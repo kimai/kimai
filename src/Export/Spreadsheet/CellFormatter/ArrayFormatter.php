@@ -11,7 +11,7 @@ namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ArrayFormatter implements CellFormatterInterface
+final class ArrayFormatter implements CellFormatterInterface
 {
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {

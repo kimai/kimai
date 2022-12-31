@@ -10,47 +10,56 @@
 namespace App\Event;
 
 use App\Entity\User;
-use App\Widget\WidgetContainerInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class DashboardEvent extends Event
 {
     /**
-     * @deprecated since 1.4, will be removed with 2.0
+     * @var array<string>
      */
-    public const DASHBOARD = DashboardEvent::class;
+    private $widgets = [];
 
-    /**
-     * @var User
-     */
-    protected $user;
-    /**
-     * @var WidgetContainerInterface[]
-     */
-    protected $widgetRows = [];
-
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getWidgets(): array
+    {
+        ksort($this->widgets, SORT_NUMERIC);
+
+        return $this->widgets;
+    }
+
+    /**
+     * Adding a widget here will add it to the default dashboard settings for users,
+     * which do not yet have their own dashboard configured.
+     *
+     * @param string $widget
+     * @param int|null $position
+     * @return void
+     */
+    public function addWidget(string $widget, ?int $position = null): void
+    {
+        if ($position === null) {
+            $position = 0;
+            $keys = array_keys($this->widgets);
+            if (\count($keys) > 0) {
+                $position = max($keys) + 10;
+            }
+        }
+
+        while (\array_key_exists($position, $this->widgets)) {
+            $position++;
+        }
+
+        $this->widgets[$position] = $widget;
     }
 
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    public function addSection(WidgetContainerInterface $container): DashboardEvent
-    {
-        $this->widgetRows[] = $container;
-
-        return $this;
-    }
-
-    /**
-     * @return WidgetContainerInterface[]
-     */
-    public function getSections(): array
-    {
-        return $this->widgetRows;
     }
 }

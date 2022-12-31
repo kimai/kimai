@@ -9,86 +9,112 @@
 
 namespace App\Controller;
 
-use App\Configuration\LanguageFormattings;
 use App\Entity\Bookmark;
 use App\Entity\User;
 use App\Repository\BookmarkRepository;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
-use App\Utils\LocaleFormats;
+use App\Validator\ValidationFailedException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * The abstract base controller.
- * @method null|User getUser()
- */
 abstract class AbstractController extends BaseAbstractController implements ServiceSubscriberInterface
 {
-    /**
-     * @deprecated since 1.6, will be removed with 2.0
-     */
-    public const ROLE_ADMIN = User::ROLE_ADMIN;
+    protected function getUser(): User
+    {
+        $user = parent::getUser();
+        if ($user === null) {
+            throw $this->createAccessDeniedException('Missing user');
+        }
 
-    protected function getTranslator(): TranslatorInterface
+        if (!($user instanceof User)) {
+            throw $this->createAccessDeniedException('Expected Kimai user, received unknown type');
+        }
+
+        return $user;
+    }
+
+    private function getTranslator(): TranslatorInterface
     {
         return $this->container->get('translator');
     }
 
-    public function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    protected function createSearchForm(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    {
+        return $this->createFormForGetRequest($type, $data, $options);
+    }
+
+    protected function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
     {
         return $this->container
             ->get('form.factory')
-            ->createNamed('', $type, $data, $options);
+            ->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options));
     }
 
-    private function getLogger(): LoggerInterface
+    protected function createFormWithName(string $name, string $type, mixed $data = null, array $options = []): FormInterface
     {
-        return $this->container->get('logger');
+        return $this->container->get('form.factory')->createNamed($name, $type, $data, $options);
+    }
+
+    /**
+     * Returns a RedirectResponse to the given route with the given parameters.
+     *
+     * This needs to be a 201 code and NOT 302 (as usual for redirects) because 302 cannot be handled on
+     * javascript side, as the fetch() API will auto-redirect these responses without access to the header.
+     */
+    protected function redirectToRouteAfterCreate(string $route, array $parameters = []): RedirectResponse
+    {
+        $url = $this->generateUrl($route, $parameters);
+        $response = new RedirectResponse($url, 201);
+        $response->headers->set('x-modal-redirect', $url);
+
+        return $response;
     }
 
     /**
      * Adds a "successful" flash message to the stack.
-     *
-     * @param string $translationKey
-     * @param array $parameter
      */
-    protected function flashSuccess(string $translationKey, array $parameter = []): void
+    protected function flashSuccess(string $translationKey): void
     {
-        $this->addFlashTranslated('success', $translationKey, $parameter);
+        $this->addFlashTranslated('success', $translationKey);
     }
 
     /**
      * Adds a "warning" flash message to the stack.
-     *
-     * @param string $translationKey
-     * @param array $parameter
      */
-    protected function flashWarning(string $translationKey, array $parameter = []): void
+    protected function flashWarning(string $translationKey): void
     {
-        $this->addFlashTranslated('warning', $translationKey, $parameter);
+        $this->addFlashTranslated('warning', $translationKey);
     }
 
     /**
-     * Adds a "error" flash message to the stack.
+     * Adds an "error" flash message to the stack.
      *
      * @param string $translationKey
-     * @param array $parameter
+     * @param array<string, string>|string $reason passing an array is deprecated
+     * @return void
+     * @throws \Exception
      */
-    protected function flashError(string $translationKey, array $parameter = []): void
+    protected function flashError(string $translationKey, array|string $reason = ''): void
     {
-        $this->addFlashTranslated('error', $translationKey, $parameter);
+        if (\is_array($reason)) {
+            @trigger_error('Calling "flashError" with an array $reason is deprecated and will be removed soon. Refactor and pass a string instead.', E_USER_DEPRECATED);
+            $reason = \array_key_exists('%reason%', $reason) ? $reason['%reason%'] : '';
+        }
+
+        $this->addFlashTranslated('error', $translationKey, ['%reason%' => $reason]);
     }
 
     /**
      * Adds an exception flash message for failed update/create actions.
-     *
-     * @param \Exception $exception
      */
     protected function flashUpdateException(\Exception $exception): void
     {
@@ -97,8 +123,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     /**
      * Adds an exception flash message for failed delete actions.
-     *
-     * @param \Exception $exception
      */
     protected function flashDeleteException(\Exception $exception): void
     {
@@ -106,21 +130,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     }
 
     /**
-     * Adds a "error" flash message and logs the Exception.
-     *
-     * @param \Exception $exception
-     * @param string $translationKey
-     * @param array $parameter
+     * Adds an "error" flash message and logs the Exception.
      */
-    protected function flashException(\Exception $exception, string $translationKey, array $parameter = []): void
+    protected function flashException(\Exception $exception, string $translationKey): void
     {
         $this->logException($exception);
 
-        if (!\array_key_exists('%reason%', $parameter)) {
-            $parameter['%reason%'] = $exception->getMessage();
-        }
-
-        $this->addFlashTranslated('error', $translationKey, $parameter);
+        $this->addFlashTranslated('error', $translationKey, ['%reason%' => $exception->getMessage()]);
     }
 
     /**
@@ -128,9 +144,11 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param string $type
      * @param string $message
-     * @param array $parameter
+     * @param array<string, string> $parameter
+     * @return void
+     * @throws \Exception
      */
-    protected function addFlashTranslated(string $type, string $message, array $parameter = []): void
+    private function addFlashTranslated(string $type, string $message, array $parameter = []): void
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
@@ -146,17 +164,39 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $this->addFlash($type, $message);
     }
 
-    protected function logException(\Exception $ex): void
+    /**
+     * Handles exception flash messages for failed update/create actions.
+     */
+    protected function handleFormUpdateException(\Exception $exception, FormInterface $form): void
     {
-        $this->getLogger()->critical($ex->getMessage());
+        if (!($exception instanceof ValidationFailedException)) {
+            $this->flashUpdateException($exception);
+
+            return;
+        }
+
+        $msg = $this->getTranslator()->trans($exception->getMessage(), [], 'validators');
+        if ($exception->getViolations()->count() > 0) {
+            for ($i = 0; $i < $exception->getViolations()->count(); $i++) {
+                $violation = $exception->getViolations()->get($i);
+                $form->addError(new FormError($violation->getMessage()));
+            }
+        } else {
+            $form->addError(new FormError($msg));
+        }
     }
 
-    public static function getSubscribedServices()
+    protected function logException(\Exception $ex): void
+    {
+        $this->container->get('logger')->critical($ex->getMessage());
+    }
+
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
             'translator' => TranslatorInterface::class,
             'logger' => LoggerInterface::class,
-            LanguageFormattings::class => LanguageFormattings::class,
+            BookmarkRepository::class => BookmarkRepository::class,
         ]);
     }
 
@@ -169,43 +209,36 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return DateTimeFactory::createByUser($user);
     }
 
-    protected function getLocaleFormats(string $locale): LocaleFormats
+    // ================================ SEARCH AND BOOKMARKS ================================
+
+    private function getBookmark(): BookmarkRepository
     {
-        return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
+        return $this->container->get(BookmarkRepository::class);
     }
 
-    private function getLastSearch(BaseQuery $query): ?array
+    private function getLastSearch(SessionInterface $session, BaseQuery $query): ?array
     {
         $name = 'search_' . $this->getSearchName($query);
 
-        if (!$this->get('session')->has($name)) {
+        if (!$session->has($name)) {
             return null;
         }
 
-        return $this->get('session')->get($name);
+        return $session->get($name);
     }
 
-    private function removeLastSearch(BaseQuery $query): void
+    private function removeLastSearch(SessionInterface $session, BaseQuery $query): void
     {
         $name = 'search_' . $this->getSearchName($query);
 
-        if ($this->get('session')->has($name)) {
-            $this->get('session')->remove($name);
+        if ($session->has($name)) {
+            $session->remove($name);
         }
     }
 
     private function getSearchName(BaseQuery $query): string
     {
         return substr($query->getName(), 0, 50);
-    }
-
-    /**
-     * @param Request $request
-     * @internal
-     */
-    protected function ignorePersistedSearch(Request $request): void
-    {
-        $request->query->set('performSearch', true);
     }
 
     protected function handleSearch(FormInterface $form, Request $request): bool
@@ -230,21 +263,26 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
         if ($request->query->has('resetSearchFilter')) {
             $data->resetFilter();
-            $this->removeLastSearch($data);
+            $this->removeLastSearch($request->getSession(), $data);
 
             return true;
         }
 
-        $submitData = $request->query->all();
-        // allow to use forms with block-prefix
+        $queryKey = null;
         if (!empty($formName = $form->getConfig()->getName()) && $request->request->has($formName)) {
-            $submitData = $request->request->get($formName);
+            // allow using forms with block-prefix
+            $queryKey = $formName;
         }
 
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $submitData = $request->request->all($queryKey);
+        } else {
+            $submitData = $request->query->all($queryKey);
+        }
         $searchName = $this->getSearchName($data);
 
         /** @var BookmarkRepository $bookmarkRepo */
-        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmarkRepo = $this->getBookmark();
         $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $searchName);
 
         if ($bookmark !== null) {
@@ -260,12 +298,23 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
         // apply persisted search data ONLY if search form was not submitted manually
         if (!$request->query->has('performSearch')) {
-            $sessionSearch = $this->getLastSearch($data);
+            $sessionSearch = $this->getLastSearch($request->getSession(), $data);
             if ($sessionSearch !== null) {
                 $submitData = array_merge($sessionSearch, $submitData);
             } elseif ($bookmark !== null && !$request->query->has('setDefaultQuery')) {
-                $submitData = array_merge($bookmark->getContent(), $submitData);
-                $data->flagAsBookmarkSearch();
+                $bookContent = $bookmark->getContent();
+                $isBookmarkSearch = true;
+                foreach ($submitData as $key => $value) {
+                    if (!\array_key_exists($key, $bookContent) || $value !== $bookContent[$key]) {
+                        $isBookmarkSearch = false;
+                        break;
+                    }
+                }
+                if ($isBookmarkSearch) {
+                    $data->flagAsBookmarkSearch();
+                }
+
+                $submitData = array_merge($bookContent, $submitData);
             }
         }
 
@@ -298,7 +347,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         if ($request->query->has('performSearch')) {
-            $this->get('session')->set('search_' . $searchName, $params);
+            $request->getSession()->set('search_' . $searchName, $params);
         }
 
         // filter stuff, that does not belong in a bookmark
@@ -310,7 +359,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         if ($request->query->has('setDefaultQuery')) {
-            $this->removeLastSearch($data);
+            $this->removeLastSearch($request->getSession(), $data);
             if ($bookmark === null) {
                 $bookmark = new Bookmark();
                 $bookmark->setType(Bookmark::SEARCH_DEFAULT);

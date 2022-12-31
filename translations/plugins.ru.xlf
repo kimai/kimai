@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Нет установленных дополнений.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Магазин Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

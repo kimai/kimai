@@ -9,7 +9,7 @@
 
 namespace App\Tests\Export\Timesheet;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -46,17 +46,20 @@ abstract class AbstractRendererTest extends KernelTestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
 
+        $user = new User();
+        $user->setUserIdentifier('ssdf');
+
         $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('getUser')->willReturn($user);
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages), $security);
+        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages), $security);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -70,8 +73,7 @@ abstract class AbstractRendererTest extends KernelTestCase
      */
     protected function render(TimesheetExportInterface $renderer)
     {
-        $customer = new Customer();
-        $customer->setName('Customer Name');
+        $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
         $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
@@ -88,15 +90,17 @@ abstract class AbstractRendererTest extends KernelTestCase
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
+        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
+        $user1->method('getUserIdentifier')->willReturn('foo-bar');
 
         $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
         $user2->method('getUsername')->willReturn('hello-world');
+        $user2->method('getUserIdentifier')->willReturn('hello-world');
 
         $timesheet = new Timesheet();
         $timesheet
@@ -143,11 +147,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->addTag((new Tag())->setName('foo'))
         ;
 
+        $user = new User();
+        $user->setUserIdentifier('kevin');
+
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser((new User())->setUsername('kevin'))
+            ->setUser($user)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))

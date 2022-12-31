@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -11,22 +9,10 @@ declare(strict_types=1);
 
 namespace App\Export\Annotation;
 
-/**
- * @Annotation
- * @Target({"CLASS"})
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 final class Order
 {
-    /**
-     * @var array<string>
-     */
-    public $order = [];
-
-    public function __construct(array $data)
+    public function __construct(public array $order = [])
     {
-        if (isset($data['value'])) {
-            $this->order = $data['value'];
-            unset($data['value']);
-        }
     }
 }

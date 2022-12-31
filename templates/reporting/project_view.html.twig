@@ -1,193 +1,21 @@
-{% extends 'reporting/layout.html.twig' %}
-{% import "macros/datatables.html.twig" as tables %}
+{% extends 'reporting/project_list_data.html.twig' %}
 
-{% block report_title %}{{ (title|default('report_project_view'))|trans({}, 'reporting') }}{% endblock %}
-
-{% set showMoneyBudget = is_granted('budget_money', 'project') %}
-{% set showTimeBudget = is_granted('budget_time', 'project') %}
-{% set showBudgets = showMoneyBudget or showTimeBudget %}
-
-{% set availableColumns = {
-    'name':             {'class': 'alwaysVisible'},
-} %}
-{% if showMoneyBudget %}
-    {% set availableColumns = availableColumns|merge({
-        'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
-        'invoiced':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
-    }) %}
-{% endif %}
-{% if showTimeBudget %}
-    {% set availableColumns = availableColumns|merge({
-        'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
-        'exported':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
-    }) %}
-{% endif %}
-{% set availableColumns = availableColumns|merge({
-    'lastRecord':       {'class': 'text-center hw-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
-    'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
-    'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
-    'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
-    'projectStart':     {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_start'|trans},
-    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
-    'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
-    'actions':          {'class': 'actions alwaysVisible'},
-}) %}
-{% set tableName = tableName|default('project_view_reporting') %}
-{% set skipColumns = skipColumns is defined ? skipColumns : {} %}
-{% set columns = {} %}
-{% for name, config in availableColumns %}
-    {% if name not in skipColumns %}
-        {% set columns = columns|merge({(name): config}) %}
-    {% endif %}
-{% endfor %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block report %}
-
-    {% set hasData = entries|length > 0 %}
-
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/progressbar.html.twig" as progress %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% import "macros/datatables.html.twig" as tables %}
-        {% import "project/actions.html.twig" as projectActions %}
-        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_tools %}
-            {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
-        {% endblock %}
-        {% block box_title %}
-            {% if form.customer is defined %}
-                {{ form_widget(form.customer) }}
-            {% endif %}
-            {% if form.month is defined %}
-                {{ form_widget(form.month) }}
-            {% endif %}
-            {% if form.includeNoBudget is defined or form.includeNoWork is defined %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu checkbox-menu">
-                    {% if form.includeNoBudget is defined %}
-                    <li>
-                        {{ form_widget(form.includeNoBudget) }}
-                    </li>
-                    {% endif %}
-                    {% if form.includeNoWork is defined %}
-                    <li>
-                        {{ form_widget(form.includeNoWork) }}
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% endif %}
-            {{ form_rest(form) }}
-        {% endblock %}
-        {% block box_body %}
-            {% if not hasData %}
-                {{ widgets.nothing_found() }}
-            {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'boxClass': ''}) }}
-
-                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
-                    <tr class="summary">
-                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
-                    </tr>
-                    {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
-                        {% set project = entry.project %}
-                        {% set budgetStats = entry.getBudgetStatisticModel() %}
-                        {% set currency = project.customer.currency %}
-                        <tr {{ widgets.project_row_attr(project, now) }}>
-                        {% for name, column_config in columns %}
-                            {% if name == 'name' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
-                            {% elseif name == 'lastRecord' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
-                                {% if entry.lastRecord is not null %}
-                                    {{ entry.lastRecord|date_short }}
-                                {% else %}
-                                    &ndash;
-                                {% endif %}
-                            </td>
-                            {% elseif name == 'today' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
-                            {% elseif name == 'week' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
-                            {% elseif name == 'month' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
-                            {% elseif name == 'durationTotal' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }} w-min">{{ entry.durationTotal|duration }}</td>
-                            {% elseif name == 'timeBudget' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                                {% if budgetStats.hasTimeBudget() and is_granted('time', project) %}
-                                    {{ progress.progressbar_timebudget(budgetStats) }}
-                                {% endif %}
-                            </td>
-                            {% elseif name == 'budget' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                                {% if project.hasBudget() and is_granted('budget', project) %}
-                                    {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
-                                {% endif %}
-                            </td>
-                            {% elseif name == 'exported' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
-                                {% if is_granted('create_export') %}
-                                    <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
-                                        {{ entry.notExportedDuration|duration }}
-                                    </a>
-                                {% else %}
-                                    {{ entry.notExportedDuration|duration }}
-                                {% endif %}
-                            </td>
-                            {% elseif name == 'invoiced' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'invoiced') }}">
-                                {% if is_granted('view_invoice') %}
-                                    <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                        {{ entry.notBilledRate|money(currency) }}
-                                    </a>
-                                {% else %}
-                                    {{ entry.notBilledRate|money(currency) }}
-                                {% endif %}
-                            </td>
-                            {% elseif name == 'projectStart' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'projectStart') }}">{% if project.start is not null %}{{ project.start|date_short }}{% endif %}</td>
-                            {% elseif name == 'projectEnd' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
-                            {% elseif name == 'comment' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
-                            {% elseif name == 'actions' %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                                {{ projectActions.project(project, 'custom') }}
-                            </td>
-                            {% endif %}
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-                {% endfor %}
-                {{ tables.data_table_footer(entries) }}
-            {% endif %}
-        {% endblock %}
-    {% endembed %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#project-view-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-    </script>
+{% block report_form_layout %}
+    {{ form_widget(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('filter', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.budgetType.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-item">
+                {{ form_widget(form.includeNoWork) }}
+            </li>
+        </ul>
+    </div>
 {% endblock %}

@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>La registrazione non può essere avviata</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Il limite delle registrazioni attivabili è stato raggiunto, cortesemente interrompere almeno una registrazione attiva.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Stai modificando attività già esportate</target>

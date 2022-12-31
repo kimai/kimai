@@ -10,15 +10,15 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\TeamQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TeamToolbarForm extends AbstractToolbarForm
+final class TeamToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addUsersChoice($builder);
         $this->addSearchTermInputField($builder);
@@ -28,10 +28,7 @@ class TeamToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, TeamQuery::TEAM_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TeamQuery::class,

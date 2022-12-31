@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 /**
  * @covers \App\Command\ChangePasswordCommand
@@ -25,10 +26,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class ChangePasswordCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -42,19 +40,15 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->application->add(new ChangePasswordCommand($userService));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
         $command = $application->find('kimai:user:password');
         self::assertInstanceOf(ChangePasswordCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:change-password');
-        self::assertInstanceOf(ChangePasswordCommand::class, $command);
     }
 
-    protected function callCommand(?string $username, ?string $password)
+    protected function callCommand(?string $username, ?string $password): CommandTester
     {
         $command = $this->application->find('kimai:user:password');
         $input = [
@@ -85,25 +79,32 @@ class ChangePasswordCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testChangePassword()
+    public function testChangePassword(): void
     {
         $commandTester = $this->callCommand('john_user', '0987654321');
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
 
-        $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('john_user');
+        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByIdentifier('john_user');
         self::assertInstanceOf(User::class, $user);
 
-        $container = self::$kernel->getContainer();
-        $encoderService = $container->get('security.password_encoder');
-        self::assertTrue($encoderService->isPasswordValid($user, '0987654321'));
+        /** @var PasswordHasherFactoryInterface $passwordEncoder */
+        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), '0987654321'));
     }
 
-    public function testWithMissingUsername()
+    public function testChangePasswordFailsOnShortPassword(): void
+    {
+        $commandTester = $this->callCommand('john_user', '1');
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+    }
+
+    public function testWithMissingUsername(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');
@@ -111,7 +112,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->callCommand(null, '1234567890');
     }
 
-    public function testWithMissingPasswordAsksForPassword()
+    public function testWithMissingPasswordAsksForPassword(): void
     {
         $commandTester = $this->callCommand('john_user', null);
         $output = $commandTester->getDisplay();

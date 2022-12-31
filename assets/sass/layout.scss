@@ -1,8 +1,38 @@
-@media (max-width: $screen-sm-max) {
-    .main-header .logo {
-        display: none;
+.inline-search {
+    max-width: 200px;
+    /* the entire inline-search should actually use .input-group-flat, but that causes some weird css problems inside the dropdown menu */
+    #searchTerm {
+        border-right: 0;
     }
-    .fixed .content-wrapper, .fixed .right-side, .control-sidebar, .main-sidebar {
-        padding-top: 50px;
+}
+@media (min-width: 360px) {
+    .inline-search {
+        max-width: 235px;
     }
+}
+@include media-breakpoint-up(md) {
+    .inline-search {
+        max-width: 325px;
+    }
+    .search-dropdown {
+        width: 500px;
+    }
+}
+
+/* Format the company title in the left navigation, as Tabler is optimized for an image only */
+h1.navbar-brand a {
+    span {
+        display: inline-block;
+        padding-top: 0.5rem;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.page-actions .dropdown-menu,
+#export-buttons .dropdown-menu,
+.inline-search .dropdown-menu {
+    /* bootstrap thead.sticky-top has z-index 1020 and the reporting form dropdowns hide behind that */
+    z-index: 1021;
 }

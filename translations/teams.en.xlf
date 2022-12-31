@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
-        <source>teams.title</source>
-        <target>Teams</target>
-      </trans-unit>
       <trans-unit id="A_4Fc7c" resname="teams.project_access">
         <source>teams.project_access</source>
         <target>Grant access to projects</target>
@@ -33,6 +29,10 @@
       <trans-unit id="cZEIdcu" resname="team.create_default">
         <source>team.create_default</source>
         <target>Create a new team to limit access</target>
+      </trans-unit>
+      <trans-unit id="6g81kYY" approved="yes" resname="team.member">
+        <source>team.member</source>
+        <target>Member</target>
       </trans-unit>
     </body>
   </file>

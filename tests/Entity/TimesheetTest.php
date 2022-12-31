@@ -55,7 +55,6 @@ class TimesheetTest extends TestCase
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
-        self::assertNull($sut->getMetaFieldValue('foo'));
     }
 
     public function testValueCanBeNull()
@@ -75,8 +74,7 @@ class TimesheetTest extends TestCase
 
     protected function getEntity()
     {
-        $customer = new Customer();
-        $customer->setName('Test Customer');
+        $customer = new Customer('Test Customer');
 
         $project = new Project();
         $project->setName('Test Project');
@@ -128,7 +126,6 @@ class TimesheetTest extends TestCase
         self::assertSame($result, $meta);
         self::assertEquals('test', $result->getType());
         self::assertEquals('bar2', $result->getValue());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $meta2 = new TimesheetMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
@@ -139,7 +136,6 @@ class TimesheetTest extends TestCase
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
         self::assertEquals('test2', $result->getType());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $sut->setMetaField((new TimesheetMeta())->setName('blub')->setIsVisible(true));
         $sut->setMetaField((new TimesheetMeta())->setName('blab')->setIsVisible(true));
@@ -155,26 +151,6 @@ class TimesheetTest extends TestCase
         self::assertFalse($sut->isBillable());
         self::assertInstanceOf(Timesheet::class, $sut->setBillable(true));
         self::assertTrue($sut->isBillable());
-    }
-
-    public function testResetRates()
-    {
-        $sut = new Timesheet();
-        self::assertSame(0.00, $sut->getRate());
-        self::assertNull($sut->getFixedRate());
-        self::assertNull($sut->getInternalRate());
-        self::assertNull($sut->getHourlyRate());
-
-        $sut->setRate(123.45);
-        $sut->setFixedRate(42.32);
-        $sut->setInternalRate(212);
-        $sut->setHourlyRate(123);
-        $sut->resetRates();
-
-        self::assertSame(0.00, $sut->getRate());
-        self::assertNull($sut->getFixedRate());
-        self::assertNull($sut->getInternalRate());
-        self::assertNull($sut->getHourlyRate());
     }
 
     public function testCategory()
@@ -222,7 +198,6 @@ class TimesheetTest extends TestCase
         foreach ($sut->getMetaFields() as $metaField) {
             $cloneMeta = $clone->getMetaField($metaField->getName());
             self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
-            self::assertEquals($metaField->getValue(), $clone->getMetaFieldValue($metaField->getName()));
         }
         self::assertEquals($clone->getTags(), $sut->getTags());
         self::assertEquals($clone->getTags(), $sut->getTags());

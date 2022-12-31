@@ -23,9 +23,5 @@ interface VisibilityInterface
 
     public function getVisibility(): int;
 
-    /**
-     * @param int $visibility
-     * @return mixed
-     */
-    public function setVisibility($visibility);
+    public function setVisibility(int $visibility): void;
 }

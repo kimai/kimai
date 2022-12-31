@@ -1,0 +1,16 @@
+{% if config('theme.show_about') %}
+<div class="row text-center align-items-center flex-row">
+    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+        <ul class="list-inline list-inline-dots mb-0">
+            <li class="list-inline-item">
+                Copyright &copy; <a href="https://www.kevinpapst.de/" target="_blank" class="link-secondary">Kevin Papst</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="link-secondary" href="{{ path('about') }}">
+                    {{ 'about.title'|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endif %}

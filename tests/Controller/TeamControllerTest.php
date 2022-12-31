@@ -41,9 +41,7 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
-            'search' => '#',
-            'create' => $this->createUrl('/admin/teams/create'),
-            'help' => 'https://www.kimai.org/documentation/teams.html'
+            'create modal-ajax-form' => $this->createUrl('/admin/teams/create'),
         ]);
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_admin_teams', 6);
@@ -52,7 +50,6 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Team $team) {
@@ -86,8 +83,9 @@ class TeamControllerTest extends ControllerBaseTest
         $values['team_edit_form']['members'][0]['teamlead'] = 1;
         $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
 
-        $this->assertIsRedirect($client, '/edit');
-        $client->followRedirect();
+        $location = $this->assertIsModalRedirect($client, '/edit');
+        $this->requestPure($client, $location);
+
         $this->assertHasFlashSuccess($client);
         $this->assertHasCustomerAndProjectPermissionBoxes($client);
     }
@@ -207,19 +205,15 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('team.duplicate');
+        $this->request($client, '/admin/teams/1/duplicate');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
 
-        $this->request($client, '/admin/teams/1/duplicate/' . $token);
-        $this->assertIsRedirect($client, '/edit');
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('#team_edit_form_name');
-        self::assertEquals(1, $node->count());
-        self::assertEquals('Test team [COPY]', $node->attr('value'));
-    }
+        $client->submit($form);
 
-    public function testDuplicateActionWithInvalidCsrf()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertInvalidCsrfToken($client, '/admin/teams/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/teams/1/edit'));
+        $location = $this->assertIsModalRedirect($client);
+        $this->requestPure($client, $location);
+
+        $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $this->assertEquals('Test team (1)', $editForm->get('team_edit_form[name]')->getValue());
     }
 }

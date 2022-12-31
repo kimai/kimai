@@ -9,51 +9,27 @@
 
 namespace App\Export\Base;
 
-use App\Export\ExportContext;
+use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
-use App\Export\ExportItemInterface;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\PdfContext;
+use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
-use App\Utils\FileHelper;
-use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class PDFRenderer implements DispositionInlineInterface
 {
     use RendererTrait;
-    use DispositionInlineTrait;
+    use PDFRendererTrait;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
-    /**
-     * @var HtmlToPdfConverter
-     */
-    private $converter;
-    /**
-     * @var ProjectStatisticService
-     */
-    private $projectStatisticService;
-    /**
-     * @var string
-     */
-    private $id = 'pdf';
-    /**
-     * @var string
-     */
-    private $template = 'default.pdf.twig';
-    /**
-     * @var array
-     */
-    private $pdfOptions = [];
+    private string $id = 'pdf';
+    private string $template = 'default.pdf.twig';
+    private array $pdfOptions = [];
 
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectStatisticService)
+    public function __construct(private Environment $twig, private HtmlToPdfConverter $converter, private ProjectStatisticService $projectStatisticService)
     {
-        $this->twig = $twig;
-        $this->converter = $converter;
-        $this->projectStatisticService = $projectStatisticService;
     }
 
     protected function getTemplate(): string
@@ -86,7 +62,7 @@ class PDFRenderer implements DispositionInlineInterface
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportableItem[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError
@@ -96,15 +72,13 @@ class PDFRenderer implements DispositionInlineInterface
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
         $filename = new ExportFilename($query);
-        $context = new ExportContext();
+        $context = new PdfContext();
         $context->setOption('filename', $filename->getFilename());
 
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
-            // @deprecated since 1.13
-            'now' => new \DateTime('now', new \DateTimeZone(date_default_timezone_get())),
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'decimal' => false,
@@ -115,22 +89,7 @@ class PDFRenderer implements DispositionInlineInterface
 
         $content = $this->converter->convertToPdf($content, $pdfOptions);
 
-        $response = new Response($content);
-
-        $filename = $context->getOption('filename');
-        if (empty($filename)) {
-            $filename = new ExportFilename($query);
-            $filename = $filename->getFilename();
-        }
-
-        $filename = FileHelper::convertToAsciiFilename($filename);
-
-        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
-
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', $disposition);
-
-        return $response;
+        return $this->createPdfResponse($content, $context);
     }
 
     public function setTemplate(string $filename): PDFRenderer

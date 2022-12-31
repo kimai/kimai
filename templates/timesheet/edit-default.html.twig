@@ -1,0 +1,95 @@
+{% block timesheet_form %}
+    {% form_theme form 'form/horizontal.html.twig' %}
+    {% embed formOptions.template with formOptions %}
+        {% block form_body %}
+            {% if form.begin_date is defined %}
+                <div class="mb-3 row">
+                    <label class="col-form-label col-sm-2 required" for="{{ form.vars.name }}_begin_date">{{ 'begin'|trans }}</label>
+                    <div class="col-sm-5">
+                        {{ form_widget(form.begin_date, {'label': false}) }}
+                        {{ form_errors(form.begin_date, {'label': false}) }}
+                    </div>
+                    <div class="col-sm-5">
+                        {{ form_widget(form.begin_time, {'label': false}) }}
+                        {{ form_errors(form.begin_time, {'label': false}) }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if form.end_time is defined or form.duration is defined %}
+                <div class="mb-3 row">
+                    <label class="col-form-label col-sm-2" for="{{ form.vars.name }}_duration">{{ 'duration'|trans }} / {{ 'endtime'|trans }}</label>
+                    {% set size = form.duration is defined ? 5 : 10 %}
+                    {% if form.duration is defined %}
+                    <div class="col-sm-{{ size }}">
+                        {{ form_widget(form.duration, {'label': false}) }}
+                        {{ form_errors(form.duration, {'label': false}) }}
+                    </div>
+                    {% endif %}
+                    {% if form.end_time is defined %}
+                    <div class="col-sm-{{ size }}">
+                        {{ form_widget(form.end_time, {'label': false}) }}
+                        {{ form_errors(form.end_time, {'label': false}) }}
+                    </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                {% if form.duration is defined %}
+                    {{ form_row(form.duration, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.duration.vars.name}}) }}
+                {% endif %}
+            {% endif %}
+
+            {% if form.customer is defined %}
+                {{ form_row(form.customer, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.customer.vars.name}}) }}
+            {% endif %}
+            {% if form.project is defined %}
+                {{ form_row(form.project, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.project.vars.name}}) }}
+            {% endif %}
+            {% if form.activity is defined %}
+                {{ form_row(form.activity, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.activity.vars.name}}) }}
+            {% endif %}
+            {% if form.description is defined %}
+                {{ form_row(form.description, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.description.vars.name}}) }}
+            {% endif %}
+            {% if form.tags is defined %}
+                {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.tags.vars.name}}) }}
+            {% endif %}
+            {% if form.user is defined %}
+                {{ form_row(form.user, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.user.vars.name}}) }}
+            {% endif %}
+            {% if form.users is defined %}
+                {{ form_row(form.users, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.users.vars.name}}) }}
+            {% endif %}
+            {% if form.teams is defined %}
+                {{ form_row(form.teams, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.teams.vars.name}}) }}
+            {% endif %}
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                {{ form_row(form.metaFields) }}
+            {% endif %}
+            {% if form.fixedRate is defined or form.hourlyRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}
+                {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+                    {% import "macros/widgets.html.twig" as widgets %}
+                    {% block box_title %}{{ 'extended_settings'|trans }}{% endblock %}
+                    {% block box_body_class %}{% endblock %}
+                    {% block box_body %}
+                        {% if form.fixedRate is defined %}
+                            {{ form_row(form.fixedRate, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.fixedRate.vars.name}}) }}
+                        {% endif %}
+                        {% if form.hourlyRate is defined %}
+                            {{ form_row(form.hourlyRate, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.hourlyRate.vars.name}}) }}
+                        {% endif %}
+                        {% if form.billable is defined %}
+                            {{ form_row(form.billable, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.billable.vars.name}}) }}
+                        {% elseif form.billableMode is defined %}
+                            {{ form_row(form.billableMode, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.billableMode.vars.name}}) }}
+                        {% endif %}
+                        {% if form.exported is defined %}
+                            {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.exported.vars.name}}) }}
+                        {% endif %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
+            {{ form_rest(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -29,10 +29,6 @@ class InvoiceModelActivityHydratorTest extends TestCase
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
-
-        $model->getQuery()->setActivities([]);
-        $result = $sut->hydrate($model);
-        self::assertEmpty($result);
     }
 
     protected function assertModelStructure(array $model)

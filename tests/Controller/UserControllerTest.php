@@ -35,12 +35,11 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
-            'create' => $this->createUrl('/admin/user/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/user'),
-            'help' => 'https://www.kimai.org/documentation/users.html'
+            'create modal-ajax-form' => $this->createUrl('/admin/user/create'),
+            'dropdown-item action-weekly' => $this->createUrl('/reporting/users/week'),
+            'dropdown-item action-monthly' => $this->createUrl('/reporting/users/month'),
+            'dropdown-item action-yearly' => $this->createUrl('/reporting/users/year'),
         ]);
     }
 
@@ -103,8 +102,6 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $this->assertFalse($form->get('user_create[create_more]')->hasValue());
         $client->submit($form, [
             'user_create' => [
                 'username' => $username,
@@ -114,34 +111,12 @@ class UserControllerTest extends ControllerBaseTest
                 'enabled' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
-        $client->followRedirect();
+
+        $location = $this->assertIsModalRedirect($client, '/profile/' . urlencode($username) . '/edit');
+        $this->requestPure($client, $location);
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
-    }
-
-    public function testCreateActionWithCreateMore()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/user/create');
-        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $client->submit($form, [
-            'user_create' => [
-                'username' => 'foobar@example.com',
-                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
-                'email' => 'foobar@example.com',
-                'enabled' => 1,
-                'create_more' => true,
-            ]
-        ]);
-        $this->assertFalse($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $this->assertTrue($form->get('user_create[create_more]')->hasValue());
-        $this->assertEquals(1, $form->get('user_create[create_more]')->getValue());
     }
 
     public function testDeleteAction()

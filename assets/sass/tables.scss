@@ -1,0 +1,169 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+@import "variables";
+
+table.dataTable {
+    clear: both;
+    margin-bottom: 0 !important;
+    max-width: none !important;
+
+    thead .sorting,
+    thead .sorting_asc,
+    thead .sorting_desc {
+        cursor: pointer;
+        position: relative;
+    }
+
+    thead .sorting_asc,
+    thead .sorting_desc {
+        font-weight: bold;
+    }
+
+    thead .sorting:after,
+    thead .sorting_asc:after,
+    thead .sorting_desc:after {
+        padding-left: 5px;
+        font-family: 'Font Awesome 5 Free';
+        opacity: 0.5;
+        font-size: 12px;
+    }
+    thead .sorting:after {
+        opacity: 0.2;
+        content: "\f0dc"; /* sort */
+    }
+    thead .sorting_asc:after {
+        content: "\f077";
+    }
+    thead .sorting_desc:after {
+        content: "\f078";
+    }
+
+    thead > tr > th {
+        vertical-align: top;
+        white-space: nowrap;
+    }
+
+    th:active {
+        outline: none;
+    }
+}
+
+table.table-bordered {
+    thead th,
+    thead td {
+        border-left-width: 0;
+        border-top-width: 0;
+    }
+
+    tbody th,
+    tbody td {
+        border-left-width: 0;
+        border-bottom-width: 0;
+    }
+
+    tfoot th,
+    tfoot td {
+        border-left-width: 0;
+        border-bottom-width: 0;
+    }
+
+    th:last-child,
+    td:last-child {
+        border-right-width: 0;
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    table.dataTable.table > tbody > tr > td {
+        vertical-align: middle;
+    }
+}
+
+table.dataTable {
+    /* action column */
+    .actions {
+        width: 40px;
+    }
+    tr {
+        /* summary row - used in many tables to show rows with summarized values like durations or money */
+        &.summary td {
+            font-weight: bold;
+            border: 0;
+            background-color: var(--tblr-table-striped-bg);
+        }
+        th.multiCheckbox {
+            width: 15px;
+        }
+        &.overlapping {
+            border-top: 2px solid rgba(214,57,57,.1);
+        }
+        &.exported {
+            opacity: 0.7;
+        }
+    }
+    td {
+        /*
+            Make sure that the action buttons do not line-break if another column takes all available space
+            See https://github.com/twbs/bootstrap/issues/9939#issuecomment-37682952
+         */
+        .btn-group {
+            display: flex;
+        }
+        .label {
+            font-size: 85%;
+            padding: .3em .6em .3em;
+            line-height: 24px;
+        }
+        span.label-activity,
+        span.label-project,
+        span.label-customer {
+            a {
+                color: unset;
+                padding-bottom: 2px;
+                border-bottom: 1px dotted $gray-lte;
+                &:hover {
+                    border-bottom: 1px dotted darken($gray-lte, 20);
+                }
+            }
+        }
+        span.label-invisible {
+            opacity: 0.8;
+        }
+    }
+    th.weekend,
+    td.weekend {
+        background-color: #f9f9f9;
+    }
+    /* order is important, "today” should overwrite "weekend" therefor later in the file */
+    th.today,
+    td.today {
+        background-color: $highlight-today;
+    }
+    th.total,
+    td.total {
+        font-weight: bold;
+    }
+}
+
+/* Quick entry form */
+.form-dataTable {
+    table.dataTable {
+        .form-group {
+            margin-bottom: 0;
+        }
+    }
+}
+
+table.table-hover {
+    tr {
+        &.exported {
+            &:hover {
+                opacity: 1.0;
+            }
+        }
+    }
+}

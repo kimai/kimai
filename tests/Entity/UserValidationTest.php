@@ -24,7 +24,6 @@ class UserValidationTest extends KernelTestCase
     {
         return [
             ['', ''],
-            [null, null],
             ['x', 'test@'], // too short username
             [str_pad('#', 61, '-'), 'test@x.'], // too long username
         ];
@@ -40,7 +39,7 @@ class UserValidationTest extends KernelTestCase
         ];
 
         $user = new User();
-        $user->setUsername($username);
+        $user->setUserIdentifier($username);
         $user->setEmail($email);
         if (!empty($roles)) {
             $user->setRoles($roles);
@@ -53,7 +52,7 @@ class UserValidationTest extends KernelTestCase
     public function testInvalidRoles()
     {
         $user = new User();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $user->setEmail('foo@example.com');
         $user->setRoles(['xxxxxx']);
 
@@ -63,7 +62,7 @@ class UserValidationTest extends KernelTestCase
     public function testValidRoles()
     {
         $user = new User();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $user->setEmail('foo@example.com');
         $user->setRoles(['ROLE_TEAMLEAD']);
 
@@ -84,7 +83,7 @@ class UserValidationTest extends KernelTestCase
     public function testValidValues($username, $email, $roles = [])
     {
         $user = new User();
-        $user->setUsername($username);
+        $user->setUserIdentifier($username);
         $user->setEmail($email);
         if (!empty($roles)) {
             $user->setRoles($roles);

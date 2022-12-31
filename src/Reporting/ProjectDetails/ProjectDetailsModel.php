@@ -20,33 +20,28 @@ use App\Model\UserStatistic;
 final class ProjectDetailsModel
 {
     /**
-     * @var Project
-     */
-    private $project;
-    /**
      * @var Year[]
      */
-    private $years = [];
+    private array $years = [];
     /**
      * @var array<string, array<ActivityStatistic>>
      */
-    private $yearlyActivities = [];
+    private array $yearlyActivities = [];
     /**
      * @var array<string, array<int, UserYear>>
      */
-    private $usersMonthly = [];
+    private array $usersMonthly = [];
     /**
      * @var ActivityStatistic[]
      */
-    private $activities = [];
+    private array $activities = [];
     /**
      * @var BudgetStatisticModel
      */
-    private $budgetStatisticModel;
+    private ?BudgetStatisticModel $budgetStatisticModel = null;
 
-    public function __construct(Project $project)
+    public function __construct(private Project $project)
     {
-        $this->project = $project;
     }
 
     public function getProject(): Project
@@ -76,7 +71,7 @@ final class ProjectDetailsModel
      * @param string $year
      * @return ActivityStatistic[]
      */
-    public function getYearActivities(string $year): ?array
+    public function getYearActivities(string $year): array
     {
         if (!\array_key_exists($year, $this->yearlyActivities)) {
             return [];
@@ -99,8 +94,8 @@ final class ProjectDetailsModel
                     $userStat = new UserStatistic($userYear->getUser());
                     $users[$id] = $userStat;
                 }
-                $userStat->setRecordDuration($userStat->getRecordDuration() + $userYear->getDuration());
-                $userStat->setRecordRate($userStat->getRecordRate() + $userYear->getRate());
+                $userStat->setDuration($userStat->getDuration() + $userYear->getDuration());
+                $userStat->setRate($userStat->getRate() + $userYear->getRate());
             }
         }
 

@@ -32,7 +32,7 @@ class ColorTest extends TestCase
         $globalActivity->setColor('#000001');
         self::assertEquals('#000001', $sut->getColor($globalActivity));
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         self::assertNull($sut->getColor($customer));
 
         $customer->setColor('#000004');
@@ -82,7 +82,7 @@ class ColorTest extends TestCase
         $timesheet = new Timesheet();
         $timesheet->setActivity(new Activity());
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->setColor('#123456');
         $project->setCustomer($customer);
         $timesheet->setProject($project);

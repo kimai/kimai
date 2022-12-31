@@ -9,26 +9,21 @@
 
 namespace App\DependencyInjection\Compiler;
 
-use App\Configuration\ThemeConfiguration;
 use App\Twig\Configuration;
+use App\Twig\Context;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Dynamically adds twig globals.
  */
-class TwigContextCompilerPass implements CompilerPassInterface
+final class TwigContextCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     * @throws \Exception
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $twig = $container->getDefinition('twig');
 
-        // @deprecated since 1.15
-        $theme = $container->getDefinition(ThemeConfiguration::class);
+        $theme = $container->getDefinition(Context::class);
         $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
 
         $config = $container->getDefinition(Configuration::class);

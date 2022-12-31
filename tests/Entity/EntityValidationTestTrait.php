@@ -25,7 +25,7 @@ trait EntityValidationTestTrait
     {
         self::bootKernel();
         /** @var ValidatorInterface $validator */
-        $validator = static::$kernel->getContainer()->get('validator');
+        $validator = self::getContainer()->get('validator');
         $violations = $validator->validate($entity, null, $groups);
 
         if (!\is_array($fieldNames)) {
@@ -60,7 +60,7 @@ trait EntityValidationTestTrait
     {
         self::bootKernel();
         /** @var ValidatorInterface $validator */
-        $validator = static::$kernel->getContainer()->get('validator');
+        $validator = self::getContainer()->get('validator');
 
         $violations = $validator->validate($entity, null, $groups);
         $actual = $violations->count();

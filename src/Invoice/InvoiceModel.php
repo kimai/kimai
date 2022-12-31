@@ -12,6 +12,7 @@ namespace App\Invoice;
 use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
+use App\Entity\ExportableItem;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
@@ -29,58 +30,28 @@ use App\Repository\Query\InvoiceQuery;
  */
 final class InvoiceModel
 {
+    private ?Customer $customer = null;
+    private ?InvoiceQuery $query = null;
     /**
-     * @var Customer|null
+     * @var ExportableItem[]
      */
-    private $customer;
-    /**
-     * @var InvoiceQuery
-     */
-    private $query;
-    /**
-     * @var InvoiceItemInterface[]
-     */
-    private $entries = [];
-    /**
-     * @var InvoiceTemplate
-     */
-    private $template;
-    /**
-     * @var CalculatorInterface
-     */
-    private $calculator;
-    /**
-     * @var NumberGeneratorInterface
-     */
-    private $generator;
-    /**
-     * @var \DateTime
-     */
-    private $invoiceDate;
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var InvoiceFormatter
-     */
-    private $formatter;
+    private array $entries = [];
+    private ?InvoiceTemplate $template = null;
+    private ?CalculatorInterface $calculator = null;
+    private ?NumberGeneratorInterface $generator = null;
+    private \DateTime $invoiceDate;
+    private ?User $user = null;
+    private InvoiceFormatter $formatter;
     /**
      * @var InvoiceModelHydrator[]
      */
-    private $modelHydrator = [];
+    private array $modelHydrator = [];
     /**
      * @var InvoiceItemHydrator[]
      */
-    private $itemHydrator = [];
-    /**
-     * @var string
-     */
-    private $invoiceNumber;
-    /**
-     * @var bool
-     */
-    private $hideZeroTax = false;
+    private array $itemHydrator = [];
+    private ?string $invoiceNumber = null;
+    private bool $hideZeroTax = false;
 
     /**
      * @internal use InvoiceModelFactory
@@ -97,19 +68,12 @@ final class InvoiceModel
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
     }
 
-    /**
-     * @return InvoiceQuery
-     */
     public function getQuery(): ?InvoiceQuery
     {
         return $this->query;
     }
 
-    /**
-     * @param InvoiceQuery $query
-     * @return InvoiceModel
-     */
-    public function setQuery(InvoiceQuery $query)
+    public function setQuery(InvoiceQuery $query): InvoiceModel
     {
         $this->query = $query;
 
@@ -119,9 +83,9 @@ final class InvoiceModel
     /**
      * Returns the raw data from the model.
      *
-     * Do not use this method for rendering the invoice, use getItems() instead.
+     * Do not use this method for rendering the invoice, use getCalculator()->getEntries() instead.
      *
-     * @return InvoiceItemInterface[]
+     * @return ExportableItem[]
      */
     public function getEntries(): array
     {
@@ -129,21 +93,7 @@ final class InvoiceModel
     }
 
     /**
-     * @deprecated since 1.3 - will be removed with 2.0
-     * @param InvoiceItemInterface[] $entries
-     * @return InvoiceModel
-     */
-    public function setEntries(array $entries): InvoiceModel
-    {
-        @trigger_error('setEntries() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        $this->entries = $entries;
-
-        return $this;
-    }
-
-    /**
-     * @param InvoiceItemInterface[] $entries
+     * @param ExportableItem[] $entries
      * @return InvoiceModel
      */
     public function addEntries(array $entries): InvoiceModel
@@ -186,11 +136,7 @@ final class InvoiceModel
         return $this->customer;
     }
 
-    /**
-     * @param Customer|null $customer
-     * @return InvoiceModel
-     */
-    public function setCustomer($customer): InvoiceModel
+    public function setCustomer(?Customer $customer): InvoiceModel
     {
         $this->customer = $customer;
 
@@ -237,14 +183,6 @@ final class InvoiceModel
         $this->generator->setModel($this);
 
         return $this;
-    }
-
-    /**
-     * @deprecated since 1.9 - will be removed with 2.0 - use getInvoiceNumber() instead
-     */
-    public function getNumberGenerator(): ?NumberGeneratorInterface
-    {
-        return $this->generator;
     }
 
     public function setCalculator(CalculatorInterface $calculator): InvoiceModel

@@ -2,37 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
-        <source>label.invoice_renderer</source>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+        <source>invoice_renderer</source>
         <target>Faktura dokument</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
         <target>Faktura (standard)</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Timeseddel</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer">
-        <source>freelancer</source>
+      <trans-unit id="m1UyfD9" resname="service-date">
+        <source>service-date</source>
         <target>Freelancer</target>
-      </trans-unit>
-      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
-        <source>open-spreadsheet</source>
-        <target>Regneark</target>
-      </trans-unit>
-      <trans-unit id="U_VP0mi" resname="spreadsheet">
-        <source>spreadsheet</source>
-        <target>Excel</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Data eksport</target>
-      </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
-        <source>company</source>
-        <target>Firmafaktura</target>
       </trans-unit>
     </body>
   </file>

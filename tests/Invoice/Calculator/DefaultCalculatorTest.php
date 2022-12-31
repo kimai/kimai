@@ -33,7 +33,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
     public function testWithMultipleEntries()
     {
         $date = new \DateTime();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 

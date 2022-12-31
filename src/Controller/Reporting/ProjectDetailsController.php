@@ -10,40 +10,50 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
-use App\Entity\Project;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDetails\ProjectDetailsForm;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class ProjectDetailsController extends AbstractController
 {
-    /**
-     * @Route(path="/reporting/project_details", name="report_project_details", methods={"GET"})
-     * @Security("is_granted('view_reporting') and is_granted('details', 'project')")
-     */
+    #[Route(path: '/reporting/project_details', name: 'report_project_details', methods: ['GET'])]
+    #[Security("is_granted('report:project') and is_granted('details', 'project')")]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
 
         $query = new ProjectDetailsQuery($dateFactory->createDateTime(), $user);
-        $form = $this->createForm(ProjectDetailsForm::class, $query);
+        $form = $this->createFormForGetRequest(ProjectDetailsForm::class, $query);
         $form->submit($request->query->all(), false);
 
         $projectView = null;
         $projectDetails = null;
+        $project = $query->getProject();
 
-        if ($query->getProject() !== null && $this->isGranted('details', $query->getProject())) {
-            $projectViews = $service->getProjectView($user, [$query->getProject()], $query->getToday());
+        if ($project !== null && $this->isGranted('details', $project)) {
+            $projectViews = $service->getProjectView($user, [$project], $query->getToday());
             $projectView = $projectViews[0];
             $projectDetails = $service->getProjectsDetails($query);
         }
 
+        $page = new PageSetup('projects');
+        $page->setHelp('project.html');
+
+        if ($project !== null) {
+            $page->setActionName('project');
+            $page->setActionView('project_details_report');
+            $page->setActionPayload(['project' => $project]);
+        }
+
         return $this->render('reporting/project_details.html.twig', [
-            'project' => $query->getProject(),
+            'page_setup' => $page,
+            'report_title' => 'report_project_details',
+            'project' => $project,
             'project_view' => $projectView,
             'project_details' => $projectDetails,
             'form' => $form->createView(),

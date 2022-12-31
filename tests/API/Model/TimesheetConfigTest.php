@@ -20,12 +20,18 @@ class TimesheetConfigTest extends TestCase
     public function testSetter()
     {
         $sut = new TimesheetConfig();
+        $sut->setIsAllowFutureTimes(false);
+        $sut->setIsAllowOverlapping(false);
+        $sut->setDefaultBeginTime('08:00');
+        $sut->setTrackingMode('punch');
+        $sut->setActiveEntriesHardLimit(3);
 
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowFutureTimes(false));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowOverlapping(false));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setDefaultBeginTime('08:00'));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setTrackingMode('punch'));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesSoftLimit(2));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesHardLimit(3));
+        $obj = new \ReflectionClass($sut);
+
+        self::assertFalse($obj->getProperty('isAllowFutureTimes')->getValue($sut));
+        self::assertFalse($obj->getProperty('isAllowOverlapping')->getValue($sut));
+        self::assertEquals('08:00', $obj->getProperty('defaultBeginTime')->getValue($sut));
+        self::assertEquals('punch', $obj->getProperty('trackingMode')->getValue($sut));
+        self::assertEquals(3, $obj->getProperty('activeEntriesHardLimit')->getValue($sut));
     }
 }

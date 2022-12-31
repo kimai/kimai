@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block page_actions %}
+    {% set event = actions(app.user, 'reporting', 'report') %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
+
+{% block main %}
+    <div class="row row-cards">
+
+        {% for report in reports %}
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body p-4 text-center">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded"><i class="{{ report.reportIcon|icon(false, report.reportIcon) }}" style="color: {{ null|colorize(report.reportIcon) }}"></i></span>
+                </div>
+                <div class="d-flex">
+                    <a href="{{ path(report.route) }}" class="card-btn">{{ report.label|trans({}, 'reporting') }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

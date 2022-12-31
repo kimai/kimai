@@ -11,7 +11,6 @@ namespace App\Tests\Event;
 
 use App\Entity\User;
 use App\Event\DashboardEvent;
-use App\Widget\Type\CompoundRow;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,11 +26,13 @@ class DashboardEventTest extends TestCase
         $sut = new DashboardEvent($user);
 
         $this->assertEquals($user, $sut->getUser());
-        $this->assertEquals([], $sut->getSections());
 
-        $section = new CompoundRow();
-        $sut->addSection($section);
+        $sut->addWidget('test');
+        $sut->addWidget('test2', 5);
+        $sut->addWidget('test3', 45);
+        $sut->addWidget('test4', 10);
+        $sut->addWidget('test5', 5);
 
-        $this->assertEquals([$section], $sut->getSections());
+        $this->assertSame([0 => 'test', 5 => 'test2', 6 => 'test5', 10 => 'test4', 45 => 'test3'], $sut->getWidgets());
     }
 }

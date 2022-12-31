@@ -29,26 +29,25 @@ class InvoiceTemplateFixtures implements TestFixture
         $faker = Factory::create();
 
         $template = new InvoiceTemplate();
-        $template
-            ->setName('Invoice')
-            ->setTitle('Your company name')
-            ->setCompany($faker->company())
-            ->setVat(19)
-            ->setDueDays(14)
-            ->setPaymentTerms(
-                'I would like to thank you for your confidence and will gladly be there for you in the future.' .
-                PHP_EOL .
-                'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
-                'as reference.'
-            )
-            ->setAddress(
-                $faker->streetAddress() . PHP_EOL .
-                $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
-                'Phone: ' . $faker->phoneNumber() . PHP_EOL .
-                'Email: ' . $faker->safeEmail()
-            )
-            ->setLanguage('en')
-        ;
+        $template->setName('Invoice');
+        $template->setTitle('Your company name');
+        $template->setCompany($faker->company());
+        $template->setVat(19);
+        $template->setDueDays(14);
+        $template->setPaymentTerms(
+            'I would like to thank you for your confidence and will gladly be there for you in the future.' .
+            PHP_EOL .
+            'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
+            'as reference.'
+        );
+        $template->setAddress(
+            $faker->streetAddress() . PHP_EOL .
+            $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
+            'Phone: ' . $faker->phoneNumber() . PHP_EOL .
+            'Email: ' . $faker->safeEmail()
+        );
+        $template->setLanguage('en');
+        $template->setRenderer('invoice');
 
         $manager->persist($template);
         $manager->flush();

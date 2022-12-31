@@ -13,13 +13,11 @@ use DateTime;
 
 final class DateRange
 {
-    private $resetTimes;
-    private $begin;
-    private $end;
+    private ?DateTime $begin = null;
+    private ?DateTime $end = null;
 
-    public function __construct(bool $resetTimes = true)
+    public function __construct(private bool $resetTimes = true)
     {
-        $this->resetTimes = $resetTimes;
     }
 
     public function getBegin(): ?DateTime

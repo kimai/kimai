@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>A gravação de tempo não pôde ser iniciada</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>O limite de registros de tempo ativos foi atingido, por favor, pare pelo menos uma medição de tempo de execução primeiro.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Você está editando um registro exportado</target>

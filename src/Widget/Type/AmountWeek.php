@@ -20,14 +20,16 @@ final class AmountWeek extends AbstractAmountPeriod
 
     public function getId(): string
     {
-        return 'amountWeek';
+        return 'AmountWeek';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $this->setBegin('monday this week 00:00:00');
-        $this->setEnd('sunday this week 23:59:59');
+        return $this->getRevenue('monday this week 00:00:00', 'sunday this week 23:59:59', $options);
+    }
 
-        return parent::getData($options);
+    public function getPermissions(): array
+    {
+        return ['view_all_data'];
     }
 }

@@ -16,16 +16,16 @@ use App\Entity\User;
  */
 class AboutControllerTest extends ControllerBaseTest
 {
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/about');
 
-        $result = $client->getCrawler()->filter('ul.nav.nav-stacked li a');
-        $this->assertEquals(4, \count($result));
+        $result = $client->getCrawler()->filter('.content a.card-btn');
+        self::assertCount(4, $result);
 
-        $result = $client->getCrawler()->filter('div.box-body pre');
-        $this->assertEquals(1, \count($result));
-        $this->assertStringContainsString('MIT License', $result->text(null, true));
+        $result = $client->getCrawler()->filter('div.card-body.card_details');
+        self::assertCount(1, $result);
+        self::assertStringContainsString('GNU Affero General Public License v3.0', $result->text(null, true));
     }
 }

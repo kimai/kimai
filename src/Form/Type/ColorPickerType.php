@@ -16,37 +16,28 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ColorPickerType extends AbstractType implements DataTransformerInterface
+final class ColorPickerType extends AbstractType implements DataTransformerInterface
 {
     public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'documentation' => [
                 'type' => 'string',
                 'description' => sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
             ],
-            'label' => 'label.color',
+            'label' => 'color',
             'empty_data' => null,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function transform($data)
+    public function transform(mixed $data): mixed
     {
         if (empty($data)) {
             return self::DEFAULT_COLOR;
@@ -55,18 +46,12 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function reverseTransform($data)
+    public function reverseTransform(mixed $value): mixed
     {
-        return null === $data ? self::DEFAULT_COLOR : $data;
+        return null === $value ? self::DEFAULT_COLOR : $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ColorType::class;
     }

@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target state="translated">Tämä vuosi</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target state="translated">Mukautettu aikaväli</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

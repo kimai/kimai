@@ -15,19 +15,18 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\ActivityStatistic;
 use App\Repository\Loader\ActivityLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
-use Doctrine\DBAL\Types\Types;
+use App\Utils\Pagination;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Activity>
@@ -42,7 +41,7 @@ class ActivityRepository extends EntityRepository
      * @param null $lockVersion
      * @return Activity|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Activity
     {
         /** @var Activity|null $activity */
         $activity = parent::find($id, $lockMode, $lockVersion);
@@ -60,7 +59,7 @@ class ActivityRepository extends EntityRepository
      * @param Project $project
      * @return Activity[]
      */
-    public function findByProject(Project $project)
+    public function findByProject(Project $project): array
     {
         return $this->findBy(['project' => $project]);
     }
@@ -69,7 +68,7 @@ class ActivityRepository extends EntityRepository
      * @param int[] $activityIds
      * @return Activity[]
      */
-    public function findByIds(array $activityIds)
+    public function findByIds(array $activityIds): array
     {
         $qb = $this->createQueryBuilder('a');
         $qb
@@ -101,67 +100,13 @@ class ActivityRepository extends EntityRepository
      * @param null|bool $visible
      * @return int
      */
-    public function countActivity($visible = null)
+    public function countActivity($visible = null): int
     {
         if (null !== $visible) {
             return $this->count(['visible' => (bool) $visible]);
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Activity $activity
-     * @return ActivityStatistic
-     */
-    public function getActivityStatistics(Activity $activity): ActivityStatistic
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->where('t.activity = :activity')
-            ->setParameter('activity', $activity)
-        ;
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        $stats = new ActivityStatistic();
-
-        if (null !== $timesheetResult) {
-            $stats->setCounter($timesheetResult['amount']);
-            $stats->setRecordDuration($timesheetResult['duration']);
-            $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setInternalRate($timesheetResult['internal_rate']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->where('t.activity = :activity')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('activity', $activity)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $timesheetResult) {
-            $stats->setDurationBillable($timesheetResult['duration']);
-            $stats->setRateBillable($timesheetResult['rate']);
-            $stats->setRecordAmountBillable($timesheetResult['amount']);
-        }
-
-        return $stats;
     }
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [], bool $globalsOnly = false): void
@@ -230,19 +175,6 @@ class ActivityRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     */
-    public function builderForEntityType($activity, $project)
-    {
-        $query = new ActivityFormTypeQuery();
-        $query->addActivity($activity);
-        $query->addProject($project);
-
-        return $this->getQueryBuilderForFormType($query);
-    }
-
-    /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
      *
      * @param ActivityFormTypeQuery $query
@@ -261,7 +193,7 @@ class ActivityRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('a.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         if (!$query->isGlobalsOnly()) {
             $qb
@@ -280,7 +212,7 @@ class ActivityRepository extends EntityRepository
                 )
             );
 
-            $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('is_visible', true, ParameterType::BOOLEAN);
         }
 
         if ($query->isGlobalsOnly()) {
@@ -379,13 +311,13 @@ class ActivityRepository extends EntityRepository
                         )
                     )
                 );
-                $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('is_visible', true, ParameterType::BOOLEAN);
             }
 
             if ($query->isShowVisible()) {
-                $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', true, ParameterType::BOOLEAN);
             } elseif ($query->isShowHidden()) {
-                $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', false, ParameterType::BOOLEAN);
             }
         }
 
@@ -401,13 +333,7 @@ class ActivityRepository extends EntityRepository
                 // projects have a setting to disallow global activities, and we check for it only
                 // if we query for exactly one project (usually used in dropdown queries)
                 if (\count($query->getProjects()) === 1) {
-                    $project = $query->getProjects()[0];
-                    if (!$project instanceof Project) {
-                        $project = $this->getEntityManager()->getRepository(Project::class)->find($project);
-                    }
-                    if ($project instanceof Project) {
-                        $includeGlobals = $project->isGlobalActivities();
-                    }
+                    $includeGlobals = $query->getProjects()[0]->isGlobalActivities();
                 }
                 if ($includeGlobals) {
                     $orX->add($qb->expr()->isNull('a.project'));
@@ -415,10 +341,10 @@ class ActivityRepository extends EntityRepository
             }
 
             $where->add($orX);
-            $qb->setParameter('project', $query->getProjects());
+            $qb->setParameter('project', $query->getProjectIds());
         } elseif ($query->hasCustomers()) {
             $where->add($qb->expr()->in('p.customer', ':customer'));
-            $qb->setParameter('customer', $query->getCustomers());
+            $qb->setParameter('customer', $query->getCustomerIds());
         }
 
         if ($where->count() > 0) {
@@ -463,9 +389,9 @@ class ActivityRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getPagerfantaForQuery(ActivityQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -496,7 +422,7 @@ class ActivityRepository extends EntityRepository
     /**
      * @param Activity $delete
      * @param Activity|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteActivity(Activity $delete, ?Activity $replace = null)
     {

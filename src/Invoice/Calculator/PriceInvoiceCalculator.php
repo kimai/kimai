@@ -9,15 +9,15 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\ExportableItem;
 use App\Invoice\CalculatorInterface;
-use App\Invoice\InvoiceItemInterface;
 
 /**
  * A calculator that sums up the invoice item records by price.
  */
-class PriceInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class PriceInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
+    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
         if (null !== $invoiceItem->getFixedRate()) {
             return 'fixed_' . $invoiceItem->getFixedRate();
@@ -26,9 +26,6 @@ class PriceInvoiceCalculator extends AbstractSumInvoiceCalculator implements Cal
         return 'hourly_' . $invoiceItem->getHourlyRate();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'price';

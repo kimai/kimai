@@ -10,49 +10,27 @@
 namespace App\Controller;
 
 use App\Reporting\ReportingService;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to render reports.
- *
- * @Route(path="/reporting")
- * @Security("is_granted('view_reporting')")
  */
+#[Route(path: '/reporting')]
+#[Security("is_granted('view_reporting')")]
 final class ReportingController extends AbstractController
 {
-    /**
-     * @Route(path="/", name="reporting", methods={"GET"})
-     *
-     * @return Response
-     */
+    #[Route(path: '/', name: 'reporting', methods: ['GET'])]
     public function defaultReport(ReportingService $reportingService): Response
     {
-        $user = $this->getUser();
-        $route = null;
+        $page = new PageSetup('menu.reporting');
+        $page->setHelp('reporting.html');
 
-        $defaultReport = $user->getPreferenceValue('reporting.initial_view', ReportingService::DEFAULT_VIEW, false);
-        $allReports = $reportingService->getAvailableReports($user);
-
-        foreach ($allReports as $report) {
-            if ($report->getId() === $defaultReport) {
-                $route = $report->getRoute();
-                break;
-            }
-        }
-
-        // fallback, if the configured report could not be found
-        // e.g. when it was deleted or replaced by an enhanced version with a new id
-        if ($route === null && \count($allReports) > 0) {
-            $report = $allReports[array_keys($allReports)[0]];
-            $route = $report->getRoute();
-        }
-
-        if ($route === null) {
-            throw $this->createNotFoundException('Unknown default report');
-        }
-
-        return $this->redirectToRoute($route);
+        return $this->render('reporting/index.html.twig', [
+            'page_setup' => $page,
+            'reports' => $reportingService->getAvailableReports($this->getUser()),
+        ]);
     }
 }

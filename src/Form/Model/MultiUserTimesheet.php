@@ -12,22 +12,21 @@ namespace App\Form\Model;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @App\Validator\Constraints\TimesheetMultiUser
- */
+#[Constraints\TimesheetMultiUser]
 final class MultiUserTimesheet extends Timesheet
 {
     /**
      * @var Collection<User>
      */
-    private $users;
+    private Collection $users;
     /**
      * @var Collection<Team>
      */
-    private $teams;
+    private Collection $teams;
 
     public function __construct()
     {
@@ -44,20 +43,16 @@ final class MultiUserTimesheet extends Timesheet
         return $this->users;
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user): void
     {
         $this->users->add($user);
-
-        return $this;
     }
 
-    public function removeUser(User $user)
+    public function removeUser(User $user): void
     {
         if ($this->users->contains($user)) {
             $this->users->remove($user);
         }
-
-        return $this;
     }
 
     /**
@@ -68,19 +63,15 @@ final class MultiUserTimesheet extends Timesheet
         return $this->teams;
     }
 
-    public function addTeam(Team $team)
+    public function addTeam(Team $team): void
     {
         $this->teams->add($team);
-
-        return $this;
     }
 
-    public function removeTeam(Team $team)
+    public function removeTeam(Team $team): void
     {
         if ($this->teams->contains($team)) {
             $this->teams->remove($team);
         }
-
-        return $this;
     }
 }

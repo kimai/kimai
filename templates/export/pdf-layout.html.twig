@@ -18,61 +18,7 @@
 <head>
 {% block styles %}
     <style>
-        body {
-            font-family: sans-serif;
-            font-size: 10pt;
-            margin: 0;
-            padding: 0;
-        }
-        p {
-            margin: 0;
-        }
-        table.items {
-            border: 0.1mm solid #000000;
-            width: 100%;
-            font-size: 9pt;
-            border-collapse: collapse;
-        }
-        td, th {
-            padding: 7px;
-        }
-        td {
-            vertical-align: top;
-        }
-        .items td {
-            border-left: 0.1mm solid #000000;
-            border-right: 0.1mm solid #000000;
-        }
-        .items tr.even {
-            background-color: #f5f5f5;
-        }
-        .items tr.summary {
-            background-color: #efefef;
-        }
-        .items tr.summary td {
-            font-weight: bold;
-            border-top: 0.1mm solid #000000;
-            border-bottom: 0.1mm solid #000000;
-        }
-        table thead th {
-            background-color: #ececec;
-            border: 0.1mm solid #000000;
-            font-weight: bold;
-            font-size: 10pt;
-            text-align: left;
-        }
-        .items td.totals {
-            font-weight: bold;
-            border: 0.1mm solid #000000;
-        }
-        .items .center,
-        .items td.duration,
-        .items td.cost {
-            text-align: center;
-        }
-        .text-nowrap {
-            white-space: nowrap;
-        }
+        {{ encore_entry_css_source('export-pdf')|raw }}
     </style>
 {% endblock %}
 </head>
@@ -86,15 +32,15 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     {% if not showUserColumn and query is defined and query.user %}
         &ndash;
-        {{ 'label.user'|trans }}: {{ query.user.displayName }}
+        {{ 'user'|trans }}: {{ query.user.displayName }}
     {% endif %}
     </td>
     <td align="right">
     {% set company = config('theme.branding.company') %}
     {% if company is not empty %}
-        {{ company|raw }} &ndash; {{ now|date_full }}
+        {{ company }} &ndash; {{ now|date_time }}
     {% else %}
-        {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
+        {{ 'export.date_copyright'|trans({'%date%': now|date_time, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
     {% endif %}
     </td>
 </tr>
@@ -118,20 +64,20 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
-            <th>{{ 'label.customer'|trans }}</th>
-            <th>{{ 'label.project'|trans }}</th>
+            <th>{{ 'customer'|trans }}</th>
+            <th>{{ 'project'|trans }}</th>
             {% if showTimeBudget %}
-                <th class="center">{{ 'label.timeBudget'|trans }}</th>
+                <th class="center">{{ 'timeBudget'|trans }}</th>
             {% endif %}
             {% if showRateBudget %}
-                <th class="center">{{ 'label.budget'|trans }}</th>
+                <th class="center">{{ 'budget'|trans }}</th>
             {% endif %}
-            <th class="center">{{ 'label.duration'|trans }}</th>
+            <th class="center">{{ 'duration'|trans }}</th>
             {% if showRateColumn %}
                 {% if showInternalRate %}
-                    <th class="center">{{ 'label.rate_internal'|trans }}</th>
+                    <th class="center">{{ 'internalRate'|trans }}</th>
                 {% endif %}
-                <th class="center">{{ 'label.rate'|trans }}</th>
+                <th class="center">{{ 'rate'|trans }}</th>
             {% endif %}
         </tr>
         </thead>
@@ -268,17 +214,17 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
-            <th>{{ 'label.date'|trans }}</th>
+            <th>{{ 'date'|trans }}</th>
             {% if showUserColumn %}
-                <th>{{ 'label.user'|trans }}</th>
+                <th>{{ 'user'|trans }}</th>
             {% endif %}
-            <th>{{ 'label.description'|trans }}</th>
-            <th class="center">{{ 'label.duration'|trans }}</th>
+            <th>{{ 'description'|trans }}</th>
+            <th class="center">{{ 'duration'|trans }}</th>
             {% if showRateColumn %}
                 {% if showInternalRate %}
-                    <th class="center">{{ 'label.rate_internal'|trans }}</th>
+                    <th class="center">{{ 'internalRate'|trans }}</th>
                 {% endif %}
-                <th class="center">{{ 'label.rate'|trans }}</th>
+                <th class="center">{{ 'rate'|trans }}</th>
             {% endif %}
         </tr>
         </thead>

@@ -42,10 +42,6 @@
         <source>daterangepicker.thisYear</source>
         <target>Tento rok</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Vlastný rozsah</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

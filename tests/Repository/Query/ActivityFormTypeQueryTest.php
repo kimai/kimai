@@ -18,7 +18,7 @@ use App\Repository\Query\ActivityFormTypeQuery;
  */
 class ActivityFormTypeQueryTest extends BaseFormTypeQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new ActivityFormTypeQuery();
 

@@ -15,99 +15,65 @@ interface MetaTableTypeInterface
 {
     /**
      * Returns the name of this entry.
-     *
-     * @return string|null
      */
     public function getName(): ?string;
 
     /**
      * Sets the name of this entry.
-     *
-     * @param string $name
-     * @return MetaTableTypeInterface
      */
     public function setName(string $name): MetaTableTypeInterface;
 
-    /**
-     * @return int|bool|string|null
-     */
-    public function getValue();
+    public function getValue(): mixed;
 
     /**
      * Value will not be serialized before its stored, so it should be a primitive type.
-     *
-     * @param mixed|null $value
-     * @return MetaTableTypeInterface
      */
-    public function setValue($value): MetaTableTypeInterface;
+    public function setValue(mixed $value): MetaTableTypeInterface;
 
     /**
      * Get the linked entity.
-     *
-     * @return EntityWithMetaFields|null
      */
     public function getEntity(): ?EntityWithMetaFields;
 
     /**
      * Set the linked entity of this entry.
-     *
-     * @param EntityWithMetaFields $entity
-     * @return MetaTableTypeInterface
      */
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface;
 
     /**
      * This will merge the current object with the values from the given $meta instance.
      * It should NOT update the name or value, but only the form settings.
-     *
-     * @param MetaTableTypeInterface $meta
-     * @return MetaTableTypeInterface
      */
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface;
 
     /**
      * Whether this field can be displayed in "public" places like API results or export.
-     *
-     * @param bool $include
-     * @return MetaTableTypeInterface
      */
     public function setIsVisible(bool $include): MetaTableTypeInterface;
 
     /**
      * Whether this field can be displayed in "public" places like API results or export.
-     *
-     * @return bool
      */
     public function isVisible(): bool;
 
     /**
      * Whether this field is required to be filled out in the form.
-     *
-     * @param bool $isRequired
-     * @return MetaTableTypeInterface
      */
     public function setIsRequired(bool $isRequired): MetaTableTypeInterface;
 
     /**
      * Whether the form field is required.
-     *
-     * @return bool
      */
     public function isRequired(): bool;
 
     /**
      * The form type for this field.
      * If this method returns null, it will not be shown on the form.
-     *
-     * @return string|null
      */
     public function getType(): ?string;
 
     /**
      * Sets the form type.
-     *
-     * @param string $type
-     * @return MetaTableTypeInterface
      */
     public function setType(string $type): MetaTableTypeInterface;
 
@@ -120,9 +86,6 @@ interface MetaTableTypeInterface
 
     /**
      * Adds a constraint to the form type.
-     *
-     * @param Constraint $constraint
-     * @return MetaTableTypeInterface
      */
     public function addConstraint(Constraint $constraint): MetaTableTypeInterface;
 
@@ -136,23 +99,18 @@ interface MetaTableTypeInterface
 
     /**
      * Returns the label shown to the end-user.
-     *
-     * @return string
      */
     public function getLabel(): ?string;
 
     /**
-     * Sets the label shown to the end-user.
-     *
-     * @param string $label
-     * @return MetaTableTypeInterface
+     * Sets or removes the label shown to the end-user.
      */
-    public function setLabel(string $label): MetaTableTypeInterface;
+    public function setLabel(?string $label): MetaTableTypeInterface;
 
     /**
      * Set an array of options for the FormType.
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      * @return MetaTableTypeInterface
      */
     public function setOptions(array $options): MetaTableTypeInterface;
@@ -160,22 +118,17 @@ interface MetaTableTypeInterface
     /**
      * Returns an array with options for the FormType.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 
     /**
-     * Sets the weight order.
-     *
-     * @param int $order
-     * @return MetaTableTypeInterface
+     * Sets the order of this meta-field.
      */
     public function setOrder(int $order): MetaTableTypeInterface;
 
     /**
-     * Returns the weight order.
-     *
-     * @return int
+     * Returns the order (default: 0).
      */
     public function getOrder(): int;
 }

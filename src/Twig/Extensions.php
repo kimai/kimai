@@ -17,15 +17,12 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-/**
- * Multiple Twig extensions: filters and functions
- */
-class Extensions extends AbstractExtension
+final class Extensions extends AbstractExtension
 {
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('report_date', [$this, 'formatReportDate']),
@@ -41,7 +38,7 @@ class Extensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
@@ -50,10 +47,10 @@ class Extensions extends AbstractExtension
         ];
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return [
-            new TwigTest('number', function ($value) {
+            new TwigTest('number', function ($value): bool {
                 return !\is_string($value) && is_numeric($value);
             }),
         ];

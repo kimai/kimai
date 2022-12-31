@@ -9,7 +9,7 @@
 
 namespace App\Repository;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use Symfony\Component\Finder\Finder;
 
 final class InvoiceDocumentRepository
@@ -17,9 +17,9 @@ final class InvoiceDocumentRepository
     public const DEFAULT_DIRECTORY = 'templates/invoice/renderer/';
 
     /**
-     * @var array
+     * @var array<string>
      */
-    private $documentDirs = [];
+    private array $documentDirs = [];
 
     public function __construct(array $directories)
     {
@@ -62,14 +62,6 @@ final class InvoiceDocumentRepository
         @unlink(realpath($invoiceDocument->getFilename()));
     }
 
-    /**
-     * @deprecated since 1.10 - will be removed with 2.0 - use getUploadDirectory() instead
-     */
-    public function getCustomInvoiceDirectory(): string
-    {
-        return $this->getUploadDirectory();
-    }
-
     public function getUploadDirectory(): string
     {
         // reverse the array, as bundles can register invoice directories a well (as prepend extensions)
@@ -101,7 +93,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findCustom()
+    public function findCustom(): array
     {
         $paths = [];
         foreach ($this->documentDirs as $dir) {
@@ -119,7 +111,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findBuiltIn()
+    public function findBuiltIn(): array
     {
         foreach ($this->documentDirs as $dir) {
             if ($dir === self::DEFAULT_DIRECTORY) {
@@ -135,7 +127,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findByPaths($this->documentDirs);
     }
@@ -145,7 +137,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    private function findByPaths(array $paths)
+    private function findByPaths(array $paths): array
     {
         $base = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 

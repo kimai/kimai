@@ -12,45 +12,36 @@ namespace App\Reporting\ProjectView;
 use App\Form\Type\CustomerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectViewForm extends AbstractType
+final class ProjectViewForm extends AbstractType
 {
-    /**
-     * Simplify cross linking between pages by removing the block prefix.
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
-            'label' => false,
             'width' => false,
         ]);
-        $builder->add('includeNoBudget', CheckboxType::class, [
+        $builder->add('budgetType', ChoiceType::class, [
+            'label' => false,
             'required' => false,
-            'label' => 'label.includeNoBudget',
+            'placeholder' => null,
+            'expanded' => true,
+            'choices' => [
+                'all' => null,
+                'includeWithBudget' => true,
+                'includeNoBudget' => false
+            ]
         ]);
         $builder->add('includeNoWork', CheckboxType::class, [
             'required' => false,
-            'label' => 'label.includeNoWork',
+            'label' => 'includeNoWork',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ProjectViewQuery::class,

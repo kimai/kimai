@@ -19,15 +19,14 @@ export default class KimaiConfirmationLink extends KimaiPlugin {
 
     constructor(selector) {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
     init() {
-        const self = this;
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', (event) => {
             let target = event.target;
-            while (target !== null && !target.matches('body')) {
-                if (target.classList.contains(self.selector)) {
+            while (target !== null && typeof target.matches === "function" && !target.matches('body')) {
+                if (target.classList.contains(this._selector)) {
                     const attributes = target.dataset;
 
                     // is this a link? 
@@ -44,7 +43,7 @@ export default class KimaiConfirmationLink extends KimaiPlugin {
                     }
 
                     if (attributes.question !== undefined) {
-                        self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
+                        this.getContainer().getPlugin('alert').question(attributes.question, function(value) {
                             if (value) {
                                 if (form === null) {
                                     document.location = url;

@@ -1,12 +1,6 @@
-{% macro teams(view, query) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'teams', view, {'query': query}) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
-
 {% macro team(team, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'team', view, {'team': team, 'token': csrf_token('team.duplicate')}) %}
+    {% set event = actions(app.user, 'team', view, {'team': team}) %}
     {% if view == 'index' %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}

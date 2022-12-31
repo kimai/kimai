@@ -9,8 +9,8 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
+use App\Model\InvoiceDocument;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -67,10 +67,10 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
             $sheetValues = false;
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
-                $replacer = null;
                 if ($value === null) {
                     continue;
                 }
+                $replacer = null;
                 $firstReplacerPos = stripos($value, '${');
                 if ($firstReplacerPos === false) {
                     continue;
@@ -98,7 +98,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     if (stripos($value, $searchKey) === false) {
                         continue;
                     }
-                    if (\is_string($content) && $content[0] === '=') {
+                    if (\is_string($content) && str_starts_with($content, '=')) {
                         $contentLooksLikeFormula = true;
                     }
                     $value = str_replace($searchKey, $content, $value);

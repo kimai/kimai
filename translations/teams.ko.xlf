@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ko" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
-        <source>teams.title</source>
-        <target>팀</target>
-      </trans-unit>
       <trans-unit id="A_4Fc7c" resname="teams.project_access">
         <source>teams.project_access</source>
         <target>프로젝트에 대한 액세스 권한 부여</target>

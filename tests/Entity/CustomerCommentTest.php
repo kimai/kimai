@@ -9,7 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\CommentInterface;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 
@@ -19,18 +18,14 @@ use App\Entity\CustomerComment;
  */
 class CustomerCommentTest extends AbstractCommentEntityTest
 {
-    protected function getEntity(): CommentInterface
+    protected function getEntity(): CustomerComment
     {
-        return new CustomerComment();
+        return new CustomerComment(new Customer('foo'));
     }
 
     public function testEntitySpecificMethods()
     {
-        $sut = new CustomerComment();
-        self::assertNull($sut->getCustomer());
-
-        $customer = new Customer();
-        self::assertInstanceOf(CustomerComment::class, $sut->setCustomer($customer));
-        self::assertSame($customer, $sut->getCustomer());
+        $sut = $this->getEntity();
+        self::assertNotNull($sut->getCustomer());
     }
 }

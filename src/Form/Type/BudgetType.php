@@ -16,31 +16,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the type of budget.
  */
-class BudgetType extends AbstractType
+final class BudgetType extends AbstractType
 {
     public const TYPE_MONTH = 'month';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.budgetType',
+            'label' => 'budgetType',
             // not yet translated in enough languages
-            //'placeholder' => 'label.budgetType_full',
+            //'placeholder' => 'budgetType_full',
             'required' => false,
             'search' => false,
             'choices' => [
-                'label.budgetType_month' => self::TYPE_MONTH,
+                'budgetType_month' => self::TYPE_MONTH,
             ],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

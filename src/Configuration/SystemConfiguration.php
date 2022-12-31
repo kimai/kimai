@@ -9,21 +9,152 @@
 
 namespace App\Configuration;
 
-class SystemConfiguration implements SystemBundleConfiguration
+final class SystemConfiguration
 {
-    use StringAccessibleConfigTrait;
+    private bool $initialized = false;
 
-    public function getPrefix(): string
+    public function __construct(private ConfigLoaderInterface $repository, private ?array $settings)
     {
-        return 'kimai';
     }
 
-    protected function getConfigurations(ConfigLoaderInterface $repository): array
+    private function prepare(): void
     {
-        return $repository->getConfiguration();
+        if ($this->initialized) {
+            return;
+        }
+
+        foreach ($this->repository->getConfigurations() as $configuration) {
+            $this->set($configuration->getName(), $configuration->getValue());
+        }
+
+        $this->initialized = true;
     }
 
-    // ========== Login form ==========
+    /**
+     * Set an array item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire array will be replaced.
+     *
+     * @see https://github.com/divineomega/array_undot
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    private function set(string $key, $value): void
+    {
+        if (\array_key_exists($key, $this->settings)) {
+            if (\is_bool($this->settings[$key])) {
+                $value = (bool) $value;
+            } elseif (\is_int($this->settings[$key])) {
+                $value = (int) $value;
+            }
+        }
+        $this->settings[$key] = $value;
+    }
+
+    /**
+     * @param string $key
+     * @return string|int|bool|float|null
+     */
+    public function find(string $key): string|int|bool|float|null
+    {
+        $this->prepare();
+
+        if (\array_key_exists($key, $this->settings)) {
+            return $this->settings[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * This method should be avoided if possible, use plain keys instead.
+     *
+     * @param string $key
+     * @return array
+     */
+    public function findArray(string $key): array
+    {
+        $this->prepare();
+
+        $result = array_filter($this->settings, function ($settingName) use ($key): bool {
+            return str_starts_with($settingName, $key);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $replaced = [];
+        foreach ($result as $settingName => $value) {
+            if (\is_bool($this->settings[$settingName])) {
+                $value = (bool) $value;
+            } elseif (\is_int($this->settings[$settingName])) {
+                $value = (int) $value;
+            }
+
+            $baseName = str_replace($key . '.', '', $settingName);
+
+            $keys = explode('.', $baseName);
+            $array = &$replaced;
+            while (\count($keys) > 1) {
+                $search = array_shift($keys);
+                /* @phpstan-ignore-next-line  */
+                if (!\array_key_exists($search, $array) || !\is_array($array[$search])) {
+                    $array[$search] = [];
+                }
+
+                $array = &$array[$search];
+            }
+            $array[array_shift($keys)] = $value;
+        }
+
+        return $replaced;
+    }
+
+    public function has(string $key): bool
+    {
+        $this->prepare();
+
+        if (\array_key_exists($key, $this->settings)) {
+            return true;
+        }
+
+        $result = array_filter($this->settings, function ($settingName) use ($key): bool {
+            return str_starts_with($settingName, $key);
+        }, ARRAY_FILTER_USE_KEY);
+
+        return \count($result) > 0;
+    }
+
+    // ========== Array access methods ==========
+
+    public function offsetExists($offset): bool
+    {
+        return $this->has($offset);
+    }
+
+    public function offsetGet($offset): mixed
+    {
+        return $this->find($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \BadMethodCallException
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * @param mixed $offset
+     * @throws \BadMethodCallException
+     */
+    public function offsetUnset($offset)
+    {
+        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+    }
+
+    // ========== Authentication configurations ==========
 
     public function isLoginFormActive(): bool
     {
@@ -41,6 +172,10 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     public function isSelfRegistrationActive(): bool
     {
+        if (!$this->isLoginFormActive()) {
+            return false;
+        }
+
         return (bool) $this->find('user.registration');
     }
 
@@ -56,10 +191,12 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     public function isPasswordResetActive(): bool
     {
+        if (!$this->isLoginFormActive()) {
+            return false;
+        }
+
         return (bool) $this->find('user.password_reset');
     }
-
-    // ========== SAML configurations ==========
 
     public function isSamlActive(): bool
     {
@@ -71,19 +208,9 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (string) $this->find('saml.title');
     }
 
-    public function getSamlAttributeMapping(): array
+    public function getSamlProvider(): ?string
     {
-        return (array) $this->find('saml.mapping');
-    }
-
-    public function getSamlRolesAttribute(): ?string
-    {
-        return (string) $this->find('saml.roles.attribute');
-    }
-
-    public function getSamlRolesMapping(): array
-    {
-        return (array) $this->find('saml.roles.mapping');
+        return $this->find('saml.provider');
     }
 
     public function isSamlRolesResetOnLogin(): bool
@@ -91,39 +218,12 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('saml.roles.resetOnLogin');
     }
 
-    public function getSamlConnection(): array
-    {
-        return (array) $this->find('saml.connection');
-    }
-
-    // ========== LDAP configurations ==========
-
     public function isLdapActive(): bool
     {
         return (bool) $this->find('ldap.activate');
     }
 
-    public function getLdapRoleParameters(): array
-    {
-        return (array) $this->find('ldap.role');
-    }
-
-    public function getLdapUserParameters(): array
-    {
-        return (array) $this->find('ldap.user');
-    }
-
-    public function getLdapConnectionParameters(): array
-    {
-        return (array) $this->find('ldap.connection');
-    }
-
     // ========== Calendar configurations ==========
-
-    public function getCalendarBusinessDays(): array
-    {
-        return (array) $this->find('calendar.businessHours.days');
-    }
 
     public function getCalendarBusinessTimeBegin(): string
     {
@@ -165,9 +265,9 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $this->find('calendar.google.api_key');
     }
 
-    public function getCalendarGoogleSources(): ?array
+    public function getCalendarGoogleSources(): array
     {
-        return $this->find('calendar.google.sources');
+        return $this->findArray('calendar.google.sources');
     }
 
     public function getCalendarSlotDuration(): string
@@ -272,16 +372,14 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (bool) $this->find('timesheet.markdown_content');
     }
 
+    public function isTimesheetRequiresActivity(): bool
+    {
+        return (bool) $this->find('timesheet.rules.require_activity');
+    }
+
     public function getTimesheetActiveEntriesHardLimit(): int
     {
         return (int) $this->find('timesheet.active_entries.hard_limit');
-    }
-
-    public function getTimesheetActiveEntriesSoftLimit(): int
-    {
-        @trigger_error('The configuration timesheet.active_entries.soft_limit is deprecated since 1.15', E_USER_DEPRECATED);
-
-        return $this->getTimesheetActiveEntriesHardLimit();
     }
 
     public function getTimesheetDefaultRoundingDays(): string
@@ -309,32 +407,7 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (int) $this->find('timesheet.rounding.default.duration');
     }
 
-    public function getTimesheetLockdownPeriodStart(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_period_start');
-    }
-
-    public function getTimesheetLockdownPeriodEnd(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_period_end');
-    }
-
-    public function getTimesheetLockdownGracePeriod(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_grace_period');
-    }
-
-    public function getTimesheetLockdownTimeZone(): ?string
-    {
-        return $this->find('timesheet.rules.lockdown_period_timezone');
-    }
-
-    public function isTimesheetLockdownActive(): bool
-    {
-        return !empty($this->find('timesheet.rules.lockdown_period_start')) && !empty($this->find('timesheet.rules.lockdown_period_end'));
-    }
-
-    private function getIncrement(string $key, int $fallback, int $min = 1): ?int
+    private function getIncrement(string $key, int $fallback, int $min = 1): int
     {
         $config = $this->find($key);
 
@@ -344,27 +417,22 @@ class SystemConfiguration implements SystemBundleConfiguration
 
         $config = (int) $config;
 
-        return $config < $min ? null : $config;
+        return max($config, $min);
     }
 
-    public function getTimesheetIncrementDuration(): ?int
+    public function getTimesheetIncrementDuration(): int
     {
-        return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 1);
+        return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 0);
     }
 
-    public function getTimesheetIncrementBegin(): ?int
+    public function getTimesheetIncrementMinutes(): int
     {
-        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingBegin(), 0);
-    }
-
-    public function getTimesheetIncrementEnd(): ?int
-    {
-        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
+        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingDuration(), 0);
     }
 
     public function getQuickEntriesRecentAmount(): int
     {
-        return $this->getIncrement('quick_entry.recent_activities', 5, 0) ?? 5;
+        return $this->getIncrement('quick_entry.recent_activities', 5, 5);
     }
 
     // ========== Company configurations ==========
@@ -382,24 +450,14 @@ class SystemConfiguration implements SystemBundleConfiguration
 
     // ========== Theme configurations ==========
 
-    public function isThemeColorsLimited(): bool
+    public function isShowAbout(): bool
     {
-        return (bool) $this->find('theme.colors_limited');
-    }
-
-    public function isThemeRandomColors(): bool
-    {
-        return (bool) $this->find('theme.random_colors');
+        return (bool) $this->find('theme.show_about');
     }
 
     public function isThemeAllowAvatarUrls(): bool
     {
         return (bool) $this->find('theme.avatar_url');
-    }
-
-    public function getThemeAutocompleteCharacters(): int
-    {
-        return (int) $this->find('theme.autocomplete_chars');
     }
 
     public function getThemeColorChoices(): ?string
@@ -409,19 +467,7 @@ class SystemConfiguration implements SystemBundleConfiguration
             return $config;
         }
 
-        return $this->default('theme.color_choices');
-    }
-
-    // ========== Branding configurations ==========
-
-    public function getBrandingTitle(): ?string
-    {
-        return $this->find('theme.branding.title');
-    }
-
-    public function isAllowTagCreation(): bool
-    {
-        return (bool) $this->find('theme.tags_create');
+        return 'Silver|#c0c0c0';
     }
 
     // ========== Projects ==========

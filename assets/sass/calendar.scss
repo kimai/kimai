@@ -1,51 +1,15 @@
-.popover-content {
-    .calendar-entry {
-        ul {
-            padding: 0;
-            list-style-type: none;
-        }
+.calendar-entry {
+    ul {
+        padding: 0;
+        list-style-type: none;
     }
 }
 
-/* Drag and Drop events with styling */
-.external-events {
-    .external-event {
-        vertical-align: middle;
-        padding: 0 !important;
-        display: inline-block;
-        position: relative;
-        width: 100%;
-    }
-
-    .subtitle {
-        padding: 0 7px 4px 7px;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 0.7em;
-    }
-
-    .title {
-        padding: 3px 7px 0;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.draggable {
+    cursor: grab;
 }
 
-
-.fc-bootstrap3 {
-    .table-bordered > tbody > tr > td,
-    .table-bordered > thead > tr > td,
-    .table-bordered > thead > tr > th {
-        border: 1px solid #ddd;
-    }
-    .fc-head {
-        background-color: #fafafa;
-    }
-    td.fc-today {
-        background-color: #fcf8e3!important;
-    }
+#timesheet_calendar {
+    --bs-gray-400: var(--tblr-border-color);
+    --bs-gray-200: var(--tblr-gray-200);
 }

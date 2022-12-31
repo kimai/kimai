@@ -12,7 +12,9 @@ namespace App\Form;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
+use App\Form\Type\InvoiceLabelType;
+use App\Form\Type\TeamType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,19 +26,16 @@ class ProjectEditForm extends AbstractType
 {
     use EntityFormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $customer = null;
-        $id = null;
+        $isNew = false;
         $options['currency'] = null;
 
         if (isset($options['data'])) {
             /** @var Project $entry */
             $entry = $options['data'];
-            $id = $entry->getId();
+            $isNew = $entry->getId() === null;
 
             if (null !== $entry->getCustomer()) {
                 $customer = $entry->getCustomer();
@@ -53,62 +52,63 @@ class ProjectEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        $timeIncrement = 1;
-        if ($options['time_increment'] >= 1 && $options['time_increment'] <= 60) {
-            $timeIncrement = $options['time_increment'];
-        }
-
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
                 'required' => false,
             ])
-            ->add('invoiceText', TextareaType::class, [
-                'label' => 'label.invoiceText',
-                'required' => false,
-            ])
+            ->add('invoiceText', InvoiceLabelType::class)
             ->add('orderNumber', TextType::class, [
-                'label' => 'label.orderNumber',
+                'label' => 'orderNumber',
                 'required' => false,
             ])
-            ->add('orderDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.orderDate',
+            ->add('orderDate', DatePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'orderDate',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'start',
             ]))
-            ->add('start', DateTimePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.project_start',
+            ->add('start', DatePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'project_start',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'start',
             ]))
-            ->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.project_end',
+            ->add('end', DatePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'project_end',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'end',
             ]))
             ->add('customer', CustomerType::class, [
-                'placeholder' => (null === $id && null === $customer) ? '' : false,
+                'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
                 'query_builder_for_user' => true,
             ])
             ->add('globalActivities', YesNoType::class, [
-                'label' => 'label.globalActivities',
+                'label' => 'globalActivities',
+                'help' => 'help.globalActivities'
             ])
         ;
+
+        if ($isNew) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => false,
+                    'by_reference' => false,
+                    'help' => 'help.teams',
+                ]);
+        }
 
         $this->addCommonFields($builder, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Project::class,
@@ -120,7 +120,6 @@ class ProjectEditForm extends AbstractType
             'include_budget' => false,
             'include_time' => false,
             'timezone' => date_default_timezone_get(),
-            'time_increment' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'
             ],

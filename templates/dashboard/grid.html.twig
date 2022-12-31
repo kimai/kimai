@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+{% from "macros/widgets.html.twig" import nothing_found, alert, page_actions, card_tool_button %}
+
+{% block page_class %}dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('chart') }}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chart') }}
+    {{ encore_entry_script_tags('dashboard') }}
+{% endblock %}
+
+{% block main %}
+
+    {% if widgets is empty %}
+        {{ nothing_found() }}
+    {% else %}
+        {% if form is defined %}
+            {{ alert('warning', 'dashboard.edit_mode') }}
+
+            {{ form_start(form, {'attr': {'style': 'display: none', 'id': 'dashboard-widgets'}}) }}
+            {{ form_end(form) }}
+        {% endif %}
+
+        <div class="grid-stack" id="dashboard-grid-container" style="visibility: hidden">
+            {% for widget in widgets %}
+                {% set gridWidth = widget.width %}
+                {% set gridHeight = widget.height %}
+                {% set widgetWidth = gridWidth * 100 %}
+                {% set widgetHeight = (gridHeight * 72) %}
+                {% if gridHeight == 1 %}
+                    {% set widgetHeight = widgetHeight - 67 %}
+                {% elseif gridHeight == 3 %}
+                    {% set widgetHeight = widgetHeight %}
+                {% elseif gridHeight == 5 %}
+                    {% set widgetHeight = widgetHeight - 10 %}
+                {% elseif gridHeight == 7 %}
+                    {% set widgetHeight = widgetHeight - 10 %}
+                {% endif %}
+                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ gridWidth }}" gs-min-w="{{ gridWidth }}" gs-h="{{ gridHeight }}" gs-id="{{ widget.id }}" id="{{ widget.id }}">
+                    <div class="grid-stack-item-content">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ widget.title|trans }}</h3>
+                                <div class="card-actions">
+                                    {% if widget.hasForm() %}
+                                        {{ card_tool_button('configuration', {'title': 'settings', 'translation_domain': 'actions', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}
+                                    {% endif %}
+                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'translation_domain': 'actions', 'url': '#', 'onclick': "removeWidget('" ~ widget.id ~ "'); return false;"}) }}
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-100" preserveAspectRatio="none" width="{{ widgetWidth }}" height="{{ widgetHeight }}" viewBox="0 0 {{ widgetWidth }} {{ widgetHeight }}" stroke="var(--tblr-border-color, #b8cef1)">
+                                    <line x1="0" y1="0" x2="{{ widgetWidth }}" y2="{{ widgetHeight }}"></line>
+                                    <line x1="0" y1="{{ widgetHeight }}" x2="{{ widgetWidth }}" y2="0"></line>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        let grid = null;
+
+        function resizeGrid() {
+            let width = document.body.clientWidth;
+            if (width < 576) {
+                grid.column(1);
+            } else if (width < 992) {
+                grid.column(2);
+            } else if (width) {
+                grid.column(4);
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            resizeGrid();
+        });
+
+        document.addEventListener('kimai.initialized', function() {
+            grid = GridStack.init({
+                'float': false,
+                'cellHeight': 84,
+                'disableResize': true,
+                'column': 4,
+                'marginTop': 0,
+                'marginBottom': 0,
+                'marginLeft': 5,
+                'marginRight': 5,
+                'disableOneColumnMode': true,
+                {% if form is not defined %}
+                'staticGrid': true,
+                {% endif %}
+            });
+
+            resizeGrid();
+
+            document.dispatchEvent(new Event('dashboard.initialized'));
+            document.getElementById('dashboard-grid-container').style.visibility = 'visible';
+        });
+
+        {% if form is defined %}
+        function removeWidget(widgetId)
+        {
+            const widget = document.querySelector('div[data-widget=' + widgetId + ']');
+            if (widget !== null) {
+                grid.removeWidget(widget);
+            }
+        }
+
+        function saveDashboard()
+        {
+            let serializedData = grid.save();
+            const choice = document.getElementById('form_widgets');
+            const values = [];
+            const newChoices = [];
+
+            for (let item of serializedData) {
+                values.push(item.id);
+                for (let i = 0; i < choice.options.length; i++) {
+                    if (choice.options[i].value === item.id) {
+                        choice.options[i].selected = true;
+                        newChoices.push(choice.options[i]);
+                        break;
+                    }
+                }
+            }
+
+            choice.options.length = 0;
+            newChoices.forEach(child => choice.appendChild(child));
+            choice.dispatchEvent(new Event('change'));
+
+            document.getElementById('dashboard-widgets').submit();
+        }
+        {% endif %}
+    </script>
+{% endblock %}

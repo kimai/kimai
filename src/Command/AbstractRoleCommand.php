@@ -20,18 +20,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class AbstractRoleCommand extends Command
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-        $this->userService = $userService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDefinition([
@@ -41,10 +35,7 @@ abstract class AbstractRoleCommand extends Command
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $role = $input->getArgument('role');
@@ -62,7 +53,7 @@ abstract class AbstractRoleCommand extends Command
 
         $this->executeRoleCommand($this->userService, new SymfonyStyle($input, $output), $user, $super, $role);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     abstract protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role);

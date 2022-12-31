@@ -17,22 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the timesheet mode.
  */
-class RoundingModeType extends AbstractType
+final class RoundingModeType extends AbstractType
 {
-    /**
-     * @var RoundingService
-     */
-    private $service;
-
-    public function __construct(RoundingService $service)
+    public function __construct(private RoundingService $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];
 
@@ -46,10 +37,7 @@ class RoundingModeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

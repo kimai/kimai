@@ -1,23 +1,14 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "activity/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activity(activity, 'delete') }}{% endblock %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block main %}
-
-    {% set inUse = (stats.counter > 0) %}
-
     {% set params = {
         '%records%': stats.counter,
         '%duration%': stats.duration|duration
     } %}
-
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
+    {{ include(kimai_context.modalRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
         'message': ("delete_warning.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
         'form': form,
-        'used': inUse,
+        'used': (stats.counter > 0),
         'back': path('admin_activity')
     }) }}
-
 {% endblock %}

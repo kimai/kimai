@@ -32,6 +32,8 @@ class MetaFieldExtractorTest extends TestCase
             $event->addField((new ProjectMeta())->setName('foo')->setIsVisible(true));
             $event->addField((new ProjectMeta())->setName('no')->setIsVisible(false));
             $event->addField((new ProjectMeta())->setName('bar')->setIsVisible(true));
+
+            return $event;
         });
 
         $sut = new MetaFieldExtractor($dispatcher);

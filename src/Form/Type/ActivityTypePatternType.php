@@ -18,26 +18,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used when rendering an activity select.
  */
-class ActivityTypePatternType extends AbstractType
+final class ActivityTypePatternType extends AbstractType
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $name = $this->translator->trans('label.name');
-        $comment = $this->translator->trans('label.description');
+        $name = $this->translator->trans('name');
+        $comment = $this->translator->trans('description');
         $spacer = ActivityHelper::SPACER;
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $name => ActivityHelper::PATTERN_NAME,
                 $comment => ActivityHelper::PATTERN_COMMENT,
@@ -46,10 +40,7 @@ class ActivityTypePatternType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

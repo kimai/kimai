@@ -11,7 +11,7 @@ namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DurationFormatter implements CellFormatterInterface
+final class DurationFormatter implements CellFormatterInterface
 {
     public const DURATION_FORMAT = '[hh]:mm';
 

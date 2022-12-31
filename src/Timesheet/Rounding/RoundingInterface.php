@@ -16,26 +16,11 @@ use App\Entity\Timesheet;
  */
 interface RoundingInterface
 {
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundBegin(Timesheet $record, $minutes);
+    public function roundBegin(Timesheet $record, int $minutes): void;
 
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundEnd(Timesheet $record, $minutes);
+    public function roundEnd(Timesheet $record, int $minutes): void;
 
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundDuration(Timesheet $record, $minutes);
+    public function roundDuration(Timesheet $record, int $minutes): void;
 
-    /**
-     * @return string
-     */
     public function getId(): string;
 }

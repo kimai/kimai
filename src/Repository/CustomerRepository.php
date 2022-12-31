@@ -9,26 +9,24 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\CustomerStatistic;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Utils\Pagination;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Customer>
@@ -91,92 +89,10 @@ class CustomerRepository extends EntityRepository
     public function countCustomer(bool $visible = false): int
     {
         if ($visible) {
-            return $this->count(['visible' => (bool) $visible]);
+            return $this->count(['visible' => $visible]);
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use CustomerStatisticService::getCustomerStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Customer $customer
-     * @return CustomerStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getCustomerStatistics(Customer $customer): CustomerStatistic
-    {
-        $stats = new CustomerStatistic();
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('t.billable as billable')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-            ->groupBy('billable')
-        ;
-
-        $timesheetResult = $qb->getQuery()->getResult();
-
-        if (null !== $timesheetResult) {
-            $amount = 0;
-            $duration = 0;
-            $rate = 0.00;
-            $rateInternal = 0.00;
-            foreach ($timesheetResult as $resultRow) {
-                $amount += $resultRow['amount'];
-                $duration += $resultRow['duration'];
-                $rate += $resultRow['rate'];
-                $rateInternal += $resultRow['internal_rate'];
-                if ($resultRow['billable']) {
-                    $stats->setDurationBillable($resultRow['duration']);
-                    $stats->setRateBillable($resultRow['rate']);
-                    $stats->setRecordAmountBillable($resultRow['amount']);
-                }
-            }
-            $stats->setCounter($amount);
-            $stats->setRecordDuration($duration);
-            $stats->setRecordRate($rate);
-            $stats->setInternalRate($rateInternal);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->select('COUNT(a.id) as amount')
-            ->from(Activity::class, 'a')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
-            ->andWhere('a.project = p.id')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-        ;
-
-        $activityResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $activityResult) {
-            $stats->setActivityAmount($activityResult['amount']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(p.id) as amount')
-            ->from(Project::class, 'p')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-        ;
-
-        $projectResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $projectResult) {
-            $stats->setProjectAmount($projectResult['amount']);
-        }
-
-        return $stats;
     }
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
@@ -227,18 +143,6 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     */
-    public function builderForEntityType($customer)
-    {
-        $query = new CustomerFormTypeQuery();
-        $query->addCustomer($customer);
-
-        return $this->getQueryBuilderForFormType($query);
-    }
-
-    /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
      *
      * @param CustomerFormTypeQuery $query
@@ -255,7 +159,7 @@ class CustomerRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('c.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
         if ($permissions->count() > 0) {
@@ -307,10 +211,10 @@ class CustomerRepository extends EntityRepository
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('visible', true, ParameterType::BOOLEAN);
         } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+            $qb->setParameter('visible', false, ParameterType::BOOLEAN);
         }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
@@ -338,9 +242,9 @@ class CustomerRepository extends EntityRepository
         return ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'];
     }
 
-    public function getPagerfantaForQuery(CustomerQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(CustomerQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -384,7 +288,7 @@ class CustomerRepository extends EntityRepository
     /**
      * @param Customer $delete
      * @param Customer|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteCustomer(Customer $delete, ?Customer $replace = null)
     {

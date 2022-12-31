@@ -26,7 +26,7 @@ nelmio_api_doc:
             - { alias: TagEntity,                   type: App\Entity\Tag,                           groups: [Default, Entity, Tag] }
             - { alias: TimesheetEditForm,           type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet, Not_Expanded] }
             - { alias: TimesheetEntity,             type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Not_Expanded] }
-            - { alias: TimesheetEntityExpanded,     type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Expanded] }
+            - { alias: TimesheetExpanded,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Expanded] }
             - { alias: TimesheetCollection,         type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Not_Expanded] }
             - { alias: TimesheetCollectionExpanded, type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Subresource, Expanded] }
             - { alias: UserCreateForm,              type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }
@@ -48,18 +48,19 @@ nelmio_api_doc:
             title: Kimai - API Docs
             description: |
                 JSON API for the Kimai time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
-            version: '0.6'
-        securityDefinitions:
-            apiUser:
-                type: apiKey
-                description: 'Value: {Username}'
-                name: X-AUTH-USER
-                in: header
-            apiToken:
-                type: apiKey
-                description: 'Value: {API Token}'
-                name: X-AUTH-TOKEN
-                in: header
+            version: '0.7'
+        components:
+            securitySchemes:
+                apiUser:
+                    type: apiKey
+                    description: 'Value: {Username}'
+                    name: X-AUTH-USER
+                    in: header
+                apiToken:
+                    type: apiKey
+                    description: 'Value: {API Token}'
+                    name: X-AUTH-TOKEN
+                    in: header
         security:
             - X-AUTH-USER: []
             - X-AUTH-TOKEN: []

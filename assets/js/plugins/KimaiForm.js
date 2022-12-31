@@ -10,35 +10,44 @@
  */
 
 import KimaiPlugin from "../KimaiPlugin";
+import KimaiFormPlugin from "../forms/KimaiFormPlugin";
 
 export default class KimaiForm extends KimaiPlugin {
 
-    getId() {
+    getId()
+    {
         return 'form';
     }
 
-    activateForm(formSelector, container) {
-        this.getContainer().getPlugin('date-range-picker').activateDateRangePicker(formSelector);
-        this.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formSelector);
-        this.getContainer().getPlugin('date-picker').activateDatePicker(formSelector);
-        this.getContainer().getPlugin('autocomplete').activateAutocomplete(formSelector);
-        this.getContainer().getPlugin('form-select').activateSelectPicker(formSelector, container);
+    activateForm(formSelector)
+    {
+        [].slice.call(document.querySelectorAll(formSelector)).map((form) => {
+            for (const plugin of this.getContainer().getPlugins()) {
+                if (plugin instanceof KimaiFormPlugin && plugin.supportsForm(form)) {
+                    plugin.activateForm(form);
+                }
+            }
+        });
     }
-    
-    destroyForm(formSelector) {
-        this.getContainer().getPlugin('form-select').destroySelectPicker(formSelector);
-        this.getContainer().getPlugin('autocomplete').destroyAutocomplete(formSelector);
-        this.getContainer().getPlugin('date-picker').destroyDatePicker(formSelector);
-        this.getContainer().getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
-        this.getContainer().getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
+
+    destroyForm(formSelector)
+    {
+        [].slice.call(document.querySelectorAll(formSelector)).map((form) => {
+            for (const plugin of this.getContainer().getPlugins()) {
+                if (plugin instanceof KimaiFormPlugin && plugin.supportsForm(form)) {
+                    plugin.destroyForm(form);
+                }
+            }
+        });
     }
 
     /**
      * @param {HTMLFormElement} form
      * @param {Object} overwrites
+     * @param {boolean} removeEmpty
      * @returns {string}
      */
-    convertFormDataToQueryString(form, overwrites = {})
+    convertFormDataToQueryString(form, overwrites = {}, removeEmpty = false)
     {
         let serialized = [];
         let data = new FormData(form);
@@ -48,7 +57,9 @@ export default class KimaiForm extends KimaiPlugin {
         }
 
         for (let row of data) {
-            serialized.push(encodeURIComponent(row[0]) + "=" + encodeURIComponent(row[1]));
+            if (!removeEmpty || row[1] !== '') {
+                serialized.push(encodeURIComponent(row[0]) + "=" + encodeURIComponent(row[1]));
+            }
         }
 
         return serialized.join('&');

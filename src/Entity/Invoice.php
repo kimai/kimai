@@ -18,24 +18,19 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_invoices",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"invoice_number"}),
- *          @ORM\UniqueConstraint(columns={"invoice_filename"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
- * @UniqueEntity("invoiceNumber")
- * @UniqueEntity("invoiceFilename")
- *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
- * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
- * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
- * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
- * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
- * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
- */
+#[ORM\Table(name: 'kimai2_invoices')]
+#[ORM\UniqueConstraint(columns: ['invoice_number'])]
+#[ORM\UniqueConstraint(columns: ['invoice_filename'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\InvoiceRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('invoiceNumber')]
+#[UniqueEntity('invoiceFilename')]
+#[Exporter\Order(['id', 'createdAt', 'invoiceNumber', 'status', 'customer', 'subtotal', 'total', 'tax', 'currency', 'vat', 'dueDays', 'dueDate', 'paymentDate', 'user', 'invoiceFilename', 'customerNumber', 'comment'])]
+#[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
+#[Exporter\Expose(name: 'customerNumber', label: 'number', exp: 'object.getCustomer() === null ? null : object.getCustomer().getNumber()')]
+#[Exporter\Expose(name: 'dueDate', label: 'invoice.due_days', type: 'datetime', exp: 'object.getDueDate() === null ? null : object.getDueDate()')]
+#[Exporter\Expose(name: 'user', label: 'username', type: 'string', exp: 'object.getUser() === null ? null : object.getUser().getDisplayName()')]
+#[Exporter\Expose(name: 'paymentDate', label: 'invoice.payment_date', type: 'date', exp: 'object.getPaymentDate() === null ? null : object.getPaymentDate()')]
 class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';
@@ -44,159 +39,83 @@ class Invoice implements EntityWithMetaFields
     public const STATUS_NEW = 'new';
 
     /**
-     * @var int|null
-     *
-     * @Exporter\Expose(label="label.id", type="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * Unique invoice ID
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
+    private ?int $id = null;
+    #[ORM\Column(name: 'invoice_number', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Exporter\Expose(label: 'invoice.number', type: 'string')]
+    private ?string $invoiceNumber = null;
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'comment')]
+    private ?string $comment = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private ?Customer $customer = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private ?User $user = null;
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Assert\NotNull]
+    #[Exporter\Expose(label: 'date', type: 'datetime')]
+    private ?\DateTime $createdAt = null;
+    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    private ?string $timezone = null;
+    #[ORM\Column(name: 'total', type: 'float', nullable: false)]
+    #[Assert\NotNull]
+    #[Exporter\Expose(label: 'total_rate', type: 'float')]
+    private float $total = 0.00;
+    #[ORM\Column(name: 'tax', type: 'float', nullable: false)]
+    #[Assert\NotNull]
+    #[Exporter\Expose(label: 'invoice.tax', type: 'float')]
+    private float $tax = 0.00;
+    #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(max: 3)]
+    #[Exporter\Expose(label: 'currency', type: 'string')]
+    private ?string $currency = null;
+    #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Range(min: 0, max: 999)]
+    #[Exporter\Expose(label: 'due_days', type: 'integer')]
+    private int $dueDays = 30;
+    #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Range(min: 0.0, max: 99.99)]
+    #[Exporter\Expose(label: 'tax_rate', type: 'float')]
+    private float $vat = 0.00;
+    #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotNull]
+    #[Exporter\Expose(label: 'status', type: 'string')]
+    private string $status = self::STATUS_NEW;
+    #[ORM\Column(name: 'invoice_filename', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 1, max: 150)]
+    #[Exporter\Expose(label: 'file', type: 'string')]
+    private ?string $invoiceFilename = null;
+    private bool $localized = false;
+    #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
+    private ?\DateTime $paymentDate = null;
     /**
-     * @var string
+     * Meta fields registered with the invoice
      *
-     * @Exporter\Expose(label="invoice.number", type="string")
-     *
-     * @ORM\Column(name="invoice_number", type="string", length=50, nullable=false)
-     * @Assert\NotNull()
+     * @var Collection<InvoiceMeta>
      */
-    private $invoiceNumber;
-    /**
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
-     *
-     * @Exporter\Expose(label="label.comment")
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
-     */
-    private $comment;
-    /**
-     * @var Customer
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $customer;
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $user;
-    /**
-     * @var \DateTime
-     *
-     * @Exporter\Expose(label="label.date", type="datetime")
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $createdAt;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
-     */
-    private $timezone;
-    /**
-     * @var float
-     *
-     * @Exporter\Expose(label="label.total_rate", type="float")
-     *
-     * @ORM\Column(name="total", type="float", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $total = 0.00;
-    /**
-     * @var float
-     *
-     * @Exporter\Expose(label="invoice.tax", type="float")
-     *
-     * @ORM\Column(name="tax", type="float", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $tax = 0.00;
-    /**
-     * @var string
-     *
-     * @Exporter\Expose(label="label.currency", type="string")
-     *
-     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Length(max=3)
-     */
-    private $currency;
-    /**
-     * @var int
-     *
-     * @Exporter\Expose(label="label.due_days", type="integer")
-     *
-     * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Range(min = 0, max = 999)
-     */
-    private $dueDays = 30;
-    /**
-     * @var float
-     *
-     * @Exporter\Expose(label="label.tax_rate", type="float")
-     *
-     * @ORM\Column(name="vat", type="float", nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Range(min = 0.0, max = 99.99)
-     */
-    private $vat = 0.00;
-    /**
-     * @var string
-     *
-     * @Exporter\Expose(label="label.status", type="string")
-     *
-     * @ORM\Column(name="status", type="string", length=20, nullable=false)
-     * @Assert\NotNull()
-     */
-    private $status = self::STATUS_NEW;
-    /**
-     * @var string
-     *
-     * @Exporter\Expose(label="file", type="string")
-     *
-     * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Length(min=1, max=150, allowEmptyString=false)
-     */
-    private $invoiceFilename;
-    /**
-     * @var bool
-     */
-    private $localized = false;
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="payment_date", type="date", nullable=true)
-     */
-    private $paymentDate;
-    /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this invoice
-     *
-     * @var InvoiceMeta[]|Collection
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Invoice"})
-     * @Serializer\Type(name="array<App\Entity\InvoiceMeta>")
-     * @Serializer\SerializedName("metaFields")
-     * @Serializer\Accessor(getter="getVisibleMetaFields")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceMeta", mappedBy="invoice", cascade={"persist"})
-     */
-    private $meta;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\InvoiceMeta', mappedBy: 'invoice', cascade: ['persist'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Invoice'])]
+    #[Serializer\Type(name: 'array<App\Entity\InvoiceMeta>')]
+    #[Serializer\SerializedName('metaFields')]
+    #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
+    private Collection $meta;
 
     public function __construct()
     {
@@ -232,7 +151,7 @@ class Invoice implements EntityWithMetaFields
     {
         if (!$this->localized) {
             if (null !== $this->createdAt && null !== $this->timezone) {
-                $this->createdAt->setTimeZone(new \DateTimeZone($this->timezone));
+                $this->createdAt->setTimezone(new \DateTimeZone($this->timezone));
             }
 
             $this->localized = true;
@@ -376,11 +295,8 @@ class Invoice implements EntityWithMetaFields
         return $this->invoiceFilename;
     }
 
-    /**
-     * @Exporter\Expose(label="invoice.subtotal", type="float", name="subtotal")
-     * @return float|null
-     */
-    public function getSubtotal(): ?float
+    #[Exporter\Expose(label: 'invoice.subtotal', type: 'float', name: 'subtotal')]
+    public function getSubtotal(): float
     {
         return $this->total - $this->tax;
     }
@@ -439,20 +355,6 @@ class Invoice implements EntityWithMetaFields
         }
 
         return null;
-    }
-
-    /**
-     * @param string $name
-     * @return bool|int|string|null
-     */
-    public function getMetaFieldValue(string $name)
-    {
-        $field = $this->getMetaField($name);
-        if ($field === null) {
-            return null;
-        }
-
-        return $field->getValue();
     }
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields

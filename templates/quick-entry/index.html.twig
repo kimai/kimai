@@ -1,41 +1,33 @@
 {% extends 'base.html.twig' %}
-{% import "quick-entry/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'quick_entry.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
+{% block page_class %}quick-entry-page{% endblock %}
 
 {% block main %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
         {% block box_before %}
-            {{ form_start(form, {attr: {class: 'form-dataTable'}}) }}
+            {{ form_start(form, {attr: {id: 'quick-entries-form', class: 'form-dataTable quick-entries'}}) }}
             {{ form_widget(form._token) }}
         {% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}no-padding maybe-table-responsive{% endblock %}
-        {% block box_footer %}
-            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
-                <i class="{{ 'create'|icon }}"></i>
-                {{ 'action.add'|trans }}
-            </button>
-        {% endblock %}
+        {# "table-responsive" does not work, because that would render dropdowns at the bottom behind the container #}
+        {% block box_body_class %}p-0 maybe-table-responsive{% endblock %}
         {% block box_body %}
             <table class="table dataTable">
-                <thead>
+                <thead class="sticky-top">
                     <tr>
-                        <th>{{ 'label.project'|trans }}</th>
-                        <th>{{ 'label.activity'|trans }}</th>
+                        <th>{{ 'project'|trans }}</th>
+                        <th>{{ 'activity'|trans }}</th>
                         {% for id, week in days %}
                         <th class="text-center{% if week.day is weekend %} weekend{% endif %}{% if week.day is today %} today{% endif %}">
                             {{ week.day|date_weekday }}
                         </th>
                         {% endfor %}
-                        <th class="summary">{{ 'label.duration'|trans }}</th>
+                        <th class="summary">{{ 'duration'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
@@ -53,6 +45,13 @@
                 </tfoot>
             </table>
         {% endblock %}
+        {% block box_footer %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
+                {{ icon('create', true) }}
+                {{ 'action.add'|trans }}
+            </button>
+        {% endblock %}
     {% endembed %}
 {% endblock %}
 
@@ -62,21 +61,32 @@
         document.addEventListener('kimai.initialized', function(event) {
             const kimai = event.detail.kimai;
             const DATES = kimai.getPlugin('date');
-            const FORMS = kimai.getPlugin('form-select');
+            /** @type {KimaiFormSelect} FORM_SELECT */
+            const FORM_SELECT = kimai.getPlugin('form-select');
 
             if (window.matchMedia("(max-width: 1000px)").matches) {
-                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .input-group-btn')) {
+                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .btn-duration-preset')) {
                     dropdowns.style.display = 'none';
+                }
+
+                for (let tmp of document.querySelectorAll('tr.qe-entry-week-row .duration-widget .input-group')) {
+                    tmp.style.maxWidth = '50px';
+                    tmp.style.minWidth = '50px';
+                }
+                for (let input of document.querySelectorAll('tr.qe-entry-week-row input.duration-input')) {
+                    input.style.maxWidth = '50px';
                 }
                 document.querySelector('form[name=quick_entry_form] div.maybe-table-responsive').classList.replace('maybe-table-responsive', 'table-responsive');
             }
 
-            const recalculateTotals = function(e) {
+            const recalculateTotals = () => {
                 const allFields = document.getElementsByClassName('duration-input');
                 let totalsPerDay = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
                 let fullTotals = 0;
                 for (let durationInput of allFields) {
-                    let id = durationInput.id.replace(/_duration/, '').substr(-1);
+                    // turn a string like "quick_entry_form_rows_16_timesheets_3_duration" into "3"
+                    // we can safely use -1 because there are only 0 (monday) to 6 (sunday) indexes
+                    let id = durationInput.id.replace(/_duration/, '').slice(-1);
                     totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value);
                 }
                 for (const [id, total] of Object.entries(totalsPerDay)) {
@@ -97,17 +107,12 @@
             };
             recalculateTotals();
 
-            {% if form.user is defined %}
-            jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
-            });
-            {% endif %}
-
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
+            document.getElementById('{{ form.date.vars.id }}').addEventListener('change', function(ev) {
+                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', ev.target.value);
             });
 
-            jQuery('body').on('change', '.duration-input', recalculateTotals);
+            document.getElementById('quick-entries-form').addEventListener('click', recalculateTotals);
+            document.getElementById('quick-entries-form').addEventListener('change', recalculateTotals);
 
             const addFormToCollection = function(e) {
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
@@ -129,8 +134,9 @@
 
                 collectionHolder.appendChild(node);
 
-                jQuery(node).find('.selectpicker').each(function(i, el) {
-                    FORMS.activateSelectPickerByElement(el, 'body');
+
+                [].slice.call(node.querySelectorAll('.selectpicker')).map((element) => {
+                    FORM_SELECT.activateSelectPickerByElement(element);
                 });
 
                 collectionHolder.dataset.index++;

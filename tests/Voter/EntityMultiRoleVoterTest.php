@@ -27,10 +27,10 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
      */
     public function testVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'foo', $user->getRoles());
         $sut = $this->getVoter(EntityMultiRoleVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUsername());
+        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUserIdentifier());
     }
 
     public function getTestData()
@@ -43,7 +43,7 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
 
         $result = VoterInterface::ACCESS_GRANTED;
         $allPermissions = ['budget_money', 'budget_time', 'budget_any', 'details'];
-        $allSubjects = ['project', 'customer', new Project(), new Customer()];
+        $allSubjects = ['project', 'customer', new Project(), new Customer('foo')];
 
         foreach ($allPermissions as $permission) {
             foreach ($allSubjects as $subject) {

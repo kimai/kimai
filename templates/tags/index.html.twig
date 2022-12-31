@@ -1,60 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
-{% import "tags/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'tags'|trans }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.tags('index', query) }}{% endblock %}
+{% set manageAllowed = is_granted('manage_tag') %}
 
-{% block main %}
-
-    {% if tags|length == 0 %}
-        {{ widgets.nothing_found('kimai.tagUpdate') }}
-    {% else %}
-
-        {% set columns = {} %}
-
-        {% if multiUpdateForm is not null %}
-            {% set columns = columns|merge({
-                'id': {'class': 'alwaysVisible multiCheckbox', 'orderBy': false, 'title': false, 'html_before': tables.datatable_multiupdate_all()},
-            }) %}
-        {% endif %}
-
-        {% set columns = columns|merge({
-            'name': {'class': 'alwaysVisible'},
-            'amount': {'class': 'text-center w-min'},
-            'actions': {'class': 'actions alwaysVisible'},
-        }) %}
-
-        {% set tableName = 'admin_tags' %}
-        {% set manageAllowed = is_granted('manage_tag') %}
-
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.tagUpdate'}) }}
-        {% for tag in tags %}
-            {% set type = '' %}
-            {% if tag.amount == 0 %}
-                {% set type = 'bg-yellow' %}
-            {% endif %}
-
-            <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
-                {% if multiUpdateForm is not null %}
-                    <td class="text-nowrap">
-                        {{ tables.datatable_multiupdate_row(tag.id) }}
-                    </td>
-                {% endif %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(tag.name, tag.color) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.badge_counter(tag.amount, null, type) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                    {{ actions.tag(tag, 'index') }}
-                </td>
-            </tr>
-        {% endfor %}
-        {{ tables.data_table_footer(tags, 'tags_paginated', multiUpdateForm) }}
-
+{% block datatable_row %}
+    {% set type = '' %}
+    {% if entry.amount == 0 %}
+        {% set type = 'bg-yellow' %}
     {% endif %}
 
+    <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': entry.id}) }}"{% endif %}>
+        {% if dataTable.hasBatchForm() %}
+            <td class="text-nowrap">
+                {{ tables.datatable_multiupdate_row(entry.id) }}
+            </td>
+        {% endif %}
+        <td class="{{ tables.class(dataTable, 'name') }}">
+            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'amount') }}">{{ widgets.badge_counter(entry.amount, null, type) }}</td>
+        <td class="{{ tables.class(dataTable, 'actions') }}">
+            {% set event = actions(app.user, 'tag', 'index', {'tag': entry}) %}
+            {{ widgets.table_actions(event.actions) }}
+        </td>
+    </tr>
 {% endblock %}

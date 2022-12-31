@@ -22,10 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class WeekPickerType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',
@@ -35,7 +32,7 @@ final class WeekPickerType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var \DateTime|null $date */
         $date = $form->getData();
@@ -49,18 +46,12 @@ final class WeekPickerType extends AbstractType
         $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return DateType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'weekpicker';
     }

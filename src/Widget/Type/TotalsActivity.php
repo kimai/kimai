@@ -9,20 +9,19 @@
 
 namespace App\Widget\Type;
 
-use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use App\Widget\WidgetInterface;
 
-final class TotalsActivity extends SimpleWidget implements UserWidget, AuthorizedWidget
+final class TotalsActivity extends AbstractWidget
 {
-    use UserWidgetTrait;
-
-    private $activity;
-
-    public function __construct(ActivityRepository $activity)
+    public function __construct(private ActivityRepository $activity)
     {
-        $this->activity = $activity;
-        $this->setTitle('stats.activityTotal');
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.activityTotal';
     }
 
     public function getOptions(array $options = []): array
@@ -30,20 +29,13 @@ final class TotalsActivity extends SimpleWidget implements UserWidget, Authorize
         return array_merge([
             'route' => 'admin_activity',
             'icon' => 'activity',
-            'color' => 'primary',
-            'dataType' => 'int',
+            'color' => WidgetInterface::COLOR_TOTAL,
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $options = $this->getOptions($options);
-
-        $user = $options['user'];
-        if (null === $user || !($user instanceof User)) {
-            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
-        }
-
+        $user = $this->getUser();
         $query = new ActivityQuery();
         $query->setCurrentUser($user);
 
@@ -61,5 +53,10 @@ final class TotalsActivity extends SimpleWidget implements UserWidget, Authorize
     public function getTemplateName(): string
     {
         return 'widget/widget-more.html.twig';
+    }
+
+    public function getId(): string
+    {
+        return 'TotalsActivity';
     }
 }

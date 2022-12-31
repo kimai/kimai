@@ -48,8 +48,7 @@ class ExportControllerTest extends ControllerBaseTest
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $user = $this->getUserByRole(User::ROLE_USER);
         /** @var Team $team */
-        $team = new Team();
-        $team->setName('fooo');
+        $team = new Team('fooo');
         $team->addTeamlead($teamlead);
         $team->addUser($user);
         $em->persist($team);
@@ -175,9 +174,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->request($client, '/export/data', 'POST');
 
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertStringContainsString('Missing export renderer', $response->getContent());
+        $this->assert404($response, 'Missing export renderer');
     }
 
     public function testExportActionWithInvalidRenderer()
@@ -197,9 +194,7 @@ class ExportControllerTest extends ControllerBaseTest
         ]);
 
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertStringContainsString('Unknown export renderer', $response->getContent());
+        $this->assert404($response, 'Unknown export renderer');
     }
 
     public function testExportAction()
@@ -238,9 +233,11 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $node->count());
 
         // poor mans assertions ;-)
-        $this->assertStringContainsString('export_print', $node->getIterator()[0]->getAttribute('class'));
+        /** @var \DOMElement $element */
+        $element = $node->getIterator()[0];
+        $this->assertStringContainsString('export_print', $element->getAttribute('class'));
         $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
-        $this->assertStringContainsString('<h3 id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
+        $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer

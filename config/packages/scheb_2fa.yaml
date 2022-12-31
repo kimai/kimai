@@ -1,0 +1,14 @@
+# Documentation at https://symfony.com/bundles/SchebTwoFactorBundle/6.x/configuration.html
+scheb_two_factor:
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+    totp:
+        enabled: true
+        template: security/2fa.html.twig    # Overwritten template
+        window: 1                           # How many codes before/after the current one would be accepted as valid
+#        server_name: Server Name           # Server name used in QR code
+        issuer: Kimai                       # Issuer name used in QR code
+#        parameters:                        # Additional parameters added in the QR code
+#            image: 'https://my-service/img/logo.png'
+    two_factor_condition: App\Security\TwoFactorCondition

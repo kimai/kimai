@@ -12,55 +12,100 @@
     {{ encore_entry_script_tags('chart') }}
 {% endblock %}
 
-{% block profile_navbar %}
-    {{ _self.about_me(user, stats, firstTimesheet) }}
-{% endblock %}
-
-{% block profile_intro %}{% endblock %}
-
 {% block profile_content %}
-
-    {{ _self.profile_box_horizontal(user, stats) }}
-
-    {% if workMonths is empty %}
-        {{ widgets.nothing_found() }}
+    {% set datagrid = {
+        'username' : user.userIdentifier,
+    } %}
+    {% if user.accountNumber is not empty %}
+        {% set datagrid = datagrid|merge({
+        'account_number' : (user.accountNumber ?? '&ndash;'),
+        }) %}
+    {% endif %}
+    {% set datagrid = datagrid|merge({
+        'profile.first_entry' : (firstTimesheet is not null ? firstTimesheet|date_short : '&ndash;'),
+        'profile.registration_date' : user.registeredAt|date_short,
+    }) %}
+    {% set seeOwnRate = false %}
+    {% if stats is not null %}
+        {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+        {% set datagrid = datagrid|merge({
+            'stats.durationTotal' : stats.durationTotal|duration,
+            'stats.durationMonth' : stats.durationThisMonth|duration
+        }) %}
+        {#% if seeOwnRate %}
+            {% set datagrid = datagrid|merge({
+                'stats.amountMonth' : stats.rateThisMonthBillable|money,
+                'stats.amountTotal' : stats.rateTotalBillable|money
+            }) %}
+        {% endif %#}
+    {% endif %}
+    {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
+        {% set datagrid = datagrid|merge({
+            'hourlyRate' : user.preferenceValue('hourly_rate'),
+            'internalRate' : user.preferenceValue('internal_rate')
+        }) %}
     {% endif %}
 
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="datagrid">
+                {% for name, value in datagrid %}
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ name|trans }}</div>
+                        <div class="datagrid-content">{{ value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     {% set monthRoute = null %}
-    {% set canSeeReport = user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) %}
+    {% set canSeeOwnReport = app.user.id == user.id and is_granted('report:user') %}
+    {% set canSeeOtherReport = app.user.id != user.id and is_granted('report:other') %}
+    {% set canSeeReport = user.enabled and (canSeeOwnReport or canSeeOtherReport) %}
 
     {%- if canSeeReport -%}
         {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
     {% endif %}
 
-    {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
+    {{ charts.bar_javascript({'legend': {'display': false}, 'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
     {% for year in workMonths.years|reverse %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% set totalDuration = 0 %}
+        {% for month in workMonths.year(year) %}
+            {% set totalDuration = totalDuration + month.duration %}
+        {% endfor %}
+        {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
-            {% block box_title %}{{ year }}{% endblock %}
+            {% import "macros/widgets.html.twig" as macros %}
+            {% from "macros/status.html.twig" import status_duration %}
+            {% block box_title -%}
+                {{ year }}
+                {{ status_duration(totalDuration|duration) }}
+            {%- endblock %}
             {% block box_tools %}
                 {%- if canSeeReport -%}
-                    <a class="btn btn-default btn-sm" href="{{ path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'}) }}"><i class="{{ 'reporting'|icon }}"></i></a>
+                    {% from '@theme/components/buttons.html.twig' import action_cardtoolbutton %}
+                    {{ action_cardtoolbutton('reporting', {'url': path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'})}) }}
                 {% endif %}
             {% endblock %}
             {% block box_body %}
                 {% set dataset = [] %}
                 {% for month in workMonths.year(year) %}
                     {% set monthDate = create_date(year ~ '-' ~ month.date.format('m') ~ '-01') %}
-                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
                 {% endfor %}
-                {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset], {}) }}
+                {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset]) }}
             {% endblock %}
         {% endembed %}
     {% endfor %}
 
     {% if user.teams is not empty and (is_granted('teams', user) or is_granted('view_team_member', user)) %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' with {fullsize: true} %}
             {% import "macros/widgets.html.twig" as widgets %}
-            {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
+            {% block box_title %}{{ 'my_teams'|trans }}{% endblock %}
             {% block box_body %}
-                {{ widgets.team_list(user.teams) }}
+                {{ widgets.team_list(user.teams, {collapse: 22}) }}
             {% endblock %}
         {% endembed %}
     {% endif %}
@@ -69,110 +114,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.teamUpdate', true);
-        });
-    </script>
+    {{ widgets.page_reloader('kimai.teamUpdate', true) }}
 {% endblock %}
-
-{% macro about_me(user, stats, firstTimesheet) %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_title %}
-            <a href="mailto:{{ user.email }}" title="{{ 'label.email'|trans }}">{{ widgets.icon('mail') }}</a>
-            <span data-toggle="tooltip" title="{{ 'label.id'|trans }}: {{ user.id }}">{{ 'profile.about_me'|trans }}</span>
-        {% endblock %}
-        {% block box_body %}
-            <p>
-                <strong>{{ 'label.username'|trans }}</strong><br>
-                {{ user.username }}
-            </p>
-            {% if user.accountNumber is not empty %}
-            <p>
-                <strong>{{ 'label.account_number'|trans }}</strong><br>
-                {{ user.accountNumber }}
-            </p>
-            {% endif %}
-
-            <p>
-                <strong>{{ 'profile.first_entry'|trans }}</strong><br>
-                {% if firstTimesheet is not null %}
-                    {{ firstTimesheet|date_short }}
-                {% else %}
-                    &ndash;
-                {% endif %}
-            </p>
-            <p>
-                <strong>{{ 'profile.registration_date'|trans }}</strong><br>
-                {{ user.registeredAt|date_short }}
-            </p>
-            {% if is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
-                <p>
-                    <strong>{{ 'label.hourlyRate'|trans }}</strong><br>
-                    {{ user.preferenceValue('hourly_rate') }}
-                </p>
-            {% endif %}
-        {% endblock %}
-    {% endembed %}
-{% endmacro %}
-
-{% macro profile_box_horizontal(user, stats) %}
-    {% import "@AdminLTE/Macros/default.html.twig" as macro %}
-    {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set color = config('theme.chart.background_color') %}
-    {% set event = trigger('user.profile_background', {'color': color, 'font': color|font_contrast, 'user': user, 'image': null}) %}
-    {% set config = event.payload %}
-
-    <div class="box box-widget widget-user box-user-profile">
-        <div class="widget-user-header" style="{% if config.image is not null %}background: url('{{ config.image }}') center center;{% else %}background-color: {{ config.color }}{% endif %}">
-            <h3 class="widget-user-username" style="color: {{ config.font }}">
-                {{ widgets.username(user) }}
-                {% if user.displayName != user.username %}
-                    ({{ user.username }})
-                {% endif %}
-            </h3>
-            <h5 class="widget-user-desc" style="color: {{ config.font }}">{{ user.title }}</h5>
-        </div>
-        <div class="widget-user-image">
-            {{ widgets.user_avatar(user) }}
-        </div>
-        <div class="box-footer">
-            {% if stats is not null %}
-                {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
-                {% set columnLength = seeOwnRate ? 3 : 6 %}
-                <div class="row">
-                    <div class="col-sm-{{ columnLength }} border-right">
-                        <div class="description-block">
-                            <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
-                        </div>
-                    </div>
-                    {% if seeOwnRate %}
-                        <div class="col-sm-{{ columnLength }} border-right">
-                            <div class="description-block">
-                                <h5 class="description-header">{{ stats.rateThisMonthBillable|money }}</h5>
-                                <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="col-sm-{{ columnLength }} border-right">
-                        <div class="description-block">
-                            <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
-                            <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
-                        </div>
-                    </div>
-                    {% if seeOwnRate %}
-                        <div class="col-sm-{{ columnLength }} border-right">
-                            <div class="description-block">
-                                <h5 class="description-header">{{ stats.rateTotalBillable|money }}</h5>
-                                <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-{% endmacro %}

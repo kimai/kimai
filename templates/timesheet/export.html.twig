@@ -1,8 +1,8 @@
+{% extends 'invoice/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% extends 'invoice/layout.html.twig' %}
 
-{% block title %}{{ 'menu.export'|trans }}{% endblock %}
+{% block title %}{{ 'export'|trans }}{% endblock %}
 {% block invoice %}
     {% set decimal = decimal|default(false) %}
     {% set showUserColumn = true %}
@@ -38,15 +38,15 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>{{ 'label.date'|trans }}</th>
+                    <th>{{ 'date'|trans }}</th>
                     {% if showUserColumn %}
-                        <th>{{ 'label.username'|trans }}</th>
+                        <th>{{ 'username'|trans }}</th>
                     {% endif %}
-                    <th>{{ 'label.description'|trans }}</th>
+                    <th>{{ 'description'|trans }}</th>
                     {% for field in timesheetMetaFields %}
                         <th class="text-nowrap">{{ field.label|trans }}</th>
                     {% endfor %}
-                    <th>{{ 'label.hours'|trans }}</th>
+                    <th>{{ 'hours'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,9 +65,9 @@
                                 </div>
                             {% endif %}
                             <span class="small">
-                                {% if entry.activity is not null %}{{ 'label.activity'|trans }}: {{ entry.activity.name }} |{% endif %}
-                                {{ 'label.project'|trans }}: {{ entry.project.name }} |
-                                {{ 'label.customer'|trans }}: {{ entry.project.customer.name }}
+                                {% if entry.activity is not null %}{{ 'activity'|trans }}: {{ entry.activity.name }} |{% endif %}
+                                {{ 'project'|trans }}: {{ entry.project.name }} |
+                                {{ 'customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
                         </td>
                         {% for field in timesheetMetaFields %}

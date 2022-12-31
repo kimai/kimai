@@ -13,50 +13,38 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class LastLoginSubscriber implements EventSubscriberInterface
+final class LastLoginSubscriber implements EventSubscriberInterface
 {
-    private $repository;
-
-    public function __construct(UserRepository $repository)
+    public function __construct(private UserRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
+            // triggered for programmatic logins like "password reset" or "registration"
             UserInteractiveLoginEvent::class => 'onImplicitLogin',
-            SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
+            // We do not use the InteractiveLoginEvent because it is not triggered e.g. for SAML
+            LoginSuccessEvent::class => 'onFormLogin',
         ];
     }
 
-    public function onImplicitLogin(UserInteractiveLoginEvent $event)
+    public function onImplicitLogin(UserInteractiveLoginEvent $event): void
     {
         $user = $event->getUser();
 
-        $user->setLastLogin(new \DateTime());
+        $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
         $this->repository->saveUser($user);
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onFormLogin(LoginSuccessEvent $event): void
     {
-        // do not count API calls as logins
-        // this point could be used to add API rate limitation in the future
-        if ($event->getAuthenticationToken() instanceof PostAuthenticationGuardToken) {
-            return;
-        }
-
-        $user = $event->getAuthenticationToken()->getUser();
+        $user = $event->getUser();
 
         if ($user instanceof User) {
-            $user->setLastLogin(new \DateTime());
+            $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
             $this->repository->saveUser($user);
         }
     }

@@ -16,25 +16,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a calendar view.
  */
-class CalendarViewType extends AbstractType
+final class CalendarViewType extends AbstractType
 {
     public const DEFAULT_VIEW = 'month';
 
-    public const ALLOWED_VIEWS = [
-        'month',
-        'agendaWeek',
-        'agendaDay',
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $choices = [];
-        foreach (self::ALLOWED_VIEWS as $name) {
-            $choices[$name] = $name;
-        }
+        $choices = [
+            'month' => 'month',
+            'agendaWeek' => 'agendaWeek',
+            'agendaDay' => 'agendaDay',
+        ];
 
         $resolver->setDefaults([
             'required' => true,
@@ -43,10 +35,7 @@ class CalendarViewType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

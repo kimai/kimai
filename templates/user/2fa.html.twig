@@ -1,0 +1,63 @@
+{% extends 'user/form.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block form_body %}
+    <div class="card-body">
+        <div class="row mb-3">
+            <p>
+                {{ 'profile.2fa_intro'|trans }}
+            </p>
+            <p>
+                <img src="{{ path('user_profile_2fa_image', {'username': user.username}) }}" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />
+            </p>
+            {% if user.totpAuthenticationEnabled %}
+                <div class="row mb-3">
+                    <div class="form-selectgroup form-selectgroup-boxes d-flex">
+                        <label class="form-selectgroup-item flex-column">
+                            <input type="radio" id="user_two_factor_enable" name="user_two_factor[enabled]" class="form-selectgroup-input" value="1" checked="checked">
+                            <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                <div class="me-3">
+                                    <span class="form-selectgroup-check"></span>
+                                </div>
+                                <div>
+                                    <label class="form-check-label" for="user_two_factor_enable">{{ 'activated'|trans }}</label>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="form-selectgroup-item flex-column">
+                            <input type="radio" id="user_two_factor_disable" name="user_two_factor[enabled]" class="form-selectgroup-input" value="0">
+                            <div class="form-selectgroup-label d-flex align-items-center p-3">
+                                <div class="me-3">
+                                    <span class="form-selectgroup-check"></span>
+                                </div>
+                                <div>
+                                    <label class="form-check-label" for="user_two_factor_disable">{{ 'deactivated'|trans }}</label>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                {{ form_start(deactivate, {'attr': {'id': 'user_two_factor_form'}}) }}
+                {{ form_end(deactivate) }}
+            {% else %}
+                {{ form_start(form, {'attr': {'id': 'user_two_factor_form'}}) }}
+                <p>{{ 'profile.2fa_confirmation'|trans }}</p>
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" id="user_two_factor_button" />
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('user_two_factor_button').addEventListener('click', function(){
+            document.getElementById('user_two_factor_form').submit();
+        });
+    </script>
+{% endblock %}

@@ -13,12 +13,12 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
 
-class UTCDateTimeType extends DateTimeType
+final class UTCDateTimeType extends DateTimeType
 {
     /**
      * @var \DateTimeZone|null
      */
-    private static $utc;
+    private static ?\DateTimeZone $utc = null;
 
     /**
      * @param mixed $value
@@ -26,7 +26,7 @@ class UTCDateTimeType extends DateTimeType
      * @return mixed|string
      * @throws ConversionException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if ($value instanceof \DateTime) {
             $value = clone $value;
@@ -36,21 +36,22 @@ class UTCDateTimeType extends DateTimeType
         return parent::convertToDatabaseValue($value, $platform);
     }
 
-    /**
-     * @return \DateTimeZone
-     */
-    public static function getUtc()
+    public static function getUtc(): \DateTimeZone
     {
-        return self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC');
+        if (self::$utc === null) {
+            self::$utc = new \DateTimeZone('UTC');
+        }
+
+        return self::$utc;
     }
 
     /**
      * @param mixed $value
      * @param AbstractPlatform $platform
-     * @return bool|\DateTime|false|mixed
+     * @return null|\DateTime
      * @throws ConversionException
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTime
     {
         if (null === $value || $value instanceof \DateTime) {
             return $value;
@@ -73,7 +74,7 @@ class UTCDateTimeType extends DateTimeType
         return $converted;
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }

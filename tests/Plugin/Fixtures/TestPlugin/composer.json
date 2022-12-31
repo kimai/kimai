@@ -3,6 +3,7 @@
   "description": "Just a test fixture for the PluginManager",
   "homepage": "https://github.com/kimai/kimai",
   "type": "kimai-plugin",
+  "version": "1.0",
   "require": {
     "kimai/kimai2-composer": "*",
     "kevinpapst/kimai2": "*"
@@ -20,8 +21,7 @@
   ],
   "extra": {
     "kimai": {
-      "require": "0.9",
-      "version": "1.0",
+      "require": 10000,
       "name": "TestPlugin from composer.json",
       "license": []
     }

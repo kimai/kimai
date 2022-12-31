@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
-
-{% block page_content_class %}{{ parent() }} dashboard{% endblock %}
+{% block page_class %}dashboard{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -16,14 +13,25 @@
     {{ encore_entry_script_tags('chart') }}
 {% endblock %}
 
+{% block footer %}
+    {% if 'dashboard' in app.request.attributes.get('_route') %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block main %}
 
     {% if widgets is empty %}
         {{ widgets.nothing_found() }}
     {% else %}
-        {% for row in widgets %}
-            {{ render_widget(row) }}
+        <div class="row row-deck row-cards">
+        {% for widget in widgets %}
+            {% set columnSize = widget.width %}
+            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}" id="{{ widget.id }}">
+                {{ render_widget(widget) }}
+            </div>
         {% endfor %}
+        </div>
     {% endif %}
 
 {% endblock %}

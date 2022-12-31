@@ -6,12 +6,12 @@
 {% set data = data.data %}
 
 <div class="chart">
-    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px;"></canvas>
+    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px; width: 100%;"></canvas>
 </div>
 
 <script type="text/javascript">
     var myChart = null;
-    
+
     var paintChart = function() {
         myChart = new Chart(
             document.getElementById('{{ chart_id }}').getContext('2d'), {
@@ -19,7 +19,7 @@
                 data: {
                     labels: [
                         {% for day in data -%}
-                        moment('{{ day.day|date_format('Y-m-d') }}').format('ll')
+                        '{{ day.day|date_format('d.') }} {{ day.day|month_name(true) }}'
                         {% if not loop.last %},{% endif -%}
                         {%- endfor %}
                     ],
@@ -72,18 +72,17 @@
                 },
                 options: {
                     maintainAspectRatio: true,
-                    responsive: true,
-                    legend: false,
+                    responsive: false,
                     barPercentage: 0.5,
-                    categoryPercentage: 0.9,
+                    categoryPercentage: 1.0,
                     scales: {
-                        xAxes: [{
+                        x: {
                             stacked: true,
                             gridLines: {
                                 display: false
                             },
-                        }],
-                        yAxes: [{
+                        },
+                        y: {
                             stacked: true,
                             ticks: {
                                 beginAtZero: true
@@ -93,37 +92,42 @@
                                 color: '{{ gridColor }}',
                                 lineWidth: 1
                             }
-                        }],
-                    },
-                    tooltips: {
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                                return ' ' + tooltipData.duration + ': ' + tooltipData.activity;
-                            },
-                            beforeTitle: function(tooltipItems, data) {
-                                var tooltipItem = tooltipItems[0];
-                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                                return tooltipData.customer;
-                            },
-                            title: function(tooltipItems, data) {
-                                var tooltipItem = tooltipItems[0];
-                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                                return tooltipData.project;
-                            },
-                            afterTitle: function(tooltipItems, data) {
-                                return ' ';
-                            },
-                            footer: function(tooltipItems, data) {
-                                var tooltipItem = tooltipItems[0];
-                                var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                                return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total + '\n{{ 'label.billable'|trans }}: ' + tooltipData.billable;
-                            },
-                            beforeFooter: function(tooltipItems, data) {
-                                return ' ';
-                            },
                         },
-                    }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    return ' ' + tooltipData.duration + ': ' + tooltipData.activity;
+                                },
+                                beforeTitle: function(tooltipItems) {
+                                    const tooltipItem = tooltipItems[0];
+                                    const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    return tooltipData.customer;
+                                },
+                                title: function(tooltipItems) {
+                                    const tooltipItem = tooltipItems[0];
+                                    const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    return tooltipData.project;
+                                },
+                                afterTitle: function(tooltipItems) {
+                                    return ' ';
+                                },
+                                footer: function(tooltipItems) {
+                                    const tooltipItem = tooltipItems[0];
+                                    const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total + '\n{{ 'billable'|trans }}: ' + tooltipData.billable;
+                                },
+                                beforeFooter: function(tooltipItems) {
+                                    return ' ';
+                                },
+                            },
+                        }
+                    },
                 }
             }
         );
@@ -132,10 +136,14 @@
     var destroyChart = function () {
         myChart.destroy();
     };
-    
-    {% if app.request.xmlHttpRequest %}
+
+    {% if kimai_context.javascriptRequest %}
         paintChart();
     {% else %}
-        document.addEventListener('kimai.initialized', paintChart);
+        if (document.getElementById('dashboard-grid-container') !== null) {
+            document.addEventListener('dashboard.initialized', paintChart);
+        } else {
+            document.addEventListener('kimai.initialized', paintChart);
+        }
     {% endif %}
 </script>

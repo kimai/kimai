@@ -14,9 +14,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TeamMemberType extends AbstractType
+final class TeamMemberType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('user', UserType::class, [
             'selectpicker' => false,
@@ -24,23 +24,15 @@ class TeamMemberType extends AbstractType
         ]);
 
         $builder->add('teamlead', YesNoType::class, [
-            'label' => 'label.teamlead'
+            'label' => 'teamlead'
         ]);
     }
 
-    public function getBlockPrefix()
-    {
-        return 'team_member';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TeamMember::class,
-            'label' => 'label.user',
+            'label' => 'user',
             'compound' => true,
             'include_users' => [],
         ]);

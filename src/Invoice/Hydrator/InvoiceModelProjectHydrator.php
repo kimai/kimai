@@ -14,31 +14,39 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 use App\Project\ProjectStatisticService;
 
-class InvoiceModelProjectHydrator implements InvoiceModelHydrator
+final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 
-    private $projectStatistic;
-
-    public function __construct(ProjectStatisticService $projectStatistic)
+    public function __construct(private ProjectStatisticService $projectStatistic)
     {
-        $this->projectStatistic = $projectStatistic;
     }
 
     public function hydrate(InvoiceModel $model): array
     {
-        if (!$model->getQuery()->hasProjects()) {
+        $projects = [];
+
+        foreach ($model->getEntries() as $entry) {
+            if ($entry->getProject() === null) {
+                continue;
+            }
+
+            $key = 'P_' . $entry->getProject()->getId();
+            if (!\array_key_exists($key, $projects)) {
+                $projects[$key] = $entry->getProject();
+            }
+        }
+
+        if (\count($projects) === 0) {
             return [];
         }
+
+        $projects = array_values($projects);
 
         $values = [];
         $i = 0;
 
-        if (\count($model->getQuery()->getProjects()) === 1) {
-            $values['project'] = $model->getQuery()->getProjects()[0]->getName();
-        }
-
-        foreach ($model->getQuery()->getProjects() as $project) {
+        foreach ($projects as $project) {
             $prefix = '';
             if ($i > 0) {
                 $prefix = $i . '.';
@@ -59,8 +67,8 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $project->getId(),
-            $prefix . 'name' => $project->getName(),
-            $prefix . 'comment' => $project->getComment(),
+            $prefix . 'name' => $project->getName() ?? '',
+            $prefix . 'comment' => $project->getComment() ?? '',
             $prefix . 'order_number' => $project->getOrderNumber(),
             $prefix . 'start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
             $prefix . 'end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
@@ -73,11 +81,13 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
         ];
 
-        $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
+        if ($model->getQuery()?->getEnd() !== null) {
+            $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
 
-        $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+            $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+        }
 
-        foreach ($project->getVisibleMetaFields() as $metaField) {
+        foreach ($project->getMetaFields() as $metaField) {
             $values = array_merge($values, [
                 $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);

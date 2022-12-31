@@ -10,10 +10,10 @@
 namespace App\Tests\Export\Timesheet;
 
 use App\Export\Timesheet\PDFRenderer;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\HtmlToPdfConverter;
-use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
@@ -40,8 +40,8 @@ class PdfRendererTest extends AbstractRendererTest
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
-        $stack = $kernel->getContainer()->get('request_stack');
+        $twig = self::getContainer()->get('twig');
+        $stack = self::getContainer()->get('request_stack');
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
         $converter = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
         $request = new Request();

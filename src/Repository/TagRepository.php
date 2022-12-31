@@ -13,16 +13,21 @@ use App\Entity\Tag;
 use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Tag>
  */
 class TagRepository extends EntityRepository
 {
+    /**
+     * See KimaiFormSelect.js (maxOptions) as well.
+     */
+    public const MAX_AMOUNT_SELECT = 500;
+
     /**
      * @param Tag $tag
      * @throws ORMException
@@ -47,6 +52,15 @@ class TagRepository extends EntityRepository
         $entityManager->flush();
     }
 
+    /**
+     * @param array $tagNames
+     * @return array<Tag>
+     */
+    public function findTagsByName(array $tagNames): array
+    {
+        return $this->findBy(['name' => $tagNames]);
+    }
+
     public function findTagByName(string $tagName): ?Tag
     {
         return $this->findOneBy(['name' => $tagName]);
@@ -57,7 +71,7 @@ class TagRepository extends EntityRepository
      * @param string $tagNames
      * @return array
      */
-    public function findIdsByTagNameList(string $tagNames)
+    public function findIdsByTagNameList(string $tagNames): array
     {
         $qb = $this
             ->createQueryBuilder('t')
@@ -80,7 +94,7 @@ class TagRepository extends EntityRepository
      * @param string $filter
      * @return array
      */
-    public function findAllTagNames($filter = null)
+    public function findAllTagNames($filter = null): array
     {
         $qb = $this->createQueryBuilder('t');
 
@@ -104,9 +118,9 @@ class TagRepository extends EntityRepository
      * - amount
      *
      * @param TagQuery $query
-     * @return Pagerfanta
+     * @return Pagination
      */
-    public function getTagCount(TagQuery $query)
+    public function getTagCount(TagQuery $query): Pagination
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -120,30 +134,24 @@ class TagRepository extends EntityRepository
 
         $paginator = new QueryBuilderPaginator($qb, $counter);
 
-        $pagerfanta = new Pagerfanta($paginator);
-        $pagerfanta->setMaxPerPage($query->getPageSize());
-        $pagerfanta->setCurrentPage($query->getPage());
+        $pager = new Pagination($paginator);
+        $pager->setMaxPerPage($query->getPageSize());
+        $pager->setCurrentPage($query->getPage());
 
-        return $pagerfanta;
+        return $pager;
     }
 
     private function getQueryBuilderForQuery(TagQuery $query): QueryBuilder
     {
         $qb = $this->createQueryBuilder('tag');
 
-        $qb
-            ->select('tag.id, tag.name, tag.color, SIZE(tag.timesheets) as amount')
-        ;
+        $qb->select('tag.id, tag.name, tag.color, SIZE(tag.timesheets) as amount');
 
         $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'amount':
-                $orderBy = 'amount';
-                break;
-            default:
-                $orderBy = 'tag.' . $orderBy;
-                break;
-        }
+        $orderBy = match ($orderBy) {
+            'amount' => 'amount',
+            default => 'tag.' . $orderBy,
+        };
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 

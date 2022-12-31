@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-final class UserAmountWeek extends AbstractUserAmountPeriod
+final class UserAmountWeek extends AbstractUserRevenuePeriod
 {
     public function getOptions(array $options = []): array
     {
@@ -20,14 +20,11 @@ final class UserAmountWeek extends AbstractUserAmountPeriod
 
     public function getId(): string
     {
-        return 'userAmountWeek';
+        return 'UserAmountWeek';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $this->setBegin('monday this week 00:00:00');
-        $this->setEnd('sunday this week 23:59:59');
-
-        return parent::getData($options);
+        return $this->getRevenue('monday this week 00:00:00', 'sunday this week 23:59:59', $options);
     }
 }

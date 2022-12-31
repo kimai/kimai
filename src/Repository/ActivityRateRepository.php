@@ -12,33 +12,24 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<ActivityRate>
+ * @extends EntityRepository<ActivityRate>
  */
 class ActivityRateRepository extends EntityRepository
 {
-    public function saveRate(ActivityRate $rate)
+    public function saveRate(ActivityRate $rate): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($rate);
         $entityManager->flush();
     }
 
-    public function deleteRate(ActivityRate $rate)
+    public function deleteRate(ActivityRate $rate): void
     {
-        $em = $this->getEntityManager();
-        $em->beginTransaction();
-
-        try {
-            $em->remove($rate);
-            $em->flush();
-            $em->commit();
-        } catch (ORMException $ex) {
-            $em->rollback();
-            throw $ex;
-        }
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($rate);
+        $entityManager->flush();
     }
 
     /**

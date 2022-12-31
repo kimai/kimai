@@ -21,23 +21,20 @@ final class UserFormTypeQuery extends BaseFormTypeQuery
     /**
      * @var User[]
      */
-    private $includeUsers = [];
+    private array $includeUsers = [];
     /**
      * @var User[]
      */
-    private $ignoredUsers = [];
+    private array $ignoredUsers = [];
 
     /**
      * Sets a list of users which must be included in the result always.
      *
-     * @param array $users
-     * @return UserFormTypeQuery
+     * @param array<User> $users
      */
-    public function setUsersAlwaysIncluded(array $users): UserFormTypeQuery
+    public function setUsersAlwaysIncluded(array $users): void
     {
         $this->includeUsers = $users;
-
-        return $this;
     }
 
     /**

@@ -1,0 +1,30 @@
+{% extends 'wizard/layout.html.twig' %}
+
+{% block wizard_content %}
+    <div class="card-body text-center py-4 p-sm-5">
+        <h1 class="mt-2">{{ 'wizard.profile.title'|trans({}, 'wizard') }}</h1>
+        <p class="text-muted">{{ 'wizard.profile.description'|trans({}, 'wizard') }}</p>
+    </div>
+    <div class="hr-text hr-text-center hr-text-spaceless">{{ 'wizard.separator'|trans({}, 'wizard') }}</div>
+    <div class="card-body">
+        <div class="mb-3">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            const skinChooser = document.getElementById('form_skin');
+            if (skinChooser !== null) {
+                skinChooser.addEventListener('change', () => {
+                    document.body.classList.remove('theme-light');
+                    document.body.classList.remove('theme-default');
+                    document.body.classList.remove('theme-dark');
+                    document.body.classList.add('theme-' + skinChooser.value);
+                });
+            }
+        });
+    </script>
+{% endblock %}

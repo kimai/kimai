@@ -11,19 +11,8 @@ namespace App\Reporting;
 
 final class Report implements ReportInterface
 {
-    private $id;
-    private $label;
-    private $route;
-    private $reportIcon = 'reporting';
-
-    public function __construct(string $id, string $route, string $label, ?string $reportIcon = null)
+    public function __construct(private string $id, private string $route, private string $label, private string $reportIcon)
     {
-        $this->id = $id;
-        $this->route = $route;
-        $this->label = $label;
-        if (null !== $reportIcon) {
-            $this->reportIcon = $reportIcon;
-        }
     }
 
     public function getRoute(): string

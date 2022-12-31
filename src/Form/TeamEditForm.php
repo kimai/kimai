@@ -22,10 +22,7 @@ class TeamEditForm extends AbstractType
 {
     use ColorTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $users = [];
 
@@ -37,7 +34,7 @@ class TeamEditForm extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
@@ -58,7 +55,8 @@ class TeamEditForm extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
-            'label' => 'label.user',
+            'label' => 'team.member',
+            'translation_domain' => 'teams',
             'documentation' => [
                 'type' => 'array',
                 'items' => [
@@ -89,10 +87,7 @@ class TeamEditForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Team::class,

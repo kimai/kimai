@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target>Этот год</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Свой диапазон</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

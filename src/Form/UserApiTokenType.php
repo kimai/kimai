@@ -19,26 +19,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to set the users API token.
  */
-class UserApiTokenType extends AbstractType
+final class UserApiTokenType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('plainApiToken', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.api_token'],
-                'second_options' => ['label' => 'label.api_token_repeat'],
+                'first_options' => ['label' => 'api_token'],
+                'second_options' => ['label' => 'api_token_repeat'],
             ])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => ['ApiTokenUpdate'],

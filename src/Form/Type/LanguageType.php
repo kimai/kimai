@@ -9,7 +9,7 @@
 
 namespace App\Form\Type;
 
-use App\Utils\LanguageService;
+use App\Configuration\LocaleService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Intl\Locales;
@@ -18,36 +18,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the language.
  */
-class LanguageType extends AbstractType
+final class LanguageType extends AbstractType
 {
-    private $languageService;
-
-    public function __construct(LanguageService $languageService)
+    public function __construct(private LocaleService $localeService)
     {
-        $this->languageService = $languageService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];
-        foreach ($this->languageService->getAllLanguages() as $key) {
+        foreach ($this->localeService->getAllLocales() as $key) {
             $name = ucfirst(Locales::getName($key, $key));
             $choices[$name] = $key;
         }
 
         $resolver->setDefaults([
             'choices' => $choices,
-            'label' => 'label.language',
+            'label' => 'language',
+            'choice_translation_domain' => false,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

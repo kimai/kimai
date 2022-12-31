@@ -13,27 +13,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TestUserEntity implements UserInterface
 {
-    public function getRoles()
+    public function getRoles(): array
     {
         return [];
     }
 
-    public function getPassword()
-    {
-        return null;
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return 'foo';
     }
 
     public function eraseCredentials()
     {
+    }
+
+    public function getTimeFormat()
+    {
+        return 'H:i';
     }
 }

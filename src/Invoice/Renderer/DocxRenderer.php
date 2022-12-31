@@ -9,9 +9,9 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use PhpOffice\PhpWord\Escaper\Xml;
 use PhpOffice\PhpWord\Exception\Exception as OfficeException;
 use PhpOffice\PhpWord\Settings;
@@ -21,11 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class DocxRenderer extends AbstractRenderer implements RendererInterface
 {
-    /**
-     * @param InvoiceDocument $document
-     * @param InvoiceModel $model
-     * @return Response
-     */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
         Settings::setOutputEscapingEnabled(false);
@@ -46,9 +41,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
             try {
                 $template->cloneRow('entry.row', \count($model->getCalculator()->getEntries()));
             } catch (OfficeException $ex) {
-                @trigger_error(
-                    sprintf('Invoice document (%s) did not contain a clone row, was that on purpose?', $document->getFilename())
-                );
+                @trigger_error('Invoice document did not contain a clone row, was that on purpose?');
             }
         }
 
@@ -73,18 +66,12 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         return $this->getFileResponse(new Stream($cacheFile), $filename);
     }
 
-    /**
-     * @return string[]
-     */
-    protected function getFileExtensions()
+    protected function getFileExtensions(): array
     {
         return ['.docx'];
     }
 
-    /**
-     * @return string
-     */
-    protected function getContentType()
+    protected function getContentType(): string
     {
         return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     }

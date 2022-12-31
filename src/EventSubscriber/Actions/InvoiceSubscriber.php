@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Invoice;
 use App\Event\PageActionsEvent;
 
-class InvoiceSubscriber extends AbstractActionsSubscriber
+final class InvoiceSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -30,15 +30,28 @@ class InvoiceSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        $event->addAction('edit', ['url' => $this->path('admin_invoice_edit', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form']);
-        $event->addAction('download', ['url' => $this->path('admin_invoice_download', ['id' => $invoice->getId()]), 'target' => '_blank']);
+        $allowCreate = $this->isGranted('create_invoice');
+        $allowView = $this->isGranted('view_invoice');
+        $allowCustomer = $this->isGranted('access', $invoice->getCustomer());
 
-        $event->addDivider();
+        if ($allowCustomer && $allowCreate) {
+            $event->addAction('edit', ['url' => $this->path('admin_invoice_edit', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form']);
+        }
 
-        if (!$invoice->isPending()) {
-            $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
-        } else {
-            $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid', 'token' => $payload['token']]), 'class' => 'modal-ajax-form']);
+        if ($allowCustomer && $allowView) {
+            $event->addAction('download', ['url' => $this->path('admin_invoice_download', ['id' => $invoice->getId()]), 'target' => '_blank']);
+        }
+
+        if ($event->countActions() > 0) {
+            $event->addDivider();
+        }
+
+        if ($allowCustomer && $allowCreate) {
+            if (!$invoice->isPending()) {
+                $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
+            } else {
+                $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid', 'token' => $payload['token']]), 'class' => 'modal-ajax-form']);
+            }
         }
 
         $allowDelete = $this->isGranted('delete_invoice');

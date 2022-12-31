@@ -1,20 +1,25 @@
-{% extends 'user/layout.html.twig' %}
+{% extends 'user/form.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block profile_content %}
+{% block form_pre_content %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_title %}{{ ('profile.' ~ tab)|trans }}{% endblock %}
-        {% block box_tools %}
-            <a class="btn btn-box-tool" target="_blank" href="{{ path('app.swagger_ui') }}"><i class="{{ 'api'|icon('fas fa-book') }}"></i></a>
-            <a class="btn btn-box-tool" target="_blank" href="{{ 'rest-api.html'|docu_link }}"><i class="{{ 'help'|icon }}"></i></a>
-        {% endblock %}
-        {% block box_body %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            {{ form_end(form) }}
-        {% endblock %}
-    {% endembed %}
+    {% if user.apiToken is empty %}
+        <div class="row mb-3">
+            <div class="">
+                {{ widgets.alert('warning', 'api_password.missing_description'|trans, 'api_password.missing_title'|trans, 'warning', false) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row mb-3">
+        <div class="d-flex">
+            {{ 'api_password.intro'|trans }}
+
+            <div class="ms-auto">
+                <a class="btn btn-icon" target="_blank" href="{{ path('api.swagger_ui') }}" data-toggle="tooltip" title="Swagger API Docs">{{ icon('documentation', true) }}</a>
+                <a class="btn btn-icon" target="_blank" href="{{ 'rest-api.html'|docu_link }}" data-toggle="tooltip" title="{{ 'help'|trans({}, 'about') }}">{{ icon('help', true) }}</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

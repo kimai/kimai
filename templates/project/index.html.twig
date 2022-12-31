@@ -1,93 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
 {% import "project/actions.html.twig" as actions %}
 
-{% set columns = {
-    'name': {'class': 'alwaysVisible'},
-    'customer': {'class': 'hidden-xs'},
-    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
-    'orderNumber': {'class': 'hidden-xs hidden-sm hidden'},
-    'orderDate': {'class': 'hidden-xs hidden-sm hidden'},
-    'project_start': {'class': 'hidden-xs hidden-sm hidden'},
-    'project_end': {'class': 'hidden-xs hidden-sm hidden'},
-} %}
-{% for field in metaColumns %}
-    {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ field.name, 'orderBy': false}
-    }) %}
-{% endfor %}
-{% if is_granted('budget_money', 'project') %}
-    {% set columns = columns|merge({
-        'budget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.budget'|trans},
-    }) %}
-{% endif %}
-{% if is_granted('budget_time', 'project') %}
-    {% set columns = columns|merge({
-        'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.timeBudget'|trans},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'team': {'class': 'text-center w-min', 'orderBy': false},
-    'visible': {'class': 'text-center hidden w-min'},
-    'actions': {'class': 'actions alwaysVisible'},
-}) %}
+{% block datatable_row_attr %} {{ widgets.project_row_attr(entry, now) }}{% endblock %}
 
-{% set tableName = 'project_admin' %}
-
-{% block page_title %}{{ 'projects'|trans }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.projects('index', query) }}{% endblock %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main %}
-
-    {% if entries.count == 0 %}
-        {{ widgets.nothing_found('kimai.projectUpdate kimai.projectTeamUpdate') }}
-    {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.projectUpdate kimai.projectDelete kimai.projectTeamUpdate'}) }}
-
-        {% for entry in entries %}
-            <tr {{ widgets.project_row_attr(entry, now) }}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(entry.name, entry.color) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderNumber') }}">{{ entry.orderNumber }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'orderDate') }}">{% if entry.orderDate is not null %}{{ entry.orderDate|date_full(true) }}{% endif %}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'project_start') }}">{% if entry.start is not null %}{{ entry.start|date_full(true) }}{% endif %}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'project_end') }}">{% if entry.end is not null %}{{ entry.end|date_full(true) }}{% endif %}</td>
-                {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                    {% if entry.hasBudget() and is_granted('budget', entry) %}
-                        {{ entry.budget|money(entry.customer.currency) }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                    {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                        {{ entry.timeBudget|duration }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.project(entry, 'index') }}</td>
-            </tr>
-        {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_project_paginated') }}
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'customer' %}
+        {{ widgets.label_customer(entry.customer) }}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'orderNumber' %}
+        {{ entry.orderNumber }}
+    {% elseif column == 'orderDate' %}
+        {% if entry.orderDate is not null %}{{ entry.orderDate|date_short }}{% endif %}
+    {% elseif column == 'project_start' %}
+        {% if entry.start is not null %}{{ entry.start|date_short }}{% endif %}
+    {% elseif column == 'project_end' %}
+        {% if entry.end is not null %}{{ entry.end|date_short }}{% endif %}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money(entry.customer.currency) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.project(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
     {% endif %}
-
 {% endblock %}

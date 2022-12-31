@@ -10,132 +10,112 @@
         <source>theme</source>
         <target state="translated">Teema</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target state="translated">Salli markdown-muotoilu kuvauksissa ja kommenteissa</target>
       </trans-unit>
-      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target state="translated">Tunnisteet: käytä automaattista täyttöä haussa ja salli tunnisteiden luominen</target>
-      </trans-unit>
-      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
-        <source>label.timesheet.mode</source>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+        <source>timesheet.mode</source>
         <target state="translated">Työaikaseurannan tila</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
-        <source>label.timesheet.mode_default</source>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+        <source>timesheet.mode_default</source>
         <target state="translated">[Oletus] aloitus- ja lopetusaikoja voidaan muuttaa</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target state="translated">[Kesto] korvaa lopetusajan syötetyllä kestolla</target>
-      </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
-        <source>label.timesheet.mode_duration_fixed_begin</source>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
+        <source>timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[Kesto] konfiguroitava kiinteä aloitusaika, vain kestoa voidaan muuttaa</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
-        <source>label.timesheet.mode_punch</source>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+        <source>timesheet.mode_punch</source>
         <target state="translated">[Ajan tallennus] käyttäjä voi aloittaa ja lopettaa ajan tallentamisen, mutta ei muokata aikoja tai kestoa</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
-        <source>label.timesheet.rules.allow_future_times</source>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
+        <source>timesheet.rules.allow_future_times</source>
         <target state="translated">Salli aikamerkinnät tulevaisuudessa</target>
       </trans-unit>
-      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
-        <source>label.timesheet.rules.allow_overlapping_records</source>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
+        <source>timesheet.rules.allow_overlapping_records</source>
         <target state="translated">Salli päällekkäiset aikamerkinnät</target>
       </trans-unit>
-      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+        <source>timesheet.rules.lockdown_period_start</source>
         <target state="translated">Lukituksen alkamisaika (relatiivisesta PHP päivämäärästä tähän hetkeen)</target>
       </trans-unit>
-      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+        <source>timesheet.rules.lockdown_period_end</source>
         <target state="translated">Lukituksen päättymisaika (relatiivisesta PHP päivämäärästä tähän hetkeen)</target>
       </trans-unit>
-      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+        <source>timesheet.rules.lockdown_grace_period</source>
         <target state="translated">Lukituksen armoajan päättymisaika (relatiivisesta PHP päivämäärästä lukituksen päättymiseen)</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
+        <source>timesheet.active_entries.hard_limit</source>
         <target state="translated">Sallittu määrä samanaikaisesti suoritettavia aikamerkintöjä</target>
       </trans-unit>
-      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target state="translated">Minimi määrä kirjaimia ennen automaattisen täyttämisen aloitusta</target>
-      </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+        <source>calendar.week_numbers</source>
         <target state="translated">Näytä viikkonumero</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+        <source>calendar.weekends</source>
         <target state="translated">Näytä viikonloput</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+        <source>calendar.businessHours.begin</source>
         <target state="translated">Normaalin työajan alku (korostetaan)</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+        <source>calendar.businessHours.end</source>
         <target state="translated">Normaalin työajan loppu (korostetaan)</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
+        <source>calendar.visibleHours.begin</source>
         <target state="translated">Näkyvän aikajakson alku</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
+        <source>calendar.visibleHours.end</source>
         <target state="translated">Näkyvän aikajakson loppu</target>
       </trans-unit>
-      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+        <source>calendar.slot_duration</source>
         <target state="translated">Paikan kesto viikko- ja päivänäkymälle (muoto: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target state="translated">Brändi</target>
       </trans-unit>
-      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
-        <source>label.theme.branding.logo</source>
+      <trans-unit id="o9mON14" resname="theme.branding.logo">
+        <source>theme.branding.logo</source>
         <target state="translated">Logo (Image URL, korvaa yrityksen logon sisäänkirjauksessa)</target>
       </trans-unit>
-      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
-        <source>label.theme.branding.company</source>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+        <source>theme.branding.company</source>
         <target state="translated">Yritys</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target state="translated">Mini Logo (piilotettu sivupalkki)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target state="translated">Selaimen otsikko</target>
       </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target state="translated">Ajan pyöristys</target>
       </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
+        <source>timesheet.rounding.default.begin</source>
         <target state="translated">Aloitusajan pyöristäminen minuutteina (0 = ei aktiivinen)</target>
       </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
+        <source>timesheet.rounding.default.end</source>
         <target state="translated">Lopetusajan pyöristäminen minuutteina (0 = ei aktiivinen)</target>
       </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
+        <source>timesheet.rounding.default.duration</source>
         <target state="translated">Keston pyöristys minuutteina (0 = deaktivoitu)</target>
       </trans-unit>
-      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
+        <source>timesheet.rounding.default.mode</source>
         <target state="translated">Pyöristystapa</target>
       </trans-unit>
-      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
+        <source>timesheet.rounding.default.days</source>
         <target state="translated">Viikonpäivät, jolloin pyöristetään</target>
       </trans-unit>
       <trans-unit id="agDfwdy" resname="Monday">
@@ -182,136 +162,120 @@
         <source>Floor</source>
         <target state="translated">Pohja: alku, loppu ja kesto pyöristetään alaspäin</target>
       </trans-unit>
-      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
-        <source>label.timesheet.default_begin</source>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+        <source>timesheet.default_begin</source>
         <target state="translated">Oletus aloitusaika (ei käytetä kaikissa aikataulun seurantatiloissa)</target>
       </trans-unit>
-      <trans-unit id="cRbnwyP" resname="label.simple_form">
-        <source>label.simple_form</source>
-        <target state="translated">Yksinkertainen haku</target>
-      </trans-unit>
-      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
-        <source>label.invoice.number_format</source>
+      <trans-unit id="UTurPF1" resname="invoice.number_format">
+        <source>invoice.number_format</source>
         <target state="translated">Laskun numeromuotoilu</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target state="translated">Viikon ensimmäinen päivä</target>
       </trans-unit>
-      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
-        <source>label.theme.avatar_url</source>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
+        <source>theme.avatar_url</source>
         <target state="translated">Salli URL-osoitteiden käyttö avatar-kuvissa</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target state="translated">Pilkuilla eroteltu luettelo HTML-värikoodeista. Värien nimet voidaan asettaa lisäämällä värikoodin eteen nimi ja "|"-erotin, esim.: Valkoinen|#ffffff,Musta|#000000.</target>
       </trans-unit>
-      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
-        <source>label.timesheet.rules.allow_zero_duration</source>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
+        <source>timesheet.rules.allow_zero_duration</source>
         <target state="translated">Salli aikamerkinnät, joiden kesto on tyhjä</target>
       </trans-unit>
-      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
-        <source>label.timesheet.rules.allow_overbooking_budget</source>
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
+        <source>timesheet.rules.allow_overbooking_budget</source>
         <target state="translated">Salli tallennettujen budjettien ylivaraus</target>
       </trans-unit>
-      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
-        <source>label.quick_entry.minimum_rows</source>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows">
+        <source>quick_entry.minimum_rows</source>
         <target state="translated">Rivien vähimmäismäärä</target>
       </trans-unit>
-      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
-        <source>label.quick_entry.recent_activity_weeks</source>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
+        <source>quick_entry.recent_activity_weeks</source>
         <target state="translated">Ota merkinnät viimeiseltä X viikolta (tyhjä tai 0 koko ajalta)</target>
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
         <target state="translated">Tunnistus</target>
       </trans-unit>
-      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
-        <source>label.user_auth_login</source>
+      <trans-unit id="BGHQ8YO" resname="user_auth_login">
+        <source>user_auth_login</source>
         <target state="translated">Kirjautumislomake</target>
       </trans-unit>
-      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
-        <source>label.user_auth_registration</source>
+      <trans-unit id="C26_mL7" resname="user_auth_registration">
+        <source>user_auth_registration</source>
         <target state="translated">Käyttäjän rekisteröinti</target>
       </trans-unit>
-      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
-        <source>label.user_auth_password_reset</source>
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset">
+        <source>user_auth_password_reset</source>
         <target state="translated">Unohtunut salasana</target>
       </trans-unit>
-      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
-        <source>label.user_auth_password_reset_retry_ttl</source>
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl">
+        <source>user_auth_password_reset_retry_ttl</source>
         <target state="translated">Unohtunut salasana - sekuntia ennen kuin käyttäjä voi pyytää seuraavaa sähköpostia</target>
       </trans-unit>
-      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
-        <source>label.user_auth_password_reset_token_ttl</source>
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl">
+        <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">Unohtunut salasana - sekuntia ennen kuin palautuslinkki vanhenee</target>
       </trans-unit>
-      <trans-unit id="71FjFMp" resname="label.ldap_activate">
-        <source>label.ldap_activate</source>
+      <trans-unit id="ihORk9W" resname="ldap_activate">
+        <source>ldap_activate</source>
         <target state="translated">LDAP-kirjautuminen</target>
       </trans-unit>
-      <trans-unit id="A3HPT4p" resname="label.saml_activate">
-        <source>label.saml_activate</source>
+      <trans-unit id="0noFWbL" resname="saml_activate">
+        <source>saml_activate</source>
         <target state="translated">SAML-kirjautuminen</target>
       </trans-unit>
-      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
-        <source>label.timesheet.rules.break_warning_duration</source>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration">
+        <source>timesheet.rules.break_warning_duration</source>
         <target state="translated">Työaikakirjanpidon enimmäiskesto minuutteina ennen kuin "taukovaroitus" näytetään (0 = pois käytöstä)</target>
       </trans-unit>
-      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
-        <source>label.timesheet.rules.long_running_duration</source>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
+        <source>timesheet.rules.long_running_duration</source>
         <target state="translated">Työaikakirjanpidon enimmäiskesto minuutteina ennen tallennuksen hylkäämistä (0 = deaktivoitu)</target>
       </trans-unit>
-      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
-        <source>label.calendar.dragdrop_amount</source>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount">
+        <source>calendar.dragdrop_amount</source>
         <target state="translated">Vedä&amp;pudota merkintöjen määrä (0 = ei käytössä)</target>
-      </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target state="translated">Käytä satunnaisia värejä objekteille, joille ei ole määritetty väriä</target>
-      </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">Käytä pyöristyssäännön määritettyä arvoa</target>
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="translated">Pois</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target state="translated">Rajoita värivaihtoehtoja</target>
-      </trans-unit>
-      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
-        <source>label.theme.color_choices</source>
+      <trans-unit id="EFY6GmX" resname="theme.color_choices">
+        <source>theme.color_choices</source>
         <target state="translated">Sallitut värit</target>
       </trans-unit>
-      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
-        <source>label.timesheet.duration_increment</source>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
+        <source>timesheet.duration_increment</source>
         <target state="translated">Minuuttivalinta kestolle</target>
       </trans-unit>
-      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
-        <source>label.timesheet.time_increment</source>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
+        <source>timesheet.time_increment</source>
         <target state="translated">Minuuttivalinta: Mistä &amp; Mihin</target>
       </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
         <target state="translated">Lukituskausi</target>
       </trans-unit>
-      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
-        <source>label.quick_entry.recent_activities</source>
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities">
+        <source>quick_entry.recent_activities</source>
         <target state="translated">Edellisiltä viikoilta otettujen merkintöjen määrä</target>
       </trans-unit>
-      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
-        <source>label.timesheet.rules.lockdown_period_timezone</source>
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
+        <source>timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">Aikavyöhyke (jos tyhjä, käytetään vastaavan käyttäjän aikavyöhykettä)</target>
       </trans-unit>
-      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
-        <source>label.company.financial_year</source>
+      <trans-unit id="AzOiQES" resname="company.financial_year">
+        <source>company.financial_year</source>
         <target state="translated">Tilikausi</target>
       </trans-unit>
-      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
-        <source>label.calendar.title_pattern</source>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern">
+        <source>calendar.title_pattern</source>
         <target state="translated">Kalenterimerkintöjen otsikoiden näyttö</target>
       </trans-unit>
     </body>

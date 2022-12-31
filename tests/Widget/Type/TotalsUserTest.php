@@ -16,9 +16,8 @@ use App\Widget\Type\TotalsUser;
 
 /**
  * @covers \App\Widget\Type\TotalsUser
- * @covers \App\Widget\Type\SimpleWidget
  */
-class TotalsUserTest extends AbstractWidgetTypeTest
+class TotalsUserTest extends AbstractWidgetTest
 {
     /** @var User */
     private $user;
@@ -32,7 +31,7 @@ class TotalsUserTest extends AbstractWidgetTypeTest
         $this->user = $user;
     }
 
-    public function createSut(): AbstractWidgetType
+    public function createSut(): TotalsUser
     {
         return $this->createWidget();
     }
@@ -53,9 +52,7 @@ class TotalsUserTest extends AbstractWidgetTypeTest
         return [
             'route' => 'admin_user',
             'icon' => 'user',
-            'color' => 'primary',
-            'dataType' => 'int',
-            'user' => $this->user,
+            'color' => 'red',
         ];
     }
 

@@ -9,12 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
-use App\Entity\ProjectComment;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
 use App\Entity\Team;
@@ -51,10 +49,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
-            'help' => 'https://www.kimai.org/documentation/project.html'
         ]);
     }
 
@@ -65,12 +60,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/project'),
-            'help' => 'https://www.kimai.org/documentation/project.html'
         ]);
     }
 
@@ -91,11 +82,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/project/');
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
-            'help' => 'https://www.kimai.org/documentation/project.html'
         ]);
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
@@ -174,23 +162,28 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $this->assertDetailsPage($client);
+    }
+
+    private function assertDetailsPage(HttpKernelBrowser $client)
+    {
         self::assertHasProgressbar($client);
 
-        $node = $client->getCrawler()->filter('div.box#project_details_box');
+        $node = $client->getCrawler()->filter('div.card#project_details_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#time_budget_box');
+        $node = $client->getCrawler()->filter('div.card#time_budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#budget_box');
+        $node = $client->getCrawler()->filter('div.card#budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#comments_box');
+        $node = $client->getCrawler()->filter('div.card#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-actions a.btn');
         self::assertEquals(2, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
     }
 
@@ -206,15 +199,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
         $client->submit($form, [
             'project_rate_form' => [
-                'user' => null,
                 'rate' => $rate,
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/' . $projectId . '/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString($rate, $node->text(null, true));
     }
@@ -228,10 +220,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
         $project->setEnd(new \DateTime());
         $em->persist($project);
-        $team = new Team();
+        $team = new Team('project 1');
         $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
         $team->addProject($project);
-        $team->setName('project 1');
         $em->persist($team);
         $rate = new ProjectRate();
         $rate->setProject($project);
@@ -248,14 +239,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $em->persist($rate);
         $em->flush();
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.duplicate');
+        $token = $this->getCsrfToken($client, 'project.duplicate');
 
         $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
@@ -291,14 +282,12 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('A beautiful and long comment **with some** markdown formatting', $node->html());
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $configService->offsetSet('timesheet.markdown_content', true);
+        $this->setSystemConfiguration('timesheet.markdown_content', true);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -314,20 +303,14 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
 
-        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.delete_comment');
-
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete/' . $token), $node->attr('href'));
-        $this->request($client, '/admin/project/' . $id . '/comment_delete/' . $token);
+        $this->request($client, $node->attr('href'));
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
@@ -343,39 +326,35 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
         self::assertEquals(0, $node->count());
 
-        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
-
-        $this->request($client, '/admin/project/' . $id . '/comment_pin/' . $token);
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
+        self::assertEquals(1, $node->count());
+        $this->request($client, $node->attr('href'));
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
-        $token2 = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
-        self::assertNotEquals($token, $token2);
+        self::assertStringContainsString('/admin/project/', $node->attr('href'));
+        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $this->request($client, '/admin/project/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         // creating the default team a second time fails, as the name already exists
@@ -389,9 +368,9 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .card-actions ul.pagination li');
         self::assertEquals(0, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools a.modal-ajax-form.open-edit');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .card-actions a.modal-ajax-form.open-edit');
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
@@ -404,10 +383,10 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
 
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .card-footer ul.pagination li');
         self::assertEquals(4, $node->count());
 
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .card-body table tbody tr');
         self::assertEquals(5, $node->count());
     }
 
@@ -422,15 +401,18 @@ class ProjectControllerTest extends ControllerBaseTest
                 'customer' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, '/details');
-        $client->followRedirect();
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+
+        $this->assertDetailsPage($client);
         $this->assertHasFlashSuccess($client);
     }
 
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/project/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

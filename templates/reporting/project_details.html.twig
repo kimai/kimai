@@ -2,8 +2,6 @@
 {% import "macros/charts.html.twig" as charts %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block report_title %}{{ 'report_project_details'|trans({}, 'reporting') }}{% endblock %}
-
 {% set tableName = tableName|default('project_details_reporting') %}
 {% set tableId = 'project-details-form' %}
 {% set showMoneyBudget = project_details is not null and is_granted('budget', project_details.project) %}
@@ -23,35 +21,31 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% set options = {'label': 'duration', 'title': 'name', 'legend': 'false'} %}
+    {% set options = {'label': 'duration', 'title': 'name', 'legend': {'display': false}} %}
     {% if view_revenue %}
         {% set options = options|merge({'footer': 'rate'}) %}
     {% endif %}
     {{ charts.doughnut_javascript(options) }}
-    {{ charts.bar_javascript({'legend': 'false'}) }}
+    {{ charts.bar_javascript({'legend': {'display': false}}) }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ tableId }}').on('change', function(ev) {
-                jQuery(this).submit();
+        [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]')).forEach(function (triggerEl) {
+            triggerEl.addEventListener('shown.bs.tab', function (event) {
+                renderChart(event.target.dataset.chart);
             });
             {% if project is not null %}
             renderChart('project{{ project.id }}Budget');
             {% endif %}
         });
 
-        jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            renderChart(e.target.dataset.chart);
-        });
-
         function renderChart(chartName)
         {
-            var found = false;
+            let found = false;
 
-            Chart.helpers.each(Chart.instances, function(instance){
-                if (instance.chart.canvas.id === chartName) {
+            for (const instance of Object.values(Chart.instances)) {
+                if (instance.canvas.id === chartName) {
                     found = true;
                 }
-            });
+            }
 
             if (!found) {
                 document.dispatchEvent(new Event('render.' + chartName))
@@ -60,29 +54,16 @@
     </script>
 {% endblock %}
 
+{% block report_form_layout %}
+    {{ form_widget(form.project, {'label': false, 'placeholder': 'please_choose'}) }}
+{% endblock %}
+
 {% block report %}
     {% set hasData = project is not null and project_view is not null %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': tableId}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form) }}
-        {% endblock %}
-        {% block box_body %}{% endblock %}
-        {% block box_body_class %}hidden{% endblock %}
-    {% endembed %}
-
     {% if not hasData %}
         {{ widgets.nothing_found() }}
-    {% endif %}
-
-    {% if hasData %}
+    {% else %}
         {{ _self.project_details(project, project_view, project_details, showMoneyBudget, showTimeBudget, view_revenue, see_users) }}
         {% set currency = project.customer.currency %}
 
@@ -109,19 +90,29 @@
         {% set rates = rates|merge([{'label': rate|money(currency), 'value': rate}]) %}
     {% endfor -%}
 
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
-            {% if see_users %}
-            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
-            {% endif %}
-            <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-            {% if view_revenue %}
-                <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-            {% endif %}
-            <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            <li class="pull-left header">{{ title }} {{ widgets.label(yearStat.duration|duration, 'gray') }}{% if view_revenue %} {{ widgets.label(yearStat.rate|money(currency), 'gray') }}{% endif %}</small></li>
-        </ul>
-        <div class="tab-content no-padding">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title me-3">
+                {{ title }}
+            </h3>
+            <ul class="nav nav-pills" data-bs-toggle="tabs">
+                <li class="nav-item"><a class="nav-link active" data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                {% if view_revenue %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                {% endif %}
+                {% if see_users %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
+            </ul>
+            <div class="card-actions">
+                {{ widgets.badge_counter(yearStat.duration|duration) }}
+                {% if view_revenue %}
+                    {{ widgets.badge_counter(yearStat.rate|money(currency)) }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="tab-content mt-2 p-2">
             <div class="chart tab-pane active" id="time-chart-{{ id }}">
                 <div class="row">
                     <div class="col-xs-12">
@@ -155,7 +146,7 @@
         <div class="col-xs-12 table-responsive">
             <table class="table table-hover dataTable">
                 <tr>
-                    <th>{{ 'label.username'|trans }}</th>
+                    <th>{{ 'username'|trans }}</th>
                     <th></th>
                     {% for monthName in month_names() %}
                         <th class="text-center">{{ monthName }}</th>
@@ -228,17 +219,17 @@
                     {% endif %}
                     <tr>
                         <td>{{ widgets.label_activity(stat.activity, {'inherit': false, 'random': true}) }}</td>
-                        <td class="text-nowrap text-right">{{ stat.duration|duration }}</td>
+                        <td class="text-nowrap text-end">{{ stat.duration|duration }}</td>
                         {% if view_revenue %}
-                        <td class="text-nowrap text-right">{{ stat.rate|money(currency) }}</td>
+                        <td class="text-nowrap text-end">{{ stat.rate|money(currency) }}</td>
                         {% endif %}
-                        <td class="text-nowrap text-right">{{ percentage|number_format(1) }} %</td>
+                        <td class="text-nowrap text-end">{{ percentage|number_format(1) }} %</td>
                     </tr>
                 {% endfor %}
             </table>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-            {% set chartOptions = {'height': (dataset|length > 12 ? '600px' : '300px'), 'legend': {'position': (dataset|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'} %}
+            {% set chartOptions = {'height': (dataset|length > 12 ? '600px' : '300px'), 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'} %}
             {{ charts.doughnut_chart(chartPrefix ~ 'Activity', labels, dataset, chartOptions) }}
         </div>
     </div>
@@ -266,106 +257,116 @@
         {% set rates = rates|merge([{'label': year.rate|money(currency), 'value': year.rate}]) %}
         {% set durations = durations|merge([{'label': year.duration|duration, 'value': year.duration|chart_duration}]) %}
     {% endfor -%}
+    {% set showTotalDurationChart = project_view.durationTotal > 0 and years|length > 1 %}
+    {% set showTotalRevenueChart = view_revenue and project_view.rateTotal > 0 and years|length > 1 %}
 
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
-            {% if see_users and project_details.userStats|length > 0 %}
-            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
-            {% endif %}
-            {% if activities is not empty %}
-            <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-            {% endif %}
-            {% if view_revenue and project_view.rateTotal > 0 %}
-            <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-            {% endif %}
-            {% if project_view.durationTotal > 0 %}
-            <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            {% endif %}
-            <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
-            <li class="pull-left header hidden-xs">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title me-3">
                 {{ widgets.label_project(project, {'inherit': false}) }}
-            </li>
-        </ul>
-        <div class="tab-content no-padding">
+            </h3>
+            <ul class="nav nav-pills" data-bs-toggle="tabs">
+                <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
+                {% if showTotalDurationChart %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                {% endif %}
+                {% if showTotalRevenueChart  %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                {% endif %}
+                {% if see_users and project_details.userStats|length > 0 %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
+                {% endif %}
+                {% if activities is not empty %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
+                {% endif %}
+            </ul>
+            <div class="card-actions">
+                {{ widgets.badge_counter(project_view.durationTotal|duration) }}
+                {% if view_revenue %}
+                    {{ widgets.badge_counter(project_view.rateTotal|money(currency)) }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="tab-content mt-2 p-2 ps-3">
             <div class="chart tab-pane active" id="details-chart">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <table class="table table-hover dataTable">
-                            <tr {{ widgets.customer_row_attr(project.customer) }}>
-                                <th class="w-min">
-                                    {{ 'label.customer'|trans }}
-                                </th>
-                                <td>
+                    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7 col-xl-6 col-xxl-5">
+                        <div class="datagrid" style="--tblr-datagrid-item-width: 12rem">
+                            <div class="datagrid-item" {{ widgets.customer_row_attr(project.customer) }}>
+                                <div class="datagrid-title">
+                                    {{ 'customer'|trans }}
+                                </div>
+                                <div class="datagrid-content">
                                     {{ widgets.label_customer(project.customer) }}
-                                </td>
-                            </tr>
-                            <tr {{ widgets.project_row_attr(project) }}>
-                                <th class="w-min">
-                                    {{ 'label.project'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                            </div>
+                            <div class="datagrid-item" {{ widgets.project_row_attr(project) }}>
+                                <div class="datagrid-title">
+                                    {{ 'project'|trans }}
+                                </div>
+                                <div class="datagrid-content">
                                     {{ widgets.label_project(project) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
+                                </div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'stats.durationTotal'|trans }}
-                                </th>
-                                <td>{{ project_view.durationTotal|duration }}</td>
-                            </tr>
+                                </div>
+                                <div class="datagrid-content">{{ project_view.durationTotal|duration }}</div>
+                            </div>
                             {% if view_revenue %}
-                            <tr>
-                                <th class="w-min">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'stats.amountTotal'|trans }}
-                                </th>
-                                <td>{{ project_view.rateTotal|money(currency) }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'label.billable'|trans }}
-                                </th>
-                                <td>{{ project_view.billableRate|money(currency) }}</td>
-                            </tr>
+                                </div>
+                                <div class="datagrid-content">{{ project_view.rateTotal|money(currency) }}</div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
+                                    {{ 'billable'|trans }}
+                                </div>
+                                <div class="datagrid-content">{{ project_view.billableRate|money(currency) }}</div>
+                            </div>
                             {% endif %}
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'label.last_record'|trans }}
-                                </th>
-                                <td>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
+                                    {{ 'last_record'|trans }}
+                                </div>
+                                <div class="datagrid-content">
                                     {% if project_view.lastRecord is not null %}
                                         {{ project_view.lastRecord|date_short }}
                                     {% else %}
                                         &ndash;
                                     {% endif %}
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% if is_granted('create_export') %}
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'label.not_exported'|trans }}
-                                </th>
-                                <td>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
+                                    {{ 'not_exported'|trans }}
+                                </div>
+                                <div class="datagrid-content">
                                     <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
                                         {{ project_view.notExportedDuration|duration }}
                                     </a>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% endif %}
                             {% if is_granted('view_invoice') %}
-                            <tr>
-                                <th class="w-min">
-                                    {{ 'label.not_invoiced'|trans }}
-                                </th>
-                                <td>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
+                                    {{ 'not_invoiced'|trans }}
+                                </div>
+                                <div class="datagrid-content">
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                         {{ project_view.notBilledRate|money(currency) }}
                                     </a>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% endif %}
-                        </table>
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 col-xl-6 col-xxl-7">
                         {% if (showMoneyBudget and project.hasBudget()) or (showTimeBudget and project.hasTimeBudget()) %}
                             {% from "project/charts.html.twig" import project_budget %}
                             {{ project_budget(project, project_details, chartPrefix) }}
@@ -376,13 +377,13 @@
                     {% set budgetStats = project_details.budgetStatisticModel %}
                     <div class="row">
                         <div class="col-xs-12">
-                            <table class="table table-hover dataTable">
+                            <table class="table table-borderless">
                                 {% if showTimeBudget and project.hasTimeBudget() %}
                                     <tr>
                                         <th class="w-min">
-                                            {{ 'label.timeBudget'|trans }}
+                                            {{ 'timeBudget'|trans }}
                                             {% if budgetStats.isMonthlyBudget() %}
-                                                ({{ 'label.budgetType_month'|trans }})
+                                                ({{ 'budgetType_month'|trans }})
                                             {% endif %}
                                         </th>
                                         <td>
@@ -393,9 +394,9 @@
                                 {% if showMoneyBudget and project.hasBudget() %}
                                     <tr>
                                         <th class="w-min">
-                                            {{ 'label.budget'|trans }}
+                                            {{ 'budget'|trans }}
                                             {% if budgetStats.isMonthlyBudget() %}
-                                                ({{ 'label.budgetType_month'|trans }})
+                                                ({{ 'budgetType_month'|trans }})
                                             {% endif %}
                                         </th>
                                         <td>
@@ -409,15 +410,15 @@
                 {% endif %}
 
             </div>
-            {% if view_revenue and project_view.rateTotal > 0 %}
+            {% if showTotalDurationChart %}
+            <div class="chart tab-pane" id="time-chart">
+                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
+            </div>
+            {% if showTotalRevenueChart %}
             <div class="chart tab-pane" id="revenue-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
             </div>
             {% endif %}
-            {% if project_view.durationTotal > 0 %}
-            <div class="chart tab-pane" id="time-chart">
-                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
-            </div>
             {% endif %}
             {% if activities is not empty %}
             <div class="chart tab-pane" id="activity-chart">
@@ -447,31 +448,31 @@
                                     <td>
                                         {{ widgets.label_dot(user.displayName, user.color) }}
                                     </th>
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ userStat.duration|duration }}
                                     </td>
                                     {% if view_revenue %}
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ userStat.rate|money(currency) }}
                                     </td>
                                     {% endif %}
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ percentage|number_format(1) }} %
                                     </td>
                                 </tr>
                             {% endfor %}
                                 <tr>
                                     <td></td>
-                                    <th class="text-nowrap text-right total">{{ totalDuration|duration }}</th>
+                                    <th class="text-nowrap text-end total">{{ totalDuration|duration }}</th>
                                     {% if view_revenue %}
-                                    <th class="text-nowrap text-right total">{{ rateTotal|money(currency) }}</th>
+                                    <th class="text-nowrap text-end total">{{ rateTotal|money(currency) }}</th>
                                     {% endif %}
                                     <td></td>
                                 </tr>
                         </table>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-                        {% set chartOptions = {'height': (datasets|length > 12 ? '600px' : '300px'), 'legend': {'position': (datasets|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'User'} %}
+                        {% set chartOptions = {'height': (datasets|length > 12 ? '600px' : '300px'), 'renderEvent': 'render.' ~ chartPrefix ~ 'User'} %}
                         {{ charts.doughnut_chart(chartPrefix ~ 'User', labels, datasets, chartOptions) }}
                     </div>
                 </div>

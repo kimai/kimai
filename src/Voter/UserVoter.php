@@ -25,6 +25,7 @@ final class UserVoter extends Voter
         'roles',
         'teams',
         'password',
+        '2fa',
         'delete',
         'preferences',
         'api-token',
@@ -32,11 +33,8 @@ final class UserVoter extends Voter
         'view_team_member',
     ];
 
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**
@@ -44,7 +42,7 @@ final class UserVoter extends Voter
      * @param mixed $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof User)) {
             return false;
@@ -63,7 +61,7 @@ final class UserVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -91,6 +89,12 @@ final class UserVoter extends Voter
             if (!$subject->isInternalUser()) {
                 return false;
             }
+        }
+
+        if ($attribute === '2fa') {
+            // two factor only works for internal users and
+            // can only be activated by the logged-in user for himself
+            return $subject->isInternalUser() && $subject->getId() === $user->getId();
         }
 
         $permission = $attribute;

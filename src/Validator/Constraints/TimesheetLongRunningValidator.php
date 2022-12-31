@@ -17,18 +17,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLongRunningValidator extends ConstraintValidator
 {
-    private $systemConfiguration;
-
-    public function __construct(SystemConfiguration $systemConfiguration)
+    public function __construct(private SystemConfiguration $systemConfiguration)
     {
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetLongRunning)) {
             throw new UnexpectedTypeException($constraint, TimesheetLongRunning::class);
@@ -64,14 +61,14 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
         // float on purpose, because one second more than the configured minutes is already too long
         $minutes = $duration / 60;
 
-        if ($minutes < $maxMinutes) {
+        // allow maximum of the exact configured minutes
+        if ($minutes <= $maxMinutes) {
             return;
         }
 
         $format = new \App\Utils\Duration();
         $hours = $format->format($maxMinutes * 60);
 
-        // raise a violation for all entries before the start of lockdown period
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $hours)
             ->setTranslationDomain('validators')

@@ -13,54 +13,35 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_bookmarks",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "name"})
- *      }
- * )
- * @UniqueEntity(fields={"user", "name"})
- * @ORM\Entity(repositoryClass="App\Repository\BookmarkRepository")
- */
+#[ORM\Table(name: 'kimai2_bookmarks')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\BookmarkRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity(fields: ['user', 'name'])]
 class Bookmark
 {
     public const SEARCH_DEFAULT = 'search-default';
-    public const COLUMN_VISIBILITY = 'column-visibility';
+    public const COLUMN_VISIBILITY = 'columns';
     public const TIMESHEET = 'timesheet';
 
-    /**
-     * @var int|null
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $user;
-    /**
-     * @var string
-     * @ORM\Column(name="type", type="string", length=20, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=20, allowEmptyString=false)
-     */
-    private $type;
-    /**
-     * @var string
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
-     */
-    private $name;
-    /**
-     * @var string
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
-    private $content;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private ?User $user = null;
+    #[ORM\Column(name: 'type', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 20)]
+    private ?string $type = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
+    private ?string $name = null;
+    #[ORM\Column(name: 'content', type: 'text', nullable: false)]
+    private ?string $content = null;
 
     public function getId(): ?int
     {

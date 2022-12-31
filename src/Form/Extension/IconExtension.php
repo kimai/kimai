@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Allows to register custom icons at form fields
  */
-class IconExtension extends AbstractTypeExtension
+final class IconExtension extends AbstractTypeExtension
 {
     public static function getExtendedTypes(): iterable
     {
@@ -30,7 +30,7 @@ class IconExtension extends AbstractTypeExtension
      * @param FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['icon'] = $options['icon'] ?? null;
     }
@@ -38,7 +38,7 @@ class IconExtension extends AbstractTypeExtension
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['icon']);
         $resolver->setAllowedTypes('icon', 'string');

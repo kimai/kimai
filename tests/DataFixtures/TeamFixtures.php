@@ -106,8 +106,7 @@ final class TeamFixtures implements TestFixture
                 }
             }
 
-            $team = new Team();
-            $team->setName('Testing: ' . uniqid());
+            $team = new Team('Testing: ' . uniqid());
             $team->addTeamlead($lead);
 
             if ($this->addUser) {

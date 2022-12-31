@@ -10,63 +10,79 @@
  */
 
 import KimaiPlugin from '../KimaiPlugin';
-import jQuery from "jquery";
 
 export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
-    init() {
-        const self = this;
-        
-        jQuery('body').
-            on('change', '#multi_update_all', function(event) {
-                jQuery('.multi_update_single').prop('checked', jQuery(event.target).prop('checked'));
-                self.toggleForm();
-            })
-            .on('change', '.multi_update_single', function(event) {
-                self.toggleForm();
-            })
-            .on('change', '#multi_update_table_action', function(event) {
-                const selectedItem = jQuery('#multi_update_table_action option:selected');
-                const selectedVal = selectedItem.val();
+    init()
+    {
+        if (document.getElementById('multi_update_all') === null) {
+            return;
+        }
 
-                if (selectedVal === '') {
-                    return;
+        // we have to attach it to the "page-body" div, because section.content can be replaced
+        // via KimaiDatable and everything inside will be removed, including event listeners
+        const element = document.querySelector('div.page-body');
+        element.addEventListener('change', (event) => {
+            if (event.target.matches('#multi_update_all')) {
+                // the "check all" checkbox in the upper start corner of the table
+                const checked = event.target.checked;
+                for (const element of document.querySelectorAll('.multi_update_single')) {
+                    element.checked = checked;
                 }
-                
-                const form = jQuery('#multi_update_form form');
-                const selectedText = selectedItem.text();
-                const ids = self.getSelectedIds();
-                const question = form.attr('data-question').replace(/%action%/, selectedText).replace(/%count%/, ids.length);
-                
-                self.getContainer().getPlugin('alert').question(question, function(value) {
+                this._toggleForm();
+                event.stopPropagation();
+            } else if (event.target.matches('.multi_update_single')) {
+                // single checkboxes in front of each row
+                this._toggleForm();
+                event.stopPropagation();
+            }
+        });
+
+        element.addEventListener('click', (event) => {
+            if (event.target.matches('.multi_update_table_action')) {
+                const selectedItem = event.target;
+                const ids = this._getSelectedIds();
+                const form = document.getElementById('multi_update_form');
+                const question = form.dataset['question'].replace(/%action%/, selectedItem.textContent).replace(/%count%/, ids.length.toString());
+
+                /** @type {KimaiAlert} ALERT */
+                const ALERT = this.getPlugin('alert');
+                ALERT.question(question, function(value) {
                     if (value) {
-                        form.attr('action', selectedVal).submit();
-                    } else {
-                        jQuery('#multi_update_table_action').val('').trigger('change');
+                        const form = document.getElementById('multi_update_form');
+                        form.action = selectedItem.dataset['href'];
+                        form.submit();
                     }
                 });
-            });
+            }
+        });
     }
     
-    getSelectedIds()
+    _getSelectedIds()
     {
         let ids = [];
-        jQuery('.multi_update_single:checked').each(function(i){
-            ids[i] = $(this).val();
-        });
+        for (const box of document.querySelectorAll('input.multi_update_single:checked')) {
+            ids.push(box.value);
+        }
 
         return ids;
     }
     
-    toggleForm() 
+    _toggleForm()
     {
-        const ids = this.getSelectedIds();
-        jQuery('#multi_update_table_entities').val(ids.join(','));
+        const ids = this._getSelectedIds();
+        document.getElementById('multi_update_table_entities').value = ids.join(',');
 
         if (ids.length > 0) {
-            jQuery('#multi_update_form').show();
+            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+                element.style.setProperty('display', 'none', 'important');
+            }
+            document.getElementById('multi_update_form').style.display = null;//'block';
         } else {
-            jQuery('#multi_update_form').hide();
+            document.getElementById('multi_update_form').style.setProperty('display', 'none', 'important');
+            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+                element.style.display = null;
+            }
         }
     }
     

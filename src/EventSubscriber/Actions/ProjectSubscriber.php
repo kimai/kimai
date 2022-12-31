@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Project;
 use App\Event\PageActionsEvent;
 
-class ProjectSubscriber extends AbstractActionsSubscriber
+final class ProjectSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -25,23 +25,26 @@ class ProjectSubscriber extends AbstractActionsSubscriber
 
         /** @var Project $project */
         $project = $payload['project'];
+        $customer = $project->getCustomer();
 
-        if ($project->getId() === null) {
+        if ($project->getId() === null || $customer === null) {
             return;
         }
 
+        $isListingView = $event->isIndexView() || $event->isCustomView();
+
         if (!$event->isView('project_details') && $this->isGranted('view', $project)) {
-            $event->addAction('details', ['url' => $this->path('project_details', ['id' => $project->getId()])]);
+            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('project_details', ['id' => $project->getId()])]);
         }
 
         if ($this->isGranted('edit', $project)) {
             $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-            $event->addAction('edit', ['url' => $this->path('admin_project_edit', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addAction('edit', ['title' => 'edit', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_edit', ['id' => $project->getId()]), 'class' => $class]);
         }
 
         if ($this->isGranted('permissions', $project)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
         }
 
         if ($event->countActions() > 0) {
@@ -49,19 +52,23 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
+        }
+
+        if ($this->isGranted('create_export')) {
+            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
         }
 
         if ($event->hasSubmenu('filter')) {
             $event->addDivider();
         }
 
-        if (!$event->isView('project_details')) {
-            if ($project->isVisible() && $project->getCustomer()->isVisible() && $this->isGranted('create_activity')) {
+        if ($isListingView) {
+            if ($project->isVisible() && $customer->isVisible() && $this->isGranted('create_activity')) {
                 $event->addAction('create-activity', [
                     'icon' => 'create',
                     'url' => $this->path('admin_activity_create_with_project', ['project' => $project->getId()]),
@@ -70,10 +77,10 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             }
         }
 
-        if ($this->isGranted('edit', $project) && $this->isGranted('create_project')) {
+        if (\array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
-                ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
+                ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
             );
         }
 
@@ -81,8 +88,8 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
 
-        if ($project->isVisible() && $this->isGranted('view_reporting') && $this->isGranted('details', $project)) {
-            $event->addAction('report_project_details', ['url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+        if (!$event->isView('project_details_report') && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
+            $event->addAction('report_project_details', ['title' => 'report_project_details', 'translation_domain' => 'reporting', 'url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting']);
         }
     }
 }

@@ -9,39 +9,23 @@
 
 namespace App\Reporting\ProjectInactive;
 
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectInactiveForm extends AbstractType
+final class ProjectInactiveForm extends AbstractType
 {
-    /**
-     * Simplify cross linking between pages by removing the block prefix.
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('lastChange', DateTimePickerType::class, [
-            'label' => 'label.last_record_before',
+        $builder->add('lastChange', DatePickerType::class, [
+            'label' => 'last_record_before',
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ProjectInactiveQuery::class,

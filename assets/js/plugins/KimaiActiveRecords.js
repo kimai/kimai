@@ -15,8 +15,8 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
     constructor(selector, selectorEmpty) {
         super();
-        this.selector = selector;
-        this.selectorEmpty = selectorEmpty;
+        this._selector = selector;
+        this._selectorEmpty = selectorEmpty;
     }
 
     getId() {
@@ -24,101 +24,146 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     init() {
-        this.menu = document.querySelector(this.selector);
+        this._menu = document.querySelector(this._selector);
 
         // the menu can be hidden if user has no permissions to see it
-        if (this.menu === null) {
+        if (this._menu === null) {
             return;
         }
 
-        this.attributes = this.menu.dataset;
+        this.attributes = this._menu.dataset;
 
-        const self = this;
-        const handle = function() { self.reloadActiveRecords(); };
+        const handleUpdate = () => {
+            this.reloadActiveRecords();
+        };
 
+        document.addEventListener('kimai.timesheetUpdate', handleUpdate);
+        document.addEventListener('kimai.timesheetDelete', handleUpdate);
+        document.addEventListener('kimai.activityUpdate', handleUpdate);
+        document.addEventListener('kimai.activityDelete', handleUpdate);
+        document.addEventListener('kimai.projectUpdate', handleUpdate);
+        document.addEventListener('kimai.projectDelete', handleUpdate);
+        document.addEventListener('kimai.customerUpdate', handleUpdate);
+        document.addEventListener('kimai.customerDelete', handleUpdate);
+
+        // -----------------------------------------------------------------------
+        // handle duration in the visible UI
+        this._updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
+        this._updateDuration();
+        const handle = () => {
+            this._updateDuration();
+        };
+        this._updatesHandler = setInterval(handle, 10000);
         document.addEventListener('kimai.timesheetUpdate', handle);
-        document.addEventListener('kimai.timesheetDelete', handle);
-        document.addEventListener('kimai.activityUpdate', handle);
-        document.addEventListener('kimai.activityDelete', handle);
-        document.addEventListener('kimai.projectUpdate', handle);
-        document.addEventListener('kimai.projectDelete', handle);
-        document.addEventListener('kimai.customerUpdate', handle);
-        document.addEventListener('kimai.customerDelete', handle);
+        document.addEventListener('kimai.reloadedContent', handle);
     }
 
-    _toggleMenu(hasEntries) {
-        this.menu.style.display = hasEntries ? 'inline-block' : 'none';
+    // TODO we could unregister all handler and listener
+    // _unregisterHandler() {
+    //     clearInterval(this._updatesHandler);
+    // }
+
+    _updateDuration() {
+        const activeRecords = this._menu.querySelectorAll('[data-since]:not([data-since=""])');
+
+        if (activeRecords.length === 0) {
+            if (this._updateBrowserTitle) {
+                if (document.body.dataset['title'] === undefined) {
+                    this._updateBrowserTitle = false;
+                } else {
+                    document.title = document.body.dataset['title'];
+                }
+            }
+            return;
+        }
+
+        const DATE = this.getDateUtils();
+        let durations = [];
+
+        for (const record of activeRecords) {
+            const duration = DATE.formatDuration(record.dataset['since']);
+            // only use the ones from the menu for the title
+            if (record.dataset['replacer'] !== undefined && record.dataset['title'] !== null && duration !== '?') {
+                durations.push(duration);
+            }
+            // but update all on the page (running entries in list pages)
+            record.textContent = duration;
+        }
+
+        if (durations.length === 0) {
+            return;
+        }
+
+        if (!this._updateBrowserTitle) {
+            return;
+        }
+
+        let title = durations.shift();
+        for (const duration of durations.slice(0, 2)) {
+            title += ' | ' + duration;
+        }
+        document.title = title;
+    }
+
+    _setEntries(entries) {
+        const hasEntries = entries.length > 0;
+
+        this._menu.style.display = hasEntries ? 'inline-block' : 'none';
         if (!hasEntries) {
             // make sure that template entries in the menu are removed, otherwise they
             // might still be shown in the browsers title
-            for (let record of this.menu.querySelectorAll('[data-since]')) {
+            for (let record of this._menu.querySelectorAll('[data-since]')) {
                 record.dataset['since'] = '';
             }
         }
 
-        const menuEmpty = document.querySelector(this.selectorEmpty);
+        const menuEmpty = document.querySelector(this._selectorEmpty);
         if (menuEmpty !== null) {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
-    }
 
-    setEntries(entries) {
-        this._toggleMenu(entries.length > 0);
+        const stop = this._menu.querySelector('.ticktac-stop');
 
-        const template = this.menu.querySelector('[data-template="active-record"]');
-
-        const label = this.menu.querySelector('a > span.label');
-        if (label !== null) {
-            label.innerText = entries.length === 0 ? '' : entries.length;
-        }
-
-        if (entries.length === 0) {
+        if (!hasEntries) {
+            if (stop) {
+                stop.accesskey = null;
+            }
             return;
         }
 
-        if (template === null) {
-            this._replaceInNode(this.menu, entries[0]);
-        } else {
-            const container = template.parentElement;
-            container.innerHTML = '';
-
-            for (let timesheet of entries) {
-                const newNode = template.cloneNode(true);
-                container.appendChild(this._replaceInNode(newNode, timesheet));
-            }
+        if (stop) {
+            stop.accesskey = 's';
         }
-
-        this.getContainer().getPlugin('timesheet-duration').updateRecords();
+        this._replaceInNode(this._menu, entries[0]);
+        this._updateDuration();
     }
 
     _replaceInNode(node, timesheet) {
-        const date = this.getContainer().getPlugin('date');
+        const date = this.getDateUtils();
         const allReplacer = node.querySelectorAll('[data-replacer]');
-        for (let node of allReplacer) {
-            const replacerName = node.dataset['replacer'];
+        for (let link of allReplacer) {
+            const replacerName = link.dataset['replacer'];
             if (replacerName === 'url') {
-                node.href = this.attributes['href'].replace('000', timesheet.id);
+                link.href = this.attributes['href'].replace('000', timesheet.id);
             } else if (replacerName === 'activity') {
-                node.innerText = timesheet.activity.name;
+                link.innerText = timesheet.activity.name;
             } else if (replacerName === 'project') {
-                node.innerText = timesheet.project.name;
+                link.innerText = timesheet.project.name;
             } else if (replacerName === 'customer') {
-                node.innerText = timesheet.project.customer.name;
+                link.innerText = timesheet.project.customer.name;
             } else if (replacerName === 'duration') {
-                node.dataset['since'] = timesheet.begin;
-                node.innerText = date.formatDuration(timesheet.duration);
+                link.dataset['since'] = timesheet.begin;
+                link.innerText = date.formatDuration(timesheet.duration);
             }
         }
-
-        return node;
     }
 
     reloadActiveRecords() {
-        const self = this;
-        const API= this.getContainer().getPlugin('api');
+        /** @type {KimaiAPI} API */
+        const API = this.getContainer().getPlugin('api');
 
-        API.get(this.attributes['api'], {}, function(result) {
-            self.setEntries(result);
+        API.get(this.attributes['api'], {}, (result) => {
+            this._setEntries(result);
         });
     }
 

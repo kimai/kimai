@@ -13,8 +13,8 @@ use App\Controller\AbstractController;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DailyStatistic;
-use App\Reporting\WeeklyUserList;
-use App\Reporting\WeeklyUserListForm;
+use App\Reporting\WeeklyUserList\WeeklyUserList;
+use App\Reporting\WeeklyUserList\WeeklyUserListForm;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
@@ -24,15 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting/users")
- * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
- */
+#[Route(path: '/reporting/users')]
+#[Security("is_granted('report:other')")]
 final class ReportUsersWeekController extends AbstractController
 {
-    /**
-     * @Route(path="/week", name="report_weekly_users", methods={"GET","POST"})
-     */
+    #[Route(path: '/week', name: 'report_weekly_users', methods: ['GET', 'POST'])]
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         return $this->render(
@@ -41,9 +37,7 @@ final class ReportUsersWeekController extends AbstractController
         );
     }
 
-    /**
-     * @Route(path="/week_export", name="report_weekly_users_export", methods={"GET","POST"})
-     */
+    #[Route(path: '/week_export', name: 'report_weekly_users_export', methods: ['GET', 'POST'])]
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         $data = $this->getData($request, $statisticService, $userRepository);
@@ -66,7 +60,7 @@ final class ReportUsersWeekController extends AbstractController
         $values = new WeeklyUserList();
         $values->setDate($dateTimeFactory->getStartOfWeek());
 
-        $form = $this->createForm(WeeklyUserListForm::class, $values, [
+        $form = $this->createFormForGetRequest(WeeklyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
         ]);
@@ -74,6 +68,7 @@ final class ReportUsersWeekController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $query = new UserQuery();
+        $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
 
         if ($form->isSubmitted()) {

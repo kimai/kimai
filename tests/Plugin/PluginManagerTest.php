@@ -12,7 +12,6 @@ namespace App\Tests\Plugin;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
-use App\Plugin\PluginMetadata;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 use App\Tests\Plugin\Fixtures\TestPlugin2\TestPlugin2;
 use PHPUnit\Framework\TestCase;
@@ -37,16 +36,18 @@ class PluginManagerTest extends TestCase
 
     public function testAdd()
     {
-        $sut = new PluginManager([]);
-
         $plugin = $this->createMock(PluginInterface::class);
         $plugin->expects($this->any())->method('getName')->willReturn('foo');
         $plugin->expects($this->any())->method('getPath')->willReturn('bar');
 
-        $sut->addPlugin(new TestPlugin());
-        $sut->addPlugin($plugin);
-        $sut->addPlugin(new TestPlugin2());
-        $sut->addPlugin(new TestPlugin());
+        $plugins = [
+            new TestPlugin(),
+            $plugin,
+            new TestPlugin2(),
+            new TestPlugin(),
+        ];
+
+        $sut = new PluginManager($plugins);
 
         // make sure a plugin with the same name is not added twice, the first one wins!
         $this->assertEquals(2, \count($sut->getPlugins()));
@@ -59,7 +60,7 @@ class PluginManagerTest extends TestCase
         $test = $sut->getPlugin('TestPlugin');
         $this->assertInstanceOf(Plugin::class, $test);
         $this->assertEquals('TestPlugin', $test->getName());
-        $this->assertEquals(new PluginMetadata(), $test->getMetadata());
+        $this->assertNull($test->getMetadata());
     }
 
     public function testLoadMetadata()
@@ -69,10 +70,10 @@ class PluginManagerTest extends TestCase
         $sut->loadMetadata($plugin);
 
         $meta = $plugin->getMetadata();
-        $this->assertEquals('0.9', $meta->getKimaiVersion());
+        $this->assertEquals(10000, $meta->getKimaiVersion());
         $this->assertEquals('1.0', $meta->getVersion());
         $this->assertEquals('TestPlugin', $plugin->getId());
-        $this->assertEquals('TestPlugin from composer.json', $plugin->getName());
+        $this->assertEquals('TestPlugin from composer.json', $meta->getName());
         $this->assertEquals('Just a test fixture for the PluginManager', $meta->getDescription());
         $this->assertEquals('https://github.com/kimai/kimai', $meta->getHomepage());
     }

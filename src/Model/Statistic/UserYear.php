@@ -13,19 +13,8 @@ use App\Entity\User;
 
 final class UserYear
 {
-    /**
-     * @var Year
-     */
-    private $year;
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function __construct(User $user, Year $year)
+    public function __construct(private User $user, private Year $year)
     {
-        $this->user = $user;
-        $this->year = $year;
     }
 
     public function getYear(): Year

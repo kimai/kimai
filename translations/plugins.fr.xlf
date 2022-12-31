@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Aucune extension d'installée pour le moment.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Magasin de Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "activity/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activity(activity, 'activity_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', activity) %}
@@ -12,7 +8,7 @@
         {% set currency = activity.project.customer.currency %}
     {% endif %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "customer/actions.html.twig" as customerActions %}
         {% import "project/actions.html.twig" as projectActions %}
@@ -22,20 +18,20 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_activity_edit', {'id': activity.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_activity_edit', {'id': activity.id})}) }}
             {% endif %}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if activity.comment is not empty %}
-                <div class="comment">
+                <div class="comment p-3">
                     {{ activity.comment|comment2html(true) }}
                 </div>
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not activity.visible %}
                     <tr class="{{ widgets.class_activity_row(activity, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(activity.visible) }}
                         </td>
@@ -43,7 +39,7 @@
                 {% endif %}
                 {% if not activity.billable %}
                     <tr>
-                        <th>{{ 'label.billable'|trans }}</th>
+                        <th>{{ 'billable'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(activity.billable) }}
                         </td>
@@ -51,7 +47,7 @@
                 {% endif %}
                 {% if not activity.global %}
                     <tr {{ widgets.customer_row_attr(activity.project.customer, now) }}>
-                        <th>{{ 'label.customer'|trans }}</th>
+                        <th>{{ 'customer'|trans }}</th>
                         <td>
                             {{ widgets.label_customer(activity.project.customer) }}
                         </td>
@@ -63,7 +59,7 @@
                         </td>
                     </tr>
                     <tr {{ widgets.project_row_attr(activity.project, now) }}>
-                        <th>{{ 'label.project'|trans }}</th>
+                        <th>{{ 'project'|trans }}</th>
                         <td>
                             {{ widgets.label_project(activity.project) }}
                         </td>
@@ -85,8 +81,12 @@
         {% endblock %}
     {% endembed %}
 
+    {% if can_edit %}
+        {{ include('embeds/rates-table.html.twig', {'id': 'activity_rates_box', 'entity': activity, 'create_url': path('admin_activity_rate_add', {'id': activity.id}), 'delete_route': 'delete_activity_rate', 'currency': currency, 'edit_route': 'admin_activity_rate_edit'}) }}
+    {% endif %}
+
     {% if stats is not null %}
-        {% set currency = kimai_config.getCustomerDefaultCurrency() %}
+        {% set currency = kimai_config.customerDefaultCurrency %}
         {% if activity.project is not null %}
             {% set currency = activity.project.customer.currency %}
         {% endif %}
@@ -96,10 +96,6 @@
     {% for controller in boxes %}
         {{ render(controller(controller, {'activity': activity, 'page': 1})) }}
     {% endfor %}
-
-    {% if can_edit %}
-        {{ include('embeds/rates-table.html.twig', {'id': 'activity_rates_box', 'entity': activity, 'create_url': path('admin_activity_rate_add', {'id': activity.id}), 'delete_route': 'delete_activity_rate', 'currency': currency}) }}
-    {% endif %}
 
     {% if teams is not null %}
         {% set options = {'teams': teams, 'team': team} %}

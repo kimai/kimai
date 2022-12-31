@@ -16,17 +16,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class CalendarGoogleSourceEvent extends Event
 {
     /**
-     * @var User
-     */
-    private $user;
-    /**
      * @var GoogleSource[]
      */
     private $sources = [];
 
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): User

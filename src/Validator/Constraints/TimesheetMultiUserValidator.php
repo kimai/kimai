@@ -20,7 +20,7 @@ final class TimesheetMultiUserValidator extends ConstraintValidator
      * @param Timesheet|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetMultiUser)) {
             throw new UnexpectedTypeException($constraint, TimesheetMultiUser::class);

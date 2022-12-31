@@ -13,18 +13,12 @@ use App\Plugin\PluginInterface;
 
 class TestPlugin implements PluginInterface
 {
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'TestPlugin';
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return __DIR__;
     }

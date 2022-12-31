@@ -9,7 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\CommentInterface;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 
@@ -19,18 +18,14 @@ use App\Entity\ProjectComment;
  */
 class ProjectCommentTest extends AbstractCommentEntityTest
 {
-    protected function getEntity(): CommentInterface
+    protected function getEntity(): ProjectComment
     {
-        return new ProjectComment();
+        return new ProjectComment(new Project());
     }
 
     public function testEntitySpecificMethods()
     {
-        $sut = new ProjectComment();
-        self::assertNull($sut->getProject());
-
-        $project = new Project();
-        self::assertInstanceOf(ProjectComment::class, $sut->setProject($project));
-        self::assertSame($project, $sut->getProject());
+        $sut = $this->getEntity();
+        self::assertNotNull($sut->getProject());
     }
 }

@@ -9,43 +9,25 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 
 abstract class AbstractCalculator
 {
-    /**
-     * @var string
-     */
-    protected $currency;
-
-    /**
-     * @var InvoiceModel
-     */
-    protected $model;
+    protected InvoiceModel $model;
 
     /**
      * @return InvoiceItem[]
      */
-    abstract public function getEntries();
+    abstract public function getEntries(): array;
 
-    /**
-     * @return string
-     */
     abstract public function getId(): string;
 
-    /**
-     * @param InvoiceModel $model
-     */
-    public function setModel(InvoiceModel $model)
+    public function setModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }
 
-    /**
-     * @return float
-     */
     public function getSubtotal(): float
     {
         $amount = 0.00;
@@ -56,17 +38,11 @@ abstract class AbstractCalculator
         return round($amount, 2);
     }
 
-    /**
-     * @return float
-     */
-    public function getVat(): ?float
+    public function getVat(): float
     {
         return $this->model->getTemplate()->getVat();
     }
 
-    /**
-     * @return float
-     */
     public function getTax(): float
     {
         $vat = $this->getVat();
@@ -79,26 +55,9 @@ abstract class AbstractCalculator
         return round($this->getSubtotal() * $percent, 2);
     }
 
-    /**
-     * @return float
-     */
     public function getTotal(): float
     {
         return $this->getSubtotal() + $this->getTax();
-    }
-
-    /**
-     * @deprecated since 1.8 will be removed with 2.0
-     * @return string
-     */
-    public function getCurrency(): string
-    {
-        @trigger_error(
-            sprintf('%s::getCurrency() is deprecated and will be removed with 2.0', CalculatorInterface::class),
-            E_USER_DEPRECATED
-        );
-
-        return $this->model->getCurrency();
     }
 
     /**

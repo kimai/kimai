@@ -12,61 +12,49 @@ namespace App\Ldap;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * Overwritten to be able to deactivate LDAP via config switch.
- *
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- *
- * @final
- */
-class LdapUserProvider implements UserProviderInterface
+final class LdapUserProvider implements UserProviderInterface
 {
-    private $ldapManager;
-    private $logger;
-
-    public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
+    public function __construct(private LdapManager $ldapManager, private ?LoggerInterface $logger = null)
     {
-        $this->ldapManager = $ldapManager;
-        $this->logger = $logger;
     }
 
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->ldapManager->findUserByUsername($username);
+        $user = $this->ldapManager->findUserByUsername($identifier);
 
         if (empty($user)) {
-            $this->logInfo('User {username} {result} on LDAP', [
-                'action' => 'loadUserByUsername',
-                'username' => $username,
+            $this->logDebug('User {username} {result} on LDAP', [
+                'action' => 'loadUserByIdentifier',
+                'username' => $identifier,
                 'result' => 'not found',
             ]);
-            $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
-            $ex->setUsername($username);
+            $ex = new UserNotFoundException(sprintf('User "%s" not found', $identifier));
+            $ex->setUserIdentifier($identifier);
 
             throw $ex;
         }
 
-        $this->logInfo('User {username} {result} on LDAP', [
-            'action' => 'loadUserByUsername',
-            'username' => $username,
+        $this->logDebug('User {username} {result} on LDAP', [
+            'action' => 'loadUserByIdentifier',
+            'username' => $identifier,
             'result' => 'found',
         ]);
 
         return $user;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!($user instanceof User) || !$this->supportsClass(\get_class($user))) {
+        if (!($user instanceof User)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
         if (!$user->isLdapUser() && null === $user->getPreferenceValue('ldap.dn')) {
-            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUsername()));
+            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUserIdentifier()));
         }
 
         try {
@@ -77,26 +65,23 @@ class LdapUserProvider implements UserProviderInterface
                 $user->setAuth(User::AUTH_LDAP);
             }
         } catch (LdapDriverException $ex) {
-            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUsername()));
+            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUserIdentifier()));
         }
 
         return $user;
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class === User::class;
     }
 
-    /**
-     * Log a message into the logger if this exists.
-     */
-    private function logInfo(string $message, array $context = []): void
+    private function logDebug(string $message, array $context = []): void
     {
-        if (!$this->logger) {
+        if ($this->logger === null) {
             return;
         }
 
-        $this->logger->info($message, $context);
+        $this->logger->debug($message, $context);
     }
 }

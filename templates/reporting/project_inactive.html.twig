@@ -1,0 +1,8 @@
+{% extends 'reporting/project_list_data.html.twig' %}
+
+{% block report_form_layout %}
+    {% form_theme form 'form/horizontal.html.twig' %}
+    {{ form_row(form.lastChange, {'row_attr': {'class': 'row'}}) }}
+{% endblock %}
+
+{% block report_form_container_class %}w-100{% endblock %}

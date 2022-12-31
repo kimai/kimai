@@ -11,37 +11,31 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\User\UserService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class PromoteUserCommand extends AbstractRoleCommand
+#[AsCommand(name: 'kimai:user:promote')]
+final class PromoteUserCommand extends AbstractRoleCommand
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
-            ->setName('kimai:user:promote')
-            ->setAliases(['fos:user:promote'])
             ->setDescription('Promotes a user by adding a role')
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:promote</info> command promotes a user by adding a role
+                    The <info>kimai:user:promote</info> command promotes a user by adding a role
 
-  <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
-  <info>php %command.full_name% --super susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
+                      <info>php %command.full_name% --super susan_super</info>
+                    EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role)
     {
-        $username = $user->getUsername();
+        $username = $user->getUserIdentifier();
         if ($super) {
             if (!$user->isSuperAdmin()) {
                 $user->setSuperAdmin(true);

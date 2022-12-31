@@ -24,11 +24,11 @@ class ProjectVoterTest extends AbstractVoterTest
 {
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ProjectVoter::class);
 
         if ($subject instanceof Project && null === $subject->getCustomer()) {
-            $subject->setCustomer(new Customer());
+            $subject->setCustomer(new Customer('foo'));
         }
 
         $actual = $sut->vote($token, $subject, [$attribute]);
@@ -51,7 +51,7 @@ class ProjectVoterTest extends AbstractVoterTest
             $this->assertVote($user, new Project(), 'delete', $result);
         }
 
-        $team = new Team();
+        $team = new Team('foo');
         $team->addTeamlead($userTeamlead);
         foreach ([$userTeamlead] as $user) {
             $project = new Project();
@@ -92,20 +92,20 @@ class ProjectVoterTest extends AbstractVoterTest
 
     public function testTeamlead()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_TEAMLEAD);
         $team->addTeamlead($user);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $customer->addTeam($team);
 
         $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $project->addTeam($team);
 
@@ -114,25 +114,25 @@ class ProjectVoterTest extends AbstractVoterTest
 
     public function testTeamMember()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addTeamlead($user);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
         $project->setCustomer($customer);
 
         $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
 
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addUser($user);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->addTeam($team);
         $project->setCustomer($customer);
 

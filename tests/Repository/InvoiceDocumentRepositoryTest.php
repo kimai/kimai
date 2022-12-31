@@ -9,7 +9,7 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -18,28 +18,34 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceDocumentRepositoryTest extends TestCase
 {
-    protected static $defaultDirectories = [
+    /**
+     * @var array<string>
+     */
+    private static array $defaultDirectories = [
         'templates/invoice/renderer'
     ];
 
-    protected static $testDocuments = [
+    /**
+     * @var array<string>
+     */
+    private static array $testDocuments = [
+        'company.docx',
         'spreadsheet.xsls',
         'open-spreadsheet.ods',
         'default.pdf.twig',
     ];
 
-    protected static $defaultDocuments = [
-        'company.docx',
-        'default.html.twig',
-        'default-pdf.pdf.twig',
-        'freelancer.pdf.twig',
+    /**
+     * @var array<string>
+     */
+    private static array $defaultDocuments = [
+        'invoice.html.twig',
+        'default.pdf.twig',
+        'service-date.pdf.twig',
         'timesheet.html.twig',
-        'text.txt.twig',
-        'javascript.json.twig',
-        'xml.xml.twig',
     ];
 
-    public function testDirectories()
+    public function testDirectories(): void
     {
         $sut = new InvoiceDocumentRepository([]);
         self::assertEmpty($sut->findAll());
@@ -78,14 +84,14 @@ class InvoiceDocumentRepositoryTest extends TestCase
         self::assertEquals($path, $sut->getUploadDirectory());
     }
 
-    public function testDefaultTemplatesExists()
+    public function testDefaultTemplatesExists(): void
     {
         $sut = new InvoiceDocumentRepository(self::$defaultDirectories);
         $all = $sut->findAll();
         $this->assertCount(\count(self::$defaultDocuments), $all);
 
         foreach ($all as $document) {
-            $this->assertTrue(\in_array($document->getName(), self::$defaultDocuments));
+            $this->assertTrue(\in_array($document->getName(), self::$defaultDocuments), 'Missing template: ' . $document->getName());
         }
 
         foreach (self::$defaultDocuments as $filename) {

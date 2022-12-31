@@ -58,6 +58,15 @@ final class TagFixtures implements TestFixture
         return $this;
     }
 
+    public function importAmount(int $amount): void
+    {
+        $tags = [];
+        for ($i = 0; $i <= $amount; $i++) {
+            $tags[] = (string) $i;
+        }
+        $this->setTagArray($tags);
+    }
+
     /**
      * @param ObjectManager $manager
      * @return Tag[]

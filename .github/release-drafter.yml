@@ -36,11 +36,10 @@ template: |
     [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/)
 
     **PHP Version compatibility:**
-    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php)
-    - PHP 7.4 is [end-of-life](https://www.php.net/supported-versions.php) in a few days!
+    - PHP 7.3 and PHP 7.4 are [end-of-life](https://www.php.net/supported-versions.php)
     - PHP 8.0 and PHP 8.1 are supported
-      
-    **Next release will be PHP 8 ONLY, as [announced one year ago](https://www.kimai.org/blog/2021/sunsetting-php-7/).**    
+
+    A feature freeze is in place and only bugfix releases will be published for 1.30.x. Next major release will be in the 2.x series (PHP >= 8.1, Symfony 6, Tabler UI, see #2902).
     
     $CHANGES
     

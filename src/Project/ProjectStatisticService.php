@@ -43,17 +43,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ProjectStatisticService
 {
-    private $repository;
-    private $timesheetRepository;
-    private $dispatcher;
-    private $userRepository;
-
-    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher, UserRepository $userRepository)
+    public function __construct(private ProjectRepository $repository, private TimesheetRepository $timesheetRepository, private EventDispatcherInterface $dispatcher, private UserRepository $userRepository)
     {
-        $this->repository = $projectRepository;
-        $this->timesheetRepository = $timesheetRepository;
-        $this->dispatcher = $dispatcher;
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -114,7 +105,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -198,7 +189,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -424,8 +415,8 @@ class ProjectStatisticService
                 $activity = $activities[$activityId];
             }
 
-            $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
-            $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+            $activity->setRate($activity->getRate() + $tmp['rate']);
+            $activity->setDuration($activity->getDuration() + $tmp['duration']);
             $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
             $activity->setCounter($activity->getCounter() + $tmp['count']);
 
@@ -581,8 +572,8 @@ class ProjectStatisticService
                 } else {
                     $activity = $yearActivities[$yearName][$activityId];
                 }
-                $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
-                $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+                $activity->setRate($activity->getRate() + $tmp['rate']);
+                $activity->setDuration($activity->getDuration() + $tmp['duration']);
                 $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
                 $activity->setCounter($activity->getCounter() + $tmp['count']);
 
@@ -590,11 +581,12 @@ class ProjectStatisticService
                     $activity->setDurationBillable($activity->getDurationBillable() + $tmp['duration']);
                     $activity->setRateBillable($activity->getRateBillable() + $tmp['rate']);
                 }
+                $model->addYearActivity($tmp['year'], $activity);
             }
         }
 
-        foreach ($yearActivities as $year => $activities) {
-            foreach ($activities as $activity) {
+        foreach ($yearActivities as $year => $yearlyActivities) {
+            foreach ($yearlyActivities as $activity) {
                 $model->addYearActivity($year, $activity);
             }
         }
@@ -667,11 +659,18 @@ class ProjectStatisticService
             ;
         }
 
-        if (!$query->isIncludeNoBudget()) {
+        if ($query->isIncludeWithBudget()) {
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->gt('p.timeBudget', 0),
                     $qb->expr()->gt('p.budget', 0)
+                )
+            );
+        } elseif ($query->isIncludeWithoutBudget()) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.timeBudget', 0),
+                    $qb->expr()->eq('p.budget', 0)
                 )
             );
         }
@@ -682,7 +681,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -779,46 +778,32 @@ class ProjectStatisticService
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
         }
 
-        // values for all time (not exported)
         $qb = clone $tplQb;
         $qb
-            ->andWhere('t.exported = :exported')
-            ->setParameter('exported', false, Types::BOOLEAN)
+            ->addSelect('t.exported')
+            ->addSelect('t.billable')
+            ->addGroupBy('t.exported')
+            ->addGroupBy('t.billable')
         ;
-
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
-            $projectViews[$row['id']]->setNotExportedDuration($row['duration']);
-            $projectViews[$row['id']]->setNotExportedRate($row['rate']);
-        }
-
-        // values for all time (not exported and billable)
-        $qb = clone $tplQb;
-        $qb
-            ->andWhere('t.exported = :exported')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('exported', false, Types::BOOLEAN)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $result = $qb->getQuery()->getScalarResult();
-        foreach ($result as $row) {
-            $projectViews[$row['id']]->setNotBilledDuration($row['duration']);
-            $projectViews[$row['id']]->setNotBilledRate($row['rate']);
-        }
-
-        // values for all time (none billable)
-        $qb = clone $tplQb;
-        $qb
-            ->andWhere('t.billable = :billable')
-            ->groupBy('t.project')
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $result = $qb->getQuery()->getScalarResult();
-        foreach ($result as $row) {
-            $projectViews[$row['id']]->setBillableDuration($row['duration']);
-            $projectViews[$row['id']]->setBillableRate($row['rate']);
+            /** @var ProjectViewModel $view */
+            $view = $projectViews[$row['id']];
+            if ($row['billable'] === 1 && $row['exported'] === 1) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+            } elseif ($row['billable'] === 1 && $row['exported'] === 0) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+                $view->setNotBilledDuration($view->getNotBilledDuration() + $row['duration']);
+                $view->setNotBilledRate($view->getNotBilledRate() + $row['rate']);
+            } elseif ($row['billable'] === 0 && $row['exported'] === 0) {
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+            }
+            // the last possible case $row['billable'] === 0 && $row['exported'] === 1 is extremely unlikely and not used
         }
 
         return array_values($projectViews);

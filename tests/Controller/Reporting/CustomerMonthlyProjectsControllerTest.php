@@ -78,7 +78,7 @@ class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
         $client = $this->prepareReport();
 
         $this->assertAccessIsGranted($client, '/reporting/customer/monthly_projects/view');
-        self::assertStringContainsString('<form method="get" class="form-inline form-reporting" id="report-toolbar-form">', $client->getResponse()->getContent());
+        self::assertStringContainsString('<form method="get" class="form-reporting" id="report-form">', $client->getResponse()->getContent());
         $rows = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')]");
         self::assertGreaterThan(0, $rows->count());
     }

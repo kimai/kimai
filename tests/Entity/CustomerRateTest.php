@@ -49,14 +49,13 @@ class CustomerRateTest extends TestCase
 
         $user = new User();
         $user->setAlias('foo');
-        $user->setUsername('bar');
+        $user->setUserIdentifier('bar');
         self::assertInstanceOf(CustomerRate::class, $sut->setUser($user));
         self::assertSame($user, $sut->getUser());
         $sut->setUser(null);
         self::assertNull($sut->getUser());
 
-        $entity = new Customer();
-        $entity->setName('foo');
+        $entity = new Customer('foo');
         self::assertInstanceOf(CustomerRate::class, $sut->setCustomer($entity));
         self::assertSame($entity, $sut->getCustomer());
     }

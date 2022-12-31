@@ -17,7 +17,6 @@ use App\Entity\UserPreference;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Tests\Security\TestUserEntity;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -31,12 +30,10 @@ class UserTest extends TestCase
     public function testDefaultValues()
     {
         $user = new User();
-        self::assertInstanceOf(\Serializable::class, $user);
         self::assertInstanceOf(EquatableInterface::class, $user);
         self::assertInstanceOf(UserInterface::class, $user);
         $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
         self::assertNull($user->getTitle());
-        self::assertNull($user->getDisplayName());
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());
         self::assertNull($user->getId());
@@ -47,10 +44,14 @@ class UserTest extends TestCase
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
-        self::assertFalse($user->isSmallLayout());
         self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
-        self::assertTrue($user->is24Hour());
+
+        $user->setUserIdentifier('foo');
+        self::assertEquals('foo', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getDisplayName());
+        $user->setAlias('BAR');
+        self::assertEquals('BAR', $user->getDisplayName());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -81,6 +82,22 @@ class UserTest extends TestCase
         $sut->setColor('#000000');
         self::assertEquals('#000000', $sut->getColor());
         self::assertTrue($sut->hasColor());
+    }
+
+    public function testWizards()
+    {
+        $sut = new User();
+        // internal name may not be changed
+        self::assertNull($sut->getPreferenceValue('__wizards__'));
+        self::assertFalse($sut->hasSeenWizard('intro'));
+        $sut->setWizardAsSeen('intro');
+        self::assertTrue($sut->hasSeenWizard('intro'));
+        self::assertNotNull($sut->getPreferenceValue('__wizards__'));
+        $sut->setWizardAsSeen('intro');
+        self::assertTrue($sut->hasSeenWizard('intro'));
+        self::assertFalse($sut->hasSeenWizard('profile'));
+        $sut->setWizardAsSeen('profile');
+        self::assertTrue($sut->hasSeenWizard('profile'));
     }
 
     public function testAuth()
@@ -138,34 +155,21 @@ class UserTest extends TestCase
         $user = new User();
         self::assertNull($user->getPreference('test'));
         self::assertNull($user->getPreferenceValue('test'));
-        self::assertNull($user->getMetaFieldValue('test'));
         self::assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
 
-        $preference = new UserPreference();
-        $preference
-            ->setName('test')
-            ->setValue('foobar');
+        $preference = new UserPreference('test', 'foobar');
         $user->addPreference($preference);
         self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('foobar', $user->getMetaFieldValue('test'));
         self::assertEquals($preference, $user->getPreference('test'));
 
         $user->setPreferenceValue('test', 'Hello World');
         self::assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('Hello World', $user->getMetaFieldValue('test'));
 
         self::assertNull($user->getPreferenceValue('test2'));
-        self::assertNull($user->getMetaFieldValue('test2'));
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
-        self::assertEquals('I like rain', $user->getMetaFieldValue('test2'));
 
-        $user->setPreferenceValue('theme.layout', 'boxed');
-        self::assertTrue($user->isSmallLayout());
-        $user->setPreferenceValue('theme.layout', '12345');
-        self::assertFalse($user->isSmallLayout());
-
-        $user->setPreferenceValue('timesheet.export_decimal', true);
+        $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());
     }
 
@@ -173,14 +177,30 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $user->setUsername('bar');
+        $user->setUserIdentifier('bar');
         self::assertEquals('bar', $user->getDisplayName());
-        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('bar', $user->getUserIdentifier());
         self::assertEquals('bar', (string) $user);
 
         $user->setAlias('foo');
         self::assertEquals('foo', $user->getAlias());
-        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('bar', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getDisplayName());
+        self::assertEquals('foo', (string) $user);
+    }
+
+    public function testGetUsername()
+    {
+        $user = new User();
+
+        $user->setUserIdentifier('bar');
+        self::assertEquals('bar', $user->getDisplayName());
+        self::assertEquals('bar', $user->getUserIdentifier());
+        self::assertEquals('bar', (string) $user);
+
+        $user->setAlias('foo');
+        self::assertEquals('foo', $user->getAlias());
+        self::assertEquals('bar', $user->getUserIdentifier());
         self::assertEquals('foo', $user->getDisplayName());
         self::assertEquals('foo', (string) $user);
     }
@@ -190,9 +210,7 @@ class UserTest extends TestCase
         $sut = new User();
         self::assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
 
-        $language = new UserPreference();
-        $language->setName(UserPreference::LOCALE);
-        $language->setValue('fr');
+        $language = new UserPreference(UserPreference::LOCALE, 'fr');
         $sut->addPreference($language);
 
         self::assertEquals('fr', $sut->getLocale());
@@ -202,7 +220,7 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $user = new User();
-        $team = new Team();
+        $team = new Team('foo');
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getUsers());
 
@@ -223,10 +241,10 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamleadOf($team));
         self::assertTrue($sut->isInTeam($team));
 
-        $team2 = new Team();
+        $team2 = new Team('foo');
         self::assertFalse($sut->isInTeam($team2));
         self::assertFalse($sut->isTeamleadOf($team2));
-        $team2->setTeamLead($sut);
+        $team2->addTeamLead($sut);
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
 
@@ -305,10 +323,7 @@ class UserTest extends TestCase
         // lets keep it, as it occured during the work on SAML authentication
         $sut = new User();
 
-        $preference = new UserPreference();
-        $preference
-            ->setName('test')
-            ->setValue('foobar');
+        $preference = new UserPreference('test', 'foobar');
 
         $property = new \ReflectionProperty(User::class, 'preferences');
         $property->setAccessible(true);
@@ -330,28 +345,38 @@ class UserTest extends TestCase
         self::assertFalse($sut->initCanSeeAllData(true));
     }
 
+    public function testSystemAccount()
+    {
+        $sut = new User();
+        self::assertFalse($sut->isSystemAccount());
+        $sut->setSystemAccount(true);
+        self::assertTrue($sut->isSystemAccount());
+        $sut->setSystemAccount(false);
+        self::assertFalse($sut->isSystemAccount());
+    }
+
     public function testExportAnnotations()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $columns = $sut->extract(User::class);
 
         self::assertIsArray($columns);
 
         $expected = [
-            ['label.id', 'integer'],
-            ['label.username', 'string'],
-            ['label.alias', 'string'],
-            ['label.title', 'string'],
-            ['label.email', 'string'],
-            ['label.lastLogin', 'datetime'],
-            ['label.language', 'string'],
-            ['label.timezone', 'string'],
-            ['label.active', 'boolean'],
+            ['id', 'integer'],
+            ['username', 'string'],
+            ['alias', 'string'],
+            ['title', 'string'],
+            ['email', 'string'],
+            ['lastLogin', 'datetime'],
+            ['language', 'string'],
+            ['timezone', 'string'],
+            ['active', 'boolean'],
             ['profile.registration_date', 'datetime'],
-            ['label.roles', 'array'],
-            ['label.color', 'string'],
-            ['label.account_number', 'string'],
+            ['roles', 'array'],
+            ['color', 'string'],
+            ['account_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -372,6 +397,7 @@ class UserTest extends TestCase
     public function testEqualsTo()
     {
         $sut = new User();
+        $sut->setUserIdentifier('foo');
 
         $user = new TestUserEntity();
         self::assertFalse($sut->isEqualTo($user));
@@ -389,11 +415,11 @@ class UserTest extends TestCase
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
 
-        $sut->setUsername('12345678');
+        $sut->setUserIdentifier('12345678');
         self::assertFalse($sut->isEqualTo($sut2));
         self::assertFalse($sut2->isEqualTo($sut));
 
-        $sut2->setUsername('12345678');
+        $sut2->setUserIdentifier('12345678');
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
     }
@@ -402,7 +428,7 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $sut->setPassword('ABC-1234567890');
-        $sut->setUsername('foo-BAR');
+        $sut->setUserIdentifier('foo-BAR');
         $sut->setEmail('hello@world.com');
         $sut->setEnabled(false);
 
@@ -415,10 +441,11 @@ class UserTest extends TestCase
             'hello@world.com',
         ];
 
+        /** @var User $unserialized */
         $unserialized = unserialize($data);
 
         $actual = [
-            $unserialized->getUsername(),
+            $unserialized->getUserIdentifier(),
             $unserialized->isEnabled(),
             $unserialized->getId(),
             $unserialized->getEmail(),
@@ -429,8 +456,7 @@ class UserTest extends TestCase
 
     public function testTeamMemberships()
     {
-        $team = new Team();
-        $team->setName('Foo');
+        $team = new Team('Foo');
 
         $member = new TeamMember();
         $member->setTeam($team);
@@ -475,7 +501,7 @@ class UserTest extends TestCase
         self::assertCount(1, $sut->getMemberships());
         self::assertSame($sut, $member21->getUser());
 
-        $sut->addTeam(new Team());
+        $sut->addTeam(new Team('foo'));
         self::assertCount(2, $sut->getTeams());
         self::assertCount(2, $sut->getMemberships());
 
@@ -490,16 +516,5 @@ class UserTest extends TestCase
         $member = new TeamMember();
         $member->setUser(new User());
         $sut->addMembership($member);
-    }
-
-    public function test24Hour()
-    {
-        $user = new User();
-        self::assertTrue($user->is24Hour());
-        self::assertEquals('H:i', $user->getTimeFormat());
-
-        $user->setPreferenceValue(UserPreference::HOUR_24, false);
-        self::assertFalse($user->is24Hour());
-        self::assertEquals('h:i A', $user->getTimeFormat());
     }
 }

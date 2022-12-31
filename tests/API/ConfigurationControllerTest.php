@@ -16,33 +16,6 @@ use App\Entity\User;
  */
 class ConfigurationControllerTest extends APIControllerBaseTest
 {
-    public function testIsI18nSecure()
-    {
-        $this->assertUrlIsSecured('/api/config/i18n');
-    }
-
-    public function testGetI18n()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/config/i18n', 'GET');
-        $result = json_decode($client->getResponse()->getContent(), true);
-
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(7, \count($result));
-        $this->assertI18nStructure($result);
-    }
-
-    protected function assertI18nStructure(array $result)
-    {
-        $expectedKeys = ['date', 'dateTime', 'duration', 'formDate', 'is24hours', 'time', 'now'];
-        $actual = array_keys($result);
-        sort($actual);
-        sort($expectedKeys);
-
-        $this->assertEquals($expectedKeys, $actual, 'Config structure does not match');
-    }
-
     public function testIsTimesheetSecure()
     {
         $this->assertUrlIsSecured('/api/config/timesheet');
@@ -56,13 +29,8 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(6, \count($result));
-        $this->assertTimesheetStructure($result);
-    }
-
-    protected function assertTimesheetStructure(array $result)
-    {
-        $expectedKeys = ['activeEntriesHardLimit', 'activeEntriesSoftLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
+        $expectedKeys = ['activeEntriesHardLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
+        $this->assertCount(\count($expectedKeys), $result);
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);

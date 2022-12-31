@@ -1,79 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
 {% import "user/actions.html.twig" as actions %}
 
-{% set columns = {
-    'avatar': {'class': 'alwaysVisible w-min', 'title': null, 'orderBy': false},
-    'alias': {'class': 'alwaysVisible'},
-    'account_number': {'class': 'hidden-xs hidden-sm hidden'},
-    'title': {'class': 'hidden-xs hidden-sm hidden'},
-    'email': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'lastLogin': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'roles': {'class': 'hidden-sm', 'orderBy': false},
-} %}
-{% for pref in preferences %}
-    {% set columns = columns|merge({
-        ('mf_' ~ pref.name): {'title': pref.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ pref.name, 'orderBy': false}
-    }) %}
-{% endfor %}
-{% set columns = columns|merge({
-    'team': {'class': 'text-center hidden-xs w-min', 'orderBy': false},
-    'active': {'class': 'hidden-xs hidden w-min', 'orderBy': false},
-    'actions': {'class': 'actions alwaysVisible'},
-}) %}
+{% block datatable_row_attr %} {{ widgets.user_row_attr(entry) }}{% endblock %}
 
-{% set tableName = 'user_admin' %}
-
-{% block page_title %}{{ 'users'|trans }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.users('index', query) }}{% endblock %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns, 'kimai.userUpdate') }}
-{% endblock %}
-
-{% block main %}
-
-    {% if entries.count == 0 %}
-        {{ widgets.nothing_found('kimai.userUpdate') }}
-    {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.userUpdate'}) }}
-
-        {% for entry in entries %}
-            <tr {{ widgets.user_row_attr(entry) }}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">{{ widgets.user_avatar(entry) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'alias') }}">{{ widgets.username(entry) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'account_number') }}">{{ entry.accountNumber }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_full }}{% endif %}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
-                    {% set showUserRole = entry.roles|length == 1 %}
-                    {% for role in entry.roles %}
-                        {% if showUserRole or role != 'ROLE_USER' %}
-                            {{ widgets.label_role(role) }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                {% for pref in preferences %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ pref.name) }}">
-                        {% set metaField = entry.preference(pref.name) %}
-                        {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
-                            {{ widgets.form_type_value(pref.type, metaField.value, entry) }}
-                        {% endif %}
-                    </td>
-                {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">
-                    {{ widgets.badge_team_access(entry.teams) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.user(entry, 'index') }}</td>
-            </tr>
+{% block datatable_column_value %}
+    {% if column == 'avatar' %}
+        {{ widgets.user_avatar(entry, false) }}
+    {% elseif column == 'alias' %}
+        {{ entry.alias }}
+    {% elseif column == 'user' %}
+        {{ widgets.username(entry) }}
+    {% elseif column == 'username' %}
+        {{ entry.username }}
+    {% elseif column == 'account_number' %}
+        {{ entry.accountNumber }}
+    {% elseif column == 'title' %}
+        {{ entry.title }}
+    {% elseif column == 'email' %}
+        {{ entry.email }}
+    {% elseif column == 'lastLogin' %}
+        {% if entry.lastLogin is not null %}{{ entry.lastLogin|date_time }}{% endif %}
+    {% elseif column == 'roles' %}
+        {% set showUserRole = entry.roles|length == 1 %}
+        {% for role in entry.roles %}
+            {% if showUserRole or role != 'ROLE_USER' %}
+                {{ widgets.label_role(role) }}
+            {% endif %}
         {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_user_paginated') }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'active' %}
+        {{ widgets.label_visible(entry.enabled) }}
+    {% elseif column == 'actions' %}
+        {{ actions.user(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {% set metaField = entry.preference(data.name) %}
+        {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+            {{ widgets.form_type_value(data.type, metaField.value, entry) }}
+        {% endif %}
     {% endif %}
-
 {% endblock %}

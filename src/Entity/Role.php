@@ -13,34 +13,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_roles",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="roles_name", columns={"name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
- * @UniqueEntity("name")
- */
+#[ORM\Table(name: 'kimai2_roles')]
+#[ORM\UniqueConstraint(name: 'roles_name', columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\RoleRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class Role
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=50, allowEmptyString=false)
-     */
-    private $name;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 5, max: 50)]
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -54,7 +42,7 @@ class Role
 
     public function setName(string $name): Role
     {
-        $this->name = $name;
+        $this->name = strtoupper($name);
 
         return $this;
     }

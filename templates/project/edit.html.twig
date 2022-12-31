@@ -1,11 +1,7 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "project/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'projects'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'edit') }}{% endblock %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': (project.id is null ? 'create-project'|trans({}, 'actions') : 'edit'|trans({}, 'actions')),
         'form': form,
@@ -14,10 +10,10 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     {{ form_row(form.name) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {{ form_row(form.color) }}
                 </div>
             </div>
@@ -56,26 +52,38 @@
                 </div>
             </div>
             {% endif %}
-            {% if form.invoiceText is defined %}
-                {{ form_row(form.invoiceText) }}
+            {% if form.teams is defined %}
+                <div class="row">
+                    <div class="col-12">
+                        {{ form_row(form.teams) }}
+                    </div>
+                </div>
             {% endif %}
             <div class="row">
                 <div class="col-md-4">
                     {{ form_row(form.visible) }}
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-4">
                     {{ form_row(form.billable) }}
                 </div>
-                <div class="col-md-4 text-right">
+                <div class="col-md-4">
                     {{ form_row(form.globalActivities) }}
                 </div>
             </div>
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                    {{ form_row(meta) }}
-                {% endfor %}
+                {{ form_row(form.metaFields) }}
             {% endif %}
-            {{ form_widget(form) }}
+            {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block box_title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block box_body_class %}{% endblock %}
+                {% block box_body %}
+                    {% if form.invoiceText is defined %}
+                        {{ form_row(form.invoiceText) }}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

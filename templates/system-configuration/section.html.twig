@@ -1,0 +1,22 @@
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
+
+{% block main %}
+
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+
+    {% for section in sections %}
+        {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
+        {% if title == section.model.translation %}
+            {% set title = section.model.section|trans %}
+        {% endif %}
+        {% embed formEditTemplate with {'title': title, 'form': section.form} %}
+            {% block form_body %}
+                {% for pref in form.children.configuration %}
+                    {{ form_widget(pref) }}
+                {% endfor %}
+                {{ form_rest(form) }}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+
+{% endblock %}

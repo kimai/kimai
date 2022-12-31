@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "customer/actions.html.twig" as actions %}
-
-{% block page_actions %}{{ actions.customer(customer, 'customer_details') }}{% endblock %}
-{% block page_title %}{{ 'customers'|trans }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', customer) %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="customer_details_box"{% endblock %}
         {% block box_title %}
@@ -17,26 +13,27 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_customer_edit', {'id': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                {{ widgets.card_tool_button('vcard', {'title': 'vcard', 'translation_domain': 'actions', 'icon': 'far fa-address-card', 'url': path('customer_vcard', {'id': customer.id})}) }}
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_customer_edit', {'id': customer.id})}) }}
             {% endif %}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if customer.comment is not empty %}
-                <div class="comment">
+                <div class="comment p-3">
                     {{ customer.comment|comment2html(true) }}
                 </div>
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not customer.visible %}
                     <tr class="{{ widgets.class_customer_row(customer, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
                 {% endif %}
                 {% if not customer.billable %}
                     <tr>
-                        <th>{{ 'label.billable'|trans }}</th>
+                        <th>{{ 'billable'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(customer.billable) }}
                         </td>
@@ -44,74 +41,74 @@
                 {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
-                        <th>{{ 'label.address'|trans }}</th>
+                        <th>{{ 'address'|trans }}</th>
                         <td>{{ customer.address|nl2br }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.country is not empty %}
                     <tr>
-                        <th>{{ 'label.country'|trans }}</th>
-                        <td>{{ customer.country|country }}</td>
+                        <th>{{ 'country'|trans }}</th>
+                        <td>{{ customer.country|country_name }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.contact is not empty %}
                     <tr>
-                        <th>{{ 'label.contact'|trans }}</th>
+                        <th>{{ 'contact'|trans }}</th>
                         <td>{{ customer.contact }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.phone is not empty %}
                     <tr>
-                        <th>{{ 'label.phone'|trans }}</th>
+                        <th>{{ 'phone'|trans }}</th>
                         <td><a href="tel:{{ customer.phone }}">{{ customer.phone }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.mobile is not empty %}
                     <tr>
-                        <th>{{ 'label.mobile'|trans }}</th>
+                        <th>{{ 'mobile'|trans }}</th>
                         <td><a href="tel:{{ customer.mobile }}">{{ customer.mobile }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.email is not empty %}
                     <tr>
-                        <th>{{ 'label.email'|trans }}</th>
+                        <th>{{ 'email'|trans }}</th>
                         <td><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.homepage is not empty %}
                     <tr>
-                        <th>{{ 'label.homepage'|trans }}</th>
+                        <th>{{ 'homepage'|trans }}</th>
                         <td><a href="{{ customer.homepage }}" target="_blank">{{ customer.homepage|replace({'https://': '', 'http://': ''}) }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.fax is not empty %}
                     <tr>
-                        <th>{{ 'label.fax'|trans }}</th>
+                        <th>{{ 'fax'|trans }}</th>
                         <td>{{ customer.fax }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.timezone is not empty %}
                     <tr>
-                        <th>{{ 'label.timezone'|trans }}</th>
-                        <td>{{ customer_now|date_full }} ({{ customer.timezone }})</td>
+                        <th>{{ 'timezone'|trans }}</th>
+                        <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
-                        <th>{{ 'label.currency'|trans }}</th>
+                        <th>{{ 'currency'|trans }}</th>
                         <td>{{ customer.currency }}</td>
                     </tr>
                 {% endif %}
                 {% if is_granted('details', customer) %}
                     {% if customer.number is not empty %}
                         <tr>
-                            <th>{{ 'label.number'|trans }}</th>
+                            <th>{{ 'number'|trans }}</th>
                             <td>{{ customer.number }}</td>
                         </tr>
                     {% endif %}
                     {% if customer.vatId is not empty %}
                         <tr>
-                            <th>{{ 'label.vat_id'|trans }}</th>
+                            <th>{{ 'vat_id'|trans }}</th>
                             <td>{{ customer.vatId }}</td>
                         </tr>
                     {% endif %}
@@ -127,7 +124,11 @@
     {% endembed %}
 
     {{ render(controller('App\\Controller\\CustomerController::projectsAction', {'customer': customer.id, 'page': 1})) }}
-    
+
+    {% if can_edit %}
+        {{ include('embeds/rates-table.html.twig', {'id': 'customer_rates_box', 'entity': customer, 'create_url': path('admin_customer_rate_add', {'id': customer.id}), 'delete_route': 'delete_customer_rate', 'currency': customer.currency, 'edit_route': 'admin_customer_rate_edit'}) }}
+    {% endif %}
+
     {% if stats is not null %}
         {{ include('embeds/budgets.html.twig', {'entity': customer, 'stats': stats, 'currency': customer.currency}) }}
     {% endif %}
@@ -135,10 +136,6 @@
     {% for controller in boxes %}
         {{ render(controller(controller, {'customer': customer, 'page': 1})) }}
     {% endfor %}
-
-    {% if can_edit %}
-        {{ include('embeds/rates-table.html.twig', {'id': 'customer_rates_box', 'entity': customer, 'create_url': path('admin_customer_rate_add', {'id': customer.id}), 'delete_route': 'delete_customer_rate', 'currency': customer.currency}) }}
-    {% endif %}
 
     {% if teams is not null %}
         {% set options = {'teams': teams, 'team': team} %}

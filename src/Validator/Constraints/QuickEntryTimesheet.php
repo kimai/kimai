@@ -11,10 +11,6 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS"})
- */
-class QuickEntryTimesheet extends Constraint
+final class QuickEntryTimesheet extends Constraint
 {
 }

@@ -10,8 +10,8 @@
         {% set currency = project.customer.currency %}
         {% if project.isMonthlyBudget() %}
             <h4>
-                {%- if showMoneyBudget %}{{ 'label.budget'|trans }}{% else %}{{ 'label.timeBudget'|trans }}{% endif -%}
-                : {{ 'label.budgetType_month'|trans }}
+                {%- if showMoneyBudget %}{{ 'budget'|trans }}{% else %}{{ 'timeBudget'|trans }}{% endif -%}
+                : {{ 'budgetType_month'|trans }}
             </h4>
             {% set chartData = [] %}
             {% set chartLabels = [] %}
@@ -45,7 +45,7 @@
             {{ bar_chart(chartPrefix, chartLabels, [chartData], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix}) }}
         {% else %}
             <h4>
-                {%- if showMoneyBudget %}{{ 'label.budget'|trans }}{% else %}{{ 'label.timeBudget'|trans }}{% endif -%}
+                {%- if showMoneyBudget %}{{ 'budget'|trans }}{% else %}{{ 'timeBudget'|trans }}{% endif -%}
             </h4>
             {% set chartData = [] %}
             {% set chartLabels = [] %}
@@ -70,12 +70,9 @@
                             'label': (showMoneyBudget ? totalBudget|money(currency) : totalBudget|duration),
                             'value': (showMoneyBudget ? totalBudget|chart_money : totalBudget|chart_duration),
                         } %}
-                        {# line chart do not support coloring negative areas #}
-                        {#
                         {% if totalBudget < 0 %}
                             {% set chartValue = chartValue|merge({'color': 'red'}) %}
                         {% endif %}
-                        #}
                         {% set chartData = chartData|merge([chartValue]) %}
                     {% endif %}
                 {% endfor %}

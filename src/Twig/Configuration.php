@@ -10,23 +10,17 @@
 namespace App\Twig;
 
 use App\Configuration\SystemConfiguration;
+use App\Constants;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 final class Configuration extends AbstractExtension
 {
-    private $configuration;
-    private $cache = [];
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('config', [$this, 'get']),
@@ -35,30 +29,31 @@ final class Configuration extends AbstractExtension
 
     public function get(string $name)
     {
-        if (\array_key_exists($name, $this->cache)) {
-            return $this->cache[$name];
+        switch ($name) {
+            case 'chart-class':
+                return ''; // 'chart';
+            case 'theme.chart.background_color':
+                return '#3c8dbc';
+            case 'theme.chart.border_color':
+                return '#3b8bba';
+            case 'theme.chart.grid_color':
+                return 'rgba(0,0,0,.05)';
+            case 'theme.chart.height':
+                return '300';
+            case 'theme.calendar.background_color':
+                return Constants::DEFAULT_COLOR;
         }
 
-        $value = $this->configuration->find($name);
-        $this->cache[$name] = $value;
-
-        return $value;
+        return $this->configuration->find($name);
     }
 
     public function __call($name, $arguments)
     {
-        if (\array_key_exists($name, $this->cache)) {
-            return $this->cache[$name];
-        }
-
         $checks = ['is' . $name, 'get' . $name, 'has' . $name, $name];
 
         foreach ($checks as $methodName) {
             if (method_exists($this->configuration, $methodName)) {
-                $value = \call_user_func([$this->configuration, $methodName], $arguments);
-                $this->cache[$name] = $value;
-
-                return $value;
+                return \call_user_func([$this->configuration, $methodName], $arguments);
             }
         }
 

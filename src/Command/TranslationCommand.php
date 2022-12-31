@@ -9,8 +9,9 @@
 
 namespace App\Command;
 
+use App\Configuration\LocaleService;
 use App\Kernel;
-use App\Utils\LanguageService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,34 +25,24 @@ use Symfony\Component\HttpClient\HttpClient;
  *
  * @codeCoverageIgnore
  */
-class TranslationCommand extends Command
+#[AsCommand(name: 'kimai:translations')]
+final class TranslationCommand extends Command
 {
-    private $projectDirectory;
-    private $environment;
-    private $languageService;
-
-    public function __construct(string $projectDirectory, string $kernelEnvironment, LanguageService $languageService)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LocaleService $localeService)
     {
         parent::__construct();
-        $this->projectDirectory = $projectDirectory;
-        $this->environment = $kernelEnvironment;
-        $this->languageService = $languageService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:translations')
             ->setDescription('Translation adjustments')
             ->addOption('resname', null, InputOption::VALUE_NONE, 'Fix the resname vs. id attribute')
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
-            ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty kyes and files which have no translated key at all')
+            ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty keys and files which have no translated key at all')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
             // @see https://www.deepl.com/de/pro#developer
@@ -61,18 +52,16 @@ class TranslationCommand extends Command
 
     public function isEnabled(): bool
     {
-        return $this->environment !== 'prod';
+        return $this->kernelEnvironment !== 'prod';
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            'core_xliff' => $this->projectDirectory . '/translations/*.xliff',
             'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
-            'plugins_xliff' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xliff',
         ];
 
         if ($input->getOption('delete-resname')) {
@@ -123,7 +112,7 @@ class TranslationCommand extends Command
                         if (!file_exists($fromLocaleName)) {
                             $io->error('Could not find translation file: ' . $fromLocaleName);
 
-                            return 1;
+                            return Command::FAILURE;
                         }
                         $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
                     }
@@ -200,13 +189,13 @@ class TranslationCommand extends Command
         if ($locale !== null && $deepl === null) {
             $io->error('Missing "DeepL API Free" auth-key');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         if ($locale === null && $deepl !== null) {
             $io->error('Missing translation locale');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         if ($locale !== null && $deepl !== null) {
@@ -227,16 +216,16 @@ class TranslationCommand extends Command
             ];
 
             $locale = strtolower($locale);
-            if (!$this->languageService->isKnownLanguage($locale)) {
+            if (!$this->localeService->isKnownLocale($locale)) {
                 $io->error('Unknown locale given: ' . $locale);
 
-                return 1;
+                return Command::FAILURE;
             }
 
             if (!\array_key_exists($locale, $deeplySupportedLanguages)) {
                 $io->error('Locale not supported by Deeply: ' . $locale);
 
-                return 1;
+                return Command::FAILURE;
             }
 
             $allKeys = 0;
@@ -307,7 +296,7 @@ class TranslationCommand extends Command
                     } catch (\Exception $exception) {
                         $io->error($exception->getMessage());
 
-                        return 1;
+                        return Command::FAILURE;
                     }
 
                     $json = json_decode($rawResponseData->getContent(), true);
@@ -323,7 +312,7 @@ class TranslationCommand extends Command
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getTranslations(string $file): array
@@ -364,7 +353,7 @@ class TranslationCommand extends Command
         $xmlDocument->formatOutput = true;
         $xmlDocument->loadXML($xml->asXML());
 
-        $xpath = new \DOMXpath($xmlDocument);
+        $xpath = new \DOMXPath($xmlDocument);
         $xpath->registerNamespace('ns', $xmlDocument->documentElement->namespaceURI);
 
         $xmlContent = '';
@@ -379,7 +368,7 @@ class TranslationCommand extends Command
         }
 
         $fragment = $xmlDocument->createDocumentFragment();
-        $fragment->appendXml('<body>' . $xmlContent . '</body>');
+        $fragment->appendXML('<body>' . $xmlContent . '</body>');
 
         /** @var \DOMElement $element */
         $element = $xpath->evaluate('/ns:xliff/ns:file')->item(0);

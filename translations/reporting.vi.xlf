@@ -42,10 +42,6 @@
         <source>report_inactive_project</source>
         <target state="translated">Các dự án không hoạt động</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target state="translated">Báo cáo ban đầu</target>
-      </trans-unit>
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
         <source>report_customer_monthly_projects</source>
         <target state="translated">Dự án theo tháng, hoạt động và người dùng</target>

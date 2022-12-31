@@ -9,11 +9,11 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use App\Configuration\SystemConfiguration;
-use App\Entity\Configuration;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Event\ThemeJavascriptTranslationsEventTest;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
@@ -33,9 +33,6 @@ class ThemeEventExtensionTest extends TestCase
     {
         return [
             'theme' => [
-                'active_warning' => 3,
-                'box_color' => 'green',
-                'select_type' => null,
                 'show_about' => true,
                 'chart' => [
                     'background_color' => 'rgba(0,115,183,0.7)',
@@ -45,9 +42,7 @@ class ThemeEventExtensionTest extends TestCase
                 ],
                 'branding' => [
                     'logo' => null,
-                    'mini' => null,
                     'company' => null,
-                    'title' => null,
                 ],
             ],
         ];
@@ -62,11 +57,9 @@ class ThemeEventExtensionTest extends TestCase
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturn('foo');
 
-        $configs = [
-            (new Configuration())->setName('theme.branding.title')->setValue($title)
-        ];
+        $configs = [];
         $loader = new TestConfigLoader($configs);
-        $configuration = new SystemConfiguration($loader, $this->getDefaultSettings());
+        $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
 
         return new ThemeExtension($dispatcher, $translator, $configuration);
     }
@@ -108,41 +101,41 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut();
         $values = $sut->getJavascriptTranslations();
-        self::assertCount(24, $values);
+        self::assertCount(ThemeJavascriptTranslationsEventTest::COUNTER, $values);
     }
 
     public function getProgressbarColors()
     {
-        yield ['progress-bar-danger', 100, false];
-        yield ['progress-bar-danger', 91, false];
-        yield ['progress-bar-warning', 90, false];
-        yield ['progress-bar-warning', 80, false];
-        yield ['progress-bar-warning', 71, false];
-        yield ['progress-bar-success', 70, false];
-        yield ['progress-bar-success', 60, false];
-        yield ['progress-bar-success', 51, false];
-        yield ['progress-bar-primary', 50, false];
-        yield ['progress-bar-primary', 40, false];
-        yield ['progress-bar-primary', 31, false];
-        yield ['progress-bar-info', 30, false];
-        yield ['progress-bar-info', 20, false];
-        yield ['progress-bar-info', 10, false];
-        yield ['progress-bar-info', 0, false];
-        yield ['progress-bar-primary', 100, true];
-        yield ['progress-bar-primary', 91, true];
-        yield ['progress-bar-success', 90, true];
-        yield ['progress-bar-success', 80, true];
-        yield ['progress-bar-success', 71, true];
-        yield ['progress-bar-warning', 70, true];
-        yield ['progress-bar-warning', 60, true];
-        yield ['progress-bar-warning', 51, true];
-        yield ['progress-bar-danger', 50, true];
-        yield ['progress-bar-danger', 40, true];
-        yield ['progress-bar-danger', 31, true];
-        yield ['progress-bar-info', 30, true];
-        yield ['progress-bar-info', 20, true];
-        yield ['progress-bar-info', 10, true];
-        yield ['progress-bar-info', 0, true];
+        yield ['bg-red', 100, false];
+        yield ['bg-red', 91, false];
+        yield ['bg-warning', 90, false];
+        yield ['bg-warning', 80, false];
+        yield ['bg-warning', 71, false];
+        yield ['bg-green', 70, false];
+        yield ['bg-green', 60, false];
+        yield ['bg-green', 51, false];
+        yield ['bg-green', 50, false];
+        yield ['bg-green', 40, false];
+        yield ['bg-green', 31, false];
+        yield ['', 30, false];
+        yield ['', 20, false];
+        yield ['', 10, false];
+        yield ['', 0, false];
+        yield ['bg-green', 100, true];
+        yield ['bg-green', 91, true];
+        yield ['bg-green', 90, true];
+        yield ['bg-green', 80, true];
+        yield ['bg-green', 71, true];
+        yield ['bg-warning', 70, true];
+        yield ['bg-warning', 60, true];
+        yield ['bg-warning', 51, true];
+        yield ['bg-red', 50, true];
+        yield ['bg-red', 40, true];
+        yield ['bg-red', 31, true];
+        yield ['', 30, true];
+        yield ['', 20, true];
+        yield ['', 10, true];
+        yield ['', 0, true];
     }
 
     /**
@@ -166,20 +159,9 @@ class ThemeEventExtensionTest extends TestCase
     public function testGetBrandedTitle()
     {
         $sut = $this->getSut(false, 'MyCompany');
-        $this->assertEquals('MyCompany – foo', $sut->generateTitle());
-        $this->assertEquals('sdfsdf | MyCompany – foo', $sut->generateTitle('sdfsdf | '));
-        $this->assertEquals('<b>MyCompany</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
-        $this->assertEquals('MyCompany | foo', $sut->generateTitle(null, ' | '));
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testThemeConfig()
-    {
-        $sut = $this->getSut(false);
-        self::assertEquals(3, $sut->getThemeConfig('active_warning'));
-        self::assertEquals('green', $sut->getThemeConfig('box_color'));
-        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
+        $this->assertEquals('Kimai – foo', $sut->generateTitle());
+        $this->assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
+        $this->assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
+        $this->assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
     }
 }

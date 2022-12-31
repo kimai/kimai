@@ -22,15 +22,14 @@ export default class KimaiAPILink extends KimaiPlugin {
 
     constructor(selector) {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
     init() {
-        const self = this;
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', (event) => {
             let target = event.target;
-            while (target !== null && !target.matches('body')) {
-                if (target.classList.contains(self.selector)) {
+            while (target !== null && typeof target.matches === "function" && !target.matches('body')) {
+                if (target.classList.contains(this._selector)) {
                     const attributes = target.dataset;
 
                     let url = attributes['href'];
@@ -39,13 +38,13 @@ export default class KimaiAPILink extends KimaiPlugin {
                     }
 
                     if (attributes.question !== undefined) {
-                        self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
+                        this.getContainer().getPlugin('alert').question(attributes.question, (value) => {
                             if (value) {
-                                self._callApi(url, attributes);
+                                this._callApi(url, attributes);
                             }
                         });
                     } else {
-                        self._callApi(url, attributes);
+                        this._callApi(url, attributes);
                     }
 
                     event.preventDefault();
@@ -57,37 +56,45 @@ export default class KimaiAPILink extends KimaiPlugin {
         });
     }
 
+    /**
+     * @param {string} url
+     * @param {DOMStringMap} attributes
+     * @private
+     */
     _callApi(url, attributes)
     {
         const method = attributes['method'];
         const eventName = attributes['event'];
+        /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
-        const eventing = this.getContainer().getPlugin('event');
-        const alert = this.getContainer().getPlugin('alert');
-        const successHandle = function(result) {
-            eventing.trigger(eventName);
-            if (attributes.msgSuccess) {
-                alert.success(attributes.msgSuccess);
+        /** @type {KimaiEvent} EVENTS */
+        const EVENTS = this.getContainer().getPlugin('event');
+        /** @type {KimaiAlert} ALERT */
+        const ALERT = this.getContainer().getPlugin('alert');
+        const successHandle = () => {
+            EVENTS.trigger(eventName);
+            if (attributes['msgSuccess'] !== undefined) {
+                ALERT.success(attributes['msgSuccess']);
             }
         };
-        const errorHandle = function(xhr, err) {
+        const errorHandle = (error) => {
             let message = 'action.update.error';
-            if (attributes.msgError) {
-                message = attributes.msgError;
+            if (attributes['msgError'] !== undefined) {
+                message = attributes['msgError'];
             }
-            API.handleError(message, xhr, err);
+            API.handleError(message, error);
         };
 
         if (method === 'PATCH') {
             let data = {};
-            if (attributes.payload) {
-                data  = attributes.payload;
+            if (attributes['payload'] !== undefined) {
+                data = attributes['payload'];
             }
             API.patch(url, data, successHandle, errorHandle);
         } else if (method === 'POST') {
             let data = {};
-            if (attributes.payload) {
-                data  = attributes.payload;
+            if (attributes['payload'] !== undefined) {
+                data = attributes['payload'];
             }
             API.post(url, data, successHandle, errorHandle);
         } else if (method === 'DELETE') {

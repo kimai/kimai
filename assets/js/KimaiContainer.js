@@ -20,8 +20,8 @@ export default class KimaiContainer {
     /**
      * Create a new Container with the given configurations and translations.
      *
-     * @param {Object} configuration
-     * @param {Object} translation
+     * @param {KimaiConfiguration} configuration
+     * @param {KimaiTranslation} translation
      */
     constructor(configuration, translation) {
         if (!(configuration instanceof KimaiConfiguration)) {

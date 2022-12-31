@@ -10,7 +10,6 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -215,10 +214,7 @@ class UserControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('Access denied.', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
 
     public function testPatchAction()
@@ -229,7 +225,6 @@ class UserControllerTest extends APIControllerBaseTest
             'email' => 'foo@example.com',
             'title' => 'asdfghjkl',
             'plainPassword' => 'foo@example.com',
-            'enabled' => true,
             'language' => 'ru',
             'timezone' => 'Europe/Paris',
             'roles' => [
@@ -240,10 +235,11 @@ class UserControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertFalse($result['enabled']);
 
         $data = [
             'title' => 'qwertzui',
-            'enabled' => false,
+            'enabled' => true,
             'language' => 'it',
             'timezone' => 'America/New_York',
             'roles' => [
@@ -259,7 +255,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['username']);
         self::assertEquals('qwertzui', $result['title']);
-        self::assertFalse($result['enabled']);
+        self::assertTrue($result['enabled']);
         self::assertEquals('it', $result['language']);
         self::assertEquals('America/New_York', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);

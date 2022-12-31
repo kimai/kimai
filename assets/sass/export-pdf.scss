@@ -1,0 +1,62 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+body {
+    font-family: sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+}
+p {
+    margin: 0;
+}
+table.items {
+    border: 0.1mm solid #000000;
+    width: 100%;
+    font-size: 9pt;
+    border-collapse: collapse;
+}
+td, th {
+    padding: 7px;
+}
+td {
+    vertical-align: top;
+}
+.items td {
+    border-left: 0.1mm solid #000000;
+    border-right: 0.1mm solid #000000;
+}
+.items tr.even {
+    background-color: #f5f5f5;
+}
+.items tr.summary {
+    background-color: #efefef;
+}
+.items tr.summary td {
+    font-weight: bold;
+    border-top: 0.1mm solid #000000;
+    border-bottom: 0.1mm solid #000000;
+}
+table thead th {
+    background-color: #ececec;
+    border: 0.1mm solid #000000;
+    font-weight: bold;
+    font-size: 10pt;
+    text-align: left;
+}
+.items td.totals {
+    font-weight: bold;
+    border: 0.1mm solid #000000;
+}
+.items .center,
+.items td.duration,
+.items td.cost {
+    text-align: center;
+}
+.text-nowrap {
+    white-space: nowrap;
+}

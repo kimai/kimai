@@ -22,10 +22,6 @@
         <source>support</source>
         <target>الدعم</target>
       </trans-unit>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target>حول Kimai</target>
-      </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
         <target>تم نشره حسب %kimai%</target>

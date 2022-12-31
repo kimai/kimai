@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Não tem plugins instalados ainda.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Marketplace do Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -13,7 +13,7 @@ use App\Entity\UserPreference;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelUserHydrator implements InvoiceModelHydrator
+final class InvoiceModelUserHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {
@@ -24,10 +24,10 @@ class InvoiceModelUserHydrator implements InvoiceModelHydrator
         }
 
         $values = [
-            'user.name' => $user->getUsername(),
+            'user.name' => $user->getUserIdentifier(),
             'user.email' => $user->getEmail(),
-            'user.title' => $user->getTitle(),
-            'user.alias' => $user->getAlias(),
+            'user.title' => $user->getTitle() ?? '',
+            'user.alias' => $user->getAlias() ?? '',
         ];
 
         /** @var UserPreference $metaField */

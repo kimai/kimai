@@ -11,63 +11,39 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to update a Kimai installation.
  */
+#[AsCommand(name: 'kimai:update')]
 final class UpdateCommand extends Command
 {
-    public const ERROR_CACHE_CLEAN = 2;
-    public const ERROR_CACHE_WARMUP = 4;
-    public const ERROR_DATABASE = 8;
-    public const ERROR_MIGRATIONS = 32;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private Connection $connection, private string $kernelEnvironment)
     {
         parent::__construct();
-        $this->connection = $connection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:update')
             ->setDescription('Update your Kimai installation')
             ->setHelp('This command will execute all required steps to update your Kimai installation.')
         ;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Kimai updates running ...');
 
-        /** @var Application $application */
-        $application = $this->getApplication();
-        /** @var KernelInterface $kernel */
-        $kernel = $application->getKernel();
-        $environment = $kernel->getEnvironment();
+        $environment = $this->kernelEnvironment;
 
         // make sure database is available, Kimai running and installed
         try {
@@ -77,21 +53,21 @@ final class UpdateCommand extends Command
                 );
             }
 
-            if (!$this->connection->getSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
+            if (!$this->connection->createSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
                 $io->error('Tables missing. Did you run the installer already?');
 
-                return self::ERROR_DATABASE;
+                return Command::FAILURE;
             }
 
-            if (!$this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
+            if (!$this->connection->createSchemaManager()->tablesExist(['migration_versions'])) {
                 $io->error('Unknown migration status, aborting database update');
 
-                return self::ERROR_DATABASE;
+                return Command::FAILURE;
             }
         } catch (\Exception $ex) {
             $io->error('Failed to validate database: ' . $ex->getMessage());
 
-            return self::ERROR_DATABASE;
+            return Command::FAILURE;
         }
 
         // execute latest doctrine migrations
@@ -107,13 +83,13 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_MIGRATIONS;
+            return Command::FAILURE;
         }
 
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
 
-        if ($cacheResult !== 0) {
+        if ($cacheResult !== Command::SUCCESS) {
             $io->warning(
                 [
                     sprintf('Updated %s to version %s but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION),
@@ -128,10 +104,10 @@ final class UpdateCommand extends Command
             );
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 
@@ -143,7 +119,7 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_CLEAN;
+            return Command::FAILURE;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
@@ -154,9 +130,9 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_WARMUP;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

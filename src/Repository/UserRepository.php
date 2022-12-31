@@ -10,32 +10,40 @@
 namespace App\Repository;
 
 use App\Entity\Invoice;
-use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
-use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
+use App\Utils\Pagination;
+use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
  */
-class UserRepository extends EntityRepository implements UserLoaderInterface
+class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
 {
-    public function getById($id): ?User
+    public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
     {
-        @trigger_error('UserRepository::getById is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        return $this->getUserById($id);
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($preference);
+        if ($flush) {
+            $entityManager->flush();
+        }
     }
 
     /**
@@ -48,6 +56,20 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $entityManager = $this->getEntityManager();
         $entityManager->persist($user);
         $entityManager->flush();
+    }
+
+    public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void
+    {
+        if (!($user instanceof User)) {
+            return;
+        }
+
+        try {
+            $user->setPassword($newHashedPassword);
+            $this->saveUser($user);
+        } catch (\Exception $ex) {
+            // happens during login: if it fails, ignore it!
+        }
     }
 
     /**
@@ -93,10 +115,10 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      * Overwritten to fetch preferences when using the Profile controller actions.
      * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
      */
-    public function findOneBy(array $criteria, array $orderBy = null)
+    public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        if (\count($criteria) == 1 && isset($criteria['username'])) {
-            return $this->loadUserByUsername($criteria['username']);
+        if (\count($criteria) === 1 && isset($criteria['username'])) {
+            return $this->loadUserByIdentifier($criteria['username']);
         }
 
         return parent::findOneBy($criteria, $orderBy);
@@ -110,57 +132,46 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
-            return $this->count(['enabled' => (bool) $enabled]);
+            return $this->count(['enabled' => $enabled]);
         }
 
         return $this->count([]);
     }
 
     /**
-     * @param UserQuery $query
-     * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
-     * @deprecated since 1.4, use getUsersForQuery() instead
+     * @param string $identifier
+     * @return User
+     * @throws UserNotFoundException
      */
-    public function findByQuery(UserQuery $query)
-    {
-        @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
-            return $this->getPagerfantaForQuery($query);
-        }
-
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        if (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
-            return $qb->getQuery()->execute();
-        }
-
-        return $qb;
-    }
-
-    /**
-     * @param string $username
-     * @return null|User
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
         /** @var User|null $user */
         $user = $this->createQueryBuilder('u')
             ->select('u')
             ->where('u.username = :username')
             ->orWhere('u.email = :username')
-            ->setParameter('username', $username)
+            ->setParameter('username', $identifier)
             ->getQuery()
             ->getOneOrNullResult();
 
-        if ($user !== null) {
-            $loader = new UserLoader($this->getEntityManager(), true);
-            $loader->loadResults([$user]);
+        if ($user === null) {
+            throw new UserNotFoundException();
         }
 
+        $loader = new UserLoader($this->getEntityManager(), true);
+        $loader->loadResults([$user]);
+
         return $user;
+    }
+
+    public function refreshUser(UserInterface $user): User
+    {
+        return $this->loadUserByIdentifier($user->getUserIdentifier());
+    }
+
+    public function supportsClass(string $class): bool
+    {
+        return $class === User::class;
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder
@@ -171,7 +182,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         if ($query->isShowVisible()) {
             $or->add($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', true, ParameterType::BOOLEAN);
         }
 
         $includeAlways = $query->getUsersAlwaysIncluded();
@@ -191,6 +202,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
             $qb->andWhere($qb->expr()->notIn('u.id', $ids));
         }
+
+        $qb->andWhere($qb->expr()->eq('u.systemAccount', ':system'));
+        $qb->setParameter('system', false, Types::BOOLEAN);
 
         $qb->orderBy('u.username', 'ASC');
 
@@ -238,8 +252,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         if (\count($teams) > 0) {
             $userIds = [];
             foreach ($teams as $team) {
-                foreach ($team->getUsers() as $user) {
-                    $userIds[] = $user->getId();
+                foreach ($team->getUsers() as $teamMember) {
+                    $userIds[] = $teamMember->getId();
                 }
             }
             $userIds = array_unique($userIds);
@@ -287,8 +301,20 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $qb
             ->select('u')
             ->from(User::class, 'u')
-            ->orderBy('u.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'user':
+                    $qb->addSelect('COALESCE(u.alias, u.username) as HIDDEN userOrder');
+                    $orderBy = 'userOrder';
+                    break;
+                default:
+                    $orderBy = 'u.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
+        }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
@@ -305,10 +331,10 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', true, ParameterType::BOOLEAN);
         } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', false, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', false, ParameterType::BOOLEAN);
         }
 
         if ($query->getRole() !== null) {
@@ -320,6 +346,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 $qb->setParameter('role1', '%{}');
             }
             $qb->andWhere($rolesWhere);
+        }
+
+        if ($query->getSystemAccount() !== null) {
+            $qb->andWhere($qb->expr()->eq('u.systemAccount', ':system'));
+            $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
         if ($query->hasSearchTerm()) {
@@ -359,9 +390,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $qb;
     }
 
-    public function getPagerfantaForQuery(UserQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(UserQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -425,8 +456,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     ->update(Timesheet::class, 't')
                     ->set('t.user', ':replace')
                     ->where('t.user = :delete')
-                    ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
+                    ->setParameter('delete', $delete->getId())
+                    ->setParameter('replace', $replace->getId())
                     ->getQuery()
                     ->execute();
 
@@ -435,8 +466,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     ->update(Invoice::class, 'i')
                     ->set('i.user', ':replace')
                     ->where('i.user = :delete')
-                    ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
+                    ->setParameter('delete', $delete->getId())
+                    ->setParameter('replace', $replace->getId())
                     ->getQuery()
                     ->execute();
             }

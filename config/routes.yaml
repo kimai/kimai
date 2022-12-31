@@ -1,3 +1,45 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+    prefix: /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+api.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+api.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
+
+api:
+    resource: ../src/API/
+    type: annotation
+    prefix: /api
+
+auth:
+    resource: ../src/Controller/Auth/
+    type: annotation
+    prefix: /auth
+
+security:
+    resource: ../src/Controller/Security/
+    type: annotation
+    prefix: /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
 home:
     path: /
     defaults:
@@ -14,3 +56,11 @@ homeLocale:
         _locale: '%locale%'
         route: homepage
         permanent: true
+
+2fa_login:
+    path: /{_locale}/auth/2fa
+    defaults:
+        _controller: "scheb_two_factor.form_controller::form"
+
+2fa_login_check:
+    path: /{_locale}/auth/2fa_check

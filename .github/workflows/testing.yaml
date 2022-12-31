@@ -3,13 +3,13 @@ on:
     pull_request: null
     push:
         branches:
-            - master
+            - main
 jobs:
     integration:
         runs-on: ubuntu-latest
         services:
             mysql:
-                image: mysql:5.7
+                image: mysql:latest
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: kimai
@@ -19,30 +19,34 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: ['7.4', '8.0', '8.1']
+                php: ['8.1', '8.2']
 
         name: Integration (${{ matrix.php }})
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
+                with:
+                    persist-credentials: false
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    coverage: none
-                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
-                    tools: cs2pr:1.1.0, symfony-cli
+                    coverage: pcov
+                    extensions: ctype, gd, iconv, intl, ldap, mbstring, mysql, xml, zip
+                    tools: cs2pr, symfony-cli
+                env:
+                    fail-fast: true
 
             -   name: Determine composer cache directory
                 id: composer-cache
-                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+                run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
 
             -   name: Cache Composer dependencies
-                uses: actions/cache@v2
+                uses: actions/cache@v3
                 with:
-                    path: "${{ steps.composer-cache.outputs.directory }}"
+                    path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies
@@ -51,43 +55,49 @@ jobs:
             -   name: Validate Composer
                 run: composer validate --strict
 
-            -   name: Warmup cache for PHPStan
+            -   name: Warmup cache
                 run: APP_ENV=dev bin/console kimai:reload -n
 
             -   name: Check codestyles
-                run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
+                run: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 
-            -   name: Run PHPStan on Codebase
-                run: vendor/bin/phpstan analyse src -c phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
+            -   name: Run PHPStan for application
+                run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress --error-format=checkstyle | cs2pr
 
-            -   name: Run PHPStan on Tests
-                run: vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
+            -   name: Run PHPStan for tests
+                run: vendor/bin/phpstan analyse -c tests/phpstan.neon --no-progress --error-format=checkstyle | cs2pr
 
             -   name: Lint codebase
                 run: composer linting
 
-            -   name: Check for security issues in packages
-                run: symfony security:check
-
-            -   name: Install LDAP package
+            -   name: Install LDAP package (for tests)
                 run: composer require laminas/laminas-ldap
 
-            -   name: Setup problem matchers for PHPUnit
+            -   name: Setup problem matchers (for PHPUnit)
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            -   name: Run unit tests
-                run: composer kimai:tests-unit
+            -   name: Run quick unit-tests
+                run: composer tests-unit
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
 
-            -   name: Run integration tests
-                run: composer kimai:tests-integration
+            -   name: Full test-suite with coverage
+                run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+                    TEST_WITH_BUNDLES: 1
+
+            -   name: Upload code coverage
+                if: matrix.php == '8.1'
+                uses: codecov/codecov-action@v3
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
+                    files: ./coverage.xml
+                    fail_ci_if_error: true
 
             -   name: Run migrations on MySQL
                 run: |
@@ -99,3 +109,6 @@ jobs:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+
+            -   name: Check for security issues in packages
+                run: symfony security:check

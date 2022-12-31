@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -14,31 +12,23 @@ namespace App\API\Model;
 use App\Plugin\Plugin as CorePlugin;
 use JMS\Serializer\Annotation as Serializer;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
-class Plugin
+#[Serializer\ExclusionPolicy('all')]
+final class Plugin
 {
     /**
      * The plugin name, eg. "ExpensesBundle"
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      */
-    protected $name;
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
+    private ?string $name = null;
     /**
      * The plugin version, eg. "1.14"
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      */
-    protected $version;
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
+    private ?string $version = null;
 
     public function __construct(CorePlugin $plugin)
     {

@@ -16,26 +16,20 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ProjectValidator extends ConstraintValidator
+final class ProjectValidator extends ConstraintValidator
 {
-    /**
-     * @var Constraint[]
-     */
-    private $constraints;
-
     /**
      * @param Constraint[] $constraints
      */
-    public function __construct(iterable $constraints = [])
+    public function __construct(private iterable $constraints = [])
     {
-        $this->constraints = $constraints;
     }
 
     /**
      * @param Project|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof ProjectConstraint)) {
             throw new UnexpectedTypeException($constraint, ProjectConstraint::class);
@@ -47,18 +41,18 @@ class ProjectValidator extends ConstraintValidator
 
         $this->validateProject($value, $this->context);
 
-        foreach ($this->constraints as $constraint) {
+        foreach ($this->constraints as $innerConstraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($value, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($value, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 
-    protected function validateProject(Project $project, ExecutionContextInterface $context)
+    protected function validateProject(Project $project, ExecutionContextInterface $context): void
     {
         if (null !== $project->getStart() && null !== $project->getEnd() && $project->getStart()->getTimestamp() > $project->getEnd()->getTimestamp()) {
-            $context->buildViolation('End date must not be earlier then start date.')
+            $context->buildViolation(ProjectConstraint::getErrorName(ProjectConstraint::END_BEFORE_BEGIN_ERROR))
                 ->atPath('end')
                 ->setTranslationDomain('validators')
                 ->setCode(ProjectConstraint::END_BEFORE_BEGIN_ERROR)

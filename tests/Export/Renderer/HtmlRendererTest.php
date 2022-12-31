@@ -46,7 +46,7 @@ class HtmlRendererTest extends AbstractRendererTest
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
+        $twig = self::getContainer()->get('twig');
 
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->any())->method('getUser')->willReturn(new User());
@@ -57,7 +57,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $app = $twig->getGlobals()['app'];
         $twig->addGlobal('app', $app);
         $app->setTokenStorage($tokenStorage);
-        $stack = $kernel->getContainer()->get('request_stack');
+        $stack = self::getContainer()->get('request_stack');
         $request = new Request();
         $request->setLocale('en');
         $stack->push($request);
@@ -74,7 +74,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $content = $response->getContent();
 
         $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
-        $this->assertStringContainsString('<h3 id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
+        $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
         $this->assertEquals(1, substr_count($content, 'id="export-summary"'));
         $this->assertEquals(1, substr_count($content, 'id="export-records"'));
         $this->assertEquals(1, substr_count($content, 'id="summary-project"'));
@@ -82,7 +82,7 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $this->assertStringContainsString('<td>Customer Name</td>', $content);
         $this->assertStringContainsString('<td>project name</td>', $content);
-        $this->assertStringContainsString('<span class="duration-format" data-duration="7000">01:56 h</span>', $content);
+        $this->assertStringContainsString('<span class="duration-format" data-duration-decimal="1.94" data-duration="1:56">1:56</span>', $content);
         $this->assertStringContainsString('<td class="cost summary-rate">€2,437.12</td>', $content);
         $this->assertStringContainsString('-€100.92', $content);
 

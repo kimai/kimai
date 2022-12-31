@@ -24,13 +24,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a customer.
  */
-class CustomerType extends AbstractType
+final class CustomerType extends AbstractType
 {
-    private $customerHelper;
-
-    public function __construct(CustomerHelper $customerHelper)
+    public function __construct(private CustomerHelper $customerHelper)
     {
-        $this->customerHelper = $customerHelper;
     }
 
     public function getChoiceLabel(Customer $customer): string
@@ -43,10 +40,7 @@ class CustomerType extends AbstractType
         return ['data-currency' => $customer->getCurrency()];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -54,15 +48,15 @@ class CustomerType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Customer ID',
             ],
-            'label' => 'label.customer',
+            'label' => 'customer',
             'class' => Customer::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'query_builder_for_user' => true,
             'project_enabled' => false,
             'project_select' => 'project',
-            'start_date_param' => '%begin%',
-            'end_date_param' => '%end%',
+            'start_date_param' => '%begin_date%',
+            'end_date_param' => '%end_date%',
             'ignore_date' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
             // @var Customer|null
@@ -108,6 +102,7 @@ class CustomerType extends AbstractType
                 }
 
                 return [
+                    'reload' => 'get_customers',
                     'select' => $options['project_select'],
                     'route' => 'get_projects',
                     'route_params' => $routeParams,
@@ -119,17 +114,14 @@ class CustomerType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-option-pattern' => $this->customerHelper->getChoicePattern(),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

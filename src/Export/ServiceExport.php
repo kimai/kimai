@@ -9,6 +9,7 @@
 
 namespace App\Export;
 
+use App\Entity\ExportableItem;
 use App\Event\ExportItemsQueryEvent;
 use App\Repository\Query\ExportQuery;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -27,14 +28,9 @@ final class ServiceExport
      * @var ExportRepositoryInterface[]
      */
     private $repositories = [];
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function addRenderer(ExportRendererInterface $renderer): void
@@ -92,19 +88,17 @@ final class ServiceExport
 
     /**
      * @param ExportQuery $query
-     * @return ExportItemInterface[]
+     * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
-    public function getExportItems(ExportQuery $query)
+    public function getExportItems(ExportQuery $query): array
     {
         $items = [];
 
-        $event = new ExportItemsQueryEvent($query);
-        $this->eventDispatcher->dispatch($event);
-        $max = $event->getExportQuery()->getMaxResults();
+        $max = $this->getMaximumResults($query);
 
         foreach ($this->repositories as $repository) {
-            $items = array_merge($items, $repository->getExportItemsForQuery($event->getExportQuery()));
+            $items = array_merge($items, $repository->getExportItemsForQuery($query));
             if ($max !== null && \count($items) > $max) {
                 throw new TooManyItemsExportException(
                     sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
@@ -120,5 +114,13 @@ final class ServiceExport
         foreach ($this->repositories as $repository) {
             $repository->setExported($items);
         }
+    }
+
+    public function getMaximumResults(ExportQuery $query): ?int
+    {
+        $event = new ExportItemsQueryEvent($query);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getExportQuery()->getMaxResults();
     }
 }

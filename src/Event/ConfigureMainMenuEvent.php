@@ -10,8 +10,6 @@
 namespace App\Event;
 
 use App\Utils\MenuItemModel;
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
@@ -19,70 +17,50 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ConfigureMainMenuEvent extends Event
 {
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const CONFIGURE = ConfigureMainMenuEvent::class;
+    private MenuItemModel $menu;
+    private MenuItemModel $apps;
+    private MenuItemModel $admin;
+    private MenuItemModel $system;
 
-    /**
-     * @var Request
-     */
-    private $request;
-    /**
-     * @var SidebarMenuEvent
-     */
-    private $event;
-    /**
-     * @var MenuItemModel
-     */
-    private $admin;
-    /**
-     * @var MenuItemModel
-     */
-    private $system;
-
-    /**
-     * @param Request $request
-     * @param SidebarMenuEvent $event
-     * @param MenuItemModel $admin
-     * @param MenuItemModel $system
-     */
-    public function __construct(Request $request, SidebarMenuEvent $event, MenuItemModel $admin, MenuItemModel $system)
+    public function __construct()
     {
-        $this->request = $request;
-        $this->event = $event;
-        $this->admin = $admin;
-        $this->system = $system;
+        $this->menu = new MenuItemModel('main', 'menu.root');
+        $this->apps = new MenuItemModel('apps', 'menu.apps', '', [], 'applications');
+        $this->admin = new MenuItemModel('admin', 'menu.admin', '', [], 'administration');
+        $this->system = new MenuItemModel('system', 'menu.system', '', [], 'configuration');
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest()
+    public function getMenu(): MenuItemModel
     {
-        return $this->request;
+        return $this->menu;
     }
 
-    /**
-     * @return SidebarMenuEvent
-     */
-    public function getMenu()
+    public function getTimesheetMenu(): ?MenuItemModel
     {
-        return $this->event;
+        return $this->menu->getChild('timesheet');
     }
 
-    /**
-     * @return MenuItemModel
-     */
-    public function getAdminMenu()
+    public function getInvoiceMenu(): ?MenuItemModel
+    {
+        return $this->menu->getChild('invoice');
+    }
+
+    public function getReportingMenu(): ?MenuItemModel
+    {
+        return $this->menu->getChild('reporting');
+    }
+
+    public function getAppsMenu(): MenuItemModel
+    {
+        return $this->apps;
+    }
+
+    public function getAdminMenu(): MenuItemModel
     {
         return $this->admin;
     }
 
-    /**
-     * @return MenuItemModel
-     */
-    public function getSystemMenu()
+    public function getSystemMenu(): MenuItemModel
     {
         return $this->system;
     }

@@ -31,7 +31,7 @@
         <target>Dieser Wert ist keine gültige Rolle.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>The end date must not be before the start date.</source>
+        <source>End date must not be earlier then start date.</source>
         <target state="translated">Das Enddatum darf nicht vor dem Startdatum liegen.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
@@ -86,9 +86,29 @@
         <source>This timesheet is already exported.</source>
         <target>Dieser Eintrag wurde bereits exportiert.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target>Es gab ein Problem beim Speichern.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet">
+        <source>Cannot stop running timesheet</source>
+        <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target>Das angegebene Format für die Tageszeit ist nicht korrekt.</target>
+      </trans-unit>
       <trans-unit id="FtWbd_F" resname="Global activities are forbidden for the selected project.">
         <source>Global activities are forbidden for the selected project.</source>
         <target>Globale Aktivitäten sind in dem gewählten Projekt nicht erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target>Der übermittelte Code ist nicht der korrekte TOTP Token.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target>Dies ist kein gültiger Name für eine Benutzer-Rolle.</target>
       </trans-unit>
     </body>
   </file>

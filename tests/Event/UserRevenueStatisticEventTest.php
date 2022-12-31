@@ -26,7 +26,7 @@ class UserRevenueStatisticEventTest extends TestCase
         self::assertSame($user, $sut->getUser());
         self::assertNull($sut->getEnd());
         self::assertNull($sut->getBegin());
-        self::assertSame(0.0, $sut->getRevenue());
+        self::assertSame([], $sut->getRevenue());
 
         $end = new \DateTime();
         $begin = new \DateTime();
@@ -36,13 +36,13 @@ class UserRevenueStatisticEventTest extends TestCase
         self::assertSame($user, $sut->getUser());
         self::assertSame($begin, $sut->getBegin());
         self::assertSame($end, $sut->getEnd());
-        self::assertSame(0.0, $sut->getRevenue());
+        self::assertSame([], $sut->getRevenue());
 
-        $sut->addRevenue(13.45);
-        $sut->addRevenue(6.55);
-        $sut->addRevenue(111);
-        $sut->addRevenue(2222.22);
+        $sut->addRevenue('CAD', 13.45);
+        $sut->addRevenue('CAD', 6.55);
+        $sut->addRevenue('CAD', 111);
+        $sut->addRevenue('CAD', 2222.22);
 
-        self::assertSame(2353.22, $sut->getRevenue());
+        self::assertSame(['CAD' => 2353.22], $sut->getRevenue());
     }
 }

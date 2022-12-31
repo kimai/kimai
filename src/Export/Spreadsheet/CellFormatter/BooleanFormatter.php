@@ -11,7 +11,7 @@ namespace App\Export\Spreadsheet\CellFormatter;
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class BooleanFormatter implements CellFormatterInterface
+final class BooleanFormatter implements CellFormatterInterface
 {
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {

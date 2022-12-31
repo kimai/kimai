@@ -9,7 +9,7 @@
 
 namespace App\Validator;
 
-class ValidationException extends \RuntimeException
+final class ValidationException extends \RuntimeException
 {
     public function __construct(string $message = null)
     {

@@ -11,9 +11,9 @@ namespace App\Model\Statistic;
 
 class Timesheet
 {
-    private $totalDuration = 0;
-    private $totalRate = 0.00;
-    private $totalInternalRate = 0.00;
+    private int $totalDuration = 0;
+    private float $totalRate = 0.00;
+    private float $totalInternalRate = 0.00;
 
     /**
      * For unified access, used in frontend.

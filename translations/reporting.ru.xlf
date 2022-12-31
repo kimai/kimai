@@ -14,10 +14,6 @@
         <source>report_monthly_users</source>
         <target>Месячный просмотр для всех пользователей</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Исходный отчет</target>
-      </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>
         <target>Неактивные проекты</target>

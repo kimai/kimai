@@ -42,7 +42,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         return [
             [4, 'duration', 'Working hours total'],
             [4, 'rate', 'Total revenue'],
-            [4, 'internalRate', 'Internal rate'],
+            [4, 'internalRate', 'Internal price'],
         ];
     }
 
@@ -54,7 +54,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, sprintf('%s?user=%s&date=12999119191&sumType=%s', $this->getReportUrl(), $user, $dataType));
-        self::assertStringContainsString(sprintf('<div class="box-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        self::assertStringContainsString(sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
         $option = $client->getCrawler()->filterXPath("//select[@id='user']/option[@selected]");
         self::assertEquals($user, $option->attr('value'));
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
@@ -66,7 +66,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importReportingFixture(User::ROLE_USER);
         $this->assertAccessIsGranted($client, sprintf('%s?date=12999119191', $this->getReportUrl()));
-        self::assertStringContainsString(sprintf('<div class="box-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        self::assertStringContainsString(sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");

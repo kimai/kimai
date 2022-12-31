@@ -12,7 +12,6 @@ namespace App\Export\Spreadsheet\Extractor;
 use App\Export\Annotation\Expose;
 use App\Export\Annotation\Order;
 use App\Export\Spreadsheet\ColumnDefinition;
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
@@ -20,18 +19,10 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
  */
 final class AnnotationExtractor implements ExtractorInterface
 {
-    /**
-     * @var ExpressionLanguage
-     */
-    private $expressionLanguage;
-    /**
-     * @var Reader
-     */
-    private $annotationReader;
+    private ExpressionLanguage $expressionLanguage;
 
-    public function __construct(Reader $annotationReader)
+    public function __construct()
     {
-        $this->annotationReader = $annotationReader;
         $this->expressionLanguage = new ExpressionLanguage();
     }
 
@@ -54,88 +45,98 @@ final class AnnotationExtractor implements ExtractorInterface
 
         $columns = [];
 
-        if (null !== ($definitions = $this->annotationReader->getClassAnnotations($reflectionClass))) {
-            foreach ($definitions as $definition) {
-                if ($definition instanceof Order) {
-                    foreach ($definition->order as $columnName) {
-                        $columns[$columnName] = null;
-                    }
-                }
-            }
-            foreach ($definitions as $definition) {
-                if ($definition instanceof Expose) {
-                    if (null === $definition->name) {
-                        throw new ExtractorException(sprintf('@Expose needs a name attribute on class level hierarchy, check %s::class', $value));
-                    }
-                    if (null === $definition->exp) {
-                        throw new ExtractorException(sprintf('@Expose needs an expression attribute on class level hierarchy, check %s::class', $value));
-                    }
-
-                    $parsed = $this->expressionLanguage->parse($definition->exp, ['object']);
-
-                    $columns[$definition->name] = new ColumnDefinition(
-                        $definition->label,
-                        $definition->type,
-                        function ($obj) use ($parsed) {
-                            return $parsed->getNodes()->evaluate([], ['object' => $obj]);
-                        }
-                    );
-                }
+        $order = $reflectionClass->getAttributes(Order::class);
+        foreach ($order as $definition) {
+            foreach ($definition->getArguments()[0] as $columnName) {
+                $columns[$columnName] = null;
             }
         }
 
+        $definitions = $reflectionClass->getAttributes(Expose::class);
+        foreach ($definitions as $definition) {
+            $arguments = $definition->getArguments();
+            if (!\array_key_exists('name', $arguments) || $arguments['name'] === null) {
+                throw new ExtractorException(sprintf('@Expose needs the "name" attribute on class level hierarchy, check %s::class', $value));
+            }
+            if (!\array_key_exists('exp', $arguments) || $arguments['exp'] === null) {
+                throw new ExtractorException(sprintf('@Expose needs the "exp" attribute on class level hierarchy, check %s::class', $value));
+            }
+            if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
+                throw new ExtractorException(sprintf('@Expose needs the "label" attribute on class level hierarchy, check %s::class', $value));
+            }
+
+            $parsed = $this->expressionLanguage->parse($arguments['exp'], ['object']);
+
+            $columns[$arguments['name']] = new ColumnDefinition(
+                $arguments['label'],
+                $arguments['type'] ?? 'string',
+                function ($obj) use ($parsed) {
+                    return $parsed->getNodes()->evaluate([], ['object' => $obj]);
+                }
+            );
+        }
+
         foreach ($reflectionClass->getProperties() as $property) {
-            if (null !== ($definitions = $this->annotationReader->getPropertyAnnotations($property))) {
-                foreach ($definitions as $definition) {
-                    if ($definition instanceof Expose) {
-                        if (null !== $definition->exp) {
-                            throw new ExtractorException(sprintf('@Expose only supports the expression attribute on class level hierarchy, check %s::$%s', $value, $property->getName()));
+            $definitions = $property->getAttributes(Expose::class);
+            foreach ($definitions as $definition) {
+                $arguments = $definition->getArguments();
+                if (\array_key_exists('exp', $arguments) && $arguments['exp'] !== null) {
+                    throw new ExtractorException(sprintf('@Expose only supports the "exp" attribute on class level hierarchy, check %s::$%s', $value, $property->getName()));
+                }
+                if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
+                    throw new ExtractorException(sprintf('@Expose needs the "label" attribute on property level hierarchy, check %s::$%s', $value, $property->getName()));
+                }
+
+                $name = $property->getName();
+                if (\array_key_exists('name', $arguments) && $arguments['name'] !== null) {
+                    $name = $arguments['name'];
+                }
+
+                $columns[$name] = new ColumnDefinition(
+                    $arguments['label'],
+                    $arguments['type'] ?? 'string',
+                    function ($obj) use ($property) {
+                        if (!$property->isPublic()) {
+                            $property->setAccessible(true);
                         }
 
-                        $name = empty($definition->name) ? $property->getName() : $definition->name;
-
-                        $columns[$name] = new ColumnDefinition(
-                            $definition->label,
-                            $definition->type,
-                            function ($obj) use ($property) {
-                                if (!$property->isPublic()) {
-                                    $property->setAccessible(true);
-                                }
-
-                                return $property->getValue($obj);
-                            }
-                        );
+                        return $property->getValue($obj);
                     }
-                }
+                );
             }
         }
 
         foreach ($reflectionClass->getMethods() as $method) {
-            if (null !== ($definitions = $this->annotationReader->getMethodAnnotations($method))) {
-                foreach ($definitions as $definition) {
-                    if ($definition instanceof Expose) {
-                        if (null !== $definition->exp) {
-                            throw new ExtractorException(sprintf('@Expose only supports the expression attribute on class level hierarchy, check %s::%s()', $value, $method->getName()));
-                        }
-                        $name = empty($definition->name) ? $method->getName() : $definition->name;
-
-                        if (\count($method->getParameters()) > 0) {
-                            throw new ExtractorException(sprintf('@Expose does not support method %s::%s(...), it has required parameters.', $value, $method->getName()));
-                        }
-
-                        $columns[$name] = new ColumnDefinition(
-                            $definition->label,
-                            $definition->type,
-                            function ($obj) use ($method) {
-                                if (!$method->isPublic()) {
-                                    $method->setAccessible(true);
-                                }
-
-                                return $method->invoke($obj);
-                            }
-                        );
-                    }
+            $definitions = $method->getAttributes(Expose::class);
+            foreach ($definitions as $definition) {
+                if (\count($method->getParameters()) > 0) {
+                    throw new ExtractorException(sprintf('@Expose does not support method %s::%s(...) as it has required parameters.', $value, $method->getName()));
                 }
+
+                $arguments = $definition->getArguments();
+                if (\array_key_exists('exp', $arguments) && $arguments['exp'] !== null) {
+                    throw new ExtractorException(sprintf('@Expose only supports the "exp" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
+                }
+                if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
+                    throw new ExtractorException(sprintf('@Expose needs the "label" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
+                }
+
+                $name = $method->getName();
+                if (\array_key_exists('name', $arguments) && $arguments['name'] !== null) {
+                    $name = $arguments['name'];
+                }
+
+                $columns[$name] = new ColumnDefinition(
+                    $arguments['label'],
+                    $arguments['type'] ?? 'string',
+                    function ($obj) use ($method) {
+                        if (!$method->isPublic()) {
+                            $method->setAccessible(true);
+                        }
+
+                        return $method->invoke($obj);
+                    }
+                );
             }
         }
 

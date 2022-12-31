@@ -14,10 +14,6 @@
         <source>report_monthly_users</source>
         <target>Összes felhasználó havi nézete</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Kezdeti jelentés</target>
-      </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users">
         <source>report_yearly_users</source>
         <target>Éves nézet minden felhasználó számára</target>

@@ -11,7 +11,9 @@ namespace App\Form;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Form\Type\InvoiceLabelType;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TeamType;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
@@ -24,78 +26,79 @@ class ActivityEditForm extends AbstractType
 {
     use EntityFormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $project = null;
         $customer = null;
-        $new = true;
+        $isNew = true;
         $isGlobal = false;
         $options['currency'] = null;
 
         if (isset($options['data'])) {
             /** @var Activity $entry */
             $entry = $options['data'];
+            $isGlobal = $entry->isGlobal();
 
-            if (null !== $entry->getProject()) {
+            if (!$isGlobal) {
                 $project = $entry->getProject();
                 $customer = $project->getCustomer();
                 $options['currency'] = $customer->getCurrency();
-            } else {
-                $isGlobal = null === $entry->getProject();
             }
 
-            $new = $entry->getId() === null;
+            $isNew = $entry->getId() === null;
         }
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
                 'required' => false,
             ])
-            ->add('invoiceText', TextareaType::class, [
-                'label' => 'label.invoiceText',
-                'required' => false,
-            ])
+            ->add('invoiceText', InvoiceLabelType::class)
         ;
 
-        if ($new || !$isGlobal) {
+        if ($isNew || !$isGlobal) {
             $builder
                 ->add('project', ProjectType::class, [
                     'required' => false,
+                    'help' => 'help.globalActivity',
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
                         $query->setIgnoreDate(true);
+                        $query->setWithCustomer(true);
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
                 ]);
         }
 
+        if ($isNew) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => false,
+                    'by_reference' => false,
+                    'help' => 'help.teams',
+                ]);
+        }
+
         $this->addCommonFields($builder, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Activity::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
-            // @deprecated not supported since 1.15, which removed the customer select completely
-            'customer' => false,
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
             'include_time' => false,

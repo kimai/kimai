@@ -8,13 +8,13 @@
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
-    {% set dataTypeTitle = 'label.rate_internal' %}
+    {% set dataTypeTitle = 'internalRate' %}
 {% else %}
     {% set dataTypeTitle = 'stats.durationTotal' %}
 {% endif %}
 {% set columns = 2 %}
 {% set totalCurrency = false %}
-<table class="table table-bordered table-hover dataTable">
+<table class="table table-hover dataTable">
     <thead>
         <tr>
             <th>&nbsp;</th>

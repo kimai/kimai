@@ -11,7 +11,6 @@ namespace App\Form;
 
 use App\Form\Type\TeamType;
 use App\Form\Type\UserRoleType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,14 +21,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserCreateType extends UserEditType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', null, [
-                'label' => 'label.username',
+                'label' => 'username',
                 'required' => true,
                 'attr' => [
                     'autofocus' => 'autofocus'
@@ -38,8 +34,16 @@ class UserCreateType extends UserEditType
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password', 'attr' => ['autocomplete' => 'new-password']],
-                'second_options' => ['label' => 'label.password_repeat', 'attr' => ['autocomplete' => 'new-password']],
+                'first_options' => [
+                    'label' => 'password',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
+                'second_options' => [
+                    'label' => 'password_repeat',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
             ]);
 
         parent::buildForm($builder, $options);
@@ -61,23 +65,14 @@ class UserCreateType extends UserEditType
                     'required' => false,
                 ]);
         }
-
-        if ($options['include_add_more'] === true) {
-            $builder->add('create_more', CheckboxType::class, [
-                'label' => 'label.create_more',
-                'required' => false,
-                'mapped' => false,
-            ]);
-        }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
             'validation_groups' => ['UserCreate', 'Registration'],
-            'include_add_more' => false,
             'include_roles' => false,
             'include_teams' => false,
         ]);

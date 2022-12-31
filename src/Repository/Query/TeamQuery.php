@@ -13,12 +13,12 @@ use App\Entity\User;
 
 class TeamQuery extends BaseQuery
 {
-    public const TEAM_ORDER_ALLOWED = ['id', 'name'];
+    public const TEAM_ORDER_ALLOWED = ['name'];
 
     /**
      * @var User[]
      */
-    private $users = [];
+    private array $users = [];
 
     public function __construct()
     {

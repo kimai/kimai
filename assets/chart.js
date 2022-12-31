@@ -1,2 +1,56 @@
+import {
+    Chart,
+    ArcElement,
+    LineElement,
+    BarElement,
+    PointElement,
+    BarController,
+//    BubbleController,
+    DoughnutController,
+    LineController,
+    PieController,
+//    PolarAreaController,
+//    RadarController,
+//    ScatterController,
+    CategoryScale,
+    LinearScale,
+//    LogarithmicScale,
+//    RadialLinearScale,
+//    TimeScale,
+//    TimeSeriesScale,
+//    Decimation,
+//    Filler,
+    Legend,
+    Title,
+    Tooltip,
+//    SubTitle
+} from 'chart.js';
 
-require('chart.js/dist/Chart.min');
+Chart.register(
+    ArcElement,
+    LineElement,
+    BarElement,
+    PointElement,
+    BarController,
+//    BubbleController,
+    DoughnutController,
+    LineController,
+    PieController,
+//    PolarAreaController,
+//    RadarController,
+//    ScatterController,
+    CategoryScale,
+    LinearScale,
+//    LogarithmicScale,
+//    RadialLinearScale,
+//    TimeScale,
+//    TimeSeriesScale,
+//    Decimation,
+//    Filler,
+    Legend,
+    Title,
+    Tooltip,
+//    SubTitle
+);
+
+global.Chart = Chart;

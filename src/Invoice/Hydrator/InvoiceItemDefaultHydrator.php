@@ -13,12 +13,9 @@ use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
 
-class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
+final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
+    private InvoiceModel $model;
 
     public function setInvoiceModel(InvoiceModel $model)
     {
@@ -32,11 +29,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $rate = $item->getRate();
         $internalRate = $item->getInternalRate();
         $appliedRate = $item->getHourlyRate();
-        if ($this->model->getTemplate()->isDecimalDuration()) {
-            $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
-        } else {
-            $amount = $formatter->getFormattedDuration($item->getDuration());
-        }
+        $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
 
         if ($item->isFixedRate()) {
@@ -63,11 +56,11 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 
         $values = [
             'entry.row' => '',
-            'entry.description' => $description,
+            'entry.description' => $description ?? '',
             'entry.amount' => $amount,
             'entry.type' => $item->getType(),
             'entry.tags' => implode(', ', $item->getTags()),
-            'entry.category' => $item->getCategory(),
+            'entry.category' => $item->getCategory() ?? '',
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
@@ -91,9 +84,9 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.week' => \intval($begin->format('W')),
             'entry.weekyear' => $begin->format('o'),
             'entry.user_id' => $user->getId(),
-            'entry.user_name' => $user->getUsername(),
-            'entry.user_title' => $user->getTitle(),
-            'entry.user_alias' => $user->getAlias(),
+            'entry.user_name' => $user->getUserIdentifier(),
+            'entry.user_title' => $user->getTitle() ?? '',
+            'entry.user_alias' => $user->getAlias() ?? '',
         ];
 
         if (null !== $activity) {

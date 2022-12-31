@@ -19,19 +19,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Support Remote-API calls for Entity select-boxes.
  */
-class SelectWithApiDataExtension extends AbstractTypeExtension
+final class SelectWithApiDataExtension extends AbstractTypeExtension
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
-
-    /**
-     * @param UrlGeneratorInterface $router
-     */
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(private UrlGeneratorInterface $router)
     {
-        $this->router = $router;
     }
 
     public static function getExtendedTypes(): iterable
@@ -44,7 +35,7 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
      * @param FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (!isset($options['api_data'])) {
             return;
@@ -54,6 +45,12 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
 
         if (!\is_array($apiData)) {
             throw new \InvalidArgumentException('Option "api_data" must be an array for form "' . $form->getName() . '"');
+        }
+
+        if (isset($apiData['create'])) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-create' => $this->router->generate($apiData['create']),
+            ]);
         }
 
         if (!isset($apiData['select'])) {
@@ -93,12 +90,15 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
                 'data-empty-url' => $this->router->generate($apiData['route'], $apiData['empty_route_params']),
             ]);
         }
+
+        if (isset($apiData['reload'])) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-reload' => $this->router->generate($apiData['reload']),
+            ]);
+        }
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['api_data']);
         $resolver->setAllowedTypes('api_data', 'array');

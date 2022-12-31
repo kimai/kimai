@@ -1,94 +1,44 @@
-{% extends 'reporting/layout.html.twig' %}
+{% extends 'reporting/report_user_list_layout.html.twig' %}
 
-{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
-
-{% block report %}
-
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% from "macros/widgets.html.twig" import nothing_found %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'user-list-filter-form'}}) }}
+{% block report_content %}
+    {% embed 'reporting/user_list_period_data.html.twig' with {stats: stats, dataType: dataType, period_attribute: period_attribute, subReportDate: subReportDate, decimal: decimal} only %}
+        {% block period_name %}
+            <th class="text-center text-nowrap">
+                <a href="{{ path('report_monthly_users', {'date': column|report_date, 'sumType': dataType}) }}">
+                    {{ column|month_name }}<br>
+                    {{ column|date_format('Y') }}
+                </a>
+            </th>
         {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
+        {% block total_rate_user %}
+            <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(subReportDate.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                {{ usersTotalRate|money }}
+            </a>
         {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form.date) }}
-            {% if form.team is defined %}
-                {{ form_widget(form.team) }}
-            {% endif %}
-            {% if form.sumType.vars.choices|length > 1 %}
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu checkbox-menu">
-                        <li>
-                            {{ form_widget(form.sumType) }}
-                        </li>
-                    </ul>
-                </div>
-            {% endif %}
-            <button class="btn btn-primary" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+        {% block total_internal_rate_user %}
+            <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(subReportDate.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                {{ usersTotalInternalRate|money }}
+            </a>
         {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
-        {% block box_body %}
-            {% if not hasData %}
-                {{ nothing_found() }}
-            {% else %}
-                {% embed 'reporting/user_list_period_data.html.twig' %}
-                    {% block period_name %}
-                        <th class="text-center text-nowrap">
-                            <a href="{{ path('report_monthly_users', {'date': column|report_date, 'sumType': dataType}) }}">
-                                {{ column|month_name }}<br>
-                                {{ column|date_format('Y') }}
-                            </a>
-                        </th>
-                    {% endblock %}
-                    {% block total_rate_user %}
-                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
-                            {{ usersTotalRate|money }}
-                        </a>
-                    {% endblock %}
-                    {% block total_internal_rate_user %}
-                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
-                            {{ usersTotalInternalRate|money }}
-                        </a>
-                    {% endblock %}
-                    {% block total_duration_user %}
-                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
-                            {{ usersTotalDuration|duration(decimal) }}
-                        </a>
-                    {% endblock %}
-                    {% block rate %}
-                        <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
-                            {{ period.totalRate|money }}
-                        </a>
-                    {% endblock %}
-                    {% block internal_rate %}
-                        <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
-                            {{ period.totalInternalRate|money }}
-                        </a>
-                    {% endblock %}
-                    {% block duration %}
-                        <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
-                            {{ period.totalDuration|duration(decimal) }}
-                        </a>
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
+        {% block total_duration_user %}
+            <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(subReportDate.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                {{ usersTotalDuration|duration(decimal) }}
+            </a>
+        {% endblock %}
+        {% block rate %}
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+                {{ period.totalRate|money }}
+            </a>
+        {% endblock %}
+        {% block internal_rate %}
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+                {{ period.totalInternalRate|money }}
+            </a>
+        {% endblock %}
+        {% block duration %}
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+                {{ period.totalDuration|duration(decimal) }}
+            </a>
         {% endblock %}
     {% endembed %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#user-list-filter-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-    </script>
 {% endblock %}

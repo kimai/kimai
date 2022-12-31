@@ -9,37 +9,57 @@
  * [KIMAI] KimaiReducedClickHandler: abstract class
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiReducedClickHandler extends KimaiPlugin {
 
-    _addClickHandler(selector, callback) {
-        jQuery('body').on('click', selector, function(event) {
-            // just in case an inner element is editable, than this should not be triggered
-            if (event.target.parentNode.isContentEditable || event.target.isContentEditable) {
+    /**
+     * No _underscore naming for now, as it would be mangled otherwise
+     * @param selector
+     * @param callback
+     */
+    addClickHandler(selector, callback) {
+        document.body.addEventListener('click', (event) => {
+            // event.currentTarget is ALWAYS the body
+
+            let target = event.target;
+            while (target !== null) {
+                const tagName = target.tagName.toUpperCase();
+                if (tagName === 'BODY') {
+                    return;
+                }
+
+                if (target.matches(selector)) {
+                    break;
+                }
+
+                // when an element is clicked, which can trigger stuff itself, we don't want the event to be processed
+                if (tagName === 'A' || tagName === 'BUTTON' || tagName === 'INPUT' || tagName === 'LABEL') {
+                    return;
+                }
+
+                target = target.parentNode;
+            }
+
+            if (target === null) {
                 return;
             }
 
-            // handles the "click" on table rows or list elements
-            let target = event.target;
-            if (event.currentTarget.matches('tr') || event.currentTarget.matches('li')) {
-                while (target !== null && !target.matches('body')) {
-                    // when an element within the row is clicked, that can trigger stuff itself, we don't want the event to be processed
-                    // don't act if a link, button or form element was clicked
-                    if (target.matches('a') || target.matches ('button') || target.matches ('input')) {
-                        return;
-                    }
-                    target = target.parentNode;
-                }
+            // just in case an inner element is editable, then this should not be triggered
+            if (target.isContentEditable || target.parentNode.isContentEditable) {
+                return;
+            }
+
+            if (!target.matches(selector)) {
+                return;
             }
 
             event.preventDefault();
             event.stopPropagation();
 
-            let href = jQuery(this).attr('data-href');
-            if (!href) {
-                href = jQuery(this).attr('href');
+            let href = target.dataset['href'];
+            if (href === undefined || href === null) {
+                href = target.href;
             }
 
             if (href === undefined || href === null || href === '') {

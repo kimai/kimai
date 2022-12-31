@@ -1,16 +1,15 @@
 {% extends 'security/self-registration/layout.html.twig' %}
 
 {% block login_form %}
-
     <p>
-        {{ 'registration.confirmed'|trans({'%username%': user.username}, 'AdminLTEBundle') }}
+        {{ 'registration.confirmed'|trans({'%username%': user.username}, 'TablerBundle') }}
     </p>
-
 {% endblock %}
 
 {% block login_actions %}
-    <br>
-    <a href="{{ path('homepage') }}">
-        {{ 'Show homepage'|trans({}, 'AdminLTEBundle') }}
-    </a>
+    <div class="text-center text-muted mt-3">
+        <a href="{{ path('homepage') }}">
+            {{ 'Show homepage'|trans({}, 'TablerBundle') }}
+        </a>
+    </div>
 {% endblock %}

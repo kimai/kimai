@@ -1,0 +1,36 @@
+===========================================================================
+
+INVOICES
+
+- HTML Rechnungstemplates funktionieren nicht mehr richtig
+
+===========================================================================
+
+THEME
+
+- Update to latest release und angepasstes CSS entfernen
+
+- Theme Dark Mode mit Modus "Browser" sollte Standard sein:
+    https://github.com/tabler/tabler/issues/892#event-5666309557
+
+===========================================================================
+
+MIXED
+
+- Alle URLs ändern
+   - /admin/activity/ zu /activity/
+   - /admin/project/ zu /project/
+   - /admin/..../ zu /..../
+   - /team/timesheet/ zu /timesheets/
+
+- Tags => immer Berechtigung prüfen und "create" option über die VIEW ans Javascript geben
+  => den FormType nur ändern zu "AutoComplete" wenn es mehr als 500 Tags sind
+  => Übersetzungen (Suche, Erstellen, Keine Ergebnisse) über data attribute ans JS durchreichen
+
+===========================================================================
+
+MIGRATIONS
+
+- rename 2.0 migration once it will be released
+
+===========================================================================

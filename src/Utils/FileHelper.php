@@ -14,25 +14,17 @@ use Symfony\Component\String\UnicodeString;
 
 final class FileHelper
 {
-    /**
-     * @var string
-     */
-    private $dataDir;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private Filesystem $filesystem;
 
-    public function __construct(string $dataDir)
+    public function __construct(private string $dataDir)
     {
-        $this->dataDir = $dataDir;
         $this->filesystem = new Filesystem();
     }
 
     /**
      * @CloudRequired
      */
-    public function setDataDirectory(string $directory)
+    public function setDataDirectory(string $directory): void
     {
         $this->dataDir = $directory;
     }

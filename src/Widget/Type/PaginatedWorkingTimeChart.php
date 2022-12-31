@@ -10,31 +10,40 @@
 namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
+use App\Widget\WidgetInterface;
 use DateTime;
 
-final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
+final class PaginatedWorkingTimeChart extends AbstractWidget
 {
-    private $repository;
-    private $systemConfiguration;
-
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(private TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
     {
-        $this->repository = $repository;
-        $this->systemConfiguration = $systemConfiguration;
-        $this->setTitle('stats.yourWorkingHours');
     }
 
-    public function setUser(User $user): void
+    public function getWidth(): int
     {
-        $this->setOption('user', $user);
-        $now = new DateTime('now', new \DateTimeZone($user->getTimezone()));
-        $this->setOptions([
-            'year' => $now->format('o'),
-            'week' => $now->format('W'),
-        ]);
+        return WidgetInterface::WIDTH_FULL;
+    }
+
+    public function getHeight(): int
+    {
+        return WidgetInterface::HEIGHT_MAXIMUM;
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_own_timesheet'];
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.yourWorkingHours';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-paginatedworkingtimechart.html.twig';
     }
 
     public function getOptions(array $options = []): array
@@ -45,9 +54,20 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
             $options['type'] = 'bar';
         }
 
-        if (!\array_key_exists('year', $options)) {
-            $options['year'] = (new DateTime('now'))->format('o');
-            $options['week'] = (new DateTime('now'))->format('W');
+        if (!\array_key_exists('year', $options) || !\array_key_exists('week', $options)) {
+            $timezone = date_default_timezone_get();
+            if ($this->getUser() !== null) {
+                $timezone = $this->getUser()->getTimezone();
+            }
+            $now = new DateTime('now', new \DateTimeZone($timezone));
+
+            if (!\array_key_exists('year', $options)) {
+                $options['year'] = $now->format('o');
+            }
+
+            if (!\array_key_exists('week', $options)) {
+                $options['week'] = $now->format('W');
+            }
         }
 
         return $options;
@@ -61,14 +81,9 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         return $lastWeekInYear->format('W') === '53' ? 53 : 52;
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $options = $this->getOptions($options);
-
-        $user = $options['user'];
-        if (null === $user || !($user instanceof User)) {
-            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
-        }
+        $user = $this->getUser();
 
         $dateTimeFactory = DateTimeFactory::createByUser($user);
 
@@ -96,7 +111,7 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
 
         $yearBegin = $dateTimeFactory->createDateTime(sprintf('01 january %s 00:00:00', $year));
         $yearEnd = $dateTimeFactory->createDateTime(sprintf('31 december %s 23:59:59', $year));
-        $yearData = $this->repository->getStatistic('duration', $yearBegin, $yearEnd, $user);
+        $yearData = $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $yearBegin, $yearEnd, $user);
 
         $financialYearData = null;
         $financialYearBegin = null;
@@ -104,22 +119,26 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $financialYearBegin = $dateTimeFactory->createStartOfFinancialYear($financialYear);
             $financialYearEnd = $dateTimeFactory->createEndOfFinancialYear($financialYearBegin);
-            $financialYearData = $this->repository->getStatistic('duration', $financialYearBegin, $financialYearEnd, $user);
+            $financialYearData = $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $financialYearBegin, $financialYearEnd, $user);
         }
 
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
-            'stats' => $this->repository->getDailyStats($user, $weekBegin, $weekEnd),
             'thisMonth' => $thisMonth,
             'lastWeekInYear' => $lastWeekInYear,
             'lastWeekInLastYear' => $lastWeekInLastYear,
-            'day' => $this->repository->getStatistic('duration', $dayBegin, $dayEnd, $user),
-            'week' => $this->repository->getStatistic('duration', $weekBegin, $weekEnd, $user),
-            'month' => $this->repository->getStatistic('duration', $monthBegin, $monthEnd, $user),
+            'day' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $dayBegin, $dayEnd, $user),
+            'week' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $weekBegin, $weekEnd, $user),
+            'month' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $monthBegin, $monthEnd, $user),
             'year' => $yearData,
             'financial' => $financialYearData,
             'financialBegin' => $financialYearBegin,
         ];
+    }
+
+    public function getId(): string
+    {
+        return 'PaginatedWorkingTimeChart';
     }
 }

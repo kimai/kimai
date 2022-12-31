@@ -17,21 +17,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetFutureTimesValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetFutureTimes)) {
             throw new UnexpectedTypeException($constraint, TimesheetFutureTimes::class);
@@ -51,7 +45,7 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
         $allowedDiff = ($this->configuration->getTimesheetDefaultRoundingBegin() * 60) + 60;
         if (($now->getTimestamp() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
             $this->context->buildViolation('The begin date cannot be in the future.')
-                ->atPath('begin')
+                ->atPath('begin_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
                 ->addViolation();

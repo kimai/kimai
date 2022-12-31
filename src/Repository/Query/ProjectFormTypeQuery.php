@@ -14,26 +14,17 @@ use App\Entity\Project;
 
 final class ProjectFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var \DateTime|null
-     */
-    private $projectStart;
-    /**
-     * @var \DateTime|null
-     */
-    private $projectEnd;
-    /**
-     * @var Project|null
-     */
-    private $projectToIgnore;
-    private $ignoreDate = false;
-    private $withCustomer = false;
+    private ?\DateTime $projectStart = null;
+    private ?\DateTime $projectEnd = null;
+    private ?Project $projectToIgnore = null;
+    private bool $ignoreDate = false;
+    private bool $withCustomer = false;
 
     /**
-     * @param Project|int|null|array<int>|array<Project> $project
-     * @param Customer|int|null|array<int>|array<Customer> $customer
+     * @param Project|array<Project>|int|null $project
+     * @param Customer|array<Customer>|int|null $customer
      */
-    public function __construct($project = null, $customer = null)
+    public function __construct(Project|array|int|null $project = null, Customer|array|int|null $customer = null)
     {
         if (null !== $project) {
             if (!\is_array($project)) {
@@ -49,13 +40,12 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
             $this->setCustomers($customer);
         }
 
-        $this->projectStart = $this->projectEnd = new \DateTime();
+        $this->projectStart = new \DateTime();
+        $this->projectEnd = clone $this->projectStart;
     }
 
     /**
      * Whether customers should be joined
-     *
-     * @return bool
      */
     public function withCustomer(): bool
     {
@@ -64,17 +54,12 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
 
     /**
      * Directly join the customer
-     *
-     * @param bool $withCustomer
      */
     public function setWithCustomer(bool $withCustomer): void
     {
         $this->withCustomer = $withCustomer;
     }
 
-    /**
-     * @return Project|null
-     */
     public function getProjectToIgnore(): ?Project
     {
         return $this->projectToIgnore;

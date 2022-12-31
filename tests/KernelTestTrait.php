@@ -26,7 +26,10 @@ trait KernelTestTrait
             throw new \Exception('KernelTestTrait can only be used in a KernelTestCase');
         }
 
-        return $this::$container->get('doctrine.orm.entity_manager');
+        /** @var EntityManagerInterface $em */
+        $em = self::getContainer()->get('doctrine.orm.entity_manager');
+
+        return $em;
     }
 
     protected function importFixture(TestFixture $fixture): array
@@ -34,39 +37,26 @@ trait KernelTestTrait
         return $fixture->load($this->getEntityManager());
     }
 
-    protected function getUserByName(string $username): ?User
+    protected function getUserByName(string $username): User
     {
-        return $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => $username]);
+        $user = $this->getEntityManager()->getRepository(User::class)->findOneBy(['username' => $username]);
+
+        if ($user === null) {
+            throw new \InvalidArgumentException('Unknown user: ' . $username);
+        }
+
+        return $user;
     }
 
-    /**
-     * @param string $role
-     * @return User|null
-     */
-    protected function getUserByRole(string $role = User::ROLE_USER)
+    protected function getUserByRole(string $role = User::ROLE_USER): User
     {
-        $name = null;
-
-        switch ($role) {
-            case User::ROLE_SUPER_ADMIN:
-                $name = UserFixtures::USERNAME_SUPER_ADMIN;
-                break;
-
-            case User::ROLE_ADMIN:
-                $name = UserFixtures::USERNAME_ADMIN;
-                break;
-
-            case User::ROLE_TEAMLEAD:
-                $name = UserFixtures::USERNAME_TEAMLEAD;
-                break;
-
-            case User::ROLE_USER:
-                $name = UserFixtures::USERNAME_USER;
-                break;
-
-            default:
-                return null;
-        }
+        $name = match ($role) {
+            User::ROLE_SUPER_ADMIN => UserFixtures::USERNAME_SUPER_ADMIN,
+            User::ROLE_ADMIN => UserFixtures::USERNAME_ADMIN,
+            User::ROLE_TEAMLEAD => UserFixtures::USERNAME_TEAMLEAD,
+            User::ROLE_USER => UserFixtures::USERNAME_USER,
+            default => throw new \InvalidArgumentException('Unknown user by role: ' . $role),
+        };
 
         return $this->getUserByName($name);
     }

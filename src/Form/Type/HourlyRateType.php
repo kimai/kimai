@@ -16,12 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to set the hourly rate.
  */
-class HourlyRateType extends AbstractType
+final class HourlyRateType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -30,14 +27,11 @@ class HourlyRateType extends AbstractType
                 'description' => 'Hourly rate',
             ],
             'required' => false,
-            'label' => 'label.hourlyRate',
+            'label' => 'hourlyRate',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return MoneyType::class;
     }

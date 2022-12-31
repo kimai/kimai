@@ -11,7 +11,6 @@ namespace App\Tests\Invoice;
 
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
-use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
@@ -33,7 +32,6 @@ class InvoiceModelTest extends TestCase
         self::assertNull($sut->getCustomer());
         self::assertNull($sut->getDueDate());
         self::assertNull($sut->getCalculator());
-        self::assertNull($sut->getNumberGenerator());
 
         self::assertEmpty($sut->getEntries());
         self::assertIsArray($sut->getEntries());
@@ -67,7 +65,7 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
         self::assertSame($query, $sut->getQuery());
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         self::assertInstanceOf(InvoiceModel::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
 
@@ -77,11 +75,7 @@ class InvoiceModelTest extends TestCase
 
         $generator = new IncrementingNumberGenerator();
         self::assertInstanceOf(InvoiceModel::class, $sut->setNumberGenerator($generator));
-        self::assertSame($generator, $sut->getNumberGenerator());
         $number = $sut->getInvoiceNumber();
-        $first = $sut->getNumberGenerator()->getInvoiceNumber();
-        $second = $sut->getNumberGenerator()->getInvoiceNumber();
-        self::assertEquals(((int) $first + 1), $second);
         self::assertEquals($number, $sut->getInvoiceNumber());
 
         $template = new InvoiceTemplate();
@@ -90,17 +84,5 @@ class InvoiceModelTest extends TestCase
         self::assertSame($template, $sut->getTemplate());
         /* @phpstan-ignore-next-line */
         self::assertInstanceOf(\DateTime::class, $sut->getDueDate());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecations()
-    {
-        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-
-        $entries = [new Timesheet()];
-        self::assertInstanceOf(InvoiceModel::class, $sut->setEntries($entries));
-        self::assertSame($entries, $sut->getEntries());
     }
 }

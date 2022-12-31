@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class PermissionsSubscriber extends AbstractActionsSubscriber
+final class PermissionsSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -23,7 +23,5 @@ class PermissionsSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('role_permissions')) {
             $event->addCreate($this->path('admin_user_roles'), !$event->isView('role'));
         }
-
-        $event->addHelp($this->documentationLink('permissions.html'));
     }
 }

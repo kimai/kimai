@@ -13,133 +13,62 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceTemplateRepository")
- * @ORM\Table(name="kimai2_invoice_templates",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"})
- *      }
- * )
- * @UniqueEntity("name")
- */
+#[ORM\Table(name: 'kimai2_invoice_templates')]
+#[ORM\UniqueConstraint(columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\InvoiceTemplateRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class InvoiceTemplate
 {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 60, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 60)]
+    private ?string $name = null;
+    #[ORM\Column(name: 'title', type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    private ?string $title = null;
+    #[ORM\Column(name: 'company', type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    private ?string $company = null;
+    #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
+    private ?string $vatId = null;
+    #[ORM\Column(name: 'address', type: 'text', nullable: true)]
+    private ?string $address = null;
+    #[ORM\Column(name: 'contact', type: 'text', nullable: true)]
+    private ?string $contact = null;
+    #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[Assert\Range(min: 0, max: 999)]
+    private int $dueDays = 30;
+    #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[Assert\Range(min: 0.0, max: 99.99)]
+    private float $vat = 0.00;
+    #[ORM\Column(name: 'calculator', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
+    private string $calculator = 'default';
+    #[ORM\Column(name: 'number_generator', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
+    private string $numberGenerator = 'default';
+    #[ORM\Column(name: 'renderer', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
+    private string $renderer = 'default';
+    #[ORM\Column(name: 'payment_terms', type: 'text', nullable: true)]
+    private ?string $paymentTerms = null;
+    #[ORM\Column(name: 'payment_details', type: 'text', nullable: true)]
+    private ?string $paymentDetails = null;
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * Used for translations and formatting money, numbers, dates and time.
      */
-    private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=60, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=60, allowEmptyString=false)
-     */
-    private $name;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
-     */
-    private $title;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="company", type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
-     */
-    private $company;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
-     * @Assert\Length(max=50)
-     */
-    private $vatId;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="address", type="text", nullable=true)
-     */
-    private $address;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="contact", type="text", nullable=true)
-     */
-    private $contact;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
-     * @Assert\Range(min = 0, max = 999)
-     */
-    private $dueDays = 30;
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="vat", type="float", nullable=false)
-     * @Assert\Range(min = 0.0, max = 99.99)
-     */
-    private $vat = 0.00;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="calculator", type="string", length=20, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
-    private $calculator = 'default';
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="number_generator", type="string", length=20, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
-    private $numberGenerator = 'default';
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="renderer", type="string", length=20, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
-    private $renderer = 'default';
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="payment_terms", type="text", nullable=true)
-     */
-    private $paymentTerms;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="payment_details", type="text", nullable=true)
-     */
-    private $paymentDetails;
-    /**
-     * Used when rendering HTML templates.
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="decimal_duration", type="boolean", nullable=false, options={"default": false})
-     * @Assert\NotNull()
-     */
-    private $decimalDuration = false;
-    /**
-     * Used for translations and locale dependent number and date formats.
-     *
-     * @var string|null
-     *
-     * @ORM\Column(name="language", type="string", length=6, nullable=true)
-     */
-    private $language;
+    #[ORM\Column(name: 'language', type: 'string', length: 6, nullable: false)]
+    #[Assert\NotBlank]
+    private ?string $language = 'en';
 
     public function getId(): ?int
     {
@@ -304,16 +233,12 @@ class InvoiceTemplate
         return $this;
     }
 
+    /**
+     * @deprecated since 2.0
+     */
     public function isDecimalDuration(): bool
     {
-        return $this->decimalDuration;
-    }
-
-    public function setDecimalDuration(bool $decimalDuration): InvoiceTemplate
-    {
-        $this->decimalDuration = $decimalDuration;
-
-        return $this;
+        return true;
     }
 
     public function getLanguage(): ?string
@@ -328,10 +253,7 @@ class InvoiceTemplate
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

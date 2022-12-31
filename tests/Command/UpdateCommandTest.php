@@ -34,7 +34,8 @@ class UpdateCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
 
         $this->application->add(new UpdateCommand(
-            $container->get('doctrine')->getConnection()
+            $container->get('doctrine')->getConnection(),
+            $this->application->getKernel()->getEnvironment()
         ));
 
         return $this->application->find('kimai:update');

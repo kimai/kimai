@@ -1,0 +1,139 @@
+#
+# Configuration file for the Tabler bundle
+#
+# For more information about the bundle settings visit:
+# https://github.com/kevinpapst/TablerBundle/blob/master/Resources/docs/configurations.md
+#
+tabler:
+    options:
+        # dark or normal layout
+        dark_mode: false
+        # condensed = one nav-bar, false = two nav-bars
+        navbar_condensed: true
+        # overlap = https://preview.tabler.io/layout-navbar-overlap.html
+        navbar_overlap: true
+        # boxed layout (true) or full-screen (false)
+        boxed_layout: false
+        # right to left = true
+        rtl_mode: false
+        # true = only avatar, false = show username and title as well
+        user_menu_condensed: true
+        # url to your company logo
+        logo_url: "touch-icon-192x192.png"
+
+    knp_menu:
+        enable: false
+        main_menu: tabler_main
+        breadcrumb_menu: false
+
+    routes:
+        tabler_welcome: dashboard
+        tabler_login: login
+        tabler_logout: logout
+        tabler_login_check: security_check
+        tabler_registration: registration_register
+        tabler_registration_register: registration_register
+        tabler_password_reset: resetting_request
+        tabler_password_reset_sent: resetting_send_email
+
+    icons:
+        about: fas fa-info-circle
+        activity: fas fa-tasks
+        admin: fas fa-wrench
+        administration: fas fa-toolbox
+        applications: fas fa-rocket
+        audit: fas fa-history
+        avatar: fas fa-user
+        back: fas fa-long-arrow-alt-left
+        barcode: fas fa-barcode
+        bookmark: far fa-star
+        bookmarked: fas fa-star
+        calendar: far fa-calendar-alt
+        cancel: fas fa-times
+        clock: far fa-clock
+        collapse: fas fa-chevron-down
+        columns: fas fa-table
+        comment: far fa-comment
+        configuration: fas fa-cog
+        copy: far fa-copy
+        create: fas fa-plus
+        csv: fas fa-table
+        customer: fas fa-user-tie
+        dashboard: fas fa-tachometer-alt
+        debug: far fa-file-alt
+        delete: far fa-trash-alt
+        details: fas fa-info-circle
+        display: fas fa-layer-group
+        doctor: fas fa-medkit
+        documentation: fas fa-book
+        dot: fas fa-circle
+        download: fas fa-download
+        duration: far fa-hourglass
+        edit: far fa-edit
+        end: fas fa-stopwatch
+        export: fas fa-file-export
+        failure: fas fa-times
+        fax: fas fa-fax
+        filter: fas fa-filter
+        help: far fa-question-circle
+        home: fas fa-home
+        invoice: fas fa-file-contract
+        invoice-template: fas fa-file-signature
+        left: fas fa-chevron-left
+        left2: fas fa-angle-double-left
+        link: fas fa-link
+        list: fas fa-list
+        locked: fas fa-lock
+        login: fas fa-sign-in-alt
+        logout: fas fa-sign-out-alt
+        mail: far fa-envelope
+        mail-sent: fas fa-paper-plane
+        manual: fas fa-book
+        mobile: fas fa-mobile
+        money: fas fa-coins
+        ods: fas fa-table
+        off: fas fa-toggle-off
+        on: fas fa-toggle-on
+        password: fas fa-key
+        pause: fas fa-pause
+        pause-small: far fa-pause-circle
+        pin: fas fa-thumbtack
+        pdf: fas fa-file-pdf
+        permissions: fas fa-user-lock
+        phone: fas fa-phone
+        plugin: fas fa-plug
+        print: fas fa-print
+        profile: fas fa-user-edit
+        profile-stats: far fa-chart-bar
+        project: fas fa-briefcase
+        repeat: fas fa-redo-alt
+        reporting: far fa-chart-bar
+        report: far fa-chart-bar
+        right: fas fa-chevron-right
+        right2: fas fa-angle-double-right
+        roles: fas fa-user-shield
+        save: far fa-save
+        search: fas fa-search
+        settings: fas fa-cog
+        shop: fas fa-shopping-cart
+        spinner: fas fa-spinner fa-pulse
+        start: fas fa-play
+        start-small: far fa-play-circle
+        stop: fas fa-stop
+        stop-small: far fa-stop-circle
+        success: fas fa-check
+        tag: fas fa-tags
+        team: fas fa-users
+        timesheet: fas fa-clock
+        timesheet-team: fas fa-user-clock
+        trash: far fa-trash-alt
+        unlocked: fas fa-unlock-alt
+        upload: fas fa-upload
+        user: fas fa-user
+        users: fas fa-user-friends
+        visibility: far fa-eye
+        warning: fas fa-exclamation
+        weekly-times: fas fa-th
+        widget_add: fas fa-folder-plus
+        widget_remove: fas fa-folder-minus
+        xlsx: fas fa-file-excel

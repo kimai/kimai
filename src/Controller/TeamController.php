@@ -16,41 +16,31 @@ use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-/**
- * @Route(path="/admin/teams")
- * @Security("is_granted('view_team')")
- */
+#[Route(path: '/admin/teams')]
+#[Security("is_granted('view_team')")]
 final class TeamController extends AbstractController
 {
-    /**
-     * @var TeamRepository
-     */
-    private $repository;
-
-    public function __construct(TeamRepository $repository)
+    public function __construct(private TeamRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_team", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_team_paginated", methods={"GET"})
-     *
      * @param TeamRepository $repository
      * @param Request $request
      * @param int $page
      * @return Response
      */
-    public function listTeams(TeamRepository $repository, Request $request, $page)
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_team', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_team_paginated', methods: ['GET'])]
+    public function listTeams(TeamRepository $repository, Request $request, $page): Response
     {
         $query = new TeamQuery();
         $query->setPage($page);
@@ -61,69 +51,66 @@ final class TeamController extends AbstractController
             return $this->redirectToRoute('admin_team');
         }
 
-        $teams = $repository->getPagerfantaForQuery($query);
+        $entries = $repository->getPagerfantaForQuery($query);
+
+        $table = new DataTable('admin_teams', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_team_paginated');
+        $table->setReloadEvents('kimai.teamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('teamlead', ['class' => 'd-none badges', 'orderBy' => false]);
+        $table->addColumn('teamlead_avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
+        $table->addColumn('user', ['class' => 'd-none badges', 'orderBy' => false, 'title' => 'user']);
+        $table->addColumn('actions', ['class' => 'actions']);
+
+        $page = new PageSetup('teams');
+        $page->setActionName('teams');
+        $page->setHelp('teams.html');
+        $page->setDataTable($table);
 
         return $this->render('team/index.html.twig', [
-            'teams' => $teams,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
+            'page_setup' => $page,
+            'dataTable' => $table,
         ]);
     }
 
     /**
-     * @Route(path="/create", name="admin_team_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_team')")
-     *
      * @param Request $request
-     * @return RedirectResponse|Response
+     * @return Response
      */
-    public function createTeam(Request $request)
+    #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_team')")]
+    public function createTeam(Request $request): Response
     {
-        return $this->renderEditScreen(new Team(), $request);
+        return $this->renderEditScreen(new Team(''), $request, true);
     }
 
-    /**
-     * @Route(path="/{id}/duplicate/{token}", name="team_duplicate", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team) and is_granted('create_team')")
-     */
-    public function duplicateTeam(Team $team, string $token, CsrfTokenManagerInterface $csrfTokenManager)
+    #[Route(path: '/{id}/duplicate', name: 'team_duplicate', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team) and is_granted('create_team')")]
+    public function duplicateTeam(Team $team, Request $request)
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('team.duplicate', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-        }
-
-        $csrfTokenManager->refreshToken('team.duplicate');
-
         $newTeam = clone $team;
-        $newTeam->setName($team->getName() . ' [COPY]');
 
-        try {
-            $this->repository->saveTeam($newTeam);
-            $this->flashSuccess('action.update.success');
+        $i = 1;
+        do {
+            $newName = sprintf('%s (%s)', $team->getName(), $i++);
+        } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
+        $newTeam->setName($newName);
 
-            return $this->redirectToRoute('admin_team_edit', ['id' => $newTeam->getId()]);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('admin_team');
+        return $this->renderEditScreen($newTeam, $request, true);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_team_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team)")
-     */
+    #[Route(path: '/{id}/edit', name: 'admin_team_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team)")]
     public function editAction(Team $team, Request $request)
     {
         return $this->renderEditScreen($team, $request);
     }
 
-    /**
-     * @Route(path="/{id}/edit_member", name="admin_team_member", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team)")
-     */
+    #[Route(path: '/{id}/edit_member', name: 'admin_team_member', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team)")]
     public function editMemberAction(Team $team, Request $request)
     {
         $editForm = $this->createForm(TeamEditForm::class, $team, [
@@ -144,13 +131,17 @@ final class TeamController extends AbstractController
             }
         }
 
+        $page = new PageSetup('teams');
+        $page->setHelp('teams.html');
+
         return $this->render('team/edit_member.html.twig', [
+            'page_setup' => $page,
             'team' => $team,
             'form' => $editForm->createView(),
         ]);
     }
 
-    private function renderEditScreen(Team $team, Request $request): Response
+    private function renderEditScreen(Team $team, Request $request, bool $create = false): Response
     {
         $customerForm = null;
         $projectForm = null;
@@ -173,9 +164,13 @@ final class TeamController extends AbstractController
                 $this->repository->saveTeam($team);
                 $this->flashSuccess('action.update.success');
 
+                if ($create) {
+                    return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 
@@ -213,21 +208,24 @@ final class TeamController extends AbstractController
             }
         }
 
+        $page = new PageSetup('teams');
+        $page->setHelp('teams.html');
+
         return $this->render('team/edit.html.twig', [
+            'page_setup' => $page,
             'team' => $team,
             'form' => $editForm->createView(),
-            'customerForm' => $customerForm ? $customerForm->createView() : null,
-            'projectForm' => $projectForm ? $projectForm->createView() : null,
+            'customerForm' => $customerForm?->createView(),
+            'projectForm' => $projectForm?->createView(),
         ]);
     }
 
     private function getToolbarForm(TeamQuery $query): FormInterface
     {
-        return $this->createForm(TeamToolbarForm::class, $query, [
+        return $this->createSearchForm(TeamToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_team', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 }

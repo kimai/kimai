@@ -19,19 +19,13 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class InvoiceDocumentUploadForm extends AbstractType
+final class InvoiceDocumentUploadForm extends AbstractType
 {
-    private $repository;
-
-    public function __construct(InvoiceDocumentRepository $repository)
+    public function __construct(private InvoiceDocumentRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $mimetypes = [
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -41,7 +35,7 @@ class InvoiceDocumentUploadForm extends AbstractType
 
         $builder
             ->add('document', FileType::class, [
-                'label' => 'label.invoice_renderer',
+                'label' => 'invoice_renderer',
                 'translation_domain' => 'invoice-renderer',
                 'help' => 'help.upload',
                 'mapped' => false,
@@ -80,10 +74,7 @@ class InvoiceDocumentUploadForm extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'csrf_protection' => true,

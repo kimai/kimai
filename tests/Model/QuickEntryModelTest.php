@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class QuickEntryModelTest extends TestCase
 {
-    public function testEmptyModel()
+    public function testEmptyModel(): void
     {
         $sut = new QuickEntryModel();
         self::assertFalse($sut->isPrototype());
@@ -37,7 +37,7 @@ class QuickEntryModelTest extends TestCase
         self::assertFalse($sut->hasTimesheetWithDuration());
     }
 
-    public function testFullModel()
+    public function testFullModel(): void
     {
         $user = new User();
         $project = new Project();
@@ -101,7 +101,7 @@ class QuickEntryModelTest extends TestCase
         self::assertCount(4, $sut->getTimesheets());
     }
 
-    public function testHasExistingTimesheet()
+    public function testHasExistingTimesheet(): void
     {
         $sut = new QuickEntryModel();
 
@@ -113,7 +113,7 @@ class QuickEntryModelTest extends TestCase
         self::assertFalse($sut->isPrototype());
     }
 
-    public function testDefaultModel()
+    public function testDefaultModel(): void
     {
         $user = new User();
         $project = new Project();
@@ -126,7 +126,7 @@ class QuickEntryModelTest extends TestCase
         self::assertSame($user, $sut->getUser());
     }
 
-    public function testPrototype()
+    public function testPrototype(): void
     {
         $sut = new QuickEntryModel();
         $sut->markAsPrototype();

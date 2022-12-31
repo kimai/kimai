@@ -74,7 +74,7 @@ class UserStatisticTest extends AbstractTimesheetCountedStatisticTest
 
         self::assertSame(145, $sut->getDuration());
         self::assertSame(1468, $sut->getDurationBillable());
-        self::assertSame(669.64, round($sut->getRate(), 2));
+        self::assertSame('669.64', number_format($sut->getRate(), 2));
         self::assertSame(580.236, $sut->getRateBillable());
         self::assertSame(1134.98, $sut->getInternalRate());
     }

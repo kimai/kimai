@@ -34,7 +34,7 @@ class KimaiMailerTest extends TestCase
     public function testSendSetsFrom()
     {
         $user = new User();
-        $user->setUsername('Testing');
+        $user->setUserIdentifier('Testing');
         $user->setEmail('foo@example.com');
         $user->setAlias('Super User');
 

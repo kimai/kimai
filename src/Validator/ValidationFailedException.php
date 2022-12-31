@@ -11,21 +11,14 @@ namespace App\Validator;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class ValidationFailedException extends \RuntimeException
+final class ValidationFailedException extends \RuntimeException
 {
-    /**
-     * @var ConstraintViolationListInterface
-     */
-    private $violations;
-
-    public function __construct(ConstraintViolationListInterface $violations, ?string $message = null)
+    public function __construct(private ConstraintViolationListInterface $violations, ?string $message = null)
     {
         if ($message === null) {
             $message = 'Validation failed';
         }
         parent::__construct($message, 400);
-
-        $this->violations = $violations;
     }
 
     public function getViolations(): ConstraintViolationListInterface

@@ -9,10 +9,10 @@
 
 namespace App\Tests\EventSubscriber\Actions;
 
-use App\Entity\InvoiceDocument;
 use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\EventSubscriber\Actions\InvoiceDocumentSubscriber;
+use App\Model\InvoiceDocument;
 
 /**
  * @covers \App\EventSubscriber\Actions\InvoiceDocumentSubscriber

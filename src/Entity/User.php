@@ -19,55 +19,35 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
+use OpenApi\Attributes as OA;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="kimai2_users",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"username"}),
- *          @ORM\UniqueConstraint(columns={"email"})
- *      }
- * )
- * @UniqueEntity("username")
- * @UniqueEntity("email")
- * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
- *
- * @Serializer\ExclusionPolicy("all")
- * @Serializer\VirtualProperty(
- *      "LanguageAsString",
- *      exp="object.getLocale()",
- *      options={
- *          @Serializer\SerializedName("language"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"User_Entity"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "TimezoneAsString",
- *      exp="object.getTimezone()",
- *      options={
- *          @Serializer\SerializedName("timezone"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"User_Entity"})
- *      }
- * )
- *
- * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
- * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
- * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
- * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
- * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
- * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
- * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
- * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
- */
-class User implements UserInterface, EquatableInterface, \Serializable
+#[ORM\Table(name: 'kimai2_users')]
+#[ORM\UniqueConstraint(columns: ['username'])]
+#[ORM\UniqueConstraint(columns: ['email'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('username')]
+#[UniqueEntity('email')]
+#[Serializer\ExclusionPolicy('all')]
+#[Exporter\Order(['id', 'username', 'alias', 'title', 'email', 'last_login', 'language', 'timezone', 'active', 'registeredAt', 'roles', 'teams', 'color', 'accountNumber'])]
+#[Exporter\Expose(name: 'email', label: 'email', exp: 'object.getEmail()')]
+#[Exporter\Expose(name: 'username', label: 'username', exp: 'object.getUserIdentifier()')]
+#[Exporter\Expose(name: 'timezone', label: 'timezone', exp: 'object.getTimezone()')]
+#[Exporter\Expose(name: 'language', label: 'language', exp: 'object.getLanguage()')]
+#[Exporter\Expose(name: 'last_login', label: 'lastLogin', exp: 'object.getLastLogin()', type: 'datetime')]
+#[Exporter\Expose(name: 'roles', label: 'roles', exp: 'object.getRoles()', type: 'array')]
+#[Exporter\Expose(name: 'active', label: 'active', exp: 'object.isEnabled()', type: 'boolean')]
+#[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
+class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -82,211 +62,159 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
 
+    public const WIZARDS = ['intro', 'profile'];
+
     /**
-     * Internal ID
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.id", type="integer")
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
+     * Unique User ID
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
+    private ?int $id = null;
     /**
      * The user alias will be displayed in the frontend instead of the username
-     *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.alias")
-     *
-     * @ORM\Column(name="alias", type="string", length=60, nullable=true)
-     * @Assert\Length(max=60)
      */
-    private $alias;
+    #[ORM\Column(name: 'alias', type: 'string', length: 60, nullable: true)]
+    #[Assert\Length(max: 60)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'alias')]
+    private ?string $alias = null;
     /**
      * Registration date for the user
-     *
-     * @var DateTime|null
-     *
-     * @Exporter\Expose(label="profile.registration_date", type="datetime")
-     *
-     * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
-    private $registeredAt;
+    #[ORM\Column(name: 'registration_date', type: 'datetime', nullable: true)]
+    #[Exporter\Expose(label: 'profile.registration_date', type: 'datetime')]
+    private ?\DateTime $registeredAt = null;
     /**
      * An additional title for the user, like the Job position or Department
-     *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
-     *
-     * @Exporter\Expose(label="label.title")
-     *
-     * @ORM\Column(name="title", type="string", length=50, nullable=true)
-     * @Assert\Length(max=50)
      */
-    private $title;
+    #[ORM\Column(name: 'title', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'title')]
+    private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
-     *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
-     *
-     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
      */
-    private $avatar;
+    #[ORM\Column(name: 'avatar', type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    private ?string $avatar = null;
     /**
      * API token (password) for this user
-     *
-     * @var string|null
-     *
-     * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
-    private $apiToken;
+    #[ORM\Column(name: 'api_token', type: 'string', length: 255, nullable: true)]
+    private ?string $apiToken = null;
     /**
-     * @var string|null
      * @internal to be set via form, must not be persisted
-     *
-     * @Assert\NotBlank(groups={"ApiTokenUpdate"})
-     * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */
-    private $plainApiToken;
+    #[Assert\NotBlank(groups: ['ApiTokenUpdate'])]
+    #[Assert\Length(min: 8, max: 60, groups: ['ApiTokenUpdate'])]
+    private ?string $plainApiToken = null;
     /**
      * User preferences
      *
      * List of preferences for this user, required ones have dedicated fields/methods
      *
-     * @var Collection<UserPreference>
+     * This Collection can be null for one edge case ONLY:
+     * if a currently logged-in user will be deleted and then refreshed from the session from one of the UserProvider
+     * e.g. see LdapUserProvider::refreshUser() it might crash if $user->getPreferenceValue() is called
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
+     * @var Collection<UserPreference>|null
      */
-    private $preferences;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\UserPreference', mappedBy: 'user', cascade: ['persist'])]
+    private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
      * @var Collection<TeamMember>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(ref="#/definitions/TeamMembership")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="user", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotNull()
      */
-    private $memberships;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/TeamMembership')]
+    private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
-     * @var string|null
      * @internal for internal usage only
-     *
-     * @ORM\Column(name="auth", type="string", length=20, nullable=true)
-     * @Assert\Length(max=20)
      */
-    private $auth = self::AUTH_INTERNAL;
+    #[ORM\Column(name: 'auth', type: 'string', length: 20, nullable: true)]
+    #[Assert\Length(max: 20)]
+    private ?string $auth = self::AUTH_INTERNAL;
     /**
      * This flag will be initialized in UserEnvironmentSubscriber.
      *
-     * @var bool|null
      * @internal has no database mapping as the value is calculated from a permission
      */
-    private $isAllowedToSeeAllData = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @var string
-     * @ORM\Column(name="username", type="string", length=180)
-     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
-     * @Assert\Length(min="2", max="60", groups={"Registration", "UserCreate", "Profile"})
-     */
-    private $username;
-    /**
-     * @var string
-     * @ORM\Column(name="email", type="string", length=180)
-     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
-     * @Assert\Length(min="2", max="180")
-     * @Assert\Email(groups={"Registration", "UserCreate", "Profile"})
-     */
-    private $email;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.account_number")
-     *
-     * @var string|null
-     * @ORM\Column(name="account", type="string", length=30, nullable=true)
-     * @Assert\Length(allowEmptyString=true, max="30", groups={"Registration", "UserCreate", "Profile"})
-     */
-    private $accountNumber;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @var bool
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    private $enabled = false;
+    private ?bool $isAllowedToSeeAllData = null;
+    #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
+    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 60, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?string $username = null;
+    #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
+    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 180)]
+    #[Assert\Email(groups: ['Registration', 'UserCreate', 'Profile'])]
+    private ?string $email = null;
+    #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
+    #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'account_number')]
+    private ?string $accountNumber = null;
+    #[ORM\Column(name: 'enabled', type: 'boolean', nullable: false)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private bool $enabled = false;
     /**
      * Encrypted password. Must be persisted.
-     *
-     * @var string
-     * @ORM\Column(name="password", type="string")
      */
-    private $password;
+    #[ORM\Column(name: 'password', type: 'string', nullable: false)]
+    private ?string $password = null;
     /**
      * Plain password. Used for model validation, not persisted.
-     *
-     * TODO make the password rules configurable
-     *
-     * @var string|null
-     * @Assert\NotBlank(groups={"Registration", "PasswordUpdate", "UserCreate"})
-     * @Assert\Length(min="8", max="60", groups={"Registration", "PasswordUpdate", "UserCreate", "ResetPassword", "ChangePassword"})
      */
-    private $plainPassword;
-    /**
-     * @var \DateTime|null
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
-     */
-    private $lastLogin;
+    #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
+    #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    private ?string $plainPassword = null;
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
+    private ?DateTime $lastLogin = null;
     /**
      * Random string sent to the user email address in order to verify it.
-     *
-     * @var string|null
-     * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
      */
-    private $confirmationToken;
-    /**
-     * @var \DateTime|null
-     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
-     */
-    private $passwordRequestedAt;
+    #[ORM\Column(name: 'confirmation_token', type: 'string', length: 180, unique: true, nullable: true)]
+    private ?string $confirmationToken = null;
+    #[ORM\Column(name: 'password_requested_at', type: 'datetime', nullable: true)]
+    private ?\DateTime $passwordRequestedAt = null;
     /**
      * List of all role names
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
-     * @Serializer\Type("array<string>")
-     *
-     * @var array
-     * @ORM\Column(name="roles", type="array")
-     * @Constraints\Role(groups={"RolesUpdate"})
      */
-    private $roles = [];
+    #[ORM\Column(name: 'roles', type: 'array', nullable: false)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Type('array<string>')]
+    #[Constraints\Role(groups: ['RolesUpdate'])]
+    private array $roles = [];
+    /**
+     * If not empty two-factor authentication is enabled.
+     */
+    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
+    private ?string $totpSecret;
+    #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
+    private bool $totpEnabled = false;
+    #[ORM\Column(name: 'system_account', type: 'boolean', nullable: false, options: ['default' => false])]
+    private bool $systemAccount = false;
 
     use ColorTrait;
 
@@ -377,14 +305,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Read-only list of of all visible user preferences.
      *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("preferences"),
-     * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/UserPreference"))
-     *
      * @internal only for API usage
      * @return UserPreference[]
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('preferences')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserPreference'))]
     public function getVisiblePreferences(): array
     {
         // hide all internal preferences, which are either available in other fields
@@ -393,14 +320,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
             UserPreference::TIMEZONE,
             UserPreference::LOCALE,
             UserPreference::SKIN,
-            'calendar.initial_view',
-            'login.initial_view',
-            'reporting.initial_view',
-            'theme.collapsed_sidebar',
-            'theme.layout',
-            'theme.update_browser_title',
-            'timesheet.daily_stats',
-            'timesheet.export_decimal',
+            'calendar_initial_view',
+            'login_initial_view',
+            'collapsed_sidebar', // TODO @2.1 removed with 2.0, can be deleted with 2.1
+            'layout', // TODO @2.1 removed with 2.0, can be deleted with 2.1
+            'update_browser_title',
+            'daily_stats',
+            'export_decimal',
         ];
 
         $all = [];
@@ -438,15 +364,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @param string $name
-     * @param bool|int|string|null $value
+     * @param bool|int|string|float|null $value
      */
     public function setPreferenceValue(string $name, $value = null)
     {
         $pref = $this->getPreference($name);
 
         if (null === $pref) {
-            $pref = new UserPreference();
-            $pref->setName($name);
+            $pref = new UserPreference($name);
             $this->addPreference($pref);
         }
 
@@ -455,14 +380,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getPreference(string $name): ?UserPreference
     {
-        // this code will be triggered, if a currently logged-in user will be deleted and then refreshed from the session
-        // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
         if ($this->preferences === null) {
             return null;
         }
 
         foreach ($this->preferences as $preference) {
-            if ($preference->getName() === $name) {
+            if ($preference->matches($name)) {
                 return $preference;
             }
         }
@@ -470,25 +393,19 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return null;
     }
 
-    public function getTimeFormat(): string
-    {
-        if ($this->is24Hour()) {
-            return 'H:i';
-        }
-
-        return 'h:i A';
-    }
-
-    public function is24Hour(): bool
-    {
-        return (bool) $this->getPreferenceValue(UserPreference::HOUR_24, true, false);
-    }
-
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('language')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
     }
 
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('timezone')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getTimezone(): string
     {
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
@@ -517,14 +434,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
-    public function isSmallLayout(): bool
-    {
-        return $this->getPreferenceValue('theme.layout', 'fixed', false) === 'boxed';
-    }
-
     public function isExportDecimal(): bool
     {
-        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false, false);
+        return (bool) $this->getPreferenceValue('export_decimal', false, false);
     }
 
     public function setTimezone(?string $timezone)
@@ -537,11 +449,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @param string $name
-     * @param mixed $default
+     * @param bool|int|float|string|null $default
      * @param bool $allowNull
-     * @return bool|int|string|null
+     * @return bool|int|float|string|null
      */
-    public function getPreferenceValue(string $name, $default = null, bool $allowNull = true)
+    public function getPreferenceValue(string $name, mixed $default = null, bool $allowNull = true): bool|int|float|string|null
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {
@@ -551,15 +463,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $value = $preference->getValue();
 
         return $allowNull ? $value : ($value ?? $default);
-    }
-
-    /**
-     * @param string $name
-     * @return bool|int|string|null
-     */
-    public function getMetaFieldValue(string $name)
-    {
-        return $this->getPreferenceValue($name);
     }
 
     /**
@@ -593,16 +496,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
         }
 
         // when using the API an invalid Team ID triggers the validation too late
-        if ($member->getTeam() === null) {
+        if (($team = $member->getTeam()) === null) {
             return;
         }
 
-        if (null !== $this->findMemberByTeam($member->getTeam())) {
+        if (null !== $this->findMemberByTeam($team)) {
             return;
         }
 
         $this->memberships->add($member);
-        $member->getTeam()->addMember($member);
+        $team->addMember($member);
     }
 
     private function findMemberByTeam(Team $team): ?TeamMember
@@ -688,13 +591,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * List of all teams, this user is part of
      *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("teams"),
-     * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
-     *
      * @return Team[]
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('teams')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     public function getTeams(): iterable
     {
         $teams = [];
@@ -802,7 +704,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             return $this->getAlias();
         }
 
-        return $this->getUsername();
+        return $this->getUserIdentifier();
     }
 
     public function getAuth(): ?string
@@ -846,35 +748,49 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
         $this->plainApiToken = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsername()
+    public function hasUsername(): bool
+    {
+        return $this->username !== null;
+    }
+
+    public function getUsername(): string
     {
         return $this->username;
     }
 
     /**
-     * {@inheritdoc}
+     * @internal only here to satisfy the theme interface
      */
-    public function getEmail()
+    public function getIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
+    public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function hasEmail(): bool
+    {
+        return $this->email !== null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -888,7 +804,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         if ($this->lastLogin !== null) {
             // make sure to use the users own timezone
-            $this->lastLogin->setTimeZone(new \DateTimeZone($this->getTimezone()));
+            $this->lastLogin->setTimezone(new \DateTimeZone($this->getTimezone()));
         }
 
         return $this->lastLogin;
@@ -902,7 +818,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -941,14 +857,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    public function setUsername($username): User
+    public function setUsername(string $username): void
     {
         $this->username = $username;
-
-        return $this;
     }
 
-    public function setEmail($email): User
+    public function setUserIdentifier(string $identifier): void
+    {
+        $this->setUsername($identifier);
+    }
+
+    public function setEmail(?string $email): User
     {
         $this->email = $email;
 
@@ -1016,7 +935,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         $date = $this->getPasswordRequestedAt();
 
-        if ($date === null || !($date instanceof DateTime)) {
+        if (!($date instanceof \DateTimeInterface)) {
             return false;
         }
 
@@ -1034,7 +953,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if (!$user instanceof self) {
             return false;
@@ -1044,7 +963,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             return false;
         }
 
-        if ($this->username !== $user->getUsername()) {
+        if ($this->username !== $user->getUserIdentifier()) {
             return false;
         }
 
@@ -1062,20 +981,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-        ]);
-    }
-
     public function __unserialize(array $data): void
     {
         if (!\array_key_exists('id', $data)) {
@@ -1088,43 +993,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
         $this->password = $data['password'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        // unserialize a user object from <= 1.14
-        if (8 === \count($data)) {
-            unset($data[1], $data[2], $data[7]);
-            $data = array_values($data);
-        }
-
-        list(
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email) = $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->getDisplayName();
     }
 
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('initials')]
+    #[Serializer\Groups(['Default'])]
+    #[OA\Property(type: 'string')]
     public function getInitials(): string
     {
         $length = 2;
@@ -1173,6 +1050,83 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function isSystemAccount(): bool
     {
+        return $this->systemAccount;
+    }
+
+    public function setSystemAccount(bool $isSystemAccount): void
+    {
+        $this->systemAccount = $isSystemAccount;
+    }
+
+    public function getName(): string
+    {
+        return $this->getDisplayName();
+    }
+
+    public function hasSeenWizard(string $wizard): bool
+    {
+        $wizards = $this->getPreferenceValue('__wizards__');
+
+        if (\is_string($wizards)) {
+            $wizards = explode(',', $wizards);
+
+            return \in_array($wizard, $wizards);
+        }
+
         return false;
+    }
+
+    public function setWizardAsSeen(string $wizard): void
+    {
+        $wizards = $this->getPreferenceValue('__wizards__');
+        $values = [];
+
+        if (\is_string($wizards)) {
+            $values = explode(',', $wizards);
+        }
+
+        if (\in_array($wizard, $values)) {
+            return;
+        }
+
+        $values[] = $wizard;
+        $this->setPreferenceValue('__wizards__', implode(',', array_filter($values)));
+    }
+
+    // --------------- 2 Factor Authentication ---------------
+
+    public function setTotpSecret(?string $secret): void
+    {
+        $this->totpSecret = $secret;
+    }
+
+    public function hasTotpSecret(): bool
+    {
+        return $this->totpSecret !== null;
+    }
+
+    public function isTotpAuthenticationEnabled(): bool
+    {
+        return $this->totpEnabled;
+    }
+
+    public function enableTotpAuthentication(): void
+    {
+        $this->totpEnabled = true;
+    }
+
+    public function disableTotpAuthentication(): void
+    {
+        $this->totpEnabled = false;
+    }
+
+    public function getTotpAuthenticationUsername(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
+    public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface
+    {
+        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 }

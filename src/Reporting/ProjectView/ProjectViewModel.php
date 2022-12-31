@@ -15,31 +15,23 @@ use DateTime;
 
 final class ProjectViewModel
 {
-    private $project;
-    private $timesheetCounter = 0;
-    private $durationDay = 0;
-    private $durationWeek = 0;
-    private $durationMonth = 0;
-    private $durationTotal = 0;
-    private $rateTotal = 0.00;
-    private $notExportedDuration = 0;
-    private $notExportedRate = 0.00;
-    private $notBilledDuration = 0;
-    private $notBilledRate = 0.00;
-    private $billableDuration = 0;
-    private $billableRate = 0.00;
-    /**
-     * @var \DateTime|null
-     */
-    private $lastRecord;
-    /**
-     * @var BudgetStatisticModelInterface
-     */
-    private $budgetStatisticModel;
+    private int $timesheetCounter = 0;
+    private int $durationDay = 0;
+    private int $durationWeek = 0;
+    private int $durationMonth = 0;
+    private int $durationTotal = 0;
+    private float $rateTotal = 0.00;
+    private int $notExportedDuration = 0;
+    private float $notExportedRate = 0.00;
+    private int $notBilledDuration = 0;
+    private float $notBilledRate = 0.00;
+    private int $billableDuration = 0;
+    private float $billableRate = 0.00;
+    private ?DateTime $lastRecord = null;
+    private ?BudgetStatisticModelInterface $budgetStatisticModel = null;
 
-    public function __construct(Project $project)
+    public function __construct(private Project $project)
     {
-        $this->project = $project;
     }
 
     public function getProject(): Project

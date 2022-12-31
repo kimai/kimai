@@ -11,22 +11,10 @@ namespace App\Timesheet;
 
 final class Rate
 {
-    /**
-     * @var float
-     */
-    private $rate = 0.00;
-    /**
-     * @var float
-     */
-    private $internalRate = 0.00;
-    /**
-     * @var float|null
-     */
-    private $fixedRate = null;
-    /**
-     * @var float|null
-     */
-    private $hourlyRate = null;
+    private float $rate;
+    private float $internalRate;
+    private ?float $hourlyRate;
+    private ?float $fixedRate;
 
     public function __construct(float $rate, float $internalRate, ?float $hourlyRate = null, ?float $fixedRate = null)
     {

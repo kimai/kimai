@@ -25,18 +25,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SpreadsheetExporter
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-    /**
      * @var CellFormatterInterface[]
      */
     private $formatter = [];
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
-
         $this->registerCellFormatter('datetime', new DateTimeFormatter());
         $this->registerCellFormatter('date', new DateFormatter());
         $this->registerCellFormatter('time', new TimeFormatter());
@@ -45,7 +39,7 @@ class SpreadsheetExporter
         $this->registerCellFormatter('array', new ArrayFormatter());
     }
 
-    public function registerCellFormatter(string $type, CellFormatterInterface $formatter)
+    public function registerCellFormatter(string $type, CellFormatterInterface $formatter): void
     {
         $this->formatter[$type] = $formatter;
     }

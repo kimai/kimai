@@ -10,30 +10,18 @@
 namespace App\Controller;
 
 use App\Constants;
+use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/about")
- */
-class AboutController extends AbstractController
+#[Route(path: '/about')]
+final class AboutController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    protected $projectDirectory;
-
-    /**
-     * @param string $projectDirectory
-     */
-    public function __construct(string $projectDirectory)
+    public function __construct(private string $projectDirectory)
     {
-        $this->projectDirectory = $projectDirectory;
     }
 
-    /**
-     * @Route(path="", name="about", methods={"GET"})
-     */
+    #[Route(path: '', name: 'about', methods: ['GET'])]
     public function license(): Response
     {
         $filename = $this->projectDirectory . '/LICENSE';
@@ -47,10 +35,11 @@ class AboutController extends AbstractController
 
         if (false === $license) {
             $license = 'Failed reading license file: ' . $filename . '. ' .
-                'Check this instead: ' . Constants::GITHUB . 'blob/master/LICENSE';
+                'Check this instead: ' . Constants::GITHUB . 'blob/main/LICENSE';
         }
 
         return $this->render('about/license.html.twig', [
+            'page_setup' => new PageSetup('about.title'),
             'license' => $license
         ]);
     }

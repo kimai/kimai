@@ -7,24 +7,81 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+        <div class="col-xs-12">
             {% block profile_intro %}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        {{ widgets.user_avatar(user, false, 'avatar-md') }}
-                        {{ user.displayName }}
-                        {% if user.title is not empty %} &ndash; {{ user.title }} {% endif %}
+                <div class="card mb-3">
+                    <div class="card-body box-user-profile">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-auto" data-toggle="tooltip" title="{{ 'id'|trans }}: {{ user.id }}">
+                                {{ widgets.user_avatar(user, false, 'avatar-lg') }}
+                            </div>
+                            <div class="col">
+                                <h4 class="card-title m-0">{{ widgets.username(user) }}</h4>
+                                {% if user.title is not empty %}
+                                <div class="text-muted">
+                                    {{ user.title }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-auto" id="profile-buttons">
+                                {% from '@theme/components/buttons.html.twig' import link_button %}
+                                {% if app.user == user %}
+                                {{ link_button('notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}
+                                {% endif %}
+                                {{ link_button('email'|trans, ('mailto:' ~ user.email), 'mail', 'default') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endblock %}
             {% block profile_content %}{% endblock %}
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-            <div class="hidden-xs">
-            {% set event = actions(app.user, 'user', tab, {'user': user}) %}
-            {{ widgets.list_group_actions(event.actions, app.request.requestUri) }}
-            </div>
-            {% block profile_navbar %}{% endblock %}
-        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.user == user %}
+    <script>
+        function notificationStatus()
+        {
+            const notification = window.kimai.getPlugin('notification');
+            if (!notification.isSupported()) {
+                notification.request((result) => {
+                    if (result === false) {
+                        window.kimai.getPlugin('alert').info('{{ 'notifications.denied'|trans|e('js') }}');
+                    } else if (result === true) {
+                        notification.notify(null, '{{ 'notifications.welcome'|trans|e('js') }}');
+                    }
+                    buttonStatusCheck(window.kimai);
+                });
+            } else {
+                notification.notify(null, '{{ 'notifications.welcome'|trans|e('js') }}');
+            }
+        }
+
+        function buttonStatusCheck(kimai)
+        {
+            const button = document.querySelector('div#profile-buttons a');
+            const icon = button.querySelector('i');
+            const notification = kimai.getPlugin('notification');
+
+            if (notification.isSupported()) {
+                icon.classList.remove('fa-bell-slash');
+                icon.classList.add('fa-bell');
+                icon.classList.remove('text-danger');
+                icon.classList.add('text-success');
+            } else {
+                icon.classList.remove('fa-bell');
+                icon.classList.add('fa-bell-slash');
+                icon.classList.remove('text-success');
+                icon.classList.add('text-danger');
+            }
+        }
+
+        document.addEventListener('kimai.initialized', function(event) {
+            buttonStatusCheck(event.detail.kimai);
+        });
+    </script>
+    {% endif %}
 {% endblock %}

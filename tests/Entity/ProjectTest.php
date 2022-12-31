@@ -16,7 +16,6 @@ use App\Entity\ProjectMeta;
 use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -44,7 +43,6 @@ class ProjectTest extends AbstractEntityTest
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
-        self::assertNull($sut->getMetaFieldValue('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
         self::assertTrue($sut->isVisibleAtDate(new \DateTime()));
@@ -59,7 +57,7 @@ class ProjectTest extends AbstractEntityTest
     {
         $sut = new Project();
 
-        $customer = (new Customer())->setName('customer');
+        $customer = new Customer('customer');
         self::assertInstanceOf(Project::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
 
@@ -123,7 +121,6 @@ class ProjectTest extends AbstractEntityTest
         self::assertSame($result, $meta);
         self::assertEquals('test', $result->getType());
         self::assertEquals('bar2', $result->getValue());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $meta2 = new ProjectMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
@@ -134,7 +131,6 @@ class ProjectTest extends AbstractEntityTest
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
         self::assertEquals('test2', $result->getType());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $sut->setMetaField((new ProjectMeta())->setName('blub')->setIsVisible(true));
         $sut->setMetaField((new ProjectMeta())->setName('blab')->setIsVisible(true));
@@ -145,7 +141,7 @@ class ProjectTest extends AbstractEntityTest
     public function testTeams()
     {
         $sut = new Project();
-        $team = new Team();
+        $team = new Team('foo');
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getProjects());
 
@@ -156,7 +152,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertSame($sut, $team->getProjects()[0]);
 
         // test remove unknown team doesn't do anything
-        $sut->removeTeam(new Team());
+        $sut->removeTeam(new Team('foo'));
         self::assertCount(1, $sut->getTeams());
         self::assertCount(1, $team->getProjects());
 
@@ -167,27 +163,27 @@ class ProjectTest extends AbstractEntityTest
 
     public function testExportAnnotations()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $columns = $sut->extract(Project::class);
 
         self::assertIsArray($columns);
 
         $expected = [
-            ['label.id', 'integer'],
-            ['label.name', 'string'],
-            ['label.customer', 'string'],
-            ['label.orderNumber', 'string'],
-            ['label.orderDate', 'datetime'],
-            ['label.project_start', 'datetime'],
-            ['label.project_end', 'datetime'],
-            ['label.budget', 'float'],
-            ['label.timeBudget', 'duration'],
-            ['label.budgetType', 'string'],
-            ['label.color', 'string'],
-            ['label.visible', 'boolean'],
-            ['label.comment', 'string'],
-            ['label.billable', 'boolean'],
+            ['id', 'integer'],
+            ['name', 'string'],
+            ['customer', 'string'],
+            ['orderNumber', 'string'],
+            ['orderDate', 'datetime'],
+            ['project_start', 'datetime'],
+            ['project_end', 'datetime'],
+            ['budget', 'float'],
+            ['timeBudget', 'duration'],
+            ['budgetType', 'string'],
+            ['color', 'string'],
+            ['visible', 'boolean'],
+            ['comment', 'string'],
+            ['billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -207,8 +203,7 @@ class ProjectTest extends AbstractEntityTest
 
     public function testClone()
     {
-        $customer = new Customer();
-        $customer->setName('prj-customer');
+        $customer = new Customer('prj-customer');
         $customer->setVatId('DE-0123456789');
 
         $sut = new Project();
@@ -222,7 +217,7 @@ class ProjectTest extends AbstractEntityTest
 
         $sut->setCustomer($customer);
 
-        $team = new Team();
+        $team = new Team('foo');
         $sut->addTeam($team);
 
         $meta = new ProjectMeta();
@@ -237,7 +232,6 @@ class ProjectTest extends AbstractEntityTest
         foreach ($sut->getMetaFields() as $metaField) {
             $cloneMeta = $clone->getMetaField($metaField->getName());
             self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
-            self::assertEquals($metaField->getValue(), $clone->getMetaFieldValue($metaField->getName()));
         }
         self::assertEquals($clone->getBudget(), $sut->getBudget());
         self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
@@ -251,7 +245,7 @@ class ProjectTest extends AbstractEntityTest
     {
         $now = new \DateTime();
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $sut = new Project();
         $sut->setVisible(false);

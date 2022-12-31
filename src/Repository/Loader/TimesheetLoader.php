@@ -9,30 +9,129 @@
 
 namespace App\Repository\Loader;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class TimesheetLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false, private bool $basicHydrated = true)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param array<int|Timesheet> $results
      */
-    public function loadResults(array $timesheets): void
+    public function loadResults(array $results): void
     {
-        $ids = array_map(function (Timesheet $timesheet) {
-            return $timesheet->getId();
+        if (empty($results)) {
+            return;
+        }
+
+        $ids = array_map(function ($timesheet) {
+            if ($timesheet instanceof Timesheet) {
+                return $timesheet->getId();
+            }
+
+            return $timesheet;
+        }, $results);
+
+        $em = $this->entityManager;
+
+        $qb = $em->createQueryBuilder();
+        $timesheets = $qb->select('PARTIAL t.{id}', 'project')
+            ->from(Timesheet::class, 't')
+            ->leftJoin('t.project', 'project')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->getQuery()
+            ->execute();
+
+        $projectIds = array_map(function (Timesheet $timesheet) {
+            return $timesheet->getProject()->getId();
         }, $timesheets);
 
-        $loader = new TimesheetIdLoader($this->entityManager, $this->fullyHydrated);
-        $loader->loadResults($ids);
+        if ($this->fullyHydrated) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL p.{id}', 'meta')
+                ->from(Project::class, 'p')
+                ->leftJoin('p.meta', 'meta')
+                ->andWhere($qb->expr()->in('p.id', $projectIds))
+                ->getQuery()
+                ->execute();
+        }
+
+        $qb = $em->createQueryBuilder();
+        $projects = $qb->select('PARTIAL p.{id}', 'customer')
+            ->from(Project::class, 'p')
+            ->leftJoin('p.customer', 'customer')
+            ->andWhere($qb->expr()->in('p.id', $projectIds))
+            ->getQuery()
+            ->execute();
+
+        if ($this->fullyHydrated) {
+            $customerIds = array_map(function (Project $project) {
+                return $project->getCustomer()->getId();
+            }, $projects);
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL c.{id}', 'meta')
+                ->from(Customer::class, 'c')
+                ->leftJoin('c.meta', 'meta')
+                ->andWhere($qb->expr()->in('c.id', $customerIds))
+                ->getQuery()
+                ->execute();
+        }
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL t.{id}', 'activity')
+            ->from(Timesheet::class, 't')
+            ->leftJoin('t.activity', 'activity')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->getQuery()
+            ->execute();
+
+        if ($this->fullyHydrated) {
+            $activityIds = array_filter(array_map(function (Timesheet $timesheet) {
+                return $timesheet->getActivity()?->getId();
+            }, $timesheets), function ($id): bool {
+                return $id !== null;
+            });
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL a.{id}', 'meta')
+                ->from(Activity::class, 'a')
+                ->leftJoin('a.meta', 'meta')
+                ->andWhere($qb->expr()->in('a.id', $activityIds))
+                ->getQuery()
+                ->execute();
+        }
+
+        if ($this->basicHydrated) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'user')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.user', 'user')
+                ->andWhere($qb->expr()->in('t.id', $ids))
+                ->getQuery()
+                ->execute();
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'tags')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.tags', 'tags')
+                ->andWhere($qb->expr()->in('t.id', $ids))
+                ->getQuery()
+                ->execute();
+
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'meta')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.meta', 'meta')
+                ->andWhere($qb->expr()->in('t.id', $ids))
+                ->getQuery()
+                ->execute();
+        }
     }
 }

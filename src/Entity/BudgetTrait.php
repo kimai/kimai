@@ -17,50 +17,35 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait BudgetTrait
 {
     /**
-     * The total monetary budget, will be zero if unconfigured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
-     *
-     * @Exporter\Expose(label="label.budget", type="float")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\Range(min=0.00, max=900000000000.00)
-     * @Assert\NotNull()
+     * The total monetary budget, will be zero if not configured.
      */
-    private $budget = 0.00;
+    #[ORM\Column(name: 'budget', type: 'float', nullable: false)]
+    #[Assert\Range(min: 0.00, max: 900000000000.00)]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Exporter\Expose(label: 'budget', type: 'float')]
+    private float $budget = 0.00;
     /**
-     * The time budget in seconds, will be zero if unconfigured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
-     *
-     * @Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\Range(min=0, max=2145600000)
-     * @Assert\NotNull()
+     * The time budget in seconds, will be zero if not configured.
      */
-    private $timeBudget = 0;
+    #[ORM\Column(name: 'time_budget', type: 'integer', nullable: false)]
+    #[Assert\Range(min: 0, max: 2145600000)]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Exporter\Expose(label: 'timeBudget', type: 'duration')]
+    private int $timeBudget = 0;
     /**
      * The type of budget:
      *  - null      = default / full time
      *  - month     = monthly budget
-     *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
-     *
-     * @Exporter\Expose(label="label.budgetType")
-     *
-     * @ORM\Column(name="budget_type", type="string", length=10, nullable=true)
      */
-    private $budgetType;
+    #[ORM\Column(name: 'budget_type', type: 'string', length: 10, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Exporter\Expose(label: 'budgetType')]
+    private ?string $budgetType = null;
 
     public function setBudget(float $budget): void
     {

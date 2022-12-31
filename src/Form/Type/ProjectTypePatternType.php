@@ -18,31 +18,25 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used when rendering a project select.
  */
-class ProjectTypePatternType extends AbstractType
+final class ProjectTypePatternType extends AbstractType
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $name = $this->translator->trans('label.name');
-        $comment = $this->translator->trans('label.description');
-        $orderNumber = $this->translator->trans('label.orderNumber');
-        $projectStart = $this->translator->trans('label.project_start');
-        $projectEnd = $this->translator->trans('label.project_end');
-        $customer = $this->translator->trans('label.customer');
+        $name = $this->translator->trans('name');
+        $comment = $this->translator->trans('description');
+        $orderNumber = $this->translator->trans('orderNumber');
+        $projectStart = $this->translator->trans('project_start');
+        $projectEnd = $this->translator->trans('project_end');
+        $customer = $this->translator->trans('customer');
 
         $spacer = ProjectHelper::SPACER;
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $name => ProjectHelper::PATTERN_NAME,
                 $comment => ProjectHelper::PATTERN_COMMENT,
@@ -54,10 +48,7 @@ class ProjectTypePatternType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

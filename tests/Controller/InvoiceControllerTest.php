@@ -13,11 +13,9 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -36,7 +34,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->clearInvoiceFiles();
     }
 
-    private function clearInvoiceFiles()
+    private function clearInvoiceFiles(): void
     {
         $path = __DIR__ . '/../_data/invoices/';
 
@@ -48,17 +46,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/invoice/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/');
     }
 
-    public function testIndexActionRedirectsToCreateTemplate()
+    public function testIndexActionRedirectsToCreateTemplate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -66,7 +64,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/invoice/template/create');
     }
 
-    public function testIndexActionHasErrorMessageOnEmptyQuery()
+    public function testIndexActionHasErrorMessageOnEmptyQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -80,7 +78,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
     }
 
-    public function testListTemplateAction()
+    public function testListTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -93,7 +91,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
     }
 
-    public function testCreateTemplateAction()
+    public function testCreateTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/invoice/template/create');
@@ -125,7 +123,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertEquals('27.937', $template->getVat());
     }
 
-    public function testCopyTemplateAction()
+    public function testCopyTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -139,7 +137,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $values = $form->getPhpValues()['invoice_template_form'];
-        $this->assertEquals('Copy of ' . $template->getName(), $values['name']);
+        $this->assertEquals($template->getName() . ' (1)', $values['name']);
         $this->assertEquals($template->getTitle(), $values['title']);
         $this->assertEquals($template->getDueDays(), $values['dueDays']);
         $this->assertEquals($template->getCalculator(), $values['calculator']);
@@ -150,12 +148,13 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $fixture = new InvoiceTemplateFixtures();
         $templates = $this->importFixture($fixture);
+        /** @var InvoiceTemplate $template */
         $template = $templates[0];
 
         $begin = new \DateTime('first day of this month');
@@ -174,7 +173,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -192,21 +191,19 @@ class InvoiceControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
         // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
         $urlParams = [
             'daterange' => $dateRange,
             'projects[]' => 1,
-            'markAsExported' => 1,
+            'template' => $template->getId(),
         ];
 
-        /** @var CsrfToken $token */
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+        $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 
-        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token->getValue() . '?' . http_build_query($urlParams);
+        $action = '/invoice/save-invoice/1/' . $token . '?' . http_build_query($urlParams);
         $this->request($client, $action);
-        $this->assertIsRedirect($client);
-        $this->assertRedirectUrl($client, '/invoice/show?id=', false);
+        $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
@@ -221,7 +218,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testPreviewAction()
+    public function testPreviewAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -242,7 +239,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -256,9 +253,6 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        /** @var CsrfToken $token */
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.preview');
-
         $params = [
             'daterange' => $dateRange,
             'projects' => [1],
@@ -266,15 +260,20 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers[]' => 1
         ];
 
-        $action = '/invoice/preview/1/' . $token->getValue() . '?' . http_build_query($params);
+        $token = $client->getCrawler()->filter('div#preview-token')->attr('data-value');
+        $action = '/invoice/preview/1/' . $token . '?' . http_build_query($params);
+
         $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
         $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+
+        /** @var \DOMElement $element */
+        $element = $node->getIterator()[0];
+        $this->assertEquals('invoice_print', $element->getAttribute('class'));
     }
 
-    public function testCreateActionAsAdminWithDownloadAndStatusChange()
+    public function testCreateActionAsAdminWithDownloadAndStatusChange(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -295,11 +294,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
@@ -313,28 +312,27 @@ class InvoiceControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
         // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+        $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token->getValue()));
+        $node->setAttribute('action', $this->createUrl('/invoice/save-invoice/1/' . $token));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customers' => [1],
             'projects' => [1],
-            'markAsExported' => 1,
         ]);
 
-        $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
-        $id = $invoices[0]->getId();
-
-        $this->assertIsRedirect($client, '/invoice/show?id=' . $id);
+        $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
+        self::assertCount(1, $invoices);
+        $id = $invoices[0]->getId();
 
         $this->assertHasFlashSuccess($client);
 
@@ -348,20 +346,23 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
-        $this->request($client, '/invoice/change-status/' . $id . '/pending/' . $token->getValue());
+        $this->request($client, '/invoice/show');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $link = $client->getCrawler()->selectLink('Waiting for payment');
+
+        $this->request($client, $link->attr('href'));
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
-        $this->request($client, '/invoice/change-status/' . $id . '/paid/' . $token->getValue());
+        $link = $client->getCrawler()->selectLink('Invoice paid');
+        $url = $link->attr('href');
+        $this->request($client, $url);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
         $this->assertHasValidationError(
             $client,
-            '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
+            $url,
             'form[name=invoice_edit_form]',
             [
                 'invoice_edit_form' => [
@@ -376,7 +377,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
         $client->submit($form, [
             'invoice_edit_form' => [
-                'paymentDate' => (new \DateTime())->format('Y-m-d')
+                'paymentDate' => (new \DateTime())->format(self::DEFAULT_DATE_FORMAT)
             ]
         ]);
 
@@ -384,14 +385,14 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $token = $this->getCsrfToken($client, 'invoice.status');
         $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testEditTemplateAction()
+    public function testEditTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -418,7 +419,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
     }
 
-    public function testDeleteTemplateAction()
+    public function testDeleteTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -426,9 +427,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.delete_template');
+        $this->request($client, '/invoice/template');
+        $url = $this->createUrl('/invoice/template/' . $id . '/delete/');
+        $links = $client->getCrawler()->filterXPath("//a[starts-with(@href, '" . $url . "')]");
 
-        $this->request($client, '/invoice/template/' . $id . '/delete/' . $token);
+        $this->requestPure($client, $links->attr('href'));
         $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 
@@ -438,7 +441,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
-    public function testUploadDocumentAction()
+    public function testUploadDocumentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -453,12 +456,12 @@ class InvoiceControllerTest extends ControllerBaseTest
         // we do not test the upload here, just make sure that the action can be rendered properly
     }
 
-    public function testExportIsSecureForRole()
+    public function testExportIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/export');
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/invoice/export');

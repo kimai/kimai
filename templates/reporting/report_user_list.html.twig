@@ -1,80 +1,30 @@
-{% extends 'reporting/layout.html.twig' %}
+{% extends 'reporting/report_user_list_layout.html.twig' %}
 
-{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
-
-{% block report %}
-
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% from "macros/widgets.html.twig" import nothing_found %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline', 'id': 'user-list-filter-form'}}) }}
+{% block report_content %}
+    {% embed 'reporting/user_list_period_data.html.twig' with {stats: stats, dataType: dataType, period_attribute: period_attribute, subReportRoute: subReportRoute, subReportDate: subReportDate, decimal: decimal} only %}
+        {% block period_name %}
+            <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
+                {{ column|date_weekday }}
+            </th>
         {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
+        {% block total_rate_user %}
+            <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalRate|money }}</a>
         {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form.date) }}
-            {% if form.team is defined %}
-                {{ form_widget(form.team) }}
-            {% endif %}
-            {% if form.sumType.vars.choices|length > 1 %}
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu checkbox-menu">
-                        <li>
-                            {{ form_widget(form.sumType) }}
-                        </li>
-                    </ul>
-                </div>
-            {% endif %}
-            <button class="btn btn-primary" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+        {% block total_internal_rate_user %}
+            <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalInternalRate|money }}</a>
         {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
-        {% block box_body %}
-            {% if not hasData %}
-                {{ nothing_found() }}
-            {% else %}
-                {% embed 'reporting/user_list_period_data.html.twig' %}
-                    {% block period_name %}
-                        <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
-                            {{ column|date_weekday }}
-                        </th>
-                    {% endblock %}
-                    {% block total_rate_user %}
-                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalRate|money }}</a>
-                    {% endblock %}
-                    {% block total_internal_rate_user %}
-                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalInternalRate|money }}</a>
-                    {% endblock %}
-                    {% block total_duration_user %}
-                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalDuration|duration(decimal) }}</a>
-                    {% endblock %}
-                    {% block rate %}
-                        {{ period.totalRate|money }}
-                    {% endblock %}
-                    {% block internal_rate %}
-                        {{ period.totalInternalRate|money }}
-                    {% endblock %}
-                    {% block duration %}
-                        {{ period.totalDuration|duration(decimal) }}
-                    {% endblock %}
-                    {% block period_cell_class %}{% if period.date is weekend %} weekend{% endif %}{% if period.date is today %} today{% endif %}{% endblock %}
-                {% endembed %}
-            {% endif %}
+        {% block total_duration_user %}
+            <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalDuration|duration(decimal) }}</a>
         {% endblock %}
+        {% block rate %}
+            {{ period.totalRate|money }}
+        {% endblock %}
+        {% block internal_rate %}
+            {{ period.totalInternalRate|money }}
+        {% endblock %}
+        {% block duration %}
+            {{ period.totalDuration|duration(decimal) }}
+        {% endblock %}
+        {% block period_cell_class %}{% if period.date is weekend %} weekend{% endif %}{% if period.date is today %} today{% endif %}{% endblock %}
     {% endembed %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#user-list-filter-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-    </script>
 {% endblock %}

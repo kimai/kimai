@@ -14,103 +14,82 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_teams",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
- * @UniqueEntity("name")
- *
- * @Serializer\ExclusionPolicy("all")
- * @Constraints\Team
- */
+#[ORM\Table(name: 'kimai2_teams')]
+#[ORM\UniqueConstraint(columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
+#[Serializer\ExclusionPolicy('all')]
+#[Constraints\Team]
 class Team
 {
-    /**
-     * @var int|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?int $id = null;
     /**
      * Team name
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, allowEmptyString=false)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 100)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?string $name = null;
     /**
      * All team member (including team leads)
      *
      * @var Collection<TeamMember>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/TeamMember"))
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\Count(min="1")
      */
-    private $members;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[Assert\Count(min: 1)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamMember'))]
+    private Collection $members;
     /**
      * Customers assigned to the team
      *
      * @var Collection<Customer>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
-     *
-     * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $customers;
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Customer', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Customer'))]
+    private Collection $customers;
     /**
      * Projects assigned to the team
      *
      * @var Collection<Project>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Project"))
-     *
-     * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $projects;
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Project', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity', 'Expanded'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Project'))]
+    private Collection $projects;
     /**
      * Activities assigned to the team
      *
      * @var Collection<Activity>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
-     *
-     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $activities;
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Activity', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity', 'Expanded'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Activity'))]
+    private Collection $activities;
 
     use ColorTrait;
 
-    public function __construct()
+    public function __construct(string $name)
     {
+        $this->name = $name;
         $this->members = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->projects = new ArrayCollection();
@@ -122,7 +101,7 @@ class Team
         return $this->id;
     }
 
-    public function setName(string $name): Team
+    public function setName(?string $name): Team
     {
         $this->name = $name;
 
@@ -157,16 +136,16 @@ class Team
         }
 
         // when using the API an invalid User ID triggers the validation too late
-        if ($member->getUser() === null) {
+        if (($user = $member->getUser()) === null) {
             return;
         }
 
-        if (null !== $this->findMemberByUser($member->getUser())) {
+        if (null !== $this->findMemberByUser($user)) {
             return;
         }
 
         $this->members->add($member);
-        $member->getUser()->addMembership($member);
+        $user->addMembership($member);
     }
 
     public function hasMember(TeamMember $member): bool
@@ -198,28 +177,6 @@ class Team
     }
 
     /**
-     * BE AWARE: this property is deprecated and will be removed with 2.0 - teams can have multiple teamleads since 1.15!
-     *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("teamlead"),
-     * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
-     *
-     * @deprecated since 1.15 - will be removed with 2.0
-     * @return User|null
-     */
-    public function getTeamlead(): ?User
-    {
-        foreach ($this->members as $member) {
-            if ($member->isTeamlead()) {
-                return $member->getUser();
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @return User[]
      */
     public function getTeamleads(): array
@@ -241,15 +198,6 @@ class Team
         }
 
         return false;
-    }
-
-    /**
-     * @deprecated since 1.15 - will be removed with 2.0
-     * @param User $teamlead
-     */
-    public function setTeamlead(User $teamlead): void
-    {
-        $this->addTeamlead($teamlead);
     }
 
     public function addTeamlead(User $user): void
@@ -277,8 +225,6 @@ class Team
     {
         if (null !== ($member = $this->findMemberByUser($user))) {
             $member->setTeamlead(false);
-
-            return;
         }
     }
 
@@ -326,11 +272,6 @@ class Team
     /**
      * Returns all users in the team, both teamlead and normal member.
      *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("users"),
-     * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
-     *
      * @return User[]
      */
     public function getUsers(): array
@@ -348,7 +289,7 @@ class Team
         return $this->customers->contains($customer);
     }
 
-    public function addCustomer(Customer $customer)
+    public function addCustomer(Customer $customer): void
     {
         if ($this->customers->contains($customer)) {
             return;
@@ -358,7 +299,7 @@ class Team
         $customer->addTeam($this);
     }
 
-    public function removeCustomer(Customer $customer)
+    public function removeCustomer(Customer $customer): void
     {
         if (!$this->customers->contains($customer)) {
             return;
@@ -381,7 +322,7 @@ class Team
         return $this->projects->contains($project);
     }
 
-    public function addProject(Project $project)
+    public function addProject(Project $project): void
     {
         if ($this->projects->contains($project)) {
             return;
@@ -391,7 +332,7 @@ class Team
         $project->addTeam($this);
     }
 
-    public function removeProject(Project $project)
+    public function removeProject(Project $project): void
     {
         if (!$this->projects->contains($project)) {
             return;
@@ -414,7 +355,7 @@ class Team
         return $this->activities->contains($activity);
     }
 
-    public function addActivity(Activity $activity)
+    public function addActivity(Activity $activity): void
     {
         if ($this->activities->contains($activity)) {
             return;
@@ -424,7 +365,7 @@ class Team
         $activity->addTeam($this);
     }
 
-    public function removeActivity(Activity $activity)
+    public function removeActivity(Activity $activity): void
     {
         if (!$this->activities->contains($activity)) {
             return;
@@ -442,10 +383,7 @@ class Team
         return $this->activities;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-(new Dotenv(false))->loadEnv(dirname(__DIR__) . '/.env');
+(new Dotenv())->loadEnv(dirname(__DIR__) . '/.env');
 
 $env = $_SERVER['APP_ENV'] ?? 'prod';
 $debug = (bool) ($_SERVER['APP_DEBUG'] ?? (in_array($env, ['dev', 'test'])));

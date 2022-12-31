@@ -52,18 +52,12 @@ class StatusControllerTest extends APIControllerBaseTest
 
         $this->assertArrayHasKey('version', $result);
         $this->assertArrayHasKey('versionId', $result);
-        $this->assertArrayHasKey('candidate', $result);
-        $this->assertArrayHasKey('semver', $result);
-        $this->assertArrayHasKey('name', $result);
         $this->assertArrayHasKey('copyright', $result);
 
         $this->assertSame(Constants::VERSION, $result['version']);
         $this->assertSame(Constants::VERSION_ID, $result['versionId']);
-        $this->assertEquals(Constants::STATUS, $result['candidate']);
-        $this->assertEquals(Constants::VERSION . '-' . Constants::STATUS, $result['semver']);
-        $this->assertEquals(Constants::NAME, $result['name']);
         $this->assertEquals(
-            'Kimai ' . Constants::VERSION . ' by Kevin Papst and contributors.',
+            'Kimai ' . Constants::VERSION . ' by Kevin Papst.',
             $result['copyright']
         );
     }

@@ -14,172 +14,101 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_activities",
- *      indexes={
- *          @ORM\Index(columns={"visible","project_id"}),
- *          @ORM\Index(columns={"visible","project_id","name"}),
- *          @ORM\Index(columns={"visible","name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
- *
- * @Serializer\ExclusionPolicy("all")
- * @Serializer\VirtualProperty(
- *      "ProjectName",
- *      exp="object.getProject() === null ? null : object.getProject().getName()",
- *      options={
- *          @Serializer\SerializedName("parentTitle"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"Activity"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "ProjectAsId",
- *      exp="object.getProject() === null ? null : object.getProject().getId()",
- *      options={
- *          @Serializer\SerializedName("project"),
- *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Activity", "Team", "Not_Expanded"})
- *      }
- * )
- *
- * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment", "billable"})
- * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
- */
+#[ORM\Table(name: 'kimai2_activities')]
+#[ORM\Index(columns: ['visible', 'project_id'])]
+#[ORM\Index(columns: ['visible', 'project_id', 'name'])]
+#[ORM\Index(columns: ['visible', 'name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\ActivityRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
+#[Serializer\VirtualProperty('ProjectName', exp: 'object.getProject() === null ? null : object.getProject().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Activity'])])]
+#[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Activity', 'Team', 'Not_Expanded'])])]
+#[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 class Activity implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
     use ColorTrait;
 
     /**
-     * Internal ID
-     *
-     * @var int|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.id", type="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * Unique activity ID
      */
-    private $id;
-    /**
-     * @var Project|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(ref="#/definitions/Project")
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    private $project;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
+    private ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[OA\Property(ref: '#/components/schemas/Project')]
+    private ?Project $project = null;
     /**
      * Name of this activity
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.name")
-     *
-     * @ORM\Column(name="name", type="string", length=150, nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=150, allowEmptyString=false)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'name')]
+    private ?string $name = null;
     /**
      * Description of this activity
-     *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.comment")
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
      */
-    private $comment;
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'comment')]
+    private ?string $comment = null;
     /**
-     * Whether this activity is visible and can be used for timesheets
-     *
-     * @var bool
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.visible", type="boolean")
-     *
-     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
-     * @Assert\NotNull()
+     * Whether this activity is visible and can be selected
      */
-    private $visible = true;
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'visible', type: 'boolean')]
+    private bool $visible = true;
+    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'billable', type: 'boolean')]
+    private bool $billable = true;
     /**
-     * @var bool
+     * Meta fields registered with the activity
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @Exporter\Expose(label="label.billable", type="boolean")
-     *
-     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
-     * @Assert\NotNull()
+     * @var Collection<ActivityMeta>
      */
-    private $billable = true;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ActivityMeta', mappedBy: 'activity', cascade: ['persist'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Activity'])]
+    #[Serializer\Type(name: 'array<App\Entity\ActivityMeta>')]
+    #[Serializer\SerializedName('metaFields')]
+    #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
+    private Collection $meta;
     /**
-     * Meta fields
+     * Teams with access to the activity
      *
-     * All visible meta (custom) fields registered with this activity
-     *
-     * @var ActivityMeta[]|Collection
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity"})
-     * @Serializer\Type(name="array<App\Entity\ActivityMeta>")
-     * @Serializer\SerializedName("metaFields")
-     * @Serializer\Accessor(getter="getVisibleMetaFields")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
+     * @var Collection<Team>
      */
-    private $meta;
-    /**
-     * Teams
-     *
-     * If no team is assigned, everyone can access the activity
-     *
-     * @var Team[]|ArrayCollection
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
-     *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="activities")
-     * @ORM\JoinTable(
-     *  name="kimai2_activities_teams",
-     *  joinColumns={
-     *      @ORM\JoinColumn(name="activity_id", referencedColumnName="id", onDelete="CASCADE")
-     *  },
-     *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
-     *  }
-     * )
-     */
-    private $teams;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="invoice_text", type="text", nullable=true)
-     */
-    private $invoiceText;
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'activities')]
+    #[ORM\JoinTable(name: 'kimai2_activities_teams')]
+    #[ORM\JoinColumn(name: 'activity_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Activity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
+    private Collection $teams;
+    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    private ?string $invoiceText = null;
 
     public function __construct()
     {
@@ -289,20 +218,6 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         return null;
     }
 
-    /**
-     * @param string $name
-     * @return bool|int|string|null
-     */
-    public function getMetaFieldValue(string $name)
-    {
-        $field = $this->getMetaField($name);
-        if ($field === null) {
-            return null;
-        }
-
-        return $field->getValue();
-    }
-
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
@@ -354,10 +269,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         $this->invoiceText = $invoiceText;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

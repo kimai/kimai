@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @deprecated since 1.7 will be removed with 2.0
-     */
-    public const TYPE_SELECTPICKER = 'selectpicker';
-
     public static function getExtendedTypes(): iterable
     {
         return [EntityType::class, ChoiceType::class];
@@ -36,7 +31,7 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
      * @param FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['selectpicker']) && false === $options['selectpicker']) {
             return;
@@ -59,16 +54,13 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         }
 
         if (false === $options['search']) {
-            $extendedOptions['data-minimum-results-for-search'] = 'Infinity';
+            $extendedOptions['data-disable-search'] = 1;
         }
 
         $view->vars['attr'] = array_merge($view->vars['attr'], $extendedOptions);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['selectpicker']);
         $resolver->setAllowedTypes('selectpicker', 'boolean');

@@ -9,11 +9,11 @@
 
 namespace App\Tests\EventSubscriber;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -30,18 +30,15 @@ class UserPreferenceSubscriberTest extends TestCase
         'language',
         'first_weekday',
         'skin',
-        'hours_24',
-        'theme.layout',
-        'theme.collapsed_sidebar',
-        'theme.update_browser_title',
-        'calendar.initial_view',
-        'reporting.initial_view',
-        'login.initial_view',
-        'timesheet.daily_stats',
-        'timesheet.export_decimal',
+        'update_browser_title',
+        'calendar_initial_view',
+        'login_initial_view',
+        'daily_stats',
+        'export_decimal',
+        'favorite_routes',
     ];
 
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(PrepareUserEvent::class, $events);
@@ -49,7 +46,7 @@ class UserPreferenceSubscriberTest extends TestCase
         $this->assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
     }
 
-    public function testWithHourlyRateAllowed()
+    public function testWithHourlyRateAllowed(): void
     {
         $sut = $this->getSubscriber(true);
         $user = new User();
@@ -68,7 +65,6 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
-                case 'reporting.initial_view':
                     self::assertTrue($pref->isEnabled());
                     break;
 
@@ -82,7 +78,7 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    public function testWithHourlyRateNotAllowed()
+    public function testWithHourlyRateNotAllowed(): void
     {
         $sut = $this->getSubscriber(false);
         $user = new User();
@@ -99,9 +95,8 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
-                case 'reporting.initial_view':
                     self::assertFalse($pref->isEnabled());
-                break;
+                    break;
 
                 default:
                     self::assertTrue($pref->isEnabled());
@@ -109,13 +104,20 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    protected function getSubscriber(bool $seeHourlyRate)
+    protected function getSubscriber(bool $seeHourlyRate): UserPreferenceSubscriber
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
         $authMock->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
-        $formConfigMock = $this->createMock(SystemConfiguration::class);
+        $formConfigMock = SystemConfigurationFactory::createStub([
+            'defaults' => [
+                'user' => [
+                    'language' => 'en',
+                    'currency' => 'EUR',
+                ]
+            ]
+        ]);
 
         return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }

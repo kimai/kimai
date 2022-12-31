@@ -20,7 +20,7 @@ class CustomerMetaDefinitionEventTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $sut = new CustomerMetaDefinitionEvent($customer);
         $this->assertSame($customer, $sut->getEntity());
     }

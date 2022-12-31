@@ -17,7 +17,7 @@ use App\Repository\Query\InvoiceQuery;
  */
 class InvoiceQueryTest extends TimesheetQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new InvoiceQuery();
 
@@ -36,7 +36,6 @@ class InvoiceQueryTest extends TimesheetQueryTest
         self::assertTrue($sut->isStopped());
 
         $this->assertExportedWith($sut, InvoiceQuery::STATE_NOT_EXPORTED);
-        $this->assertMarkAsExported($sut);
         $this->assertModifiedAfter($sut);
 
         self::assertTrue($sut->getBillable());
@@ -47,13 +46,5 @@ class InvoiceQueryTest extends TimesheetQueryTest
         self::assertTrue($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         $this->assertBillable($sut);
-    }
-
-    protected function assertMarkAsExported(InvoiceQuery $sut)
-    {
-        self::assertTrue($sut->isMarkAsExported());
-
-        $sut->setMarkAsExported(false);
-        self::assertFalse($sut->isMarkAsExported());
     }
 }

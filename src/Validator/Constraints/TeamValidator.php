@@ -14,13 +14,13 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class TeamValidator extends ConstraintValidator
+final class TeamValidator extends ConstraintValidator
 {
     /**
      * @param TeamEntity $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof Team)) {
             throw new UnexpectedTypeException($constraint, Team::class);
@@ -32,7 +32,7 @@ class TeamValidator extends ConstraintValidator
 
         if (!$value->hasTeamleads()) {
             $this->context->buildViolation(Team::getErrorName(Team::MISSING_TEAMLEAD))
-                ->atPath('teamleads')
+                ->atPath('members')
                 ->setTranslationDomain('validators')
                 ->setCode(Team::MISSING_TEAMLEAD)
                 ->addViolation();

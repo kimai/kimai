@@ -6,8 +6,6 @@ services:
     _defaults:
         public: true
 
-    test.PasswordEncoder: "@security.encoder_factory"
-
     App\Configuration\SystemConfiguration:
         arguments: ['@App\Repository\ConfigurationRepository', "%kimai.config%"]
 
@@ -29,4 +27,8 @@ services:
 
     App\User\UserService:
         public: true
-        arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.password_encoder']
+        arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
+
+    App\Plugin\PluginManager:
+        public: true
+        arguments: [!tagged kimai.plugin]

@@ -4,47 +4,51 @@
 {# ------------------------------------------------------------------------------ #}
 
 {#
-    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': false}
+    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': {'display': false}}
 #}
 {% macro doughnut_javascript(options) %}
     <script type="text/javascript">
         function doughnutChartOptions() {
             return {
-                legend: {% if options.legend is defined %}{{ options.legend }}{% else %}false{% endif %},
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 responsive: true,
                 cutoutPercentage: 40,
                 animation: {
                     animateRotate: true
                 },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['{{ options.label|default('label') }}'];
-                        },
-                        afterTitle: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        {% if options.title is defined and options.title is not empty %}
-                        title: function(tooltipItems, data) {
-                            var tooltipItem = tooltipItems[0];
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['{{ options.title }}'];
-                        },
-                        {% endif %}
-                        {% if options.footer is defined and options.footer is not empty %}
-                        beforeFooter: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        footer: function(tooltipItems, data) {
-                            var tooltipItem = tooltipItems[0];
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return tooltipData['{{ options.footer }}'];
-                        },
-                        {% endif %}
+                plugins: {
+                    {% if options.legend is defined and options.legend is iterable %}
+                    legend: {{ options.legend|json_encode|raw }},
+                    {% endif %}
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return ' ' + tooltipData['{{ options.label|default('label') }}'];
+                            },
+                            afterTitle: function(tooltipItems) {
+                                return ' ';
+                            },
+                            {% if options.title is defined and options.title is not empty %}
+                            title: function(tooltipItems) {
+                                const tooltipItem = tooltipItems[0];
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return ' ' + tooltipData['{{ options.title }}'];
+                            },
+                            {% endif %}
+                            {% if options.footer is defined and options.footer is not empty %}
+                            beforeFooter: function(tooltipItems) {
+                                return ' ';
+                            },
+                            footer: function(tooltipItems) {
+                                const tooltipItem = tooltipItems[0];
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return tooltipData['{{ options.footer }}'];
+                            },
+                            {% endif %}
+                        }
                     }
-                }
+                },
             };
         }
     </script>
@@ -59,13 +63,13 @@
 {% macro doughnut_chart(id, labels, dataset, options) %}
     {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
     {% set bgColor = config('theme.chart.background_color') %}
-    <div class="chart" style="position: relative;">
-        <canvas id="{{ id }}" style="height: {{ height }};"></canvas>
+    <div class="{{ config('chart-class') }}" style="position: relative;">
+        <canvas id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
             new Chart(
-                $("#{{ id }}").get(0).getContext("2d"), {
+                document.getElementById("{{ id }}").getContext("2d"), {
                     type: 'doughnut',
                     data: {
                         {% if labels is not empty %}
@@ -100,24 +104,23 @@
 {# ------------------------------------------------------------------- #}
 
 {#
-    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': false, 'onclick': {'url': string, 'replacer': {'name': 'value'}}}
+    options = {'label': 'label', 'title': string|null, 'footer': string|null, 'legend': {'display': false}, 'onclick': {'url': string, 'replacer': {'name': 'value'}}}
 #}
 {% macro bar_javascript(options) %}
     <script type="text/javascript">
         function barChartOptions() {
             return {
-                legend: {% if options.legend is defined %}{{ options.legend }}{% else %}false{% endif %},
                 maintainAspectRatio: true,
                 responsive: true,
                 barPercentage: 0.5,
-                categoryPercentage: 0.9,
+                categoryPercentage: 1.0,
                 scales: {
-                    xAxes: [{
+                    x: {
                         gridLines: {
                             display: false
                         }
-                    }],
-                    yAxes: [{
+                    },
+                    y: {
                         ticks: {
                             beginAtZero: true,
                         },
@@ -126,44 +129,52 @@
                             color: '{{ config('theme.chart.grid_color') }}',
                             lineWidth: 1
                         }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['{{ options.label|default('label') }}'];
-                        },
-                        afterTitle: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        {% if options.title is defined and options.title is not empty %}
-                        title: function(tooltipItems, data) {
-                            var tooltipItem = tooltipItems[0];
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return ' ' + tooltipData['{{ options.title }}'];
-                        },
-                        {% endif %}
-                        {% if options.footer is defined and options.footer is not empty %}
-                        beforeFooter: function(tooltipItems, data) {
-                            return ' ';
-                        },
-                        footer: function(tooltipItems, data) {
-                            var tooltipItem = tooltipItems[0];
-                            var tooltipData = data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
-                            return tooltipData['{{ options.footer }}'];
-                        },
-                        {% endif %}
                     }
                 },
+                plugins: {
+                    {% if options.legend is defined and options.legend is iterable %}
+                    legend: {{ options.legend|json_encode|raw }},
+                    {% endif %}
+                    tooltip: {
+                        titleSpacing: 0,
+                        titleMarginBottom: 0,
+                        footerMarginTop: 0,
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return ' ' + tooltipData['{{ options.label|default('label') }}'];
+                            },
+                            afterTitle: function(tooltipItems) {
+                                return ' ';
+                            },
+                            {% if options.title is defined and options.title is not empty %}
+                            title: function(tooltipItems) {
+                                const tooltipItem = tooltipItems[0];
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return ' ' + tooltipData['{{ options.title }}'];
+                            },
+                            {% endif %}
+                            {% if options.footer is defined and options.footer is not empty %}
+                            beforeFooter: function(tooltipItems) {
+                                return ' ';
+                            },
+                            footer: function(tooltipItems) {
+                                const tooltipItem = tooltipItems[0];
+                                const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                return tooltipData['{{ options.footer }}'];
+                            },
+                            {% endif %}
+                        }
+                    },
+                },
                 {% if options.onclick is defined and options.onclick.url is defined %}
-                onClick: function(event, elements) {
+                onClick: function(event, elements, chart) {
                     if (elements.length !== 1) {
                         return;
                     }
-                    var element = elements[0];
-                    var data = this.data.datasets[element._datasetIndex].realData[element._index];
-                    var url = '{{ options.onclick.url|raw }}';
+                    const element = elements[0];
+                    const data = this.data.datasets[element.datasetIndex].realData[element.index];
+                    let url = '{{ options.onclick.url|raw }}';
                     {% if options.onclick.replacer is defined %}
                         {% for replacer, field in options.onclick.replacer %}
                         url = url.replace(/{{ replacer }}/, data['{{ field }}']);
@@ -186,8 +197,8 @@
 {% macro bar_chart(id, labels, datasets, options) %}
     {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
     {% set bgColor = config('theme.chart.background_color') %}
-    <div class="chart" style="position: relative;">
-        <canvas id="{{ id }}" style="height: {{ height }};"></canvas>
+    <div class="{{ config('chart-class') }}" style="position: relative;">
+        <canvas id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {

@@ -10,19 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\CustomerRateForm;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerRateApiForm extends CustomerRateForm
+final class CustomerRateApiForm extends CustomerRateForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
-    }
 }

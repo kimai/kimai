@@ -16,20 +16,17 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UserValidator extends ConstraintValidator
+final class UserValidator extends ConstraintValidator
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
-        $this->userService = $userService;
     }
 
     /**
      * @param UserEntity $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof User)) {
             throw new UnexpectedTypeException($constraint, User::class);
@@ -42,16 +39,16 @@ class UserValidator extends ConstraintValidator
         $this->validateUser($value, $this->context);
     }
 
-    protected function validateUser(UserEntity $user, ExecutionContextInterface $context)
+    protected function validateUser(UserEntity $user, ExecutionContextInterface $context): void
     {
-        if ($user->getEmail() !== null) {
+        if ($user->hasEmail()) {
             $this->validateEmailExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL, $context);
             $this->validateUsernameExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL_AS_NAME, $context);
         }
 
-        if ($user->getUsername() !== null) {
-            $this->validateEmailExists($user->getId(), $user->getUsername(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
-            $this->validateUsernameExists($user->getId(), $user->getUsername(), 'username', User::USER_EXISTING_NAME, $context);
+        if ($user->hasUsername()) {
+            $this->validateEmailExists($user->getId(), $user->getUserIdentifier(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
+            $this->validateUsernameExists($user->getId(), $user->getUserIdentifier(), 'username', User::USER_EXISTING_NAME, $context);
         }
     }
 

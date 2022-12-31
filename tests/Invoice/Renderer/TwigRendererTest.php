@@ -30,10 +30,10 @@ class TwigRendererTest extends KernelTestCase
         $env = new Environment($loader);
         $sut = new TwigRenderer($env);
 
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('default.html.twig')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx')));
+        $this->assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
+        $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
@@ -42,8 +42,8 @@ class TwigRendererTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
-        $stack = $kernel->getContainer()->get('request_stack');
+        $twig = self::getContainer()->get('twig');
+        $stack = self::getContainer()->get('request_stack');
         $request = new Request();
         $request->setLocale('en');
         $stack->push($request);
@@ -65,7 +65,9 @@ class TwigRendererTest extends KernelTestCase
         $filename = $model->getInvoiceNumber() . '-customer_with_special_name';
         $this->assertStringContainsString('<title>' . $filename . '</title>', $content);
         $this->assertStringContainsString('<span contenteditable="true">a very *long* test invoice / template title with [ßpecial] chäracter</span>', $content);
-        $this->assertEquals(3, substr_count($content, 'activity description'));
+        // 3 timesheets have a description and therefor do not render the activity
+        // 2 timesheets have no description and the correct activity assigned
+        $this->assertEquals(2, substr_count($content, 'activity description'));
         $this->assertStringContainsString(nl2br("foo\n" .
     "foo\r\n" .
     'foo' . PHP_EOL .

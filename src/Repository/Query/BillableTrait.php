@@ -11,10 +11,7 @@ namespace App\Repository\Query;
 
 trait BillableTrait
 {
-    /**
-     * @var bool|null
-     */
-    private $billable = null;
+    private ?bool $billable = null;
 
     public function getBillable(): ?bool
     {

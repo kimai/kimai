@@ -19,26 +19,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to set the users password.
  */
-class UserPasswordType extends AbstractType
+final class UserPasswordType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password', 'attr' => ['autocomplete' => 'new-password']],
-                'second_options' => ['label' => 'label.password_repeat', 'attr' => ['autocomplete' => 'new-password']],
+                'first_options' => [
+                    'label' => 'password',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
+                'second_options' => [
+                    'label' => 'password_repeat',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
             ])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => ['PasswordUpdate'],

@@ -2,15 +2,33 @@
 
 {% block profile_content %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_title %}{{ ('profile.' ~ tab)|trans }}{% endblock %}
-        {% block box_body %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+    {% import "user/actions.html.twig" as actions %}
+    {% set event = actions(app.user, 'user_forms', tab, {'user': user}) %}
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills" data-bs-toggle="tabs">
+                {% for name, settings in event.actions %}
+                    <li class="nav-item" role="presentation">
+                        <a href="{{ settings.url }}" class="nav-link{% if tab == name %} active{% endif %}" role="tab">{{ settings.title|trans({}, settings.translation_domain ?? 'messages') }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% block form_body %}
+        {{ form_start(form) }}
+        <div class="card-body">
+            {% block form_pre_content %}{% endblock %}
+            {% block form_content %}
+                {{ form_widget(form) }}
+            {% endblock %}
+            {% block form_post_content %}{% endblock %}
+        </div>
+        <div class="card-footer">
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            {{ form_end(form) }}
+        </div>
+        {{ form_end(form) }}
         {% endblock %}
-    {% endembed %}
+    </div>
 
 {% endblock %}

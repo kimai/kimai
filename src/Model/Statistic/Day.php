@@ -11,24 +11,13 @@ namespace App\Model\Statistic;
 
 use DateTime;
 
-class Day extends Timesheet
+final class Day extends Timesheet
 {
-    /**
-     * @var int|null
-     */
-    private $totalDurationBillable = 0;
-    /**
-     * @var DateTime
-     */
-    protected $day;
-    /**
-     * @var array
-     */
-    protected $details = [];
+    private int $totalDurationBillable = 0;
+    private array $details = [];
 
-    public function __construct(DateTime $day, int $duration, float $rate)
+    public function __construct(private DateTime $day, int $duration, float $rate)
     {
-        $this->day = $day;
         $this->setTotalDuration($duration);
         $this->setTotalRate($rate);
     }

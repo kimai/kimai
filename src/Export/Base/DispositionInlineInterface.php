@@ -9,9 +9,6 @@
 
 namespace App\Export\Base;
 
-/**
- * @deprecated remove me in 2.0
- */
 interface DispositionInlineInterface
 {
     public function setDispositionInline(bool $useInlineDisposition): void;

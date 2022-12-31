@@ -19,12 +19,10 @@ final class ActivityHelper
     public const PATTERN_SPACER = '{spacer}';
     public const SPACER = ' - ';
 
-    private $configuration;
-    private $pattern;
+    private ?string $pattern = null;
 
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function getChoicePattern(): string

@@ -22,4 +22,14 @@ final class AmountTotal extends AbstractAmountPeriod
     {
         return 'amountTotal';
     }
+
+    public function getPermissions(): array
+    {
+        return ['view_all_data'];
+    }
+
+    public function getData(array $options = []): mixed
+    {
+        return $this->getRevenue(null, null, $options);
+    }
 }

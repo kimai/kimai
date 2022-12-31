@@ -18,26 +18,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetOverlappingValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(SystemConfiguration $configuration, TimesheetRepository $repository)
+    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository)
     {
-        $this->configuration = $configuration;
-        $this->repository = $repository;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetOverlapping)) {
             throw new UnexpectedTypeException($constraint, TimesheetOverlapping::class);
@@ -64,7 +53,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
         }
 
         $this->context->buildViolation('You already have an entry for this time.')
-            ->atPath('begin')
+            ->atPath('begin_date')
             ->setTranslationDomain('validators')
             ->setCode(TimesheetOverlapping::RECORD_OVERLAPPING)
             ->addViolation();

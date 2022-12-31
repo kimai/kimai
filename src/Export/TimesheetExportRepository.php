@@ -15,14 +15,8 @@ use App\Repository\TimesheetRepository;
 
 final class TimesheetExportRepository implements ExportRepositoryInterface
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

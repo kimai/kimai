@@ -53,4 +53,9 @@ final class PunchInOutMode implements TrackingModeInterface
     {
         return true;
     }
+
+    public function getEditTemplate(): string
+    {
+        return 'timesheet/edit-default.html.twig';
+    }
 }

@@ -48,10 +48,6 @@ class DemoteUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:demote');
         self::assertInstanceOf(DemoteUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:demote');
-        self::assertInstanceOf(DemoteUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username, ?string $role, bool $super = false)
@@ -89,7 +85,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('tony_teamlead');
+        $user = $userRepository->loadUserByIdentifier('tony_teamlead');
         self::assertInstanceOf(User::class, $user);
         self::assertFalse($user->hasTeamleadRole());
     }
@@ -104,7 +100,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('susan_super');
+        $user = $userRepository->loadUserByIdentifier('susan_super');
         self::assertInstanceOf(User::class, $user);
         self::assertFalse($user->isSuperAdmin());
     }

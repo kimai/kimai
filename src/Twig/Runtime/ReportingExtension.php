@@ -16,11 +16,8 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ReportingExtension implements RuntimeExtensionInterface
 {
-    private $service;
-
-    public function __construct(ReportingService $reportingService)
+    public function __construct(private ReportingService $service)
     {
-        $this->service = $reportingService;
     }
 
     /**

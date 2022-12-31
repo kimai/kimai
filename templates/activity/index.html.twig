@@ -1,96 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
 {% import "activity/actions.html.twig" as actions %}
 
-{% set columns = {
-    'name': {'class': 'alwaysVisible'},
-    'project': {'class': 'hidden-xs'},
-    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
-} %}
-{% for field in metaColumns %}
-    {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ field.name, 'orderBy': false}
-    }) %}
-{% endfor %}
-{% if is_granted('budget_money', 'activity') %}
-    {% set columns = columns|merge({
-        'budget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.budget'|trans},
-    }) %}
-{% endif %}
-{% if is_granted('budget_time', 'activity') %}
-    {% set columns = columns|merge({
-        'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.timeBudget'|trans},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'team': {'class': 'text-center w-min', 'orderBy': false},
-    'visible': {'class': 'text-center hidden w-min'},
-    'actions': {'class': 'actions alwaysVisible'},
-}) %}
+{% block datatable_row_attr %} {{ widgets.activity_row_attr(entry, now) }}{% endblock %}
 
-{% set tableName = 'activity_admin' %}
-
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.activities('index', query) }}{% endblock %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main %}
-
-    {% if entries.count == 0 %}
-        {{ widgets.nothing_found('kimai.activityUpdate') }}
-    {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate'}) }}
-
-        {% for entry in entries %}
-            <tr {{ widgets.activity_row_attr(entry, now) }}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(entry.name, entry.color) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
-                    {# only none-global activities have a project and customer assigned #}
-                    {% if entry.project %}
-                        {{ widgets.label_project(entry.project) }}
-                        {% if entry.project.customer %}
-                            <br>
-                            <small>
-                                {{ widgets.label_customer(entry.project.customer) }}
-                            </small>
-                        {% endif %}
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
-                {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                    {% if entry.hasBudget() and is_granted('budget', entry) %}
-                        {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                    {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                        {{ entry.timeBudget|duration }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.activity(entry, 'index') }}</td>
-            </tr>
-        {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_activity_paginated') }}
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'project' %}
+        {# only none-global activities have a project and customer assigned #}
+        {% if entry.project %}
+            {{ widgets.label_project(entry.project) }}
+            {% if entry.project.customer %}
+                <br>
+                <small>
+                    {{ widgets.label_customer(entry.project.customer) }}
+                </small>
+            {% endif %}
+        {% endif %}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.activity(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
     {% endif %}
-
 {% endblock %}

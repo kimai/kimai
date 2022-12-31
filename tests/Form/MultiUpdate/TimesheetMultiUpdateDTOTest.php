@@ -57,7 +57,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
             [
                 '' => '',
                 'action.edit' => 'foo',
-                'action.delete' => 'bar',
+                'delete' => 'bar',
                 'test' => 'hello/world'
             ],
             $sut->getActions()
@@ -89,7 +89,8 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         $sut->setReplaceTags(true);
         self::assertTrue($sut->isReplaceTags());
 
-        $user = (new User())->setUsername('sdfsdfsd');
+        $user = new User();
+        $user->setUserIdentifier('sdfsdfsd');
         $sut->setUser($user);
         self::assertSame($user, $sut->getUser());
 
@@ -101,7 +102,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         $sut->setProject($project);
         self::assertSame($project, $sut->getProject());
 
-        $customer = (new Customer())->setName('sdfsdfsd');
+        $customer = new Customer('sdfsdfsd');
         $sut->setCustomer($customer);
         self::assertSame($customer, $sut->getCustomer());
 

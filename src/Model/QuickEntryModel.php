@@ -19,20 +19,14 @@ use App\Entity\User;
  */
 class QuickEntryModel
 {
-    private $user;
-    private $project;
-    private $activity;
-    private $prototype = false;
+    private bool $prototype = false;
     /**
      * @var Timesheet[]
      */
-    private $timesheets = [];
+    private array $timesheets = [];
 
-    public function __construct(?User $user = null, ?Project $project = null, ?Activity $activity = null)
+    public function __construct(private ?User $user = null, private ?Project $project = null, private ?Activity $activity = null)
     {
-        $this->user = $user;
-        $this->project = $project;
-        $this->activity = $activity;
     }
 
     public function markAsPrototype(): void

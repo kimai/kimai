@@ -11,24 +11,8 @@ namespace App\Calendar;
 
 final class GoogleSource
 {
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $uri;
-    /**
-     * @var string|null
-     */
-    private $color;
-
-    public function __construct(string $id, string $uri, ?string $color = null)
+    public function __construct(private string $id, private string $uri, private ?string $color = null)
     {
-        $this->id = $id;
-        $this->uri = $uri;
-        $this->color = $color;
     }
 
     public function getId(): string

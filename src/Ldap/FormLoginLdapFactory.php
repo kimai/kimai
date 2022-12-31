@@ -9,63 +9,66 @@
 
 namespace App\Ldap;
 
-use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use App\Configuration\LdapConfiguration;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AuthenticatorFactoryInterface;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- */
-class FormLoginLdapFactory implements SecurityFactoryInterface
+final class FormLoginLdapFactory extends AbstractFactory implements AuthenticatorFactoryInterface
 {
-    public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPointId)
+    public function __construct()
     {
-        $authProviderId = $this->createAuthProvider($container, $id, $userProviderId);
-        $listenerId = $this->createListener($container, $id, $config);
-
-        return [$authProviderId, $listenerId, $defaultEntryPointId];
+        $this->addOption('username_parameter', '_username');
+        $this->addOption('password_parameter', '_password');
+        $this->addOption('csrf_parameter', '_csrf_token');
+        $this->addOption('csrf_token_id', 'authenticate');
+        $this->addOption('enable_csrf', false);
+        $this->addOption('post_only', true);
+        $this->addOption('form_only', false);
     }
 
-    public function getPosition()
+    public function getPriority(): int
     {
-        return 'pre_auth';
+        return -20;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return 'kimai_ldap';
     }
 
-    public function addConfiguration(NodeDefinition $builder)
+    public function createAuthenticator(ContainerBuilder $container, string $firewallName, array $config, string $userProviderId): string
     {
-    }
+        $key = $this->getKey();
 
-    protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
-    {
-        $providerId = 'security.authentication.provider.kimai_ldap.' . $id;
+        $authenticatorId = 'security.authenticator.form_login.' . $firewallName;
+        $options = array_intersect_key($config, $this->options);
+        $authenticator = $container
+            ->setDefinition($authenticatorId, new ChildDefinition('security.authenticator.form_login'))
+            ->replaceArgument(1, new Reference($userProviderId))
+            ->replaceArgument(2, new Reference($this->createAuthenticationSuccessHandler($container, $firewallName, $config)))
+            ->replaceArgument(3, new Reference($this->createAuthenticationFailureHandler($container, $firewallName, $config)))
+            ->replaceArgument(4, $options);
 
-        $container
-            ->setDefinition($providerId, new ChildDefinition(LdapAuthenticationProvider::class))
-            ->replaceArgument(1, $id)
-            ->replaceArgument(2, new Reference($userProviderId))
+        if ($options['use_forward'] ?? false) {
+            $authenticator->addMethodCall('setHttpKernel', [new Reference('http_kernel')]);
+        }
+
+        $container->setDefinition('security.listener.' . $key . '.' . $firewallName, new Definition(LdapCredentialsSubscriber::class))
+            ->addTag('kernel.event_subscriber', ['dispatcher' => 'security.event_dispatcher.' . $firewallName])
+            ->addArgument(new Reference(LdapManager::class))
         ;
 
-        return $providerId;
-    }
+        $ldapAuthenticatorId = 'security.authenticator.' . $key . '.' . $firewallName;
+        $container->setDefinition($ldapAuthenticatorId, new Definition(LdapAuthenticator::class))
+            ->setArguments([
+                new Reference($authenticatorId),
+                new Reference(LdapConfiguration::class),
+            ]);
 
-    protected function createListener(ContainerBuilder $container, $id, $config)
-    {
-        $listener = 'security.authentication.listener.form';
-        $listenerId = $listener . '.' . $id;
-
-        $container
-            ->setDefinition($listenerId, new ChildDefinition($listener))
-            ->replaceArgument(4, $id)
-            ->replaceArgument(5, $config)
-        ;
-
-        return $listenerId;
+        return $ldapAuthenticatorId;
     }
 }

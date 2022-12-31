@@ -11,25 +11,12 @@ namespace App\Form\API;
 
 use App\Form\TeamEditForm;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TeamApiEditForm extends TeamEditForm
+final class TeamApiEditForm extends TeamEditForm
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder->remove('users');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
     }
 }

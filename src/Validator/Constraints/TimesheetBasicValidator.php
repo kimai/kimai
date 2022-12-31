@@ -9,6 +9,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,36 +18,36 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBasicValidator extends ConstraintValidator
 {
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate($timesheet, Constraint $constraint)
+    public function __construct(private SystemConfiguration $systemConfiguration)
+    {
+    }
+
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetBasic)) {
             throw new UnexpectedTypeException($constraint, TimesheetBasic::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        $this->validateBeginAndEnd($timesheet, $this->context);
-        $this->validateActivityAndProject($timesheet, $this->context);
+        $this->validateBeginAndEnd($value, $this->context);
+        $this->validateActivityAndProject($value, $this->context);
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $begin = $timesheet->getBegin();
         $end = $timesheet->getEnd();
 
         if (null === $begin) {
-            $context->buildViolation('You must submit a begin date.')
-                ->atPath('begin')
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::MISSING_BEGIN_ERROR))
+                ->atPath('begin_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_BEGIN_ERROR)
                 ->addViolation();
@@ -55,8 +56,8 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if (null !== $end && $begin > $end) {
-            $context->buildViolation('End date must not be earlier then start date.')
-                ->atPath('end')
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::END_BEFORE_BEGIN_ERROR))
+                ->atPath('end_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::END_BEFORE_BEGIN_ERROR)
                 ->addViolation();
@@ -67,10 +68,12 @@ final class TimesheetBasicValidator extends ConstraintValidator
      * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
-        if (null === ($activity = $timesheet->getActivity())) {
-            $context->buildViolation('An activity needs to be selected.')
+        $activity = $timesheet->getActivity();
+
+        if ($this->systemConfiguration->isTimesheetRequiresActivity() && null === $activity) {
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::MISSING_ACTIVITY_ERROR))
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_ACTIVITY_ERROR)
@@ -78,19 +81,21 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if (null === ($project = $timesheet->getProject())) {
-            $context->buildViolation('A project needs to be selected.')
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::MISSING_PROJECT_ERROR))
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_PROJECT_ERROR)
                 ->addViolation();
         }
 
-        if (null === $activity || null === $project) {
+        $hasActivity = null !== $activity;
+
+        if (null === $project) {
             return;
         }
 
-        if (null !== $activity->getProject() && $activity->getProject() !== $project) {
-            $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
+        if ($hasActivity && null !== $activity->getProject() && $activity->getProject() !== $project) {
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::ACTIVITY_PROJECT_MISMATCH_ERROR))
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::ACTIVITY_PROJECT_MISMATCH_ERROR)
@@ -100,8 +105,8 @@ final class TimesheetBasicValidator extends ConstraintValidator
         $timesheetEnd = $timesheet->getEnd();
         $newOrStarted = null === $timesheetEnd || $timesheet->getId() === null;
 
-        if ($newOrStarted && !$activity->isVisible()) {
-            $context->buildViolation('Cannot start a disabled activity.')
+        if ($newOrStarted && $hasActivity && !$activity->isVisible()) {
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_ACTIVITY_ERROR))
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::DISABLED_ACTIVITY_ERROR)
@@ -109,7 +114,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if ($newOrStarted && !$project->isVisible()) {
-            $context->buildViolation('Cannot start a disabled project.')
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_PROJECT_ERROR))
                 ->atPath('project')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::DISABLED_PROJECT_ERROR)
@@ -117,20 +122,23 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if ($newOrStarted && !$project->getCustomer()->isVisible()) {
-            $context->buildViolation('Cannot start a disabled customer.')
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_CUSTOMER_ERROR))
                 ->atPath('customer')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::DISABLED_CUSTOMER_ERROR)
                 ->addViolation();
         }
 
-        if (!$project->isGlobalActivities() && $activity->isGlobal()) {
-            $context->buildViolation('Global activities are forbidden for the selected project.')
+        if ($hasActivity && !$project->isGlobalActivities() && $activity->isGlobal()) {
+            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_DISALLOWS_GLOBAL_ACTIVITY))
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::PROJECT_DISALLOWS_GLOBAL_ACTIVITY)
                 ->addViolation();
         }
+
+        $pathStart = 'begin_date';
+        $pathEnd = 'end_date';
 
         $projectBegin = $project->getStart();
         $projectEnd = $project->getEnd();
@@ -139,21 +147,18 @@ final class TimesheetBasicValidator extends ConstraintValidator
             return;
         }
 
-        $pathStart = 'begin';
-        $pathEnd = 'end';
-
         $timesheetStart = $timesheet->getBegin();
         $timesheetEnd = $timesheet->getEnd();
 
         if (null !== $timesheetStart) {
             if (null !== $projectBegin && $timesheetStart->getTimestamp() < $projectBegin->getTimestamp()) {
-                $context->buildViolation('The project has not started at that time.')
+                $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_NOT_STARTED))
                     ->atPath($pathStart)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetBasic::PROJECT_NOT_STARTED)
                     ->addViolation();
             } elseif (null !== $projectEnd && $timesheetStart->getTimestamp() > $projectEnd->getTimestamp()) {
-                $context->buildViolation('The project is finished at that time.')
+                $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_ALREADY_ENDED))
                     ->atPath($pathStart)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetBasic::PROJECT_ALREADY_ENDED)
@@ -163,13 +168,13 @@ final class TimesheetBasicValidator extends ConstraintValidator
 
         if (null !== $timesheetEnd) {
             if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
-                $context->buildViolation('The project is finished at that time.')
+                $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_ALREADY_ENDED))
                     ->atPath($pathEnd)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetBasic::PROJECT_ALREADY_ENDED)
                     ->addViolation();
             } elseif (null !== $projectBegin && $timesheetEnd->getTimestamp() < $projectBegin->getTimestamp()) {
-                $context->buildViolation('The project has not started at that time.')
+                $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_NOT_STARTED))
                     ->atPath($pathEnd)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetBasic::PROJECT_NOT_STARTED)

@@ -12,7 +12,8 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
+use App\Repository\TagRepository;
+use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
@@ -22,17 +23,17 @@ use App\Timesheet\Util;
  */
 class TimesheetTeamControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/team/timesheet/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/team/timesheet/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/team/timesheet/');
@@ -42,22 +43,18 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
-            'download toolbar-action modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
-            'create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
-            'create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
-            'help' => 'https://www.kimai.org/documentation/timesheet.html'
+            'download modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
+            'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
         ]);
     }
 
-    public function testIndexActionWithQuery()
+    public function testIndexActionWithQuery(): void
     {
         // Switching the user is not allowed for TEAMLEADs but ONLLY for admin and super-admins
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -69,7 +66,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
+        $dateRange = $this->formatDateRange($start, new \DateTime('last day of this month'));
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
@@ -89,12 +86,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         self::assertEquals(3, $node->count());
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -115,8 +111,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
-
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
@@ -127,11 +121,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 5);
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(7);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -146,14 +139,12 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+        $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
         $client->submitForm('export-btn-print', [
-            'export' => [
-                'state' => 1,
-                'daterange' => $dateRange,
-                'customers' => [],
-            ]
+            'state' => 1,
+            'daterange' => $dateRange,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -167,7 +158,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(10, \count($result));
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/create');
@@ -198,9 +189,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
-    public function testCreateForMultipleUsersAction()
+    public function testCreateForMultipleUsersAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
+
         $this->request($client, '/team/timesheet/create_mu');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -235,16 +231,19 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testCreateForMultipleUsersActionWithoutUserOrTeam()
+    public function testCreateForMultipleUsersActionWithoutUserOrTeam(): void
     {
+        $begin = new \DateTime();
+        $end = new \DateTime('+1 hour');
         $data = [
             'timesheet_multi_user_edit_form' => [
                 'description' => 'Testing is more fun!',
                 'project' => 1,
                 'activity' => 1,
                 // make sure the default validation for timesheets is applied as well
-                'begin' => (new \DateTime())->format('Y-m-d H:i'),
-                'end' => (new \DateTime('-1 hour'))->format('Y-m-d H:i'),
+                'begin_date' => $this->formatDate($begin),
+                'begin_time' => $this->formatTime($begin),
+                'end_time' => $this->formatTime($end),
             ]
         ];
 
@@ -253,13 +252,15 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             '/team/timesheet/create_mu',
             'form[name=timesheet_multi_user_edit_form]',
             $data,
-            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams', '#timesheet_multi_user_edit_form_end']
+            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams']
         );
     }
 
-    public function testEditAction()
+    public function testEditAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', '1440');
 
         $user = $this->getUserByRole(User::ROLE_USER);
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
@@ -269,6 +270,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setFixedStartDate(new \DateTime('-2 hours'));
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/' . $id . '/edit');
 
@@ -302,11 +307,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
 
-    public function testMultiDeleteAction()
+    public function testMultiDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -330,7 +334,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/team/timesheet/multi-delete'),
                 'entities' => implode(',', $ids)
             ]
         ]);
@@ -341,15 +344,18 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
 
-    public function testMultiUpdate()
+    public function testMultiUpdate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
+        $this->importFixture($fixture);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/team/timesheet/');
@@ -368,10 +374,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             self::assertEquals($user->getId(), $timesheet->getUser()->getId());
             $ids[] = $timesheet->getId();
         }
-
+        // FIXME
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/team/timesheet/multi-update'),
                 'entities' => implode(',', $ids)
             ]
         ]);
@@ -402,7 +407,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testDuplicateAction()
+    public function testDuplicateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $dateTime = new DateTimeFactory(new \DateTimeZone('Europe/London'));

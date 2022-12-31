@@ -14,7 +14,6 @@ use App\Repository\Loader\CustomerLoader;
 
 /**
  * @covers \App\Repository\Loader\CustomerLoader
- * @covers \App\Repository\Loader\CustomerIdLoader
  */
 class CustomerLoaderTest extends AbstractLoaderTest
 {
@@ -27,6 +26,6 @@ class CustomerLoaderTest extends AbstractLoaderTest
         $entity = $this->createMock(Customer::class);
         $entity->expects($this->once())->method('getId')->willReturn(1);
 
-        $sut->loadResults([$entity]);
+        $sut->loadResults([$entity, 4711]);
     }
 }

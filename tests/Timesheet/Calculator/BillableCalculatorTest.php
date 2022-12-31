@@ -42,17 +42,17 @@ class BillableCalculatorTest extends TestCase
         }
         $timesheet->setBillable($billable);
         $timesheet->setBillableMode($mode);
-        $sut->calculate($timesheet);
+        $sut->calculate($timesheet, []);
         self::assertEquals($mode, $timesheet->getBillableMode());
         self::assertEquals($expected, $timesheet->isBillable());
     }
 
     public function getTestData()
     {
-        $customerYes = new Customer();
+        $customerYes = new Customer('foo');
         $customerYes->setBillable(true);
 
-        $customerNo = new Customer();
+        $customerNo = new Customer('foo');
         $customerNo->setBillable(false);
 
         $projectYes = new Project();

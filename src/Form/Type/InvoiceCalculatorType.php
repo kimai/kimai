@@ -17,26 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice calculator.
  */
-class InvoiceCalculatorType extends AbstractType
+final class InvoiceCalculatorType extends AbstractType
 {
-    /**
-     * @var ServiceInvoice
-     */
-    protected $service;
-
-    /**
-     * InvoiceCalculatorType constructor.
-     * @param ServiceInvoice $service
-     */
-    public function __construct(ServiceInvoice $service)
+    public function __construct(private ServiceInvoice $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $renderer = [];
         foreach ($this->service->getCalculator() as $calculator) {
@@ -44,7 +31,7 @@ class InvoiceCalculatorType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_calculator',
+            'label' => 'invoice_calculator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
                 return $renderer;
@@ -54,10 +41,7 @@ class InvoiceCalculatorType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

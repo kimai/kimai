@@ -13,24 +13,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select if something is billable.
+ * Form field type to select if something is billable.
  */
-class BillableType extends AbstractType
+final class BillableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.billable',
+            'label' => 'billable',
+            'help' => 'help.billable',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return YesNoType::class;
     }

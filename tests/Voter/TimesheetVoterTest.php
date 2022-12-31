@@ -10,12 +10,12 @@
 namespace App\Tests\Voter;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -34,7 +34,7 @@ class TimesheetVoterTest extends AbstractVoterTest
 
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
@@ -110,7 +110,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         $timesheet->setBegin($begin);
         $timesheet->setUser($user);
 
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getLockdownVoter($lockdownBegin, $lockdownEnd, $lockdownGrace);
 
         self::assertEquals($expected, $sut->vote($token, $timesheet, [$permission]));
@@ -162,7 +162,9 @@ class TimesheetVoterTest extends AbstractVoterTest
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without activity
         $timesheet = new Timesheet();
-        $timesheet->setUser($user2)->setProject(new Project());
+        $project = new Project();
+        $project->setCustomer(new Customer('foo'));
+        $timesheet->setUser($user2)->setProject($project);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without project
         $timesheet = new Timesheet();
@@ -180,7 +182,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         $activity->setProject($project);
         $timesheet->setProject($project);
         $timesheet->setActivity($activity);
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
 
         return $timesheet;
@@ -204,7 +206,7 @@ class TimesheetVoterTest extends AbstractVoterTest
     protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): Voter
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'lockdown_period_start' => $lockdownBegin,

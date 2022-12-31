@@ -15,10 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerRateForm extends AbstractRateForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $currency = null;
 
@@ -34,10 +31,7 @@ class CustomerRateForm extends AbstractRateForm
         $this->addFields($builder, $currency);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CustomerRate::class,

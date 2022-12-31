@@ -17,6 +17,7 @@ use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -45,9 +46,10 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
 
     public function testWithEmptyConstraintsList()
     {
+        $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
         $handler = $this->createMock(FlattenExceptionHandler::class);
-        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler);
+        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler, $security);
 
         $constraints = new ConstraintViolationList();
         $validations = new ValidationFailedException($constraints, 'Uuups, that is broken');
@@ -64,10 +66,11 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
 
     public function testWithUnsupportedException()
     {
+        $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
         $handler = $this->createMock(FlattenExceptionHandler::class);
         $handler->method('serializeToJson')->willReturn('foooo');
-        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler);
+        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler, $security);
         $actual = $sut->serializeExceptionToJson(
             new JsonSerializationVisitor(),
             FlattenException::createFromThrowable(new \Exception('sdfsdf')),
@@ -80,9 +83,10 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
 
     public function testWithConstraintsList()
     {
+        $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
         $handler = $this->createMock(FlattenExceptionHandler::class);
-        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler);
+        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler, $security);
         $translator->method('trans')->willReturnArgument(0);
 
         $constraints = new ConstraintViolationList();
@@ -123,10 +127,11 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
 
     public function testWithConstraintsListAndWrongException()
     {
+        $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
         $handler = $this->createMock(FlattenExceptionHandler::class);
         $handler->method('serializeToJson')->willReturn('foooo');
-        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler);
+        $sut = new ValidationFailedExceptionErrorHandler($translator, $handler, $security);
         $translator->method('trans')->willReturnArgument(0);
 
         $constraints = new ConstraintViolationList();

@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\SystemConfigurationFactory;
 
 /**
  * @group integration
@@ -34,15 +35,10 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->request($client, '/calendar/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertPageActions($client, [
-            'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'help' => 'https://www.kimai.org/documentation/calendar.html'
-        ]);
-
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
         $this->assertEquals(1, $calendar->count());
-        $dragAndDropBoxes = $crawler->filter('div.box-body.drag-and-drop-source');
+        $dragAndDropBoxes = $crawler->filter('div.card-body.drag-and-drop-source');
         $this->assertEquals(1, $dragAndDropBoxes->count());
     }
 
@@ -50,21 +46,15 @@ class CalendarControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/calendar/');
-
-        $this->assertPageActions($client, [
-            'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/calendar'),
-            'help' => 'https://www.kimai.org/documentation/calendar.html'
-        ]);
     }
 
     public function testCalendarActionWithGoogleSource()
     {
         $loader = new TestConfigLoader([]);
-        $config = new SystemConfiguration($loader, $this->getDefaultSettings());
+        $config = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
 
         $client = $this->getClientForAuthenticatedUser();
-        static::$kernel->getContainer()->set(SystemConfiguration::class, $config);
+        self::getContainer()->set(SystemConfiguration::class, $config);
         $this->request($client, '/calendar/');
         $this->assertSuccessResponse($client);
 
@@ -83,9 +73,6 @@ class CalendarControllerTest extends ControllerBaseTest
     {
         return [
             'theme' => [
-                'active_warning' => 3,
-                'box_color' => 'blue',
-                'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
                     'background_color' => '#3c8dbc',
@@ -100,8 +87,6 @@ class CalendarControllerTest extends ControllerBaseTest
                     'title' => null,
                     'translation' => null,
                 ],
-                'autocomplete_chars' => 3,
-                'tags_create' => true,
                 'calendar' => [
                     'background_color' => '#d2d6de'
                 ],

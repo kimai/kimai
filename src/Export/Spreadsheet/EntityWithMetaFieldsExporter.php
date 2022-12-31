@@ -16,15 +16,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class EntityWithMetaFieldsExporter
 {
-    private $exporter;
-    private $annotationExtractor;
-    private $metaFieldExtractor;
-
-    public function __construct(SpreadsheetExporter $exporter, AnnotationExtractor $annotationExtractor, MetaFieldExtractor $metaFieldExtractor)
+    public function __construct(private SpreadsheetExporter $exporter, private AnnotationExtractor $annotationExtractor, private MetaFieldExtractor $metaFieldExtractor)
     {
-        $this->exporter = $exporter;
-        $this->annotationExtractor = $annotationExtractor;
-        $this->metaFieldExtractor = $metaFieldExtractor;
     }
 
     public function export(string $class, array $entries, MetaDisplayEventInterface $event): Spreadsheet

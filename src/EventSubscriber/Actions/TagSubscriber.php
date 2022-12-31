@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Tag;
 use App\Event\PageActionsEvent;
 
-class TagSubscriber extends AbstractActionsSubscriber
+final class TagSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -53,7 +53,8 @@ class TagSubscriber extends AbstractActionsSubscriber
         if ($event->isIndexView() && $this->isGranted('delete_tag')) {
             $event->addAction('trash', [
                 'url' => $this->path('delete_tag', ['id' => $id]),
-                'class' => 'api-link',
+                'class' => 'api-link text-red',
+                'translation_domain' => 'actions',
                 'attr' => [
                     'data-event' => 'kimai.tagDelete kimai.tagUpdate',
                     'data-method' => 'DELETE',

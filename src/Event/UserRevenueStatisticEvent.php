@@ -17,12 +17,10 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class UserRevenueStatisticEvent extends Event
 {
-    private $event;
-    private $user;
+    private RevenueStatisticEvent $event;
 
-    public function __construct(User $user, ?\DateTime $begin, ?\DateTime $end)
+    public function __construct(private User $user, ?\DateTime $begin, ?\DateTime $end)
     {
-        $this->user = $user;
         $this->event = new RevenueStatisticEvent($begin, $end);
     }
 
@@ -36,14 +34,14 @@ final class UserRevenueStatisticEvent extends Event
         return $this->event->getEnd();
     }
 
-    public function getRevenue(): float
+    public function getRevenue(): array
     {
         return $this->event->getRevenue();
     }
 
-    public function addRevenue(float $revenue): void
+    public function addRevenue(string $currency, float $revenue): void
     {
-        $this->event->addRevenue($revenue);
+        $this->event->addRevenue($currency, $revenue);
     }
 
     public function getUser(): User

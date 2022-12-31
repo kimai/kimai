@@ -22,6 +22,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\SearchTerm;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,62 +34,26 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class InvoiceCreateCommand extends Command
+#[AsCommand(name: 'kimai:invoice:create')]
+final class InvoiceCreateCommand extends Command
 {
-    /**
-     * @var ServiceInvoice
-     */
-    private $serviceInvoice;
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-    /**
-     * @var ProjectRepository
-     */
-    private $projectRepository;
-    /**
-     * @var InvoiceTemplateRepository
-     */
-    private $invoiceTemplateRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var string|null
-     */
-    private $previewDirectory;
-    private $previewUniqueFile = false;
+    private ?string $previewDirectory = null;
+    private bool $previewUniqueFile = false;
 
     public function __construct(
-        ServiceInvoice $serviceInvoice,
-        CustomerRepository $customerRepository,
-        ProjectRepository $projectRepository,
-        InvoiceTemplateRepository $invoiceTemplateRepository,
-        UserRepository $userRepository,
-        EventDispatcherInterface $eventDispatcher
+        private ServiceInvoice $serviceInvoice,
+        private CustomerRepository $customerRepository,
+        private ProjectRepository $projectRepository,
+        private InvoiceTemplateRepository $invoiceTemplateRepository,
+        private UserRepository $userRepository,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->serviceInvoice = $serviceInvoice;
-        $this->customerRepository = $customerRepository;
-        $this->projectRepository = $projectRepository;
-        $this->invoiceTemplateRepository = $invoiceTemplateRepository;
-        $this->userRepository = $userRepository;
-        $this->eventDispatcher = $eventDispatcher;
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:invoice:create')
             ->setDescription('Create invoices')
             ->setHelp('This command allows to create invoices by several different filters.')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the invoices')
@@ -101,7 +66,6 @@ class InvoiceCreateCommand extends Command
             ->addOption('by-project', null, InputOption::VALUE_NONE, 'If set, one invoice for each active project in the given timerange is created')
             ->addOption('set-exported', null, InputOption::VALUE_NONE, 'Whether the invoice items should be marked as exported')
             ->addOption('template', null, InputOption::VALUE_OPTIONAL, 'Invoice template', null)
-            ->addOption('template-meta', null, InputOption::VALUE_OPTIONAL, 'Fetch invoice template from a meta-field', null)
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
             ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
@@ -109,10 +73,7 @@ class InvoiceCreateCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -122,16 +83,17 @@ class InvoiceCreateCommand extends Command
         if (empty($username)) {
             $io->error('You must set a "user" to create invoices');
 
-            return 1;
+            return Command::FAILURE;
         }
 
-        $user = $this->userRepository->loadUserByUsername($username);
-        if (null === $user) {
+        try {
+            $user = $this->userRepository->loadUserByIdentifier($username);
+        } catch (\Exception $exception) {
             $io->error(
                 sprintf('The given username "%s" could not be resolved', $username)
             );
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $exportedFilter = TimesheetQuery::STATE_NOT_EXPORTED;
@@ -150,7 +112,7 @@ class InvoiceCreateCommand extends Command
             default:
                 $io->error('Unknown "exported" filter given');
 
-                return 1;
+                return Command::FAILURE;
         }
 
         $timezone = $input->getOption('timezone');
@@ -164,7 +126,7 @@ class InvoiceCreateCommand extends Command
         if (!empty($input->getOption('start')) && empty($input->getOption('end'))) {
             $io->error('You need to supply a end date if a start date was given');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $byActiveCustomer = $input->getOption('by-customer');
@@ -173,7 +135,7 @@ class InvoiceCreateCommand extends Command
         if ($byActiveCustomer && $byActiveProject) {
             $io->error('You cannot mix "by-customer" and "by-project"');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $customersIDs = $input->getOption('customer');
@@ -181,13 +143,7 @@ class InvoiceCreateCommand extends Command
         if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs) && empty($projectIDs)) {
             $io->error('Could not determine generation mode, you need to set one of: customer, project, by-customer, by-project');
 
-            return 1;
-        }
-
-        if (null === $input->getOption('template') && null === $input->getOption('template-meta')) {
-            $io->error('You must either pass the "template" or "template-meta" option');
-
-            return 1;
+            return Command::FAILURE;
         }
 
         $start = $input->getOption('start');
@@ -197,7 +153,7 @@ class InvoiceCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
-                return 1;
+                return Command::FAILURE;
             }
         }
         if (!$start instanceof \DateTime) {
@@ -212,7 +168,7 @@ class InvoiceCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
-                return 1;
+                return Command::FAILURE;
             }
         }
         if (!$end instanceof \DateTime) {
@@ -227,12 +183,12 @@ class InvoiceCreateCommand extends Command
 
         $markAsExported = false;
         if ($input->getOption('preview') !== null) {
-            $this->previewUniqueFile = $input->getOption('preview-unique');
+            $this->previewUniqueFile = (bool) $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
                 $io->error('Invalid preview directory given');
 
-                return 1;
+                return Command::FAILURE;
             }
         } elseif ($input->getOption('set-exported')) {
             $markAsExported = true;
@@ -245,7 +201,6 @@ class InvoiceCreateCommand extends Command
         $defaultQuery->setEnd($end);
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
-        $defaultQuery->setMarkAsExported($markAsExported);
         $defaultQuery->setExported($exportedFilter);
 
         /** @var Invoice[] $invoices */
@@ -261,7 +216,7 @@ class InvoiceCreateCommand extends Command
                 if (null === $tmp) {
                     $io->error('Unknown customer ID: ' . $id);
 
-                    return 1;
+                    return Command::FAILURE;
                 }
                 $customers[] = $tmp;
             }
@@ -276,7 +231,7 @@ class InvoiceCreateCommand extends Command
                 if (null === $tmp) {
                     $io->error('Unknown project ID: ' . $id);
 
-                    return 1;
+                    return Command::FAILURE;
                 }
                 $projects[] = $tmp;
             }
@@ -290,7 +245,7 @@ class InvoiceCreateCommand extends Command
         } else {
             $io->error('Could not determine generation mode'); //-///9==8=//99/96//////-*/-*//96* <= by Ayumi
 
-            return 1;
+            return Command::FAILURE;
         }
 
         return $this->renderInvoiceResult($input, $output, $invoices);
@@ -312,11 +267,16 @@ class InvoiceCreateCommand extends Command
         $invoices = [];
 
         foreach ($projects as $project) {
+            $customer = $project->getCustomer();
+            if ($customer === null) {
+                throw new \Exception('Project has no customer: ' . $project->getId());
+            }
+
             $query = clone $defaultQuery;
             $query->addProject($project);
-            $query->addCustomer($project->getCustomer());
+            $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForProject($input, $project);
+            $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
                 $io->warning(sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                 continue;
@@ -325,9 +285,9 @@ class InvoiceCreateCommand extends Command
 
             try {
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
@@ -396,9 +356,9 @@ class InvoiceCreateCommand extends Command
 
             try {
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
@@ -421,7 +381,7 @@ class InvoiceCreateCommand extends Command
         if (empty($invoices)) {
             $io->warning('No invoice was generated');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         if (null !== $this->previewDirectory) {
@@ -437,7 +397,7 @@ class InvoiceCreateCommand extends Command
 
             $table->render();
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $columns = ['ID', 'Customer', 'Total', 'Filename'];
@@ -465,56 +425,24 @@ class InvoiceCreateCommand extends Command
 
         $table->render();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate
     {
         $template = $input->getOption('template');
 
-        $meta = $input->getOption('template-meta');
-        if (!empty($meta)) {
-            $metaField = $customer->getMetaField($meta);
-            if (null !== $metaField && !empty($metaField->getValue())) {
-                $template = $metaField->getValue();
-            }
-        }
-
         if (null === $template) {
-            return null;
+            return $customer->getInvoiceTemplate();
         }
 
-        return $this->findTemplate($template);
-    }
-
-    private function findTemplate(string $idOrName): ?InvoiceTemplate
-    {
-        $tpl = $this->invoiceTemplateRepository->find($idOrName);
+        $tpl = $this->invoiceTemplateRepository->find($template);
 
         if (null !== $tpl) {
             return $tpl;
         }
 
-        return $this->invoiceTemplateRepository->findOneBy(['name' => $idOrName]);
-    }
-
-    private function getTemplateForProject(InputInterface $input, Project $project): ?InvoiceTemplate
-    {
-        $template = $this->getTemplateForCustomer($input, $project->getCustomer());
-
-        $meta = $input->getOption('template-meta');
-        if (!empty($meta)) {
-            $metaField = $project->getMetaField($meta);
-            if (null !== $metaField && !empty($metaField->getValue())) {
-                $template = $metaField->getValue();
-            }
-        }
-
-        if (null === $template) {
-            return null;
-        }
-
-        return $this->findTemplate($template);
+        return $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
     }
 
     /**

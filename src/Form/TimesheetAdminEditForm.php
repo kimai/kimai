@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TimesheetAdminEditForm extends TimesheetEditForm
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $options['allow_begin_datetime'] = true;
         $options['allow_end_datetime'] = true;

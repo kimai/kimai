@@ -10,8 +10,8 @@
 namespace App\Tests\Timesheet;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +20,10 @@ use PHPUnit\Framework\TestCase;
  */
 class LockdownServiceTest extends TestCase
 {
-    protected function createService(?string $start, ?string $end, ?string $grace, ?string $timezone = null)
+    protected function createService(?string $start, ?string $end, ?string $grace = null, ?string $timezone = null): LockdownService
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'lockdown_period_start' => $start,
@@ -37,7 +37,7 @@ class LockdownServiceTest extends TestCase
         return new LockdownService($config);
     }
 
-    public function testValidatorWithoutNowConstraint()
+    public function testValidatorWithoutNowConstraint(): void
     {
         $sut = $this->createService('first day of last month', 'last day of last month', '+10 days');
 
@@ -49,14 +49,14 @@ class LockdownServiceTest extends TestCase
         self::assertFalse($sut->isEditable($timesheet, new \DateTime(), false));
     }
 
-    public function testValidatorWithEmptyTimesheet()
+    public function testValidatorWithEmptyTimesheet(): void
     {
         $sut = $this->createService('first day of last month', 'last day of last month', '+10 days');
 
         self::assertTrue($sut->isEditable(new Timesheet(), new \DateTime(), false));
     }
 
-    public function testValidatorWithoutNowStringConstraint()
+    public function testValidatorWithoutNowStringConstraint(): void
     {
         $sut = $this->createService('first day of last month', 'last day of last month', '+10 days');
 
@@ -68,7 +68,7 @@ class LockdownServiceTest extends TestCase
         self::assertTrue($sut->isEditable($timesheet, new \DateTime('first day of this month'), false));
     }
 
-    public function testValidatorWithEndBeforeStartPeriod()
+    public function testValidatorWithEndBeforeStartPeriod(): void
     {
         $sut = $this->createService('first day of this month', 'last day of last month', '+10 days');
 
@@ -83,7 +83,7 @@ class LockdownServiceTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testLockdown(bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation)
+    public function testLockdown(bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation): void
     {
         $sut = $this->createService('first day of last month', 'last day of last month', '+10 days');
 
@@ -120,7 +120,7 @@ class LockdownServiceTest extends TestCase
     /**
      * @dataProvider getConfigTestData
      */
-    public function testLockdownConfig(bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation)
+    public function testLockdownConfig(bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation): void
     {
         $sut = $this->createService($lockdownBegin, $lockdownEnd, $grace);
 
@@ -148,5 +148,20 @@ class LockdownServiceTest extends TestCase
 
         yield [true, 'öööö', '+11 days', null, false];
         yield [true, '+5 days', '+5 of !!!!', null, false];
+    }
+
+    public function testIsLockdownActive(): void
+    {
+        $sut = $this->createService(null, null);
+        self::assertFalse($sut->isLockdownActive());
+
+        $sut = $this->createService('+5 days', null);
+        self::assertFalse($sut->isLockdownActive());
+
+        $sut = $this->createService(null, '+5 days');
+        self::assertFalse($sut->isLockdownActive());
+
+        $sut = $this->createService('+5 days', '+5 days');
+        self::assertTrue($sut->isLockdownActive());
     }
 }

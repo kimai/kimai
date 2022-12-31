@@ -78,6 +78,7 @@ class ActivityEditFormTest extends TypeTestCase
     {
         $model = $this->createMock(Activity::class);
         $model->expects($this->once())->method('getId')->willReturn(1);
+        $model->expects($this->atLeast(1))->method('isGlobal')->willReturn(true);
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
             'include_budget' => true,
         ]);
@@ -89,7 +90,7 @@ class ActivityEditFormTest extends TypeTestCase
     public function testWithNonGlobalExistingActivityAndOptions()
     {
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $model = $this->createMock(Activity::class);
 

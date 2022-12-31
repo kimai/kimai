@@ -26,6 +26,7 @@ class PageActionsEventTest extends TestCase
         $sut = new PageActionsEvent($user, [], 'foo', 'bar');
         $this->assertEquals('bar', $sut->getView());
         $this->assertEquals('foo', $sut->getActionName());
+        $this->assertEquals('actions.foo', $sut->getEventName());
         $this->assertTrue($sut->isView('bar'));
         $this->assertFalse($sut->isView('foo'));
         $this->assertFalse($sut->isIndexView());
@@ -82,28 +83,21 @@ class PageActionsEventTest extends TestCase
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
 
-        $sut->addSearchToggle();
         $sut->addDivider();
-        $sut->addBack('foo1');
         $sut->addColumnToggle('foo2');
         $sut->addDelete('foo3');
-        $sut->addHelp('foo4');
         $sut->addCreate('foo5', true);
         $sut->addCreate('foo6', false);
         $sut->addQuickExport('foo7');
 
-        $this->assertEquals(8, $sut->countActions());
-
         $expected = [
-            'search' => ['modal' => '#modal_search', 'label' => null, 'accesskey' => 'q'],
             'divider0' => null,
-            'back' => ['url' => 'foo1', 'translation_domain' => 'actions'],
-            'visibility' => ['modal' => '#foo2'],
-            'help' => ['url' => 'foo4', 'target' => '_blank', 'accesskey' => 'h'],
-            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'accesskey' => 'a'],
-            'download' => ['url' => 'foo7', 'class' => 'toolbar-action'],
-            'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
+            'columns' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
+            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create', 'accesskey' => 'a'],
+            'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export'],
+            'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red', 'translation_domain' => 'actions'],
         ];
+        $this->assertEquals(\count($expected), $sut->countActions());
 
         $this->assertEquals($expected, $sut->getActions());
     }
@@ -114,13 +108,13 @@ class PageActionsEventTest extends TestCase
 
         // make sure that modal always start with #, no matter what was given
         $sut->addColumnToggle('#fooX');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
         // make sure that a second toggle cannot be added
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
 
-        $sut->removeAction('visibility');
+        $sut->removeAction('columns');
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooY']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
     }
 }

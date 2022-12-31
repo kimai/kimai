@@ -11,24 +11,16 @@ namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
+use App\Security\RoleService;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- *
  * @final
  */
 class LdapManager
 {
-    private $driver;
-    private $hydrator;
-    private $config;
-
-    public function __construct(LdapDriver $driver, LdapUserHydrator $hydrator, LdapConfiguration $config)
+    public function __construct(private LdapDriver $driver, private LdapConfiguration $config, private RoleService $roles)
     {
-        $this->config = $config;
-        $this->driver = $driver;
-        $this->hydrator = $hydrator;
     }
 
     /**
@@ -42,16 +34,8 @@ class LdapManager
     {
         $params = $this->config->getUserParameters();
 
-        return $this->findUserBy([$params['usernameAttribute'] => $username]);
-    }
+        $criteria = [$params['usernameAttribute'] => $username];
 
-    /**
-     * @param array $criteria
-     * @return User|null
-     * @throws LdapDriverException
-     */
-    public function findUserBy(array $criteria): ?UserInterface
-    {
         $params = $this->config->getUserParameters();
         $filter = $this->buildFilter($criteria);
         $entries = $this->driver->search($params['baseDn'], $filter);
@@ -65,7 +49,7 @@ class LdapManager
         }
 
         // do not updateUser() here, as this would happen before bind()
-        return $this->hydrator->hydrate($entries[0]);
+        return $this->hydrate($entries[0]);
     }
 
     private function buildFilter(array $criteria, string $condition = '&'): string
@@ -82,9 +66,9 @@ class LdapManager
         return sprintf('(%s%s)', $condition, implode($filters));
     }
 
-    public function bind(UserInterface $user, string $password): bool
+    public function bind(string $dn, string $password): bool
     {
-        return $this->driver->bind($user, $password);
+        return $this->driver->bind($dn, $password);
     }
 
     /**
@@ -105,9 +89,9 @@ class LdapManager
         }
 
         // always look up the users current DN first, as the cached DN might have been renamed in LDAP
-        $userFresh = $this->findUserByUsername($user->getUsername());
+        $userFresh = $this->findUserByUsername($user->getUserIdentifier());
         if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap.dn'))) {
-            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUsername()));
+            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
         $user->setPreferenceValue('ldap.dn', $baseDn);
 
@@ -122,7 +106,7 @@ class LdapManager
             return;
         }
 
-        $this->hydrator->hydrateUser($user, $entries[0]);
+        $this->hydrateUser($user, $entries[0]);
 
         $roleParameter = $this->config->getRoleParameters();
         if (null === $roleParameter['baseDn']) {
@@ -141,7 +125,7 @@ class LdapManager
         $roles = $this->getRoles($roleValue, $roleParameter);
 
         if (!empty($roles)) {
-            $this->hydrator->hydrateRoles($user, $roles);
+            $this->hydrateRoles($user, $roles);
         }
     }
 
@@ -154,5 +138,149 @@ class LdapManager
             sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, '', LDAP_ESCAPE_FILTER)),
             [$roleParameter['nameAttribute']]
         );
+    }
+
+    // ===================================================================
+
+    private function createUser(): User
+    {
+        $user = new User();
+        $user->setEnabled(true);
+
+        return $user;
+    }
+
+    public function hydrate(array $ldapEntry): User
+    {
+        $user = $this->createUser();
+        $this->hydrateUser($user, $ldapEntry);
+
+        return $user;
+    }
+
+    public function hydrateUser(User $user, array $ldapEntry)
+    {
+        $userParams = $this->config->getUserParameters();
+        $attributeMap = [];
+        if (\array_key_exists('attributes', $userParams)) {
+            $attributeMap = $userParams['attributes'];
+        }
+        $attributeMap = array_merge(
+            [
+                ['ldap_attr' => $userParams['usernameAttribute'], 'user_method' => 'setUserIdentifier'],
+            ],
+            $attributeMap
+        );
+
+        $this->hydrateUserWithAttributesMap($user, $ldapEntry, $attributeMap);
+
+        /** @var string|array|null $email */
+        $email = $user->getEmail();
+        if (null === $email) {
+            $user->setEmail($user->getUserIdentifier());
+        }
+
+        // fill them after hydrating account, so they can't be overwritten
+        // by the mapping attributes
+        if ($user->getId() === null) {
+            $user->setPassword('');
+        }
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
+    }
+
+    /**
+     * @param User $user
+     * @param array $entries
+     */
+    public function hydrateRoles(User $user, array $entries)
+    {
+        $roleParams = $this->config->getRoleParameters();
+        $allowedRoles = $this->roles->getAvailableNames();
+        $groupNameMapping = [];
+        if (\array_key_exists('groups', $roleParams)) {
+            $groupNameMapping = $roleParams['groups'];
+        }
+        $roleNameAttr = $roleParams['nameAttribute'];
+
+        $roles = [];
+        for ($i = 0; $i < $entries['count']; $i++) {
+            $roleName = $entries[$i][$roleNameAttr][0];
+            $mapped = false;
+            foreach ($groupNameMapping as $attr) {
+                if ($roleName === $attr['ldap_value']) {
+                    $roleName = $attr['role'];
+                    $mapped = true;
+                }
+            }
+
+            if (!$mapped) {
+                $roleName = sprintf('ROLE_%s', self::slugify($roleName));
+            }
+
+            if (!\in_array($roleName, $allowedRoles, true)) {
+                continue;
+            }
+
+            $roles[] = $roleName;
+        }
+
+        $user->setRoles($roles);
+    }
+
+    private static function slugify(string $role): string
+    {
+        $role = preg_replace('/\W+/', '_', $role);
+        $role = trim($role, '_');
+        $role = strtoupper($role);
+
+        return $role;
+    }
+
+    private function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap)
+    {
+        $sawUsername = false;
+        /** @var array $attr */
+        foreach ($attributeMap as $attr) {
+            if (!\array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
+                continue;
+            }
+
+            $ldapValue = $ldapUserAttributes[$attr['ldap_attr']];
+
+            if (\array_key_exists('count', $ldapValue)) {
+                unset($ldapValue['count']);
+            }
+
+            if (1 === \count($ldapValue)) {
+                $value = array_shift($ldapValue);
+            } else {
+                $value = $ldapValue;
+            }
+
+            // BC layer for 2.0
+            if ($attr['user_method'] === 'setUsername') {
+                @trigger_error('Your LDAP configuration is deprecated: change the attribute mapping from "setUsername" to "setUserIdentifier".', E_USER_DEPRECATED);
+                $attr['user_method'] = 'setUserIdentifier';
+            }
+
+            if ($attr['user_method'] === 'setEmail') {
+                if (\is_array($value)) {
+                    $value = $value[0];
+                }
+            } elseif ($attr['user_method'] === 'setUserIdentifier') {
+                $sawUsername = true;
+            }
+
+            if (!method_exists($user, $attr['user_method'])) {
+                throw new \Exception('Unknown mapping method: ' . $attr['user_method']);
+            }
+
+            $user->{$attr['user_method']}($value);
+        }
+
+        if (!$sawUsername) {
+            throw new LdapDriverException('Missing username in LDAP hydration');
+        }
     }
 }

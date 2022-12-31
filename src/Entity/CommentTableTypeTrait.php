@@ -14,48 +14,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait CommentTableTypeTrait
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="message", type="text", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $message;
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $createdBy;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $createdAt;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="pinned", type="boolean", nullable=false, options={"default": false})
-     * @Assert\NotNull()
-     */
-    private $pinned = false;
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
+    #[ORM\Column(name: 'message', type: 'text', nullable: false)]
+    #[Assert\NotNull]
+    private ?string $message = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private ?User $createdBy = null;
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Assert\NotNull]
+    private ?\DateTime $createdAt = null;
+    #[ORM\Column(name: 'pinned', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
+    private bool $pinned = false;
 
     public function getId(): ?int
     {

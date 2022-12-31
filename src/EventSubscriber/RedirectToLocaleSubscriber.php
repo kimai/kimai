@@ -9,7 +9,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Utils\LanguageService;
+use App\Configuration\LocaleService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -24,15 +24,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  * @author Oleg Voronkovich <oleg-voronkovich@yandex.ru>
  */
-class RedirectToLocaleSubscriber implements EventSubscriberInterface
+final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
-    private $urlGenerator;
-    private $languageService;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, LanguageService $languageService)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private LocaleService $localeService)
     {
-        $this->urlGenerator = $urlGenerator;
-        $this->languageService = $languageService;
     }
 
     public static function getSubscribedEvents(): array
@@ -42,7 +37,7 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -58,11 +53,11 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $allLanguages = $this->languageService->getAllLanguages();
+        $allLanguages = $this->localeService->getAllLocales();
 
         // Add the default locale at the first position of the array, because getPreferredLanguage()
         // returns the first element when no appropriate language is found
-        array_unshift($allLanguages, $this->languageService->getDefaultLanguage());
+        array_unshift($allLanguages, $this->localeService->getDefaultLocale());
 
         $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
 

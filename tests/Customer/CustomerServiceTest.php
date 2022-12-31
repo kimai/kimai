@@ -19,6 +19,7 @@ use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -43,6 +44,9 @@ class CustomerServiceTest extends TestCase
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
+            $dispatcher->method('dispatch')->willReturnCallback(function ($event) {
+                return $event;
+            });
         }
 
         if ($validator === null) {
@@ -51,15 +55,18 @@ class CustomerServiceTest extends TestCase
         }
 
         if ($configuration === null) {
-            $configuration = $this->createMock(SystemConfiguration::class);
-            $configuration->method('getCustomerDefaultTimezone')->willReturn('Europe/Vienna');
-            $configuration->method('getCustomerDefaultCountry')->willReturn('IN');
-            $configuration->method('getCustomerDefaultCurrency')->willReturn('RUB');
+            $configuration = SystemConfigurationFactory::createStub([
+                'defaults' => [
+                    'customer' => [
+                        'timezone' => 'Europe/Vienna',
+                        'country' => 'IN',
+                        'currency' => 'RUB',
+                    ]
+                ]
+            ]);
         }
 
-        $service = new CustomerService($repository, $configuration, $validator, $dispatcher);
-
-        return $service;
+        return new CustomerService($repository, $configuration, $validator, $dispatcher);
     }
 
     public function testCannotSavePersistedCustomerAsNew()
@@ -88,7 +95,7 @@ class CustomerServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewCustomer(new Customer());
+        $sut->saveNewCustomer(new Customer('foo'));
     }
 
     public function testUpdateDispatchesEvents()
@@ -105,6 +112,8 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -123,11 +132,13 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
 
-        $customer = $sut->createNewCustomer();
+        $customer = $sut->createNewCustomer('');
 
         self::assertInstanceOf(Customer::class, $customer);
         self::assertEquals('Europe/Vienna', $customer->getTimezone());
@@ -146,11 +157,13 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
 
-        $Customer = new Customer();
+        $Customer = new Customer('foo');
         $sut->saveNewCustomer($Customer);
     }
 }

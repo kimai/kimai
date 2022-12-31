@@ -33,7 +33,6 @@ class TrackingModeServiceTest extends TestCase
 
         self::assertContains('default', $ids);
         self::assertContains('punch', $ids);
-        self::assertContains('duration_only', $ids);
         self::assertContains('duration_fixed_begin', $ids);
     }
 

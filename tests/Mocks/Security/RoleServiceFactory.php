@@ -18,7 +18,7 @@ use App\Tests\Mocks\AbstractMockFactory;
 class RoleServiceFactory extends AbstractMockFactory
 {
     /**
-     * @param array<string, array<string>>|null $roles
+     * @param array<string>|null $roles
      * @param Role[]|null $repositoryRoles
      * @return RoleService
      */
@@ -26,10 +26,10 @@ class RoleServiceFactory extends AbstractMockFactory
     {
         if (null === $roles) {
             $roles = [
-                User::ROLE_USER => [],
-                User::ROLE_TEAMLEAD => [User::ROLE_USER],
-                User::ROLE_ADMIN => [User::ROLE_TEAMLEAD],
-                User::ROLE_SUPER_ADMIN => [User::ROLE_ADMIN],
+                User::ROLE_USER,
+                User::ROLE_TEAMLEAD,
+                User::ROLE_ADMIN,
+                User::ROLE_SUPER_ADMIN,
             ];
         }
 

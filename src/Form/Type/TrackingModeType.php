@@ -17,37 +17,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the timesheet mode.
  */
-class TrackingModeType extends AbstractType
+final class TrackingModeType extends AbstractType
 {
-    protected $service;
-
-    public function __construct(TrackingModeService $service)
+    public function __construct(private TrackingModeService $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];
 
         foreach ($this->service->getModes() as $mode) {
             $id = $mode->getId();
-            $choices['label.timesheet.mode_' . $id] = $id;
+            $choices['timesheet.mode_' . $id] = $id;
         }
 
         $resolver->setDefaults([
-            'label' => 'label.timesheet.mode',
+            'label' => 'timesheet.mode',
             'choices' => $choices,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

@@ -11,9 +11,6 @@ namespace App\Repository\Loader;
 
 final class DefaultLoader implements LoaderInterface
 {
-    /**
-     * @param array $results
-     */
     public function loadResults(array $results): void
     {
         // nothing to do here, the results are already fully populated

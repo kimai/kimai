@@ -33,7 +33,7 @@ class ActivityVoterTest extends AbstractVoterTest
 
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ActivityVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
@@ -87,14 +87,14 @@ class ActivityVoterTest extends AbstractVoterTest
 
     public function testTeamlead()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_TEAMLEAD);
         $team->addTeamlead($user);
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $activity->setProject($project);
         $customer->addTeam($team);
@@ -103,7 +103,7 @@ class ActivityVoterTest extends AbstractVoterTest
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $activity->setProject($project);
         $project->addTeam($team);
@@ -112,7 +112,7 @@ class ActivityVoterTest extends AbstractVoterTest
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $activity->setProject($project);
         $activity->addTeam($team);
@@ -126,14 +126,14 @@ class ActivityVoterTest extends AbstractVoterTest
 
     public function testTeamMember()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addTeamlead($user);
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
         $project->setCustomer($customer);
         $activity->setProject($project);
@@ -141,13 +141,13 @@ class ActivityVoterTest extends AbstractVoterTest
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
 
         $activity = new Activity();
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addUser($user);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->addTeam($team);
         $project->setCustomer($customer);
         $activity->setProject($project);
@@ -155,13 +155,13 @@ class ActivityVoterTest extends AbstractVoterTest
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
 
         $activity = new Activity();
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addUser($user);
 
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $activity->addTeam($team);
         $project->setCustomer($customer);
         $activity->setProject($project);

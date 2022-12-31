@@ -17,7 +17,7 @@ use App\Repository\Query\VisibilityInterface;
  */
 class CustomerQueryTest extends BaseQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new CustomerQuery();
 

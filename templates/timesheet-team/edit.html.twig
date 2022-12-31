@@ -1,7 +1,0 @@
-{% extends 'timesheet/layout-edit.html.twig' %}
-{% import "timesheet-team/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'menu.admin_timesheet'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.timesheet_team(timesheet, 'edit') }}{% endblock %}
-
-{% set route_back = 'admin_timesheet' %}

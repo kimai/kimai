@@ -11,39 +11,60 @@ namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Event\RevenueStatisticEvent;
+use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class AmountYear extends CounterYear
+final class AmountYear extends AbstractCounterYear
 {
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
     {
         parent::__construct($repository, $systemConfiguration);
-        $this->dispatcher = $dispatcher;
-        $this->setId('amountYear');
-        $this->setOption('dataType', 'money');
-        $this->setOption('icon', 'money');
-        $this->setOption('color', WidgetInterface::COLOR_YEAR);
-        $this->setTitle('stats.amountYear');
     }
 
-    public function getData(array $options = [])
+    public function getOptions(array $options = []): array
     {
-        $this->titleYear = 'stats.amountFinancialYear';
+        return array_merge([
+            'icon' => 'money',
+            'color' => WidgetInterface::COLOR_YEAR,
+        ], parent::getOptions($options));
+    }
+
+    public function getData(array $options = []): mixed
+    {
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(false);
 
+        /** @var array<Revenue> $data */
         $data = parent::getData($options);
 
-        $event = new RevenueStatisticEvent($this->begin, $this->end);
-        if ($data !== null) {
-            $event->addRevenue($data);
+        $event = new RevenueStatisticEvent($this->getBegin(), $this->getEnd());
+        foreach ($data as $row) {
+            $event->addRevenue($row->getCurrency(), $row->getAmount());
         }
         $this->dispatcher->dispatch($event);
 
         return $event->getRevenue();
+    }
+
+    public function getId(): string
+    {
+        return 'AmountYear';
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.amountFinancialYear';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-counter-money.html.twig';
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_all_data'];
     }
 }

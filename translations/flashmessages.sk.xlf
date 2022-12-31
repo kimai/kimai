@@ -18,10 +18,6 @@
         <source>timesheet.start.error</source>
         <target>Nahrávanie času nebolo možné spustiť: %reason%</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Dosiahla sa hranica záznamov aktívneho času, najskôr zastavte aspoň jedno meranie času.</target>
-      </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
         <target>Uloženie prebehlo úpešne</target>

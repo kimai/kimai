@@ -18,23 +18,18 @@ use Doctrine\ORM\Events;
 /**
  * A listener to make sure all Timesheet entries will have a proper duration.
  */
-class TimesheetSubscriber implements EventSubscriber
+final class TimesheetSubscriber implements EventSubscriber
 {
     /**
      * @var CalculatorInterface[]
      */
-    private $calculator;
-    /**
-     * @var CalculatorInterface[]
-     */
-    private $sorted;
+    private ?array $sorted = null;
 
     /**
      * @param CalculatorInterface[] $calculators
      */
-    public function __construct(iterable $calculators)
+    public function __construct(private iterable $calculators)
     {
-        $this->calculator = $calculators;
     }
 
     public function getSubscribedEvents(): array
@@ -46,7 +41,7 @@ class TimesheetSubscriber implements EventSubscriber
 
     public function onFlush(OnFlushEventArgs $args): void
     {
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
         $meta = $em->getClassMetadata(Timesheet::class);
 
@@ -69,17 +64,14 @@ class TimesheetSubscriber implements EventSubscriber
         }
     }
 
-    protected function calculateFields(Timesheet $entity, array $changes = []): void
+    private function calculateFields(Timesheet $entity, array $changes = []): void
     {
         if ($this->sorted === null) {
             $this->sorted = [];
 
-            foreach ($this->calculator as $calculator) {
+            foreach ($this->calculators as $calculator) {
                 $i = 0;
-                $prio = 1000;
-                if (method_exists($calculator, 'getPriority')) {
-                    $prio = $calculator->getPriority();
-                }
+                $prio = $calculator->getPriority();
 
                 do {
                     $key = $prio + $i++;
@@ -92,7 +84,6 @@ class TimesheetSubscriber implements EventSubscriber
         }
 
         foreach ($this->sorted as $calculator) {
-            /* @phpstan-ignore-next-line */
             $calculator->calculate($entity, $changes);
         }
     }

@@ -3,28 +3,29 @@
 {% endif %}
 {% set _back = back is defined and back is not same as (false) ? back : false %}
 {% set _reset = reset is defined and reset is same as (false) ? false : true %}
-<div class="box box-primary">
+<div class="card mb-3">
     {% block form_before %}{% endblock %}
     {{ form_start(form, formStartOptions|default({})) }}
-    <div class="box-header with-border">
-        <h3 class="box-title">
+    <div class="card-header">
+        <h3 class="card-title">
             {{ title }}
             {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+                <a class="form-help" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">?</a>
             {% endif %}
         </h3>
     </div>
-    <div class="box-body">
+    <div class="card-body">
+        {{ form_errors(form) }}
         {% block form_body %}
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     </div>
-    <div class="box-footer">
+    <div class="card-footer">
         {% block submit_button %}
             <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
         {% endblock %}
         {% if _back is not same as (false) %}
-            <a href="{{ _back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
+            <a href="{{ _back }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
         {% endif %}
         {% if _reset is not same as (false) %}
             <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />

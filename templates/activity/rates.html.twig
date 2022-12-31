@@ -1,11 +1,7 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "activity/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activity(activity, 'rates') }}{% endblock %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+    {{ include(kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': activity.name,
         'form': form,
         'back': path('admin_activity')

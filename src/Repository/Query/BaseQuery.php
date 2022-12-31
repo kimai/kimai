@@ -12,7 +12,9 @@ namespace App\Repository\Query;
 use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Form\Model\DateRange;
 use App\Utils\SearchTerm;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
 
 /**
@@ -22,80 +24,33 @@ class BaseQuery
 {
     public const ORDER_ASC = 'ASC';
     public const ORDER_DESC = 'DESC';
-
     public const DEFAULT_PAGESIZE = 50;
-    /** @deprecated since 1.14 */
-    public const DEFAULT_PAGE = 1;
 
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_OBJECTS = 'Objects';
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_PAGER = 'PagerFanta';
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
-
-    private $defaults = [
+    /** @var array<string, string|int|null|bool|array<mixed>|DateRange> */
+    private array $defaults = [
         'page' => 1,
         'pageSize' => self::DEFAULT_PAGESIZE,
         'orderBy' => 'id',
         'order' => self::ORDER_ASC,
         'searchTerm' => null,
     ];
-    /**
-     * @var int
-     */
-    private $page = 1;
-    /**
-     * @var int
-     */
-    private $pageSize = self::DEFAULT_PAGESIZE;
-    /**
-     * @var string
-     */
-    private $orderBy = 'id';
-    /**
-     * @var string
-     */
-    private $order = self::ORDER_ASC;
+    private int $page = 1;
+    private int $pageSize = self::DEFAULT_PAGESIZE;
+    private string $orderBy = 'id';
+    private string $order = self::ORDER_ASC;
     /**
      * @var array<string, string>
      */
-    private $orderGroups = [];
+    private array $orderGroups = [];
+    private ?User $currentUser = null;
     /**
-     * @var string
-     * @deprecated since 1.4, will be removed with 2.0
+     * @var array<Team>
      */
-    private $resultType = self::RESULT_TYPE_PAGER;
-    /**
-     * @var User
-     */
-    private $currentUser;
-    /**
-     * @var Team[]
-     */
-    private $teams = [];
-    /**
-     * @var SearchTerm|null
-     */
-    private $searchTerm;
-    /**
-     * @var Bookmark|null
-     */
-    private $bookmark;
-    /**
-     * @var string|null
-     */
-    private $name;
-    /**
-     * @var bool
-     */
-    private $bookmarkSearch = false;
+    private array $teams = [];
+    private ?SearchTerm $searchTerm = null;
+    private ?Bookmark $bookmark = null;
+    private ?string $name = null;
+    private bool $bookmarkSearch = false;
 
     /**
      * @param Team[] $teams
@@ -140,29 +95,22 @@ class BaseQuery
      * @param User $user
      * @return self
      */
-    public function setCurrentUser(User $user)
+    public function setCurrentUser(?User $user): self
     {
         $this->currentUser = $user;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @param int $page
-     * @return self
-     */
-    public function setPage($page)
+    public function setPage(?int $page): self
     {
-        if ($page !== null && (int) $page > 0) {
-            $this->page = (int) $page;
+        if ($page !== null && $page > 0) {
+            $this->page = $page;
         }
 
         return $this;
@@ -173,14 +121,10 @@ class BaseQuery
         return $this->pageSize;
     }
 
-    /**
-     * @param int $pageSize
-     * @return self
-     */
-    public function setPageSize($pageSize)
+    public function setPageSize(?int $pageSize): self
     {
-        if ($pageSize !== null && (int) $pageSize > 0) {
-            $this->pageSize = (int) $pageSize;
+        if ($pageSize !== null && $pageSize > 0) {
+            $this->pageSize = $pageSize;
         }
 
         return $this;
@@ -226,17 +170,6 @@ class BaseQuery
         return $this->orderGroups;
     }
 
-    /**
-     * @deprecated since 1.0
-     * @return string
-     */
-    public function getResultType()
-    {
-        @trigger_error('BaseQuery::getResultType() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        return $this->resultType;
-    }
-
     public function hasSearchTerm(): bool
     {
         return null !== $this->searchTerm;
@@ -247,18 +180,14 @@ class BaseQuery
         return $this->searchTerm;
     }
 
-    /**
-     * @param SearchTerm|null $searchTerm
-     * @return self
-     */
-    public function setSearchTerm(?SearchTerm $searchTerm)
+    public function setSearchTerm(?SearchTerm $searchTerm): self
     {
         $this->searchTerm = $searchTerm;
 
         return $this;
     }
 
-    protected function set($name, $value)
+    protected function set(string $name, mixed $value): void
     {
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
@@ -267,7 +196,7 @@ class BaseQuery
             return;
         }
 
-        if (substr($name, -1) === 's') {
+        if (str_ends_with($name, 's')) {
             $method = 'add' . ucfirst(substr($name, 0, \strlen($name) - 1));
             if (method_exists($this, $method) && \is_array($value)) {
                 foreach ($value as $v) {
@@ -283,7 +212,7 @@ class BaseQuery
         }
     }
 
-    protected function get($name)
+    protected function get(string $name): mixed
     {
         $methods = ['get' . ucfirst($name), 'is' . ucfirst($name), 'has' . ucfirst($name)];
         foreach ($methods as $method) {
@@ -295,15 +224,17 @@ class BaseQuery
         if (property_exists($this, $name)) {
             return $this->{$name};
         }
+
+        return null;
     }
 
     /**
      * You have to add ALL user facing form fields as default!
      *
-     * @param array $defaults
+     * @param array<string, string|int|null|bool|array<mixed>|DateRange> $defaults
      * @return self
      */
-    protected function setDefaults(array $defaults)
+    protected function setDefaults(array $defaults): self
     {
         $this->defaults = array_merge($this->defaults, $defaults);
         foreach ($this->defaults as $key => $value) {
@@ -314,14 +245,14 @@ class BaseQuery
     }
 
     /**
-     * @param FormErrorIterator $errors
-     * @return self
+     * @param FormErrorIterator<FormError> $errors
+     * @return $this
      */
-    public function resetByFormError(FormErrorIterator $errors)
+    public function resetByFormError(FormErrorIterator $errors): self
     {
         foreach ($errors as $error) {
-            $key = $error->getOrigin()->getName();
-            if (\array_key_exists($key, $this->defaults)) {
+            $key = $error->getOrigin()?->getName();
+            if ($key !== null && \array_key_exists($key, $this->defaults)) {
                 $this->set($key, $this->defaults[$key]);
             }
         }
@@ -399,7 +330,7 @@ class BaseQuery
         $currentValue = $this->get($filter);
 
         if (\is_object($currentValue)) {
-            if ($currentValue != $expectedValue) {
+            if ($currentValue !== $expectedValue) {
                 return false;
             }
         } else {

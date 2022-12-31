@@ -14,22 +14,13 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class RoleValidator extends ConstraintValidator
+final class RoleValidator extends ConstraintValidator
 {
-    /**
-     * @var RoleService
-     */
-    private $service;
-
-    public function __construct(RoleService $service)
+    public function __construct(private RoleService $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof Role) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Role');
@@ -41,11 +32,11 @@ class RoleValidator extends ConstraintValidator
             $roles = [$roles];
         }
 
-        // the fos user entity uppercases the roles by default
-        $allowedRoles = array_map('strtoupper', $this->service->getAvailableNames());
+        // user entity uses uppercase for the roles
+        $allowedRoles = $this->service->getAvailableNames();
 
         foreach ($roles as $role) {
-            if (!\is_string($role) || !\in_array($role, $allowedRoles)) {
+            if (!\is_string($role) || !\in_array($role, $allowedRoles, true)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($role))
                     ->setCode(Role::ROLE_ERROR)

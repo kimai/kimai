@@ -1,3 +1,4 @@
+{%- set with_avatar = avatar is defined ? avatar : true -%}
 {%- set absoluteDuration = 0 -%}
 {%- set absoluteInternalRate = 0 -%}
 {%- set absoluteRate = 0 -%}
@@ -8,16 +9,19 @@
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
-    {% set dataTypeTitle = 'label.rate_internal' %}
+    {% set dataTypeTitle = 'internalRate' %}
 {% else %}
     {% set dataTypeTitle = 'stats.durationTotal' %}
 {% endif %}
-<table class="table table-bordered table-hover dataTable">
+<table class="table table-hover dataTable">
     <thead>
         <tr>
+            {% if with_avatar %}
+            <th class="w-avatar"></th>
+            {% endif %}
             <th>&nbsp;</th>
             {% if showAccountNumber %}
-            <th>{{ 'label.account_number'|trans }}</th>
+            <th>{{ 'account_number'|trans }}</th>
             {% endif %}
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in stats.0.getDateTimes() %}
@@ -35,11 +39,14 @@
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
         <tr class="user">
+            {% if with_avatar %}
+                <td class="w-avatar">
+                    {% from "macros/widgets.html.twig" import user_avatar %}
+                    {{ user_avatar(userPeriod.user) }}
+                </td>
+            {% endif %}
             <td class="text-nowrap"{% block user_column_cell_attribute %}{% endblock %}>
-                {% block user_column %}
-                    {% from "macros/widgets.html.twig" import label_dot %}
-                    {{ label_dot(userPeriod.user.displayName, userPeriod.user.color) }}
-                {% endblock %}
+                {{ userPeriod.user.displayName }}
             </td>
             {% if showAccountNumber %}
                 <td>{{ userPeriod.user.accountNumber }}</td>
@@ -89,7 +96,7 @@
     </tbody>
     <tfoot>
         <tr class="summary">
-            <td>{{ dataTypeTitle|trans }}</td>
+            <td{% if with_avatar %} colspan="2"{% endif %}>{{ dataTypeTitle|trans }}</td>
             {% if showAccountNumber %}
                 <td></td>
             {% endif %}

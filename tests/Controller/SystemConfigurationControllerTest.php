@@ -27,17 +27,23 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/system-config/');
     }
 
+    private function getSystemConfiguration(): SystemConfiguration
+    {
+        return static::getContainer()->get(SystemConfiguration::class);
+    }
+
     public function testIndexAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $expectedForms = $this->getTestDataForms();
+        $expectedCount = \count($expectedForms) + 1; // the menu is another card
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary');
-        $this->assertEquals(\count($expectedForms), \count($result));
+        $result = $client->getCrawler()->filter('section.content div.card');
+        $this->assertEquals($expectedCount, \count($result));
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $result = $client->getCrawler()->filter('section.content div.card form');
         $this->assertEquals(\count($expectedForms), \count($result));
 
         foreach ($expectedForms as $formConfig) {
@@ -54,10 +60,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary');
+        $result = $client->getCrawler()->filter('section.content div.card');
         $this->assertEquals(1, \count($result));
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $result = $client->getCrawler()->filter('section.content div.card form');
         $this->assertEquals(1, \count($result));
 
         $result = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]');
@@ -90,7 +96,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
         $this->assertTrue($configService->find('timesheet.rules.allow_zero_duration'));
@@ -100,8 +106,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'system_configuration_form_timesheet' => [
                 'configuration' => [
-                    ['name' => 'timesheet.mode', 'value' => 'duration_only'],
-                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
+                    ['name' => 'timesheet.mode', 'value' => 'punch'],
+                    ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_zero_duration', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
@@ -116,8 +122,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
+        $configService = $this->getSystemConfiguration();
+        $this->assertEquals('punch', $configService->find('timesheet.mode'));
         $this->assertFalse($configService->find('timesheet.rules.allow_future_times'));
         $this->assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
@@ -128,7 +134,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertNull($configService->find('timesheet.rules.lockdown_period_start'));
         $this->assertNull($configService->find('timesheet.rules.lockdown_period_end'));
         $this->assertNull($configService->find('timesheet.rules.lockdown_period_timezone'));
@@ -151,7 +157,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertEquals('first day of last month 01:23:45', $configService->find('timesheet.rules.lockdown_period_start'));
         $this->assertEquals('last day of last month 23:01:45', $configService->find('timesheet.rules.lockdown_period_end'));
         $this->assertEquals('Africa/Bangui', $configService->find('timesheet.rules.lockdown_period_timezone'));
@@ -168,7 +174,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
-                        ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
+                        ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_zero_duration', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
@@ -190,7 +196,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertNull($configService->find('defaults.customer.timezone'));
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
@@ -211,7 +217,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
         $this->assertEquals('BB', $configService->find('defaults.customer.country'));
         $this->assertEquals('GBP', $configService->find('defaults.customer.currency'));
@@ -245,9 +251,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/user');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertNull($configService->find('defaults.user.timezone'));
-        $this->assertNull($configService->find('defaults.user.theme'));
+        $this->assertEquals('default', $configService->find('defaults.user.theme'));
         $this->assertEquals('en', $configService->find('defaults.user.language'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
@@ -256,7 +262,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'configuration' => [
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
-                    ['name' => 'defaults.user.theme', 'value' => 'purple'],
+                    ['name' => 'defaults.user.theme', 'value' => 'dark'],
                 ]
             ]
         ]);
@@ -266,9 +272,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
-        $this->assertEquals('purple', $configService->find('defaults.user.theme'));
+        $this->assertEquals('dark', $configService->find('defaults.user.theme'));
         $this->assertEquals('ru', $configService->find('defaults.user.language'));
     }
 
@@ -301,15 +307,13 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertFalse($configService->find('timesheet.markdown_content'));
-        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
         $client->submit($form, [
             'system_configuration_form_theme' => [
                 'configuration' => [
-                    ['name' => 'theme.autocomplete_chars', 'value' => 5],
                     ['name' => 'timesheet.markdown_content', 'value' => 1],
                 ]
             ]
@@ -320,8 +324,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
+        $configService = $this->getSystemConfiguration();
         $this->assertTrue($configService->find('timesheet.markdown_content'));
     }
 
@@ -334,13 +337,13 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             [
                 'system_configuration_form_theme' => [
                     'configuration' => [
-                        ['name' => 'theme.select_type', 'value' => 'foo'],
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
+                        ['name' => 'theme.color_choices', 'value' => '112324567865=)(/&%$§Silver|#c0c0c0'],
                     ]
                 ]
             ],
             [
-                '#system_configuration_form_theme_configuration_0_value',
+                '#system_configuration_form_theme_configuration_1_value',
             ],
             true
         );
@@ -351,7 +354,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertTrue($configService->find('calendar.week_numbers'));
         $this->assertTrue($configService->find('calendar.weekends'));
         $this->assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
@@ -378,7 +381,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService = $this->getSystemConfiguration();
         $this->assertFalse($configService->find('calendar.week_numbers'));
         $this->assertFalse($configService->find('calendar.weekends'));
         $this->assertEquals('10:00', $configService->find('calendar.businessHours.begin'));

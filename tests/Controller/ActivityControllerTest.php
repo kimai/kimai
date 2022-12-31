@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -43,11 +44,8 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
-            'help' => 'https://www.kimai.org/documentation/activity.html'
         ]);
     }
 
@@ -58,12 +56,8 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/activity'),
-            'help' => 'https://www.kimai.org/documentation/activity.html'
         ]);
     }
 
@@ -159,15 +153,21 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+
+        $this->assertDetailsPage($client);
+    }
+
+    private function assertDetailsPage(HttpKernelBrowser $client)
+    {
         self::assertHasProgressbar($client);
 
-        $node = $client->getCrawler()->filter('div.box#activity_details_box');
+        $node = $client->getCrawler()->filter('div.card#activity_details_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#time_budget_box');
+        $node = $client->getCrawler()->filter('div.card#time_budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#budget_box');
+        $node = $client->getCrawler()->filter('div.card#budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box');
+        $node = $client->getCrawler()->filter('div.card#activity_rates_box');
         self::assertEquals(1, $node->count());
     }
 
@@ -178,15 +178,14 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_rate_form]')->form();
         $client->submit($form, [
             'activity_rate_form' => [
-                'user' => null,
                 'rate' => 123.45,
             ]
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box');
+        $node = $client->getCrawler()->filter('div.card#activity_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#activity_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
@@ -202,9 +201,12 @@ class ActivityControllerTest extends ControllerBaseTest
                 'project' => '1',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+
+        $this->assertDetailsPage($client);
+        $this->assertHasFlashSuccess($client);
 
         $activities = $this->getEntityManager()->getRepository(Activity::class)->findAll();
         $activity = array_pop($activities);
@@ -218,7 +220,7 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        self::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -296,15 +298,15 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
 
         $this->request($client, '/admin/activity/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         // creating the default team a second time fails, as the name already exists

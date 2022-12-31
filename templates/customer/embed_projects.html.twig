@@ -1,23 +1,26 @@
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'customer': customer, 'projects': projects, 'page': page} %}
+    {% embed '@theme/embeds/card.html.twig' with {'customer': customer, 'projects': projects, 'page': page} %}
         {% import "project/actions.html.twig" as actions %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}{{ 'projects'|trans }}{% endblock %}
         {% block box_attributes %}
-            id="project_list_box" data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate kimai.projectDelete"
+            id="project_list_box" data-reload="kimai.projectUpdate kimai.projectDelete"
         {% endblock %}
         {% block box_tools %}
-            {% if is_granted('view_reporting') and is_granted('budget_any', 'project') %}
-                <a class="btn btn-default btn-sm btn-pager" href="{{ path('report_project_view', {'customer': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'report_project_view'|trans({}, 'reporting') }}"><i class="{{ 'reporting'|icon }}"></i></a>
-            {% endif %}
-            {% if customer.visible and is_granted('create_project') %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm btn-pager" data-href="{{ path('admin_project_create_with_customer', {'customer': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
-            {% endif %}
-            {% if projects|length > 0 %}
-                {{ pagination(projects, { css_container_class: 'pagination pagination-sm inline', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
-            {% endif %}
+            {%- if is_granted('report:project') and is_granted('budget_any', 'project') -%}
+                {{ widgets.card_tool_button('reporting', {'title': 'report_project_view', 'translation_domain': 'reporting', 'url': path('report_project_view', {'customer': customer.id})}) }}
+            {%- endif -%}
+            {%- if customer.visible and is_granted('create_project') -%}
+                {{ widgets.card_tool_button('create', {'class': 'modal-ajax-form open-edit', 'title': 'create', 'url': path('admin_project_create_with_customer', {'customer': customer.id})}) }}
+            {%- endif -%}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
-        {% block box_tools_attributes %}data-page="{{ page }}"{% endblock %}
+        {% block box_footer %}
+            {%- if projects|length > 0 -%}
+                <div class="d-flex">
+                    {{ pagination(projects, { css_container_class: 'pagination ms-auto m-0', routeName: 'customer_projects', routeParams: {'id': customer.id} }) }}
+                </div>
+            {%- endif -%}
+        {% endblock %}
+        {% block box_body_class %}{%- if projects|length > 0 -%}p-0{%- endif -%}{% endblock %}
         {% block box_body %}
             {% if projects|length == 0 %}
                 <div class="comment">{{ 'error.no_entries_found'|trans }}</div>
@@ -25,11 +28,11 @@
             <table class="table table-hover dataTable">
                 <thead>
                     <tr>
-                        <th>{{ 'label.name'|trans }}</th>
-                        <th class="hidden-xs">{{ 'label.comment'|trans }}</th>
-                        <th class="w-min text-right">{{ 'label.project_end'|trans }}</th>
-                        <th class="w-min text-center">{{ 'label.visible'|trans }}</th>
-                        <th class="w-min text-center">{{ 'label.team'|trans }}</th>
+                        <th>{{ 'name'|trans }}</th>
+                        <th class="d-none d-md-table-cell">{{ 'comment'|trans }}</th>
+                        <th class="d-none d-sm-table-cell w-min text-end">{{ 'project_end'|trans }}</th>
+                        <th class="d-none d-sm-table-cell w-min text-center">{{ 'visible'|trans }}</th>
+                        <th class="d-none d-sm-table-cell w-min text-center">{{ 'team'|trans }}</th>
                         <th class="actions"></th>
                     </tr>
                 </thead>
@@ -37,16 +40,16 @@
                 {% for project in projects %}
                     <tr {{ widgets.project_row_attr(project, now) }}>
                         <td>{{ widgets.label_project(project) }}</td>
-                        <td class="hidden-xs">{{ project.comment|comment1line(not app.user.smallLayout) }}</td>
-                        <td class="w-min text-right">
+                        <td class="d-none d-md-table-cell">{{ project.comment|comment1line(false) }}</td>
+                        <td class="d-none d-sm-table-cell w-min text-end">
                             {% if project.end is not null %}
                                 {{ project.end|date_short }}
                             {% else %}
                                 &ndash;
                             {% endif %}
                         </td>
-                        <td class="w-min text-center">{{ widgets.label_visible(project.visible) }}</td>
-                        <td class="w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
+                        <td class="d-none d-sm-table-cell w-min text-center">{{ widgets.label_visible(project.visible) }}</td>
+                        <td class="d-none d-sm-table-cell w-min text-center">{{ widgets.badge_team_access(project.teams) }}</td>
                         <td class="actions">{{ actions.project(project, 'customer_details', true) }}</td>
                     </tr>
                 {% endfor %}
@@ -56,7 +59,7 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        {% set eventName = app.request.xmlHttpRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
+        {% set eventName = kimai_context.javascriptRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
         document.addEventListener('{{ eventName }}', function() {
             KimaiPaginatedBoxWidget.create('#project_list_box');
         });

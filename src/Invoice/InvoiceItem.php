@@ -12,102 +12,53 @@ namespace App\Invoice;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
+use DateTime;
 
 final class InvoiceItem
 {
-    /**
-     * @var float
-     */
-    private $fixedRate;
-    /**
-     * @var float
-     */
-    private $hourlyRate;
-    /**
-     * @var float
-     */
-    private $rate = 0.00;
-    /**
-     * @var float
-     */
-    private $rateInternal = 0.00;
-    /**
-     * @var float
-     */
-    private $amount = 0;
-    /**
-     * @var string
-     */
-    private $description;
-    /**
-     * @var int
-     */
-    private $duration = 0;
-    /**
-     * @var \DateTime
-     */
-    private $begin;
-    /**
-     * @var \DateTime
-     */
-    private $end;
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var Activity
-     */
-    private $activity;
-    /**
-     * @var Project
-     */
-    private $project;
-    /**
-     * @var array
-     */
-    private $additionalFields = [];
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $category;
+    private ?float $fixedRate = null;
+    private ?float $hourlyRate = null;
+    private float $rate = 0.00;
+    private float $rateInternal = 0.00;
+    private float $amount = 0.00;
+    private ?string $description = null;
+    private int $duration = 0;
+    private ?DateTime $begin = null;
+    private ?DateTime $end = null;
+    private ?User $user = null;
+    private ?Activity $activity = null;
+    private ?Project $project = null;
+    /** @var array<string, mixed> */
+    private array $additionalFields = [];
+    private ?string $type = null;
+    private ?string $category = null;
     /**
      * @var string[]
      */
-    private $tags = [];
+    private array $tags = [];
 
-    public function addAdditionalField(string $name, ?string $value): InvoiceItem
+    public function addAdditionalField(string $name, mixed $value): InvoiceItem
     {
         $this->additionalFields[$name] = $value;
 
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAdditionalFields(): array
     {
         return $this->additionalFields;
     }
 
-    public function getAdditionalField(string $name, $default = null)
+    public function getAdditionalField(string $name, mixed $default = null): mixed
     {
         if (\array_key_exists($name, $this->additionalFields)) {
             return $this->additionalFields[$name];
         }
 
         return $default;
-    }
-
-    public function getMetaFieldValue(string $field)
-    {
-        if (\array_key_exists($field, $this->additionalFields)) {
-            return $this->additionalFields[$field];
-        }
-
-        return null;
     }
 
     public function getActivity(): ?Activity

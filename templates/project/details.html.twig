@@ -1,43 +1,39 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "project/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'projects'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'project_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', project) %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "customer/actions.html.twig" as customerActions %}
         {% block box_attributes %}id="project_details_box"{% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_project_edit', {'id': project.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_project_edit', {'id': project.id})}) }}
             {% endif %}
         {% endblock %}
         {% block box_title %}
             {{ widgets.label_name(project.name, project.color) }}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if project.comment is not empty %}
-                <div class="comment">
+                <div class="comment p-3">
                     {{ project.comment|comment2html(true) }}
                 </div>
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not project.visible %}
                     <tr class="{{ widgets.class_project_row(project, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(project.visible) }}
                         </td>
                     </tr>
                 {% endif %}
                 <tr {{ widgets.customer_row_attr(project.customer, now) }}>
-                    <th>{{ 'label.customer'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
                     <td>
                         {{ widgets.label_customer(project.customer) }}
                     </td>
@@ -51,7 +47,7 @@
                 {% if is_granted('details', project) %}
                     {% if not project.billable %}
                         <tr>
-                            <th>{{ 'label.billable'|trans }}</th>
+                            <th>{{ 'billable'|trans }}</th>
                             <td colspan="3">
                                 {{ widgets.label_boolean(project.billable) }}
                             </td>
@@ -59,7 +55,7 @@
                     {% endif %}
                     {% if project.orderNumber is not empty %}
                     <tr>
-                        <th>{{ 'label.orderNumber'|trans }}</th>
+                        <th>{{ 'orderNumber'|trans }}</th>
                         <td colspan="3">
                             {{ project.orderNumber }}
                         </td>
@@ -67,25 +63,25 @@
                     {% endif %}
                     {% if project.orderDate is not empty %}
                     <tr>
-                        <th>{{ 'label.orderDate'|trans }}</th>
+                        <th>{{ 'orderDate'|trans }}</th>
                         <td colspan="3">
-                            {{ project.orderDate|date_full(true) }}
+                            {{ project.orderDate|date_short }}
                         </td>
                     </tr>
                     {% endif %}
                     {% if project.start is not empty %}
                     <tr>
-                        <th>{{ 'label.project_start'|trans }}</th>
+                        <th>{{ 'project_start'|trans }}</th>
                         <td colspan="3">
-                            {{ project.start|date_full(true) }}
+                            {{ project.start|date_short }}
                         </td>
                     </tr>
                     {% endif %}
                     {% if project.end is not empty %}
                     <tr>
-                        <th>{{ 'label.project_end'|trans }}</th>
+                        <th>{{ 'project_end'|trans }}</th>
                         <td colspan="3">
-                            {{ project.end|date_full(true) }}
+                            {{ project.end|date_short }}
                         </td>
                     </tr>
                     {% endif %}
@@ -93,9 +89,9 @@
                 {% if project.hasBudget() and is_granted('budget', project) %}
                     <tr>
                         <th>
-                            {{ 'label.budget'|trans }}
+                            {{ 'budget'|trans }}
                             {% if project.isMonthlyBudget() %}
-                                ({{ 'label.budgetType_month'|trans }})
+                                ({{ 'budgetType_month'|trans }})
                             {% endif %}
                         </th>
                         <td colspan="3">
@@ -106,9 +102,9 @@
                 {% if project.hasTimeBudget() and is_granted('time', project) %}
                     <tr>
                         <th>
-                            {{ 'label.timeBudget'|trans }}
+                            {{ 'timeBudget'|trans }}
                             {% if project.isMonthlyBudget() %}
-                                ({{ 'label.budgetType_month'|trans }})
+                                ({{ 'budgetType_month'|trans }})
                             {% endif %}
                         </th>
                         <td colspan="3">
@@ -118,7 +114,7 @@
                 {% endif %}
                 {% if not project.globalActivities %}
                     <tr>
-                        <th>{{ 'label.globalActivities'|trans }}</th>
+                        <th>{{ 'globalActivities'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(project.globalActivities) }}
                         </td>
@@ -136,6 +132,10 @@
 
     {{ render(controller('App\\Controller\\ProjectController::activitiesAction', {'project': project.id, 'page': 1})) }}
 
+    {% if can_edit %}
+        {{ include('embeds/rates-table.html.twig', {'id': 'project_rates_box', 'entity': project, 'create_url': path('admin_project_rate_add', {'id': project.id}), 'delete_route': 'delete_project_rate', 'currency': project.customer.currency, 'edit_route': 'admin_project_rate_edit'}) }}
+    {% endif %}
+
     {% if stats is not null %}
         {{ include('embeds/budgets.html.twig', {'entity': project, 'stats': stats, 'currency': project.customer.currency}) }}
     {% endif %}
@@ -143,10 +143,6 @@
     {% for controller in boxes %}
         {{ render(controller(controller, {'project': project, 'page': 1})) }}
     {% endfor %}
-
-    {% if can_edit %}
-        {{ include('embeds/rates-table.html.twig', {'id': 'project_rates_box', 'entity': project, 'create_url': path('admin_project_rate_add', {'id': project.id}), 'delete_route': 'delete_project_rate', 'currency': project.customer.currency}) }}
-    {% endif %}
 
     {% if teams is not null%}
         {% set options = {'teams': teams, 'team': team} %}

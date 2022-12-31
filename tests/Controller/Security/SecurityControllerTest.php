@@ -45,10 +45,9 @@ class SecurityControllerTest extends ControllerBaseTest
 
         $content = $response->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
-        $this->assertStringContainsString('<form action="/en/login_check" method="post">', $content);
+        $this->assertStringContainsString('<form action="/en/login_check" method="post"', $content);
         $this->assertStringContainsString('<input type="text" name="_username"', $content);
         $this->assertStringContainsString('<input name="_password" type="password"', $content);
-        $this->assertStringContainsString('<input id="remember_me" name="_remember_me" type="checkbox"', $content);
         $this->assertStringContainsString('">Login</button>', $content);
         $this->assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
         $this->assertStringNotContainsString('<a href="/en/register/"', $content);
@@ -112,7 +111,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $client->followRedirect();
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        self::assertStringContainsString('<div class="alert alert-danger">Invalid credentials.</div>', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class="alert alert-important alert-danger">Invalid credentials.</div>', $client->getResponse()->getContent());
     }
 
     public function testCheckAction()
@@ -120,7 +119,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
 
-        $client = self::createClient(); // just to bootstrap the container
+        self::createClient(); // just to bootstrap the container
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);
@@ -133,7 +132,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must activate the logout in your security firewall configuration.');
 
-        $client = self::createClient(); // just to bootstrap the container
+        self::createClient(); // just to bootstrap the container
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);

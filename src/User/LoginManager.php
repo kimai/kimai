@@ -16,33 +16,18 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class LoginManager
 {
-    private $tokenStorage;
-    private $userChecker;
-    private $sessionStrategy;
-    private $requestStack;
-    private $eventDispatcher;
-    private $rememberMeService;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        UserChecker $userChecker,
-        SessionAuthenticationStrategyInterface $sessionStrategy,
-        RequestStack $requestStack,
-        EventDispatcherInterface $eventDispatcher,
-        RememberMeServicesInterface $rememberMeService = null
+        private TokenStorageInterface $tokenStorage,
+        private UserChecker $userChecker,
+        private SessionAuthenticationStrategyInterface $sessionStrategy,
+        private RequestStack $requestStack,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->userChecker = $userChecker;
-        $this->sessionStrategy = $sessionStrategy;
-        $this->requestStack = $requestStack;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->rememberMeService = $rememberMeService;
     }
 
     public function logInUser(User $user, Response $response = null)
@@ -54,10 +39,6 @@ final class LoginManager
 
         if (null !== $request) {
             $this->sessionStrategy->onAuthentication($request, $token);
-
-            if (null !== $response && null !== $this->rememberMeService) {
-                $this->rememberMeService->loginSuccess($request, $response, $token);
-            }
         }
 
         $this->tokenStorage->setToken($token);
@@ -67,6 +48,6 @@ final class LoginManager
 
     private function createToken(string $firewall, User $user): UsernamePasswordToken
     {
-        return new UsernamePasswordToken($user, null, $firewall, $user->getRoles());
+        return new UsernamePasswordToken($user, $firewall, $user->getRoles());
     }
 }

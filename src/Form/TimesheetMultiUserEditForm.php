@@ -12,11 +12,10 @@ namespace App\Form;
 use App\Form\Type\TeamType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $options['allow_begin_datetime'] = true;
         $options['allow_end_datetime'] = true;
@@ -25,6 +24,7 @@ class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
         parent::buildForm($builder, $options);
 
         $builder->add('users', UserType::class, [
+            'label' => 'users',
             'multiple' => true,
             'required' => false,
         ]);
@@ -33,10 +33,5 @@ class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
             'multiple' => true,
             'required' => false,
         ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
     }
 }

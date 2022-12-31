@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Zatím nemáte nainstalované žádné doplňky.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Kimai obchod</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

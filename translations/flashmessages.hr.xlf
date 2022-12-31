@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Snimanje vremena se nije moglo pokrenuti</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Dosegnut je maksimalni broj aktivnih snimanja vremena. Najprije prekini barem jedno mjerenje vremena.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Uređuješ izvezeni zapis</target>

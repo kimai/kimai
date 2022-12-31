@@ -19,8 +19,8 @@ use App\Entity\RateInterface;
 use App\Entity\User;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
+use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -141,7 +141,7 @@ class ActivityControllerTest extends APIControllerBaseTest
     /**
      * @dataProvider getCollectionTestData
      */
-    public function testGetCollection($url, $project, $parameters, $expected)
+    public function testGetCollection($url, $project, $parameters, $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $imports = $this->loadActivityTestData();
@@ -153,10 +153,16 @@ class ActivityControllerTest extends APIControllerBaseTest
             }
 
             if (\array_key_exists('projects', $parameters)) {
-                if (stripos($parameters['projects'], ',') !== false) {
-                    $parameters['projects'] = $projectId . ',' . $projectId;
+                if (!\is_array($parameters['projects'])) {
+                    throw new \InvalidArgumentException('projects needs to be an array');
+                }
+                $count = \count($parameters['projects']);
+                if ($count === 2) {
+                    $parameters['projects'] = [$projectId, $projectId];
+                } elseif ($count === 1) {
+                    $parameters['projects'] = [$projectId];
                 } else {
-                    $parameters['projects'] = (string) $projectId;
+                    throw new \InvalidArgumentException('Invalid count for projects');
                 }
             }
         }
@@ -177,19 +183,22 @@ class ActivityControllerTest extends APIControllerBaseTest
         }
     }
 
-    public function getCollectionTestData()
+    /**
+     * @return \Generator<array<mixed>>
+     */
+    public function getCollectionTestData(): iterable
     {
         yield ['/api/activities', null, [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
         //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
         yield ['/api/activities', null, ['globals' => 'true'], [[false], [false]]];
-        yield ['/api/activities', null, ['globals' => 'true', 'visible' => 3], [[false], [false], [false]]];
-        yield ['/api/activities', null, ['globals' => 'true', 'visible' => '2'], [[false]]];
-        yield ['/api/activities', null, ['globals' => 'true', 'visible' => 1], [[false], [false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => VisibilityInterface::SHOW_BOTH], [[false], [false], [false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false]]];
+        yield ['/api/activities', null, ['globals' => 'true', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[false], [false]]];
         yield ['/api/activities', 0, ['project' => '1'], [[false], [false], [true, 1]]];
-        yield ['/api/activities', 1, ['project' => '2', 'projects' => '2', 'visible' => 1], [[true, 2], [true, 2], [false], [false]]];
-        yield ['/api/activities', 1, ['project' => '2', 'projects' => '2,2', 'visible' => '3'], [[true, 2], [true, 2], [true, 2], [false], [false], [false]]];
-        yield ['/api/activities', 1, ['projects' => '2,2', 'visible' => 2], [[true, 2], [false]]];
-        yield ['/api/activities', 1, ['projects' => '2', 'visible' => 2], [[true, 2], [false]]];
+        yield ['/api/activities', 1, ['project' => '2', 'projects' => ['2'], 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 2], [true, 2], [false], [false]]];
+        yield ['/api/activities', 1, ['project' => '2', 'projects' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 2], [true, 2], [true, 2], [false], [false], [false]]];
+        yield ['/api/activities', 1, ['projects' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN], [[true, 2], [false]]];
+        yield ['/api/activities', 1, ['projects' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN], [[true, 2], [false]]];
     }
 
     public function testGetCollectionWithQuery()
@@ -222,7 +231,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     public function testNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/2');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Activity object not found by the @ParamConverter annotation.');
     }
 
     public function testPostAction()
@@ -269,10 +278,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot create activities', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'User cannot create activities');
     }
 
     public function testPostActionWithInvalidData()
@@ -343,10 +349,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot update activity', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'User cannot update activity');
     }
 
     public function testPatchActionWithUnknownActivity()
@@ -375,32 +378,32 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     public function testMetaActionThrowsExceptionOnMissingName()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['value' => 'X'], [
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['value' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Bad Request'
         ]);
     }
 
     public function testMetaActionThrowsExceptionOnMissingValue()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X'], [
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Bad Request'
         ]);
     }
 
     public function testMetaActionThrowsExceptionOnMissingMetafield()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 500,
-            'message' => 'Unknown meta-field requested'
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X', 'value' => 'Y'], [
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        static::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

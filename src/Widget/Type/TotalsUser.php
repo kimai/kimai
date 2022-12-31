@@ -9,20 +9,14 @@
 
 namespace App\Widget\Type;
 
-use App\Entity\User;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
+use App\Widget\WidgetInterface;
 
-final class TotalsUser extends SimpleWidget implements UserWidget, AuthorizedWidget
+final class TotalsUser extends AbstractWidget
 {
-    use UserWidgetTrait;
-
-    private $user;
-
-    public function __construct(UserRepository $user)
+    public function __construct(private UserRepository $repository)
     {
-        $this->user = $user;
-        $this->setTitle('stats.userTotal');
     }
 
     public function getOptions(array $options = []): array
@@ -30,29 +24,24 @@ final class TotalsUser extends SimpleWidget implements UserWidget, AuthorizedWid
         return array_merge([
             'route' => 'admin_user',
             'icon' => 'user',
-            'color' => 'primary',
-            'dataType' => 'int',
+            'color' => WidgetInterface::COLOR_TOTAL,
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $options = $this->getOptions($options);
-
-        $user = $options['user'];
-        if (null === $user || !($user instanceof User)) {
-            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
-        }
-
+        $user = $this->getUser();
         $query = new UserQuery();
         $query->setCurrentUser($user);
 
-        return $this->user->countUsersForQuery($query);
+        return $this->repository->countUsersForQuery($query);
     }
 
-    /**
-     * @return string[]
-     */
+    public function getTitle(): string
+    {
+        return 'stats.userTotal';
+    }
+
     public function getPermissions(): array
     {
         return ['view_user'];
@@ -61,5 +50,10 @@ final class TotalsUser extends SimpleWidget implements UserWidget, AuthorizedWid
     public function getTemplateName(): string
     {
         return 'widget/widget-more.html.twig';
+    }
+
+    public function getId(): string
+    {
+        return 'TotalsUser';
     }
 }

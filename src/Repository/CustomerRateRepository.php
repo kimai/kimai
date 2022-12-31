@@ -12,33 +12,24 @@ namespace App\Repository;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<CustomerRate>
  */
 class CustomerRateRepository extends EntityRepository
 {
-    public function saveRate(CustomerRate $rate)
+    public function saveRate(CustomerRate $rate): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($rate);
         $entityManager->flush();
     }
 
-    public function deleteRate(CustomerRate $rate)
+    public function deleteRate(CustomerRate $rate): void
     {
-        $em = $this->getEntityManager();
-        $em->beginTransaction();
-
-        try {
-            $em->remove($rate);
-            $em->flush();
-            $em->commit();
-        } catch (ORMException $ex) {
-            $em->rollback();
-            throw $ex;
-        }
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($rate);
+        $entityManager->flush();
     }
 
     /**

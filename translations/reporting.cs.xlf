@@ -38,10 +38,6 @@
         <source>report_yearly_users</source>
         <target>Roční pohled všech uživatelů</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Počáteční výkaz</target>
-      </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>
         <target state="translated">Roční přehled jednoho uživatele</target>

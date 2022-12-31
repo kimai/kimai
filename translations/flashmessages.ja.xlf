@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>時間の記録を開始できませんでした</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>時間記録プロセスの制限数に到達しました。先にいずれかの実行中の記録プロセスを終了させてください。</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>エクスポート済の記録を編集しようとしています。</target>

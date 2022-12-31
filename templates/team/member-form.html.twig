@@ -1,4 +1,4 @@
-{% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+{% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
 {% set formOptions = {
     'title': team.name|default('create'|trans),
     'form': form,
@@ -17,28 +17,6 @@
         </div>
         {{ form_row(form.users) }}
         {{ form_row(form.members) }}
-        {{ form_widget(form) }}
-    {% endblock %}
-    {% block form_after %}
-        {% set blockPrefix = form.vars.id %}
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                jQuery('#{{ blockPrefix }}_users').change(function (e) {
-                    var select = jQuery(e.target);
-                    var selected = select.find(':selected');
-                    var username = selected.text();
-                    var userid = select.val();
-                    selected.remove();
-
-                    var prototype = jQuery('#{{ blockPrefix }}_members');
-                    var counter = prototype.data('widget-counter') || prototype.children().length;
-                    var newWidget = prototype.attr('data-prototype');
-                    newWidget = newWidget.replace(/__name__/g, counter);
-                    newWidget = newWidget.replace(/__USERNAME__/g, username);
-                    prototype.data('widget-counter', ++counter);
-                    jQuery(newWidget).prependTo(prototype).find('input[type=hidden]').val(userid);
-                });
-            });
-        </script>
+        {{ form_rest(form) }}
     {% endblock %}
 {% endembed %}

@@ -96,7 +96,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['name', 'color']);
     }
 
-    public function testPostActionWithInvalidUser()
+    public function testPostActionAsRegularUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
@@ -104,11 +104,13 @@ class TagControllerTest extends APIControllerBaseTest
             'name' => 'foo',
         ];
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
-        $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot create tags', $json['message']);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TagEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
     }
 
     public function testPartOfEntries()
@@ -147,6 +149,7 @@ class TagControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/' . PHP_INT_MAX);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/tags/' . PHP_INT_MAX);
     }
 }

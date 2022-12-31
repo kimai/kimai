@@ -10,37 +10,30 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\SystemConfiguration;
+use App\Controller\HomepageController;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\FavoriteMenuType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
-use App\Form\Type\ReportType;
 use App\Form\Type\SkinType;
-use App\Form\Type\ThemeLayoutType;
 use App\Form\Type\TimezoneType;
-use App\Reporting\ReportingService;
+use App\Form\Type\YesNoType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    private $eventDispatcher;
-    private $voter;
-    private $configuration;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $systemConfiguration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private AuthorizationCheckerInterface $voter, private SystemConfiguration $systemConfiguration)
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->voter = $voter;
-        $this->configuration = $systemConfiguration;
     }
 
     public static function getSubscribedEvents(): array
@@ -54,141 +47,93 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
      * @param User $user
      * @return UserPreference[]
      */
-    public function getDefaultPreferences(User $user)
+    public function getDefaultPreferences(User $user): array
     {
-        $timezone = $this->configuration->getUserDefaultTimezone();
+        $timezone = $this->systemConfiguration->getUserDefaultTimezone();
         if (null === $timezone) {
             $timezone = date_default_timezone_get();
         }
 
-        $enableDefaultReport = $this->voter->isGranted('view_reporting');
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => $this->configuration->getUserDefaultCurrency()];
+            $hourlyRateOptions = ['currency' => $this->systemConfiguration->getUserDefaultCurrency()];
         }
 
         return [
-            (new UserPreference())
-                ->setName(UserPreference::HOURLY_RATE)
-                ->setValue(0)
+            (new UserPreference(UserPreference::HOURLY_RATE, 0))
                 ->setOrder(100)
                 ->setSection('rate')
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions($hourlyRateOptions)
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'hourlyRate']))
                 ->addConstraint(new Range(['min' => 0])),
 
-            (new UserPreference())
-                ->setName(UserPreference::INTERNAL_RATE)
-                ->setValue(null)
+            (new UserPreference(UserPreference::INTERNAL_RATE, null))
                 ->setOrder(101)
                 ->setSection('rate')
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.rate_internal', 'required' => false]))
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'internalRate', 'required' => false]))
                 ->addConstraint(new Range(['min' => 0])),
 
-            (new UserPreference())
-                ->setName(UserPreference::TIMEZONE)
-                ->setValue($timezone)
+            (new UserPreference(UserPreference::TIMEZONE, $timezone))
                 ->setOrder(200)
                 ->setSection('locale')
                 ->setType(TimezoneType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::LOCALE)
-                ->setValue($this->configuration->getUserDefaultLanguage())
+            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::FIRST_WEEKDAY)
-                ->setValue(User::DEFAULT_FIRST_WEEKDAY)
+            (new UserPreference(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY))
                 ->setOrder(300)
                 ->setSection('locale')
                 ->setType(FirstWeekDayType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::HOUR_24)
-                ->setValue(true)
-                ->setOrder(305)
-                ->setSection('locale')
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName(UserPreference::SKIN)
-                ->setValue($this->configuration->getUserDefaultTheme())
+            (new UserPreference(UserPreference::SKIN, $this->systemConfiguration->getUserDefaultTheme()))
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
 
-            (new UserPreference())
-                ->setName('theme.layout')
-                ->setValue('fixed')
-                ->setOrder(450)
-                ->setSection('theme')
-                ->setType(ThemeLayoutType::class),
-
-            (new UserPreference())
-                ->setName('theme.collapsed_sidebar')
-                ->setValue(false)
-                ->setOrder(500)
-                ->setSection('theme')
-                ->setType(CheckboxType::class),
-
-            (new UserPreference())
-                ->setName('theme.update_browser_title')
-                ->setValue(true)
+            (new UserPreference('update_browser_title', true))
                 ->setOrder(550)
                 ->setSection('theme')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
 
-            (new UserPreference())
-                ->setName('calendar.initial_view')
-                ->setValue(CalendarViewType::DEFAULT_VIEW)
+            (new UserPreference('calendar_initial_view', CalendarViewType::DEFAULT_VIEW))
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
 
-            (new UserPreference())
-                ->setName('reporting.initial_view')
-                ->setValue(ReportingService::DEFAULT_VIEW)
-                ->setOrder(650)
-                ->setSection('behaviour')
-                ->setEnabled($enableDefaultReport)
-                ->setType(ReportType::class),
-
-            (new UserPreference())
-                ->setName('login.initial_view')
-                ->setValue(InitialViewType::DEFAULT_VIEW)
+            (new UserPreference('login_initial_view', HomepageController::DEFAULT_ROUTE))
                 ->setOrder(700)
                 ->setSection('behaviour')
                 ->setType(InitialViewType::class),
 
-            (new UserPreference())
-                ->setName('timesheet.daily_stats')
-                ->setValue(false)
+            (new UserPreference('favorite_routes', ''))
+                ->setOrder(710)
+                ->setSection('behaviour')
+                ->setOptions(['required' => false])
+                ->addConstraint(new Length(['max' => 75]))
+                ->setType(FavoriteMenuType::class),
+
+            (new UserPreference('daily_stats', false))
                 ->setOrder(800)
                 ->setSection('behaviour')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
 
-            (new UserPreference())
-                ->setName('timesheet.export_decimal')
-                ->setValue(false)
+            (new UserPreference('export_decimal', false))
                 ->setOrder(900)
                 ->setSection('behaviour')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
         ];
     }
 
-    /**
-     * @param PrepareUserEvent $event
-     */
-    public function loadUserPreferences(PrepareUserEvent $event)
+    public function loadUserPreferences(PrepareUserEvent $event): void
     {
         $user = $event->getUser();
 

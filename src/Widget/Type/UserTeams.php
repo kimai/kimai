@@ -9,35 +9,34 @@
 
 namespace App\Widget\Type;
 
-use App\Entity\User;
+use App\Repository\Loader\UserLoader;
+use App\Widget\WidgetInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-class UserTeams extends SimpleWidget implements AuthorizedWidget, UserWidget
+final class UserTeams extends AbstractWidget
 {
-    public function __construct()
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->setId('UserTeams');
-        $this->setTitle('label.my_teams');
-        $this->setOption('id', '');
     }
 
-    public function getOptions(array $options = []): array
+    public function getWidth(): int
     {
-        $options = parent::getOptions($options);
-
-        if (empty($options['id'])) {
-            $options['id'] = 'WidgetUserTeams';
-        }
-
-        return $options;
+        return WidgetInterface::WIDTH_HALF;
     }
 
-    public function getData(array $options = [])
+    public function getHeight(): int
     {
-        $options = $this->getOptions($options);
-        /** @var User $user */
-        $user = $options['user'];
+        return WidgetInterface::HEIGHT_LARGE;
+    }
 
-        return $user->getTeams();
+    public function getTitle(): string
+    {
+        return 'my_teams';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-userteams.html.twig';
     }
 
     /**
@@ -48,8 +47,19 @@ class UserTeams extends SimpleWidget implements AuthorizedWidget, UserWidget
         return ['view_team_member', 'view_team'];
     }
 
-    public function setUser(User $user): void
+    public function getId(): string
     {
-        $this->setOption('user', $user);
+        return 'UserTeams';
+    }
+
+    public function getData(array $options = []): mixed
+    {
+        $user = $this->getUser();
+
+        // without this, every user would be lazy loaded
+        $loader = new UserLoader($this->entityManager, true);
+        $loader->loadResults([$user->getId()]);
+
+        return $user->getTeams();
     }
 }

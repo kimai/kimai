@@ -35,7 +35,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -132,7 +132,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6, $timesheet7, $timesheet8];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity1);
+        $query->addActivity($activity1);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);

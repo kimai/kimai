@@ -18,7 +18,7 @@ use App\Repository\Query\ProjectFormTypeQuery;
  */
 class ProjectFormTypeQueryTest extends BaseFormTypeQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new ProjectFormTypeQuery();
 

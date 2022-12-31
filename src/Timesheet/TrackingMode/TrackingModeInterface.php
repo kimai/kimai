@@ -59,6 +59,13 @@ interface TrackingModeInterface
     public function canUpdateTimesWithAPI(): bool;
 
     /**
+     * Returns the edit template path for this tracking mode for regular user mode.
+     *
+     * @return string
+     */
+    public function getEditTemplate(): string;
+
+    /**
      * Whether the real begin and end times are shown in the user timesheet.
      *
      * @return bool

@@ -13,8 +13,8 @@ use App\Controller\AbstractController;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DailyStatistic;
-use App\Reporting\MonthlyUserList;
-use App\Reporting\MonthlyUserListForm;
+use App\Reporting\MonthlyUserList\MonthlyUserList;
+use App\Reporting\MonthlyUserList\MonthlyUserListForm;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
@@ -24,15 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting/users")
- * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
- */
+#[Route(path: '/reporting/users')]
+#[Security("is_granted('report:other')")]
 final class ReportUsersMonthController extends AbstractController
 {
-    /**
-     * @Route(path="/month", name="report_monthly_users", methods={"GET","POST"})
-     */
+    #[Route(path: '/month', name: 'report_monthly_users', methods: ['GET', 'POST'])]
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         return $this->render(
@@ -41,9 +37,7 @@ final class ReportUsersMonthController extends AbstractController
         );
     }
 
-    /**
-     * @Route(path="/month_export", name="report_monthly_users_export", methods={"GET","POST"})
-     */
+    #[Route(path: '/month_export', name: 'report_monthly_users_export', methods: ['GET', 'POST'])]
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         $data = $this->getData($request, $statisticService, $userRepository);
@@ -66,7 +60,7 @@ final class ReportUsersMonthController extends AbstractController
         $values = new MonthlyUserList();
         $values->setDate($dateTimeFactory->getStartOfMonth());
 
-        $form = $this->createForm(MonthlyUserListForm::class, $values, [
+        $form = $this->createFormForGetRequest(MonthlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
         ]);
@@ -74,6 +68,7 @@ final class ReportUsersMonthController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $query = new UserQuery();
+        $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
 
         if ($form->isSubmitted()) {

@@ -9,8 +9,6 @@
  * [KIMAI] KimaiDatatableColumnView: manages the visibility of data-table columns in cookies
  */
 
-import Cookies from 'js-cookie';
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatableColumnView extends KimaiPlugin {
@@ -29,80 +27,110 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         if (dataTable === null) {
             return;
         }
-        this.id = dataTable.getAttribute(this.dataAttribute);
-        this.modal = document.getElementById('modal_' + this.id);
-        this.bindButtons();
-    }
-
-    bindButtons() {
-        let self = this;
-        this.modal.querySelector('button[data-type=save]').addEventListener('click', function() {
-            self.saveVisibility();
+        this._id = dataTable.getAttribute(this.dataAttribute);
+        this._modal = document.getElementById('modal_' + this._id);
+        this._modal.addEventListener('show.bs.modal', () => {
+            this._evaluateCheckboxes();
         });
-        this.modal.querySelector('button[data-type=reset]').addEventListener('click', function() {
-            self.resetVisibility();
+        this._modal.querySelector('button[data-type=save]').addEventListener('click', () => {
+            this._saveVisibility();
         });
-        for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
-            checkbox.addEventListener('click', function () {
-                self.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
+        this._modal.querySelector('button[data-type=reset]').addEventListener('click', (event) => {
+            this._resetVisibility(event.currentTarget);
+        });
+        this._modal.querySelectorAll('input[name=datatable_profile]').forEach(element => {
+            element.addEventListener('change', () => {
+                const form = this._modal.getElementsByTagName('form')[0];
+                this.fetchForm(form, {}, element.getAttribute('data-href'))
+                .then(() => {
+                    // the local storage is read in the login screen to set a cookie,
+                    // which triggers the session switch in ProfileSubscriber
+                    localStorage.setItem('kimai_profile', element.getAttribute('value'));
+                    document.location.reload();
+                })
+                .catch(() => {
+                    form.setAttribute('action', element.getAttribute('data-href'));
+                    form.submit();
+                });
+            });
+        });
+        for (let checkbox of this._modal.querySelectorAll('form input[type=checkbox]')) {
+            checkbox.addEventListener('change', () =>  {
+                this._changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
             });
         }
     }
 
-    saveVisibility() {
-        const form = this.modal.getElementsByTagName('form')[0];
-        let settings = {};
-        for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
-            settings[checkbox.getAttribute('name')] = checkbox.checked;
+    _evaluateCheckboxes() {
+        const form = this._modal.getElementsByTagName('form')[0];
+        const table = document.getElementsByClassName('datatable_' + this._id)[0];
+        for (let columnElement of table.getElementsByTagName('th')) {
+            const fieldName = columnElement.getAttribute('data-field');
+            if (fieldName === null) {
+                continue;
+            }
+            const checkbox = form.querySelector('input[name=' + fieldName + ']');
+            if (checkbox === null) {
+                continue;
+            }
+            checkbox.checked = window.getComputedStyle(columnElement).display !== 'none';
         }
-        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
-        jQuery(this.modal).modal('toggle');
     }
 
-    resetVisibility() {
-        const form = this.modal.getElementsByTagName('form')[0];
-        Cookies.remove(form.getAttribute('name'));
-        for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
-            if (!checkbox.checked) {
-                checkbox.click();
-            }
-        }
-        jQuery(this.modal).modal('toggle');
+    _saveVisibility() {
+        const form = this._modal.getElementsByTagName('form')[0];
+
+        this.fetchForm(form)
+        .then(() => {
+            document.location.reload();
+        })
+        .catch(() => {
+            form.submit();
+        });
     }
 
-    changeVisibility(columnName, checked) {
-        const tables = document.getElementsByClassName('datatable_' + this.id);
-        for (let tableBox of tables) {
-            let column = 0;
-            let foundColumn = false;
-            let table = tableBox.getElementsByClassName('dataTable')[0];
-            for (let columnElement of table.getElementsByTagName('th')) {
-                if (columnElement.getAttribute('data-field') === columnName) {
-                    foundColumn = true;
-                    break;
+    _resetVisibility(button) {
+        const form = this._modal.getElementsByTagName('form')[0];
+
+        this.fetchForm(form, {}, button.getAttribute('formaction'))
+        .then(() => {
+            document.location.reload();
+        })
+        .catch(() => {
+            form.setAttribute('action', button.getAttribute('formaction'));
+            form.submit();
+        });
+    }
+
+    _changeVisibility(columnName, checked) {
+        for (const tableBox of document.getElementsByClassName('datatable_' + this._id)) {
+            let targetClasses = null;
+            for (let element of tableBox.getElementsByClassName('col_' + columnName)) {
+                // only calculate that once and re-use the cached class list
+                if (targetClasses === null) {
+                    let removeClass = '-none';
+                    let addClass = 'd-table-cell';
+
+                    if (!checked) {
+                        removeClass = '-table-cell';
+                        addClass = 'd-none';
+                    }
+
+                    targetClasses = '';
+                    element.classList.forEach(
+                        function (name, index, listObj) {  // eslint-disable-line no-unused-vars
+                            if (name.indexOf(removeClass) === -1) {
+                                targetClasses += ' ' + name;
+                            }
+                        }
+                    );
+
+                    if (targetClasses.indexOf(addClass) === -1) {
+                        targetClasses += ' ' + addClass;
+                    }
                 }
 
-                if (columnElement.getAttribute('colspan') !== null) {
-                    console.log('Tables with colspans are not supported!');
-                }
-
-                column++;
-            }
-
-            if (!foundColumn) {
-                return;
-            }
-
-            for (let rowElement of table.getElementsByTagName('tr')) {
-                if (rowElement.children[column] === undefined) {
-                    continue;
-                }
-
-                if (checked) {
-                    rowElement.children[column].classList.remove('hidden');
-                } else {
-                    rowElement.children[column].classList.add('hidden');
-                }
+                element.className = targetClasses;
             }
         }
     }

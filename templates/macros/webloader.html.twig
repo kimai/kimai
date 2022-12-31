@@ -1,30 +1,13 @@
 {% macro init_frontend_loader() %}
     {% set configurations = javascript_configurations(app.user)|merge({
-        login: path('fos_user_security_login'),
+        login: path('login'),
         locale: app.request.locale,
+        direction: tabler_bundle.rightToLeft ? 'rtl' : 'ltr',
         first_dow_iso: iso_day_by_name(app.user.firstDayOfWeek),
-        autoComplete: kimai_config.themeAutocompleteCharacters,
     }) %}
     <script type="text/javascript">
         window.addEventListener('load', function() {
-            const loader = new KimaiWebLoader({
-                    {%- for name, value in configurations -%}
-                        {%- if value is same as (true) -%}
-                            {{ name }}:true
-                        {%- elseif value is same as (false) -%}
-                            {{ name }}:false
-                        {%- elseif value is number -%}
-                            {{ name }}:{{ value }}
-                        {%- else -%}
-                            {{ name }}:'{{ value }}'
-                        {%- endif -%}
-                        {%- if not loop.last %},{% endif -%}
-                    {%- endfor -%}
-                },{
-                    {%- for key, translation in javascript_translations() -%}
-                    '{{ key }}': '{{ translation.0|trans({}, translation.1)|escape('js') }}'{% if not loop.last %},{% endif %}
-                    {%- endfor -%}
-            });
+            const loader = new KimaiWebLoader({{ configurations|json_encode|raw }},{{ javascript_translations()|json_encode|raw }});
             window.kimai = loader.getKimai();
         });
     </script>

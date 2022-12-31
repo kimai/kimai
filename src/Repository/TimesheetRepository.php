@@ -18,15 +18,14 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Model\Statistic\Day;
-use App\Model\Statistic\Month;
-use App\Model\Statistic\Year;
+use App\Model\Revenue;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Result\TimesheetResult;
+use App\Utils\Pagination;
 use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -35,7 +34,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Timesheet>
@@ -49,10 +47,6 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_USER = 'users';
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     */
-    public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
@@ -90,7 +84,7 @@ class TimesheetRepository extends EntityRepository
      * @param null $lockVersion
      * @return Timesheet|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Timesheet
     {
         /** @var Timesheet|null $timesheet */
         $timesheet = parent::find($id, $lockMode, $lockVersion);
@@ -104,12 +98,7 @@ class TimesheetRepository extends EntityRepository
         return $timesheet;
     }
 
-    /**
-     * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function delete(Timesheet $timesheet)
+    public function delete(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($timesheet);
@@ -137,51 +126,23 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
-    /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     */
-    public function add(Timesheet $timesheet, int $maxRunningEntries)
-    {
-        $em = $this->getEntityManager();
-        $em->beginTransaction();
-
-        try {
-            if (null === $timesheet->getEnd()) {
-                $this->stopActiveEntries($timesheet->getUser(), $maxRunningEntries, false);
-            }
-
-            $em->persist($timesheet);
-            $em->flush();
-            $em->commit();
-        } catch (Exception $ex) {
-            $em->rollback();
-            throw $ex;
-        }
-    }
-
-    public function begin()
+    public function begin(): void
     {
         $this->getEntityManager()->beginTransaction();
     }
 
-    public function commit()
+    public function commit(): void
     {
         $this->getEntityManager()->flush();
         $this->getEntityManager()->commit();
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         $this->getEntityManager()->rollback();
     }
 
-    /**
-     * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function save(Timesheet $timesheet)
+    public function save(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($timesheet);
@@ -210,65 +171,23 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     *
-     * @param Timesheet $entry
-     * @param bool $flush
-     * @return bool
-     * @throws RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function stopRecording(Timesheet $entry, bool $flush = true)
-    {
-        if (null !== $entry->getEnd()) {
-            throw new RepositoryException('Timesheet entry already stopped');
-        }
-
-        // seems to be necessary so Doctrine will recognize a changed timestamp
-        $begin = clone $entry->getBegin();
-        $end = new DateTime('now', $begin->getTimezone());
-
-        $entry->setBegin($begin);
-        $entry->setEnd($end);
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($entry);
-        if ($flush) {
-            $entityManager->flush();
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $type
+     * @param self::STATS_QUERY_* $type
      * @param DateTime|null $begin
      * @param DateTime|null $end
      * @param User|null $user
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
+    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
     {
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
                 return \count($this->getActiveEntries($user));
-
-            case self::STATS_QUERY_MONTHLY:
-                return $this->getMonthlyStats($begin, $end, $user);
-
-            case 'daily':
-                return $this->getDailyStats($user, $begin, $end);
-
             case self::STATS_QUERY_DURATION:
                 $what = 'COALESCE(SUM(t.duration), 0)';
                 break;
             case self::STATS_QUERY_RATE:
-                $what = 'COALESCE(SUM(t.rate), 0)';
-                $billable = true;
-                break;
+                return $this->getRevenue($begin, $end, $user);
             case self::STATS_QUERY_USER:
                 $what = 'COUNT(DISTINCT(t.user))';
                 break;
@@ -283,6 +202,46 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @param User|null $user
+     * @return array<Revenue>
+     */
+    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->from(Timesheet::class, 't')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as revenue')
+            ->addSelect('c.currency as currency')
+            ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
+            ->groupBy('c.currency')
+        ;
+
+        // TODO only billable?
+
+        if ($begin !== null) {
+            $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
+                ->setParameter('from', $begin)
+                ->setParameter('to', $end);
+        }
+
+        if ($user !== null) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        $all = [];
+        foreach ($qb->getQuery()->getArrayResult() as $item) {
+            $all[] = new Revenue($item['currency'], $item['revenue']);
+        }
+
+        return $all;
+    }
+
+    /**
      * @param string|string[] $select
      * @param DateTime|null $begin
      * @param DateTime|null $end
@@ -291,7 +250,7 @@ class TimesheetRepository extends EntityRepository
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange($select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
+    protected function queryTimeRange(string|array $select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
     {
         $selects = $select;
         if (!\is_array($select)) {
@@ -328,22 +287,17 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (\is_array($select)) {
-            /* @phpstan-ignore-next-line  */
+            /* @phpstan-ignore-next-line */
             return $qb->getQuery()->getOneOrNullResult();
         }
 
-        /** @phpstan-ignore-next-line  */
+        /* @phpstan-ignore-next-line */
         $result = $qb->getQuery()->getSingleScalarResult();
 
         return empty($result) ? 0 : $result;
     }
 
-    /**
-     * @param User $user
-     * @param bool $bcSafe will be removed with 2.0
-     * @return TimesheetStatistic
-     */
-    public function getUserStatistics(User $user, bool $bcSafe = true): TimesheetStatistic
+    public function getUserStatistics(User $user): TimesheetStatistic
     {
         $stats = new TimesheetStatistic();
 
@@ -357,8 +311,10 @@ class TimesheetRepository extends EntityRepository
         $stats->setDurationTotal($allTimeData['duration']);
         $stats->setRecordsTotal($allTimeData['amount']);
 
-        $billableAllTime = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user, true);
-        $stats->setRateTotalBillable($billableAllTime);
+        $data = $this->getRevenue(null, null, $user);
+        foreach ($data as $row) {
+            $stats->setRateTotalBillable($stats->getRateTotalBillable() + $row->getAmount());
+        }
 
         $timezone = new \DateTimeZone($user->getTimezone());
         $begin = new DateTime('first day of this month 00:00:00', $timezone);
@@ -377,341 +333,25 @@ class TimesheetRepository extends EntityRepository
         $stats->setAmountThisMonth($monthData['rate']);
         $stats->setDurationThisMonth($monthData['duration']);
 
-        $billableMonth = $this->getStatistic(self::STATS_QUERY_RATE, $begin, $end, $user, true);
-        $stats->setRateThisMonthBillable($billableMonth);
-
-        if ($bcSafe) {
-            $firstEntry = $this->getEntityManager()
-                ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-                ->setParameter('user', $user)
-                ->getSingleScalarResult();
-
-            $timezone = new \DateTimeZone($user->getTimezone());
-
-            if ($firstEntry !== null) {
-                $stats->setFirstEntry(new DateTime($firstEntry, $timezone));
-            } else {
-                @trigger_error(
-                    'TimesheetStatistic::getFirstEntry() returns a wrong result for users without record and will be removed with 2.0',
-                    E_USER_DEPRECATED
-                );
-                $stats->setFirstEntry(new DateTime('now', $timezone));
-            }
+        $data = $this->getRevenue($begin, $end, $user);
+        foreach ($data as $row) {
+            $stats->setRateThisMonthBillable($stats->getRateThisMonthBillable() + $row->getAmount());
         }
 
         return $stats;
     }
 
     /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
      * @param User|null $user
-     * @return Year[]
+     * @param bool $ticktac
+     * @return Timesheet[]
      */
-    public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
-    {
-        @trigger_error('TimesheetRepository::getMonthlyStats() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        /** @var Year[] $years */
-        $years = [];
-
-        $tmp = clone $begin;
-        while ($tmp < $end) {
-            $curYear = $tmp->format('Y');
-            if (!isset($years[$curYear])) {
-                $year = new Year($curYear);
-                for ($i = 1; $i < 13; $i++) {
-                    $date = clone $begin;
-                    $date->setDate((int) $curYear, $i, (int) $begin->format('d'));
-                    $date->setTime(0, 0, 0);
-                    if ($date < $begin || $date > $end) {
-                        continue;
-                    }
-                    $year->setMonth(new Month((string) $i));
-                }
-                $years[$curYear] = $year;
-            }
-            $tmp->modify('+1 month');
-        }
-
-        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
-        foreach ($qb->getQuery()->execute() as $statRow) {
-            if (!isset($years[$statRow['year']])) {
-                continue;
-            }
-            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
-            if (null === $month) {
-                continue;
-            }
-            $month->setTotalDuration((int) $statRow['duration']);
-            $month->setTotalRate((float) $statRow['rate']);
-        }
-
-        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
-        foreach ($qb->getQuery()->execute() as $statRow) {
-            if (!isset($years[$statRow['year']])) {
-                continue;
-            }
-            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
-            if (null === $month) {
-                continue;
-            }
-            $month->setBillableDuration((int) $statRow['duration']);
-            $month->setBillableRate((float) $statRow['rate']);
-        }
-
-        return $years;
-    }
-
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param User|null $user
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param bool|null $billable
-     * @return QueryBuilder
-     */
-    private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->from(Timesheet::class, 't');
-        $qb->select('COALESCE(SUM(t.rate), 0) as rate');
-        $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
-        $qb->addSelect('MONTH(t.date) as month');
-        $qb->addSelect('YEAR(t.date) as year');
-
-        if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
-            $qb->setParameter('from', $begin);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
-        }
-
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':to'));
-            $qb->setParameter('to', $end);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-        }
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user');
-            $qb->setParameter('user', $user);
-        }
-
-        if (null !== $billable) {
-            $qb->andWhere('t.billable = :billable');
-            $qb->setParameter('billable', $billable);
-        }
-
-        $qb
-            ->orderBy('year', 'DESC')
-            ->addOrderBy('month', 'ASC')
-            ->groupBy('year')
-            ->addGroupBy('month')
-        ;
-
-        return $qb;
-    }
-
-    /**
-     * In case this method is called with one timezone and the results are from another timezone,
-     * it might return rows outside the time-range.
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @param User|null $user
-     * @return mixed
-     */
-    protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $or = $qb->expr()->orX();
-        $or->add($qb->expr()->between(':begin', 't.begin', 't.end'));
-        $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
-        $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
-        $or->add($qb->expr()->between('t.end', ':begin', ':end'));
-
-        $qb->select('t, p, a, c')
-            ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($or)
-            ->orderBy('t.begin', 'DESC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
-            ->leftJoin('t.activity', 'a')
-            ->leftJoin('t.project', 'p')
-            ->leftJoin('p.customer', 'c')
-        ;
-
-        if (null !== $user) {
-            $qb
-                ->andWhere($qb->expr()->eq('t.user', ':user'))
-                ->setParameter('user', $user)
-            ;
-        }
-
-        $timesheets = $qb->getQuery()->getResult();
-
-        $results = [];
-        /** @var Timesheet $result */
-        foreach ($timesheets as $result) {
-            /** @var DateTime $beginTmp */
-            $beginTmp = $result->getBegin();
-            /** @var DateTime $endTmp */
-            $endTmp = $result->getEnd();
-            $dateKeyEnd = $endTmp->format('Ymd');
-
-            do {
-                $dateKey = $beginTmp->format('Ymd');
-
-                if ($dateKey !== $dateKeyEnd) {
-                    $newDateBegin = clone $beginTmp;
-                    $newDateBegin->add(new DateInterval('P1D'));
-                    // overlapping records should always start at midnight
-                    $newDateBegin->setTime(0, 0, 0);
-                } else {
-                    $newDateBegin = clone $endTmp;
-                }
-
-                // make sure to exclude entries that are outside the requested time-range:
-                // these entries can exist if you have long running entries that started before $begin
-                // for statistical reasons we have to include everything between $begin and $end while
-                // excluding everything that is outside of that range
-                // --------------------------------------------------------------------------------------
-                // Be aware that this will NOT filter every record, in case there is a timezone mismatch between the
-                // begin/end dates and the ones from the database (eg. recorded in UTC) - which might actually be
-                // before $begin (which happens thanks to the timezone conversion when querying the database)
-                if ($newDateBegin > $begin && $beginTmp < $end) {
-                    if (!isset($results[$dateKey])) {
-                        $results[$dateKey] = [
-                            'rate' => 0,
-                            'duration' => 0,
-                            'billable' => 0, // duration
-                            'month' => $beginTmp->format('n'),
-                            'year' => $beginTmp->format('Y'),
-                            'day' => $beginTmp->format('j'),
-                            'details' => []
-                        ];
-                    }
-                    $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
-                    $durationPercent = 0;
-                    if ($result->getDuration() !== null && $result->getDuration() > 0) {
-                        $durationPercent = $duration / $result->getDuration();
-                    }
-                    $rate = $result->getRate() * $durationPercent;
-
-                    $results[$dateKey]['rate'] += $rate;
-                    $results[$dateKey]['duration'] += $duration;
-                    if ($result->isBillable()) {
-                        $results[$dateKey]['billable'] += $duration;
-                    }
-                    $detailsId =
-                        $result->getProject()->getCustomer()->getId()
-                        . '_' . $result->getProject()->getId()
-                        . '_' . $result->getActivity()->getId()
-                    ;
-
-                    if (!isset($results[$dateKey]['details'][$detailsId])) {
-                        $results[$dateKey]['details'][$detailsId] = [
-                            'project' => $result->getProject(),
-                            'activity' => $result->getActivity(),
-                            'duration' => 0,
-                            'rate' => 0,
-                            'billable' => 0, // duration
-                        ];
-                    }
-
-                    $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
-                    $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
-                    if ($result->isBillable()) {
-                        $results[$dateKey]['details'][$detailsId]['billable'] += $duration;
-                    }
-                }
-
-                $beginTmp = $newDateBegin;
-
-                // yes, we only want to compare the day, not the time
-                if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
-                    break;
-                }
-            } while ($dateKey !== $dateKeyEnd);
-        }
-
-        ksort($results);
-
-        foreach ($results as $key => $value) {
-            $results[$key]['details'] = array_values($results[$key]['details']);
-        }
-        $results = array_values($results);
-
-        return $results;
-    }
-
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getDailyStatistics() instead
-     * @codeCoverageIgnore
-     *
-     * @param User|null $user
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @return Day[]
-     * @throws Exception
-     */
-    public function getDailyStats(?User $user, DateTime $begin, DateTime $end): array
-    {
-        /** @var Day[] $days */
-        $days = [];
-
-        // prefill the array
-        $tmp = clone $end;
-        $until = (int) $begin->format('Ymd');
-        while ((int) $tmp->format('Ymd') >= $until) {
-            $last = clone $tmp;
-            $days[$last->format('Ymd')] = new Day($last, 0, 0.00);
-            $tmp->modify('-1 day');
-        }
-
-        $results = $this->getDailyData($begin, $end, $user);
-
-        foreach ($results as $statRow) {
-            $dateTime = clone $begin;
-            $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
-            $dateTime->setTime(0, 0, 0);
-            $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
-            $day->setTotalDurationBillable($statRow['billable']);
-            $day->setDetails($statRow['details']);
-            $dateKey = $dateTime->format('Ymd');
-            // make sure entries from other timezones are filtered
-            if (!\array_key_exists($dateKey, $days)) {
-                continue;
-            }
-            $days[$dateKey] = $day;
-        }
-
-        ksort($days);
-
-        return array_values($days);
-    }
-
-    /**
-     * @param User $user
-     * @return Timesheet[]|null
-     */
-    public function getActiveEntries(User $user = null)
+    public function getActiveEntries(User $user = null, bool $ticktac = false): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('t')
             ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 
@@ -720,47 +360,13 @@ class TimesheetRepository extends EntityRepository
             $qb->setParameter('user', $user);
         }
 
-        return $this->getHydratedResultsByQuery($qb, false);
-    }
+        if ($ticktac) {
+            $qb->setMaxResults(1);
 
-    /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     *
-     * @param User $user
-     * @param int $hardLimit
-     * @param bool $flush
-     * @return int
-     * @throws RepositoryException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
-    {
-        $counter = 0;
-        $activeEntries = $this->getActiveEntries($user);
-
-        // reduce limit by one:
-        // this method is only called when a new entry is started
-        // -> all entries, including the new one must not exceed the $limit
-        $limit = $hardLimit - 1;
-
-        if (\count($activeEntries) > $limit) {
-            $i = 1;
-            foreach ($activeEntries as $activeEntry) {
-                if ($i > $limit) {
-                    if ($hardLimit > 1) {
-                        throw new Exception('timesheet.start.exceeded_limit');
-                    }
-
-                    $this->stopRecording($activeEntry, $flush);
-                    $counter++;
-                }
-                $i++;
-            }
+            return $qb->getQuery()->getResult();
         }
 
-        return $counter;
+        return $this->getHydratedResultsByQuery($qb, false);
     }
 
     /**
@@ -818,9 +424,9 @@ class TimesheetRepository extends EntityRepository
         return true;
     }
 
-    public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -844,36 +450,38 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * When switching $fullyHydrated to true, the call gets even more expensive.
-     * You normally don't need this, unless you want to access deeply nested attributes for many entries!
+     * You normally don't need this, unless you want to access deeply nested attributes for many entries.
      *
      * @param TimesheetQuery $query
      * @param bool $fullyHydrated
+     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false): iterable
+    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return new TimesheetResult($qb);
+        return new TimesheetResult($query, $qb);
     }
 
     /**
      * @param QueryBuilder $qb
      * @param bool $fullyHydrated
+     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    protected function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false): iterable
+    private function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
     {
         $results = $qb->getQuery()->getResult();
 
-        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated, $basicHydrated);
         $loader->loadResults($results);
 
         return $results;
@@ -920,7 +528,7 @@ class TimesheetRepository extends EntityRepository
 
         $user = array_merge($user, $query->getUsers());
 
-        if (empty($user) && null !== ($currentUser = $query->getCurrentUser()) && !$currentUser->canSeeAllData()) {
+        if (\count($user) === 0 && null !== ($currentUser = $query->getCurrentUser()) && !$currentUser->canSeeAllData()) {
             // make sure that the user himself is in the list of users, if he is part of a team
             // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
             $user[] = $currentUser;
@@ -932,25 +540,18 @@ class TimesheetRepository extends EntityRepository
             }
         }
 
-        if (!empty($query->getTeams())) {
-            foreach ($query->getTeams() as $team) {
-                foreach ($team->getUsers() as $teamUser) {
-                    $user[] = $teamUser;
-                }
+        foreach ($query->getTeams() as $team) {
+            foreach ($team->getUsers() as $teamUser) {
+                $user[] = $teamUser;
             }
         }
 
-        $user = array_map(function ($user) {
-            if ($user instanceof User) {
-                return $user->getId();
-            }
+        $userIds = array_unique(array_map(function (User $user) {
+            return $user->getId();
+        }, $user));
 
-            return $user;
-        }, $user);
-        $user = array_unique($user);
-
-        if (!empty($user)) {
-            $qb->andWhere($qb->expr()->in('t.user', $user));
+        if (\count($userIds) > 0) {
+            $qb->andWhere($qb->expr()->in('t.user', $userIds));
         }
 
         if (null !== $query->getBegin()) {
@@ -988,22 +589,22 @@ class TimesheetRepository extends EntityRepository
 
         if ($query->hasActivities()) {
             $qb->andWhere($qb->expr()->in('t.activity', ':activity'))
-                ->setParameter('activity', $query->getActivities());
+                ->setParameter('activity', $query->getActivityIds());
         }
 
         if ($query->hasProjects()) {
             $qb->andWhere($qb->expr()->in('t.project', ':project'))
-                ->setParameter('project', $query->getProjects());
+                ->setParameter('project', $query->getProjectIds());
         } elseif ($query->hasCustomers()) {
             $requiresCustomer = true;
             $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+                ->setParameter('customer', $query->getCustomerIds());
         }
 
         $tags = $query->getTags();
-        if (!empty($tags)) {
+        if (\count($tags) > 0) {
             $qb->andWhere($qb->expr()->isMemberOf(':tags', 't.tags'))
-                ->setParameter('tags', $query->getTags());
+                ->setParameter('tags', $tags);
         }
 
         $requiresTeams = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
@@ -1048,36 +649,51 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User|null $user
+     * @param User $user
      * @param DateTime|null $startFrom
      * @param int $limit
      * @return Timesheet[]
-     * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, DateTime $startFrom = null, int $limit = 10)
+    public function getRecentActivities(User $user, DateTime $startFrom = null, int $limit = 10): array
+    {
+        return $this->findTimesheetsById(
+            $this->getRecentActivityIds($user, $startFrom, $limit)
+        );
+    }
+
+    /**
+     * @param User $user
+     * @param DateTime|null $startFrom
+     * @param int $limit
+     * @return array<int>
+     */
+    public function getRecentActivityIds(User $user, DateTime $startFrom = null, int $limit = 10): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
+        // do NOT join the customer and do NOT check the customer visibility, as this
+        // will dramatically increase the speed of this (otherwise slow) query
+        // ->join('p.customer', 'c')
+        // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
+
+        // you might want to join activity and project to check their visibility
+        // but for now this is way slower than simply fetching more items
+        //
+        // ->join('t.project', 'p')
+        // ->andWhere($qb->expr()->eq('p.visible', ':visible'))
+        // ->join('t.activity', 'a')
+        // ->andWhere($qb->expr()->eq('a.visible', ':visible'))
+        // ->setParameter('visible', true, Types::BOOLEAN)
 
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
             ->indexBy('t', 't.id')
-            ->join('t.activity', 'a')
-            ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-            ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-            ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-            ->groupBy('a.id', 'p.id')
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
+            ->groupBy('t.project', 't.activity')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
-            ->setParameter('visible', true, Types::BOOLEAN)
+            ->setParameter('user', $user)
         ;
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
 
         if (null !== $startFrom) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
@@ -1090,7 +706,18 @@ class TimesheetRepository extends EntityRepository
             return [];
         }
 
-        $ids = array_column($results, 'maxid');
+        return array_column($results, 'maxid');
+    }
+
+    /**
+     * @param array<int> $ids
+     * @return array<Timesheet>
+     */
+    public function findTimesheetsById(array $ids, bool $fullyHydrated = false, bool $basicHydrated = true): array
+    {
+        if (\count($ids) === 0) {
+            return [];
+        }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t')
@@ -1099,7 +726,7 @@ class TimesheetRepository extends EntityRepository
             ->orderBy('t.end', 'DESC')
         ;
 
-        return $this->getHydratedResultsByQuery($qb, true);
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
     }
 
     /**

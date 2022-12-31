@@ -13,39 +13,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ConfigurationRepository")
- * @ORM\Table(name="kimai2_configuration",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"})
- *      }
- * )
- * @UniqueEntity("name")
- */
+#[ORM\Table(name: 'kimai2_configuration')]
+#[ORM\UniqueConstraint(columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\ConfigurationRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class Configuration
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Length(min=2, max=100, allowEmptyString=false)
-     */
-    private $name;
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="value", type="text", nullable=true)
-     */
-    private $value;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 100)]
+    private ?string $name = null;
+    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[Assert\Length(max: 65535)]
+    private ?string $value = null;
 
     public function getId(): ?int
     {
@@ -72,15 +57,16 @@ class Configuration
     }
 
     /**
-     * Given $value will not be serialized before its stored, so it should be a scalar type
-     * that can be casted to string.
-     *
-     * @param string|null|int|bool $value
-     * @return Configuration
+     * Given $value will not be serialized before its stored,
+     * so it should be a scalar type that can be casted to string.
      */
-    public function setValue($value): Configuration
+    public function setValue(string|int|bool|null $value): Configuration
     {
-        if (null !== $value) {
+        if (null === $value) {
+            $this->value = null;
+        } elseif ($value === false) {
+            $this->value = '0';
+        } else {
             $this->value = (string) $value;
         }
 

@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target state="needs-translation">Dieses Jahr</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target state="needs-translation">Benutzerdefiniert</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

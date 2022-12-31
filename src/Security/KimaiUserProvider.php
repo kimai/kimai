@@ -12,23 +12,20 @@ namespace App\Security;
 use App\Configuration\SystemConfiguration;
 use App\Ldap\LdapUserProvider;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
+final class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
-    private $providers;
-    private $provider;
-    private $configuration;
+    private ?ChainUserProvider $provider = null;
 
     /**
      * @param iterable|UserProviderInterface[] $providers
      */
-    public function __construct(iterable $providers, SystemConfiguration $configuration)
+    public function __construct(private iterable $providers, private SystemConfiguration $configuration)
     {
-        $this->providers = $providers;
-        $this->configuration = $configuration;
     }
 
     private function getInternalProvider(): ChainUserProvider
@@ -37,6 +34,9 @@ class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterf
             $activated = [];
             foreach ($this->providers as $provider) {
                 if ($provider instanceof LdapUserProvider) {
+                    if (!class_exists('Laminas\Ldap\Ldap')) {
+                        continue;
+                    }
                     if (!$this->configuration->isLdapActive()) {
                         continue;
                     }
@@ -49,43 +49,28 @@ class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterf
         return $this->provider;
     }
 
-    /**
-     * @return array
-     */
-    public function getProviders()
+    public function getProviders(): array
     {
         return $this->getInternalProvider()->getProviders();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        return $this->getInternalProvider()->loadUserByUsername($username);
+        return $this->getInternalProvider()->loadUserByIdentifier($identifier);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         return $this->getInternalProvider()->refreshUser($user);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsClass($class)
+    public function supportsClass(string $class): bool
     {
         return $this->getInternalProvider()->supportsClass($class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        $this->getInternalProvider()->upgradePassword($user, $newEncodedPassword);
+        $this->getInternalProvider()->upgradePassword($user, $newHashedPassword);
     }
 }

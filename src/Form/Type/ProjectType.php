@@ -25,15 +25,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a project.
  */
-class ProjectType extends AbstractType
+final class ProjectType extends AbstractType
 {
-    private $projectHelper;
-    private $customerHelper;
-
-    public function __construct(ProjectHelper $projectHelper, CustomerHelper $customerHelper)
+    public function __construct(private ProjectHelper $projectHelper, private CustomerHelper $customerHelper)
     {
-        $this->projectHelper = $projectHelper;
-        $this->customerHelper = $customerHelper;
     }
 
     public function getChoiceLabel(Project $project): string
@@ -45,7 +40,7 @@ class ProjectType extends AbstractType
      * @param Project $project
      * @param string $key
      * @param mixed $value
-     * @return array
+     * @return array<string, string|int|null>
      */
     public function getChoiceAttributes(Project $project, $key, $value): array
     {
@@ -56,10 +51,7 @@ class ProjectType extends AbstractType
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -67,11 +59,15 @@ class ProjectType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Project ID',
             ],
-            'label' => 'label.project',
+            'label' => 'project',
             'class' => Project::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => function (Project $project, $key, $index) {
+                if ($project->getCustomer() === null) {
+                    return null;
+                }
+
                 return $this->customerHelper->getChoiceLabel($project->getCustomer());
             },
             'query_builder_for_user' => true,
@@ -138,17 +134,14 @@ class ProjectType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-option-pattern' => $this->projectHelper->getChoicePattern(),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

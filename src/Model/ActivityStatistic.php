@@ -57,7 +57,7 @@ class ActivityStatistic extends BudgetStatistic implements \JsonSerializable
         return $this->activity->getName();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return array_merge(parent::jsonSerialize(), [
             'name' => $this->getName(),

@@ -68,28 +68,28 @@
       <!--
               Login / Security
             -->
-      <trans-unit id="9pvowqn" resname="label.password">
-        <source>label.password</source>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
         <target>Pasahitza</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="label.password_repeat">
-        <source>label.password_repeat</source>
+      <trans-unit id="hLEZkoC" resname="password_repeat">
+        <source>password_repeat</source>
         <target>Pasahitza errepikatu</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="label.logout">
-        <source>label.logout</source>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
         <target>Irten</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="label.user_profile">
-        <source>label.user_profile</source>
+      <trans-unit id="_x2He8M" resname="user_profile">
+        <source>user_profile</source>
         <target>Nire kontua</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="label.api_token">
-        <source>label.api_token</source>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
         <target>API pasahitza</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
-        <source>label.api_token_repeat</source>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+        <source>api_token_repeat</source>
         <target>API pasahitza errepikatu</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
@@ -115,16 +115,12 @@
         <source>menu.logout</source>
         <target>Saioa bukatu</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="ebTjBb9" resname="my_times">
+        <source>my_times</source>
         <target>Nire orduak</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exportatu</target>
-      </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
+      <trans-unit id="yxQop43" resname="all_times">
+        <source>all_times</source>
         <target>Ordu taula</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
@@ -143,8 +139,8 @@
         <source>users</source>
         <target>Erabiltzaileak</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
         <target>Lan Taldeak</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -159,8 +155,8 @@
         <source>tags</source>
         <target>Etiketak</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="JGaf9IK" resname="Doctor">
+        <source>Doctor</source>
         <target>Medikua</target>
       </trans-unit>
       <!--
@@ -177,130 +173,114 @@
       <!--
               General labels
             -->
-      <trans-unit id="H1qEi4d" resname="label.date">
-        <source>label.date</source>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
         <target>Data</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="label.starttime">
-        <source>label.starttime</source>
+      <trans-unit id="BHk4pZ3" resname="starttime">
+        <source>starttime</source>
         <target>Hasiera denbora</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="label.endtime">
-        <source>label.endtime</source>
+      <trans-unit id="eI_tMbq" resname="endtime">
+        <source>endtime</source>
         <target>Bukaera denbora</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="label.duration">
-        <source>label.duration</source>
+      <trans-unit id="yqea9Nt" resname="duration">
+        <source>duration</source>
         <target>Iraupena</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="label.user">
-        <source>label.user</source>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
         <target>Erabiltzailea</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="label.username">
-        <source>label.username</source>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
         <target>Erabiltzaile izena</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="label.description">
-        <source>label.description</source>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
         <target>Deskribapena</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="label.name">
-        <source>label.name</source>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
         <target>Izena</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="label.comment">
-        <source>label.comment</source>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
         <target>Iruzkina</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="label.id">
-        <source>label.id</source>
+      <trans-unit id="pWFFJwz" resname="id">
+        <source>id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="label.visible">
-        <source>label.visible</source>
+      <trans-unit id="1C7xSXk" resname="visible">
+        <source>visible</source>
         <target>Agerikoa</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="label.budget">
-        <source>label.budget</source>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
         <target>Aurrekontua</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="label.timeBudget">
-        <source>label.timeBudget</source>
+      <trans-unit id="qbD0dHa" resname="timeBudget">
+        <source>timeBudget</source>
         <target>Ordu-poltsa</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="label.activity">
-        <source>label.activity</source>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
         <target>Jarduera</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="label.project">
-        <source>label.project</source>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
         <target>Proiektua</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="label.tag">
-        <source>label.tag</source>
+      <trans-unit id="KhBzpuZ" resname="tag">
+        <source>tag</source>
         <target>Etiketak</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="label.tags">
-        <source>label.tags</source>
-        <target>Etiketak</target>
-      </trans-unit>
-      <trans-unit id="VAbtieW" resname="label.hourlyRate">
-        <source>label.hourlyRate</source>
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
+        <source>hourlyRate</source>
         <target>Orduko tarifa</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Orduko tarifa</target>
-      </trans-unit>
-      <trans-unit id="dezCZWf" resname="label.skin">
-        <source>label.skin</source>
-        <target>Kimai-gaia</target>
-      </trans-unit>
-      <trans-unit id="w8T34A6" resname="label.hours">
-        <source>label.hours</source>
+      <trans-unit id="QEMUsfS" resname="hours">
+        <source>hours</source>
         <target>Orduak</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="label.rate">
-        <source>label.rate</source>
+      <trans-unit id="xUl3nXn" resname="rate">
+        <source>rate</source>
         <target>Tarifa</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="label.language">
-        <source>label.language</source>
+      <trans-unit id="pO8wS6Q" resname="language">
+        <source>language</source>
         <target>Hizkuntza</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
-        <source>label.customer</source>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
         <target>Bezeroa</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
-        <source>label.email</source>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
         <target>Emaila</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
-        <source>label.team</source>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
         <target>Taldea</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
-        <source>label.teamlead</source>
+      <trans-unit id="evFI7nW" resname="teamlead">
+        <source>teamlead</source>
         <target>Talde Leaderra</target>
-      </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Gehiago sortu</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="zldXQq6" resname="label.actions">
-        <source>label.actions</source>
+      <trans-unit id="Kw3N1AA" resname="actions">
+        <source>actions</source>
         <target>Ekintzak</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
         <target>Editatu</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Ezabatu</target>
       </trans-unit>
@@ -311,10 +291,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Berrezarri</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Atzera</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
@@ -327,40 +303,24 @@
         <source>dashboard.title</source>
         <target>Orri nagusia</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Ongi etorri!</target>
-      </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Erabiltzaile guztiak</target>
-      </trans-unit>
       <!--
               Widgets
             -->
-      <trans-unit id="giznf_R" resname="more.info.link">
-        <source>more.info.link</source>
-        <target>Informazio gehiago</target>
-      </trans-unit>
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
+      <trans-unit id="muzkQpM" resname="toggle_dropdown">
+        <source>toggle_dropdown</source>
         <target>Menua erakutsi</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
-        <source>label.my_teams</source>
+      <trans-unit id="L05Qw2x" resname="my_teams">
+        <source>my_teams</source>
         <target>Nire lan taldeak</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
-        <source>label.my_team_projects</source>
+      <trans-unit id="Ia0kvPi" resname="my_team_projects">
+        <source>my_team_projects</source>
         <target>Proiektuak eta aurrekontuak</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
-        <source>label.progress</source>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
         <target>Egoera</target>
-      </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% gehiago</target>
       </trans-unit>
       <!--
               Timesheet
@@ -373,32 +333,28 @@
         <source>timesheet.edit</source>
         <target>Aldatu</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
-        <source>label.begin</source>
+      <trans-unit id="5vB9Q7X" resname="begin">
+        <source>begin</source>
         <target>Hasi</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
-        <source>label.end</source>
+      <trans-unit id="Nh5I0DC" resname="end">
+        <source>end</source>
         <target>Bukatu</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
-        <source>label.daterange</source>
+      <trans-unit id="iNOVZRh" resname="daterange">
+        <source>daterange</source>
         <target>Denbora tartea</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Zutabe bista aldatu</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Gorde ondoren egiaztatu gabeko zutabeak ezkutatu egingo dira eta ezarpen hau arakatzailearen cookie batean gordeko da. Zure cookieak ezabatzen badituzu, ezarpenak alderantzikatu egingo dira.</target>
-      </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
-        <source>label.fixedRate</source>
+      <trans-unit id="_0tuMNE" resname="fixedRate">
+        <source>fixedRate</source>
         <target>Tarifa finkoa</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
-        <source>label.color</source>
+      <trans-unit id="dChNncv" resname="color">
+        <source>color</source>
         <target>Kolorea</target>
       </trans-unit>
       <!--
@@ -432,27 +388,19 @@
         <source>profile.roles</source>
         <target>Rolak</target>
       </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target>Taldeak</target>
-      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Hobespenak</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
-        <target>Ezkerraldeko gunea txikitu</target>
-      </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+        <source>calendar_initial_view</source>
         <target>Egutegiaren hasierako bista</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view">
+        <source>login_initial_view</source>
         <target>Sarrerako bista</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Hilabetea</target>
@@ -465,8 +413,8 @@
         <source>agendaDay</source>
         <target>Eguna</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="r49TNAg" resname="daily_stats">
+        <source>daily_stats</source>
         <target>Eguneroko estatistikak erakutsi ordu taulan</target>
       </trans-unit>
       <!--
@@ -482,90 +430,90 @@
       <!--
               Admin: Projects
             -->
-      <trans-unit id="yLOqEX_" resname="label.project_start">
-        <source>label.project_start</source>
+      <trans-unit id="Xyjr.V." resname="project_start">
+        <source>project_start</source>
         <target>Proiektu hasiera</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
-        <source>label.project_end</source>
+      <trans-unit id="TBWoUYf" resname="project_end">
+        <source>project_end</source>
         <target>Proiektu bukaera</target>
       </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="39AtPxQ" resname="label.number">
-        <source>label.number</source>
+      <trans-unit id="EohvnQA" resname="number">
+        <source>number</source>
         <target>Kontua</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
-        <source>label.company</source>
+      <trans-unit id="8WjM3ZF" resname="company">
+        <source>company</source>
         <target>Enpresa</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="label.vat">
-        <source>label.vat</source>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
         <target>Zerga</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
-        <source>label.vat_id</source>
+      <trans-unit id="EJDS9HY" resname="vat_id">
+        <source>vat_id</source>
         <target>Zerga ID-a</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
-        <source>label.contact</source>
+      <trans-unit id="CT59X9u" resname="contact">
+        <source>contact</source>
         <target>Kontaktua</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
-        <source>label.address</source>
+      <trans-unit id="2Ayb_RD" resname="address">
+        <source>address</source>
         <target>Helbidea</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
-        <source>label.country</source>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
         <target>Herrialdea</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
-        <source>label.phone</source>
+      <trans-unit id="RVadpX9" resname="phone">
+        <source>phone</source>
         <target>Telefonoa</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
-        <source>label.fax</source>
+      <trans-unit id="SvTiF8B" resname="fax">
+        <source>fax</source>
         <target>Fax-a</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
-        <source>label.mobile</source>
+      <trans-unit id="1STBoIE" resname="mobile">
+        <source>mobile</source>
         <target>Mugikorra</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
-        <source>label.homepage</source>
+      <trans-unit id="pcWhXux" resname="homepage">
+        <source>homepage</source>
         <target>Web Orrialdea</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
-        <source>label.timezone</source>
+      <trans-unit id="OWLt7pw" resname="timezone">
+        <source>timezone</source>
         <target>Ordu zona</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
-        <source>label.currency</source>
+      <trans-unit id="Rm5bnNV" resname="currency">
+        <source>currency</source>
         <target>Txanpoia</target>
       </trans-unit>
       <!--
               Admin: User
             -->
-      <trans-unit id="TRDzmCV" resname="label.alias">
-        <source>label.alias</source>
+      <trans-unit id="GgpqNso" resname="alias">
+        <source>alias</source>
         <target>Izena</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
-        <source>label.title</source>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
         <target>Tituloa</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
-        <source>label.avatar</source>
+      <trans-unit id="h7voece" resname="avatar">
+        <source>avatar</source>
         <target>Profil irudia</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="label.active">
-        <source>label.active</source>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
         <target>Actibo</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
-        <source>label.roles</source>
+      <trans-unit id="Zs9VE7N" resname="roles">
+        <source>roles</source>
         <target>Rola</target>
       </trans-unit>
       <trans-unit id="ZlZ20pG" resname="user_permissions.title">
@@ -583,13 +531,9 @@
       <!--
               Admin: Plugins
             -->
-      <trans-unit id="d75KAlJ" resname="label.version">
-        <source>label.version</source>
+      <trans-unit id="XKTzhQz" resname="version">
+        <source>version</source>
         <target>Bertsioa</target>
-      </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>Ondorengoekin bateragarria</target>
       </trans-unit>
       <!--
               ROLES
@@ -657,24 +601,24 @@
         <source>stats.amountTotal</source>
         <target>Diru sarrera GUZTIRA</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target>Erabiltzaile aktiboak gaur</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target>Erabiltzaile aktiboak aste hontan</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target>Erabiltzaile aktiboak hilabete hontan</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target>Erabiltzaile aktiboak urte hontan</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
-        <source>stats.userActiveTotal</source>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
         <target>Erabiltzaile aktiboak GUZTIRA</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
@@ -720,8 +664,8 @@
         <source>invoice.filter</source>
         <target>Faktura datuak filtratu</target>
       </trans-unit>
-      <trans-unit id="7H7P1mE" resname="button.preview">
-        <source>button.preview</source>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
         <target>Aurrebista</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
@@ -748,16 +692,16 @@
         <source>invoice_print</source>
         <target>Faktura</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
-        <source>label.mark_as_exported</source>
+      <trans-unit id="dicW36D" resname="mark_as_exported">
+        <source>mark_as_exported</source>
         <target>Exportatutzat markatu</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="label.template">
-        <source>label.template</source>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
         <target>Eredua</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="label.due_days">
-        <source>label.due_days</source>
+      <trans-unit id="ohNu8DK" resname="due_days">
+        <source>due_days</source>
         <target>Epea egunetan</target>
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
@@ -792,20 +736,20 @@
         <source>invoice.service_date</source>
         <target>Zerbitzu data</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="label.amount">
-        <source>label.amount</source>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
         <target>Kopurua</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="label.total_rate">
-        <source>label.total_rate</source>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
         <target>Erabilitako Tarifa</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="label.unit_price">
-        <source>label.unit_price</source>
+      <trans-unit id="IoKfYkz" resname="unit_price">
+        <source>unit_price</source>
         <target>Unitateko Prezioa</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="label.payment_terms">
-        <source>label.payment_terms</source>
+      <trans-unit id="033t0aO" resname="payment_terms">
+        <source>payment_terms</source>
         <target>Ordainketa Baldintzak</target>
       </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user">
@@ -820,27 +764,27 @@
         <source>invoice.total_working_time</source>
         <target>Guztizko Iraupena</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
-        <source>label.orderNumber</source>
+      <trans-unit id="3tegKgk" resname="orderNumber">
+        <source>orderNumber</source>
         <target>Agindu zenbakia</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
-        <source>label.orderDate</source>
+      <trans-unit id="tCNBGKG" resname="orderDate">
+        <source>orderDate</source>
         <target>Agindu data</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
+        <source>invoice_tax_number</source>
         <target>CIF/NIF.:</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
-        <source>label.invoice_bank_account</source>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
+        <source>invoice_bank_account</source>
         <target>Kontu Korronte Zenbakia</target>
       </trans-unit>
       <!--
               Export
             -->
-      <trans-unit id="F6Jmro7" resname="export.title">
-        <source>export.title</source>
+      <trans-unit id="1GruCMx" resname="export">
+        <source>export</source>
         <target>Exportar</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
@@ -878,17 +822,9 @@
         <source>active.entries</source>
         <target>Zure denbora aktiboaren kalkuluak</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Sarrera guztiak ikusi</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Aurrejo jarduera bati berrekin</target>
-      </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% jarduera %project% proiektuan %customer% bezeroarentzako</target>
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
@@ -897,16 +833,16 @@
       <!--
               TOOLBARS
             -->
-      <trans-unit id="MPimOps" resname="label.pageSize">
-        <source>label.pageSize</source>
+      <trans-unit id="igCkqAP" resname="pageSize">
+        <source>pageSize</source>
         <target>Orrialde tamaina</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="label.entryState">
-        <source>label.entryState</source>
+      <trans-unit id="cjgNYUB" resname="entryState">
+        <source>entryState</source>
         <target>Sarrerak</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="label.exported">
-        <source>label.exported</source>
+      <trans-unit id="Qn2ouiL" resname="exported">
+        <source>exported</source>
         <target>Exportatua</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
@@ -917,8 +853,8 @@
         <source>entryState.not_exported</source>
         <target>Irekia</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
         <target>Denak</target>
       </trans-unit>
       <trans-unit id="xm7mqoK" resname="entryState.running">
@@ -937,8 +873,8 @@
         <source>export.mark_all</source>
         <target>Ageriko sarrera guztiak prozesatutzat eman?</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="label.globalsOnly">
-        <source>label.globalsOnly</source>
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
+        <source>globalsOnly</source>
         <target>Globalak soilik</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
@@ -949,8 +885,8 @@
         <source>help.batch_meta_fields</source>
         <target>Eguneratuko diren eremuak aktibatu egin behar dira lotutako kontrol laukian klik eginez.</target>
       </trans-unit>
-      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
-        <source>label.batch_meta_fields</source>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
+        <source>batch_meta_fields</source>
         <target>Eremu osagarriak</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid">
@@ -965,17 +901,9 @@
         <source>status.new</source>
         <target>Berria</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
-        <source>label.status</source>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
         <target>Egoera</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Erakutsi iraupena zenbaki hamartar gisa</target>
-      </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
-        <source>button.preview_print</source>
-        <target>Inprimatzeko aurrebista</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -993,56 +921,56 @@
         <source>stats.workingTimeToday</source>
         <target>Gaur, %day%</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="7zptTeh" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Eguneratu arakatzailearen izenburua</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="dherSTU" resname="export_decimal">
+        <source>export_decimal</source>
         <target>Erabili iraupen hamartarra esportazioan</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
-        <source>label.lastLogin</source>
+      <trans-unit id="gRIArHS" resname="lastLogin">
+        <source>lastLogin</source>
         <target>Azken saioa</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Hemen erregistratuta</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
-        <source>label.appendTags</source>
+      <trans-unit id="ICpl9sx" resname="appendTags">
+        <source>appendTags</source>
         <target>Gehitu etiketak</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
-        <source>label.replaceTags</source>
+      <trans-unit id="tl01EdS" resname="replaceTags">
+        <source>replaceTags</source>
         <target>Ordeztu etiketak</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="label.billable">
-        <source>label.billable</source>
+      <trans-unit id="aVwNQcX" resname="billable">
+        <source>billable</source>
         <target>Fakturagarria</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Idatzi zure mezua…</target>
       </trans-unit>
-      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
-        <source>label.recalculate_rates</source>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
+        <source>recalculate_rates</source>
         <target>Tasak birkalkulatu</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Barne kostuak (ez badira zehazten, tarifa normala erabiliko da)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
         <target>Barne tasa</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Orduro kobratuko den tarifa</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="HcWuW2g" resname="layout">
+        <source>layout</source>
         <target>Pantaila: diseinua</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
@@ -1069,23 +997,23 @@
         <source>upload</source>
         <target>Kargatu</target>
       </trans-unit>
-      <trans-unit id="0D_zaYd" resname="label.desc">
-        <source>label.desc</source>
+      <trans-unit id="l4ZOh4." resname="desc">
+        <source>desc</source>
         <target>Beherantz</target>
       </trans-unit>
-      <trans-unit id="31x84Dt" resname="label.asc">
-        <source>label.asc</source>
+      <trans-unit id="1o0.9vf" resname="asc">
+        <source>asc</source>
         <target>Goranzko</target>
       </trans-unit>
-      <trans-unit id="BytPihM" resname="label.set_as_default">
-        <source>label.set_as_default</source>
+      <trans-unit id="CiA4s9E" resname="set_as_default">
+        <source>set_as_default</source>
         <target>Gorde ezarpen lehenetsi gisa</target>
       </trans-unit>
-      <trans-unit id="IolBPQD" resname="label.searchTerm">
-        <source>label.searchTerm</source>
+      <trans-unit id="8W_TZI0" resname="searchTerm">
+        <source>searchTerm</source>
         <target>Bilatu hitza</target>
       </trans-unit>
-      <trans-unit id="DpdNns0" resname="label.choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
@@ -1096,10 +1024,6 @@
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target state="needs-translation">Add</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="needs-translation">Save all</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
@@ -1113,16 +1037,16 @@
         <source>invoice.payment_date</source>
         <target state="needs-translation">Payment date</target>
       </trans-unit>
-      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
-        <source>label.includeNoWork</source>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
         <target state="needs-translation">Show entries without bookings</target>
       </trans-unit>
-      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
-        <source>label.includeNoBudget</source>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
         <target state="needs-translation">Show entries without budget</target>
       </trans-unit>
-      <trans-unit id="3zn5T5e" resname="label.not_exported">
-        <source>label.not_exported</source>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
         <target state="needs-translation">Not exported</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
@@ -1133,12 +1057,12 @@
         <source>stats.durationFinancialYear</source>
         <target state="needs-translation">Working hours this financial year</target>
       </trans-unit>
-      <trans-unit id="pnGDFmf" resname="label.type">
-        <source>label.type</source>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
         <target state="needs-translation">Type</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="label.tax_rate">
-        <source>label.tax_rate</source>
+      <trans-unit id="qX_CKtU" resname="tax_rate">
+        <source>tax_rate</source>
         <target state="needs-translation">Tax rate</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
@@ -1157,20 +1081,20 @@
         <source>export.warn_result_amount</source>
         <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
       </trans-unit>
-      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
-        <source>label.includeBudgetType_month</source>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
         <target state="needs-translation">Show entries with "monthly" budget</target>
       </trans-unit>
-      <trans-unit id="AJ6dwR." resname="label.last_record_before">
-        <source>label.last_record_before</source>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
         <target state="needs-translation">No time booking since</target>
       </trans-unit>
-      <trans-unit id="qDnURk7" resname="label.last_record">
-        <source>label.last_record</source>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
         <target state="needs-translation">Last entry</target>
       </trans-unit>
-      <trans-unit id="LXdqaTH" resname="label.account_number">
-        <source>label.account_number</source>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
         <target state="needs-translation">Staff number</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
@@ -1191,18 +1115,14 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="needs-translation">Weekly hours</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
-      </trans-unit>
-      <trans-unit id="NNKq04n" resname="label.remove_default">
-        <source>label.remove_default</source>
+      <trans-unit id="DUDrvjk" resname="remove_default">
+        <source>remove_default</source>
         <target state="needs-translation">Delete search favourite</target>
       </trans-unit>
-      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
-        <source>label.orderBy</source>
+      <trans-unit id="VSo_gmO" resname="orderBy">
+        <source>orderBy</source>
         <target state="needs-translation">Order by</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
@@ -1217,20 +1137,20 @@
         <source>error.too_many_entries</source>
         <target state="needs-translation">The request could not be processed. Too many results were found.</target>
       </trans-unit>
-      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
-        <source>label.includeBudgetType_full</source>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
         <target state="needs-translation">Show entries with "life cycle" budget</target>
       </trans-unit>
-      <trans-unit id="csF1D35" resname="label.not_invoiced">
-        <source>label.not_invoiced</source>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
         <target state="needs-translation">Not billed</target>
       </trans-unit>
-      <trans-unit id="PoF7hD8" resname="label.budgetType">
-        <source>label.budgetType</source>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
         <target state="needs-translation">Budget-Type</target>
       </trans-unit>
-      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
-        <source>label.budgetType_month</source>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
         <target state="needs-translation">Monthly</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
@@ -1249,8 +1169,8 @@
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">Skipped preview of %rows% more rows …</target>
       </trans-unit>
-      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
-        <source>label.budgetType_full</source>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
         <target state="needs-translation">Life cycle</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
@@ -1261,10 +1181,6 @@
         <source>error.directory_protected</source>
         <target state="needs-translation">Directory "%dir%" is write protected.</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
         <target state="needs-translation">Revenues</target>
@@ -1272,6 +1188,10 @@
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="needs-translation">Updated at</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Kimairi buruz</target>
       </trans-unit>
     </body>
   </file>

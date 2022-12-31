@@ -30,11 +30,11 @@ class InvoiceArchiveQuery extends BaseQuery
      * Filter for invoice status (by default all)
      * @var string[]
      */
-    private $status = [];
+    private array $status = [];
     /**
      * @var Customer[]
      */
-    private $customers = [];
+    private array $customers = [];
 
     public function __construct()
     {

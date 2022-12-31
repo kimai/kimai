@@ -16,22 +16,11 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 final class TrackingModeService
 {
     /**
-     * @var TrackingModeInterface[]
-     */
-    private $modes = [];
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    /**
      * @param SystemConfiguration $configuration
      * @param TrackingModeInterface[] $modes
      */
-    public function __construct(SystemConfiguration $configuration, iterable $modes)
+    public function __construct(private SystemConfiguration $configuration, private iterable $modes)
     {
-        $this->configuration = $configuration;
-        $this->modes = $modes;
     }
 
     /**

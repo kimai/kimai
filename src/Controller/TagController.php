@@ -16,28 +16,27 @@ use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
+use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/admin/tags")
- * @Security("is_granted('view_tag')")
- */
-class TagController extends AbstractController
+#[Route(path: '/admin/tags')]
+#[Security("is_granted('view_tag')")]
+final class TagController extends AbstractController
 {
     /**
-     * @Route(path="/", defaults={"page": 1}, name="tags", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="tags_paginated", methods={"GET"})
-     *
      * @param TagRepository $repository
      * @param Request $request
      * @param int $page
      * @return Response
      */
-    public function listTags(TagRepository $repository, Request $request, $page)
+    #[Route(path: '/', defaults: ['page' => 1], name: 'tags', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'tags_paginated', methods: ['GET'])]
+    public function listTags(TagRepository $repository, Request $request, $page): Response
     {
         $query = new TagQuery();
         $query->setPage($page);
@@ -47,24 +46,37 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags');
         }
 
-        $tags = $repository->getTagCount($query);
+        $entries = $repository->getTagCount($query);
         $multiUpdateForm = $this->getMultiUpdateForm($repository);
+
+        $table = new DataTable('admin_tags', $query);
+        $table->setSearchForm($form);
+        $table->setPagination($entries);
+        $table->setPaginationRoute('tags_paginated');
+        $table->setReloadEvents('kimai.tagUpdate');
+        $table->setBatchForm($multiUpdateForm);
+
         if ($multiUpdateForm !== null) {
-            $multiUpdateForm = $multiUpdateForm->createView();
+            $table->addColumn('id', ['class' => 'alwaysVisible multiCheckbox', 'orderBy' => false, 'title' => false, 'batchUpdate' => true]);
         }
 
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('amount', ['class' => 'text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions']);
+
+        $page = new PageSetup('tags');
+        $page->setActionName('tags');
+        $page->setHelp('tags.html');
+        $page->setDataTable($table);
+
         return $this->render('tags/index.html.twig', [
-            'tags' => $tags,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'multiUpdateForm' => $multiUpdateForm,
+            'page_setup' => $page,
+            'dataTable' => $table,
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="tags_edit", methods={"GET", "POST"})
-     * @Security("is_granted('manage_tag')")
-     */
+    #[Route(path: '/{id}/edit', name: 'tags_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('manage_tag')")]
     public function editAction(Tag $tag, TagRepository $repository, Request $request)
     {
         $editForm = $this->createForm(TagEditForm::class, $tag, [
@@ -81,20 +93,22 @@ class TagController extends AbstractController
 
                 return $this->redirectToRoute('tags');
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 
+        $page = new PageSetup('tags');
+        $page->setHelp('tags.html');
+
         return $this->render('tags/edit.html.twig', [
+            'page_setup' => $page,
             'tag' => $tag,
             'form' => $editForm->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/create", name="tags_create", methods={"GET", "POST"})
-     * @Security("is_granted('manage_tag')")
-     */
+    #[Route(path: '/create', name: 'tags_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('manage_tag')")]
     public function createAction(TagRepository $repository, Request $request)
     {
         $tag = new Tag();
@@ -113,20 +127,22 @@ class TagController extends AbstractController
 
                 return $this->redirectToRoute('tags');
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 
+        $page = new PageSetup('tags');
+        $page->setHelp('tags.html');
+
         return $this->render('tags/edit.html.twig', [
+            'page_setup' => $page,
             'tag' => $tag,
             'form' => $editForm->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/multi-delete", name="tags_multi_delete", methods={"POST"})
-     * @Security("is_granted('delete_tag')")
-     */
+    #[Route(path: '/multi-delete', name: 'tags_multi_delete', methods: ['POST'])]
+    #[Security("is_granted('delete_tag')")]
     public function multiDelete(TagRepository $repository, Request $request)
     {
         $form = $this->getMultiUpdateForm($repository);
@@ -146,7 +162,7 @@ class TagController extends AbstractController
         return $this->redirectToRoute('tags');
     }
 
-    protected function getMultiUpdateForm(TagRepository $repository): ?FormInterface
+    private function getMultiUpdateForm(TagRepository $repository): ?FormInterface
     {
         $dto = new MultiUpdateTableDTO();
         if ($this->isGranted('delete_tag')) {
@@ -164,17 +180,12 @@ class TagController extends AbstractController
         ]);
     }
 
-    /**
-     * @param TagQuery $query
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getToolbarForm(TagQuery $query)
+    private function getToolbarForm(TagQuery $query): FormInterface
     {
-        return $this->createForm(TagToolbarForm::class, $query, [
+        return $this->createSearchForm(TagToolbarForm::class, $query, [
             'action' => $this->generateUrl('tags', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 }

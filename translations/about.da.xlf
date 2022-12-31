@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target>Om Kimai</target>
-      </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Support</target>
@@ -20,7 +16,7 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>Støt Kimai's fremtid</target>
+        <target>Støt</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>

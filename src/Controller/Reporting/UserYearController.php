@@ -13,8 +13,8 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Model\DateStatisticInterface;
 use App\Model\MonthlyStatistic;
-use App\Reporting\YearByUser;
-use App\Reporting\YearByUserForm;
+use App\Reporting\YearByUser\YearByUser;
+use App\Reporting\YearByUser\YearByUserForm;
 use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,19 +23,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * @Route(path="/reporting/user")
- * @Security("is_granted('view_reporting')")
- */
+#[Route(path: '/reporting/user')]
+#[Security("is_granted('report:user')")]
 final class UserYearController extends AbstractUserReportController
 {
     /**
-     * @Route(path="/year", name="report_user_year", methods={"GET","POST"})
-     *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
+    #[Route(path: '/year', name: 'report_user_year', methods: ['GET', 'POST'])]
     public function yearByUser(Request $request, SystemConfiguration $systemConfiguration): Response
     {
         return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request, $systemConfiguration));
@@ -58,7 +55,7 @@ final class UserYearController extends AbstractUserReportController
 
         $values->setDate(clone $defaultDate);
 
-        $form = $this->createForm(YearByUserForm::class, $values, [
+        $form = $this->createFormForGetRequest(YearByUserForm::class, $values, [
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),

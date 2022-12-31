@@ -13,18 +13,24 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiEvent extends KimaiPlugin {
 
-    getId() {
+    getId()
+    {
         return 'event';
     }
 
-    trigger(name, details) {
-        if (name === null || name === undefined) {
+    /**
+     * @param {string} name
+     * @param {string|array|object|null} details
+     */
+    trigger(name, details = null)
+    {
+        if (name === '') {
             return;
         }
 
-        for(let event of name.split(' ')) {
+        for (const event of name.split(' ')) {
             let triggerEvent = new Event(event);
-            if (details !== undefined) {
+            if (details !== null) {
                 triggerEvent = new CustomEvent(event, {detail: details});
             }
             document.dispatchEvent(triggerEvent);

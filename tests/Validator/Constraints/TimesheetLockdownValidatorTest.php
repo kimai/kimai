@@ -10,9 +10,9 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
@@ -50,7 +50,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         );
 
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'lockdown_period_start' => $start,
@@ -92,7 +92,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, $constraint);
 
         $this->buildViolation('This period is locked, please choose a later date.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetLockdown::PERIOD_LOCKED)
             ->assertRaised();
     }
@@ -162,7 +162,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 
         if ($isViolation) {
             $this->buildViolation('This period is locked, please choose a later date.')
-                ->atPath('property.path.begin')
+                ->atPath('property.path.begin_date')
                 ->setCode(TimesheetLockdown::PERIOD_LOCKED)
                 ->assertRaised();
         } else {

@@ -9,20 +9,19 @@
 
 namespace App\Widget\Type;
 
-use App\Entity\User;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
+use App\Widget\WidgetInterface;
 
-final class TotalsCustomer extends SimpleWidget implements UserWidget, AuthorizedWidget
+final class TotalsCustomer extends AbstractWidget
 {
-    use UserWidgetTrait;
-
-    private $customer;
-
-    public function __construct(CustomerRepository $customer)
+    public function __construct(private CustomerRepository $customer)
     {
-        $this->customer = $customer;
-        $this->setTitle('stats.customerTotal');
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.customerTotal';
     }
 
     public function getOptions(array $options = []): array
@@ -30,20 +29,13 @@ final class TotalsCustomer extends SimpleWidget implements UserWidget, Authorize
         return array_merge([
             'route' => 'admin_customer',
             'icon' => 'customer',
-            'color' => 'primary',
-            'dataType' => 'int',
+            'color' => WidgetInterface::COLOR_TOTAL,
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
-        $options = $this->getOptions($options);
-
-        $user = $options['user'];
-        if (null === $user || !($user instanceof User)) {
-            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
-        }
-
+        $user = $this->getUser();
         $query = new CustomerQuery();
         $query->setCurrentUser($user);
 
@@ -61,5 +53,10 @@ final class TotalsCustomer extends SimpleWidget implements UserWidget, Authorize
     public function getTemplateName(): string
     {
         return 'widget/widget-more.html.twig';
+    }
+
+    public function getId(): string
+    {
+        return 'TotalsCustomer';
     }
 }

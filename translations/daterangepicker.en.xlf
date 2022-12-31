@@ -34,9 +34,13 @@
         <source>daterangepicker.thisYear</source>
         <target>This year</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Custom range</target>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+        <source>daterangepicker.thisYearUntilNow</source>
+        <target>This year - until today</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
+        <source>daterangepicker.allTime</source>
+        <target>Total period</target>
       </trans-unit>
     </body>
   </file>

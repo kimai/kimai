@@ -1,6 +1,0 @@
-{% set items = [] %}
-{% for entry in entries %}
-{% set items = items|merge([entry]) %}
-{% endfor %}
-{% set json = invoice|merge({'items': items}) %}
-{{ json|json_encode|raw}}

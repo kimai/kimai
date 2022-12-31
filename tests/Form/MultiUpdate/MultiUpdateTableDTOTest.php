@@ -43,7 +43,7 @@ class MultiUpdateTableDTOTest extends TestCase
             [
                 '' => '',
                 'action.edit' => 'foo',
-                'action.delete' => 'bar',
+                'delete' => 'bar',
                 'test' => 'hello/world'
             ],
             $sut->getActions()
@@ -54,7 +54,7 @@ class MultiUpdateTableDTOTest extends TestCase
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $timesheet = new Timesheet();
         $tag = new Tag();
 

@@ -10,19 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\ActivityRateForm;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActivityRateApiForm extends ActivityRateForm
+final class ActivityRateApiForm extends ActivityRateForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
-    }
 }

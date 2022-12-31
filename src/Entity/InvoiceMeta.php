@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -15,27 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="kimai2_invoices_meta",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"invoice_id", "name"})
- *      }
- * )
- * @Serializer\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'kimai2_invoices_meta')]
+#[ORM\UniqueConstraint(columns: ['invoice_id', 'name'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class InvoiceMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    /**
-     * @var Invoice
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $invoice;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Invoice', inversedBy: 'meta')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private ?Invoice $invoice = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface
     {

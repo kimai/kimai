@@ -15,13 +15,15 @@ use App\Entity\UserPreference;
 use App\Event\UserCreateEvent;
 use App\Event\UserCreatePostEvent;
 use App\Event\UserCreatePreEvent;
+use App\Event\UserDeletePostEvent;
+use App\Event\UserDeletePreEvent;
 use App\Event\UserUpdatePostEvent;
 use App\Event\UserUpdatePreEvent;
 use App\Repository\UserRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -32,21 +34,15 @@ class UserService
     /**
      * @var array<string, int>
      */
-    private $cache = [];
+    private array $cache = [];
 
-    private $repository;
-    private $dispatcher;
-    private $validator;
-    private $configuration;
-    private $encoderFactory;
-
-    public function __construct(UserRepository $repository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator, SystemConfiguration $configuration, UserPasswordEncoderInterface $encoderFactory)
-    {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->validator = $validator;
-        $this->configuration = $configuration;
-        $this->encoderFactory = $encoderFactory;
+    public function __construct(
+        private UserRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private ValidatorInterface $validator,
+        private SystemConfiguration $configuration,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {
     }
 
     public function countUser(?bool $enabled = null): int
@@ -133,7 +129,7 @@ class UserService
 
     public function findUserByUsernameOrEmail(string $usernameOrEmail): ?User
     {
-        return $this->repository->loadUserByUsername($usernameOrEmail);
+        return $this->repository->loadUserByIdentifier($usernameOrEmail);
     }
 
     public function findUserByEmail(string $email): ?User
@@ -156,7 +152,7 @@ class UserService
         return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }
 
-    private function hashPassword(User $user)
+    private function hashPassword(User $user): void
     {
         $plain = $user->getPlainPassword();
 
@@ -164,12 +160,12 @@ class UserService
             return;
         }
 
-        $password = $this->encoderFactory->encodePassword($user, $plain);
+        $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setPassword($password);
         $user->eraseCredentials();
     }
 
-    private function hashApiToken(User $user)
+    private function hashApiToken(User $user): void
     {
         $plain = $user->getPlainApiToken();
 
@@ -177,8 +173,15 @@ class UserService
             return;
         }
 
-        $password = $this->encoderFactory->encodePassword($user, $plain);
+        $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setApiToken($password);
         $user->eraseCredentials();
+    }
+
+    public function deleteUser(User $delete, ?User $replace = null): void
+    {
+        $this->dispatcher->dispatch(new UserDeletePreEvent($delete, $replace));
+        $this->repository->deleteUser($delete, $replace);
+        $this->dispatcher->dispatch(new UserDeletePostEvent($delete, $replace));
     }
 }

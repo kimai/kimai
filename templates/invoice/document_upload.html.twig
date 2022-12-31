@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
-{% import "invoice/actions.html.twig" as actions %}
 {% import "macros/widgets.html.twig" as widgets %}
-
-{% block page_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
-{% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
 
 {% block main %}
     {% if can_upload and form is not null %}
-        {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
-        {% set formOptions = {
-            'title': 'upload'|trans,
-            'form': form,
-            'back': false,
-            'reset': false
-        } %}
-
-        {% embed 'default/_form.html.twig' with formOptions %}
-            {% block form_body %}
+        {% embed '@theme/embeds/card.html.twig' %}
+            {% form_theme form 'form/horizontal.html.twig' %}
+            {% block box_title %}
+                {{ 'upload'|trans }}
+            {% endblock %}
+            {% block box_body %}
+                {{ form_start(form) }}
                 {{ form_row(form.document) }}
-                {{ form_widget(form) }}
+                <p>
+                <a href="https://github.com/kimai/invoice-templates" target="_blank">{{ 'download_invoice_renderer'|trans({}, 'invoice-renderer') }}</a>
+                </p>
+                {{ form_end(form) }}
+            {% endblock %}
+            {% block box_footer %}
+                <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
+                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
             {% endblock %}
         {% endembed %}
     {% elseif upload_error is not null %}
@@ -26,21 +26,21 @@
     {% endif %}
 
     {% if documents|length > 0 %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'documents': documents} %}
+        {% embed '@theme/embeds/card.html.twig' with {'documents': documents} %}
             {% import "invoice/actions.html.twig" as actions %}
             {% import "macros/widgets.html.twig" as widgets %}
-            {% block box_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
+            {% block box_title %}{{ 'invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
             {% block box_attributes %}
                 id="invoice_document_list"
             {% endblock %}
-            {% block box_body_class %}no-padding{% endblock %}
+            {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 <table class="table table-hover dataTable">
                     <thead>
                         <tr>
                             <th>{{ 'file'|trans }}</th>
                             <th>{{ 'updated_at'|trans }}</th>
-                            <th>{{ 'label.template'|trans }}</th>
+                            <th>{{ 'template'|trans }}</th>
                             <th></th>
                         </tr>
                     </thead>

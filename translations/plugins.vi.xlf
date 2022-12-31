@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Bạn chưa cài đặt phần mở rộng nào.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Chợ Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

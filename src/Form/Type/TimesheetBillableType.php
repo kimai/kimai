@@ -17,15 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select if a timesheet is billable.
  */
-class TimesheetBillableType extends AbstractType
+final class TimesheetBillableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.billable',
+            'label' => 'billable',
             'choices' => [
                 'automatic' => Timesheet::BILLABLE_AUTOMATIC,
                 'yes' => Timesheet::BILLABLE_YES,
@@ -34,10 +31,7 @@ class TimesheetBillableType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

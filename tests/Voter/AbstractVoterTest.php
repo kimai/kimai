@@ -32,7 +32,7 @@ abstract class AbstractVoterTest extends TestCase
      * @param string|null $role
      * @return User
      */
-    protected function getUser($id, ?string $role)
+    protected function getUser(int $id, ?string $role)
     {
         $roles = [];
         if (!empty($role)) {
@@ -41,7 +41,7 @@ abstract class AbstractVoterTest extends TestCase
 
         $user = new User();
         $user->setRoles($roles);
-        $user->setUsername($id);
+        $user->setUserIdentifier((string) $id);
 
         $reflection = new \ReflectionClass($user);
         $property = $reflection->getProperty('id');
@@ -52,11 +52,11 @@ abstract class AbstractVoterTest extends TestCase
     }
 
     /**
-     * @param array $permissions
+     * @param array<string, array<string>> $permissions
      * @param bool $overwrite
      * @return RolePermissionManager
      */
-    protected function getRolePermissionManager(array $permissions = [], bool $overwrite = false)
+    protected function getRolePermissionManager(array $permissions = [], bool $overwrite = false): RolePermissionManager
     {
         if (!$overwrite) {
             $activities = ['view_activity', 'edit_activity', 'budget_activity', 'time_activity', 'delete_activity', 'create_activity'];
@@ -92,7 +92,17 @@ abstract class AbstractVoterTest extends TestCase
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([]);
 
+        $names = [];
+        $perms = [];
+        foreach ($permissions as $role => $permissionNames) {
+            $perms[$role] = [];
+            foreach ($permissionNames as $name) {
+                $perms[$role][$name] = true;
+                $names[$name] = true;
+            }
+        }
+
         /* @var RolePermissionRepository $repository */
-        return new RolePermissionManager($repository, $permissions);
+        return new RolePermissionManager($repository, $perms, $names);
     }
 }

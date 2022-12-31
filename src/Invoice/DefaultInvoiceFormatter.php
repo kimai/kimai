@@ -9,28 +9,24 @@
 
 namespace App\Invoice;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Utils\LocaleFormatter;
 
 final class DefaultInvoiceFormatter implements InvoiceFormatter
 {
-    private $locale;
-    private $formats;
     /**
      * @var LocaleFormatter|null
      */
     private $formatter;
 
-    public function __construct(LanguageFormattings $formats, string $locale)
+    public function __construct(private LocaleService $localeService, private string $locale)
     {
-        $this->formats = $formats;
-        $this->locale = $locale;
     }
 
     private function getFormatter(): LocaleFormatter
     {
         if ($this->formatter === null) {
-            $this->formatter = new LocaleFormatter($this->formats, $this->locale);
+            $this->formatter = new LocaleFormatter($this->localeService, $this->locale);
         }
 
         return $this->formatter;
@@ -38,12 +34,12 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
 
     public function getFormattedDateTime(\DateTime $date): string
     {
-        return $this->getFormatter()->dateShort($date);
+        return (string) $this->getFormatter()->dateShort($date);
     }
 
     public function getFormattedTime(\DateTime $date): string
     {
-        return $this->getFormatter()->time($date);
+        return (string) $this->getFormatter()->time($date);
     }
 
     public function getFormattedMonthName(\DateTime $date): string

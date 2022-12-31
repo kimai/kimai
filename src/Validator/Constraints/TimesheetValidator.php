@@ -18,23 +18,17 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @var Constraint[]
-     */
-    private $constraints;
-
-    /**
      * @param Constraint[] $constraints
      */
-    public function __construct(iterable $constraints)
+    public function __construct(private iterable $constraints)
     {
-        $this->constraints = $constraints;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetConstraint)) {
             throw new UnexpectedTypeException($constraint, Timesheet::class);
@@ -44,11 +38,11 @@ final class TimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        foreach ($this->constraints as $constraint) {
+        foreach ($this->constraints as $innerConstraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($timesheet, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }

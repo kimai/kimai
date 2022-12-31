@@ -18,7 +18,6 @@ use App\Tests\Export\Spreadsheet\Entities\ExpressionOnProperty;
 use App\Tests\Export\Spreadsheet\Entities\MethodRequiresParams;
 use App\Tests\Export\Spreadsheet\Entities\MissingExpressionOnClass;
 use App\Tests\Export\Spreadsheet\Entities\MissingNameOnClass;
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,7 +30,7 @@ class AnnotationExtractorTest extends TestCase
 {
     public function testExtract()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $columns = $sut->extract(DemoFull::class);
 
@@ -43,16 +42,16 @@ class AnnotationExtractorTest extends TestCase
         }
 
         $expected = [
-            ['label.type-time', 'time', new \DateTime()],
-            ['label.Public-Property', 'string', 'public-property'],
-            ['label.type-date', 'date', new \DateTime()],
-            ['label.Private-Property', 'integer', 123],
-            ['label.accessor', 'string', 'accessor-method'],
-            ['label.Protected-Property', 'boolean', false],
-            ['label.Public-Method', 'string', 'public-method'],
-            ['label.Protected-Method', 'datetime', new \DateTime()],
-            ['label.duration', 'duration', 12345],
-            ['label.Private-Method', 'boolean', true],
+            ['type-time', 'time', new \DateTime()],
+            ['Public-Property', 'string', 'public-property'],
+            ['type-date', 'date', new \DateTime()],
+            ['Private-Property', 'integer', 123],
+            ['accessor', 'string', 'accessor-method'],
+            ['Protected-Property', 'boolean', false],
+            ['Public-Method', 'string', 'public-method'],
+            ['Protected-Method', 'datetime', new \DateTime()],
+            ['duration', 'duration', 12345],
+            ['Private-Method', 'boolean', true],
         ];
 
         $i = 0;
@@ -72,7 +71,7 @@ class AnnotationExtractorTest extends TestCase
 
     public function testExceptionOnInvalidType()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('AnnotationExtractor needs a non-empty class name for work');
@@ -83,7 +82,7 @@ class AnnotationExtractorTest extends TestCase
 
     public function testExceptionOnEmptyString()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('AnnotationExtractor needs a non-empty class name for work');
@@ -93,50 +92,50 @@ class AnnotationExtractorTest extends TestCase
 
     public function testExceptionOnMissingExpression()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('@Expose needs an expression attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\MissingExpressionOnClass::class');
+        $this->expectExceptionMessage('@Expose needs the "exp" attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\MissingExpressionOnClass::class');
 
         $sut->extract(MissingExpressionOnClass::class);
     }
 
     public function testExceptionOnMissingName()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('@Expose needs a name attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\MissingNameOnClass::class');
+        $this->expectExceptionMessage('@Expose needs the "name" attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\MissingNameOnClass::class');
 
         $sut->extract(MissingNameOnClass::class);
     }
 
     public function testExceptionExpressionOnProperty()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('@Expose only supports the expression attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\ExpressionOnProperty::$foo');
+        $this->expectExceptionMessage('@Expose only supports the "exp" attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\ExpressionOnProperty::$foo');
 
         $sut->extract(ExpressionOnProperty::class);
     }
 
     public function testExceptionExpressionOnMethod()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('@Expose only supports the expression attribute on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\ExpressionOnMethod::foo()');
+        $this->expectExceptionMessage('@Expose only supports the "exp" attribute on method level hierarchy, check App\Tests\Export\Spreadsheet\Entities\ExpressionOnMethod::foo()');
 
         $sut->extract(ExpressionOnMethod::class);
     }
 
     public function testExceptionExpressionOnMethodWithRequiredParameters()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $this->expectException(ExtractorException::class);
-        $this->expectExceptionMessage('@Expose does not support method App\Tests\Export\Spreadsheet\Entities\MethodRequiresParams::foo(...), it has required parameters.');
+        $this->expectExceptionMessage('@Expose does not support method App\Tests\Export\Spreadsheet\Entities\MethodRequiresParams::foo(...) as it has required parameters.');
 
         $sut->extract(MethodRequiresParams::class);
     }

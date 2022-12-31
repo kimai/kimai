@@ -14,14 +14,8 @@ namespace App\Invoice;
  */
 interface NumberGeneratorInterface
 {
-    /**
-     * @param InvoiceModel $model
-     */
-    public function setModel(InvoiceModel $model);
+    public function setModel(InvoiceModel $model): void;
 
-    /**
-     * @return string
-     */
     public function getInvoiceNumber(): string;
 
     /**

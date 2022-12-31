@@ -9,8 +9,8 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
+use App\Model\InvoiceDocument;
 use Symfony\Component\HttpFoundation\Response;
 
 final class TwigRenderer extends AbstractTwigRenderer

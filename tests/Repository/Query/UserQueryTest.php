@@ -18,15 +18,15 @@ use App\Repository\Query\VisibilityInterface;
  */
 class UserQueryTest extends BaseQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new UserQuery();
-        $this->assertBaseQuery($sut, 'username');
+        $this->assertBaseQuery($sut, 'user');
         $this->assertInstanceOf(VisibilityInterface::class, $sut);
         $this->assertRole($sut);
         $this->assertSearchTeam($sut);
 
-        $this->assertResetByFormError(new UserQuery(), 'username');
+        $this->assertResetByFormError(new UserQuery(), 'user');
     }
 
     protected function assertRole(UserQuery $sut)
@@ -38,11 +38,23 @@ class UserQueryTest extends BaseQueryTest
 
     protected function assertSearchTeam(UserQuery $sut)
     {
-        $team = new Team();
+        $team = new Team('foo');
         $this->assertIsArray($sut->getSearchTeams());
         $this->assertEmpty($sut->getSearchTeams());
-        $sut->setSearchTeams([$team, new Team()]);
+        $sut->setSearchTeams([$team, new Team('foo')]);
         $this->assertCount(2, $sut->getSearchTeams());
         $this->assertSame($team, $sut->getSearchTeams()[0]);
+    }
+
+    public function testSystemAccount()
+    {
+        $sut = new UserQuery();
+        self::assertNull($sut->getSystemAccount());
+        $sut->setSystemAccount(false);
+        self::assertFalse($sut->getSystemAccount());
+        $sut->setSystemAccount(true);
+        self::assertTrue($sut->getSystemAccount());
+        $sut->setSystemAccount(null);
+        self::assertNull($sut->getSystemAccount());
     }
 }

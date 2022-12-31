@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
-class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
+final class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
 {
     /**
      * Bind value to a cell.
@@ -38,7 +38,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
 
         if ($dataType === DataType::TYPE_STRING && !$value instanceof RichText) {
             // Check for newline character "\n"
-            if (strpos($value, "\n") !== false) {
+            if (\is_string($value) && str_contains($value, "\n")) {
                 $cell->setValueExplicit($value, DataType::TYPE_STRING);
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())->getAlignment()->setWrapText(true);
 

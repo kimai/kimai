@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used for calendar entry titles.
  */
-class CalendarTitlePatternType extends AbstractType
+final class CalendarTitlePatternType extends AbstractType
 {
     public const PATTERN_CUSTOMER = '{customer}';
     public const PATTERN_PROJECT = '{project}';
@@ -29,22 +29,19 @@ class CalendarTitlePatternType extends AbstractType
     public const PATTERN_CUSTOMER_DESCRIPTION = self::PATTERN_CUSTOMER . self::SPACER . self::PATTERN_DESCRIPTION;
     public const PATTERN_PROJECT_CUSTOMER = self::PATTERN_PROJECT . self::SPACER . self::PATTERN_CUSTOMER;
 
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $customer = $this->translator->trans('label.customer');
-        $project = $this->translator->trans('label.project');
-        $activity = $this->translator->trans('label.activity');
-        $description = $this->translator->trans('label.description');
+        $customer = $this->translator->trans('customer');
+        $project = $this->translator->trans('project');
+        $activity = $this->translator->trans('activity');
+        $description = $this->translator->trans('description');
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $activity => CalendarTitlePatternType::PATTERN_ACTIVITY,
                 $project => CalendarTitlePatternType::PATTERN_PROJECT,

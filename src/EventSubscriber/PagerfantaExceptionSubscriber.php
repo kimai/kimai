@@ -30,10 +30,7 @@ final class PagerfantaExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ExceptionEvent $event
-     */
-    public function onCoreException(ExceptionEvent $event)
+    public function onCoreException(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
 

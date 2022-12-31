@@ -13,32 +13,23 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiRecentActivities extends KimaiPlugin {
 
-    constructor(selector) {
-        super();
-        this.selector = selector;
-    }
-
-    getId() {
+    getId()
+    {
         return 'recent-activities';
     }
 
-    init() {
-        const menu = document.querySelector(this.selector);
+    init()
+    {
+        this.menu = document.querySelector('header .notifications-menu');
         // the menu can be hidden if user has no permissions to see it
-        if (menu === null) {
+        // or no timesheet was recorded yet
+        if (this.menu === null || this.menu.dataset['reload'] === undefined) {
             return;
         }
 
-        const dropdown = menu.querySelector('ul.dropdown-menu');
-
-        this.attributes = dropdown.dataset;
-        this.itemList = dropdown.querySelector('li > ul.menu');
-
-        const self = this;
-        const handle = function() { self.reloadRecentActivities(); };
-
-        // don't block initial browser rendering
-        setTimeout(handle, 500);
+        const handle = () => {
+            this._reloadMenu(this.menu.dataset['reload']);
+        };
 
         document.addEventListener('kimai.recentActivities', handle);
         document.addEventListener('kimai.timesheetUpdate', handle);
@@ -49,45 +40,44 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         document.addEventListener('kimai.projectDelete', handle);
         document.addEventListener('kimai.customerUpdate', handle);
         document.addEventListener('kimai.customerDelete', handle);
+
+        this._attachAddRemoveFavorite();
     }
 
-    emptyList() {
-        this.itemList.innerHTML = '';
-    }
+    _attachAddRemoveFavorite()
+    {
+        [].slice.call(this.menu.querySelectorAll('a.list-group-item-actions')).map((element) => {
+            element.addEventListener('click', (event) => {
+                this._reloadMenu(event.currentTarget.href);
 
-    setEntries(entries) {
-        if (entries.length === 0) {
-            this.emptyList();
-            return;
-        }
+                event.preventDefault();
+                event.stopPropagation();
 
-        let htmlToInsert = '';
-
-        for (let timesheet of entries) {
-            let label = this.attributes['template']
-                .replace('%customer%', this.escape(timesheet.project.customer.name))
-                .replace('%project%', this.escape(timesheet.project.name))
-                .replace('%activity%', this.escape(timesheet.activity.name))
-            ;
-
-            htmlToInsert +=
-                `<li>` +
-                    `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStart kimai.timesheetUpdate" class="api-link" data-method="PATCH" data-msg-error="timesheet.start.error" data-msg-success="timesheet.start.success">` +
-                        `<i class="${ this.attributes['icon'] }"></i> ${ label }` +
-                    `</a>` +
-                `</li>`;
-        }
-
-        this.itemList.innerHTML = htmlToInsert;
-    }
-
-    reloadRecentActivities() {
-        const self = this;
-        const API = this.getContainer().getPlugin('api');
-
-        API.get(this.attributes['api'], {}, function(result) {
-            self.setEntries(result);
+                return false;
+            });
         });
     }
 
+    _reloadMenu(url)
+    {
+        this.fetch(url, {method: 'GET'})
+            .then(response => {
+                if (!response.ok) {
+                    //this.menu.remove();
+                    return;
+                }
+
+                return response.text().then(html => {
+                    const newFormHtml = document.createElement('div');
+                    newFormHtml.innerHTML = html;
+                    this.menu.replaceWith(newFormHtml.firstElementChild);
+
+                    this.menu = document.querySelector('header .notifications-menu');
+                    this._attachAddRemoveFavorite();
+                });
+            })
+            .catch(() =>  {
+                //this.menu.remove();
+            });
+    }
 }

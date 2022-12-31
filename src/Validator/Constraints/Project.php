@@ -9,14 +9,10 @@
 
 namespace App\Validator\Constraints;
 
-use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
- */
-class Project extends Constraint
+#[\Attribute(\Attribute::TARGET_CLASS)]
+final class Project extends Constraint
 {
     public const END_BEFORE_BEGIN_ERROR = 'kimai-project-00';
 
@@ -24,9 +20,9 @@ class Project extends Constraint
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
     ];
 
-    public $message = 'This project has invalid settings.';
+    public string $message = 'This project has invalid settings.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

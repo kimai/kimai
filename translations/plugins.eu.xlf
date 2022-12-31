@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Oraindik ez daukazu pluginik instalatuta.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Kimai plugin merkatua</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -9,10 +9,9 @@
 
 namespace App\Tests\Invoice;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Invoice;
-use App\Entity\InvoiceDocument;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
@@ -21,6 +20,7 @@ use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
+use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
@@ -39,12 +39,12 @@ class ServiceInvoiceTest extends TestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
 
-        $formattings = new LanguageFormattings($languages);
+        $formattings = new LocaleService($languages);
 
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
@@ -116,71 +116,20 @@ class ServiceInvoiceTest extends TestCase
         $this->expectExceptionMessage('Cannot create invoice model without template');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
+        $query->setCustomers([new Customer('foo')]);
 
         $sut = $this->getSut([]);
         $sut->createModel($query);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testCreateModelSetsFallbackLanguage()
-    {
-        $template = new InvoiceTemplate();
-        $template->setNumberGenerator('date');
-        self::assertNull($template->getLanguage());
-
-        $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
-        $query->setTemplate($template);
-
-        $sut = $this->getSut([]);
-        $sut->addCalculator(new DefaultCalculator());
-        $sut->addNumberGenerator($this->getNumberGeneratorSut());
-
-        $model = $sut->createModel($query);
-
-        self::assertEquals('en', $model->getTemplate()->getLanguage());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testFindInvoiceItemsWithoutCustomer()
-    {
-        $sut = $this->getSut([]);
-
-        $query = new InvoiceQuery();
-
-        $items = $sut->findInvoiceItems($query);
-        self::assertEquals([], $items);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testFindInvoiceItemsWithCustomer()
-    {
-        $sut = $this->getSut([]);
-
-        $query = new InvoiceQuery();
-        $query->setCustomers([new Customer(), new Customer()]);
-
-        $items = $sut->findInvoiceItems($query);
-        self::assertEquals([], $items);
     }
 
     public function testCreateModelUsesTemplateLanguage()
     {
         $template = new InvoiceTemplate();
         $template->setNumberGenerator('date');
-        $template->setLanguage('de');
-
-        self::assertEquals('de', $template->getLanguage());
+        $template->setLanguage('it');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
+        $query->setCustomers([new Customer('foo')]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -189,13 +138,13 @@ class ServiceInvoiceTest extends TestCase
 
         $model = $sut->createModel($query);
 
-        self::assertEquals('de', $model->getTemplate()->getLanguage());
+        self::assertEquals('it', $model->getTemplate()->getLanguage());
     }
 
     public function testBeginAndEndDateFallback()
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = new Project();
         $project->setCustomer($customer);
 
@@ -237,10 +186,8 @@ class ServiceInvoiceTest extends TestCase
         $template->setNumberGenerator('date');
         $template->setLanguage('de');
 
-        self::assertEquals('de', $template->getLanguage());
-
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer(), $customer]);
+        $query->setCustomers([new Customer('foo'), $customer]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());
@@ -266,21 +213,29 @@ class ServiceInvoiceTest extends TestCase
 
         $customer1 = $this->createMock(Customer::class);
         $customer1->method('getId')->willReturn(1);
+        $customer1->method('getName')->willReturn('customer1');
+        $customer1->method('isVisible')->willReturn(true);
         $project1 = new Project();
         $project1->setCustomer($customer1);
 
         $customer2 = $this->createMock(Customer::class);
         $customer2->method('getId')->willReturn(2);
+        $customer2->method('getName')->willReturn('customer2');
+        $customer2->method('isVisible')->willReturn(true);
         $project2 = new Project();
         $project2->setCustomer($customer2);
 
         $customer3 = $this->createMock(Customer::class);
         $customer3->method('getId')->willReturn(3);
+        $customer3->method('getName')->willReturn('customer3');
+        $customer3->method('isVisible')->willReturn(true);
         $project3 = new Project();
         $project3->setCustomer($customer3);
 
         $customer4 = $this->createMock(Customer::class);
         $customer4->method('getId')->willReturn(4);
+        $customer4->method('getName')->willReturn('customer4');
+        $customer4->method('isVisible')->willReturn(true);
         $project4 = new Project();
         $project4->setCustomer($customer4);
 
@@ -344,7 +299,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
-        $query->setCustomers([$customer3, new Customer(), $customer1, $customer3]);
+        $query->setCustomers([$customer3, new Customer('tröööt'), $customer1, $customer3]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());

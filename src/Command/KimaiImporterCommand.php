@@ -23,6 +23,9 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Repository\Loader\ActivityLoader;
+use App\Repository\Loader\ProjectLoader;
+use App\Repository\Loader\UserLoader;
 use App\Timesheet\Util;
 use DateTime;
 use DateTimeZone;
@@ -31,9 +34,11 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -41,7 +46,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -52,113 +57,86 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * This command is way to (messy and) complex to be tested, so excuse me but I use something which I normally don't like:
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:import:v1', aliases: ['kimai:import-v1'])]
 final class KimaiImporterCommand extends Command
 {
     // minimum required Kimai and database version, lower versions are not supported by this command
     public const MIN_VERSION = '1.0.1';
     public const MIN_REVISION = '1388';
 
-    public const BATCH_SIZE = 200;
+    public const BATCH_SIZE = 1000;
+    private const METAFIELD_NAME = '_imported_id';
 
-    /**
-     * Create the user default passwords
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * Validates the entities before they will be created
-     * @var ValidatorInterface
-     */
-    private $validator;
-    /**
-     * Connection to the Kimai v2 database to write imported data to
-     * @var ManagerRegistry
-     */
-    private $doctrine;
-    /**
-     * Connection to the old database to import data from
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
     /**
      * Prefix for the v1 database tables.
      * @var string
      */
-    private $dbPrefix = '';
+    private string $dbPrefix = '';
     /**
      * Old UserID => new User()
      * Global across all instances.
      *
      * @var User[]
      */
-    private $users = [];
+    private array $users = [];
     /**
      * Instance specific mappings of user IDs to cache IDs
      *
      * @var string[]
      */
-    private $userIds = [];
+    private array $userIds = [];
     /**
      * Old TeamID => new Team()
      * Global across all instances.
      *
      * @var Team[]
      */
-    private $teams = [];
+    private array $teams = [];
     /**
      * Instance specific mappings of team IDs to cache IDs
      *
      * @var string[]
      */
-    private $teamIds = [];
+    private array $teamIds = [];
     /**
      * Global across all instances.
      *
      * @var Customer[]
      */
-    private $customers = [];
+    private array $customers = [];
     /**
      * Old Project ID => new Project()
      * Global across all instances.
      *
      * @var Project[]
      */
-    private $projects = [];
+    private array $projects = [];
     /**
      * id => [projectId => Activity]
      * @var array<Activity[]>
      */
-    private $activities = [];
+    private array $activities = [];
+    private bool $debug = false;
     /**
-     * @var bool
-     */
-    private $debug = false;
-    /**
-     * Global activities (either because they were global OR becuase --global was used).
+     * Global activities (either because they were global OR because --global was used).
      *
      * @var array
      */
-    private $oldActivities = [];
+    private array $oldActivities = [];
+    /**
+     * @var array<string, mixed>
+     */
+    private array $options = [];
 
-    private $options = [];
-
-    public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher, private ManagerRegistry $doctrine, private ValidatorInterface $validator)
     {
-        $this->encoder = $encoder;
-        $this->doctrine = $registry;
-        $this->validator = $validator;
-
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:import:v1')
-            ->setAliases(['kimai:import-v1'])
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
             ->addArgument(
@@ -226,21 +204,21 @@ final class KimaiImporterCommand extends Command
     private function validateOptions(array $options, SymfonyStyle $io): bool
     {
         $password = $options['password'];
-        if (null === $password || \strlen($password = trim($password)) < 8) {
+        if (null === $password || \strlen(trim($password)) < 8) {
             $io->error('Password length is not sufficient, at least 8 character are required');
 
             return false;
         }
 
         $country = $options['country'];
-        if (null === $country || 2 != \strlen($country = trim($country))) {
+        if (null === $country || 2 !== \strlen(trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return false;
         }
 
         $currency = $options['currency'];
-        if (null === $currency || 3 != \strlen($currency = trim($currency))) {
+        if (null === $currency || 3 !== \strlen(trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return false;
@@ -255,10 +233,7 @@ final class KimaiImporterCommand extends Command
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -266,7 +241,7 @@ final class KimaiImporterCommand extends Command
         if (!$this->validateOptions($options, $io)) {
             $io->error('Invalid importer configuration, exiting');
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $this->options = $options;
@@ -277,14 +252,15 @@ final class KimaiImporterCommand extends Command
         $this->deactivateLifecycleCallbacks();
         // create reading database connection to Kimai 1
         $this->connection = $connection = DriverManager::getConnection(['url' => $options['url']]);
-
-        $this->connection->getConfiguration()->setSQLLogger(null);
-        $this->doctrine->getConnection()->getConfiguration()->setSQLLogger(null);
+        $this->connection->getConfiguration()->setSQLLogger();
+        /** @var Connection $c */
+        $c = $this->doctrine->getConnection();
+        $c->getConfiguration()->setSQLLogger();
 
         foreach ($options['prefix'] as $prefix) {
             $this->dbPrefix = $prefix;
-            if (!$this->checkDatabaseVersion($connection, $io, self::MIN_VERSION, self::MIN_REVISION)) {
-                return 1;
+            if (!$this->checkDatabaseVersion($connection, $io)) {
+                return Command::FAILURE;
             }
         }
 
@@ -336,13 +312,13 @@ final class KimaiImporterCommand extends Command
                 $this->fixTimesheet();
             }
 
-            // pre-load all data to make sure we can fully import everything
+            // preload all data to make sure we can fully import everything
             try {
                 $users = $this->fetchAllFromImport('users');
             } catch (Exception $ex) {
                 $io->error('Failed to load users: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -350,7 +326,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load customers: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -358,7 +334,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load projects: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -366,7 +342,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load activities: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -374,7 +350,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load fixedRates: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -382,7 +358,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load rates: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             $io->success('Fetched Kimai v1 data, validating now');
@@ -392,7 +368,7 @@ final class KimaiImporterCommand extends Command
                     $io->error($errorMessage);
                 }
 
-                return 1;
+                return Command::FAILURE;
             }
             $io->success('Pre-validated data, importing now');
 
@@ -403,7 +379,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -414,7 +390,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -425,7 +401,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -434,7 +410,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -444,17 +420,17 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import groups/teams: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
                 if ($options['instance-team'] && \count($users) > 0) {
                     $this->createInstanceTeam($io, $users, $activities, $prefix);
                 }
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $io->error('Failed to create instance team: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
 
             try {
@@ -466,7 +442,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return Command::FAILURE;
             }
         }
 
@@ -481,7 +457,7 @@ final class KimaiImporterCommand extends Command
             'Total memory usage: ' . $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function validateKimai1Data(array $options, array $users, array $customer, array $projects, array $activities, array $rates): array
@@ -589,12 +565,12 @@ final class KimaiImporterCommand extends Command
      * Checks if the given database connection for import has an underlying database with a compatible structure.
      * This is checked against the Kimai version and database revision.
      *
+     * @param Connection $connection
      * @param SymfonyStyle $io
-     * @param string $requiredVersion
-     * @param string $requiredRevision
      * @return bool
+     * @throws \Doctrine\DBAL\Exception
      */
-    protected function checkDatabaseVersion(Connection $connection, SymfonyStyle $io, string $requiredVersion, string $requiredRevision): bool
+    private function checkDatabaseVersion(Connection $connection, SymfonyStyle $io): bool
     {
         $optionColumn = $connection->quoteIdentifier('option');
         $qb = $connection->createQueryBuilder();
@@ -603,7 +579,7 @@ final class KimaiImporterCommand extends Command
             $connection->createQueryBuilder()
                 ->select('1')
                 ->from($connection->quoteIdentifier($this->dbPrefix . 'configuration'))
-                ->execute();
+                ->executeQuery();
         } catch (Exception $e) {
             $io->error(
                 sprintf('Cannot read from table "%sconfiguration", make sure that your prefix "%s" is correct.', $this->dbPrefix, $this->dbPrefix)
@@ -617,10 +593,13 @@ final class KimaiImporterCommand extends Command
             ->from($connection->quoteIdentifier($this->dbPrefix . 'configuration'))
             ->where($qb->expr()->eq($optionColumn, ':option'))
             ->setParameter('option', 'version')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
-        if (1 == version_compare($requiredVersion, $version)) {
+        $requiredVersion = self::MIN_VERSION;
+        $requiredRevision = self::MIN_REVISION;
+
+        if (1 === version_compare($requiredVersion, $version)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Needs at least ' . $requiredVersion . ' but found ' . $version
@@ -634,10 +613,10 @@ final class KimaiImporterCommand extends Command
             ->from($connection->quoteIdentifier($this->dbPrefix . 'configuration'))
             ->where($qb->expr()->eq($optionColumn, ':option'))
             ->setParameter('option', 'revision')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
-        if (1 == version_compare($requiredRevision, $revision)) {
+        if (1 === version_compare($requiredRevision, $revision)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Database revision needs to be ' . $requiredRevision . ' but found ' . $revision
@@ -668,7 +647,7 @@ final class KimaiImporterCommand extends Command
             $tables[] = $this->dbPrefix . $table;
         }
 
-        if (!$connection->getSchemaManager()->tablesExist($tables)) {
+        if (!$connection->createSchemaManager()->tablesExist($tables)) {
             $io->error(
                 'Import cannot be started, missing tables. Required are: ' . implode(', ', $tables)
             );
@@ -682,16 +661,16 @@ final class KimaiImporterCommand extends Command
     /**
      * Remove the timesheet lifecycle events subscriber, which would overwrite values for imported timesheet records.
      */
-    protected function deactivateLifecycleCallbacks()
+    private function deactivateLifecycleCallbacks()
     {
-        $connection = $connection = $this->getDoctrine()->getConnection();
+        $connection = $this->getDoctrine()->getConnection();
 
         $allListener = $connection->getEventManager()->getListeners();
         foreach ($allListener as $event => $listeners) {
             foreach ($listeners as $hash => $object) {
                 if ($object instanceof TimesheetSubscriber) {
                     $connection->getEventManager()->removeEventListener([$event], $object);
-                /* @phpstan-ignore-next-line  */
+                    /* @phpstan-ignore-next-line  */
                 } elseif ($object instanceof \KimaiPlugin\AuditTrailBundle\Doctrine\MetadataSubscriber) {
                     // deactivate audit plugin listener
                     $connection->getEventManager()->removeEventListener([$event], $object);
@@ -705,7 +684,7 @@ final class KimaiImporterCommand extends Command
      * @param int $size
      * @return string
      */
-    protected function bytesHumanReadable(int $size): string
+    private function bytesHumanReadable(int $size): string
     {
         if ($size === 0) {
             return '0';
@@ -718,7 +697,7 @@ final class KimaiImporterCommand extends Command
         return @round($size / pow(1024, $i), 2) . ' ' . $unit[$a];
     }
 
-    protected function fetchAllFromImport(string $table, array $where = []): array
+    private function fetchAllFromImport(string $table, array $where = []): array
     {
         $query = $this->connection->createQueryBuilder()
             ->select('*')
@@ -728,10 +707,10 @@ final class KimaiImporterCommand extends Command
             $query->andWhere($query->expr()->eq($column, $value));
         }
 
-        return $query->execute()->fetchAll();
+        return $query->executeQuery()->fetchAllAssociative();
     }
 
-    protected function countFromImport(string $table, array $where = []): int
+    private function countFromImport(string $table, array $where = []): int
     {
         $query = $this->connection->createQueryBuilder()
             ->select('COUNT(*)')
@@ -741,22 +720,19 @@ final class KimaiImporterCommand extends Command
             $query->andWhere($query->expr()->eq($column, $value));
         }
 
-        return $query->execute()->fetchOne();
+        return $query->executeQuery()->fetchOne();
     }
 
-    protected function fetchIteratorFromImport(string $table): \Traversable
+    private function fetchIteratorFromImport(string $table): \Traversable
     {
         $query = $this->connection->createQueryBuilder()
             ->select('*')
             ->from($this->connection->quoteIdentifier($this->dbPrefix . $table));
 
-        return $query->execute()->iterateAssociative();
+        return $query->executeQuery()->iterateAssociative();
     }
 
-    /**
-     * @return ManagerRegistry
-     */
-    protected function getDoctrine()
+    private function getDoctrine(): ManagerRegistry
     {
         return $this->doctrine;
     }
@@ -766,7 +742,7 @@ final class KimaiImporterCommand extends Command
      * @param object $object
      * @return bool
      */
-    protected function validateImport(SymfonyStyle $io, $object)
+    private function validateImport(SymfonyStyle $io, $object): bool
     {
         $errors = $this->validator->validate($object);
 
@@ -808,7 +784,7 @@ final class KimaiImporterCommand extends Command
         // workaround when importing multiple instances at once: search if the user exists by unique values
         foreach ($this->users as $tmpUserId => $tmpUser) {
             $newEmail = strtolower($tmpUser->getEmail());
-            $newName = strtolower($tmpUser->getUsername());
+            $newName = strtolower($tmpUser->getUserIdentifier());
             $oldEmail = strtolower($oldUser['mail']);
             $oldName = strtolower($oldUser['name']);
             if ($newEmail !== $oldEmail && $newName !== $oldName) {
@@ -850,9 +826,11 @@ final class KimaiImporterCommand extends Command
         return false;
     }
 
-    private function setUserCache(array $oldUser, User $user): void
+    private function setUserCache(array|int $oldUser, User $user): void
     {
-        $this->users[$oldUser['userID']] = $user;
+        $cacheKey = \is_array($oldUser) ? $oldUser['userID'] : $oldUser;
+
+        $this->users[$cacheKey] = $user;
     }
 
     /**
@@ -887,7 +865,7 @@ final class KimaiImporterCommand extends Command
      * @return int
      * @throws Exception
      */
-    protected function importUsers(SymfonyStyle $io, string $password, array $users, array $rates, string $timezone, string $language): int
+    private function importUsers(SymfonyStyle $io, string $password, array $users, array $rates, string $timezone, string $language): int
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -897,28 +875,32 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            $isActive = (bool) $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
-            $role = (1 == $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
+            $isActive = $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
+            $role = (1 === (int) $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
-            $user->setUsername($oldUser['name'])
-                ->setEmail($oldUser['mail'])
-                ->setPlainPassword($password)
-                ->setEnabled($isActive)
-                ->setRoles([$role])
-            ;
+            $user->setUserIdentifier($oldUser['name']);
+            $user->setEmail($oldUser['mail']);
+            $user->setPlainPassword($password);
+            $user->setEnabled($isActive);
+            $user->setRoles([$role]);
 
-            if ($this->options['alias-as-account-number']) {
-                $user->setAccountNumber(mb_substr($oldUser['alias'], 0, 30));
-            } else {
-                $user->setAlias($oldUser['alias']);
+            $newPref = new UserPreference(self::METAFIELD_NAME, $oldUser['userID']);
+            $user->addPreference($newPref);
+
+            if ($oldUser['alias'] !== null) {
+                if ($this->options['alias-as-account-number']) {
+                    $user->setAccountNumber(mb_substr($oldUser['alias'], 0, 30));
+                } else {
+                    $user->setAlias($oldUser['alias']);
+                }
             }
 
-            $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($pwd);
 
             if (!$this->validateImport($io, $user)) {
-                throw new Exception('Failed to validate user: ' . $user->getUsername());
+                throw new Exception('Failed to validate user: ' . $user->getUserIdentifier());
             }
 
             // find and migrate user preferences
@@ -935,10 +917,7 @@ final class KimaiImporterCommand extends Command
                     continue;
                 }
 
-                $newPref = new UserPreference();
-                $newPref
-                    ->setName($prefsToImport[$key])
-                    ->setValue($pref['value']);
+                $newPref = new UserPreference($prefsToImport[$key], $pref['value']);
                 $user->addPreference($newPref);
             }
 
@@ -953,9 +932,7 @@ final class KimaiImporterCommand extends Command
             // find hourly rate
             foreach ($rates as $ratesRow) {
                 if ($ratesRow['userID'] === $oldUser['userID'] && $ratesRow['activityID'] === null && $ratesRow['projectID'] === null) {
-                    $newPref = new UserPreference();
-                    $newPref->setName(UserPreference::HOURLY_RATE);
-                    $newPref->setValue($ratesRow['rate']);
+                    $newPref = new UserPreference(UserPreference::HOURLY_RATE, $ratesRow['rate']);
                     $user->addPreference($newPref);
                 }
             }
@@ -964,11 +941,11 @@ final class KimaiImporterCommand extends Command
                 $entityManager->persist($user);
                 $entityManager->flush();
                 if ($this->debug) {
-                    $io->success('Created user: ' . $user->getUsername());
+                    $io->success('Created user: ' . $user->getUserIdentifier());
                 }
                 ++$counter;
             } catch (Exception $ex) {
-                $io->error('Failed to create user: ' . $user->getUsername());
+                $io->error('Failed to create user: ' . $user->getUserIdentifier());
                 $io->error('Reason: ' . $ex->getMessage());
             }
 
@@ -987,9 +964,9 @@ final class KimaiImporterCommand extends Command
         return null;
     }
 
-    private function isKnownCustomer(array $oldCustomer): bool
+    private function isKnownCustomer(array|int $oldCustomer): bool
     {
-        $cacheId = $oldCustomer['customerID'];
+        $cacheId = \is_array($oldCustomer) ? $oldCustomer['customerID'] : $oldCustomer;
 
         return isset($this->customers[$cacheId]);
     }
@@ -1032,7 +1009,7 @@ final class KimaiImporterCommand extends Command
      * @return int
      * @throws Exception
      */
-    protected function importCustomers(SymfonyStyle $io, $customers, $country, $currency, string $timezone)
+    private function importCustomers(SymfonyStyle $io, $customers, $country, $currency, string $timezone)
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -1054,26 +1031,23 @@ final class KimaiImporterCommand extends Command
                 $newTimezone = $timezone;
             }
 
-            $customer = new Customer();
-            $customer
-                ->setName($name)
-                ->setComment($oldCustomer['comment'])
-                ->setCompany($oldCustomer['company'])
-                ->setFax($oldCustomer['fax'])
-                ->setHomepage($oldCustomer['homepage'])
-                ->setMobile($oldCustomer['mobile'])
-                ->setEmail($oldCustomer['mail'])
-                ->setPhone($oldCustomer['phone'])
-                ->setContact($oldCustomer['contact'])
-                ->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city'])
-                ->setTimezone($newTimezone)
-                ->setVisible($isActive)
-                ->setCountry(strtoupper($country))
-                ->setCurrency(strtoupper($currency))
-            ;
+            $customer = new Customer($name);
+            $customer->setComment($oldCustomer['comment']);
+            $customer->setCompany($oldCustomer['company']);
+            $customer->setFax($oldCustomer['fax']);
+            $customer->setHomepage($oldCustomer['homepage']);
+            $customer->setMobile($oldCustomer['mobile']);
+            $customer->setEmail($oldCustomer['mail']);
+            $customer->setPhone($oldCustomer['phone']);
+            $customer->setContact($oldCustomer['contact']);
+            $customer->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city']);
+            $customer->setTimezone($newTimezone);
+            $customer->setVisible($isActive);
+            $customer->setCountry(strtoupper($country));
+            $customer->setCurrency(strtoupper($currency));
 
             $metaField = new CustomerMeta();
-            $metaField->setName('_imported_id');
+            $metaField->setName(self::METAFIELD_NAME);
             $metaField->setValue($oldCustomer['customerID']);
             $metaField->setIsVisible(false);
 
@@ -1110,16 +1084,18 @@ final class KimaiImporterCommand extends Command
         return null;
     }
 
-    private function isKnownProject(array $oldProject): bool
+    private function isKnownProject(array|int $oldProject): bool
     {
-        $cacheId = $oldProject['projectID'];
+        $cacheId = \is_array($oldProject) ? $oldProject['projectID'] : $oldProject;
 
         return isset($this->projects[$cacheId]);
     }
 
-    private function setProjectCache(array $oldProject, Project $project): void
+    private function setProjectCache(array|int $oldProject, Project $project): void
     {
-        $this->projects[$oldProject['projectID']] = $project;
+        $cacheId = \is_array($oldProject) ? $oldProject['projectID'] : $oldProject;
+
+        $this->projects[$cacheId] = $project;
     }
 
     /**
@@ -1144,7 +1120,7 @@ final class KimaiImporterCommand extends Command
      * @return int
      * @throws Exception
      */
-    protected function importProjects(SymfonyStyle $io, $projects, array $fixedRates, array $rates): int
+    private function importProjects(SymfonyStyle $io, $projects, array $fixedRates, array $rates): int
     {
         $counter = 0;
         $entityManager = $this->getDoctrine()->getManager();
@@ -1154,7 +1130,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            $isActive = (bool) $oldProject['visible'] && !(bool) $oldProject['trash'];
+            $isActive = \boolval($oldProject['visible']) && !\boolval($oldProject['trash']);
 
             $customer = $this->getCachedCustomer($oldProject['customerID']);
             if ($customer === null) {
@@ -1171,16 +1147,14 @@ final class KimaiImporterCommand extends Command
             }
 
             $project = new Project();
-            $project
-                ->setCustomer($customer)
-                ->setName($name)
-                ->setComment($oldProject['comment'] ?: null)
-                ->setVisible($isActive)
-                ->setBudget($oldProject['budget'] ?: 0)
-            ;
+            $project->setCustomer($customer);
+            $project->setName($name);
+            $project->setComment($oldProject['comment'] ?: null);
+            $project->setVisible($isActive);
+            $project->setBudget($oldProject['budget'] ?: 0);
 
             $metaField = new ProjectMeta();
-            $metaField->setName('_imported_id');
+            $metaField->setName(self::METAFIELD_NAME);
             $metaField->setValue($oldProject['projectID']);
             $metaField->setIsVisible(false);
 
@@ -1202,11 +1176,11 @@ final class KimaiImporterCommand extends Command
             }
 
             foreach ($fixedRates as $fixedRow) {
-                // activity rates a re assigned in createActivity()
+                // activity rates a re-assigned in createActivity()
                 if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
                     continue;
                 }
-                if ($fixedRow['projectID'] == $oldProject['projectID']) {
+                if ($fixedRow['projectID'] === $oldProject['projectID']) {
                     $projectRate = new ProjectRate();
                     $projectRate->setProject($project);
                     $projectRate->setRate($fixedRow['rate']);
@@ -1227,7 +1201,7 @@ final class KimaiImporterCommand extends Command
                 if ($ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
                     continue;
                 }
-                if ($ratesRow['projectID'] == $oldProject['projectID']) {
+                if ($ratesRow['projectID'] === $oldProject['projectID']) {
                     $projectRate = new ProjectRate();
                     $projectRate->setProject($project);
                     $projectRate->setRate($ratesRow['rate']);
@@ -1255,6 +1229,56 @@ final class KimaiImporterCommand extends Command
         return $counter;
     }
 
+    private function clearCache(): void
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->clear();
+
+        if (!($entityManager instanceof EntityManagerInterface)) {
+            throw new Exception('Received ObjectManager, but need EntityManagerInterface');
+        }
+
+        // re-cache all projects
+        $this->projects = [];
+        $projects = $entityManager->getRepository(Project::class)->findAll();
+        $loader = new ProjectLoader($entityManager);
+        $loader->loadResults($projects);
+        /** @var Project $project */
+        foreach ($projects as $project) {
+            $oldId = $project->getMetaField(self::METAFIELD_NAME)?->getValue();
+            if (\is_int($oldId)) {
+                $this->setProjectCache($oldId, $project);
+            }
+        }
+
+        // re-cache all activities
+        $this->activities = [];
+        $activities = $entityManager->getRepository(Activity::class)->findAll();
+        $loader = new ActivityLoader($entityManager);
+        $loader->loadResults($activities);
+        /** @var Activity $activity */
+        foreach ($activities as $activity) {
+            $oldActivity = $activity->getMetaField(self::METAFIELD_NAME)?->getValue();
+            $projectId = $activity->getProject()?->getId();
+            if (\is_int($oldActivity)) {
+                $this->setActivityCache($oldActivity, $activity, $projectId);
+            }
+        }
+
+        // re-cache all users
+        $this->users = [];
+        $users = $entityManager->getRepository(User::class)->findAll();
+        $loader = new UserLoader($entityManager);
+        $loader->loadResults($users);
+        /** @var User $user */
+        foreach ($users as $user) {
+            $oldId = $user->getPreferenceValue(self::METAFIELD_NAME);
+            if (\is_int($oldId)) {
+                $this->setUserCache($oldId, $user);
+            }
+        }
+    }
+
     private function getCachedActivity(int $id, ?int $projectId = null): ?Activity
     {
         if (isset($this->activities[$id][$projectId])) {
@@ -1264,9 +1288,9 @@ final class KimaiImporterCommand extends Command
         return null;
     }
 
-    private function isKnownActivity(array $oldActivity, ?int $projectId = null): bool
+    private function isKnownActivity(array|int $oldActivity, ?int $projectId = null): bool
     {
-        $cacheId = $oldActivity['activityID'];
+        $cacheId = \is_array($oldActivity) ? $oldActivity['activityID'] : $oldActivity;
 
         if (isset($this->activities[$cacheId][$projectId])) {
             return true;
@@ -1275,9 +1299,9 @@ final class KimaiImporterCommand extends Command
         return false;
     }
 
-    private function setActivityCache(array $oldActivity, Activity $activity, ?int $projectId = null): void
+    private function setActivityCache(array|int $oldActivity, Activity $activity, ?int $projectId = null): void
     {
-        $cacheId = $oldActivity['activityID'];
+        $cacheId = \is_array($oldActivity) ? $oldActivity['activityID'] : $oldActivity;
 
         if (!isset($this->activities[$cacheId])) {
             $this->activities[$cacheId] = [];
@@ -1310,7 +1334,7 @@ final class KimaiImporterCommand extends Command
      * @return int
      * @throws Exception
      */
-    protected function importActivities(SymfonyStyle $io, array $activities, array $fixedRates, array $rates): int
+    private function importActivities(SymfonyStyle $io, array $activities, array $fixedRates, array $rates): int
     {
         $activityToProject = $this->fetchAllFromImport('projects_activities');
 
@@ -1375,13 +1399,13 @@ final class KimaiImporterCommand extends Command
      * @return Activity
      * @throws Exception
      */
-    protected function createActivity(
+    private function createActivity(
         SymfonyStyle $io,
         ObjectManager $entityManager,
         array $oldActivity,
         array $fixedRates,
         array $rates,
-        $oldProjectId = null
+        ?int $oldProjectId = null
     ) {
         $oldActivityId = $oldActivity['activityID'];
 
@@ -1389,7 +1413,7 @@ final class KimaiImporterCommand extends Command
             return $this->getCachedActivity($oldActivityId, $oldProjectId);
         }
 
-        $isActive = (bool) $oldActivity['visible'] && !(bool) $oldActivity['trash'];
+        $isActive = ((bool) $oldActivity['visible']) && !(bool) $oldActivity['trash'];
         $name = $oldActivity['name'];
         if (empty($name)) {
             $name = uniqid();
@@ -1418,7 +1442,7 @@ final class KimaiImporterCommand extends Command
         }
 
         $metaField = new ActivityMeta();
-        $metaField->setName('_imported_id');
+        $metaField->setName(self::METAFIELD_NAME);
         $metaField->setValue($oldActivity['activityID']);
         $metaField->setIsVisible(false);
 
@@ -1448,7 +1472,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if ($fixedRow['activityID'] == $oldActivityId) {
+            if ($fixedRow['activityID'] === $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($fixedRow['rate']);
@@ -1473,7 +1497,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if ($ratesRow['activityID'] == $oldActivityId) {
+            if ($ratesRow['activityID'] === $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($ratesRow['rate']);
@@ -1512,8 +1536,8 @@ final class KimaiImporterCommand extends Command
      * ["comment"]=> string(36) "a work description"
      * -- ["commentType"]=> string(1) "0"
      * ["cleared"]=> string(1) "0"
-     * -- ["location"]=> string(0) ""
-     * -- ["trackingNumber"]=> NULL
+     * ["location"]=> string(0) "" (via meta field)
+     * ["trackingNumber"]=> NULL (via meta field)
      * ["rate"]=> string(5) "50.00"
      * ["fixedRate"]=> string(4) "0.00"
      * -- ["budget"]=> NULL
@@ -1521,14 +1545,18 @@ final class KimaiImporterCommand extends Command
      * -- ["statusID"]=> string(1) "1"
      * -- ["billable"]=> NULL
      *
+     * @param OutputInterface $output
      * @param SymfonyStyle $io
      * @param array $fixedRates
      * @param array $rates
      * @return int
      * @throws Exception
      */
-    protected function importTimesheetRecords(OutputInterface $output, SymfonyStyle $io, array $fixedRates, array $rates): int
+    private function importTimesheetRecords(OutputInterface $output, SymfonyStyle $io, array $fixedRates, array $rates): int
     {
+        // clear the entity manager to free up memory and speed up things
+        $this->clearCache();
+
         $records = $this->fetchIteratorFromImport('timeSheet');
         $total = $this->countFromImport('timeSheet');
 
@@ -1547,6 +1575,12 @@ final class KimaiImporterCommand extends Command
         $progressBar = new ProgressBar($output, $total);
 
         foreach ($records as $oldRecord) {
+            if (empty($oldRecord['end'])) {
+                $io->error('Cannot import running timesheet record, skipping: ' . $oldRecord['timeEntryID']);
+                $failed++;
+                continue;
+            }
+
             $activity = null;
             $activityId = $oldRecord['activityID'];
             $projectId = $oldRecord['projectID'];
@@ -1579,12 +1613,6 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if (empty($oldRecord['end']) || $oldRecord['end'] === 0) {
-                $io->error('Cannot import running timesheet record, skipping: ' . $oldRecord['timeEntryID']);
-                $failed++;
-                continue;
-            }
-
             $duration = (int) ($oldRecord['end'] - $oldRecord['start']);
 
             // ----------------------- unknown user, damned missing data integrity in Kimai v1 -----------------------
@@ -1593,15 +1621,14 @@ final class KimaiImporterCommand extends Command
                 $tempPassword = uniqid() . uniqid();
 
                 $user = new User();
-                $user->setUsername($tempUserName)
-                    ->setAlias('Import: ' . $tempUserName)
-                    ->setEmail($tempUserName . '@example.com')
-                    ->setPlainPassword($tempPassword)
-                    ->setEnabled(false)
-                    ->setRoles([USER::ROLE_USER])
-                ;
+                $user->setUserIdentifier($tempUserName);
+                $user->setAlias('Import: ' . $tempUserName);
+                $user->setEmail($tempUserName . '@example.com');
+                $user->setPlainPassword($tempPassword);
+                $user->setEnabled(false);
+                $user->setRoles([USER::ROLE_USER]);
 
-                $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+                $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($pwd);
 
                 if (!$this->validateImport($io, $user)) {
@@ -1614,11 +1641,11 @@ final class KimaiImporterCommand extends Command
                     $entityManager->persist($user);
                     $entityManager->flush();
                     if ($this->debug) {
-                        $io->success('Created deactivated user: ' . $user->getUsername());
+                        $io->success('Created deactivated user: ' . $user->getUserIdentifier());
                     }
                     $userCounter++;
                 } catch (Exception $ex) {
-                    $io->error('Failed to create user: ' . $user->getUsername());
+                    $io->error('Failed to create user: ' . $user->getUserIdentifier());
                     $io->error('Reason: ' . $ex->getMessage());
                     $failed++;
                     continue;
@@ -1631,19 +1658,19 @@ final class KimaiImporterCommand extends Command
             $timesheet = new Timesheet();
 
             $fixedRate = $oldRecord['fixedRate'];
-            if (!empty($fixedRate) && 0.00 != $fixedRate) {
+            if (!empty($fixedRate) && 0.00 < (float) $fixedRate) {
                 $timesheet->setFixedRate($fixedRate);
             }
 
             $hourlyRate = $oldRecord['rate'];
-            if (!empty($hourlyRate) && 0.00 != $hourlyRate) {
+            if (!empty($hourlyRate) && 0.00 < (float) $hourlyRate) {
                 $timesheet->setHourlyRate($hourlyRate);
             }
 
             if ($timesheet->getFixedRate() !== null) {
                 $timesheet->setRate($timesheet->getFixedRate());
             } elseif ($timesheet->getHourlyRate() !== null) {
-                $hourlyRate = (float) $timesheet->getHourlyRate();
+                $hourlyRate = $timesheet->getHourlyRate();
                 $rate = Util::calculateRate($hourlyRate, $duration);
                 $timesheet->setRate($rate);
             }
@@ -1668,17 +1695,15 @@ final class KimaiImporterCommand extends Command
             }
             // ---------------------------------------------------------------------
 
-            $timesheet
-                ->setDescription($oldRecord['description'] ?? ($oldRecord['comment'] ?? null))
-                ->setUser($user)
-                ->setBegin($begin)
-                ->setEnd($end)
-                ->setDuration($duration)
-                ->setActivity($activity)
-                ->setProject($project)
-                ->setExported(\intval($oldRecord['cleared']) !== 0)
-                ->setTimezone($user->getTimezone())
-            ;
+            $timesheet->setDescription($oldRecord['description'] ?? ($oldRecord['comment'] ?? null));
+            $timesheet->setUser($user);
+            $timesheet->setBegin($begin);
+            $timesheet->setEnd($end);
+            $timesheet->setDuration($duration);
+            $timesheet->setActivity($activity);
+            $timesheet->setProject($project);
+            $timesheet->setExported(\intval($oldRecord['cleared']) !== 0);
+            $timesheet->setTimezone($user->getTimezone());
 
             if ($this->options['meta-comment'] !== null) {
                 $timesheet->setDescription($oldRecord['description']);
@@ -1728,14 +1753,12 @@ final class KimaiImporterCommand extends Command
             $progressBar->advance();
             if (0 === $counter % self::BATCH_SIZE) {
                 $entityManager->flush();
-                $entityManager->clear(TimesheetMeta::class);
-                $entityManager->clear(Timesheet::class);
+                $this->clearCache();
             }
         }
 
         $entityManager->flush();
-        $entityManager->clear(TimesheetMeta::class);
-        $entityManager->clear(Timesheet::class);
+        $this->clearCache();
 
         $progressBar->finish();
         $io->writeln('');
@@ -1824,7 +1847,7 @@ final class KimaiImporterCommand extends Command
      * @return int
      * @throws Exception
      */
-    protected function importGroups(SymfonyStyle $io): int
+    private function importGroups(SymfonyStyle $io): int
     {
         $groups = $this->fetchAllFromImport('groups');
         $groupToUser = $this->fetchAllFromImport('groups_users');
@@ -1857,8 +1880,7 @@ final class KimaiImporterCommand extends Command
             }
 
             if (!$this->isKnownGroup($group)) {
-                $team = new Team();
-                $team->setName($group['name']);
+                $team = new Team($group['name']);
             } else {
                 $team = $this->getCachedGroup($group['groupID']);
             }
@@ -1924,7 +1946,11 @@ final class KimaiImporterCommand extends Command
             }
             $team = $newTeams[$row['groupID']];
 
-            $project = $this->getCachedProject($row['projectID']);
+            $project = null;
+            if ($this->isKnownProject($row['projectID'])) {
+                $project = $this->getCachedProject($row['projectID']);
+            }
+
             if ($project === null) {
                 continue;
             }
@@ -2003,8 +2029,7 @@ final class KimaiImporterCommand extends Command
 
     private function createInstanceTeam(SymfonyStyle $io, array $users, array $activities, string $name): void
     {
-        $team = new Team();
-        $team->setName($name);
+        $team = new Team($name);
         $teamlead = $users[array_key_first($users)];
         $teamlead = $this->getCachedUser($teamlead['userID']);
         $team->addTeamlead($teamlead);
@@ -2031,7 +2056,7 @@ final class KimaiImporterCommand extends Command
             ->set('mail', sprintf('CONCAT(LOWER(name), "_import@%s")', $domain))
             ->where("mail = '' OR mail IS null")
         ;
-        $query->execute();
+        $query->executeStatement();
     }
 
     private function fixTimesheet(): void
@@ -2043,7 +2068,7 @@ final class KimaiImporterCommand extends Command
             ->set('rate', '0')
             ->where('start > end')
         ;
-        $query->execute();
+        $query->executeStatement();
     }
 
     private function fixEncoding(): void
@@ -2079,7 +2104,7 @@ final class KimaiImporterCommand extends Command
                         ->set($column, sprintf('REPLACE(%s, "%s", "%s")', $column, $search, $replace))
                         ->where($column . ' LIKE "%' . $search . '%"')
                     ;
-                    $query->execute();
+                    $query->executeStatement();
                 }
             }
         }

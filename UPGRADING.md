@@ -1,4 +1,4 @@
-# Upgrading Kimai 2
+# Upgrading Kimai
 
 _Make sure to create a backup before you start!_ 
 
@@ -8,12 +8,44 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.0](https://github.com/kevinpapst/kimai2/releases/tag/2.0)
+
+**!! This release requires minimum PHP version to 8.1 !!**
+
+Developer read the full documentation at [https://www.kimai.org/documentation/migration-v2.html](https://www.kimai.org/documentation/migration-v2.html).
+
+- Invoice renderer and templates for XML, JSON and TEXT were moved to the [Extended invoicing plugin](https://www.kimai.org/store/invoice-bundle.html) (install if you use one of those)
+- Moved `company.docx` to [external repo](https://github.com/kimai/invoice-templates/tree/main/docx-company) (needs to be re-uploaded if you want to keep on using it!)
+- Role names are forced to be uppercase 
+- Removed unused `public/avatars/` directory 
+- `local.yaml` is not compatible with old version, remove it before the update and then re-create it after everything works 
+  - dashboard default config
+  - removed: theme.branding.translation
+  - removed: kimai.plugin_dir
+- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
+- Removed Twig filters. You might have to replace them in your custom export/invoice templates:
+  - `date_full` => `date_time`
+  - `duration_decimal` => `duration(true)`
+  - `currency` => `currency_name`
+  - `country` => `country_name`
+  - `language` => `language_name`
+- Removed support for custom translation files (use [TranslationBundle](https://www.kimai.org/store/translation-bundle.html) instead or write your own plugin)
+- Removed all 3rd party mailer packages, you need to install them manually (ONLY if you used a short syntax to configure the `MAILER_URL` in `.env`): 
+  - `composer require symfony/amazon-mailer`
+  - `composer require symfony/google-mailer`
+  - `composer require symfony/mailchimp-mailer`
+  - `composer require symfony/mailgun-mailer`
+  - `composer require symfony/postmark-mailer`
+  - `composer require symfony/sendgrid-mailer`
 
 ## [1.16](https://github.com/kimai/kimai/releases/tag/1.16)
+
+If you are using MariaDB, it must be at least version 10.1, older versions are not supported any longer.
 
 **DEVELOPER**
 
 - Removed `formDateTime` field from API model `I18nConfig`
+- Upgraded to Doctrine DBAL 3, see [docs](https://github.com/doctrine/dbal/blob/3.1.x/UPGRADE.md) - you might have to update your bundle
 
 ## [1.15](https://github.com/kimai/kimai/releases/tag/1.15)
 

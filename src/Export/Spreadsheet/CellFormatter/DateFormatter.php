@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DateFormatter implements CellFormatterInterface
+final class DateFormatter implements CellFormatterInterface
 {
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {

@@ -116,23 +116,12 @@ class BundleInstallerCommandTest extends KernelTestCase
 
 class FakeCommand extends Command
 {
-    /**
-     * @var null|string
-     */
-    private $exception = null;
-    /**
-     * @var int
-     */
-    private $exitCode = 0;
-
-    public function __construct(string $commandName, int $exitCode, ?string $executeThrows = null)
+    public function __construct(string $commandName, private int $exitCode, private ?string $exception = null)
     {
         parent::__construct($commandName);
-        $this->exitCode = $exitCode;
-        $this->exception = $executeThrows;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (null !== $this->exception) {
             throw new \Exception($this->exception);

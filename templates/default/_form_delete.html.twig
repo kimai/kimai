@@ -1,4 +1,4 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'danger'} %}
+{% embed '@theme/embeds/card.html.twig' with {'boxtype': 'danger'} %}
     {% block box_before %}
         {{ form_start(form) }}
     {% endblock %}
@@ -9,7 +9,7 @@
         {% block form_body %}
             {% if used is same as (false) %}
                 {{ 'delete.not_in_use'|trans }}
-                <div class="hidden">
+                <div class="d-none">
                     {{ form_widget(form) }}
                 </div>
             {% else %}
@@ -19,9 +19,9 @@
         {% endblock %}
     {% endblock %}
     {% block box_footer %}
-        <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger" />
+        <input type="submit" value="{{ 'delete'|trans }}" class="btn btn-danger" />
         {% if back %}
-            <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
+            <a href="{{ back }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
         {% endif %}
     {% endblock %}
     {% block box_after %}

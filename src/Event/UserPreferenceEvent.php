@@ -19,27 +19,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class UserPreferenceEvent extends Event
 {
     /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const CONFIGURE = UserPreferenceEvent::class;
-
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var UserPreference[]
-     */
-    private $preferences = [];
-
-    /**
      * @param User $user
      * @param UserPreference[] $preferences
      */
-    public function __construct(User $user, array $preferences)
+    public function __construct(private User $user, private array $preferences)
     {
-        $this->user = $user;
-        $this->preferences = $preferences;
     }
 
     /**
@@ -60,10 +44,7 @@ final class UserPreferenceEvent extends Event
         return $this->preferences;
     }
 
-    /**
-     * @param UserPreference $preference
-     */
-    public function addPreference(UserPreference $preference)
+    public function addPreference(UserPreference $preference): void
     {
         foreach ($this->preferences as $pref) {
             if (strtolower($pref->getName()) === strtolower($preference->getName())) {
@@ -73,15 +54,5 @@ final class UserPreferenceEvent extends Event
             }
         }
         $this->preferences[] = $preference;
-    }
-
-    /**
-     * @param UserPreference $preference
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public function addUserPreference(UserPreference $preference)
-    {
-        @trigger_error('addUserPreference() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-        $this->addPreference($preference);
     }
 }

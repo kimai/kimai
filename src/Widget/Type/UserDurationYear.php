@@ -9,27 +9,39 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetInterface;
 
-final class UserDurationYear extends CounterYear
+final class UserDurationYear extends AbstractCounterYear
 {
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function getId(): string
     {
-        parent::__construct($repository, $systemConfiguration);
-        $this->setId('userDurationYear');
-        $this->setOption('dataType', 'duration');
-        $this->setOption('icon', 'duration');
-        $this->setOption('color', 'yellow');
+        return 'userDurationYear';
     }
 
-    public function getData(array $options = [])
+    public function getTemplateName(): string
     {
-        $this->setTitle('stats.durationYear');
-        $this->titleYear = 'stats.durationFinancialYear';
+        return 'widget/widget-counter-duration.html.twig';
+    }
+
+    public function getOptions(array $options = []): array
+    {
+        return array_merge([
+            'icon' => 'duration',
+            'color' => WidgetInterface::COLOR_YEAR,
+        ], parent::getOptions($options));
+    }
+
+    public function getData(array $options = []): mixed
+    {
         $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
         $this->setQueryWithUser(true);
 
         return parent::getData($options);
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.durationFinancialYear';
     }
 }

@@ -68,7 +68,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
         $this->validator->initialize($this->context);
 
         $begin = new \DateTime('-10 hour');
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $activity = new Activity();
         $project = new Project();
         $project->setCustomer($customer);
@@ -95,9 +95,8 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
 
     public function getTestData()
     {
-        yield [false, 'end', 'default'];
+        yield [false, 'end_date', 'default'];
         yield [true, null, 'default'];
-        yield [false, 'duration', 'duration_only'];
-        yield [false, 'start', 'punch'];
+        yield [false, 'start_date', 'punch'];
     }
 }

@@ -10,33 +10,30 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\UserQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the user.
  */
-class UserToolbarForm extends AbstractToolbarForm
+final class UserToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
         $this->addUserRoleChoice($builder);
         $this->addTeamsChoice($builder, 'searchTeams');
-        $this->addVisibilityChoice($builder, 'label.active');
+        $this->addVisibilityChoice($builder, 'active');
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
         $this->addOrder($builder);
         $this->addOrderBy($builder, UserQuery::USER_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => UserQuery::class,

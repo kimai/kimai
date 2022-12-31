@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use App\Plugin\PluginManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,35 +19,23 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command used to fetch plugin information.
  */
-class PluginCommand extends Command
+#[AsCommand(name: 'kimai:plugins')]
+final class PluginCommand extends Command
 {
-    /**
-     * @var PluginManager
-     */
-    private $plugins;
-
-    public function __construct(PluginManager $plugins)
+    public function __construct(private PluginManager $plugins)
     {
-        $this->plugins = $plugins;
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:plugins')
             ->setDescription('Receive plugin information')
             ->setHelp('This command prints detailed plugin information.')
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -54,7 +43,7 @@ class PluginCommand extends Command
         if (empty($plugins)) {
             $io->warning('No plugins installed');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $rows = [];
@@ -70,6 +59,6 @@ class PluginCommand extends Command
         }
         $io->table(['Name', 'Version', 'Requires', 'Directory'], $rows);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

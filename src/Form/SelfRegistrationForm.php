@@ -17,16 +17,13 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SelfRegistrationForm extends AbstractType
+final class SelfRegistrationForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, ['label' => 'label.email'])
-            ->add('username', null, ['label' => 'Username', 'translation_domain' => 'AdminLTEBundle'])
+            ->add('email', EmailType::class, ['label' => 'email'])
+            ->add('username', null, ['label' => 'Username', 'translation_domain' => 'TablerBundle'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
@@ -34,17 +31,14 @@ class SelfRegistrationForm extends AbstractType
                         'autocomplete' => 'new-password',
                     ],
                 ],
-                'first_options' => ['label' => 'label.password'],
-                'second_options' => ['label' => 'label.password_repeat'],
+                'first_options' => ['label' => 'password'],
+                'second_options' => ['label' => 'password_repeat'],
                 'invalid_message' => 'The entered passwords don\'t match.',
             ])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
@@ -52,10 +46,7 @@ class SelfRegistrationForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'user_registration';
     }

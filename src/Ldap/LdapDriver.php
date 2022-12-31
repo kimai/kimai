@@ -13,48 +13,19 @@ use App\Configuration\LdapConfiguration;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ * @internal
  */
 class LdapDriver
 {
-    /**
-     * @var Ldap
-     */
-    private $driver;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var LdapConfiguration
-     */
-    private $config;
+    private ?Ldap $driver = null;
 
-    public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
+    public function __construct(private LdapConfiguration $config, private ?LoggerInterface $logger = null)
     {
-        $this->config = $config;
-        $this->logger = $logger;
     }
 
-    /**
-     * Do not initialize in the constructor, as it is called in some situations from the Symfony DI container,
-     * even if not actively used.
-     *
-     * So users without LDAP run into the exception which is thrown below if the package is not installed.
-     *
-     * To test the problematic behaviour:
-     * - switch to "dev" env
-     * - login as any user
-     * - change the user ID in the database
-     * - reload the page and see the exception
-     *
-     * @return Ldap
-     * @throws \Exception
-     */
-    protected function getDriver()
+    protected function getDriver(): Ldap
     {
         if (null === $this->driver) {
             if (!class_exists('Laminas\Ldap\Ldap')) {
@@ -63,7 +34,6 @@ class LdapDriver
                     'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
                 );
             }
-
             $this->driver = new Ldap($this->config->getConnectionParameters());
         }
 
@@ -105,11 +75,9 @@ class LdapDriver
         return $entries;
     }
 
-    public function bind(UserInterface $user, string $password): bool
+    public function bind(string $bindDn, string $password): bool
     {
         $driver = $this->getDriver();
-
-        $bindDn = $user->getUsername();
 
         try {
             $this->logDebug('{action}({bindDn}, ****)', [
@@ -138,24 +106,18 @@ class LdapDriver
                 }
                 break;
 
-            // Other level codes
+                // Other level codes
             default:
                 $this->logDebug('{exception}', ['exception' => $sanitizedException]);
                 break;
         }
     }
 
-    /**
-     * Log debug messages if the logger is set.
-     *
-     * @param string $message
-     * @param array $context
-     */
     private function logDebug(string $message, array $context = []): void
     {
         if (null === $this->logger) {
             return;
         }
-        $this->logger->debug($message, $context);
+        $this->logger->error($message, $context);
     }
 }

@@ -14,7 +14,6 @@ use App\Form\Type\BudgetType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -33,7 +32,7 @@ trait EntityFormTrait
         if ($showMoney) {
             $builder->add('budget', MoneyType::class, [
                 'empty_data' => '0.00',
-                'label' => 'label.budget',
+                'label' => 'budget',
                 'required' => false,
                 'currency' => $options['currency'],
             ]);
@@ -42,7 +41,7 @@ trait EntityFormTrait
         if ($showTime) {
             $builder->add('timeBudget', DurationType::class, [
                 'empty_data' => 0,
-                'label' => 'label.timeBudget',
+                'label' => 'timeBudget',
                 'icon' => 'clock',
                 'required' => false,
             ]);
@@ -56,22 +55,10 @@ trait EntityFormTrait
 
         $builder
             ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
+                'label' => 'visible',
+                'help' => 'help.visible',
             ])
             ->add('billable', BillableType::class)
         ;
-    }
-
-    /**
-     * @deprecated since 1.15
-     * @param FormBuilderInterface $builder
-     */
-    public function addCreateMore(FormBuilderInterface $builder): void
-    {
-        $builder->add('create_more', CheckboxType::class, [
-            'label' => 'label.create_more',
-            'required' => false,
-            'mapped' => false,
-        ]);
     }
 }

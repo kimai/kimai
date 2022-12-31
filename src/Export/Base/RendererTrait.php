@@ -10,7 +10,7 @@
 namespace App\Export\Base;
 
 use App\Activity\ActivityStatisticService;
-use App\Invoice\InvoiceItemInterface;
+use App\Entity\ExportableItem;
 use App\Model\TimesheetCountedStatistic;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
@@ -18,10 +18,12 @@ use App\Repository\Query\TimesheetQuery;
 trait RendererTrait
 {
     /**
-     * @param InvoiceItemInterface[] $exportItems
+     * FIXME use statistic events to calculate budgets and do NOT iterate all results!
+     *
+     * @param ExportableItem[] $exportItems
      * @return array
      */
-    protected function calculateSummary(array $exportItems)
+    protected function calculateSummary(array $exportItems): array
     {
         $summary = [];
 
@@ -133,10 +135,7 @@ trait RendererTrait
             }
 
             $rate = $exportItem->getRate();
-            $internalRate = $rate;
-            if (method_exists($exportItem, 'getInternalRate')) {
-                $internalRate = $exportItem->getInternalRate();
-            }
+            $internalRate = $exportItem->getInternalRate();
 
             // rate
             $summary[$id]['rate'] += $rate;
@@ -169,12 +168,12 @@ trait RendererTrait
     }
 
     /**
-     * @param InvoiceItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ProjectStatisticService $projectStatisticService
      * @return array
      */
-    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService)
+    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService): array
     {
         $summary = [];
         $projects = [];
@@ -254,12 +253,12 @@ trait RendererTrait
     }
 
     /**
-     * @param InvoiceItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ActivityStatisticService $activityStatisticService
      * @return array
      */
-    protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService)
+    protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService): array
     {
         $summary = [];
         $activities = [];

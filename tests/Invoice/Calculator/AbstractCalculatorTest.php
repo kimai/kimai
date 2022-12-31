@@ -40,7 +40,7 @@ abstract class AbstractCalculatorTest extends TestCase
 
     protected function getEmptyModel()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $query = new InvoiceQuery();
 
@@ -54,7 +54,7 @@ abstract class AbstractCalculatorTest extends TestCase
 
     protected function assertDescription(CalculatorInterface $sut, $addProject = false, $addActivity = false)
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 

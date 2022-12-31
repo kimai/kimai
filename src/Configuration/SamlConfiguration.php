@@ -14,11 +14,8 @@ namespace App\Configuration;
  */
 final class SamlConfiguration implements SamlConfigurationInterface
 {
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function isActivated(): bool
@@ -31,19 +28,29 @@ final class SamlConfiguration implements SamlConfigurationInterface
         return $this->configuration->getSamlTitle();
     }
 
+    public function getProvider(): string
+    {
+        return $this->configuration->getSamlProvider();
+    }
+
     public function getAttributeMapping(): array
     {
-        return $this->configuration->getSamlAttributeMapping();
+        return $this->configuration->findArray('saml.mapping');
     }
 
     public function getRolesAttribute(): ?string
     {
-        return $this->configuration->getSamlRolesAttribute();
+        $attr = $this->configuration->find('saml.roles.attribute');
+        if (empty($attr)) {
+            return null;
+        }
+
+        return (string) $attr;
     }
 
     public function getRolesMapping(): array
     {
-        return $this->configuration->getSamlRolesMapping();
+        return $this->configuration->findArray('saml.roles.mapping');
     }
 
     public function isRolesResetOnLogin(): bool
@@ -53,6 +60,6 @@ final class SamlConfiguration implements SamlConfigurationInterface
 
     public function getConnection(): array
     {
-        return $this->configuration->getSamlConnection();
+        return $this->configuration->findArray('saml.connection');
     }
 }

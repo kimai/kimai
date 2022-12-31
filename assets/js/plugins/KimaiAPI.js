@@ -9,7 +9,6 @@
  * [KIMAI] KimaiAPI: easy access to API methods
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiAPI extends KimaiPlugin {
@@ -18,135 +17,162 @@ export default class KimaiAPI extends KimaiPlugin {
         return 'api';
     }
 
+    _headers() {
+        const headers = new Headers();
+        headers.append('X-AUTH-SESSION', '1');
+        headers.append('Content-Type', 'application/json');
+
+        return headers;
+    }
+
     get(url, data, callbackSuccess, callbackError) {
-        jQuery.ajax({
-            url: url,
-            headers: {
-                'X-AUTH-SESSION': true,
-                'Content-Type':'application/json'
-            },
+        if (data !== undefined) {
+            const params = (new URLSearchParams(data)).toString();
+            if (params !== '') {
+                url = url + (url.includes('?') ? '&' : '?') + params;
+            }
+        }
+
+        if (callbackError === undefined) {
+            callbackError = (error) => {
+                this.handleError('An error occurred', error);
+            };
+        }
+
+        this.fetch(url, {
             method: 'GET',
-            data: data,
-            dataType: 'json',
-            success: callbackSuccess,
-            error: callbackError
+            headers: this._headers()
+        }).then((response) => {
+            response.json().then((json) => {
+                callbackSuccess(json);
+            });
+        }).catch((error) => {
+            callbackError(error);
         });
     }
 
     post(url, data, callbackSuccess, callbackError) {
-        if (callbackError === null || callbackError === undefined) {
-            callbackError = this.getPostErrorHandler();
+        if (callbackError === undefined) {
+            callbackError = (error) => {
+                this.handleError('action.update.error', error);
+            };
         }
 
-        jQuery.ajax({
-            url: url,
-            headers: {
-                'X-AUTH-SESSION': true,
-                'Content-Type':'application/json'
-            },
+        this.fetch(url, {
             method: 'POST',
-            data: data,
-            dataType: 'json',
-            success: callbackSuccess,
-            error: callbackError
+            body: this._parseData(data),
+            headers: this._headers()
+        }).then((response) => {
+            response.json().then((json) => {
+                callbackSuccess(json);
+            });
+        }).catch((error) => {
+            callbackError(error);
         });
     }
 
     patch(url, data, callbackSuccess, callbackError) {
-        if (callbackError === null || callbackError === undefined) {
-            callbackError = this.getPatchErrorHandler();
+        if (callbackError === undefined) {
+            callbackError = (error) => {
+                this.handleError('action.update.error', error);
+            };
         }
 
-        jQuery.ajax({
-            url: url,
-            headers: {
-                'X-AUTH-SESSION': true,
-                'Content-Type':'application/json'
-            },
+        this.fetch(url, {
             method: 'PATCH',
-            data: data,
-            dataType: 'json',
-            success: callbackSuccess,
-            error: callbackError
+            body: this._parseData(data),
+            headers: this._headers()
+        }).then((response) => {
+            if (response.statusCode === 204) {
+                callbackSuccess();
+            } else {
+                response.json().then((json) => {
+                    callbackSuccess(json);
+                });
+            }
+        }).catch((error) => {
+            callbackError(error);
         });
     }
 
     delete(url, callbackSuccess, callbackError) {
-        if (callbackError === null || callbackError === undefined) {
-            callbackError = this.getDeleteErrorHandler();
+        if (callbackError === undefined) {
+            callbackError = (error) => {
+                this.handleError('action.delete.error', error);
+            };
         }
 
-        jQuery.ajax({
-            url: url,
-            headers: {
-                'X-AUTH-SESSION': true,
-                'Content-Type':'application/json'
-            },
+        this.fetch(url, {
             method: 'DELETE',
-            dataType: 'json',
-            success: callbackSuccess,
-            error: callbackError
+            headers: this._headers()
+        }).then(() => {
+            callbackSuccess();
+        }).catch((error) => {
+            callbackError(error);
         });
     }
 
-    getDeleteErrorHandler() {
-        const self = this;
-        return function(xhr, err) {
-            self.handleError('action.delete.error', xhr, err);
-        };
-    }
+    /**
+     * @param {string|object} data
+     * @returns {string}
+     * @private
+     */
+    _parseData(data) {
+        if (typeof data === 'object') {
+            return JSON.stringify(data);
+        }
 
-    getPatchErrorHandler() {
-        const self = this;
-        return function(xhr, err) {
-            self.handleError('action.update.error', xhr, err);
-        };
-    }
-
-    getPostErrorHandler() {
-        const self = this;
-        return function(xhr, err) {
-            self.handleError('action.update.error', xhr, err);
-        };
+        return data;
     }
 
     /**
      * @param {string} message
-     * @param {jqXHR} xhr
-     * @param {string} err
+     * @param {Response} response
      */
-    handleError(message, xhr, err) {
-        let resultError = err;
-        if (xhr.responseJSON && xhr.responseJSON.message) {
-            resultError = xhr.responseJSON.message;
-            // find validation errors
-            if (xhr.status === 400 && xhr.responseJSON.errors) {
-                let collected = ['<u>' + resultError + '</u>'];
-                // form errors that are not attached to a field (like extra fields)
-                if (xhr.responseJSON.errors.errors) {
-                    for (let error of xhr.responseJSON.errors.errors) {
-                        collected.push(error);
+    handleError(message, response) {
+        if (response.headers === undefined) {
+            // this can happen if someone clicks to fast and auto running
+            // requests (e.g. active records) are aborted
+            return;
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            response.json().then(data => {
+                let resultError = data.message;
+                // find validation errors
+                if (response.status === 400 && data.errors) {
+                    let collected = ['<u>' + resultError + '</u>'];
+                    // form errors that are not attached to a field (like extra fields)
+                    if (data.errors.errors) {
+                        for (let error of data.errors.errors) {
+                            collected.push(error);
+                        }
                     }
-                }
-                if (xhr.responseJSON.errors.children) {
-                    for (let field in xhr.responseJSON.errors.children) {
-                        let tmpField = xhr.responseJSON.errors.children[field];
-                        if (tmpField.hasOwnProperty('errors') && tmpField.errors.length > 0) {
-                            for (let error of tmpField.errors) {
-                                collected.push(error);
+                    if (data.errors.children) {
+                        for (let field in data.errors.children) {
+                            let tmpField = data.errors.children[field];
+                            if (tmpField.errors !== undefined && tmpField.errors.length > 0) {
+                                for (let error of tmpField.errors) {
+                                    collected.push(error);
+                                }
                             }
                         }
                     }
+                    if (collected.length > 0) {
+                        resultError = collected;
+                    }
                 }
-                if (collected.length > 0) {
-                    resultError = collected;
-                }
-            }
-        } else if (xhr.status && xhr.statusText) {
-            resultError = '[' + xhr.status + '] ' + xhr.statusText;
-        }
 
-        this.getPlugin('alert').error(message, resultError);
+                this.getPlugin('alert').error(message, resultError);
+
+            });
+        } else {
+            response.text().then(() => {
+                const resultError = '[' + response.statusCode + '] ' + response.statusText;
+                this.getPlugin('alert').error(message, resultError);
+            });
+        }
     }
 
 }

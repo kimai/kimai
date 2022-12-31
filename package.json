@@ -5,7 +5,6 @@
   "maintainers": [
     {
       "name": "Kevin Papst",
-      "email": "kpapst@gmx.net",
       "url": "https://www.kevinpapst.de"
     }
   ],
@@ -20,34 +19,36 @@
     "build": "./node_modules/.bin/encore production",
     "prod": "node_modules/.bin/encore production"
   },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.15",
-    "@symfony/webpack-encore": "^1.1",
-    "admin-lte": "^2.4",
-    "bootstrap-sass": "^3.4",
-    "chart.js": "~2.9",
-    "core-js": "^3.6",
-    "daterangepicker": "^3.1",
-    "file-loader": "^6.0",
-    "fullcalendar": "^3.9",
-    "icheck": "^1.0",
-    "jquery": "<3.6",
-    "jquery-slimscroll": "^1.3",
-    "jquery-ui": "^1.12",
-    "js-cookie": "^2.2",
-    "moment": "^2.29",
-    "node-sass": "^7.0",
-    "sass-loader": "^11.0",
-    "select2": "^4.0",
-    "select2-bootstrap-theme": "^0.1.0-beta.10",
-    "sweetalert2": "^10.16",
-    "webpack-notifier": "^1.13"
-  },
-  "resolutions": {
-    "jquery": "3.5.1"
-  },
   "browserslist": [
     "defaults"
   ],
-  "dependencies": {}
+  "packageManager": "yarn@3.2.1",
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/preset-env": "^7.19.4",
+    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@fullcalendar/bootstrap5": "^5.11",
+    "@fullcalendar/core": "^5.11",
+    "@fullcalendar/daygrid": "^5.11",
+    "@fullcalendar/google-calendar": "^5.11",
+    "@fullcalendar/icalendar": "^5.11",
+    "@fullcalendar/interaction": "^5.11",
+    "@fullcalendar/timegrid": "^5.11",
+    "@symfony/webpack-encore": "^4.0",
+    "@tabler/core": "1.0.0-beta16",
+    "chart.js": "^3.9",
+    "core-js": "^3.6",
+    "eslint": "^8.0",
+    "eslint-webpack-plugin": "^3.0",
+    "gridstack": "^7.1",
+    "litepicker": "^2.0",
+    "luxon": "^3.0",
+    "node-sass": "^8.0",
+    "sass-loader": "^13.2",
+    "tom-select": "^2.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-notifier": "^1.13"
+  }
 }

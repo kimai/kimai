@@ -16,6 +16,7 @@ use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Utils\Color;
+use App\Utils\FormFormatConverter;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -24,19 +25,8 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    private $eventDispatcher;
-    private $translator;
-    private $configuration;
-    /**
-     * @var bool
-     */
-    private $randomColors;
-
-    public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator, SystemConfiguration $configuration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->translator = $translator;
-        $this->configuration = $configuration;
     }
 
     /**
@@ -65,10 +55,8 @@ final class ThemeExtension implements RuntimeExtensionInterface
     {
         $themeEvent = new PageActionsEvent($user, $payload, $action, $view);
 
-        $eventName = 'actions.' . $action;
-
-        if ($this->eventDispatcher->hasListeners($eventName)) {
-            $this->eventDispatcher->dispatch($themeEvent, $eventName);
+        if ($this->eventDispatcher->hasListeners($themeEvent->getEventName())) {
+            $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
         }
 
         return $themeEvent;
@@ -80,14 +68,19 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getTranslations();
+        $all = [];
+        foreach ($event->getTranslations() as $key => $translation) {
+            $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
+        }
+
+        return $all;
     }
 
     public function getProgressbarClass(float $percent, ?bool $reverseColors = false): string
     {
-        $colors = ['xl' => 'progress-bar-danger', 'l' => 'progress-bar-warning', 'm' => 'progress-bar-success', 's' => 'progress-bar-primary', 'e' => 'progress-bar-info'];
+        $colors = ['xl' => 'bg-red', 'l' => 'bg-warning', 'm' => 'bg-green', 's' => 'bg-green', 'e' => ''];
         if (true === $reverseColors) {
-            $colors = ['s' => 'progress-bar-danger', 'm' => 'progress-bar-warning', 'l' => 'progress-bar-success', 'xl' => 'progress-bar-primary', 'e' => 'progress-bar-info'];
+            $colors = ['s' => 'bg-red', 'm' => 'bg-warning', 'l' => 'bg-green', 'xl' => 'bg-green', 'e' => ''];
         }
 
         if ($percent > 90) {
@@ -107,58 +100,44 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
     {
-        $title = $this->configuration->getBrandingTitle();
-        if (null === $title || \strlen($title) === 0) {
-            $title = Constants::SOFTWARE;
-        }
-
-        return ($prefix ?? '') . $title . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+        return ($prefix ?? '') . Constants::SOFTWARE . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
     }
 
-    /**
-     * @param string $name
-     * @return mixed
-     * @deprecated since 1.15
-     */
-    public function getThemeConfig(string $name)
-    {
-        @trigger_error('The twig function "theme_config" was deprecated with 1.15, replace it with the global "kimai_config" variable.', E_USER_DEPRECATED);
-
-        switch ($name) {
-            case 'auto_reload_datatable':
-                @trigger_error('The configuration auto_reload_datatable is deprecated and was removed with 1.4', E_USER_DEPRECATED);
-
-                return false;
-
-            case 'soft_limit':
-                return $this->configuration->getTimesheetActiveEntriesHardLimit();
-
-            default:
-                $name = 'theme.' . $name;
-                break;
-        }
-
-        return $this->configuration->find($name);
-    }
-
-    public function colorize(?string $color, ?string $identifier = null, ?string $fallback = null): string
+    public function colorize(?string $color, ?string $identifier = null): string
     {
         if ($color !== null) {
             return $color;
         }
 
-        if ($this->randomColors === null) {
-            $this->randomColors = $this->configuration->isThemeRandomColors();
+        return (new Color())->getRandom($identifier);
+    }
+
+    public function getTimePresets(string $timezone, string $format): array
+    {
+        $converter = new FormFormatConverter();
+        $format = $converter->convert($format);
+
+        $intervalMinutes = $this->configuration->getTimesheetIncrementMinutes();
+
+        if ($intervalMinutes < 5) {
+            return [];
         }
 
-        if ($this->randomColors) {
-            return (new Color())->getRandom($identifier);
+        $maxMinutes = 24 * 60 - $intervalMinutes;
+
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
+        $date->setTime(0, 0, 0);
+
+        $presets = [
+            $date->format($format)
+        ];
+
+        for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
+            $date->modify('+' . $intervalMinutes . ' minutes');
+
+            $presets[] = $date->format($format);
         }
 
-        if ($fallback !== null) {
-            return $fallback;
-        }
-
-        return Constants::DEFAULT_COLOR;
+        return $presets;
     }
 }

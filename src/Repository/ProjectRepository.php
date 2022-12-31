@@ -16,20 +16,20 @@ use App\Entity\ProjectMeta;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\ProjectStatistic;
 use App\Repository\Loader\ProjectLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Utils\Pagination;
 use DateTime;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Project>
@@ -44,7 +44,7 @@ class ProjectRepository extends EntityRepository
      * @param null $lockVersion
      * @return Project|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Project
     {
         /** @var Project|null $project */
         $project = parent::find($id, $lockMode, $lockVersion);
@@ -62,7 +62,7 @@ class ProjectRepository extends EntityRepository
      * @param int[] $projectIds
      * @return Project[]
      */
-    public function findByIds(array $projectIds)
+    public function findByIds(array $projectIds): array
     {
         $qb = $this->createQueryBuilder('p');
         $qb
@@ -94,96 +94,13 @@ class ProjectRepository extends EntityRepository
      * @param null|bool $visible
      * @return int
      */
-    public function countProject($visible = null)
+    public function countProject($visible = null): int
     {
         if (null !== $visible) {
             return $this->count(['visible' => (bool) $visible]);
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use ProjectStatisticService::getProjectStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Project $project
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @return ProjectStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->andWhere('t.project = :project')
-            ->setParameter('project', $project)
-        ;
-
-        // to calculate a budget at a certain point in time
-        if (null !== $end) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
-                ->setParameter('end', $end);
-        }
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        $stats = new ProjectStatistic();
-
-        if (null !== $timesheetResult) {
-            $stats->setCounter($timesheetResult['amount']);
-            $stats->setRecordDuration($timesheetResult['duration']);
-            $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setInternalRate($timesheetResult['internal_rate']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->andWhere('t.project = :project')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('project', $project)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        // to calculate a budget at a certain point in time
-        if (null !== $end) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
-                ->setParameter('end', $end);
-        }
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $timesheetResult) {
-            $stats->setDurationBillable($timesheetResult['duration']);
-            $stats->setRateBillable($timesheetResult['rate']);
-            $stats->setRecordAmountBillable($timesheetResult['amount']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Activity::class, 'a')
-            ->select('COUNT(a.id) as amount')
-            ->andWhere('a.project = :project')
-            ->setParameter('project', $project)
-        ;
-
-        $resultActivities = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $resultActivities) {
-            $stats->setActivityAmount($resultActivities['amount']);
-        }
-
-        return $stats;
     }
 
     public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
@@ -241,19 +158,6 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
-     * @codeCoverageIgnore
-     */
-    public function builderForEntityType($project, $customer)
-    {
-        $query = new ProjectFormTypeQuery();
-        $query->addProject($project);
-        $query->addCustomer($customer);
-
-        return $this->getQueryBuilderForFormType($query);
-    }
-
-    /**
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
      *
      * @param ProjectFormTypeQuery $query
@@ -278,10 +182,10 @@ class ProjectRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('p.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         $mainQuery->add($qb->expr()->eq('c.visible', ':customer_visible'));
-        $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('customer_visible', true, ParameterType::BOOLEAN);
 
         if (!$query->isIgnoreDate()) {
             $andx = $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
@@ -354,17 +258,17 @@ class ProjectRepository extends EntityRepository
             ;
 
             if ($query->isShowVisible()) {
-                $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', true, ParameterType::BOOLEAN);
             } elseif ($query->isShowHidden()) {
-                $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', false, ParameterType::BOOLEAN);
             }
 
-            $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('customer_visible', true, ParameterType::BOOLEAN);
         }
 
         if ($query->hasCustomers()) {
             $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+                ->setParameter('customer', $query->getCustomerIds());
         }
 
         if ($query->getGlobalActivities() !== null) {
@@ -417,11 +321,11 @@ class ProjectRepository extends EntityRepository
             $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':start'),
+                        $qb->expr()->lte('DATE(p.start)', 'DATE(:start)'),
                         $qb->expr()->isNull('p.start')
                     ),
                     $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':start'),
+                        $qb->expr()->gte('DATE(p.end)', 'DATE(:start)'),
                         $qb->expr()->isNull('p.end')
                     )
                 )
@@ -433,11 +337,11 @@ class ProjectRepository extends EntityRepository
             $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':end'),
+                        $qb->expr()->gte('DATE(p.end)', 'DATE(:end)'),
                         $qb->expr()->isNull('p.end')
                     ),
                     $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->lte('DATE(p.start)', 'DATE(:end)'),
                         $qb->expr()->isNull('p.start')
                     )
                 )
@@ -461,9 +365,9 @@ class ProjectRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getPagerfantaForQuery(ProjectQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(ProjectQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -495,7 +399,7 @@ class ProjectRepository extends EntityRepository
     /**
      * @param Project $delete
      * @param Project|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteProject(Project $delete, ?Project $replace = null)
     {

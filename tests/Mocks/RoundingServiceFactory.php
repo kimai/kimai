@@ -9,7 +9,6 @@
 
 namespace App\Tests\Mocks;
 
-use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Timesheet\Rounding\CeilRounding;
 use App\Timesheet\Rounding\ClosestRounding;
@@ -35,7 +34,7 @@ class RoundingServiceFactory extends AbstractMockFactory
             ];
         }
 
-        $configuration = new SystemConfiguration($loader, [
+        $configuration = SystemConfigurationFactory::create($loader, [
             'timesheet' => ['rounding' => $rules]
         ]);
 

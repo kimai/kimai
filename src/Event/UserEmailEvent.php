@@ -14,12 +14,9 @@ use Symfony\Component\Mime\Email;
 
 class UserEmailEvent extends EmailEvent
 {
-    private $user;
-
-    public function __construct(User $user, Email $email)
+    public function __construct(private User $user, Email $email)
     {
         parent::__construct($email);
-        $this->user = $user;
     }
 
     public function getUser(): User

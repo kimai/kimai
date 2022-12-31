@@ -13,20 +13,13 @@ use App\Model\ProjectBudgetStatisticModel;
 
 final class ProjectBudgetStatisticEvent
 {
-    private $models;
-    private $begin;
-    private $end;
-
     /**
      * @param ProjectBudgetStatisticModel[] $models
      * @param \DateTime|null $begin
      * @param \DateTime|null $end
      */
-    public function __construct(array $models, ?\DateTime $begin = null, ?\DateTime $end = null)
+    public function __construct(private array $models, private ?\DateTime $begin = null, private ?\DateTime $end = null)
     {
-        $this->models = $models;
-        $this->begin = $begin;
-        $this->end = $end;
     }
 
     public function getModel(int $projectId): ?ProjectBudgetStatisticModel

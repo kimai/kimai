@@ -18,18 +18,17 @@ use Faker\Factory;
  */
 final class CustomerFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $isVisible = null;
+    private int $amount = 0;
+    private ?bool $isVisible = null;
     /**
      * @var callable
      */
     private $callback;
+
+    public function __construct(int $amount = 0)
+    {
+        $this->amount = $amount;
+    }
 
     /**
      * Will be called prior to persisting the object.
@@ -78,18 +77,15 @@ final class CustomerFixtures implements TestFixture
             if (null !== $this->isVisible) {
                 $visible = $this->isVisible;
             }
-            $customer = new Customer();
-            $customer
-                ->setCurrency($faker->currencyCode())
-                ->setName($faker->company() . ($visible ? '' : ' (x)'))
-                ->setAddress($faker->address())
-                ->setEmail($faker->safeEmail())
-                ->setComment($faker->text())
-                ->setNumber('C-' . $faker->ean8())
-                ->setCountry($faker->countryCode())
-                ->setTimezone($faker->timezone())
-                ->setVisible($visible)
-            ;
+            $customer = new Customer($faker->company() . ($visible ? '' : ' (x)'));
+            $customer->setCurrency($faker->currencyCode());
+            $customer->setAddress($faker->address());
+            $customer->setEmail($faker->safeEmail());
+            $customer->setComment($faker->text());
+            $customer->setNumber('C-' . $faker->ean8());
+            $customer->setCountry($faker->countryCode());
+            $customer->setTimezone($faker->timezone());
+            $customer->setVisible($visible);
 
             if (null !== $this->callback) {
                 \call_user_func($this->callback, $customer);

@@ -23,7 +23,7 @@ class CustomerVoterTest extends AbstractVoterTest
 {
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(CustomerVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);
@@ -40,16 +40,16 @@ class CustomerVoterTest extends AbstractVoterTest
 
         $result = VoterInterface::ACCESS_GRANTED;
         foreach ([$userAdmin, $userSuperAdmin] as $user) {
-            $this->assertVote($user, new Customer(), 'view', $result);
-            $this->assertVote($user, new Customer(), 'edit', $result);
-            $this->assertVote($user, new Customer(), 'budget', $result);
-            $this->assertVote($user, new Customer(), 'delete', $result);
+            $this->assertVote($user, new Customer('foo'), 'view', $result);
+            $this->assertVote($user, new Customer('foo'), 'edit', $result);
+            $this->assertVote($user, new Customer('foo'), 'budget', $result);
+            $this->assertVote($user, new Customer('foo'), 'delete', $result);
         }
 
-        $team = new Team();
+        $team = new Team('foo');
         $team->addTeamlead($userTeamlead);
         foreach ([$userTeamlead] as $user) {
-            $customer = new Customer();
+            $customer = new Customer('foo');
             $team->addCustomer($customer);
             $this->assertVote($user, $customer, 'view', $result);
             $team->removeCustomer($customer);
@@ -59,24 +59,24 @@ class CustomerVoterTest extends AbstractVoterTest
 
         $result = VoterInterface::ACCESS_DENIED;
         foreach ([$userNoRole, $userStandard] as $user) {
-            $this->assertVote($user, new Customer(), 'view', $result);
-            $this->assertVote($user, new Customer(), 'edit', $result);
-            $this->assertVote($user, new Customer(), 'budget', $result);
-            $this->assertVote($user, new Customer(), 'delete', $result);
+            $this->assertVote($user, new Customer('foo'), 'view', $result);
+            $this->assertVote($user, new Customer('foo'), 'edit', $result);
+            $this->assertVote($user, new Customer('foo'), 'budget', $result);
+            $this->assertVote($user, new Customer('foo'), 'delete', $result);
         }
 
         foreach ([$userTeamlead] as $user) {
-            $this->assertVote($user, new Customer(), 'edit', $result);
-            $this->assertVote($user, new Customer(), 'budget', $result);
-            $this->assertVote($user, new Customer(), 'delete', $result);
+            $this->assertVote($user, new Customer('foo'), 'edit', $result);
+            $this->assertVote($user, new Customer('foo'), 'budget', $result);
+            $this->assertVote($user, new Customer('foo'), 'delete', $result);
         }
 
         $result = VoterInterface::ACCESS_ABSTAIN;
         foreach ([$userNoRole, $userStandard, $userTeamlead] as $user) {
-            $this->assertVote($user, new Customer(), 'view_customer', $result);
-            $this->assertVote($user, new Customer(), 'edit_customer', $result);
-            $this->assertVote($user, new Customer(), 'budget_customer', $result);
-            $this->assertVote($user, new Customer(), 'delete_customer', $result);
+            $this->assertVote($user, new Customer('foo'), 'view_customer', $result);
+            $this->assertVote($user, new Customer('foo'), 'edit_customer', $result);
+            $this->assertVote($user, new Customer('foo'), 'budget_customer', $result);
+            $this->assertVote($user, new Customer('foo'), 'delete_customer', $result);
             $this->assertVote($user, new \stdClass(), 'view', $result);
             $this->assertVote($user, null, 'edit', $result);
             $this->assertVote($user, $user, 'delete', $result);
@@ -85,12 +85,12 @@ class CustomerVoterTest extends AbstractVoterTest
 
     public function testTeamlead()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_TEAMLEAD);
         $team->addTeamlead($user);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
@@ -98,22 +98,22 @@ class CustomerVoterTest extends AbstractVoterTest
 
     public function testTeamMember()
     {
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addTeamlead($user);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
 
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $user->addRole(User::ROLE_USER);
         $team->addUser($user);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
@@ -122,45 +122,45 @@ class CustomerVoterTest extends AbstractVoterTest
     public function testAccess()
     {
         // ALLOW: customer has no teams
-        $this->assertVote(new User(), new Customer(), 'access', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote(new User(), new Customer('foo'), 'access', VoterInterface::ACCESS_GRANTED);
 
         // ALLOW: customer has no teams
         $user = new User();
-        $user->addTeam(new Team());
-        $this->assertVote($user, new Customer(), 'access', VoterInterface::ACCESS_GRANTED);
+        $user->addTeam(new Team('foo'));
+        $this->assertVote($user, new Customer('foo'), 'access', VoterInterface::ACCESS_GRANTED);
 
         // ALLOW: user and customer are in the same team (as teamlead)
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
         $team->addTeamlead($user);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
 
         $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
 
         // ALLOW: user and customer are in the same team (as member)
-        $team = new Team();
+        $team = new Team('foo');
         $user = new User();
-        $user->addTeam(new Team());
+        $user->addTeam(new Team('foo'));
         $user->addTeam($team);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->addTeam($team);
 
         $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
 
         // DENY: customer has a team, user not
-        $customer = new Customer();
-        $customer->addTeam(new Team());
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('foo'));
 
         $this->assertVote(new User(), $customer, 'access', VoterInterface::ACCESS_DENIED);
 
         // DENY: user and customer has a team are not in the same team
         $user = new User();
-        $user->addTeam(new Team());
-        $customer = new Customer();
-        $customer->addTeam(new Team());
+        $user->addTeam(new Team('foo'));
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('foo'));
 
         $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
     }

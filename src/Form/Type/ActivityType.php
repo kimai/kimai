@@ -24,15 +24,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an activity.
  */
-class ActivityType extends AbstractType
+final class ActivityType extends AbstractType
 {
-    private $activityHelper;
-    private $projectHelper;
-
-    public function __construct(ActivityHelper $activityHelper, ProjectHelper $projectHelper)
+    public function __construct(private ActivityHelper $activityHelper, private ProjectHelper $projectHelper)
     {
-        $this->activityHelper = $activityHelper;
-        $this->projectHelper = $projectHelper;
     }
 
     public function getChoiceLabel(Activity $activity): string
@@ -40,10 +35,7 @@ class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function groupBy(Activity $activity, $key, $index)
+    public function groupBy(Activity $activity, $key, $index): ?string
     {
         if (null === $activity->getProject()) {
             return null;
@@ -56,21 +48,18 @@ class ActivityType extends AbstractType
      * @param Activity $activity
      * @param string $key
      * @param mixed $value
-     * @return array
+     * @return array<string, string|int|null>
      */
-    public function getChoiceAttributes(Activity $activity, $key, $value)
+    public function getChoiceAttributes(Activity $activity, $key, $value): array
     {
         if (null !== ($project = $activity->getProject())) {
-            return ['data-project' => $project->getId(), 'data-currency' => $project->getCustomer()->getCurrency()];
+            return ['data-project' => $project->getId(), 'data-currency' => $project->getCustomer()?->getCurrency()];
         }
 
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -78,7 +67,7 @@ class ActivityType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Activity ID',
             ],
-            'label' => 'label.activity',
+            'label' => 'activity',
             'class' => Activity::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
@@ -90,7 +79,16 @@ class ActivityType extends AbstractType
             'activities' => null,
             // @var Activity|null
             'ignore_activity' => null,
+            'allow_create' => false,
         ]);
+
+        $resolver->setDefault('api_data', function (Options $options) {
+            if (false !== $options['allow_create']) {
+                return ['create' => 'post_activity'];
+            }
+
+            return [];
+        });
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ActivityRepository $repo) use ($options) {
@@ -109,17 +107,14 @@ class ActivityType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-option-pattern' => $this->activityHelper->getChoicePattern(),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

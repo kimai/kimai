@@ -18,33 +18,12 @@ use App\Repository\ProjectRateRepository;
 
 final class ProjectDuplicationService
 {
-    /**
-     * @var ProjectService
-     */
-    private $projectService;
-    /**
-     * @var ActivityRepository
-     */
-    private $activityRepository;
-    /**
-     * @var ProjectRateRepository
-     */
-    private $projectRateRepository;
-    /**
-     * @var ActivityRateRepository
-     */
-    private $activityRateRepository;
-
     public function __construct(
-        ProjectService $projectService,
-        ActivityRepository $activityRepository,
-        ProjectRateRepository $projectRateRepository,
-        ActivityRateRepository $activityRateRepository
+        private ProjectService $projectService,
+        private ActivityRepository $activityRepository,
+        private ProjectRateRepository $projectRateRepository,
+        private ActivityRateRepository $activityRateRepository
     ) {
-        $this->projectService = $projectService;
-        $this->activityRepository = $activityRepository;
-        $this->projectRateRepository = $projectRateRepository;
-        $this->activityRateRepository = $activityRateRepository;
     }
 
     public function duplicate(Project $project, string $newName): Project

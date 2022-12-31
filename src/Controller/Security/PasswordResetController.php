@@ -27,28 +27,22 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route(path="/resetting")
- */
+#[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
 {
-    private $eventDispatcher;
-    private $userService;
-    private $configuration;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, UserService $userService, SystemConfiguration $configuration)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->userService = $userService;
-        $this->configuration = $configuration;
+    public function __construct(
+        private EventDispatcherInterface $eventDispatcher,
+        private UserService $userService,
+        private SystemConfiguration $configuration
+    ) {
     }
 
     /**
      * Request reset user password: show form.
-     *
-     * @Route(path="/request", name="fos_user_resetting_request", methods={"GET"})
      */
+    #[Route(path: '/request', name: 'resetting_request', methods: ['GET'])]
     public function requestAction(): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -60,10 +54,9 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Request reset user password: submit form and send email.
-     *
-     * @Route(path="/send-email", name="fos_user_resetting_send_email", methods={"POST"})
      */
-    public function sendEmailAction(Request $request): Response
+    #[Route(path: '/send-email', name: 'resetting_send_email', methods: ['POST'])]
+    public function sendEmailAction(Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
@@ -75,7 +68,7 @@ final class PasswordResetController extends AbstractController
         if (null !== $user && !$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
             if (!$user->isInternalUser()) {
                 throw $this->createAccessDeniedException(
-                    sprintf('The user "%s" tried to reset the password, but it is registered as "%s" auth-type.', $user->getUsername(), $user->getAuth())
+                    sprintf('The user "%s" tried to reset the password, but it is registered as "%s" auth-type.', $user->getUserIdentifier(), $user->getAuth())
                 );
             }
 
@@ -83,7 +76,7 @@ final class PasswordResetController extends AbstractController
                 $user->setConfirmationToken($this->userService->generateSecurityToken());
             }
 
-            $mail = $this->generateResettingEmailMessage($user);
+            $mail = $this->generateResettingEmailMessage($user, $translator);
             $event = new EmailPasswordResetEvent($user, $mail);
             $this->eventDispatcher->dispatch($event);
 
@@ -94,14 +87,13 @@ final class PasswordResetController extends AbstractController
             $this->userService->updateUser($user);
         }
 
-        return $this->redirectToRoute('fos_user_resetting_check_email', ['username' => $username]);
+        return $this->redirectToRoute('resetting_check_email', ['username' => $username]);
     }
 
     /**
      * Tell the user to check his email provider.
-     *
-     * @Route(path="/check-email", name="fos_user_resetting_check_email", methods={"GET"})
      */
+    #[Route(path: '/check-email', name: 'resetting_check_email', methods: ['GET'])]
     public function checkEmailAction(Request $request): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -112,7 +104,7 @@ final class PasswordResetController extends AbstractController
 
         if (empty($username)) {
             // the user does not come from the sendEmail action
-            return $this->redirectToRoute('fos_user_resetting_request');
+            return $this->redirectToRoute('resetting_request');
         }
 
         return $this->render('security/password-reset/check_email.html.twig', [
@@ -122,9 +114,8 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Reset user password.
-     *
-     * @Route(path="/reset/{token}", name="fos_user_resetting_reset", methods={"GET", "POST"})
      */
+    #[Route(path: '/reset/{token}', name: 'resetting_reset', methods: ['GET', 'POST'])]
     public function resetAction(Request $request, LoginManager $loginManager, ?string $token): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -134,11 +125,11 @@ final class PasswordResetController extends AbstractController
         $user = $this->userService->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->redirectToRoute('fos_user_security_login');
+            return $this->redirectToRoute('login');
         }
 
         if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetTokenLifetime())) {
-            return $this->redirectToRoute('fos_user_resetting_request');
+            return $this->redirectToRoute('resetting_request');
         }
 
         $form = $this->createResetForm();
@@ -169,20 +160,20 @@ final class PasswordResetController extends AbstractController
     {
         $options = ['validation_groups' => ['ResetPassword', 'Default']];
 
-        return $this->createFormBuilder()->create('fos_user_resetting_form', PasswordResetForm::class, $options)->getForm();
+        return $this->createFormBuilder()->create('resetting_form', PasswordResetForm::class, $options)->getForm();
     }
 
-    private function generateResettingEmailMessage(User $user): Email
+    private function generateResettingEmailMessage(User $user, TranslatorInterface $translator): Email
     {
         $username = $user->getDisplayName();
         $language = $user->getLanguage();
 
-        $url = $this->generateUrl('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail()))
             ->subject(
-                $this->getTranslator()->trans('reset.subject', ['%username%' => $username], 'email', $language)
+                $translator->trans('reset.subject', ['%username%' => $username], 'email', $language)
             )
             ->htmlTemplate('emails/password-reset.html.twig')
             ->context([

@@ -33,16 +33,12 @@ final class CustomerVoter extends Voter
         'delete',
         'permissions',
         'comments',
-        'comments_create',
         'details',
         'access',
     ];
 
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**
@@ -50,7 +46,7 @@ final class CustomerVoter extends Voter
      * @param Customer $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Customer)) {
             return false;
@@ -69,7 +65,7 @@ final class CustomerVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

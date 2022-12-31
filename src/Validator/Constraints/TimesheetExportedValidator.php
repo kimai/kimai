@@ -17,18 +17,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetExportedValidator extends ConstraintValidator
 {
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetExported)) {
             throw new UnexpectedTypeException($constraint, TimesheetExported::class);
@@ -47,7 +44,7 @@ final class TimesheetExportedValidator extends ConstraintValidator
         }
 
         // this was "edit_exported_timesheet" before, but that was wrong, because the first time this
-        // can trigger is the moment when the "export" flag ist set from the "edit form".
+        // can trigger is right when the "export" flag ist set from the "edit form".
         // most teamleads should not have "edit_exported_timesheet" but only "edit_export_other_timesheet"
 
         if (null !== $this->security->getUser() && $this->security->isGranted('edit_export', $timesheet)) {

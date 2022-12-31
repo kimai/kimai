@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-As announced in the [README](README.md) I only support the latest available release and master.
+As announced in the [README](README.md) I only support the latest available release and `main` branch.
 
 | Version              | Supported          |
 |----------------------|--------------------|
-| main/master branch   | :white_check_mark: |
+| main branch          | :white_check_mark: |
 | latest minor release | :white_check_mark: |
 | older releases       | :x:                |
 

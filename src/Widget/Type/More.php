@@ -9,10 +9,28 @@
 
 namespace App\Widget\Type;
 
-class More extends SimpleWidget
+class More extends AbstractWidgetType
 {
-    public function __construct()
+    private mixed $data = null;
+
+    public function setData($data): self
     {
-        $this->setOption('dataType', 'int');
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     * @return mixed|null
+     */
+    public function getData(array $options = []): mixed
+    {
+        return $this->data;
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-more.html.twig';
     }
 }

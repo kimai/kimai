@@ -10,9 +10,8 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Repository\Query\UserQuery;
 
-class UsersSubscriber extends AbstractActionsSubscriber
+final class UsersSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -21,27 +20,16 @@ class UsersSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $payload = $event->getPayload();
-
-        /** @var UserQuery $query */
-        $query = $payload['query'];
-
-        $event->addSearchToggle($query);
-
-        if ($event->isIndexView()) {
-            $event->addColumnToggle('#modal_user_admin');
+        if ($this->isGranted('create_user')) {
+            $event->addCreate($this->path('admin_user_create'), true);
         }
 
         $event->addQuickExport($this->path('user_export'));
 
-        if ($this->isGranted('create_user')) {
-            $event->addCreate($this->path('admin_user_create'), false);
+        if ($this->isGranted('report:other')) {
+            $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_weekly_users'), 'translation_domain' => 'reporting', 'title' => 'report_weekly_users']);
+            $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_monthly_users'), 'translation_domain' => 'reporting', 'title' => 'report_monthly_users']);
+            $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_yearly_users'), 'translation_domain' => 'reporting', 'title' => 'report_yearly_users']);
         }
-
-        if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'user']), 'class' => 'modal-ajax-form']);
-        }
-
-        $event->addHelp($this->documentationLink('users.html'));
     }
 }

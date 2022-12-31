@@ -21,7 +21,6 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -63,10 +62,9 @@ class CustomerControllerTest extends APIControllerBaseTest
         $customer = $repository->find($id);
 
         if (null === $customer) {
-            $customer = new Customer();
+            $customer = new Customer('foooo');
             $customer->setCountry('DE');
             $customer->setTimezone('Europre/Paris');
-            $customer->setName('foooo');
             $repository->saveCustomer($customer);
         }
 
@@ -158,8 +156,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $em->persist($activity);
 
         // and finally a team
-        $team = new Team();
-        $team->setName('Testing customer 1 team');
+        $team = new Team('Testing customer 1 team');
         $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
         $team->addProject($project);
@@ -176,7 +173,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     public function testNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/2');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Customer object not found by the @ParamConverter annotation.');
     }
 
     public function testPostAction()
@@ -230,10 +227,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot create customers', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'User cannot create customers');
     }
 
     public function testPostActionWithInvalidData()
@@ -288,10 +282,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('User cannot update customer', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'User cannot update customer');
     }
 
     public function testPatchActionWithUnknownActivity()
@@ -330,32 +321,32 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     public function testMetaActionThrowsExceptionOnMissingName()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['value' => 'X'], [
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['value' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "name" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Bad Request'
         ]);
     }
 
     public function testMetaActionThrowsExceptionOnMissingValue()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
             'code' => 400,
-            'message' => 'Parameter "value" of value "NULL" violated a constraint "This value should not be null."'
+            'message' => 'Bad Request'
         ]);
     }
 
     public function testMetaActionThrowsExceptionOnMissingMetafield()
     {
-        return $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 500,
-            'message' => 'Unknown meta-field requested'
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 
     public function testMetaAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

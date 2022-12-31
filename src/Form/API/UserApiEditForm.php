@@ -14,18 +14,15 @@ use App\Form\UserEditType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserApiEditForm extends UserEditType
+final class UserApiEditForm extends UserEditType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
         if ($options['include_roles']) {
             $builder->add('roles', UserRoleType::class, [
-                'label' => 'label.roles',
+                'label' => 'roles',
                 'required' => false,
                 'multiple' => true,
                 'expanded' => false,
@@ -33,7 +30,7 @@ class UserApiEditForm extends UserEditType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

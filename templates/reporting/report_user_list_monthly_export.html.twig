@@ -1,4 +1,4 @@
-{% embed 'reporting/user_list_period_data.html.twig' with {'showAccountNumber': true, 'stats': stats, 'dataType': dataType, 'period_attribute': period_attribute} only %}
+{% embed 'reporting/user_list_period_data.html.twig' with {'avatar': false, 'showAccountNumber': true, 'stats': stats, 'dataType': dataType, 'period_attribute': period_attribute} only %}
     {% set dataTypeFormat = '' %}
     {% if dataType == 'rate' or dataType == 'internalRate' %}
         {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::RATE_FORMAT_NO_CURRENCY') ~ '"' %}

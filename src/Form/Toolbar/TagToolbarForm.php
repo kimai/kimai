@@ -10,15 +10,15 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\TagQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagToolbarForm extends AbstractToolbarForm
+final class TagToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
         $this->addPageSizeChoice($builder);
@@ -27,10 +27,7 @@ class TagToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, TagQuery::TAG_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TagQuery::class,

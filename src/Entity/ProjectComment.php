@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -14,35 +12,26 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="kimai2_projects_comments",
- *      indexes={
- *          @ORM\Index(columns={"project_id"})
- *      }
- * )
- */
+#[ORM\Table(name: 'kimai2_projects_comments')]
+#[ORM\Index(columns: ['project_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class ProjectComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 
-    /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $project;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private Project $project;
 
-    public function setProject(Project $project): ProjectComment
+    public function __construct(Project $project)
     {
+        $this->createdAt = new \DateTime();
         $this->project = $project;
-
-        return $this;
     }
 
-    public function getProject(): ?Project
+    public function getProject(): Project
     {
         return $this->project;
     }

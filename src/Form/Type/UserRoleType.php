@@ -19,32 +19,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a user role.
  */
-class UserRoleType extends AbstractType
+final class UserRoleType extends AbstractType
 {
-    /**
-     * @var RoleService
-     */
-    private $roles;
-
-    public function __construct(RoleService $roles)
+    public function __construct(private RoleService $roles)
     {
-        $this->roles = $roles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.roles',
+            'label' => 'roles',
             'include_default' => false,
         ]);
 
-        $resolver->setDefault('choices', function (Options $options) {
+        $resolver->setDefault('choices', function (Options $options): array {
             $roles = [];
             foreach ($this->roles->getAvailableNames() as $name) {
-                $roles[$name] = strtoupper($name);
+                $roles[$name] = $name;
             }
 
             if ($options['include_default'] !== true && isset($roles[User::DEFAULT_ROLE])) {
@@ -55,10 +46,7 @@ class UserRoleType extends AbstractType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

@@ -11,14 +11,8 @@ namespace App\Configuration;
 
 final class MailConfiguration
 {
-    /**
-     * @var string
-     */
-    private $mailFrom;
-
-    public function __construct(string $mailFrom)
+    public function __construct(private string $mailFrom)
     {
-        $this->mailFrom = $mailFrom;
     }
 
     public function getFromAddress(): ?string

@@ -24,33 +24,28 @@ use Faker\Generator;
  *
  * @codeCoverageIgnore
  */
-class InvoiceFixtures extends Fixture
+final class InvoiceFixtures extends Fixture
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('at_AT');
+        $faker = Factory::create('en_US');
 
         foreach ($this->getInvoiceConfigs($faker) as $invoiceConfig) {
-            $template = new InvoiceTemplate();
-
             // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
-            $template
-                ->setName($invoiceConfig[0])
-                ->setTitle($invoiceConfig[1])
-                ->setRenderer($invoiceConfig[2])
-                ->setCalculator($invoiceConfig[3])
-                ->setNumberGenerator($invoiceConfig[4])
-                ->setCompany($invoiceConfig[5])
-                ->setVat($invoiceConfig[6])
-                ->setDueDays($invoiceConfig[7])
-                ->setPaymentTerms($invoiceConfig[8])
-                ->setAddress($this->generateAddress($faker))
-                ->setContact($this->generateContact($faker))
-                ->setPaymentDetails($this->generatePaymentDetails($faker))
-            ;
+            $template = new InvoiceTemplate();
+            $template->setName($invoiceConfig[0]);
+            $template->setTitle($invoiceConfig[1]);
+            $template->setRenderer($invoiceConfig[2]);
+            $template->setCalculator($invoiceConfig[3]);
+            $template->setNumberGenerator($invoiceConfig[4]);
+            $template->setCompany($invoiceConfig[5]);
+            $template->setVat($invoiceConfig[6]);
+            $template->setDueDays($invoiceConfig[7]);
+            $template->setPaymentTerms($invoiceConfig[8]);
+            $template->setLanguage('en');
+            $template->setAddress($this->generateAddress($faker));
+            $template->setContact($this->generateContact($faker));
+            $template->setPaymentDetails($this->generatePaymentDetails($faker));
             $template->setVatId($faker->creditCardNumber());
 
             $manager->persist($template);
@@ -58,7 +53,11 @@ class InvoiceFixtures extends Fixture
         }
     }
 
-    private function getInvoiceConfigs(Generator $faker)
+    /**
+     * @param Generator $faker
+     * @return array
+     */
+    private function getInvoiceConfigs(Generator $faker): array
     {
         $paymentTerms =
             'I would like to thank you for your confidence and will gladly be there for you in the future.' .
@@ -86,11 +85,10 @@ class InvoiceFixtures extends Fixture
 
         // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
         return [
-            ['Invoice (PDF)',             'Invoice',         'default-pdf',      'default',  'default', $faker->company(), 16, 10, $paymentTerms],
-            ['Invoice (HTML)',            'Company name',    'default',          'default',  'default', $faker->company(), 19, 30, $paymentTerms],
-            ['Freelancer (HTML, short)',  'Invoice',         'freelancer',       'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
-            ['Timesheet (HTML)',          'Timesheet',       'timesheet',        'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
-            ['Company invoice (DOCX)',    'Invoice',         'company',          'default',  'default', 'Kimai Inc.',    19, 14, $paymentTerms_alt],
+            ['Default (PDF)',             'Invoice',         'default',         'default',  'default', $faker->company(), 16, 10, $paymentTerms],
+            ['Invoice (HTML)',            'Company name',    'invoice',         'default',  'default', $faker->company(), 19, 30, $paymentTerms],
+            ['Single service date (PDF)', 'Invoice',         'service-date',    'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
+            ['Timesheet (HTML)',          'Timesheet',       'timesheet',       'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
         ];
     }
 

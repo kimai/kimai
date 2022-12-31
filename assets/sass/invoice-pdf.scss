@@ -8,7 +8,7 @@
 body {
     font-family: sans-serif;
     font-size: 10pt;
-    margin: 0;
+    margin: 4px;
     padding: 0;
 }
 table, tr, td, th, p, h1, h2, h3, h4, h5 {
@@ -44,13 +44,9 @@ p {
     white-space: nowrap;
 }
 .date {
-    color: #666;
     font-size: 80%;
     text-align: right;
     padding-top: 6px;
-}
-.wrapper {
-    margin: 4px;
 }
 table {
     width: 100%;

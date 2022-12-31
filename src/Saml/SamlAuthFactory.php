@@ -19,18 +19,15 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class SamlAuthFactory
 {
-    private $request;
-    private $configuration;
-
-    public function __construct(RequestStack $request, SamlConfigurationInterface $configuration)
-    {
-        $this->request = $request;
-        $this->configuration = $configuration;
+    public function __construct(
+        private RequestStack $request,
+        private SamlConfigurationInterface $configuration
+    ) {
     }
 
     public function create(): Auth
     {
-        if (null !== $this->request->getMasterRequest() && $this->request->getMasterRequest()->isFromTrustedProxy()) {
+        if (null !== $this->request->getMainRequest() && $this->request->getMainRequest()->isFromTrustedProxy()) {
             Utils::setProxyVars(true);
         }
 

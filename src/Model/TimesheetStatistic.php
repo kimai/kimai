@@ -9,8 +9,6 @@
 
 namespace App\Model;
 
-use DateTime;
-
 /**
  * Timesheet statistics for one user.
  */
@@ -19,14 +17,14 @@ class TimesheetStatistic
     /**
      * @var \DateTime|null
      */
-    protected $firstEntry;
-    protected $durationThisMonth = 0;
-    protected $durationTotal = 0;
-    protected $amountThisMonth = 0.0;
-    protected $amountTotal = 0.0;
-    protected $amountThisMonthBillable = 0.0;
-    protected $amountTotalBillable = 0.0;
-    protected $recordsTotal = 0;
+    protected ?\DateTime $firstEntry = null;
+    protected int $durationThisMonth = 0;
+    protected int $durationTotal = 0;
+    protected float $amountThisMonth = 0.0;
+    protected float $amountTotal = 0.0;
+    protected float $amountThisMonthBillable = 0.0;
+    protected float $amountTotalBillable = 0.0;
+    protected int $recordsTotal = 0;
 
     public function getDurationThisMonth(): int
     {
@@ -109,19 +107,6 @@ class TimesheetStatistic
     public function setRateThisMonthBillable(float $amountThisMonth): void
     {
         $this->amountThisMonthBillable = $amountThisMonth;
-    }
-
-    /**
-     * @deprecated since 1.15 use TimesheetStatisticService::findFirstRecordDate() instead, will be removed with 2.0
-     */
-    public function getFirstEntry(): ?\DateTime
-    {
-        return $this->firstEntry;
-    }
-
-    public function setFirstEntry(DateTime $firstEntry): void
-    {
-        $this->firstEntry = $firstEntry;
     }
 
     public function getRecordsTotal(): int

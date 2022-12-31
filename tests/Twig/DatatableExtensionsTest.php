@@ -9,10 +9,10 @@
 
 namespace App\Tests\Twig;
 
+use App\Repository\BookmarkRepository;
 use App\Twig\DatatableExtensions;
+use App\Utils\ProfileManager;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFunction;
 
 /**
@@ -22,22 +22,18 @@ class DatatableExtensionsTest extends TestCase
 {
     protected function getSut(string $locale): DatatableExtensions
     {
-        $request = new Request();
-        $request->setLocale($locale);
-        $requestStack = new RequestStack();
-        $requestStack->push($request);
+        $repository = $this->createMock(BookmarkRepository::class);
 
-        return new DatatableExtensions($requestStack);
+        return new DatatableExtensions($repository, new ProfileManager());
     }
 
     public function testGetFunctions()
     {
-        $functions = ['is_visible_column', 'is_datatable_configured'];
+        $functions = ['initialize_datatable', 'datatable_column_class'];
         $sut = $this->getSut('de');
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(\count($functions), $twigFunctions);
         $i = 0;
-        /** @var TwigFunction $function */
         foreach ($twigFunctions as $function) {
             $this->assertInstanceOf(TwigFunction::class, $function);
             $this->assertEquals($functions[$i++], $function->getName());

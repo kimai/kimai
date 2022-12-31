@@ -18,11 +18,7 @@ final class DefaultRounding implements RoundingInterface
         return 'default';
     }
 
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundBegin(Timesheet $record, $minutes)
+    public function roundBegin(Timesheet $record, int $minutes): void
     {
         if ($minutes <= 0) {
             return;
@@ -41,11 +37,7 @@ final class DefaultRounding implements RoundingInterface
         $record->setBegin($newBegin);
     }
 
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundEnd(Timesheet $record, $minutes)
+    public function roundEnd(Timesheet $record, int $minutes): void
     {
         if ($minutes <= 0) {
             return;
@@ -64,17 +56,13 @@ final class DefaultRounding implements RoundingInterface
         $record->setEnd($newEnd);
     }
 
-    /**
-     * @param Timesheet $record
-     * @param int $minutes
-     */
-    public function roundDuration(Timesheet $record, $minutes)
+    public function roundDuration(Timesheet $record, int $minutes): void
     {
         if ($minutes <= 0) {
             return;
         }
 
-        $timestamp = $record->getDuration();
+        $timestamp = $record->getDuration() ?? 0;
         $seconds = $minutes * 60;
         $diff = $timestamp % $seconds;
 

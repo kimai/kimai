@@ -11,62 +11,37 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
 {
-    /**
-     * @var int|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var User|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @SWG\Property(ref="#/definitions/User")
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
-     */
-    private $user;
-    /**
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="rate", type="float", nullable=false)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $rate = 0.00;
-    /**
-     * @var float|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="internal_rate", type="float", nullable=true)
-     */
-    private $internalRate;
-    /**
-     * @var bool
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="fixed", type="boolean", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $isFixed = false;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
+    private ?User $user = null;
+    #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private float $rate = 0.00;
+    #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?float $internalRate = null;
+    #[ORM\Column(name: 'fixed', type: 'boolean', nullable: false)]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private bool $isFixed = false;
 
     /**
      * Get entry id, returns null for new entities which were not persisted.

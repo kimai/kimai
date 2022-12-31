@@ -13,12 +13,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class HexColorValidator extends ConstraintValidator
+final class HexColorValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof HexColor) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HexColor');

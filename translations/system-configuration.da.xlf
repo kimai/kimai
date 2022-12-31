@@ -10,112 +10,96 @@
         <source>theme</source>
         <target>Tema</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target>Tillad markdownformattering i beskrivelser og kommentarer</target>
       </trans-unit>
-      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
-        <source>label.timesheet.mode</source>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+        <source>timesheet.mode</source>
         <target>Tidstrackingstilstand</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
-        <source>label.timesheet.mode_default</source>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+        <source>timesheet.mode_default</source>
         <target>[Standard] start- og sluttider kan redigeres</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Varighed] erstatter sluttiden med et inputfelt til varighed</target>
-      </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
-        <source>label.timesheet.mode_duration_fixed_begin</source>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
+        <source>timesheet.mode_duration_fixed_begin</source>
         <target>[Varighed] konfigurerbar fast starttid, kun varighed kan ændres</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
-        <source>label.timesheet.mode_punch</source>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+        <source>timesheet.mode_punch</source>
         <target>[Ur] bruger kan starte og stoppe registreringer, men kan ikke redigere tid eller varighed</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
-        <source>label.timesheet.rules.allow_future_times</source>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
+        <source>timesheet.rules.allow_future_times</source>
         <target>Tillad tidsindlæg i fremtiden</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
+        <source>timesheet.active_entries.hard_limit</source>
         <target>Tilladt antal af samtidigt kørende tidsregistreringer</target>
       </trans-unit>
-      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Minimum antal af bogstaver for at starte autofulførelse</target>
-      </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+        <source>calendar.week_numbers</source>
         <target>Vis ugenumre</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+        <source>calendar.weekends</source>
         <target>Vis weekender</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+        <source>calendar.businessHours.begin</source>
         <target>Starttid for normale arbejdstider (fremhæves)</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+        <source>calendar.businessHours.end</source>
         <target>Sluttid for normale arbejdstider (fremhæves)</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
+        <source>calendar.visibleHours.begin</source>
         <target>Start for synligt tidsinterval</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
+        <source>calendar.visibleHours.end</source>
         <target>Slut for synligt tidsinterval</target>
       </trans-unit>
-      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+        <source>calendar.slot_duration</source>
         <target>Pladsvarighed for uge- og dagstilstande (format: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>Markedsføring</target>
       </trans-unit>
-      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
-        <source>label.theme.branding.logo</source>
+      <trans-unit id="o9mON14" resname="theme.branding.logo">
+        <source>theme.branding.logo</source>
         <target>Logo (Billede URL, erstatter firmalogoet i loginskærmen)</target>
       </trans-unit>
-      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
-        <source>label.theme.branding.company</source>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+        <source>theme.branding.company</source>
         <target>Firma</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Mini Logo (sammenfoldet sidebar)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Browser Titel</target>
       </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Tidsafrunding</target>
       </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
+        <source>timesheet.rounding.default.begin</source>
         <target>Afrunding af starttid i minutter (0 = deaktiveret)</target>
       </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
+        <source>timesheet.rounding.default.end</source>
         <target>Afrunding af sluttid i minutter (0 = deaktiveret)</target>
       </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
+        <source>timesheet.rounding.default.duration</source>
         <target>Afrunding af varighed i minutter (0 = deaktiveret)</target>
       </trans-unit>
-      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
+        <source>timesheet.rounding.default.mode</source>
         <target>Afrundingstilstand</target>
       </trans-unit>
-      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
+        <source>timesheet.rounding.default.days</source>
         <target>Ugedage når afrunding er anvendt</target>
       </trans-unit>
       <trans-unit id="agDfwdy" resname="Monday">
@@ -162,21 +146,9 @@
         <source>Floor</source>
         <target>Floor: start, slut, og varighed rundes ned</target>
       </trans-unit>
-      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
-        <source>label.theme.avatar_url</source>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
+        <source>theme.avatar_url</source>
         <target>Tillad brugen af URL'er for avatar billeder</target>
-      </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Brug tilfældige farver for objekter uden tildelt farve</target>
-      </trans-unit>
-      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Tags: brug auto-complete søg og tillad tag oprettelse</target>
-      </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Fakturaer</target>
       </trans-unit>
     </body>
   </file>

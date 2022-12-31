@@ -22,54 +22,30 @@ use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
+use App\User\UserService;
+use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Controller used to manage users in the admin part of the site.
- *
- * @Route(path="/admin/user")
- * @Security("is_granted('view_user')")
  */
+#[Route(path: '/admin/user')]
+#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_user')")]
 final class UserController extends AbstractController
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * @var UserRepository
-     */
-    private $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher, private UserRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->encoder = $encoder;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @return UserRepository
-     */
-    protected function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_user', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_user_paginated', methods: ['GET'])]
     public function indexAction($page, Request $request): Response
     {
         $query = new UserQuery();
@@ -81,15 +57,43 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('admin_user');
         }
 
-        $entries = $this->getRepository()->getPagerfantaForQuery($query);
+        $entries = $this->repository->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
         $this->dispatcher->dispatch($event);
 
+        $table = new DataTable('user_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_user_paginated');
+        $table->setReloadEvents('kimai.userUpdate');
+
+        $table->addColumn('avatar', ['class' => 'alwaysVisible w-avatar', 'title' => null, 'orderBy' => false]);
+        $table->addColumn('user', ['class' => 'alwaysVisible', 'orderBy' => 'user']);
+        $table->addColumn('username', ['class' => 'd-none']);
+        $table->addColumn('alias', ['class' => 'd-none']);
+        $table->addColumn('account_number', ['class' => 'd-none']);
+        $table->addColumn('title', ['class' => 'd-none']);
+        $table->addColumn('email', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('lastLogin', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('roles', ['class' => 'd-none', 'orderBy' => false]);
+
+        foreach ($event->getPreferences() as $userPreference) {
+            $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages', 'data' => $userPreference]);
+        }
+
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('active', ['class' => 'd-none w-min', 'orderBy' => false]);
+        $table->addColumn('actions', ['class' => 'actions']);
+
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+        $page->setActionName('users');
+        $page->setDataTable($table);
+
         return $this->render('user/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
+            'page_setup' => $page,
+            'dataTable' => $table,
             'preferences' => $event->getPreferences(),
         ]);
     }
@@ -105,11 +109,9 @@ final class UserController extends AbstractController
         return $user;
     }
 
-    /**
-     * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_user')")
-     */
-    public function createAction(Request $request, SystemConfiguration $config): Response
+    #[Route(path: '/create', name: 'admin_user_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_user')")]
+    public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository): Response
     {
         $user = $this->createNewDefaultUser($config);
         $editForm = $this->getCreateUserForm($user);
@@ -117,41 +119,28 @@ final class UserController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $password = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
+            $userRepository->saveUser($user);
             $this->flashSuccess('action.update.success');
 
-            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() !== true) {
-                return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
-            }
-
-            $firstUser = $user;
-            $user = $this->createNewDefaultUser($config);
-            $user->setLanguage($firstUser->getLanguage());
-            $user->setTimezone($firstUser->getTimezone());
-
-            $editForm = $this->getCreateUserForm($user);
-            if ($editForm->has('create_more')) {
-                $editForm->get('create_more')->setData(true);
-            }
+            return $this->redirectToRouteAfterCreate('user_profile_edit', ['username' => $user->getUserIdentifier()]);
         }
 
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+
         return $this->render('user/create.html.twig', [
+            'page_setup' => $page,
             'user' => $user,
             'form' => $editForm->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', userToDelete)")
-     */
-    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository): Response
+    #[Route(path: '/{id}/delete', name: 'admin_user_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('delete', userToDelete)")]
+    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository, UserService $userService): Response
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
         $stats = $repository->getUserStatistics($userToDelete);
@@ -181,7 +170,7 @@ final class UserController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->getRepository()->deleteUser($userToDelete, $deleteForm->get('user')->getData());
+                $userService->deleteUser($userToDelete, $deleteForm->get('user')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);
@@ -190,17 +179,19 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('admin_user');
         }
 
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+
         return $this->render('user/delete.html.twig', [
+            'page_setup' => $page,
             'user' => $userToDelete,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
         ]);
     }
 
-    /**
-     * @Route(path="/export", name="user_export", methods={"GET"})
-     * @Security("is_granted('view_user')")
-     */
+    #[Route(path: '/export', name: 'user_export', methods: ['GET'])]
+    #[Security("is_granted('view_user')")]
     public function exportAction(Request $request, UserExporter $exporter)
     {
         $query = new UserQuery();
@@ -214,7 +205,7 @@ final class UserController extends AbstractController
             $query->resetByFormError($form->getErrors());
         }
 
-        $entries = $this->getRepository()->getUsersForQuery($query);
+        $entries = $this->repository->getUsersForQuery($query);
 
         $spreadsheet = $exporter->export(
             $entries,
@@ -227,11 +218,10 @@ final class UserController extends AbstractController
 
     protected function getToolbarForm(UserQuery $query): FormInterface
     {
-        return $this->createForm(UserToolbarForm::class, $query, [
+        return $this->createSearchForm(UserToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_user', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 
@@ -242,7 +232,6 @@ final class UserController extends AbstractController
             'method' => 'POST',
             'include_active_flag' => true,
             'include_preferences' => true,
-            'include_add_more' => true,
             'include_teams' => $this->isGranted('teams_other_profile'),
             'include_roles' => $this->isGranted('roles_other_profile'),
         ]);

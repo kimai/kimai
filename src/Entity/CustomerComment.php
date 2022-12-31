@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -14,35 +12,26 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="kimai2_customers_comments",
- *      indexes={
- *          @ORM\Index(columns={"customer_id"})
- *      }
- * )
- */
+#[ORM\Table(name: 'kimai2_customers_comments')]
+#[ORM\Index(columns: ['customer_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class CustomerComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 
-    /**
-     * @var Customer
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $customer;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    private Customer $customer;
 
-    public function setCustomer(Customer $customer): CustomerComment
+    public function __construct(Customer $customer)
     {
+        $this->createdAt = new \DateTime();
         $this->customer = $customer;
-
-        return $this;
     }
 
-    public function getCustomer(): ?Customer
+    public function getCustomer(): Customer
     {
         return $this->customer;
     }

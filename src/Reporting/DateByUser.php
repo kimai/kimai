@@ -13,14 +13,14 @@ use App\Entity\User;
 
 abstract class DateByUser extends AbstractUserList
 {
-    private $user;
+    private ?User $user = null;
 
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }

@@ -13,17 +13,14 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MultiUpdateTable extends AbstractType
+final class MultiUpdateTable extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var EntityRepository $repository */
         $repository = $options['repository'];
@@ -36,7 +33,7 @@ class MultiUpdateTable extends AbstractType
 
         $builder->get('entities')->addModelTransformer(
             new CallbackTransformer(
-                function ($ids) {
+                function ($ids): string {
                     return implode(',', $ids);
                 },
                 function ($ids) use ($repository) {
@@ -49,18 +46,22 @@ class MultiUpdateTable extends AbstractType
             )
         );
 
-        $builder->add('action', ChoiceType::class, [
-            'mapped' => false,
-            'required' => false,
-            'choices' => $dto->getActions(),
-            'search' => false,
-        ]);
+        $i = 0;
+        foreach ($dto->getActions() as $key => $value) {
+            if (empty($key) || empty($value)) {
+                continue;
+            }
+            $builder->add('action_' . $i++, ButtonType::class, [
+                'label' => $key,
+                'attr' => [
+                    'data-href' => $value,
+                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ''),
+                ],
+            ]);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['repository']);
         $resolver->setAllowedTypes('repository', EntityRepository::class);

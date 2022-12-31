@@ -15,7 +15,6 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Export\Spreadsheet\UserExporter;
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,12 +27,12 @@ class UserExporterTest extends TestCase
     public function testExport()
     {
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
-        $annotationExtractor = new AnnotationExtractor(new AnnotationReader());
+        $annotationExtractor = new AnnotationExtractor();
         $userPreferenceExtractor = new UserPreferenceExtractor($this->createMock(EventDispatcherInterface::class));
 
         $user = new User();
         $user->setAccountNumber('F-747864');
-        $user->setUsername('test user');
+        $user->setUserIdentifier('test user');
         $user->setAvatar('Lorem Ipsum');
         $user->setTimezone('Europe/Berlin');
         $user->setColor('#ececec');

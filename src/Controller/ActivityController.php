@@ -32,50 +32,29 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used to manage activities in the admin part of the site.
- *
- * @Route(path="/admin/activity")
- * @Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")
+ * Controller used to manage activities.
  */
+#[Route(path: '/admin/activity')]
+#[Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")]
 final class ActivityController extends AbstractController
 {
-    /**
-     * @var ActivityRepository
-     */
-    private $repository;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ActivityService
-     */
-    private $activityService;
-
-    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ActivityService $activityService)
+    public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
     {
-        $this->repository = $repository;
-        $this->configuration = $configuration;
-        $this->dispatcher = $dispatcher;
-        $this->activityService = $activityService;
     }
 
-    /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_activity', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_activity_paginated', methods: ['GET'])]
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
@@ -88,12 +67,43 @@ final class ActivityController extends AbstractController
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
+        $metaColumns = $this->findMetaColumns($query);
+
+        $table = new DataTable('activity_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_activity_paginated');
+        $table->setReloadEvents('kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('project', ['class' => 'd-none']);
+        $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
+        }
+
+        if ($this->isGranted('budget_money', 'activity')) {
+            $table->addColumn('budget', ['class' => 'd-none text-end w-min', 'title' => 'budget']);
+        }
+
+        if ($this->isGranted('budget_time', 'activity')) {
+            $table->addColumn('timeBudget', ['class' => 'd-none text-end w-min', 'title' => 'timeBudget']);
+        }
+
+        $table->addColumn('billable', ['class' => 'd-none text-center w-min', 'orderBy' => false]);
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions']);
+
+        $page = $this->createPageSetup();
+        $page->setDataTable($table);
+        $page->setActionName('activities');
 
         return $this->render('activity/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'metaColumns' => $this->findMetaColumns($query),
+            'page_setup' => $page,
+            'dataTable' => $table,
+            'metaColumns' => $metaColumns,
             'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
@@ -103,7 +113,7 @@ final class ActivityController extends AbstractController
      * @param ActivityQuery $query
      * @return MetaTableTypeInterface[]
      */
-    protected function findMetaColumns(ActivityQuery $query): array
+    private function findMetaColumns(ActivityQuery $query): array
     {
         $event = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::ACTIVITY);
         $this->dispatcher->dispatch($event);
@@ -111,10 +121,8 @@ final class ActivityController extends AbstractController
         return $event->getFields();
     }
 
-    /**
-     * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
-     * @Security("is_granted('view', activity)")
-     */
+    #[Route(path: '/{id}/details', name: 'activity_details', methods: ['GET', 'POST'])]
+    #[Security("is_granted('view', activity)")]
     public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -146,7 +154,13 @@ final class ActivityController extends AbstractController
         $this->dispatcher->dispatch($event);
         $boxes = $event->getController();
 
+        $page = $this->createPageSetup();
+        $page->setActionName('activity');
+        $page->setActionView('activity_details');
+        $page->setActionPayload(['activity' => $activity]);
+
         return $this->render('activity/details.html.twig', [
+            'page_setup' => $page,
             'activity' => $activity,
             'stats' => $stats,
             'rates' => $rates,
@@ -157,17 +171,27 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
-     * @Security("is_granted('edit', activity)")
-     */
-    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository)
+    #[Route(path: '/{id}/rate/{rate}', name: 'admin_activity_rate_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
+    public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
+    {
+        return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
+    }
+
+    #[Route(path: '/{id}/rate', name: 'admin_activity_rate_add', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
+    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository): Response
     {
         $rate = new ActivityRate();
         $rate->setActivity($activity);
 
+        return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_add', ['id' => $activity->getId()]));
+    }
+
+    private function rateFormAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository, string $formUrl): Response
+    {
         $form = $this->createForm(ActivityRateForm::class, $rate, [
-            'action' => $this->generateUrl('admin_activity_rate_add', ['id' => $activity->getId()]),
+            'action' => $formUrl,
             'method' => 'POST',
         ]);
 
@@ -185,17 +209,27 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/rates.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
-     * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
-     * @Security("is_granted('create_activity')")
-     */
-    public function createAction(Request $request, ?Project $project = null)
+    #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_activity')")]
+    public function createWithProjectAction(Request $request, Project $project): Response
+    {
+        return $this->createActivity($request, $project);
+    }
+
+    #[Route(path: '/create', name: 'admin_activity_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_activity')")]
+    public function createAction(Request $request): Response
+    {
+        return $this->createActivity($request, null);
+    }
+
+    private function createActivity(Request $request, ?Project $project = null): Response
     {
         $activity = $this->activityService->createNewActivity($project);
 
@@ -210,23 +244,22 @@ final class ActivityController extends AbstractController
                 $this->activityService->saveNewActivity($activity);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('admin_activity');
+                return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
             } catch (Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 
         return $this->render('activity/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $editForm->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/permissions", name="admin_activity_permissions", methods={"GET", "POST"})
-     * @Security("is_granted('permissions', activity)")
-     */
-    public function teamPermissionsAction(Activity $activity, Request $request)
+    #[Route(path: '/{id}/permissions', name: 'admin_activity_permissions', methods: ['GET', 'POST'])]
+    #[Security("is_granted('permissions', activity)")]
+    public function teamPermissionsAction(Activity $activity, Request $request): Response
     {
         $form = $this->createForm(ActivityTeamPermissionForm::class, $activity, [
             'action' => $this->generateUrl('admin_activity_permissions', ['id' => $activity->getId()]),
@@ -251,26 +284,24 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/permissions.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/create_team", name="activity_team_create", methods={"GET"})
-     * @Security("is_granted('create_team') and is_granted('permissions', activity)")
-     */
-    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository)
+    #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
+    #[Security("is_granted('create_team') and is_granted('permissions', activity)")]
+    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
         if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+            $this->flashError('action.update.error', 'Team already existing');
 
             return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
         }
 
-        $defaultTeam = new Team();
-        $defaultTeam->setName($activity->getName());
+        $defaultTeam = new Team($activity->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addActivity($activity);
 
@@ -283,11 +314,9 @@ final class ActivityController extends AbstractController
         return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', activity)")
-     */
-    public function editAction(Activity $activity, Request $request)
+    #[Route(path: '/{id}/edit', name: 'admin_activity_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
+    public function editAction(Activity $activity, Request $request): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -307,16 +336,15 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $editForm->createView()
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', activity)")
-     */
-    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService)
+    #[Route(path: '/{id}/delete', name: 'admin_activity_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('delete', activity)")]
+    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService): Response
     {
         $stats = $statisticService->getActivityStatistics($activity);
 
@@ -352,20 +380,16 @@ final class ActivityController extends AbstractController
             return $this->redirectToRoute('admin_activity');
         }
 
-        return $this->render(
-            'activity/delete.html.twig',
-            [
-                'activity' => $activity,
-                'stats' => $stats,
-                'form' => $deleteForm->createView(),
-            ]
-        );
+        return $this->render('activity/delete.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'activity' => $activity,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
-    /**
-     * @Route(path="/export", name="activity_export", methods={"GET"})
-     */
-    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    #[Route(path: '/export', name: 'activity_export', methods: ['GET'])]
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new ActivityQuery();
         $query->setCurrentUser($this->getUser());
@@ -390,25 +414,16 @@ final class ActivityController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    /**
-     * @param ActivityQuery $query
-     * @return FormInterface
-     */
-    protected function getToolbarForm(ActivityQuery $query)
+    private function getToolbarForm(ActivityQuery $query): FormInterface
     {
-        return $this->createForm(ActivityToolbarForm::class, $query, [
+        return $this->createSearchForm(ActivityToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_activity', [
                 'page' => $query->getPage(),
-            ]),
-            'method' => 'GET',
+            ])
         ]);
     }
 
-    /**
-     * @param Activity $activity
-     * @return FormInterface
-     */
-    private function createEditForm(Activity $activity)
+    private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
         $url = $this->generateUrl('admin_activity_create');
@@ -427,5 +442,13 @@ final class ActivityController extends AbstractController
             'include_budget' => $this->isGranted('budget', $activity),
             'include_time' => $this->isGranted('time', $activity),
         ]);
+    }
+
+    private function createPageSetup(): PageSetup
+    {
+        $page = new PageSetup('activities');
+        $page->setHelp('activity.html');
+
+        return $page;
     }
 }

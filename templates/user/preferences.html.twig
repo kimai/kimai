@@ -1,16 +1,29 @@
 {% extends 'user/layout.html.twig' %}
+{% from "macros/widgets.html.twig" import form_errors %}
 
 {% block profile_content %}
 
     {{ form_start(form) }}
+    {{ form_errors(form) }}
     {% for section in sections %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-            {% block box_body %}
-                {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                    {{ form_row(pref) }}
-                {% endfor %}
-            {% endblock %}
-        {% endembed %}
+
+        {% set show = false %}
+        {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section) %}
+            {% if (pref.children|length > 0) %}
+                {% set show = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if show %}
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_body %}
+                    {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                        {{ form_widget(pref) }}
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
+
     {% endfor %}
     <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
     {{ form_end(form) }}

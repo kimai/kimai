@@ -9,93 +9,80 @@
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
-import jQuery from 'jquery';
+import { Tooltip } from 'bootstrap';
 import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiThemeInitializer extends KimaiPlugin {
 
-    init() {
-        this.registerGlobalAjaxErrorHandler();
-        this.registerAutomaticAlertRemove('div.alert-success', 5000);
-        // activate the dropdown functionality
-        jQuery('.dropdown-toggle').dropdown();
-        // activate the tooltip functionality
-        jQuery('[data-toggle="tooltip"]').tooltip();
-        // activate all form plugins
-        this.getContainer().getPlugin('form').activateForm('.content-wrapper form', 'body');
-        this.getContainer().getPlugin('form').activateForm('form.searchform', 'body');
+    init()
+    {
+        // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
+        [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
+            return new Tooltip(tooltipTriggerEl);
+        });
 
-        this.registerModalAutofocus('#modal_search');
-        this.registerModalAutofocus('#remote_form_modal');
+        // activate all form plugins
+        /** @type {KimaiForm} FORMS */
+        const FORMS = this.getContainer().getPlugin('form');
+        FORMS.activateForm('div.page-wrapper form');
+
+        this._registerModalAutofocus('#remote_form_modal');
+
+        this.overlay = null;
+
+        // register a global event listener, which displays an overlays upon notification
+        document.addEventListener('kimai.reloadContent', (event) => {
+            // do not allow more than one loading screen at a time
+            if (this.overlay !== null) {
+                return;
+            }
+
+            // at which element we append the loading screen
+            let container = 'body';
+            if (event.detail !== undefined && event.detail !== null) {
+                container = event.detail;
+            }
+
+            const temp = document.createElement('div');
+            temp.innerHTML = '<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>';
+            this.overlay = temp.firstElementChild;
+            document.querySelector(container).append(this.overlay);
+        });
+
+        // register a global event listener, which hides an overlay upon notification
+        document.addEventListener('kimai.reloadedContent', () => {
+            if (this.overlay !== null) {
+                this.overlay.remove();
+                this.overlay = null;
+            }
+        });
     }
 
     /**
-     * workaround for autofocus attribute, as the modal "steals" it
+     * Helps to set the autofocus on modals.
      *
      * @param {string} selector
      */
-    registerModalAutofocus(selector) {
-        let modal = jQuery(selector);
-        if (modal.length === 0) {
+    _registerModalAutofocus(selector) {
+        // on mobile you do not want to trigger the virtual keyboard upon modal open
+        if (this.isMobile()) {
             return;
         }
 
-        modal.on('shown.bs.modal', function () {
-            let form = modal.find('form');
-            let formAutofocus = form.find('[autofocus]');
+        const modal = document.querySelector(selector);
+        if (modal === null) {
+            return;
+        }
+
+        modal.addEventListener('shown.bs.modal', () => {
+            const form = modal.querySelector('form');
+            let formAutofocus = form.querySelectorAll('[autofocus]');
             if (formAutofocus.length < 1) {
-                formAutofocus = form.find('input[type=text],textarea,select');
+                formAutofocus = form.querySelectorAll('input[type=text],input[type=date],textarea,select');
             }
-            formAutofocus.filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
-        });
-    }
-
-    /**
-     * redirect access denied / session timeouts to login page
-     */
-    registerGlobalAjaxErrorHandler() {
-        const loginUrl = this.getConfiguration('login');
-        const alert = this.getContainer().getPlugin('alert');
-        const translation = this.getContainer().getTranslation().get('login.required');
-        jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {
-            if (jqxhr.status !== undefined && jqxhr.status === 403) {
-                const loginRequired = jqxhr.getResponseHeader('login-required');
-                if (loginRequired !== null) {
-                    alert.question(translation, function (result) {
-                        if (result === true) {
-                            window.location.replace(loginUrl);
-                        }
-                    });
-                }
+            if (formAutofocus.length > 0) {
+                formAutofocus[0].focus();
             }
         });
     }
-
-    /**
-     * auto hide success messages, as they are just meant as user feedback and not as a permanent information
-     *
-     * @param {string} selector
-     * @param {integer} interval
-     */
-    registerAutomaticAlertRemove(selector, interval) {
-        const self = this;
-        this._alertRemoveHandler = setInterval(
-            function() {
-                self.hideAlert(selector);
-            },
-            interval
-        );
-    }
-
-    unregisterAutomaticAlertRemove() {
-        clearInterval(this._alertRemoveHandler);
-    }
-
-    /**
-     * @param {string} selector
-     */
-    hideAlert(selector) {
-        jQuery(selector).alert('close');
-    }
-
 }

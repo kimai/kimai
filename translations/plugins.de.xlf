@@ -8,7 +8,15 @@
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
         <source>plugin.marketplace</source>
-        <target>Kimai Marketplace</target>
+        <target>Neue Erweiterungen aus dem Marktplatz</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target>Jetzt kaufen</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target>Mehr Erweiterungen</target>
       </trans-unit>
     </body>
   </file>

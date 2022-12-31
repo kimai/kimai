@@ -17,6 +17,8 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,19 +31,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * This is one of the cases where I don't feel like it is necessary to add tests, so lets "cheat" with:
  * @codeCoverageIgnore
  */
-class ResetTestCommand extends AbstractResetCommand
+#[AsCommand(name: 'kimai:reset:test', description: 'Resets the "test" environment')]
+final class ResetTestCommand extends AbstractResetCommand
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager, string $kernelEnvironment)
     {
-        parent::__construct();
-        $this->entityManager = $entityManager;
-    }
-
-    protected function getEnvName(): string
-    {
-        return 'test';
+        parent::__construct($kernelEnvironment);
     }
 
     protected function loadData(InputInterface $input, OutputInterface $output): void
@@ -54,13 +49,12 @@ class ResetTestCommand extends AbstractResetCommand
         $activity->setBudget(1000);
         $this->entityManager->persist($activity);
 
-        $customer = new Customer();
+        $customer = new Customer('Test');
         $customer->setNumber('1');
         $customer->setComment('Test comment');
         $customer->setContact('Test');
         $customer->setAddress('Test');
         $customer->setCompany('Test');
-        $customer->setName('Test');
         $customer->setCountry('DE');
         $customer->setCurrency('EUR');
         $customer->setPhone('111');
@@ -83,19 +77,174 @@ class ResetTestCommand extends AbstractResetCommand
 
         $users = [
             // 0=id, 1=hourly rate, 2=Alias, 3=registration date, 4=title, 5=avatar, 6=enabled, 7=password, 8=roles, 9=username, 10=username canonical, 11=email, 12=email canonical, 13=salt, 14=last login, 15=confirmation token, 16=password requested at, 17=api_token
-            [1, 53, 'Clara Haynes', '2018-02-06 23:28:57', 'CFO', 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y', 1, '$2y$04$kKBYJ8sKCOhhakCjm9sCp.TQdwLTS1FPkPiWn2KBmaCA7xFL0NA42', ['ROLE_CUSTOMER'], 'clara_customer', 'clara_customer', 'clara_customer@example.com', 'clara_customer@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [2, 82, 'John Doe', '2018-02-06 23:28:57', 'Developer', 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', 1, '$2y$04$36P/xyhP6FbnfFYbXy7V0.ioSe8HjMlJQFYnlIzz2T6Agfi8ob6jK', [], 'john_user', 'john_user', 'john_user@example.com', 'john_user@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [3, 35, 'Chris Deactive', '2018-02-06 23:28:57', 'Developer (left company)', 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', 0, '$2y$04$MLtQBZ9JLzWu1Y01QnNjsuoLm8qC9XRkpUywf6DIbpd9OAL1mEcCi', [], 'chris_user', 'chris_user', 'chris_user@example.com', 'chris_user@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [4, 35, 'Tony Maier', '2018-02-06 23:28:57', 'Head of Development', 'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg', 1, '$2y$04$rqxiiExfUVzIYRVL2x4JJumQWNPIG6PazXwrSJm/VQFEesR08Uj5i', ['ROLE_TEAMLEAD'], 'tony_teamlead', 'tony_teamlead', 'tony_teamlead@example.com', 'tony_teamlead@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [5, 81, 'Anna Smith', '2018-02-06 23:28:57', 'Administrator', null, 1, '$2y$04$ct/rVb.naDzYZECnvfTJ2uns/zPHv8.8KcunhTjYFwWQeg1dywI8G', ['ROLE_ADMIN'], 'anna_admin', 'anna_admin', 'anna_admin@example.com', 'anna_admin@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [6, 46, null, '2018-02-06 23:28:57', 'Super Administrator', '/bundles/avanzuadmintheme/img/avatar.png', 1, '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2', ['ROLE_SUPER_ADMIN'], 'susan_super', 'susan_super', 'susan_super@example.com', 'susan_super@example.com', null, '2020-04-14 09:50:38', null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [7, null, 'Test User 1', null, 'Quality Tester 1', null, 1, '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2', [], 'test_user_1', 'test_user_1', 'test_user_1@example.com', 'test_user_1@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
-            [8, null, 'Test User 2', null, 'Quality Tester 2', null, 1, '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2', [], 'test_user_2', 'test_user_2', 'test_user_2@example.com', 'test_user_2@example.com', null, null, null, null, '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'],
+            [
+                1,
+                53,
+                'Clara Haynes',
+                '2018-02-06 23:28:57',
+                'CFO',
+                'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y',
+                1,
+                '$2y$04$kKBYJ8sKCOhhakCjm9sCp.TQdwLTS1FPkPiWn2KBmaCA7xFL0NA42',
+                ['ROLE_CUSTOMER'],
+                'clara_customer',
+                'clara_customer',
+                'clara_customer@example.com',
+                'clara_customer@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                2,
+                82,
+                'John Doe',
+                '2018-02-06 23:28:57',
+                'Developer',
+                'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y',
+                1,
+                '$2y$04$36P/xyhP6FbnfFYbXy7V0.ioSe8HjMlJQFYnlIzz2T6Agfi8ob6jK',
+                [],
+                'john_user',
+                'john_user',
+                'john_user@example.com',
+                'john_user@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                3,
+                35,
+                'Chris Deactive',
+                '2018-02-06 23:28:57',
+                'Developer (left company)',
+                'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y',
+                0,
+                '$2y$04$MLtQBZ9JLzWu1Y01QnNjsuoLm8qC9XRkpUywf6DIbpd9OAL1mEcCi',
+                [],
+                'chris_user',
+                'chris_user',
+                'chris_user@example.com',
+                'chris_user@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                4,
+                35,
+                'Tony Maier',
+                '2018-02-06 23:28:57',
+                'Head of Development',
+                'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg',
+                1,
+                '$2y$04$rqxiiExfUVzIYRVL2x4JJumQWNPIG6PazXwrSJm/VQFEesR08Uj5i',
+                ['ROLE_TEAMLEAD'],
+                'tony_teamlead',
+                'tony_teamlead',
+                'tony_teamlead@example.com',
+                'tony_teamlead@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                5,
+                81,
+                'Anna Smith',
+                '2018-02-06 23:28:57',
+                'Administrator',
+                null,
+                1,
+                '$2y$04$ct/rVb.naDzYZECnvfTJ2uns/zPHv8.8KcunhTjYFwWQeg1dywI8G',
+                ['ROLE_ADMIN'],
+                'anna_admin',
+                'anna_admin',
+                'anna_admin@example.com',
+                'anna_admin@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                6,
+                46,
+                null,
+                '2018-02-06 23:28:57',
+                'Super Administrator',
+                '/bundles/avanzuadmintheme/img/avatar.png',
+                1,
+                '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2',
+                ['ROLE_SUPER_ADMIN'],
+                'susan_super',
+                'susan_super',
+                'susan_super@example.com',
+                'susan_super@example.com',
+                null,
+                '2020-04-14 09:50:38',
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                7,
+                null,
+                'Test User 1',
+                null,
+                'Quality Tester 1',
+                null,
+                1,
+                '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2',
+                [],
+                'test_user_1',
+                'test_user_1',
+                'test_user_1@example.com',
+                'test_user_1@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
+            [
+                8,
+                null,
+                'Test User 2',
+                null,
+                'Quality Tester 2',
+                null,
+                1,
+                '$2y$04$kuhEEPw/CBMYc3x7SOv27eC1hQSmrtFvgJI2ULRuJeddAVDyrPKJ2',
+                [],
+                'test_user_2',
+                'test_user_2',
+                'test_user_2@example.com',
+                'test_user_2@example.com',
+                null,
+                null,
+                null,
+                null,
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+            ],
         ];
 
         $userEntities = [];
         foreach ($users as $userConf) {
             $user = new User();
+            foreach (User::WIZARDS as $wizard) {
+                $user->setWizardAsSeen($wizard);
+            }
             if ($userConf[1] !== null) {
                 $user->setPreferenceValue(UserPreference::HOURLY_RATE, $userConf[1]);
             }
@@ -120,7 +269,7 @@ class ResetTestCommand extends AbstractResetCommand
             } else {
                 $user->setRoles(['ROLE_USER']);
             }
-            $user->setUsername($userConf[9]);
+            $user->setUserIdentifier($userConf[9]);
             if ($userConf[10] !== null) {
                 // removed field: UsernameCanonical
             }
@@ -138,8 +287,7 @@ class ResetTestCommand extends AbstractResetCommand
             $userEntities[] = $user;
         }
 
-        $team = new Team();
-        $team->setName('Test team');
+        $team = new Team('Test team');
         $team->addTeamlead($userEntities[6]);
         $team->addUser($userEntities[7]);
         $this->entityManager->persist($team);
@@ -155,9 +303,9 @@ class ResetTestCommand extends AbstractResetCommand
         } catch (Exception $ex) {
             $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
-            return 2;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

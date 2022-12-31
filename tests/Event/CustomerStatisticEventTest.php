@@ -27,7 +27,7 @@ class CustomerStatisticEventTest extends AbstractCustomerEventTest
 
     public function testStatistic()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $statistic = new CustomerStatistic();
         $sut = new CustomerStatisticEvent($customer, $statistic);
 

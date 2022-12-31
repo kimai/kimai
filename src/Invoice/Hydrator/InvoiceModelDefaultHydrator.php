@@ -12,7 +12,7 @@ namespace App\Invoice\Hydrator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
+final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {
@@ -45,21 +45,17 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal_nc' => $formatter->getFormattedMoney($subtotal, $currency, false),
             'invoice.subtotal_plain' => $subtotal,
 
-            'template.name' => $model->getTemplate()->getName(),
-            'template.company' => $model->getTemplate()->getCompany(),
-            'template.address' => $model->getTemplate()->getAddress(),
-            'template.title' => $model->getTemplate()->getTitle(),
-            'template.payment_terms' => $model->getTemplate()->getPaymentTerms(),
+            'template.name' => $model->getTemplate()->getName() ?? '',
+            'template.company' => $model->getTemplate()->getCompany() ?? '',
+            'template.address' => $model->getTemplate()->getAddress() ?? '',
+            'template.title' => $model->getTemplate()->getTitle() ?? '',
+            'template.payment_terms' => $model->getTemplate()->getPaymentTerms() ?? '',
             'template.due_days' => $model->getTemplate()->getDueDays(),
-            'template.vat_id' => $model->getTemplate()->getVatId(),
-            'template.contact' => $model->getTemplate()->getContact(),
-            'template.payment_details' => $model->getTemplate()->getPaymentDetails(),
+            'template.vat_id' => $model->getTemplate()->getVatId() ?? '',
+            'template.contact' => $model->getTemplate()->getContact() ?? '',
+            'template.payment_details' => $model->getTemplate()->getPaymentDetails() ?? '',
 
             'query.begin' => '',
-            'query.day' => '',                  // @deprecated
-            'query.month' => '',                // @deprecated
-            'query.month_number' => '',         // @deprecated
-            'query.year' => '',                 // @deprecated
             'query.begin_day' => '',
             'query.begin_month' => '',
             'query.begin_month_number' => '',
@@ -73,11 +69,11 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
         if ($begin !== null) {
             $values = array_merge($values, [
+                'query.day' => $begin->format('d'),                             // @deprecated - but impossible to delete
+                'query.month' => $formatter->getFormattedMonthName($begin),     // @deprecated - but impossible to delete
+                'query.month_number' => $begin->format('m'),                    // @deprecated - but impossible to delete
+                'query.year' => $begin->format('Y'),                            // @deprecated - but impossible to delete
                 'query.begin' => $formatter->getFormattedDateTime($begin),
-                'query.day' => $begin->format('d'),                             // @deprecated
-                'query.month' => $formatter->getFormattedMonthName($begin),     // @deprecated
-                'query.month_number' => $begin->format('m'),                    // @deprecated
-                'query.year' => $begin->format('Y'),                            // @deprecated
                 'query.begin_day' => $begin->format('d'),
                 'query.begin_month' => $formatter->getFormattedMonthName($begin),
                 'query.begin_month_number' => $begin->format('m'),

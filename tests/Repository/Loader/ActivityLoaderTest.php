@@ -14,7 +14,6 @@ use App\Repository\Loader\ActivityLoader;
 
 /**
  * @covers \App\Repository\Loader\ActivityLoader
- * @covers \App\Repository\Loader\ActivityIdLoader
  */
 class ActivityLoaderTest extends AbstractLoaderTest
 {

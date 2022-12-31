@@ -1,65 +1,20 @@
-{% extends 'reporting/layout.html.twig' %}
+{% extends 'reporting/report_by_user_layout.html.twig' %}
 
-{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
-
-{% block report %}
-
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline', 'id': 'user-filter-form'}}) }}
+{% block report_content %}
+    {% embed 'reporting/report_by_user_data.html.twig' %}
+        {% block period_name %}
+            <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
+                {{ column|date_weekday }}
+            </th>
         {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {% if form.user is defined %}
-                {{ form_row(form.user, {'label': false}) }}
-            {% else %}
-                {{ widgets.username(user) }}
-            {% endif %}
-            {{ form_widget(form.date) }}
-            <div class="btn-group"{% if form.sumType.vars.choices|length <= 1 %} style="display: none"{% endif %}>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu checkbox-menu">
-                    <li>
-                        {{ form_widget(form.sumType) }}
-                    </li>
-                </ul>
-            </div>
-        {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
-        {% block box_body %}
-            {% embed 'reporting/report_by_user_data.html.twig' %}
-                {% block period_name %}
-                    <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
-                        {{ column|date_weekday }}
-                    </th>
-                {% endblock %}
-                {% block column_classes_project -%}
-                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
-                {%- endblock %}
-                {% block column_classes_activity -%}
-                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
-                {%- endblock %}
-                {% block column_classes_total -%}
-                    {% if column is weekend %} weekend{% endif %}
-                {%- endblock %}
-            {% endembed %}
-        {% endblock %}
+        {% block column_classes_project -%}
+            {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
+        {%- endblock %}
+        {% block column_classes_activity -%}
+            {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
+        {%- endblock %}
+        {% block column_classes_total -%}
+            {% if column is weekend %} weekend{% endif %}
+        {%- endblock %}
     {% endembed %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#user-filter-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-    </script>
 {% endblock %}

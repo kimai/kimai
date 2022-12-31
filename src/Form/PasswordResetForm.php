@@ -16,12 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PasswordResetForm extends AbstractType
+final class PasswordResetForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
@@ -30,16 +27,13 @@ class PasswordResetForm extends AbstractType
                     'autocomplete' => 'new-password',
                 ],
             ],
-            'first_options' => ['label' => 'label.password'],
-            'second_options' => ['label' => 'label.password_repeat'],
+            'first_options' => ['label' => 'password'],
+            'second_options' => ['label' => 'password_repeat'],
             'invalid_message' => 'The entered passwords don\'t match.',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
@@ -47,10 +41,7 @@ class PasswordResetForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'password_resetting';
     }

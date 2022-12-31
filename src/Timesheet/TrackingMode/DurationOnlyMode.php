@@ -9,21 +9,21 @@
 
 namespace App\Timesheet\TrackingMode;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Timesheet\RoundingService;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * This is a copy of the DefaultMode from 2.0
+ * FIXME 2.1 remove me with the next release
+ * @deprecated since 2.0
+ * @codeCoverageIgnore
+ */
 final class DurationOnlyMode extends AbstractTrackingMode
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private RoundingService $rounding)
     {
-        $this->configuration = $configuration;
     }
 
     public function canEditBegin(): bool
@@ -33,7 +33,7 @@ final class DurationOnlyMode extends AbstractTrackingMode
 
     public function canEditEnd(): bool
     {
-        return false;
+        return true;
     }
 
     public function canEditDuration(): bool
@@ -53,24 +53,30 @@ final class DurationOnlyMode extends AbstractTrackingMode
 
     public function canSeeBeginAndEndTimes(): bool
     {
-        return false;
+        return true;
+    }
+
+    public function getEditTemplate(): string
+    {
+        return 'timesheet/edit-default.html.twig';
     }
 
     public function create(Timesheet $timesheet, ?Request $request = null): void
     {
+        parent::create($timesheet, $request);
+
         if (null === $timesheet->getBegin()) {
             $timesheet->setBegin(new DateTime('now', $this->getTimezone($timesheet)));
         }
 
-        $newBegin = clone $timesheet->getBegin();
+        $this->rounding->roundBegin($timesheet);
 
-        // this prevents the problem that "now" is being ignored in modify()
-        $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
-        $beginTime = (new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone()))->format('H:i:s');
-        $newBegin->modify($beginTime);
+        if (null !== $timesheet->getEnd()) {
+            $this->rounding->roundEnd($timesheet);
 
-        $timesheet->setBegin($newBegin);
-
-        parent::create($timesheet, $request);
+            if (null !== $timesheet->getDuration()) {
+                $this->rounding->roundDuration($timesheet);
+            }
+        }
     }
 }

@@ -21,56 +21,35 @@ class LayoutControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->request($client, '/dashboard/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasMainHeader($client, $user);
-        $this->assertHasSidebar($client, $user);
+        $this->assertHasNavigation($client);
     }
 
     protected function assertHasMainHeader(HttpKernelBrowser $client, User $user)
     {
-        // TODO improve me
-        // main-header > a.logo
-        // # href = homepage
-        // && > span.logo-mini
-        // && > span.logo-lg
-        // && > nav.navbar.navbar-static-top
-        //    && div.navbar-custom-menu
-
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<li class="dropdown user-menu">', $content);
-        $this->assertStringContainsString('<a href="/en/profile/' . $user->getUsername() . '">', $content);
-        $this->assertStringContainsString('<a href="/en/profile/' . $user->getUsername() . '/prefs">', $content);
-        $this->assertStringContainsString('<a href="/en/logout">', $content);
+        $this->assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open user menu"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
+        $this->assertStringContainsString('href="/en/logout"', $content);
     }
 
-    protected function assertHasSidebar(HttpKernelBrowser $client, User $user)
+    protected function assertHasNavigation(HttpKernelBrowser $client)
     {
-        // TODO improve me
-        // aside.main-sidebar
-        // && section.sidebar
-        //    && ul.sidebar-menu tree
-        //       && li#dashboard > a href=dashboard
-        //       && li#... with links
-
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<li id="dashboard"', $content);
-        $this->assertStringContainsString('<a href="/en/dashboard/">', $content);
-        $this->assertStringContainsString('<span>Dashboard</span>', $content);
-
-        $this->assertStringContainsString('<li id="timesheet"', $content);
-        $this->assertStringContainsString('<a href="/en/timesheet/">', $content);
-        $this->assertStringContainsString('<span>My times</span>', $content);
-
-        $this->assertStringContainsString('<li id="calendar"', $content);
-        $this->assertStringContainsString('<a href="/en/calendar/">', $content);
-        $this->assertStringContainsString('<span>Calendar</span>', $content);
+        $this->assertStringContainsString('href="/en/dashboard/"', $content);
+        $this->assertStringContainsString('href="/en/timesheet/"', $content);
+        $this->assertStringContainsString('My times', $content);
+        $this->assertStringContainsString('href="/en/calendar/"', $content);
+        $this->assertStringContainsString('Calendar', $content);
     }
 
     public function testActiveEntries()
@@ -82,12 +61,6 @@ class LayoutControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
 
-        self::assertStringContainsString('<li class="messages-menu', $content);
-        self::assertStringContainsString('<div class="ddt-small ticktac-single ', $content);
-        self::assertStringContainsString('data-api="', $content);
-        self::assertStringContainsString('data-href="', $content);
-        self::assertStringContainsString('data-icon=', $content);
-        self::assertStringContainsString('<ul class="menu">', $content);
-        self::assertStringContainsString('<li class="messages-menu-empty" style="">', $content);
+        $this->assertStringContainsString('<a href="/en/timesheet/create" class="modal-ajax-form ticktac-start btn', $content);
     }
 }

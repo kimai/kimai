@@ -13,24 +13,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType as BaseTimezoneType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimezoneType extends AbstractType
+final class TimezoneType extends AbstractType
 {
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'timezone_type';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'label' => 'timezone',
             'intl' => false,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return BaseTimezoneType::class;
     }

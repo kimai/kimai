@@ -9,37 +9,16 @@
 
 namespace App\Event;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoicePostRenderEvent extends Event
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
-    /**
-     * @var InvoiceDocument
-     */
-    private $document;
-    /**
-     * @var RendererInterface
-     */
-    private $renderer;
-    /**
-     * @var Response
-     */
-    private $response;
-
-    public function __construct(InvoiceModel $model, InvoiceDocument $document, RendererInterface $renderer, Response $response)
+    public function __construct(private InvoiceModel $model, private InvoiceDocument $document, private RendererInterface $renderer, private Response $response)
     {
-        $this->model = $model;
-        $this->document = $document;
-        $this->renderer = $renderer;
-        $this->response = $response;
     }
 
     public function getModel(): InvoiceModel

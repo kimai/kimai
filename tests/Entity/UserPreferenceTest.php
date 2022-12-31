@@ -22,7 +22,7 @@ class UserPreferenceTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new UserPreference();
+        $sut = new UserPreference('foo');
         self::assertTrue($sut->isEnabled());
         self::assertEquals('default', $sut->getSection());
         self::assertEquals(1000, $sut->getOrder());
@@ -30,8 +30,8 @@ class UserPreferenceTest extends TestCase
         self::assertIsArray($sut->getConstraints());
         self::assertEmpty($sut->getConstraints());
         self::assertNull($sut->getId());
-        self::assertNull($sut->getLabel());
-        self::assertNull($sut->getName());
+        self::assertEquals('foo', $sut->getLabel());
+        self::assertEquals('foo', $sut->getName());
         self::assertIsArray($sut->getOptions());
         self::assertEmpty($sut->getOptions());
         self::assertNull($sut->getType());
@@ -40,7 +40,7 @@ class UserPreferenceTest extends TestCase
 
     public function testGetValueChangesReturnTypeOnOtherType()
     {
-        $sut = new UserPreference();
+        $sut = new UserPreference('foo');
         $sut->setValue('1');
         self::assertSame('1', $sut->getValue());
         $sut->setType(IntegerType::class);
@@ -54,8 +54,7 @@ class UserPreferenceTest extends TestCase
 
     public function testGetLabelWithLabelOption()
     {
-        $sut = new UserPreference();
-        $sut->setName('foo');
+        $sut = new UserPreference('foo');
         self::assertEquals('foo', $sut->getLabel());
         $sut->setOptions(['label' => 'bar']);
         self::assertEquals('bar', $sut->getLabel());

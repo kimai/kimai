@@ -24,44 +24,44 @@ class MarkdownTest extends TestCase
         $this->assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
         $this->assertEquals('<p># foobar</p>', $sut->toHtml('# foobar'));
         $html = <<<'EOT'
-<p>foo bar</p>
-<ul>
-<li>sdfasdfasdf</li>
-<li>asdfasdfasdf</li>
-</ul>
-<p># test<br />
-asdfasdfa</p>
-<pre><code>ssdfsdf</code></pre>
-<p><a href="http://example.com/foo-bar.html" target="_blank">http://example.com/foo-bar.html</a><br />
-<a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
-<p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
-<p># test<br />
-aasdfasdf<br />
-1111<br />
-222</p>
-EOT;
+            <p>foo bar</p>
+            <ul>
+            <li>sdfasdfasdf</li>
+            <li>asdfasdfasdf</li>
+            </ul>
+            <p># test<br />
+            asdfasdfa</p>
+            <pre><code>ssdfsdf</code></pre>
+            <p><a href="http://example.com/foo-bar.html" target="_blank">http://example.com/foo-bar.html</a><br />
+            <a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
+            <p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
+            <p># test<br />
+            aasdfasdf<br />
+            1111<br />
+            222</p>
+            EOT;
 
         $markdown = <<<EOT
-foo bar
+            foo bar
 
-- sdfasdfasdf
-- asdfasdfasdf
+            - sdfasdfasdf
+            - asdfasdfasdf
 
-# test
-asdfasdfa
+            # test
+            asdfasdfa
 
-    ssdfsdf
-    
-http://example.com/foo-bar.html
-file:///home/kimai/images/beautiful-flower.png
+                ssdfsdf
+                
+            http://example.com/foo-bar.html
+            file:///home/kimai/images/beautiful-flower.png
 
-sdfsdf [asdfasdf](#test-1) asdfasdf
+            sdfsdf [asdfasdf](#test-1) asdfasdf
 
-# test
-aasdfasdf
-1111
-222
-EOT;
+            # test
+            aasdfasdf
+            1111
+            222
+            EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
 
@@ -70,18 +70,18 @@ EOT;
         $sut = new Markdown();
 
         $html = <<<'EOT'
-<p># test<br />
-## test<br />
-### test<br />
-# test</p>
-EOT;
+            <p># test<br />
+            ## test<br />
+            ### test<br />
+            # test</p>
+            EOT;
 
         $markdown = <<<EOT
-# test
-## test
-### test
-# test
-EOT;
+            # test
+            ## test
+            ### test
+            # test
+            EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
 
@@ -90,16 +90,16 @@ EOT;
         $sut = new Markdown();
 
         $html = <<<'EOT'
-<p><a href="javascript%3Aalert(`XSS`)">XSS</a><br />
-<a href="javascript%3Aalert(&quot;XSS&quot;)">XSS</a><br />
-<a href="javascript%3Aalert(&#039;XSS&#039;)">XSS</a></p>
-EOT;
+            <p><a href="javascript%3Aalert(`XSS`)">XSS</a><br />
+            <a href="javascript%3Aalert(&quot;XSS&quot;)">XSS</a><br />
+            <a href="javascript%3Aalert(&#039;XSS&#039;)">XSS</a></p>
+            EOT;
 
         $markdown = <<<EOT
-[XSS](javascript:alert(`XSS`))
-[XSS](javascript:alert("XSS"))
-[XSS](javascript:alert('XSS'))
-EOT;
+            [XSS](javascript:alert(`XSS`))
+            [XSS](javascript:alert("XSS"))
+            [XSS](javascript:alert('XSS'))
+            EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
 }

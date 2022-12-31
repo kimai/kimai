@@ -13,23 +13,21 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Model\Statistic\Day;
-use App\Repository\TimesheetRepository;
-use App\Widget\Type\AbstractWidgetType;
+use App\Widget\DataProvider\DailyWorkingTimeChartProvider;
 use App\Widget\Type\DailyWorkingTimeChart;
-use App\Widget\Type\SimpleWidget;
+use App\Widget\WidgetInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Widget\Type\DailyWorkingTimeChart
- * @covers \App\Widget\Type\SimpleWidget
  * @covers \App\Widget\Type\AbstractWidgetType
  * @covers \App\Repository\TimesheetRepository
  */
 class DailyWorkingTimeChartTest extends TestCase
 {
-    public function createSut(): AbstractWidgetType
+    public function createSut(): DailyWorkingTimeChart
     {
-        $repository = $this->createMock(TimesheetRepository::class);
+        $repository = $this->createMock(DailyWorkingTimeChartProvider::class);
 
         $sut = new DailyWorkingTimeChart($repository);
         $sut->setUser(new User());
@@ -37,32 +35,16 @@ class DailyWorkingTimeChartTest extends TestCase
         return $sut;
     }
 
-    public function testExtendsSimpleWidget()
-    {
-        $sut = $this->createSut();
-        self::assertInstanceOf(SimpleWidget::class, $sut);
-    }
-
     public function testDefaultValues()
     {
         $sut = $this->createSut();
-        self::assertInstanceOf(AbstractWidgetType::class, $sut);
+        self::assertInstanceOf(WidgetInterface::class, $sut);
         self::assertEquals('DailyWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
-        self::assertNull($sut->getOption('begin', 'xxx'));
-        self::assertNull($sut->getOption('end', 'xxx'));
-        self::assertEquals('', $sut->getOption('color', 'xxx'));
-        self::assertInstanceOf(User::class, $sut->getOption('user', 'xxx'));
-        self::assertEquals('bar', $sut->getOption('type', 'xxx'));
-    }
-
-    public function testFluentInterface()
-    {
-        $sut = $this->createSut();
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setOptions([]));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
+        $options = $sut->getOptions();
+        self::assertNull($options['begin']);
+        self::assertNull($options['end']);
+        self::assertEquals('', $options['color']);
     }
 
     public function testSetter()
@@ -71,22 +53,7 @@ class DailyWorkingTimeChartTest extends TestCase
 
         // options
         $sut->setOption('föööö', 'trääääää');
-        self::assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
-
-        // check default values
-        self::assertEquals('xxxxx', $sut->getOption('blub', 'xxxxx'));
-        self::assertEquals('xxxxx', $sut->getOption('dataType', 'xxxxx'));
-
-        $sut->setOptions(['blub' => 'blab', 'dataType' => 'money']);
-        // check option still exists
-        self::assertEquals('trääääää', $sut->getOption('föööö', 'tröööö'));
-        // check options are now existing
-        self::assertEquals('blab', $sut->getOption('blub', 'xxxxx'));
-        self::assertEquals('money', $sut->getOption('dataType', 'xxxxx'));
-
-        // id
-        $sut->setId('cvbnmyx');
-        self::assertEquals('cvbnmyx', $sut->getId());
+        self::assertEquals('trääääää', $sut->getOptions()['föööö']);
     }
 
     public function testGetOptions()
@@ -95,7 +62,7 @@ class DailyWorkingTimeChartTest extends TestCase
 
         $options = $sut->getOptions(['type' => 'xxx']);
         self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
-        self::assertEquals('bar', $options['type']);
+        self::assertEquals('xxx', $options['type']);
     }
 
     public function testGetData()
@@ -106,7 +73,7 @@ class DailyWorkingTimeChartTest extends TestCase
         $project = $this->createMock(Project::class);
         $project->method('getId')->willReturn(4711);
 
-        $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
+        $repository = $this->getMockBuilder(DailyWorkingTimeChartProvider::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
         $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) use ($activity, $project) {
             return [
                 [
@@ -129,7 +96,7 @@ class DailyWorkingTimeChartTest extends TestCase
 
         $sut = new DailyWorkingTimeChart($repository);
         $sut->setUser(new User());
-        $data = $sut->getData([]);
+        $data = $sut->getData($sut->getOptions());
         self::assertCount(2, $data);
         self::assertArrayHasKey('activities', $data);
         self::assertArrayHasKey('data', $data);

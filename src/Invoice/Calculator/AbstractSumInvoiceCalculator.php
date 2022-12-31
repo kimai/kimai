@@ -9,18 +9,18 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\ExportableItem;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceItemInterface;
 
 /**
  * An abstract calculator that sums up the invoice item records.
  */
 abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
-    abstract protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string;
+    abstract protected function calculateSumIdentifier(ExportableItem $invoiceItem): string;
 
-    protected function calculateIdentifier(InvoiceItemInterface $entry): string
+    protected function calculateIdentifier(ExportableItem $entry): string
     {
         $prefix = $this->calculateSumIdentifier($entry);
 
@@ -34,7 +34,7 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
     /**
      * @return InvoiceItem[]
      */
-    public function getEntries()
+    public function getEntries(): array
     {
         $entries = $this->model->getEntries();
         if (empty($entries)) {
@@ -60,14 +60,10 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
 
     /**
      * @param InvoiceItem $invoiceItem
-     * @param InvoiceItemInterface $entry
+     * @param ExportableItem $entry
      * @return void
      */
-    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry) /* : void */
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, ExportableItem $entry): void
     {
-        if (method_exists($this, 'mergeSumTimesheet')) {
-            @trigger_error('mergeSumTimesheet() is deprecated and will be removed with 2.0 - use mergeSumInvoiceItem() instead', E_USER_DEPRECATED);
-            $this->mergeSumTimesheet($invoiceItem, $entry);
-        }
     }
 }

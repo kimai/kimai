@@ -14,23 +14,26 @@ use App\Invoice\InvoiceItem;
 
 /**
  * Class DefaultCalculator works on all given entries using:
- * - the customers currency
+ * - the customer currency
  * - the invoice template vat rate
  * - the entries rate
  */
-class DefaultCalculator extends AbstractMergedCalculator implements CalculatorInterface
+final class DefaultCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     /**
      * @return InvoiceItem[]
      */
-    public function getEntries()
+    public function getEntries(): array
     {
         $entries = [];
 
         foreach ($this->model->getEntries() as $entry) {
             $item = new InvoiceItem();
             $this->mergeInvoiceItems($item, $entry);
-            foreach ($entry->getVisibleMetaFields() as $field) {
+            foreach ($entry->getMetaFields() as $field) {
+                if ($field->getName() === null) {
+                    continue;
+                }
                 $item->addAdditionalField($field->getName(), $field->getValue());
             }
             $entries[] = $item;
@@ -39,9 +42,6 @@ class DefaultCalculator extends AbstractMergedCalculator implements CalculatorIn
         return $entries;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'default';

@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block page_title %}{{ 'users'|trans }}{% endblock %}
-
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': 'create'|trans,
         'form': form,
@@ -12,25 +10,25 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.username) }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.email) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ form_row(form.color) }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.alias) }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.title) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ form_row(form.accountNumber) }}
                 </div>
             </div>
@@ -74,7 +72,7 @@
                 </div>
             {% endif %}
 
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

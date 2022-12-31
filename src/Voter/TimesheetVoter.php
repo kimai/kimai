@@ -48,18 +48,13 @@ final class TimesheetVoter extends Voter
         'duplicate'
     ];
 
-    private $permissionManager;
-    private $lockdownService;
+    private ?bool $lockdownGrace = null;
+    private ?bool $lockdownOverride = null;
+    private ?bool $editExported = null;
+    private ?\DateTime $now = null;
 
-    private $lockdownGrace;
-    private $lockdownOverride;
-    private $editExported;
-    private $now;
-
-    public function __construct(RolePermissionManager $permissionManager, LockdownService $lockdownService)
+    public function __construct(private RolePermissionManager $permissionManager, private LockdownService $lockdownService)
     {
-        $this->permissionManager = $permissionManager;
-        $this->lockdownService = $lockdownService;
     }
 
     /**
@@ -67,7 +62,7 @@ final class TimesheetVoter extends Voter
      * @param mixed $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Timesheet)) {
             return false;
@@ -86,7 +81,7 @@ final class TimesheetVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -142,7 +137,7 @@ final class TimesheetVoter extends Voter
         $permission .= '_';
 
         // extend me for "team" support later on
-        if ($subject->getUser()->getId() == $user->getId()) {
+        if ($subject->getUser()->getId() === $user->getId()) {
             $permission .= 'own';
         } else {
             $permission .= 'other';
@@ -153,7 +148,7 @@ final class TimesheetVoter extends Voter
         return $this->permissionManager->hasRolePermission($user, $permission);
     }
 
-    protected function canStart(Timesheet $timesheet): bool
+    private function canStart(Timesheet $timesheet): bool
     {
         // possible improvements for the future:
         // we could check the amount of active entries (maybe slow)
@@ -167,7 +162,7 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        if (!$timesheet->getActivity()->isVisible() || !$timesheet->getProject()->isVisible()) {
+        if (!$timesheet->getProject()->isVisible()) {
             return false;
         }
 
@@ -175,10 +170,14 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
+        if (!$timesheet->getActivity()->isVisible()) {
+            return false;
+        }
+
         return true;
     }
 
-    protected function canEdit(User $user, Timesheet $timesheet): bool
+    private function canEdit(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedExported($user, $timesheet)) {
             return false;
@@ -191,7 +190,7 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    protected function canDelete(User $user, Timesheet $timesheet): bool
+    private function canDelete(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedExported($user, $timesheet)) {
             return false;
@@ -204,7 +203,7 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    protected function canDuplicate(User $user, Timesheet $timesheet): bool
+    private function canDuplicate(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;

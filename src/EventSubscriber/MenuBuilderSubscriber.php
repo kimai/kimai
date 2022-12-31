@@ -9,112 +9,98 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
-use App\Utils\MenuItemModel as KimaiMenuItemModel;
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Model\MenuItemInterface;
+use KevinPapst\TablerBundle\Event\MenuEvent;
+use KevinPapst\TablerBundle\Model\MenuItemInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class MenuBuilder configures the main navigation.
  * @internal
  */
-class MenuBuilderSubscriber implements EventSubscriberInterface
+final class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->tokenStorage = $storage;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
-            SidebarMenuEvent::class => ['onSetupNavbar', 100],
+            MenuEvent::class => ['onSetupNavbar', 100],
         ];
     }
 
-    /**
-     * Generate the main menu.
-     *
-     * @param SidebarMenuEvent $event
-     */
-    public function onSetupNavbar(SidebarMenuEvent $event)
+    public function onSetupNavbar(MenuEvent $event): void
     {
-        $request = $event->getRequest();
+        $menuEvent = new ConfigureMainMenuEvent();
 
-        $event->addItem(
-            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')
-        );
-
-        $menuEvent = new ConfigureMainMenuEvent(
-            $request,
-            $event,
-            new MenuItemModel('admin', 'menu.admin', ''),
-            new MenuItemModel('system', 'menu.system', '')
-        );
+        /** @var User $user */
+        $user = $this->security->getUser();
 
         // error pages don't have a user and will fail when is_granted() is called
-        if (null !== $this->tokenStorage->getToken()) {
+        if (null !== $user) {
             $this->eventDispatcher->dispatch($menuEvent);
         }
 
+        foreach ($menuEvent->getMenu()->getChildren() as $child) {
+            if ($child->getRoute() === null && !$child->hasChildren()) {
+                continue;
+            }
+            $event->addItem($child);
+        }
+
+        if ($menuEvent->getAppsMenu()->hasChildren()) {
+            $event->addItem($menuEvent->getAppsMenu());
+        }
         if ($menuEvent->getAdminMenu()->hasChildren()) {
-            $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));
-            foreach ($menuEvent->getAdminMenu()->getChildren() as $child) {
-                $event->addItem($child);
-            }
+            $event->addItem($menuEvent->getAdminMenu());
         }
-
         if ($menuEvent->getSystemMenu()->hasChildren()) {
-            $event->addItem(new MenuItemModel('system', 'menu.system', ''));
-            foreach ($menuEvent->getSystemMenu()->getChildren() as $child) {
-                $event->addItem($child);
-            }
+            $event->addItem($menuEvent->getSystemMenu());
         }
 
-        $this->activateByRoute(
-            $event->getRequest()->get('_route'),
-            $event->getItems()
-        );
+        $route = $event->getRequest()->get('_route');
+        if (!\is_string($route)) {
+            return;
+        }
+
+        $this->activateByRoute($route, $event->getItems());
     }
 
     /**
      * @param string $route
      * @param MenuItemInterface[] $items
+     * @return bool
      */
-    protected function activateByRoute($route, $items)
+    private function activateByRoute(string $route, array $items): bool
     {
         foreach ($items as $item) {
-            if ($item->hasChildren()) {
-                $this->activateByRoute($route, $item->getChildren());
-            } else {
-                if ($item->getRoute() == $route) {
+            if ($item instanceof MenuItemModel) {
+                if ($item->isChildRoute($route)) {
                     $item->setIsActive(true);
-                    continue;
+
+                    return true;
                 }
-                if ($item instanceof KimaiMenuItemModel) {
-                    if ($item->isChildRoute($route)) {
-                        $item->setIsActive(true);
-                        continue;
-                    }
+            }
+
+            if ($item->getRoute() === $route) {
+                $item->setIsActive(true);
+
+                return true;
+            }
+
+            if ($item->hasChildren()) {
+                if ($this->activateByRoute($route, $item->getChildren())) {
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 }

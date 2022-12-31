@@ -1,0 +1,40 @@
+{% extends 'security/login.html.twig' %}
+
+{% block login_social_auth %}{% endblock %}
+{% block password_forgotten %}{% endblock %}
+{% block registration %}{% endblock %}
+
+{% block login_box_msg %}{{ 'security.unlock.title'|trans }}{% endblock %}
+
+{% block login_form %}
+        <p class="text-muted text-center mb-4">
+            {% block unlock_title %}{{ 'security.unlock.intro'|trans }}{% endblock %}
+        </p>
+        <div class="mb-4 text-center">
+            {% from "macros/widgets.html.twig" import user_avatar, username %}
+            {{ user_avatar(app.user, false, 'avatar-xl mb-3') }}
+            <h3>{{ username(app.user) }}</h3>
+            {% if app.user.title is not empty %}
+                <p class="text-muted">{{ app.user.title }}</p>
+            {% endif %}
+        </div>
+        {% block unlock_form %}
+            {% if kimai_config.loginFormActive %}
+            <form action="{{ path('tabler_login_check'|tabler_route) }}" method="post" autocomplete="off" class="login-box-body security-login">
+                <input type="hidden" name="_remember_me" value="on">
+                <input type="hidden" name="_username" value="{{ app.user.userIdentifier }}">
+                <div class="mb-3">
+                    <div class="input-group input-group-flat">
+                        <input name="_password" type="password" tabindex="20" class="form-control" placeholder="{{ 'Password'|trans({}, 'TablerBundle') }}">
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" tabindex="40" class="btn btn-primary w-100">
+                        {{ icon('unlocked', true) }} {{ 'security.unlock.button'|trans }}
+                    </button>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            </form>
+            {% endif %}
+        {% endblock %}
+{% endblock %}

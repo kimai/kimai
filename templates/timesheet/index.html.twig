@@ -1,16 +1,196 @@
-{% extends 'timesheet/layout-listing.html.twig' %}
-{% import "timesheet/actions.html.twig" as actions %}
+{% extends 'datatable.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
 
-{% set tableName = 'timesheet' %}
-{% set paginationRoute = 'timesheet_paginated' %}
-{% set editRoute = 'timesheet_edit' %}
-{% set canSeeRate = is_granted('view_rate_own_timesheet') %}
-{% set canSeeUsername = false %}
-{% set allowMarkdown = true %}
+{% set checkOverlappingDesc = false %}
+{% set checkOverlappingAsc = false %}
+{% set query = dataTable.getQuery() %}
+{% if query.orderBy == 'begin' or query.orderBy == 'end' %}
+    {% set checkOverlappingDesc = (query.order == 'DESC') %}
+    {% set checkOverlappingAsc = not checkOverlappingDesc %}
+{% endif %}
 
-{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.timesheets('index', query) }}{% endblock %}
+{% set day = null %}
+{% set dayDuration = 0 %}
+{% set dayRate = {} %}
+{% set dayHourlyRate = 0 %}
+{% set lastEntry = null %}
 
-{% block row_action %}
-    {{- actions.timesheet(entry, 'index') -}}
+{% block status %}
+    {% from "macros/status.html.twig" import status_duration %}
+    {{ status_duration(stats.duration|duration) }}
 {% endblock %}
+
+{% block datatable_after %}
+    {% if showSummary %}
+        {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
+    {% endif %}
+{% endblock %}
+
+{% block datatable_row %}
+    {%- set customerCurrency = entry.project.customer.currency -%}
+    {%- set entryHourlyRate = entry.hourlyRate|money(customerCurrency) -%}
+    {%- if day is same as(null) -%}
+        {% set day = entry.begin|date_short %}
+    {% endif %}
+    {%- if showSummary and day is not same as(entry.begin|date_short) -%}
+        {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
+        {% set day = entry.begin|date_short %}
+        {% set dayDuration = 0 %}
+        {% set dayRate = {} %}
+        {% set dayHourlyRate = 0 %}
+    {%- endif -%}
+    {% set class = '' %}
+    {% if checkOverlappingDesc or checkOverlappingAsc %}
+        {% if lastEntry is not null and entry.end is not null and entry.user is same as (lastEntry.user) %}
+            {% if checkOverlappingDesc and entry.end.timestamp > lastEntry.begin.timestamp %}
+                {% set class = class ~ ' overlapping' %}
+            {% elseif checkOverlappingAsc and entry.begin.timestamp < lastEntry.end.timestamp %}
+                {% set class = class ~ ' overlapping' %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    {% if not entry.end %}
+        {% set class = class ~ ' recording' %}
+    {% endif %}
+    <tr{% if is_granted('edit', entry) %} class="modal-ajax-form open-edit{{ class }}" data-href="{{ path(editRoute, {'id': entry.id}) }}"{% endif %}>
+        <td class="text-nowrap">
+            {% if is_granted('edit', entry) or is_granted('delete', entry) %}
+                {{ tables.datatable_multiupdate_row(entry.id) }}
+            {% endif %}
+        </td>
+        <td class="text-nowrap {{ tables.class(dataTable, 'date') }}">{{ entry.begin|date_short }}</td>
+
+        {% if showStartEndTime %}
+            <td class="text-nowrap {{ tables.class(dataTable, 'starttime') }}">{{ entry.begin|time }}</td>
+            <td class="text-nowrap {{ tables.class(dataTable, 'endtime') }}">
+                {% if entry.end %}
+                    {{ entry.end|time }}
+                {% else %}
+                    &dash;
+                {% endif %}
+            </td>
+        {% endif %}
+
+        {% if entry.end %}
+            <td class="text-nowrap {{ tables.class(dataTable, 'duration') }}">{{ entry.duration|duration }}</td>
+        {% else %}
+            <td class="text-nowrap {{ tables.class(dataTable, 'duration') }}">
+                <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
+            </td>
+        {% endif %}
+
+        {% if canSeeRate %}
+            <td class="text-nowrap {{ tables.class(dataTable, 'hourlyRate') }}">
+                {{ entryHourlyRate }}
+            </td>
+            <td class="text-nowrap {{ tables.class(dataTable, 'rate') }}">
+                {% if not entry.end or not is_granted('view_rate', entry) %}
+                    &dash;
+                {% else %}
+                    {{ entry.rate|money(customerCurrency) }}
+                {% endif %}
+            </td>
+        {% endif %}
+
+        <td class="{{ tables.class(dataTable, 'customer') }}">
+            {{ widgets.label_customer(entry.project.customer) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'project') }}">
+            {{ widgets.label_project(entry.project) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'activity') }}">
+            {% if entry.activity is not null %}
+                {{ widgets.label_activity(entry.activity) }}
+            {% endif %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'description') }} timesheet-description">
+            {% if allowMarkdown %}
+                {{ entry.description|desc2html }}
+            {% else %}
+                {{ entry.description|nl2br }}
+            {% endif %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
+
+        {% for field in metaColumns %}
+            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}">
+                {{ tables.datatable_meta_column(entry, field) }}
+            </td>
+        {% endfor %}
+
+        {% if canSeeUsername %}
+            <td class="{{ tables.class(dataTable, 'username') }}">
+                {{ widgets.label_user(entry.user) }}
+            </td>
+        {% endif %}
+
+        <td class="{{ tables.class(dataTable, 'billable') }}">
+            {{ widgets.label_boolean(entry.billable) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'exported') }}">
+            {{ widgets.label_boolean(entry.exported) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'actions') }}">
+            {% set event = actions(app.user, action_single, 'index', {'timesheet': entry}) %}
+            {{ widgets.table_actions(event.actions) }}
+        </td>
+    </tr>
+    {%- if entry.end -%}
+        {% if dayRate[customerCurrency] is not defined %}
+            {% set dayRate = dayRate|merge({(customerCurrency): 0}) %}
+        {% endif %}
+        {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
+    {%- endif -%}
+    {% if dayHourlyRate is not null %}
+        {% if dayHourlyRate == 0 %}
+            {% set dayHourlyRate = entryHourlyRate %}
+        {% elseif dayHourlyRate != entryHourlyRate %}
+            {% set dayHourlyRate = null %}
+        {% endif %}
+    {% endif %}
+    {%- set dayDuration = dayDuration + entry.duration -%}
+    {% set lastEntry = entry %}
+{% endblock %}
+
+{% macro summary(day, duration, dayHourlyRate, dayRates, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) %}
+    {% import "macros/datatables.html.twig" as tables %}
+    <tr class="summary info">
+        <td></td>
+        <td class="text-nowrap">{{ day }}</td>
+        {% if showStartEndTime %}
+            <td class="{{ tables.class(dataTable, 'starttime') }}"></td>
+            <td class="{{ tables.class(dataTable, 'endtime') }}"></td>
+        {% endif %}
+        <td class="text-nowrap {{ tables.class(dataTable, 'duration') }}">{{ duration|duration }}</td>
+        {% if canSeeRate %}
+            <td class="text-nowrap {{ tables.class(dataTable, 'hourlyRate') }}">
+                {% if dayHourlyRate is not null and dayHourlyRate != 0 %}
+                    {{ dayHourlyRate }}
+                {% endif %}
+            </td>
+            <td class="text-nowrap {{ tables.class(dataTable, 'rate') }}">
+                {% for currency, rate in dayRates %}
+                    {{ rate|money(currency) }}
+                    {% if not loop.last %}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        {% endif %}
+        <td class="{{ tables.class(dataTable, 'customer') }}"></td>
+        <td class="{{ tables.class(dataTable, 'project') }}"></td>
+        <td class="{{ tables.class(dataTable, 'activity') }}"></td>
+        <td class="{{ tables.class(dataTable, 'description') }}"></td>
+        <td class="{{ tables.class(dataTable, 'tags') }}"></td>
+        {% for field in metaColumns %}
+            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}"></td>
+        {% endfor %}
+        {% if canSeeUsername %}
+            <td class="{{ tables.class(dataTable, 'username') }}"></td>
+        {% endif %}
+        <td class="{{ tables.class(dataTable, 'billable') }}"></td>
+        <td class="{{ tables.class(dataTable, 'exported') }}"></td>
+        <td class="actions"></td>
+    </tr>
+{% endmacro %}

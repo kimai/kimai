@@ -18,30 +18,15 @@ final class RoundingService
     /**
      * @var array
      */
-    private $rules;
-    /**
-     * @var array
-     */
     private $rulesCache;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var RoundingInterface[]
-     */
-    private $roundingModes;
 
     /**
      * @param SystemConfiguration $configuration
      * @param RoundingInterface[] $roundingModes
      * @param array $rules
      */
-    public function __construct(SystemConfiguration $configuration, iterable $roundingModes, array $rules)
+    public function __construct(private SystemConfiguration $configuration, private iterable $roundingModes, private array $rules)
     {
-        $this->configuration = $configuration;
-        $this->roundingModes = $roundingModes;
-        $this->rules = $rules;
     }
 
     private function getRoundingRules(): array
@@ -71,6 +56,9 @@ final class RoundingService
     public function roundBegin(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getBegin() === null) {
+                continue;
+            }
             $weekday = $record->getBegin()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -83,6 +71,9 @@ final class RoundingService
     public function roundEnd(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -95,6 +86,9 @@ final class RoundingService
     public function roundDuration(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -111,6 +105,9 @@ final class RoundingService
         }
 
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -118,10 +115,12 @@ final class RoundingService
                 $rounder->roundBegin($record, $rounding['begin']);
                 $rounder->roundEnd($record, $rounding['end']);
 
-                $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
-                $record->setDuration($duration);
+                if ($record->getBegin() !== null) {
+                    $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
+                    $record->setDuration($duration);
 
-                $rounder->roundDuration($record, $rounding['duration']);
+                    $rounder->roundDuration($record, $rounding['duration']);
+                }
             }
         }
     }

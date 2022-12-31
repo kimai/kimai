@@ -1,0 +1,56 @@
+{% extends 'security/unlock.html.twig' %}
+
+{% block login_box_msg %}{{ 'profile.2fa'|trans({'%provider%': twoFactorProvider }) }}{% endblock %}
+{% block unlock_title %}{{ 'login.2fa_intro'|trans }}{% endblock %}
+
+{% block unlock_form %}
+
+    {# Let the user select the authentication method #}
+    {% if availableTwoFactorProviders|length > 1 %}
+        <p>{{ "choose_provider"|trans({}, 'SchebTwoFactorBundle') }}:
+            {% for provider in availableTwoFactorProviders %}
+                <a href="{{ path("2fa_login", {"preferProvider": provider}) }}">{{ provider }}</a>
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <form class="form" action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+        <div class="mb-3">
+                <div class="mb-3">
+                    <label for="_auth_code" class="form-label">{{ 'login.2fa_label'|trans }}</label>
+                    <input id="_auth_code" type="text" name="{{ authCodeParameterName }}" autocomplete="one-time-code" autofocus class="form-control{% if authenticationError %} is-invalid{% endif %}" placeholder="{{ 'login.2fa_label'|trans }}" />
+                    {% if authenticationError %}
+                        <div class="invalid-feedback d-block">
+                            {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {#
+                    https://www.twilio.com/blog/html-attributes-two-factor-authentication-autocomplete
+                    If your 2fa methods are using numeric codes only, add these attributes for better user experience:
+                    inputmode="numeric" pattern="[0-9]*"
+                #}
+        </div>
+
+        {% if displayTrustedOption %}
+            <p class="widget"><label for="_trusted"><input id="_trusted" type="checkbox" name="{{ trustedParameterName }}" /> {{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}</label></p>
+        {% endif %}
+        <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+        <div class="form-footer">
+            <button type="submit" tabindex="40" class="btn btn-primary w-100">
+                {{ 'Sign In'|trans({}, 'TablerBundle') }}
+            </button>
+        </div>
+    </form>
+
+    <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>
+
+    <div class="row">
+        <div class="col text-center">
+            {# The logout link gives the user a way out if they can't complete two-factor authentication #}
+            <a class="btn" href="{{ logoutPath }}">{{ 'cancel'|trans }}</a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -12,14 +12,21 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Configuration;
 use App\Entity\User;
+use App\Form\Type\DateRangeType;
 use App\Repository\ConfigurationRepository;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
@@ -29,11 +36,33 @@ abstract class ControllerBaseTest extends WebTestCase
     use KernelTestTrait;
 
     public const DEFAULT_LANGUAGE = 'en';
+    public const DEFAULT_DATE_FORMAT = 'n/j/Y';
+    public const DEFAULT_TIME_FORMAT = 'h:mm a';
 
     protected function tearDown(): void
     {
         $this->clearConfigCache();
         parent::tearDown();
+    }
+
+    protected function formatDateRange(\DateTime $begin, \DateTime $end): string
+    {
+        return $begin->format(self::DEFAULT_DATE_FORMAT) . DateRangeType::DATE_SPACER . $end->format(self::DEFAULT_DATE_FORMAT);
+    }
+
+    protected function formatDate(\DateTime $date): string
+    {
+        return $date->format(self::DEFAULT_DATE_FORMAT);
+    }
+
+    protected function formatDateTime(\DateTime $date): string
+    {
+        return $this->formatDate($date) . ' ' . $this->formatTime($date);
+    }
+
+    protected function formatTime(\DateTime $date): string
+    {
+        return $date->format(self::DEFAULT_TIME_FORMAT);
     }
 
     /**
@@ -45,15 +74,14 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function getPrivateService(string $service)
     {
-        return self::$container->get($service);
+        return self::getContainer()->get($service);
     }
 
     protected function loadUserFromDatabase(string $username)
     {
-        $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername($username);
+        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->loadUserByIdentifier($username);
         self::assertInstanceOf(User::class, $user);
 
         return $user;
@@ -61,7 +89,7 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function setSystemConfiguration(string $name, $value): void
     {
-        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository = self::getContainer()->get(ConfigurationRepository::class);
 
         $entity = $repository->findOneBy(['name' => $name]);
         if ($entity === null) {
@@ -76,7 +104,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function clearConfigCache()
     {
         /** @var ConfigurationRepository $repository */
-        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository = self::getContainer()->get(ConfigurationRepository::class);
         $repository->clearCache();
     }
 
@@ -121,7 +149,13 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function createUrl(string $url): string
     {
-        return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
+        $prefix = '/' . self::DEFAULT_LANGUAGE;
+
+        if (!str_starts_with($url, $prefix)) {
+            $url = $prefix . '/' . ltrim($url, '/');
+        }
+
+        return $url;
     }
 
     /**
@@ -132,9 +166,14 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param string $content
      * @return \Symfony\Component\DomCrawler\Crawler
      */
-    protected function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
     {
         return $client->request($method, $this->createUrl($url), $parameters, [], [], $content);
+    }
+
+    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
+    {
+        return $client->request($method, $url, $parameters, [], [], $content);
     }
 
     /**
@@ -168,22 +207,13 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertThat($response, new ResponseConstraint\ResponseIsSuccessful(), 'Response is not successful, got code: ' . $response->getStatusCode());
     }
 
-    /**
-     * @param string $url
-     * @param string $method
-     */
-    protected function assertUrlIsSecured(string $url, $method = 'GET')
+    protected function assertUrlIsSecured(string $url, string $method = 'GET'): void
     {
         $client = self::createClient();
         $this->assertRequestIsSecured($client, $url, $method);
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param string $method
-     */
-    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET')
+    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $client->request($method, $this->createUrl($url));
@@ -194,14 +224,14 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertAccessDenied($client);
     }
 
-    protected function assertAccessDenied(HttpKernelBrowser $client)
+    protected function assertAccessDenied(HttpKernelBrowser $client): void
     {
         self::assertFalse(
             $client->getResponse()->isSuccessful(),
             'Access is not denied for URL: ' . $client->getRequest()->getUri()
         );
         self::assertStringContainsString(
-            'Symfony\Component\Security\Core\Exception\AccessDeniedException',
+            'Page is restricted',
             $client->getResponse()->getContent(),
             'Could not find AccessDeniedException in response'
         );
@@ -216,12 +246,20 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertRouteNotFound(HttpKernelBrowser $client)
     {
         self::assertFalse($client->getResponse()->isSuccessful());
-        self::assertEquals(404, $client->getResponse()->getStatusCode());
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    protected function assert404(Response $response, ?string $message = null)
+    {
+        $message = 'Page not found';
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+        self::assertStringContainsString($message, $response->getContent());
     }
 
     protected function assertMainContentClass(HttpKernelBrowser $client, string $classname)
     {
-        self::assertStringContainsString('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
+        self::assertStringContainsString('<section id="" class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
     /**
@@ -238,7 +276,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected static function assertHasProgressbar(HttpKernelBrowser $client)
     {
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('<div class="progress-bar progress-bar-', $content);
+        self::assertStringContainsString('<div class="progress-bar', $content);
         self::assertStringContainsString('" role="progressbar" aria-valuenow="', $content);
         self::assertStringContainsString('" aria-valuemin="0" aria-valuemax="100" style="width: ', $content);
     }
@@ -260,11 +298,11 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertPageActions(HttpKernelBrowser $client, array $buttons)
     {
-        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a');
+        $node = $client->getCrawler()->filter('div.page-header div.page-actions .pa-desktop a');
 
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
-            $expectedClass = str_replace('btn btn-default btn-', '', $element->getAttribute('class'));
+            $expectedClass = trim(str_replace(['btn action-', ' btn-icon', 'btn btn-primary action-', 'btn btn-dark action-', 'btn btn-white action-', 'btn  action-'], '', $element->getAttribute('class')));
             self::assertArrayHasKey($expectedClass, $buttons);
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));
@@ -291,7 +329,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $result = $client->submit($form, $formData);
 
         $submittedForm = $result->filter($formSelector);
-        $validationErrors = $submittedForm->filter('li.text-danger');
+        $validationErrors = $submittedForm->filter('div.invalid-feedback.d-block');
 
         self::assertEquals(
             \count($fieldNames),
@@ -307,11 +345,11 @@ abstract class ControllerBaseTest extends WebTestCase
 
             $validation = $list->filter('li.text-danger');
             if (\count($validation) < 1) {
-                // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
+                // decorated form fields with icon have a different html structure
                 /** @var \DOMElement $listMsg */
-                $listMsg = $field->parents()->getNode(1);
+                $listMsg = $field->getNode(0); //->parents()->getNode(1);
                 $classes = $listMsg->getAttribute('class');
-                self::assertStringContainsString('has-error', $classes, 'Form field has no validation message: ' . $name);
+                self::assertStringContainsString('is-invalid', $classes, 'Form field has no validation message: ' . $name);
             }
         }
     }
@@ -344,7 +382,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message)
     {
-        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $node = $client->getCrawler()->filter('div.alert.alert-warning.alert-important');
         self::assertStringContainsString($message, $node->text(null, true));
     }
 
@@ -392,7 +430,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $url
      */
-    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
+    protected function assertIsRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
     {
         self::assertResponseRedirects();
 
@@ -400,13 +438,38 @@ abstract class ControllerBaseTest extends WebTestCase
             return;
         }
 
-        $this->assertRedirectUrl($client, $url);
+        $this->assertRedirectUrl($client, $url, $endsWith);
     }
 
-    protected function assertRedirectUrl(HttpKernelBrowser $client, $url = null, $endsWith = true)
+    protected function assertIsModalRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true): string
+    {
+        self::assertEquals(201, $client->getResponse()->getStatusCode());
+        self::assertTrue($client->getResponse()->headers->has('x-modal-redirect'), 'Could not find "x-modal-redirect" header');
+        $location = $client->getResponse()->headers->get('x-modal-redirect');
+
+        // check for meta refresh
+        $expectedMeta = sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
+        self::assertStringContainsString($expectedMeta, $client->getResponse()->getContent());
+
+        if ($url !== null) {
+            if ($endsWith) {
+                self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
+            } else {
+                self::assertStringContainsString($url, $location, 'Redirect URL does not match');
+            }
+        }
+
+        return $location;
+    }
+
+    protected function assertRedirectUrl(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
     {
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         $location = $client->getResponse()->headers->get('Location');
+
+        if ($url === null) {
+            return;
+        }
 
         if ($endsWith) {
             self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
@@ -434,5 +497,14 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertRedirectUrl($client, $expectedRedirect);
         $client->followRedirect();
         $this->assertHasFlashError($client, 'The action could not be performed: invalid security token.');
+    }
+
+    protected function getCsrfToken(HttpKernelBrowser $client, string $name): CsrfToken
+    {
+        $request = new Request();
+        $request->setSession(new Session(new MockArraySessionStorage()));
+        self::getContainer()->get(RequestStack::class)->push($request);
+
+        return self::getContainer()->get('security.csrf.token_manager')->getToken($name);
     }
 }

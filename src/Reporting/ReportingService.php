@@ -16,21 +16,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class ReportingService
 {
-    public const DEFAULT_VIEW = 'week_by_user';
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $security;
-
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $security)
+    public function __construct(private EventDispatcherInterface $dispatcher, private AuthorizationCheckerInterface $security)
     {
-        $this->dispatcher = $dispatcher;
-        $this->security = $security;
     }
 
     /**
@@ -42,29 +29,33 @@ final class ReportingService
         $event = new ReportingEvent($user);
 
         if ($this->security->isGranted('view_reporting')) {
-            $showBudget = $this->security->isGranted('budget_any', 'project');
-            $details = $this->security->isGranted('details', 'project');
-            $viewOther = $this->security->isGranted('view_other_reporting') && $this->security->isGranted('view_other_timesheet');
-            $event->addReport(new Report('week_by_user', 'report_user_week', 'report_user_week', 'user'));
-            $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month', 'user'));
-            $event->addReport(new Report('year_by_user', 'report_user_year', 'report_user_year', 'user'));
-            if ($viewOther) {
+            if ($this->security->isGranted('report:user')) {
+                $event->addReport(new Report('week_by_user', 'report_user_week', 'report_user_week', 'user'));
+                $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month', 'user'));
+                $event->addReport(new Report('year_by_user', 'report_user_year', 'report_user_year', 'user'));
+            }
+
+            if ($viewOther = $this->security->isGranted('report:other')) {
                 $event->addReport(new Report('weekly_users_list', 'report_weekly_users', 'report_weekly_users', 'users'));
                 $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users', 'users'));
                 $event->addReport(new Report('yearly_users_list', 'report_yearly_users', 'report_yearly_users', 'users'));
             }
-            if ($showBudget) {
-                $event->addReport(new Report('project_view', 'report_project_view', 'report_project_view', 'project'));
+
+            if ($this->security->isGranted('report:project')) {
+                if ($this->security->isGranted('details', 'project')) {
+                    $event->addReport(new Report('project_details', 'report_project_details', 'report_project_details', 'project'));
+                }
+                if ($this->security->isGranted('budget_any', 'project')) {
+                    $event->addReport(new Report('project_view', 'report_project_view', 'report_project_view', 'project'));
+                    $event->addReport(new Report('daterange_projects', 'report_project_daterange', 'report_project_daterange', 'project'));
+                    $event->addReport(new Report('inactive_projects', 'report_project_inactive', 'report_inactive_project', 'project'));
+                }
             }
-            if ($details) {
-                $event->addReport(new Report('project_details', 'report_project_details', 'report_project_details', 'project'));
-            }
-            if ($showBudget) {
-                $event->addReport(new Report('daterange_projects', 'report_project_daterange', 'report_project_daterange', 'project'));
-                $event->addReport(new Report('inactive_projects', 'report_project_inactive', 'report_inactive_project', 'project'));
-            }
-            if ($viewOther) {
-                $event->addReport(new Report('report_customer_monthly_projects', 'report_customer_monthly_projects', 'report_customer_monthly_projects', 'customer'));
+
+            if ($this->security->isGranted('report:customer')) {
+                if ($viewOther) {
+                    $event->addReport(new Report('report_customer_monthly_projects', 'report_customer_monthly_projects', 'report_customer_monthly_projects', 'customer'));
+                }
             }
 
             $this->dispatcher->dispatch($event);

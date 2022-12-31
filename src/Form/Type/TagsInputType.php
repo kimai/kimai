@@ -22,61 +22,49 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Custom form field type to enter tags or use one of autocompleted field
  */
-class TagsInputType extends AbstractType
+final class TagsInputType extends AbstractType
 {
-    /**
-     * @var TagArrayToStringTransformer
-     */
-    private $transformer;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
-
-    public function __construct(TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
+    public function __construct(private TagArrayToStringTransformer $transformer, private UrlGeneratorInterface $router)
     {
-        $this->transformer = $transformer;
-        $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->addModelTransformer(new CollectionToArrayTransformer(), true)
             ->addModelTransformer($this->transformer, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Comma separated list of tags',
             ],
-            'label' => 'label.tag',
+            'allow_create' => false,
+            'label' => 'tag',
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-autocomplete-url' => $this->router->generate('get_tags'),
-            'class' => 'js-autocomplete',
+            'data-minimum-character' => 3,
+            'class' => 'form-select',
             'autocomplete' => 'off',
+            'data-form-widget' => 'autocomplete'
         ]);
+
+        if ($options['allow_create']) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-create' => 'post_tag',
+            ]);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

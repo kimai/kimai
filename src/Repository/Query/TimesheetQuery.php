@@ -14,9 +14,6 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
-/**
- * Can be used for advanced timesheet repository queries.
- */
 class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
     use BillableTrait;
@@ -30,38 +27,21 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
 
     public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
 
+    private ?User $timesheetUser = null;
+    /** @var array<Activity> */
+    private array $activities = [];
+    private int $state = self::STATE_ALL;
+    private int $exported = self::STATE_ALL;
+    private ?int $maxResults = null;
+    private ?\DateTime $modifiedAfter = null;
     /**
-     * @var User|null
+     * @var array<Tag>
      */
-    protected $timesheetUser;
+    private array $tags = [];
     /**
-     * @var array
+     * @var array<User>
      */
-    private $activities = [];
-    /**
-     * @var int
-     */
-    protected $state = self::STATE_ALL;
-    /**
-     * @var int
-     */
-    protected $exported = self::STATE_ALL;
-    /**
-     * @var \DateTime|null
-     */
-    private $modifiedAfter;
-    /**
-     * @var iterable
-     */
-    protected $tags = [];
-    /**
-     * @var User[]
-     */
-    private $users = [];
-    /**
-     * @var int|null
-     */
-    private $maxResults;
+    private array $users = [];
 
     public function __construct(bool $resetTimes = true)
     {
@@ -114,67 +94,42 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
-     * Limit the data exclusively to the user (eg. users own timesheets).
-     *
-     * @return User|int|null
+     * Limit the data exclusively to the user.
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->timesheetUser;
     }
 
     /**
-     * Limit the data exclusively to the user (eg. users own timesheets).
-     *
-     * @param User|int|null $user
-     * @return TimesheetQuery
+     * Limit the data exclusively to the user.
      */
-    public function setUser($user = null)
+    public function setUser(?User $user): void
     {
         $this->timesheetUser = $user;
-
-        return $this;
     }
 
     /**
-     * @return Activity|int|null
-     * @deprecated since 1.9 - use getActivities() instead - will be removed with 2.0
+     * @return array<int>
      */
-    public function getActivity()
+    public function getActivityIds(): array
     {
-        if (\count($this->activities) > 0) {
-            return $this->activities[0];
-        }
-
-        return null;
+        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
+            return $activity->getId();
+        }, $this->activities)), function ($id) {
+            return $id !== null;
+        }));
     }
 
+    /**
+     * @return array<Activity>
+     */
     public function getActivities(): array
     {
         return $this->activities;
     }
 
-    /**
-     * @param Activity|int|null $activity
-     * @return $this
-     * @deprecated since 1.9 - use setActivities() or addActivity() instead - will be removed with 2.0
-     */
-    public function setActivity($activity)
-    {
-        if (null === $activity) {
-            $this->activities = [];
-        } else {
-            $this->activities = [$activity];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Activity|int $activity
-     * @return $this
-     */
-    public function addActivity($activity): TimesheetQuery
+    public function addActivity(Activity $activity): TimesheetQuery
     {
         $this->activities[] = $activity;
 
@@ -182,8 +137,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
-     * @param Activity[]|int[] $activities
-     * @return $this
+     * @param array<Activity> $activities
      */
     public function setActivities(array $activities): TimesheetQuery
     {
@@ -214,7 +168,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
 
     public function setState(int $state): TimesheetQuery
     {
-        $state = (int) $state;
         if (\in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }
@@ -237,39 +190,33 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         return $this->exported === self::STATE_NOT_EXPORTED;
     }
 
-    public function setExported(int $exported): TimesheetQuery
+    public function setExported(int $exported): void
     {
-        $exported = (int) $exported;
-        if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
-            $this->exported = $exported;
+        if (!\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
+            throw new \InvalidArgumentException('Unknown export state given');
         }
 
-        return $this;
+        $this->exported = $exported;
     }
 
-    public function getTags(bool $allowUnknown = false): iterable
+    /**
+     * @return array<Tag>
+     */
+    public function getTags(): array
     {
-        if (empty($this->tags)) {
-            return [];
-        }
-
-        $result = [];
-
-        foreach ($this->tags as $tag) {
-            if (!$allowUnknown && $tag instanceof Tag && null === $tag->getId()) {
-                continue;
-            }
-            $result[] = $tag;
-        }
-
-        return $result;
+        return array_values($this->tags);
     }
 
-    public function setTags(iterable $tags): TimesheetQuery
+    public function removeTag(Tag $tag): void
     {
-        $this->tags = $tags;
+        if (isset($this->tags[$tag->getId()])) {
+            unset($this->tags[$tag->getId()]);
+        }
+    }
 
-        return $this;
+    public function addTag(Tag $tag): void
+    {
+        $this->tags[$tag->getId()] = $tag;
     }
 
     public function getModifiedAfter(): ?\DateTime

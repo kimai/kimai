@@ -9,7 +9,6 @@
 
 namespace App\Tests\Project;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -22,6 +21,7 @@ use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
 use App\Project\ProjectService;
 use App\Repository\ProjectRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Utils\Context;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -44,6 +44,9 @@ class ProjectServiceTest extends TestCase
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
+            $dispatcher->method('dispatch')->willReturnCallback(function ($event) {
+                return $event;
+            });
         }
 
         if ($validator === null) {
@@ -51,12 +54,9 @@ class ProjectServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $configuration = $this->createMock(SystemConfiguration::class);
-        $configuration->method('isProjectCopyTeamsOnCreate')->willReturn($copyTeamsOnCreate);
+        $configuration = SystemConfigurationFactory::createStub(['project' => ['copy_teams_on_create' => $copyTeamsOnCreate]]);
 
-        $service = new ProjectService($configuration, $repository, $dispatcher, $validator);
-
-        return $service;
+        return new ProjectService($configuration, $repository, $dispatcher, $validator);
     }
 
     public function testCannotSavePersistedProjectAsNew()
@@ -102,6 +102,8 @@ class ProjectServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -120,11 +122,13 @@ class ProjectServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = $sut->createNewProject($customer);
 
         self::assertSame($customer, $project->getCustomer());
@@ -141,6 +145,8 @@ class ProjectServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -156,8 +162,8 @@ class ProjectServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher, null, true);
 
-        $team1 = new Team();
-        $team2 = new Team();
+        $team1 = new Team('foo');
+        $team2 = new Team('bar');
 
         $user = new User();
         $user->addTeam($team1);

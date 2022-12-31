@@ -9,21 +9,18 @@
 
 namespace App\DependencyInjection;
 
-use App\Constants;
+use App\Kernel;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Intl\Locales;
 
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
  */
-class AppExtension extends Extension
+final class AppExtension extends Extension
 {
-    /**
-     * @param array $configs
-     * @param ContainerBuilder $container
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         try {
@@ -33,15 +30,7 @@ class AppExtension extends Extension
             throw $e;
         }
 
-        // @deprecated since 0.9, duration_only will be removed with 2.0
-        if (isset($config['timesheet']['duration_only'])) {
-            @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
-            if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
-                trigger_error('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
-            }
-        }
-
-        // we use a comma sepearated string internally, to be able to use it in combination with the database configuration system
+        // we use a comma separated string internally, to be able to use it in combination with the database configuration system
         foreach ($config['timesheet']['rounding'] as $name => $settings) {
             $config['timesheet']['rounding'][$name]['days'] = implode(',', $settings['days']);
         }
@@ -56,21 +45,14 @@ class AppExtension extends Extension
             $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
         }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . '/var/plugins');
+        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . Kernel::PLUGIN_DIRECTORY);
 
-        $this->setLanguageFormats($config['languages'], $container);
-        unset($config['languages']);
+        $this->setLanguageFormats($container);
 
-        $container->setParameter('kimai.calendar', $config['calendar']); // @deprecated since 1.13
-        $container->setParameter('kimai.dashboard', $config['dashboard']);
-        $container->setParameter('kimai.widgets', $config['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.export.documents', $config['export']['documents']);
-        $container->setParameter('kimai.defaults', $config['defaults']); // @deprecated since 1.13
 
         $this->createPermissionParameter($config['permissions'], $container);
-        $container->setParameter('kimai.theme', $config['theme']); // @deprecated since 1.15
-        $container->setParameter('kimai.timesheet', $config['timesheet']); // @deprecated since 1.13
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 
@@ -86,58 +68,77 @@ class AppExtension extends Extension
             $config['ldap']['connection']['accountFilterFormat'] = '(&' . $filter . '(' . $config['ldap']['user']['usernameAttribute'] . '=%s))';
         }
 
-        // @deprecated since 1.15
-        $container->setParameter('kimai.ldap', $config['ldap']);
-
-        // translation files, which can overwrite the default kimai translations
-        $localTranslations = [];
-        if (null !== $config['theme']['branding']['translation']) {
-            $localTranslations[] = $config['theme']['branding']['translation'];
-        }
-        if (null !== $config['industry']['translation']) {
-            $localTranslations[] = $config['industry']['translation'];
-        }
-        $container->setParameter('kimai.i18n_domains', $localTranslations);
-
         // this should happen always at the end, so bundles do not mess with the base configuration
         /* @phpstan-ignore-next-line */
         if ($container->hasParameter('kimai.bundles.config')) {
             $bundleConfig = $container->getParameter('kimai.bundles.config');
             if (!\is_array($bundleConfig)) {
                 trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
-            }
-            foreach ($bundleConfig as $key => $value) {
-                if (\array_key_exists($key, $config)) {
-                    trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
-                    continue;
+            } else {
+                foreach ($bundleConfig as $key => $value) {
+                    if (\array_key_exists($key, $config)) {
+                        trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
+                        continue;
+                    }
+                    $config[$key] = $value;
                 }
-                $config[$key] = $value;
             }
         }
-        $container->setParameter('kimai.config', $config);
+
+        // cleanup for caching
+        unset($config['invoice']['documents']);
+        unset($config['export']);
+        unset($config['dashboard']);
+        unset($config['data_dir']);
+        unset($config['permissions']);
+
+        // make configs a flat dotted notation during compile time, this will save us from the need to
+        // parse each and every call to the config, but allows direct access
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($config, \RecursiveArrayIterator::CHILD_ARRAYS_ONLY));
+        $newConfig = [];
+        foreach ($iterator as $value) {
+            $keys = [];
+            foreach (range(0, $iterator->getDepth()) as $depth) {
+                $keys[] = $iterator->getSubIterator($depth)->key();
+            }
+            $newConfig[implode('.', $keys)] = $value;
+        }
+
+        $container->setParameter('kimai.config', $newConfig);
     }
 
-    protected function setLanguageFormats(array $config, ContainerBuilder $container)
+    private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = explode('|', $container->getParameter('app_locales'));
 
+        $directory = $container->getParameter('kernel.project_dir');
+        $config = $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
+        $settings = include $config;
+
+        $appLocales = [];
+        $defaults = [
+            'date' => 'dd.MM.y',
+            'time' => 'HH:mm',
+            'rtl' => false,
+        ];
+
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
-            if (!\array_key_exists($locale, $config)) {
-                $config[$locale] = $config[Constants::DEFAULT_LOCALE];
-            }
-        }
-
-        // make sure all keys are registered for every locale
-        foreach ($config as $locale => $settings) {
-            if ($locale === Constants::DEFAULT_LOCALE) {
+            // unlikely that a locale disappears, but in case that a new symfony update comes with changed locales
+            if (!Locales::exists($locale)) {
                 continue;
             }
-            // pre-fill all formats with the default locale settings
-            $config[$locale] = array_merge($config[Constants::DEFAULT_LOCALE], $config[$locale]);
+
+            $appLocales[$locale] = $defaults;
+
+            if (\array_key_exists($locale, $settings)) {
+                $appLocales[$locale] = array_merge($appLocales[$locale], $settings[$locale]);
+            }
         }
 
-        $container->setParameter('kimai.languages', $config);
+        ksort($appLocales);
+
+        $container->setParameter('kimai.languages', $appLocales);
     }
 
     /**
@@ -147,8 +148,20 @@ class AppExtension extends Extension
      * @param array $config
      * @param ContainerBuilder $container
      */
-    protected function createPermissionParameter(array $config, ContainerBuilder $container)
+    private function createPermissionParameter(array $config, ContainerBuilder $container): void
     {
+        $names = [];
+        // this does not include all possible permission, as plugins do not register them and Kimai defines a couple of
+        // permissions as well, which are off by default for all roles
+        foreach ($config['sets'] as $set => $permNames) {
+            foreach ($permNames as $name) {
+                if (str_starts_with($name, '@') || str_starts_with($name, '!')) {
+                    continue;
+                }
+                $names[$name] = true;
+            }
+        }
+
         $roles = [];
         foreach ($config['maps'] as $role => $sets) {
             foreach ($sets as $set) {
@@ -167,30 +180,50 @@ class AppExtension extends Extension
 
         // delete forbidden permissions from roles
         foreach (array_keys($config['maps']) as $name) {
-            $config['roles'][$name] = $this->getFilteredPermissions(
-                array_unique(array_merge($roles[$name], $config['roles'][$name] ?? []))
-            );
+            if (\array_key_exists($name, $config['roles'])) {
+                foreach ($config['roles'][$name] as $name2) {
+                    $roles[$name][$name2] = true;
+                }
+            }
+            $config['roles'][$name] = $this->getFilteredPermissions($roles[$name]);
+        }
+
+        // make sure to apply all other permissions that might have been registered through plugins
+        foreach ($config['roles'] as $role => $perms) {
+            $names = array_merge($names, $perms);
+        }
+
+        /** @var array<string, array<string>> $roles */
+        $securityRoles = $container->getParameter('security.role_hierarchy.roles');
+        $roles = [];
+        foreach ($securityRoles as $key => $value) {
+            $roles[] = $key;
+            foreach ($value as $name) {
+                $roles[] = $name;
+            }
         }
 
         $container->setParameter('kimai.permissions', $config['roles']);
+        $container->setParameter('kimai.permission_names', $names);
+        $container->setParameter('kimai.permission_roles', array_map('strtoupper', array_values(array_unique($roles))));
     }
 
-    protected function getFilteredPermissions(array $permissions): array
+    private function getFilteredPermissions(array $permissions): array
     {
-        $deleteFromArray = array_filter($permissions, function ($permission) {
-            return $permission[0] == '!';
-        });
+        $deleteFromArray = array_filter($permissions, function ($permission): bool {
+            return $permission[0] === '!';
+        }, ARRAY_FILTER_USE_KEY);
 
-        return array_filter($permissions, function ($permission) use ($deleteFromArray) {
-            if ($permission[0] == '!') {
+        return array_filter($permissions, function ($permission) use ($deleteFromArray): bool {
+            if ($permission[0] === '!') {
                 return false;
             }
 
-            return !\in_array('!' . $permission, $deleteFromArray);
-        });
+            return !\array_key_exists('!' . $permission, $deleteFromArray);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
-    protected function extractSinglePermissionsFromSet(array $permissions, string $name): array
+    private function extractSinglePermissionsFromSet(array $permissions, string $name): array
     {
         if (!isset($permissions['sets'][$name])) {
             throw new InvalidConfigurationException('Unknown permission set "' . $name . '"');
@@ -199,23 +232,20 @@ class AppExtension extends Extension
         $result = [];
 
         foreach ($permissions['sets'][$name] as $permissionName) {
-            if ($permissionName[0] == '@') {
+            if ($permissionName[0] === '@') {
                 $result = array_merge(
                     $result,
                     $this->extractSinglePermissionsFromSet($permissions, substr($permissionName, 1))
                 );
             } else {
-                $result[] = $permissionName;
+                $result[$permissionName] = true;
             }
         }
 
         return $result;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'kimai';
     }

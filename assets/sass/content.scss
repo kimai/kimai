@@ -5,20 +5,16 @@
  * file that was distributed with this source code.
  */
 
-.content {
-    padding: 15px 0;
+/* make sure that elements can be hidden without taking space (eg. hidden modals like the search or column visibility)  */
+.hidden-no-space {
+    margin: 0;
+    padding: 0;
 }
 
-@media (min-width: $screen-sm-min) {
-    .content {
-        padding: 15px;
-    }
-}
-
-@media (min-width: $screen-lg-min) {
-    .content {
-        padding: 20px;
-    }
+/* used at least in the duration dropdown */
+.pre-scrollable {
+    max-height: 340px;
+    overflow-y: scroll;
 }
 
 td {
@@ -30,26 +26,16 @@ td {
             margin: 0;
         }
     }
-}
-
-/* ABOUT SCREEN */
-.box-body .menu-icon {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 35px;
-    margin-right: 15px;
+    /* table cells that contain badges (like the team or timesheet view)
+       and are multi-line entries the badges do not have margin between them */
+    &.badges {
+        line-height: 22px;
+    }
 }
 
 .label-gray {
     background-color: $gray-lte;
     color: #666;
-}
-
-/* Delete link in action dropdowns */
-.dropdown-menu > li.delete > a {
-    color: #dd4b39;
 }
 
 .open-edit {
@@ -66,17 +52,46 @@ table.dataTable thead > tr > th.hw-min {
     width: 1%;
     white-space: normal;
 }
-
-.badge {
-    font-weight: normal;
-    color: #000;
-    background-color: $kimai-default;
+/* If a table column contains ONLY avatar <img> it will collapse, so make it a defined width */
+.w-avatar {
+    width: 40px;
+    img.avatar {
+        /* a weird bug in tables with real avatar <img> only causes them to collapse */
+        max-width: 40px;
+    }
 }
 
-.label {
-    font-weight: normal;
+.list-group-item{
+    /* !important rules, because dark theme overwrites list-group-item */
+    &.danger {
+        padding-left: $list-group-item-padding-x - 0.2rem;
+        border-left: 0.2rem solid $danger!important;
+    }
+    &.success {
+        padding-left: $list-group-item-padding-x - 0.2rem;
+        border-left: 0.2rem solid $success!important;;
+    }
 }
 
-a.link-black {
-    color: #000;
+/* Scrollable boxes (eg. widgets on dashboard) */
+.box-body-scrollable {
+    overflow: auto;
+    max-height: 340px;
+}
+
+.card {
+    .card-tools {
+        /* a button that is directly connected with a pagination element inside the box tools (eg. project list on customer detail page) */
+        .btn-pager {
+            float: left;
+            margin-right: 5px;
+        }
+    }
+}
+#customer_details_box,
+#project_details_box,
+#activity_details_box {
+    th {
+        width: 30%;
+    }
 }

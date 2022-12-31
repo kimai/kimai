@@ -18,79 +18,39 @@ use App\Entity\User;
 abstract class BaseFormTypeQuery
 {
     /**
-     * @var array
+     * @var array<Activity|int>
      */
-    private $activities = [];
+    private array $activities = [];
     /**
-     * @var array
+     * @var array<Project|int>
      */
-    private $projects = [];
+    private array $projects = [];
     /**
-     * @var array
+     * @var array<Customer|int>
      */
-    private $customers = [];
-    /**
-     * @var User
-     */
-    private $user;
+    private array $customers = [];
+    private ?User $user = null;
     /**
      * @var array<Team>
      */
-    private $teams = [];
+    private array $teams = [];
 
-    /**
-     * @return Activity|int|null
-     * @deprecated since 1.9 - use getActivities() instead - will be removed with 2.0
-     */
-    public function getActivity()
+    public function addActivity(Activity|int $activity): void
     {
-        if (\count($this->activities) > 0) {
-            return $this->activities[0];
-        }
-
-        return null;
+        $this->activities[] = $activity;
     }
 
     /**
-     * @param Activity|int|null $activity
-     * @return self
-     * @deprecated since 1.9 - use setActivities() or addActivity() instead - will be removed with 2.0
+     * @param array<Activity|int> $activities
      */
-    public function setActivity($activity): self
-    {
-        if (null === $activity) {
-            $this->activities = [];
-        } else {
-            $this->activities = [$activity];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Activity|int $activity
-     * @return self
-     */
-    public function addActivity($activity): self
-    {
-        if (null !== $activity) {
-            $this->activities[] = $activity;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Activity[]|int[] $activities
-     * @return self
-     */
-    public function setActivities(array $activities): self
+    public function setActivities(array $activities): void
     {
         $this->activities = $activities;
-
-        return $this;
     }
 
+    /**
+     * @return array<Activity|int>
+     */
     public function getActivities(): array
     {
         return $this->activities;
@@ -98,64 +58,24 @@ abstract class BaseFormTypeQuery
 
     public function hasActivities(): bool
     {
-        return !empty($this->activities);
+        return \count($this->activities) > 0;
     }
 
-    /**
-     * @return Project|int|null
-     * @deprecated since 1.9 - use getProjects() instead - will be removed with 2.0
-     */
-    public function getProject()
+    public function addProject(Project|int $project): void
     {
-        if (\count($this->projects) > 0) {
-            return $this->projects[0];
-        }
-
-        return null;
+        $this->projects[] = $project;
     }
 
     /**
-     * @param Project|int|null $project
-     * @return self
-     * @deprecated since 1.9 - use addProject() instead - will be removed with 2.0
+     * @param array<Project|int> $projects
      */
-    public function setProject($project): self
-    {
-        if (null === $project) {
-            $this->projects = [];
-        } else {
-            $this->projects = [$project];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Project|int $project
-     * @return self
-     */
-    public function addProject($project): self
-    {
-        if (null !== $project) {
-            $this->projects[] = $project;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Project[]|int[] $projects
-     * @return self
-     */
-    public function setProjects(array $projects): self
+    public function setProjects(array $projects): void
     {
         $this->projects = $projects;
-
-        return $this;
     }
 
     /**
-     * @return array
+     * @return array<Project|int>
      */
     public function getProjects(): array
     {
@@ -164,60 +84,25 @@ abstract class BaseFormTypeQuery
 
     public function hasProjects(): bool
     {
-        return !empty($this->projects);
+        return \count($this->projects) > 0;
     }
 
     /**
-     * @return Customer|int|null
-     * @deprecated since 1.9 - use getCustomers() instead - will be removed with 2.0
+     * @param array<Customer|int> $customers
      */
-    public function getCustomer()
-    {
-        if (\count($this->customers) > 0) {
-            return $this->customers[0];
-        }
-
-        return null;
-    }
-
-    /**
-     * @param Customer|int|null $customer
-     * @return self
-     * @deprecated since 1.9 - use addCustomer() instead - will be removed with 2.0
-     */
-    public function setCustomer($customer): self
-    {
-        if (null === $customer) {
-            $this->customers = [];
-        } else {
-            $this->customers = [$customer];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Customer[]|int[] $customers
-     * @return self
-     */
-    public function setCustomers(array $customers): self
+    public function setCustomers(array $customers): void
     {
         $this->customers = $customers;
+    }
 
-        return $this;
+    public function addCustomer(Customer|int $customer): void
+    {
+        $this->customers[] = $customer;
     }
 
     /**
-     * @param Customer|int $customer
-     * @return self
+     * @return array<Customer|int>
      */
-    public function addCustomer($customer): self
-    {
-        $this->customers[] = $customer;
-
-        return $this;
-    }
-
     public function getCustomers(): array
     {
         return $this->customers;
@@ -225,7 +110,7 @@ abstract class BaseFormTypeQuery
 
     public function hasCustomers(): bool
     {
-        return !empty($this->customers);
+        return \count($this->customers) > 0;
     }
 
     public function getUser(): ?User
@@ -248,18 +133,15 @@ abstract class BaseFormTypeQuery
     }
 
     /**
-     * @param Team[] $teams
-     * @return self
+     * @param array<Team> $teams
      */
-    public function setTeams(array $teams): self
+    public function setTeams(array $teams): void
     {
         $this->teams = $teams;
-
-        return $this;
     }
 
     /**
-     * @return Team[]
+     * @return array<Team>
      */
     public function getTeams(): array
     {

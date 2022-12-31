@@ -2,16 +2,45 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
-{% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'reporting', 'index') %}
-    {{ widgets.page_actions(event.actions) }}
+
+{% block breadcrumb %}
+    {% from "macros/breadcrumb.html.twig" import breadcrumb %}
+    {{ breadcrumb({
+        ('menu.reporting'|trans): path('reporting'),
+        (report_title|trans({}, 'reporting')): '#'
+    }) }}
 {% endblock %}
 
 {% block main %}
+    {% if form is defined %}
+    <div class="card mb-3">
+        <div class="card-body">
+            {% block report_form %}
+                {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
+                <div class="{% block report_form_container_class %}btn-list w-100{% endblock %}">
+                    {% block report_form_layout %}{{ form_rest(form) }}{% endblock %}
+                </div>
+                {{ form_end(form) }}
+            {% endblock %}
+        </div>
+    </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-12" id="reporting-content">
             {% block report %}{% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const reportForm = document.getElementById('report-form');
+        if (reportForm !== null) {
+            reportForm.addEventListener('change', (event) => {
+                reportForm.submit();
+            });
+        }
+    </script>
 {% endblock %}

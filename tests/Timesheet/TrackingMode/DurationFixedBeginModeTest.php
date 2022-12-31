@@ -9,10 +9,10 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class DurationFixedBeginModeTest extends TestCase
     protected function createSut($default = '13:47')
     {
         $loader = new TestConfigLoader([]);
-        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => $default]]);
+        $configuration = SystemConfigurationFactory::create($loader, ['timesheet' => ['default_begin' => $default]]);
 
         return new DurationFixedBeginMode($configuration);
     }

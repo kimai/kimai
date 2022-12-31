@@ -14,26 +14,11 @@ use App\Entity\User;
 
 final class ProjectDateRangeQuery
 {
-    /**
-     * @var \DateTime
-     */
-    private $month;
-    /**
-     * @var User|null
-     */
-    private $user;
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var bool
-     */
-    private $includeNoWork = false;
-    /**
-     * @var string|null
-     */
-    private $budgetType = null;
+    private \DateTime $month;
+    private ?User $user;
+    private ?Customer $customer = null;
+    private bool $includeNoWork = false;
+    private ?string $budgetType = null;
 
     public function __construct(\DateTime $month, User $user)
     {

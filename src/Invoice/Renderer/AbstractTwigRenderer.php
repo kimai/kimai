@@ -9,9 +9,9 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use App\Twig\TwigRendererTrait;
 use Twig\Environment;
 
@@ -22,14 +22,8 @@ abstract class AbstractTwigRenderer implements RendererInterface
 {
     use TwigRendererTrait;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    public function __construct(Environment $twig)
+    public function __construct(private Environment $twig)
     {
-        $this->twig = $twig;
     }
 
     protected function renderTwigTemplate(InvoiceDocument $document, InvoiceModel $model, array $options = []): string

@@ -17,26 +17,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectDateRangeForm extends AbstractType
+final class ProjectDateRangeForm extends AbstractType
 {
-    /**
-     * Simplify cross linking between pages by removing the block prefix.
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
-            'label' => false,
             'width' => false,
         ]);
 
@@ -48,26 +34,24 @@ class ProjectDateRangeForm extends AbstractType
 
         $builder->add('includeNoWork', CheckboxType::class, [
             'required' => false,
-            'label' => 'label.includeNoWork',
+            'label' => 'includeNoWork',
         ]);
 
         $builder->add('budgetType', ChoiceType::class, [
-            'required' => true,
+            'placeholder' => null,
+            'required' => false,
             'multiple' => false,
             'expanded' => true,
             'choices' => [
-                'label.budgetIndependent' => null,
-                'label.includeNoBudget' => 'none',
-                'label.includeBudgetType_full' => 'full',
-                'label.includeBudgetType_month' => 'month',
+                'all' => null,
+                'includeNoBudget' => 'none',
+                'includeBudgetType_full' => 'full',
+                'includeBudgetType_month' => 'month',
             ],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ProjectDateRangeQuery::class,

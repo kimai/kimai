@@ -14,15 +14,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InvoiceStatusType extends AbstractType
+final class InvoiceStatusType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.status',
+            'label' => 'status',
             'multiple' => true,
             'choices' => [
                 'status.' . Invoice::STATUS_NEW => Invoice::STATUS_NEW,
@@ -33,10 +30,7 @@ class InvoiceStatusType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

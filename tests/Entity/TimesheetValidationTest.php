@@ -26,8 +26,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     protected function getEntity()
     {
-        $customer = new Customer();
-        $customer->setName('Test Customer');
+        $customer = new Customer('Test Customer');
 
         $project = new Project();
         $project->setName('Test Project');
@@ -47,10 +46,13 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationNeedsActivity()
     {
+        $project = new Project();
+        $project->setCustomer(new Customer('foo'));
+
         $entity = new Timesheet();
         $entity
             ->setUser(new User())
-            ->setProject(new Project())
+            ->setProject($project)
             ->setBegin(new \DateTime())
         ;
 
@@ -71,7 +73,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationProjectMismatch()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $project2 = (new Project())->setName('bar')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
@@ -89,7 +91,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationCustomerInvisible()
     {
-        $customer = (new Customer())->setVisible(false);
+        $customer = (new Customer('foo'))->setVisible(false);
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -128,7 +130,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationCustomerInvisibleDoesNotTriggerOnStoppedEntities()
     {
-        $customer = (new Customer())->setVisible(false);
+        $customer = (new Customer('foo'))->setVisible(false);
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -139,7 +141,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationCustomerInvisibleDoesTriggerOnNewEntities()
     {
-        $customer = (new Customer())->setVisible(false);
+        $customer = (new Customer('foo'))->setVisible(false);
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -150,7 +152,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationProjectInvisible()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -167,7 +169,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationProjectInvisibleDoesNotTriggerOnStoppedEntities()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -178,7 +180,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationProjectInvisibleDoesTriggerOnNewEntities()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
         $activity = (new Activity())->setName('hello-world')->setProject($project);
 
@@ -189,7 +191,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationActivityInvisible()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project)->setVisible(false);
 
@@ -206,7 +208,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationActivityInvisibleDoesNotTriggerOnStoppedEntities()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project)->setVisible(false);
 
@@ -217,7 +219,7 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationActivityInvisibleDoesTriggerOnNewEntities()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = (new Project())->setName('foo')->setCustomer($customer);
         $activity = (new Activity())->setName('hello-world')->setProject($project)->setVisible(false);
 
@@ -235,7 +237,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setBegin($begin);
         $entity->setEnd($end);
 
-        $this->assertHasViolationForField($entity, 'end');
+        $this->assertHasViolationForField($entity, 'end_date');
 
         // allow same begin and end
         $entity = $this->getEntity();

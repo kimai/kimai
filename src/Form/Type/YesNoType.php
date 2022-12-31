@@ -16,24 +16,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select between Yes and No.
  */
-class YesNoType extends AbstractType
+final class YesNoType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'value' => true,
             'false_values' => [null, 0, false, 'false', '', '0'],
             'required' => false,
+            'label_attr' => [
+                'class' => 'checkbox-switch',
+            ],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return CheckboxType::class;
     }

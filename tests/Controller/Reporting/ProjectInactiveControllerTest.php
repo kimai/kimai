@@ -53,7 +53,7 @@ class ProjectInactiveControllerTest extends ControllerBaseTest
         $this->importFixture($timesheets);
 
         $this->assertAccessIsGranted($client, '/reporting/project_inactive');
-        self::assertStringContainsString('<div class="box-body inactive_project_reporting-box', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class="card-body inactive_project_reporting-box', $client->getResponse()->getContent());
         $rows = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')]");
         self::assertGreaterThan(0, $rows->count());
     }

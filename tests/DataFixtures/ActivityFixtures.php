@@ -19,26 +19,22 @@ use Faker\Factory;
  */
 final class ActivityFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $isGlobal = false;
-    /**
-     * @var bool
-     */
-    private $isVisible = null;
+    private int $amount = 0;
+    private bool $isGlobal = false;
+    private ?bool $isVisible = null;
     /**
      * @var callable
      */
     private $callback;
     /**
-     * @var Project[]
+     * @var array<Project>
      */
-    private $projects = [];
+    private array $projects = [];
+
+    public function __construct(int $amount = 0)
+    {
+        $this->amount = $amount;
+    }
 
     /**
      * Will be called prior to persisting the object.
@@ -53,9 +49,6 @@ final class ActivityFixtures implements TestFixture
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getAmount(): int
     {
         return $this->amount;
@@ -117,12 +110,10 @@ final class ActivityFixtures implements TestFixture
                 $visible = $this->isVisible;
             }
             $activity = new Activity();
-            $activity
-                ->setProject($project)
-                ->setName($faker->company() . ($visible ? '' : ' (x)'))
-                ->setComment($faker->text())
-                ->setVisible($visible)
-            ;
+            $activity->setProject($project);
+            $activity->setName($faker->company() . ($visible ? '' : ' (x)'));
+            $activity->setComment($faker->text());
+            $activity->setVisible($visible);
 
             if (null !== $this->callback) {
                 \call_user_func($this->callback, $activity);

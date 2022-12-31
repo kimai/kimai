@@ -2,12 +2,12 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
-        <source>label.invoice_renderer</source>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+        <source>invoice_renderer</source>
         <target>Template Fattura</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
         <target>Fattura (default)</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">

@@ -26,6 +26,7 @@ use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -36,10 +37,7 @@ class ExportCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    /**
-     * @var Application
-     */
-    protected $application;
+    protected Application $application;
 
     private function clearExportFiles()
     {
@@ -70,7 +68,7 @@ class ExportCreateCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $container = self::$container;
+        $container = self::getContainer();
 
         $application->add(new ExportCreateCommand(
             $container->get(ServiceExport::class),
@@ -236,7 +234,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->prepareFixtures($start);
         $options = ['--template' => 'csv', '--email' => ['foo@example.com', 'foo2@example.com'], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')];
 
-        $mailer = $this->createMock(KimaiMailer::class);
+        $mailer = $this->createMock(MailerInterface::class);
         $mailer->expects($this->exactly(2))->method('send');
 
         $application = $this->createApplication($mailer);

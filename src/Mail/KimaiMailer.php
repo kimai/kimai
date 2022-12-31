@@ -15,24 +15,10 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
 
-/**
- * @final
- */
-class KimaiMailer implements MailerInterface
+final class KimaiMailer implements MailerInterface
 {
-    /**
-     * @var MailerInterface
-     */
-    private $mailer;
-    /**
-     * @var MailConfiguration
-     */
-    private $configuration;
-
-    public function __construct(MailConfiguration $configuration, MailerInterface $mailer)
+    public function __construct(private MailConfiguration $configuration, private MailerInterface $mailer)
     {
-        $this->configuration = $configuration;
-        $this->mailer = $mailer;
     }
 
     public function send(RawMessage $message, Envelope $envelope = null): void

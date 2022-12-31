@@ -12,7 +12,7 @@ namespace App\Repository\Loader;
 interface LoaderInterface
 {
     /**
-     * Prepares the given database results, so no lazy loading will be performed.
+     * Prepares the given database results, to prevent lazy loading.
      *
      * @param array $results
      */

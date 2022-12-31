@@ -9,9 +9,10 @@
 
 namespace App\Form\Helper;
 
+use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Project;
-use App\Utils\LocaleSettings;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ProjectHelper
 {
@@ -25,15 +26,13 @@ final class ProjectHelper
     public const PATTERN_SPACER = '{spacer}';
     public const SPACER = ' - ';
 
-    private $configuration;
-    private $localeSettings;
-    private $dateFormat;
-    private $pattern;
+    private ?\IntlDateFormatter $dateFormatter = null;
+    private ?string $pattern = null;
+    private bool $showStart = false;
+    private bool $showEnd = false;
 
-    public function __construct(SystemConfiguration $configuration, LocaleSettings $localeSettings)
+    public function __construct(private SystemConfiguration $configuration, private LocaleService $localeService, private TranslatorInterface $translator)
     {
-        $this->configuration = $configuration;
-        $this->localeSettings = $localeSettings;
     }
 
     public function getChoicePattern(): string
@@ -54,27 +53,40 @@ final class ProjectHelper
 
     public function getChoiceLabel(Project $project): string
     {
-        if ($this->dateFormat === null) {
-            $this->dateFormat = $this->localeSettings->getDateFormat();
-        }
-
-        $start = '?';
-        if ($project->getStart() !== null) {
-            $start = $project->getStart()->format($this->dateFormat);
-        }
-
-        $end = '?';
-        if ($project->getEnd() !== null) {
-            $end = $project->getEnd()->format($this->dateFormat);
-        }
-
         $name = $this->getChoicePattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);
-        $name = str_replace(self::PATTERN_START, $start, $name);
-        $name = str_replace(self::PATTERN_END, $end, $name);
+
+        if ($this->dateFormatter === null) {
+            $this->showStart = stripos($name, self::PATTERN_START) !== false;
+            $this->showEnd = stripos($name, self::PATTERN_END) !== false;
+            $this->dateFormatter = new \IntlDateFormatter(
+                \Locale::getDefault(),
+                \IntlDateFormatter::MEDIUM,
+                \IntlDateFormatter::MEDIUM,
+                date_default_timezone_get(),
+                \IntlDateFormatter::GREGORIAN,
+                $this->localeService->getDateFormat(\Locale::getDefault())
+            );
+        }
+
+        if ($this->showStart) {
+            $start = '';
+            if ($project->getStart() !== null) {
+                $start = $this->translator->trans('project_start') . ': ' . $this->dateFormatter->format($project->getStart()) . ' ';
+            }
+            $name = str_replace(self::PATTERN_START, $start, $name);
+        }
+
+        if ($this->showEnd) {
+            $end = '';
+            if ($project->getEnd() !== null) {
+                $end = ' ' . $this->translator->trans('project_end') . ': ' . $this->dateFormatter->format($project->getEnd());
+            }
+            $name = str_replace(self::PATTERN_END, $end, $name);
+        }
 
         $name = ltrim($name, self::SPACER);
         $name = rtrim($name, self::SPACER);

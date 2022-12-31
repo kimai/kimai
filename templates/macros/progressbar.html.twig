@@ -8,6 +8,7 @@
     {% set percentDecimals = options['decimals'] ?? 1 %}
     {% set transPercentOpen = options['trans_percent_open'] ?? 'stats.percentUsedLeft' %}
     {% set transPercentSpent = options['trans_percent_spent'] ?? 'stats.percentUsed' %}
+    {% set outerClass = options['class'] ?? '' %}
     {% if formatter == 'duration' %}
         {% set currentFormatted = current|duration %}
         {% set maxFormatted = max|duration %}
@@ -31,12 +32,12 @@
         {% set width = 100 %}
     {% endif %}
 
-    <div class="progress-group">
+    <div class="progress-group {{ outerClass }}">
         <div class="progress-title">
             <span class="progress-text">
                 {{ currentFormatted }}
             </span>
-            <span class="progress-number">
+            <span class="progress-number text-end">
                 <strong>
                     {{ maxFormatted }}
                 </strong>
@@ -70,7 +71,7 @@
                 {{ title }}
                 {% if percentReached >= 0 and subTitle is not empty %} &ndash; {{ percentReached|number_format(2) }}%{% endif %}
             </span>
-            <span class="progress-number">
+            <span class="progress-number text-end">
                 {% if percentReached >= 0 and subTitle is empty %}
                     {{ percentReached|number_format(2) }}%
                 {% elseif subTitle is not empty %}

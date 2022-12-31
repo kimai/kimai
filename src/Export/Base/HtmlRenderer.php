@@ -10,6 +10,7 @@
 namespace App\Export\Base;
 
 use App\Activity\ActivityStatisticService;
+use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -17,7 +18,6 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
-use App\Export\ExportItemInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -30,13 +30,6 @@ class HtmlRenderer
     use RendererTrait;
 
     /**
-     * @var Environment
-     */
-    protected $twig;
-    protected $dispatcher;
-    private $projectStatisticService;
-    private $activityStatisticService;
-    /**
      * @var string
      */
     private $id = 'html';
@@ -45,12 +38,12 @@ class HtmlRenderer
      */
     private $template = 'default.html.twig';
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
-    {
-        $this->twig = $twig;
-        $this->dispatcher = $dispatcher;
-        $this->projectStatisticService = $projectStatisticService;
-        $this->activityStatisticService = $activityStatisticService;
+    public function __construct(
+        protected Environment $twig,
+        protected EventDispatcherInterface $dispatcher,
+        private ProjectStatisticService $projectStatisticService,
+        private ActivityStatisticService $activityStatisticService
+    ) {
     }
 
     /**
@@ -77,7 +70,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportableItem[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError
@@ -106,8 +99,6 @@ class HtmlRenderer
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
-            // @deprecated since 1.3, will be removed with 2.0
-            'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,

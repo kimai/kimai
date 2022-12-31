@@ -11,28 +11,25 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\User\UserService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DemoteUserCommand extends AbstractRoleCommand
+#[AsCommand(name: 'kimai:user:demote')]
+final class DemoteUserCommand extends AbstractRoleCommand
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
-            ->setName('kimai:user:demote')
-            ->setAliases(['fos:user:demote'])
             ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:demote</info> command demotes a user by removing a role
+                    The <info>kimai:user:demote</info> command demotes a user by removing a role
 
-  <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
-  <info>php %command.full_name% --super susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
+                      <info>php %command.full_name% --super susan_super</info>
+                    EOT
             );
     }
 
@@ -41,7 +38,7 @@ EOT
      */
     protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role)
     {
-        $username = $user->getUsername();
+        $username = $user->getUserIdentifier();
         if ($super) {
             if ($user->isSuperAdmin()) {
                 $user->setSuperAdmin(false);

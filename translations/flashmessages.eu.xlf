@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Ezin izan da denbora grabatzen hasi</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Denbora aktiboen erregistroen mugara iritsi zara. Utzi denbora neurketa bat gutxienez lehenik.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Exportatutako sarrera bat aldatzen zaude</target>

@@ -16,22 +16,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 abstract class AbstractMetaDisplayEvent extends Event implements MetaDisplayEventInterface
 {
     /**
-     * @var BaseQuery
-     */
-    private $query;
-    /**
-     * @var string
-     */
-    private $location;
-    /**
      * @var MetaTableTypeInterface[]
      */
     private $fields = [];
 
-    public function __construct(BaseQuery $query, string $location)
+    public function __construct(private BaseQuery $query, private string $location)
     {
-        $this->query = $query;
-        $this->location = $location;
     }
 
     /**
@@ -59,7 +49,7 @@ abstract class AbstractMetaDisplayEvent extends Event implements MetaDisplayEven
      *
      * @param MetaTableTypeInterface $meta
      */
-    public function addField(MetaTableTypeInterface $meta)
+    public function addField(MetaTableTypeInterface $meta): void
     {
         $this->fields[] = $meta;
     }

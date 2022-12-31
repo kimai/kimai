@@ -10,18 +10,18 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the timesheet.
  */
-class TimesheetToolbarForm extends AbstractToolbarForm
+final class TimesheetToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $newOptions = [];
         if ($options['ignore_date'] === true) {
@@ -47,10 +47,7 @@ class TimesheetToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TimesheetQuery::class,

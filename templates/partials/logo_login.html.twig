@@ -3,7 +3,10 @@
 {% if logo is not empty %}
     <img src="{{ logo }}" style="max-width: 300px;">
 {% elseif company is not empty %}
-    <b>{{ company|raw }}</b>
+    <p>{{ company }}</p>
+{% elseif tabler_bundle.getLogoUrl() is not empty %}
+    <img alt="{{ get_title() }}" style="max-width: 150px;"
+         src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}">
 {% else %}
-    {{- get_title('<b>', '</b><br>')|raw -}}
+    <p>{{ get_title('', '<br>')|raw }}</p>
 {% endif %}

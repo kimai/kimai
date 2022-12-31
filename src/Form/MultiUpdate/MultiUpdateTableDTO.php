@@ -9,34 +9,33 @@
 
 namespace App\Form\MultiUpdate;
 
+use Doctrine\Common\Collections\Collection;
+
 class MultiUpdateTableDTO
 {
     /**
-     * @var object[]
+     * @var iterable<object>|Collection<object>
      */
-    private $entities = [];
+    private iterable|Collection $entities = [];
     /**
      * @var string[]
      */
-    private $actions = ['' => ''];
-    /**
-     * @var string
-     */
-    private $action = null;
+    private array $actions = ['' => ''];
+    private ?string $action = null;
 
     /**
      * @return object[]
      */
-    public function getEntities(): iterable
+    public function getEntities(): iterable|Collection
     {
         return $this->entities;
     }
 
     /**
-     * @param object[] $entities
+     * @param iterable<object>|Collection<object> $entities
      * @return MultiUpdateTableDTO
      */
-    public function setEntities(iterable $entities): MultiUpdateTableDTO
+    public function setEntities(iterable|Collection $entities): MultiUpdateTableDTO
     {
         $this->entities = $entities;
 
@@ -65,7 +64,7 @@ class MultiUpdateTableDTO
 
     public function addDelete(string $url): MultiUpdateTableDTO
     {
-        $this->actions['action.delete'] = $url;
+        $this->actions['delete'] = $url;
 
         return $this;
     }

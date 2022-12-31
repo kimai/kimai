@@ -11,11 +11,8 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
- */
-class HexColor extends Constraint
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
+final class HexColor extends Constraint
 {
     public const HEX_COLOR_ERROR = 'xd5hffg-dsfef3-426a-83d7-2g8jkfr56d84';
 
@@ -23,5 +20,5 @@ class HexColor extends Constraint
         self::HEX_COLOR_ERROR => 'HEX_COLOR_ERROR',
     ];
 
-    public $message = 'The given value is not a valid hexadecimal color.';
+    public string $message = 'The given value is not a valid hexadecimal color.';
 }

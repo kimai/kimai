@@ -3,7 +3,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/webloader.html.twig" as webloader %}
 
-{% block document_title %}{{ 'export.title'|trans }}{% endblock %}
+{% block document_title %}{{ 'export'|trans }}{% endblock %}
 
 {% set storageItemName = 'kimai_html_export' %}
 
@@ -46,9 +46,9 @@
 {% set columns = columns|merge({
     'hourlyRate': false,
     'fixedRate': false,
-    'duration': 'label.duration',
-    'rate_internal': 'label.rate_internal',
-    'rate': 'label.rate',
+    'duration': 'duration',
+    'internalRate': 'internalRate',
+    'rate': 'rate',
 }) %}
 
 {% block javascripts %}
@@ -57,20 +57,17 @@
         let initialized = false;
 
         document.addEventListener('kimai.initialized', function(event) {
-            const KIMAI = event.detail.kimai;
-            const DATES = KIMAI.getPlugin('date');
-
             document.getElementById('duration-decimal').addEventListener('click', function(event) {
-                let spans = document.getElementsByClassName('duration-format');
-                for (let span of spans) {
-                    let duration = span.dataset['duration'];
-                    if (duration === undefined) {
-                        continue;
-                    }
+                var spans = document.getElementsByClassName('duration-format');
+                for (var span of spans) {
                     if (!event.target.checked) {
-                        span.innerHTML = DATES.formatSeconds(duration);
+                        if (span.dataset['duration'] !== undefined) {
+                            span.innerHTML = span.dataset['duration'];
+                        }
                     } else {
-                        span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale|replace({'_': '-'}) }}', {maximumFractionDigits: 2}).format(duration / 3600));
+                        if (span.dataset['durationDecimal'] !== undefined) {
+                            span.innerHTML = span.dataset['durationDecimal'];
+                        }
                     }
                 }
                 saveVisibility();
@@ -122,8 +119,8 @@
                 }
                 saveVisibility();
             });
-            document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('summary-rate-internal');
+            document.getElementById('summary-internalRate').addEventListener('click', function(event) {
+                let cells = document.getElementsByClassName('summary-internalRate');
                 for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
@@ -189,7 +186,7 @@
                     }
                 } catch (e) {
                     // ignore error in restoring
-                    console.log('Failed to restore settings, clearing all up: ', e);
+                    console.log('Failed to restore settings, removing invalid settings', e);
                     localStorage.removeItem('{{ storageItemName }}');
                 }
             }
@@ -261,7 +258,6 @@
             h3 { font-size: 18px; }
             p, td { font-size: 11px; }
             th, td.totals { font-size: 12px; }
-            table.table-bordered.dataTable { border-collapse: collapse!important; }
         }
         .items td.totals {
             font-weight: bold;
@@ -272,7 +268,7 @@
         .items th.cost,
         .items td.cost,
         .items th.column-rate,
-        .items th.column-rate_internal,
+        .items th.column-internalRate,
         .items th.column-duration
         {
             text-align: right;
@@ -284,115 +280,113 @@
 {% endblock %}
 
 {% block export %}
-    <form class="form-inline no-print">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+    {% set formItemClass = "d-inline-block w-auto text-nowrap me-2" %}
+    <form class="w-100 d-print-none row row-cards p-3">
+        <div class="card mb-1 p-0">
+            <div class="card-header">
                 {{ 'settings'|trans({}, 'actions') }}
             </div>
-            <div class="panel-body">
-                <label class="control-label" for="duration-decimal">
+            <div class="card-body">
+                <label for="duration-decimal">
                     <input type="checkbox" id="duration-decimal" name="duration-decimal"{% if decimal%} checked="checked"{% endif %}>
-                    {{ 'label.timesheet.export_decimal'|trans }}
+                    {{ 'export_decimal'|trans }}
                 </label>
                 |
-                <label class="control-label" for="date-format">
-                    {{ 'label.date'|trans }}:
+                <label for="date-format">
+                    {{ 'date'|trans }}:
                     {% set demo_date = create_date('2020-01-01 20:00:00') %}
                     <select id="date-format" name="date-format">
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
                 |
-                <label class="control-label" for="begin-format">
-                    {{ 'label.begin'|trans }}:
+                <label for="begin-format">
+                    {{ 'begin'|trans }}:
                     {% set demo_date = create_date('2020-01-01 11:00:00') %}
                     <select id="begin-format" name="begin-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
                 |
-                <label class="control-label" for="end-format">
-                    {{ 'label.end'|trans }}:
+                <label for="end-format">
+                    {{ 'end'|trans }}:
                     {% set demo_date = create_date('2020-01-01 18:00:00') %}
                     <select id="end-format" name="end-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
-                <button type="reset" class="btn btn-primary pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
+                <button type="reset" class="btn btn-primary btn-sm pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <label class="control-label" for="summary-show">
+        <div class="card mb-1 p-0">
+            <div class="card-header">
+                <label for="summary-show">
                     <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
                     {{ 'export.summary'|trans }}
                 </label>
             </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label" for="summary-by-activities">
+            <div class="card-body w-100">
+                <div class="{{ formItemClass }}">
+                    <label for="summary-by-activities">
                         <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
-                        {{ 'label.activity'|trans }}
+                        {{ 'activity'|trans }}
                     </label>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-timeBudget">
+                <div class="{{ formItemClass }}">
+                    <label for="summary-timeBudget">
                         <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
-                        {{ 'label.timeBudget'|trans }}
+                        {{ 'timeBudget'|trans }}
                     </label>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-budget">
+                <div class="{{ formItemClass }}">
+                    <label for="summary-budget">
                         <input type="checkbox" id="summary-budget" name="summary-budget" checked>
-                        {{ 'label.budget'|trans }}
+                        {{ 'budget'|trans }}
                     </label>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label" for="summary-duration">
+                <div class="{{ formItemClass }}">
+                    <label for="summary-duration">
                         <input type="checkbox" id="summary-duration" name="summary-duration" checked>
-                        {{ 'label.duration'|trans }}
+                        {{ 'duration'|trans }}
                     </label>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-rate-internal">
-                        <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
-                        {{ 'label.rate_internal'|trans }}
+                <div class="{{ formItemClass }}">
+                    <label for="summary-internalRate">
+                        <input type="checkbox" id="summary-internalRate" name="summary-internalRate" checked>
+                        {{ 'internalRate'|trans }}
                     </label>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-rate">
+                <div class="{{ formItemClass }}">
+                    <label for="summary-rate">
                         <input type="checkbox" id="summary-rate" name="summary-rate" checked>
-                        {{ 'label.rate'|trans }}
+                        {{ 'rate'|trans }}
                     </label>
                 </div>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="form-group">
-                    <label class="control-label" for="records-show">
+        <div class="card mb-1 p-0">
+            <div class="card-header">
+                <div class="{{ formItemClass }}">
+                    <label for="records-show">
                         <input type="checkbox" id="records-show" name="records-show" checked="checked">
                         {{ 'export.full_list'|trans }}
                     </label>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 {% for columnId, visibility in columns %}
-                    <div class="form-group">
-                        <label class="control-label" for="records-column-{{ columnId }}">
+                    <div class="{{ formItemClass }}">
+                        <label for="records-column-{{ columnId }}">
                             <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
-                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                            {{ columnTitles[columnId]|default(columnId)|trans }}
                         </label>
                     </div>
                 {% endfor %}
@@ -400,7 +394,7 @@
         </div>
     </form>
 
-    <div class="row">
+    <div class="row m-3">
         <div class="col-xs-12">
             <h2 id="doc-title" contenteditable="true" data-original="{{ 'export.document_title'|trans }}">{{ 'export.document_title'|trans }}</h2>
             <p>
@@ -410,19 +404,21 @@
         </div>
     </div>
 
-    <div class="row" id="export-summary">
-        <div class="col-xs-12">
-            <h3 id="doc-summary" contenteditable="true" data-original="{{ 'export.summary'|trans }}">{{ 'export.summary'|trans }}</h3>
-            <table class="items table table-condensed table-bordered dataTable" id="summary-project">
+    <div class="row m-3" id="export-summary">
+        <div class="card p-0">
+            <div class="card-header">
+                <h3 class="card-title" id="doc-summary" contenteditable="true" data-original="{{ 'export.summary'|trans }}">{{ 'export.summary'|trans }}</h3>
+            </div>
+            <table class="items table table-sm table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
-                    <th>{{ 'label.customer'|trans }}</th>
-                    <th>{{ 'label.project'|trans }}</th>
-                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
-                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
+                    <th>{{ 'project'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'budget'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'duration'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'internalRate'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -437,14 +433,16 @@
                         {% set customerCurrency = summary.currency %}
                     {% endif %}
                     {% if customer is not same as(summary.customer) %}
+                        {% set durationNormal = customerDuration|duration(false) %}
+                        {% set durationDecimal = customerDuration|duration(true) %}
                         <tr class="summary">
                             <td colspan="2">&nbsp;</td>
                             <td class="export-timeBudget"></td>
                             <td class="export-budget"></td>
                             <td class="totals duration summary-duration">
-                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                                <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                            <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
@@ -458,7 +456,9 @@
                         <td>{{ summary.project }}</td>
                         <td class="center export-timeBudget">
                             {% if budgets[id] is defined and budgets[id].time_left > 0 %}
-                                <span class="duration-format" data-duration="{{ budgets[id].time_left }}">{{ budgets[id].time_left|duration(decimal) }}</span>
+                                {% set durationNormal = budgets[id].time_left|duration(false) %}
+                                {% set durationDecimal = budgets[id].time_left|duration(true) %}
+                                <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             {% endif %}
                         </td>
                         <td class="center export-budget">
@@ -467,9 +467,11 @@
                             {% endif %}
                         </td>
                         <td class="duration summary-duration">
-                            <span class="duration-format" data-duration="{{ summary.duration }}">{{ summary.duration|duration(decimal) }}</span>
+                            {% set durationNormal = summary.duration|duration(false) %}
+                            {% set durationDecimal = summary.duration|duration(true) %}
+                            <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="cost summary-rate-internal">{{ summary.rate_internal|money(summary.currency) }}</td>
+                        <td class="cost summary-internalRate">{{ summary.rate_internal|money(summary.currency) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
                     {% set customerDuration = customerDuration + summary.duration %}
@@ -477,14 +479,16 @@
                     {% set customerInternalRate = customerInternalRate + summary.rate_internal %}
                 {% endfor %}
                 {% if customer is not same as(null) %}
+                    {% set durationNormal = customerDuration|duration(false) %}
+                    {% set durationDecimal = customerDuration|duration(true) %}
                     <tr class="summary">
                         <td colspan="2">&nbsp;</td>
                         <td class="export-timeBudget"></td>
                         <td class="export-budget"></td>
                         <td class="totals duration summary-duration">
-                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                        <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -497,17 +501,17 @@
             ============================================
             #}
 
-            <table class="items table table-condensed table-bordered dataTable" id="summary-activity" style="display:none">
+            <table class="items table table-sm table-bordered dataTable" id="summary-activity" style="display:none">
                 <thead>
                 <tr>
-                    <th>{{ 'label.customer'|trans }}</th>
-                    <th>{{ 'label.project'|trans }}</th>
-                    <th>{{ 'label.activity'|trans }}</th>
-                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
-                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
+                    <th>{{ 'project'|trans }}</th>
+                    <th>{{ 'activity'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'budget'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'duration'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'internalRate'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -527,9 +531,11 @@
                             <td class="export-timeBudget"></td>
                             <td class="export-budget"></td>
                             <td class="totals duration summary-duration">
-                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                                {% set durationNormal = customerDuration|duration(false) %}
+                                {% set durationDecimal = customerDuration|duration(true) %}
+                                <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                            <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
@@ -546,7 +552,9 @@
                             {% if activity_budgets[id] is defined and activity_budgets[id][activityId] is defined %}
                                 <td class="center export-timeBudget">
                                     {% if activity_budgets[id][activityId].time_left > 0 %}
-                                        <span class="duration-format" data-duration="{{ activity_budgets[id][activityId].time_left }}">{{ activity_budgets[id][activityId].time_left|duration(decimal) }}</span>
+                                        {% set durationNormal = activity_budgets[id][activityId].time_left|duration(false) %}
+                                        {% set durationDecimal = activity_budgets[id][activityId].time_left|duration(true) %}
+                                        <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                                     {% endif %}
                                 </td>
                                 <td class="center export-budget">
@@ -559,9 +567,11 @@
                                 <td class="center export-budget"></td>
                             {% endif %}
                             <td class="duration summary-duration">
-                                <span class="duration-format" data-duration="{{ activitySummary.duration }}">{{ activitySummary.duration|duration(decimal) }}</span>
+                                {% set durationNormal = activitySummary.duration|duration(false) %}
+                                {% set durationDecimal = activitySummary.duration|duration(true) %}
+                                <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="cost summary-rate-internal">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
+                            <td class="cost summary-internalRate">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
                             <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                         </tr>
                     {% endfor %}
@@ -575,9 +585,11 @@
                         <td class="export-timeBudget"></td>
                         <td class="export-budget"></td>
                         <td class="totals duration summary-duration">
-                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            {% set durationNormal = customerDuration|duration(false) %}
+                            {% set durationDecimal = customerDuration|duration(true) %}
+                            <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                        <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -586,18 +598,20 @@
         </div>
     </div>
 
-    <div class="row" id="export-records">
-        <div class="col-xs-12">
-            <h3 id="doc-records" contenteditable="true" data-original="{{ 'export.full_list'|trans }}">{{ 'export.full_list'|trans }}</h3>
-            <table class="items table table-condensed table-bordered dataTable">
+    <div class="row m-3" id="export-records">
+        <div class="card p-0">
+            <div class="card-header">
+                <h3 class="card-title" id="doc-records" contenteditable="true" data-original="{{ 'export.full_list'|trans }}">{{ 'export.full_list'|trans }}</h3>
+            </div>
+            <table class="items table table-sm table-bordered dataTable">
                 <thead>
-                <tr>
-                    {% for columnId, visibility in columns %}
-                    <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>
-                        {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
-                    </th>
-                    {% endfor %}
-                </tr>
+                    <tr>
+                        {% for columnId, visibility in columns %}
+                        <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>
+                            {{ columnTitles[columnId]|default(columnId)|trans }}
+                        </th>
+                        {% endfor %}
+                    </tr>
                 </thead>
                 <tbody>
                 {% set timeWorked = 0 %}
@@ -620,17 +634,17 @@
                     {% endif %}
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_time }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
                             </span>
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
-                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
+                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_time }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
                             {{ entry.begin|date_format('H:i') }}
                             </span>
                         </td>
                         <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
-                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
+                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_time }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
                             {{ entry.end|date_format('H:i') }}
                             </span>
                         </td>
@@ -701,9 +715,11 @@
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
                         <td class="duration column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
-                            <span class="duration-format" data-duration="{{ entry.duration }}">{{ entry.duration|duration(decimal) }}</span>
+                            {% set durationNormal = entry.duration|duration(false) %}
+                            {% set durationDecimal = entry.duration|duration(true) %}
+                            <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="cost column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
+                        <td class="cost column-internalRate text-nowrap" {% if not columns.internalRate %}style="display: none"{% endif %}>
                             {% if entry.internalRate is defined %}
                                 {{ entry.internalRate|money(entry.project.customer.currency) }}
                             {% else %}
@@ -718,14 +734,16 @@
                 {# leave in tbody instead of adding it to tfoot, as tfoot will be repeated on each page when printing #}
                 <tr>
                     {% for id, visibility in columns %}
-                        {% if id not in ['duration', 'rate', 'rate_internal'] %}
+                        {% if id not in ['duration', 'rate', 'internalRate'] %}
                             <th class="column-{{ id }}" {% if not visibility %}style="display: none"{% endif %}></th>
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
-                        <span class="duration-format" data-duration="{{ timeWorked }}">{{- timeWorked|duration(decimal) -}}</span>
+                        {% set durationNormal = timeWorked|duration(false) %}
+                        {% set durationDecimal = timeWorked|duration(true) %}
+                        <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                     </th>
-                    <th class="text-nowrap column-rate_internal">
+                    <th class="text-nowrap column-internalRate">
                         {%- if currency is not null and currency is not same as(false) %}
                             {{ rateInternalTotal|money(currency) }}
                         {% else %}

@@ -17,67 +17,38 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @App\Validator\Constraints\TimesheetMultiUpdate
  * @internal
  */
-class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
+#[Constraints\TimesheetMultiUpdate]
+final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
 {
     /**
-     * @var Tag[]|ArrayCollection|iterable
+     * @var iterable<Tag>
      */
-    private $tags = [];
+    private iterable $tags = [];
+    private bool $replaceTags = false;
+    private bool $recalculateRates = false;
+    private ?Customer $customer = null;
+    private ?Project $project = null;
+    private ?Activity $activity = null;
+    private ?User $user = null;
+    private ?bool $exported = null;
+    private ?bool $billable = null;
+    private ?float $fixedRate = null;
+    private ?float $hourlyRate = null;
     /**
-     * @var bool
+     * @var Collection<TimesheetMeta>
      */
-    private $replaceTags = false;
+    private Collection $meta;
     /**
-     * @var bool
+     * @var array<string>
      */
-    private $recalculateRates = false;
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var Project|null
-     */
-    private $project;
-    /**
-     * @var Activity|null
-     */
-    private $activity;
-    /**
-     * @var User|null
-     */
-    private $user;
-    /**
-     * @var bool|null
-     */
-    private $exported = null;
-    /**
-     * @var bool|null
-     */
-    private $billable = null;
-    /**
-     * @var float|null
-     */
-    private $fixedRate = null;
-    /**
-     * @var float|null
-     */
-    private $hourlyRate = null;
-    /**
-     * @var TimesheetMeta[]|Collection
-     */
-    private $meta;
-    /**
-     * @var string[]
-     */
-    private $updateMeta = [];
+    private array $updateMeta = [];
 
     public function __construct()
     {
@@ -115,7 +86,7 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
     }
 
     /**
-     * @return Tag[]|ArrayCollection|iterable
+     * @return iterable<Tag>
      */
     public function getTags(): iterable
     {

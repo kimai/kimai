@@ -10,11 +10,11 @@
 namespace App\Event;
 
 use App\Entity\User;
-use App\Repository\Query\BaseQuery;
 
 /**
- * This event is triggered once per side load.
- * It stores all toolbar items, which should be rendered in the upper right corner.
+ * This event is triggered for every action:
+ * - once per side load for table actions
+ * - once for every row item
  */
 class PageActionsEvent extends ThemeEvent
 {
@@ -42,6 +42,11 @@ class PageActionsEvent extends ThemeEvent
         return $this->action;
     }
 
+    public function getEventName(): string
+    {
+        return 'actions.' . $this->getActionName();
+    }
+
     public function isView(string $view): bool
     {
         return $this->view === $view;
@@ -50,6 +55,16 @@ class PageActionsEvent extends ThemeEvent
     public function isIndexView(): bool
     {
         return $this->isView('index');
+    }
+
+    /**
+     * Custom view can only be table listings.
+     *
+     * @return bool
+     */
+    public function isCustomView(): bool
+    {
+        return $this->isView('custom');
     }
 
     public function getView(): string
@@ -127,53 +142,45 @@ class PageActionsEvent extends ThemeEvent
         $this->payload['actions'][$key] = null;
     }
 
-    public function addSearchToggle(?BaseQuery $query = null): void
-    {
-        $label = null;
-
-        if ($query !== null) {
-            $label = $query->countFilter();
-            if ($label < 1) {
-                $label = null;
-            }
-        }
-
-        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label, 'accesskey' => 'q']);
-    }
-
     public function addQuickExport(string $url): void
     {
-        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action']);
+        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'export']);
     }
 
     public function addCreate(string $url, bool $modal = true): void
     {
-        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'accesskey' => 'a']);
+        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create', 'accesskey' => 'a']);
     }
 
-    public function addHelp(string $url): void
+    /**
+     * Link to a configuration section.
+     *
+     * @param string $url
+     * @return void
+     */
+    public function addSettings(string $url): void
     {
-        $this->addAction('help', ['url' => $url, 'target' => '_blank', 'accesskey' => 'h']);
+        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions', 'accesskey' => 'h']);
     }
 
-    public function addBack(string $url): void
+    public function addConfig(string $url): void
     {
-        $this->addAction('back', ['url' => $url, 'translation_domain' => 'actions']);
+        $this->addAction('settings', ['url' => $url, 'title' => 'settings', 'translation_domain' => 'actions']);
     }
 
     public function addDelete(string $url, bool $remoteConfirm = true): void
     {
         if ($remoteConfirm) {
-            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red']);
+            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red', 'translation_domain' => 'actions']);
         } else {
-            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete']]);
+            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete'], 'translation_domain' => 'actions']);
         }
     }
 
     public function addColumnToggle(string $modal): void
     {
         $modal = '#' . ltrim($modal, '#');
-        $this->addAction('visibility', ['modal' => $modal]);
+        $this->addAction('columns', ['modal' => $modal, 'title' => 'modal.columns.title']);
     }
 
     public function countActions(?string $submenu = null): int

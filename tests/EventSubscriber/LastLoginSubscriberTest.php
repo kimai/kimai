@@ -16,8 +16,9 @@ use App\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 /**
  * @covers \App\EventSubscriber\LastLoginSubscriber
@@ -32,8 +33,8 @@ class LastLoginSubscriberTest extends TestCase
         $methodName = $events[UserInteractiveLoginEvent::class];
         $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
 
-        $this->assertArrayHasKey(SecurityEvents::INTERACTIVE_LOGIN, $events);
-        $methodName = $events[SecurityEvents::INTERACTIVE_LOGIN];
+        $this->assertArrayHasKey(LoginSuccessEvent::class, $events);
+        $methodName = $events[LoginSuccessEvent::class];
         $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
@@ -52,7 +53,7 @@ class LastLoginSubscriberTest extends TestCase
         self::assertNotNull($user->getLastLogin());
     }
 
-    public function testOnSecurityInteractiveLoginWithUser()
+    public function testOnLoginSuccessWithUser()
     {
         $repository = $this->createMock(UserRepository::class);
         $repository->expects($this->once())->method('saveUser');
@@ -61,16 +62,11 @@ class LastLoginSubscriberTest extends TestCase
 
         $user = new User();
         self::assertNull($user->getLastLogin());
-
-        $event = new InteractiveLoginEvent(new Request(), new UsernamePasswordToken($user, [], 'sdf'));
-        $sut->onSecurityInteractiveLogin($event);
+        $authenticator = $this->createMock(AuthenticatorInterface::class);
+        $passport = $this->createMock(Passport::class);
+        $passport->method('getUser')->willReturn($user);
+        $event = new LoginSuccessEvent($authenticator, $passport, new UsernamePasswordToken($user, 'sdf'), new Request(), null, 'xyz');
+        $sut->onFormLogin($event);
         self::assertNotNull($user->getLastLogin());
-
-        $user = new User();
-        self::assertNull($user->getLastLogin());
-
-        $event = new InteractiveLoginEvent(new Request(), new UsernamePasswordToken('foo', 'bar', 'sdf'));
-        $sut->onSecurityInteractiveLogin($event);
-        self::assertNull($user->getLastLogin());
     }
 }

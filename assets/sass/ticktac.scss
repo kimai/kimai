@@ -1,0 +1,43 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@keyframes ticktac-blink {
+    0% { opacity: 1; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.85; }
+    20% { opacity: 0.8; }
+    25% { opacity: 0.75; }
+    30% { opacity: 0.7; }
+    35% { opacity: 0.65; }
+    40% { opacity: 0.6; }
+    45% { opacity: 0.65; }
+    50% { opacity: 0.7; }
+    55% { opacity: 0.75; }
+    60% { opacity: 0.8; }
+    65% { opacity: 0.85; }
+    70% { opacity: 0.9; }
+    75% { opacity: 0.95; }
+    100% { opacity: 1; }
+}
+
+.ticktac-start,
+.ticktac-stop {
+    i {
+        animation: ticktac-blink 2s step-end infinite;
+    }
+}
+
+/* Full size with bright colors => navbar turns dark in small screens: button and color would still be white */
+@include media-breakpoint-down(lg) {
+    aside.navbar .btn-outline-white,
+    header.navbar .btn-outline-white {
+        background-color: var(--tblr-body-color);
+        border-color: hsla(0,0%,100%,.2);
+        color: hsla(0,0%,100%,.7);
+    }
+}

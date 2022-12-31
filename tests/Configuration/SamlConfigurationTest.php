@@ -10,7 +10,7 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\SamlConfiguration;
-use App\Configuration\SystemConfiguration;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +21,7 @@ class SamlConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)
     {
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => $settings]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['saml' => $settings]);
 
         return new SamlConfiguration($systemConfig);
     }
@@ -31,6 +31,7 @@ class SamlConfigurationTest extends TestCase
         return [
             'activate' => true,
             'title' => 'SAML title',
+            'provider' => 'google',
             'connection' => [
                 'host' => '1.2.3.4',
             ],
@@ -40,6 +41,7 @@ class SamlConfigurationTest extends TestCase
             ],
             'roles' => [
                 'attribute' => 'Roles',
+                'resetOnLogin' => true,
                 'mapping' => [
                     ['saml' => 'Kimai - Admin', 'kimai' => 'ROLE_SUPER_ADMIN'],
                     ['saml' => 'Management', 'kimai' => 'ROLE_TEAMLEAD'],
@@ -57,13 +59,16 @@ class SamlConfigurationTest extends TestCase
         $this->assertEquals([], $sut->getRolesMapping());
         $this->assertEquals('', $sut->getRolesAttribute());
         $this->assertEquals([], $sut->getAttributeMapping());
+        $this->assertFalse($sut->isRolesResetOnLogin());
     }
 
     public function testDefaultSettings()
     {
         $sut = $this->getSut($this->getDefaultSettings());
         $this->assertTrue($sut->isActivated());
+        $this->assertTrue($sut->isRolesResetOnLogin());
         $this->assertEquals('SAML title', $sut->getTitle());
+        $this->assertEquals('google', $sut->getProvider());
         $this->assertEquals([
             'host' => '1.2.3.4',
         ], $sut->getConnection());

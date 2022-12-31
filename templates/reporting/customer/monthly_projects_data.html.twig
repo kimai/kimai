@@ -7,14 +7,14 @@
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
-    {% set dataTypeTitle = 'label.rate_internal' %}
+    {% set dataTypeTitle = 'internalRate' %}
 {% else %}
     {% set dataTypeTitle = 'stats.durationTotal' %}
 {% endif %}
 <table class="table table-bordered dataTable">
     <thead>
         <tr>
-            <th rowspan="2" style="{{ rowspanStyle }}">{{ 'label.project'|trans }}</th>
+            <th rowspan="2" style="{{ rowspanStyle }}">{{ 'project'|trans }}</th>
             {% for activity in stats.activities %}
                 <th colspan="3" class="text-center">{{ activity.name }}</th>
             {% endfor %}
@@ -22,7 +22,7 @@
         </tr>
         <tr>
             {% for activity in stats.activities %}
-                <th class="text-center">{{ 'label.user'|trans }}</th>
+                <th class="text-center">{{ 'user'|trans }}</th>
                 <th class="text-center">{{ dataTypeTitle|trans }}</th>
                 <th class="text-center">{{ 'sum.total'|trans }}</th>
             {% endfor %}

@@ -11,33 +11,22 @@ namespace App\Repository\Query;
 
 use App\Entity\Customer;
 
-/**
- * Can be used for advanced queries with the: ProjectRepository
- */
 class ProjectQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
     public const PROJECT_ORDER_ALLOWED = [
-        'id', 'name', 'comment', 'customer', 'orderNumber', 'orderDate', 'project_start', 'project_end', 'budget', 'timeBudget', 'visible'
+        'name', 'description' => 'comment', 'customer', 'orderNumber', 'orderDate',
+        'project_start', 'project_end', 'budget', 'timeBudget', 'visible'
     ];
 
     /**
-     * @var array<Customer|int>
+     * @var array<Customer>
      */
-    private $customers = [];
-    /**
-     * @var \DateTime|null
-     */
-    private $projectStart;
-    /**
-     * @var \DateTime|null
-     */
-    private $projectEnd;
-    /**
-     * @var null|bool
-     */
-    private $globalActivities = null;
+    private array $customers = [];
+    private ?\DateTime $projectStart = null;
+    private ?\DateTime $projectEnd = null;
+    private ?bool $globalActivities = null;
 
     public function __construct()
     {
@@ -51,46 +40,17 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         ]);
     }
 
-    /**
-     * @return Customer|int|null
-     * @deprecated since 1.9 - use getCustomers() instead - will be removed with 2.0
-     */
-    public function getCustomer()
-    {
-        if (\count($this->customers) > 0) {
-            return $this->customers[0];
-        }
-
-        return null;
-    }
-
-    /**
-     * @param Customer|int|null $customer
-     * @return $this
-     * @deprecated since 1.9 - use setCustomers() or addCustomer() instead - will be removed with 2.0
-     */
-    public function setCustomer($customer = null)
-    {
-        if (null === $customer) {
-            $this->customers = [];
-        } else {
-            $this->customers = [$customer];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Customer|int $customer
-     * @return $this
-     */
-    public function addCustomer($customer)
+    public function addCustomer(Customer $customer): self
     {
         $this->customers[] = $customer;
 
         return $this;
     }
 
+    /**
+     * @param array<Customer> $customers
+     * @return $this
+     */
     public function setCustomers(array $customers): self
     {
         $this->customers = $customers;
@@ -98,9 +58,24 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         return $this;
     }
 
+    /**
+     * @return array<Customer>
+     */
     public function getCustomers(): array
     {
         return $this->customers;
+    }
+
+    /**
+     * @return array<int>
+     */
+    public function getCustomerIds(): array
+    {
+        return array_filter(array_values(array_unique(array_map(function (Customer $customer) {
+            return $customer->getId();
+        }, $this->customers))), function ($id) {
+            return $id !== null;
+        });
     }
 
     public function hasCustomers(): bool

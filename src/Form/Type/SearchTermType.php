@@ -16,35 +16,32 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 
-class SearchTermType extends AbstractType
+final class SearchTermType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new SearchTermTransformer());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.searchTerm',
+            'label' => 'searchTerm',
             'required' => false,
+            'attr' => [
+                'placeholder' => 'search',
+            ],
             'constraints' => [
-                new Length(['min' => 3, 'allowEmptyString' => true])
+                new Length(['min' => 3])
             ],
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

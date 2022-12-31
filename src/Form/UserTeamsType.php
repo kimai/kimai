@@ -18,25 +18,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to assign a User to teams.
  */
-class UserTeamsType extends AbstractType
+final class UserTeamsType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('teams', TeamType::class, [
-                'multiple' => true,
-                'expanded' => true,
-            ])
-        ;
+        $builder->add('teams', TeamType::class, [
+            'multiple' => true,
+            'expanded' => true,
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,

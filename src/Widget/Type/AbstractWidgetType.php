@@ -11,24 +11,40 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-abstract class AbstractWidgetType implements WidgetInterface
+abstract class AbstractWidgetType extends AbstractWidget
 {
+    private ?string $id = null;
+    private string $title = '';
+    private int $height = WidgetInterface::HEIGHT_SMALL;
+    private int $width = WidgetInterface::WIDTH_SMALL;
     /**
-     * @var string
+     * @var array<string>
      */
-    protected $id;
-    /**
-     * @var string
-     */
-    protected $title = '';
-    /**
-     * @var array
-     */
-    protected $options = [];
-    /**
-     * @var mixed
-     */
-    protected $data;
+    private array $permissions = [];
+
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(int $height): AbstractWidgetType
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getWidth(): int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(int $width): AbstractWidgetType
+    {
+        $this->width = $width;
+
+        return $this;
+    }
 
     public function setId(string $id): self
     {
@@ -46,22 +62,6 @@ abstract class AbstractWidgetType implements WidgetInterface
         return (new \ReflectionClass($this))->getShortName();
     }
 
-    public function setData($data): self
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    /**
-     * @param array $options
-     * @return mixed|null
-     */
-    public function getData(array $options = [])
-    {
-        return $this->data;
-    }
-
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -77,37 +77,21 @@ abstract class AbstractWidgetType implements WidgetInterface
     public function setOptions(array $options): self
     {
         foreach ($options as $key => $value) {
-            $this->options[$key] = $value;
+            $this->setOption($key, $value);
         }
 
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setOption(string $name, $value): void
+    public function getPermissions(): array
     {
-        $this->options[$name] = $value;
+        return $this->permissions;
     }
 
-    /**
-     * @param string $name
-     * @param mixed|null $default
-     * @return mixed|null
-     */
-    public function getOption(string $name, $default = null)
+    public function setPermissions(array $permissions): AbstractWidgetType
     {
-        if (\array_key_exists($name, $this->options)) {
-            return $this->options[$name];
-        }
+        $this->permissions = $permissions;
 
-        return $default;
-    }
-
-    public function getOptions(array $options = []): array
-    {
-        return array_merge($this->options, $options);
+        return $this;
     }
 }

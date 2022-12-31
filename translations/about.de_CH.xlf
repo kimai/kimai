@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de-CH" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target state="needs-translation">Über Kimai</target>
-      </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target state="needs-translation">Support</target>

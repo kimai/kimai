@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -13,7 +11,7 @@ namespace App\API;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class NotFoundException extends NotFoundHttpException
+final class NotFoundException extends NotFoundHttpException
 {
     public function __construct(string $message = 'Not found', \Exception $previous = null, int $code = 404, array $headers = [])
     {

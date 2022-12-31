@@ -24,21 +24,12 @@ final class ThemeJavascriptTranslationsEvent extends Event
      *
      * @var array<string, array<int, string>>
      */
-    private $translations = [
+    private array $translations = [
         'confirm' => ['confirm', 'messages'],
         'cancel' => ['cancel', 'messages'],
-        'today' => ['daterangepicker.today', 'daterangepicker'],
-        'yesterday' => ['daterangepicker.yesterday', 'daterangepicker'],
-        'lastWeek' => ['daterangepicker.lastWeek', 'daterangepicker'],
-        'thisWeek' => ['daterangepicker.thisWeek', 'daterangepicker'],
-        'lastMonth' => ['daterangepicker.lastMonth', 'daterangepicker'],
-        'thisMonth' => ['daterangepicker.thisMonth', 'daterangepicker'],
-        'lastYear' => ['daterangepicker.lastYear', 'daterangepicker'],
-        'thisYear' => ['daterangepicker.thisYear', 'daterangepicker'],
-        'customRange' => ['daterangepicker.customRange', 'daterangepicker'],
+        'close' => ['action.close', 'messages'],
         'timesheet.start.success' => ['timesheet.start.success', 'flashmessages'],
         'timesheet.start.error' => ['timesheet.start.error', 'flashmessages'],
-        'timesheet.start.exceeded_limit' => ['timesheet.start.exceeded_limit', 'flashmessages'],
         'timesheet.stop.success' => ['timesheet.stop.success', 'flashmessages'],
         'timesheet.stop.error' => ['timesheet.stop.error', 'flashmessages'],
         'action.update.success' => ['action.update.success', 'flashmessages'],
@@ -46,9 +37,11 @@ final class ThemeJavascriptTranslationsEvent extends Event
         'action.delete.success' => ['action.delete.success', 'flashmessages'],
         'action.delete.error' => ['action.delete.error', 'flashmessages'],
         'confirm.delete' => ['confirm.delete', 'messages'],
-        'delete' => ['action.delete', 'messages'],
+        'delete' => ['delete', 'messages'],
         'login.required' => ['login_required', 'messages'],
-        'modal.dirty' => ['modal.dirty', 'messages']
+        'modal.dirty' => ['modal.dirty', 'messages'],
+        'select.search.notfound' => ['search.no_results', 'messages'],
+        'select.search.create' => ['select.add_new', 'messages'],
     ];
 
     public function getTranslations(): array

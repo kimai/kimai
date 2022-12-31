@@ -1,9 +1,7 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-
-{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': template.name|default('create'|trans),
         'form': form,
@@ -48,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    {{ form_row(form.renderer) }}
+                    {{ form_row(form.renderer, {'help_html': true, 'help': '<a href="https://github.com/kimai/invoice-templates" target="_blank">' ~ ('download_invoice_renderer'|trans({}, 'invoice-renderer')) ~ '</a>'}) }}
                 </div>
                 <div class="col-md-6">
                     {{ form_row(form.language) }}
@@ -62,12 +60,7 @@
                     {{ form_row(form.numberGenerator) }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{ form_row(form.decimalDuration) }}
-                </div>
-            </div>
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}    
 {% endblock %}

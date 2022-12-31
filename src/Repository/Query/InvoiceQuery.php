@@ -9,31 +9,29 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
+use App\Entity\Project;
 
 /**
- * Find items (eg timesheets) for creating a new invoice.
+ * Find items (e.g. timesheets) for creating a new invoice.
  */
 class InvoiceQuery extends TimesheetQuery
 {
-    /**
-     * @var InvoiceTemplate
-     */
-    private $template;
-    /**
-     * @var bool
-     */
-    private $markAsExported = true;
+    private ?InvoiceTemplate $template = null;
+    private ?\DateTime $invoiceDate = null;
+    private bool $allowTemplateOverwrite = true;
 
     public function __construct()
     {
         parent::__construct();
         $this->setDefaults([
-            'order' => InvoiceQuery::ORDER_ASC,
-            'exported' => InvoiceQuery::STATE_NOT_EXPORTED,
+            'order' => self::ORDER_ASC,
+            'exported' => self::STATE_NOT_EXPORTED,
             'state' => self::STATE_STOPPED,
             'billable' => true,
-            'markAsExported' => true,
+            'invoiceDate' => null,
         ]);
     }
 
@@ -49,15 +47,68 @@ class InvoiceQuery extends TimesheetQuery
         return $this;
     }
 
-    public function isMarkAsExported(): bool
+    /**
+     * Helper method, because many templates access {{ model.query.customer }} directly.
+     *
+     * @return Customer|null
+     */
+    public function getCustomer(): ?Customer
     {
-        return $this->markAsExported;
+        $customers = $this->getCustomers();
+        if (\count($customers) === 1) {
+            return $customers[0];
+        }
+
+        return null;
     }
 
-    public function setMarkAsExported(bool $markAsExported): InvoiceQuery
+    /**
+     * Helper method, because many templates access {{ model.query.project }} directly.
+     *
+     * @return Project|null
+     */
+    public function getProject(): ?Project
     {
-        $this->markAsExported = $markAsExported;
+        $projects = $this->getProjects();
+        if (\count($projects) === 1) {
+            return $projects[0];
+        }
 
-        return $this;
+        return null;
+    }
+
+    /**
+     * Helper method, because many templates access {{ model.query.activity }} directly.
+     *
+     * @return Activity|null
+     */
+    public function getActivity(): ?Activity
+    {
+        $activities = $this->getActivities();
+        if (\count($activities) === 1) {
+            return $activities[0];
+        }
+
+        return null;
+    }
+
+    public function getInvoiceDate(): ?\DateTime
+    {
+        return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate(?\DateTime $invoiceDate): void
+    {
+        $this->invoiceDate = $invoiceDate;
+    }
+
+    public function isAllowTemplateOverwrite(): bool
+    {
+        return $this->allowTemplateOverwrite;
+    }
+
+    public function setAllowTemplateOverwrite(bool $allowTemplateOverwrite): void
+    {
+        $this->allowTemplateOverwrite = $allowTemplateOverwrite;
     }
 }

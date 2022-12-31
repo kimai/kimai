@@ -17,26 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice renderer.
  */
-class InvoiceRendererType extends AbstractType
+final class InvoiceRendererType extends AbstractType
 {
-    /**
-     * @var ServiceInvoice
-     */
-    protected $service;
-
-    /**
-     * InvoiceRendererType constructor.
-     * @param ServiceInvoice $service
-     */
-    public function __construct(ServiceInvoice $service)
+    public function __construct(private ServiceInvoice $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $documents = [];
         foreach ($this->service->getDocuments() as $document) {
@@ -49,29 +36,24 @@ class InvoiceRendererType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_renderer',
+            'label' => 'invoice_renderer',
             'choices' => array_flip($documents),
             'group_by' => [$this, 'getGroupBy'],
             'choice_label' => function ($choiceValue, $key, $value) {
-                return $choiceValue;
+                return match (strtolower($choiceValue)) {
+                    'xml' => 'XML',
+                    'javascript' => 'JSON',
+                    default => $choiceValue,
+                };
             },
             'translation_domain' => 'invoice-renderer',
-            'docu_chapter' => 'invoices.html',
             'search' => false,
         ]);
     }
 
-    /**
-     * @param string $value
-     * @param string $label
-     * @param string $index
-     * @return string
-     */
-    public function getGroupBy($value, $label, $index)
+    public function getGroupBy(string $value, string $label, string $index): string
     {
-        $renderer = $label;
-
-        $parts = explode('.', $renderer);
+        $parts = explode('.', $label);
 
         if (\count($parts) > 2) {
             array_pop($parts);
@@ -79,17 +61,17 @@ class InvoiceRendererType extends AbstractType
 
         $type = array_pop($parts);
 
-        if (\in_array(strtolower($type), ['json', 'txt', 'xml'])) {
-            return 'programmatic';
-        }
-
-        return ucfirst($type);
+        return match (strtolower($type)) {
+            'json', 'txt', 'xml' => 'programmatic',
+            'pdf' => 'PDF',
+            'docx', 'doc' => 'Word',
+            'xls', 'xlsx' => 'Excel',
+            'ods' => 'LibreOffice',
+            default => ucfirst($type),
+        };
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

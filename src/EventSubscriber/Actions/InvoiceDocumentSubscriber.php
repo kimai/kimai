@@ -9,10 +9,10 @@
 
 namespace App\EventSubscriber\Actions;
 
-use App\Entity\InvoiceDocument;
 use App\Event\PageActionsEvent;
+use App\Model\InvoiceDocument;
 
-class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
+final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

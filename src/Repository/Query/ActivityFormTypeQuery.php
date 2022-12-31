@@ -14,16 +14,13 @@ use App\Entity\Project;
 
 final class ActivityFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var Activity|null
-     */
-    private $activityToIgnore;
+    private ?Activity $activityToIgnore = null;
 
     /**
-     * @param Activity|int|array|null $activity
-     * @param Project|int|array|null $project
+     * @param Activity|array<Activity>|int|null $activity
+     * @param Project|array<Project>|int|null $project
      */
-    public function __construct($activity = null, $project = null)
+    public function __construct(Activity|array|int|null $activity = null, Project|array|int|null $project = null)
     {
         if (null !== $activity) {
             if (!\is_array($activity)) {

@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber\Actions;
 
-use App\Constants;
 use App\Event\PageActionsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,13 +19,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
-    private $auth;
-    private $urlGenerator;
-
-    public function __construct(AuthorizationCheckerInterface $security, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private AuthorizationCheckerInterface $auth, private UrlGeneratorInterface $urlGenerator)
     {
-        $this->auth = $security;
-        $this->urlGenerator = $urlGenerator;
     }
 
     protected function isGranted($attributes, $subject = null): bool
@@ -37,11 +31,6 @@ abstract class AbstractActionsSubscriber implements EventSubscriberInterface
     protected function path(string $route, array $parameters = []): string
     {
         return $this->urlGenerator->generate($route, $parameters);
-    }
-
-    protected function documentationLink(string $url): string
-    {
-        return Constants::HOMEPAGE . '/documentation/' . $url;
     }
 
     public static function getSubscribedEvents(): array

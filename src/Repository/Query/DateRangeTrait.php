@@ -13,18 +13,11 @@ use App\Form\Model\DateRange;
 
 trait DateRangeTrait
 {
-    /**
-     * @var DateRange
-     */
-    protected $dateRange;
+    protected ?DateRange $dateRange = null;
 
     public function getBegin(): ?\DateTime
     {
-        if (null === $this->dateRange) {
-            return null;
-        }
-
-        return $this->dateRange->getBegin();
+        return $this->dateRange?->getBegin();
     }
 
     public function setBegin(\DateTime $begin): void
@@ -34,11 +27,7 @@ trait DateRangeTrait
 
     public function getEnd(): ?\DateTime
     {
-        if (null === $this->dateRange) {
-            return null;
-        }
-
-        return $this->dateRange->getEnd();
+        return $this->dateRange?->getEnd();
     }
 
     public function setEnd(\DateTime $end): void

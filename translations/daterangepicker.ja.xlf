@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target>今年</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>期間指定</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

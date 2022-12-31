@@ -9,42 +9,23 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\ExportableItem;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceItemInterface;
-use App\Invoice\InvoiceItemWithAmountInterface;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
     public const TYPE_MIXED = 'mixed';
     public const CATEGORY_MIXED = 'mixed';
 
-    /**
-     * @deprecated since 1.3 - will be removed with 2.0
-     */
-    protected function mergeTimesheets(InvoiceItem $invoiceItem, Timesheet $entry)
-    {
-        @trigger_error('mergeTimesheets() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        $this->mergeInvoiceItems($invoiceItem, $entry);
-    }
-
-    /**
-     * @param InvoiceItem $invoiceItem
-     * @param InvoiceItemInterface $entry
-     * @return void
-     */
-    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, InvoiceItemInterface $entry) /* : void */
+    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, ExportableItem $entry): void
     {
         $duration = $invoiceItem->getDuration();
         if (null !== $entry->getDuration()) {
             $duration += $entry->getDuration();
         }
 
-        $amount = 1;
-        if ($entry instanceof InvoiceItemWithAmountInterface) {
-            $amount = $entry->getAmount();
-        }
+        $amount = $entry->getAmount();
 
         $type = $entry->getType();
         $category = $entry->getCategory();
@@ -62,11 +43,7 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
         $invoiceItem->setAmount($invoiceItem->getAmount() + $amount);
         $invoiceItem->setUser($entry->getUser());
         $invoiceItem->setRate($invoiceItem->getRate() + $entry->getRate());
-        if (method_exists($entry, 'getInternalRate')) {
-            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getInternalRate());
-        } else {
-            $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + $entry->getRate());
-        }
+        $invoiceItem->setInternalRate($invoiceItem->getInternalRate() + ($entry->getInternalRate() ?? 0.00));
         $invoiceItem->setDuration($duration);
 
         if (null !== $entry->getFixedRate()) {

@@ -11,9 +11,8 @@ namespace App\Tests\Widget\Type;
 
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractAmountPeriod;
-use App\Widget\Type\AbstractWidgetType;
+use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AmountToday;
-use App\Widget\Type\SimpleStatisticChart;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -21,9 +20,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @covers \App\Widget\Type\AmountToday
  * @covers \App\Widget\Type\AbstractAmountPeriod
  */
-class AmountTodayTest extends AbstractWidgetTypeTest
+class AmountTodayTest extends AbstractWidgetTest
 {
-    protected function assertDefaultData(AbstractWidgetType $sut)
+    protected function assertDefaultData(AbstractWidget $sut)
     {
         self::assertEquals(0.0, $sut->getData());
     }
@@ -31,7 +30,7 @@ class AmountTodayTest extends AbstractWidgetTypeTest
     /**
      * @return AbstractAmountPeriod
      */
-    public function createSut(): AbstractWidgetType
+    public function createSut(): AbstractWidget
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -42,27 +41,16 @@ class AmountTodayTest extends AbstractWidgetTypeTest
     public function getDefaultOptions(): array
     {
         return [
-            'dataType' => 'money',
             'icon' => 'money',
             'color' => WidgetInterface::COLOR_TODAY,
         ];
-    }
-
-    public function testData()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot set data on instances of SimpleStatisticChart');
-
-        $sut = $this->createSut();
-        self::assertInstanceOf(SimpleStatisticChart::class, $sut);
-        $sut->setData(10);
     }
 
     public function testSettings()
     {
         $sut = $this->createSut();
 
-        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
-        self::assertEquals('amountToday', $sut->getId());
+        self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
+        self::assertEquals('AmountToday', $sut->getId());
     }
 }

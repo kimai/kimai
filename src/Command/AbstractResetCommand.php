@@ -26,17 +26,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class AbstractResetCommand extends Command
 {
+    public function __construct(private string $kernelEnvironment)
+    {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
-            ->setName('kimai:reset:' . $this->getEnvName())
-            ->setAliases(['kimai:reset-' . $this->getEnvName()])
-            ->setDescription('Resets the "' . $this->getEnvName() . '" environment')
             ->setHelp(
                 <<<EOT
-    This command will drop and re-create the database and its schemas, load data and clear the cache.
-    Use the <info>-n</info> switch to skip the question.
-EOT
+                        This command will drop and re-create the database and its schemas, load data and clear the cache.
+                        Use the <info>-n</info> switch to skip the question.
+                    EOT
             )
             ->addOption('no-cache', null, InputOption::VALUE_NONE, 'Skip cache flushing')
         ;
@@ -44,16 +46,7 @@ EOT
 
     public function isEnabled(): bool
     {
-        return $this->getEnv() !== 'prod';
-    }
-
-    private function getEnv(): string
-    {
-        /** @var Application $application */
-        $application = $this->getApplication();
-        $kernel = $application->getKernel();
-
-        return $kernel->getEnvironment();
+        return $this->kernelEnvironment !== 'prod';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -68,12 +61,12 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
 
-                return 1;
+                return Command::FAILURE;
             }
         }
 
         if ($this->askConfirmation($input, $output, 'Do you want to drop and re-create the schema y/N ?')) {
-            if (($result = $this->dropSchema($io, $output)) !== 0) {
+            if (($result = $this->dropSchema($io, $output)) !== Command::SUCCESS) {
                 return $result;
             }
 
@@ -85,7 +78,7 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to execute a migrations: ' . $ex->getMessage());
 
-                return 5;
+                return Command::FAILURE;
             }
         }
 
@@ -94,7 +87,7 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to import data: ' . $ex->getMessage());
 
-            return 6;
+            return Command::FAILURE;
         }
 
         if (!$input->getOption('no-cache')) {
@@ -104,11 +97,11 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 7;
+                return Command::FAILURE;
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function dropSchema(SymfonyStyle $io, OutputInterface $output): int
@@ -119,7 +112,7 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
-            return 2;
+            return Command::FAILURE;
         }
 
         try {
@@ -128,7 +121,7 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to drop migration_versions table: ' . $ex->getMessage());
 
-            return 3;
+            return Command::FAILURE;
         }
 
         try {
@@ -137,10 +130,10 @@ EOT
         } catch (Exception $ex) {
             $io->error('Failed to drop kimai2_sessions table: ' . $ex->getMessage());
 
-            return 4;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function askConfirmation(InputInterface $input, OutputInterface $output, string $question): bool
@@ -155,8 +148,6 @@ EOT
 
         return $questionHelper->ask($input, $output, $question);
     }
-
-    abstract protected function getEnvName(): string;
 
     abstract protected function loadData(InputInterface $input, OutputInterface $output): void;
 }

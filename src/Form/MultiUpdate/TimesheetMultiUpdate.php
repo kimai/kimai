@@ -30,27 +30,13 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimesheetMultiUpdate extends AbstractType
+final class TimesheetMultiUpdate extends AbstractType
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $timesheet;
-    /**
-     * @var CustomerRepository
-     */
-    private $customers;
-
-    public function __construct(TimesheetRepository $timesheet, CustomerRepository $customer)
+    public function __construct(private TimesheetRepository $timesheet, private CustomerRepository $customers)
     {
-        $this->timesheet = $timesheet;
-        $this->customers = $customer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $activity = null;
         $project = null;
@@ -65,7 +51,7 @@ class TimesheetMultiUpdate extends AbstractType
 
             $activity = $entry->getActivity();
             $project = $entry->getProject();
-            $customer = null === $project ? null : $project->getCustomer();
+            $customer = $project?->getCustomer();
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
@@ -80,7 +66,7 @@ class TimesheetMultiUpdate extends AbstractType
             ->add('customer', CustomerType::class, [
                 'query_builder_for_user' => true,
                 'customers' => $customer,
-                'data' => $customer ? $customer : '',
+                'data' => $customer,
                 'required' => false,
                 'placeholder' => '',
                 'mapped' => false,
@@ -156,8 +142,8 @@ class TimesheetMultiUpdate extends AbstractType
             'required' => true,
             'expanded' => true,
             'choices' => [
-                'label.replaceTags' => true,
-                'label.appendTags' => false,
+                'replaceTags' => true,
+                'appendTags' => false,
             ]
         ]);
 
@@ -173,7 +159,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         if ($options['include_exported']) {
             $builder->add('exported', ChoiceType::class, [
-                'label' => 'label.mark_as_exported',
+                'label' => 'mark_as_exported',
                 'required' => false,
                 'choices' => [
                     'entryState.exported' => true,
@@ -184,7 +170,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         if ($options['include_billable']) {
             $builder->add('billable', ChoiceType::class, [
-                'label' => 'label.billable',
+                'label' => 'billable',
                 'choices' => [
                     '' => null,
                     'yes' => true,
@@ -196,7 +182,7 @@ class TimesheetMultiUpdate extends AbstractType
         if ($options['include_rate']) {
             $builder
                 ->add('recalculateRates', YesNoType::class, [
-                    'label' => 'label.recalculate_rates',
+                    'label' => 'recalculate_rates',
                 ])
                 ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
@@ -221,7 +207,7 @@ class TimesheetMultiUpdate extends AbstractType
                 'choices' => $choices,
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'label.batch_meta_fields',
+                'label' => 'batch_meta_fields',
                 'help' => 'help.batch_meta_fields',
             ]);
         }
@@ -232,7 +218,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         $builder->get('entities')->addModelTransformer(
             new CallbackTransformer(
-                function ($timesheets) {
+                function ($timesheets): string {
                     $ids = [];
                     /** @var \App\Entity\Timesheet $timesheet */
                     foreach ($timesheets as $timesheet) {
@@ -252,10 +238,7 @@ class TimesheetMultiUpdate extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TimesheetMultiUpdateDTO::class,

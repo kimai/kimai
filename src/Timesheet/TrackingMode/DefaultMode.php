@@ -16,14 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class DefaultMode extends AbstractTrackingMode
 {
-    /**
-     * @var RoundingService
-     */
-    private $rounding;
-
-    public function __construct(RoundingService $rounding)
+    public function __construct(private RoundingService $rounding)
     {
-        $this->rounding = $rounding;
     }
 
     public function canEditBegin(): bool
@@ -54,6 +48,11 @@ final class DefaultMode extends AbstractTrackingMode
     public function canSeeBeginAndEndTimes(): bool
     {
         return true;
+    }
+
+    public function getEditTemplate(): string
+    {
+        return 'timesheet/edit-default.html.twig';
     }
 
     public function create(Timesheet $timesheet, ?Request $request = null): void

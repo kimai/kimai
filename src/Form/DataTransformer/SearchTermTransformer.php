@@ -13,7 +13,7 @@ use App\Utils\SearchTerm;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class SearchTermTransformer implements DataTransformerInterface
+final class SearchTermTransformer implements DataTransformerInterface
 {
     /**
      * Transforms a SearchTerm object to a string.
@@ -21,7 +21,7 @@ class SearchTermTransformer implements DataTransformerInterface
      * @param SearchTerm|null $searchTerm
      * @return string
      */
-    public function transform($searchTerm)
+    public function transform(mixed $searchTerm): mixed
     {
         if (empty($searchTerm) || !($searchTerm instanceof SearchTerm)) {
             return '';
@@ -37,7 +37,7 @@ class SearchTermTransformer implements DataTransformerInterface
      * @return SearchTerm|null
      * @throws TransformationFailedException if object (issue) is not found
      */
-    public function reverseTransform($searchTerm)
+    public function reverseTransform(mixed $searchTerm): mixed
     {
         if (empty($searchTerm)) {
             return null;

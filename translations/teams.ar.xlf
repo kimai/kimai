@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
-        <source>teams.title</source>
-        <target>الفريق</target>
-      </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
         <target>النشاط له وصول محدود ، لأنه تم تعيين أذونات الفريق للمشروع / أو العميل.</target>

@@ -11,40 +11,17 @@ namespace App\Tests\Ldap;
 
 use App\Ldap\FormLoginLdapFactory;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ChildDefinition;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @covers \App\Ldap\FormLoginLdapFactory
  */
 class FormLoginLdapFactoryTest extends TestCase
 {
-    public function testStaticValues()
+    public function testConstruct(): void
     {
         $sut = new FormLoginLdapFactory();
+
         self::assertEquals('kimai_ldap', $sut->getKey());
-        self::assertEquals('pre_auth', $sut->getPosition());
-    }
-
-    public function testCreate()
-    {
-        $container = new ContainerBuilder();
-        $sut = new FormLoginLdapFactory();
-        $result = $sut->create($container, 'test', ['foo' => 'bar'], 'fosuserbundle', 'secured_area');
-
-        self::assertEquals([
-            'security.authentication.provider.kimai_ldap.test',
-            'security.authentication.listener.form.test',
-            'secured_area'
-        ], $result);
-
-        $definition = $container->getDefinition('security.authentication.provider.kimai_ldap.test');
-        self::assertInstanceOf(ChildDefinition::class, $definition);
-        self::assertEquals('test', $definition->getArguments()['index_1']);
-
-        $definition = $container->getDefinition('security.authentication.listener.form.test');
-        self::assertInstanceOf(ChildDefinition::class, $definition);
-        self::assertEquals('test', $definition->getArguments()['index_4']);
-        self::assertEquals(['foo' => 'bar'], $definition->getArguments()['index_5']);
+        self::assertEquals(-20, $sut->getPriority());
     }
 }

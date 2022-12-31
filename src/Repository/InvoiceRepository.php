@@ -12,16 +12,15 @@ namespace App\Repository;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
-use App\Entity\InvoiceTemplate;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\InvoiceArchiveQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Invoice>
@@ -30,25 +29,14 @@ class InvoiceRepository extends EntityRepository
 {
     use RepositorySearchTrait;
 
-    /**
-     * @param InvoiceTemplate $invoiceTemplate
-     * @return void
-     * @deprecated replace me in 2.0
-     */
-    public function preventTemplateUpdate(InvoiceTemplate $invoiceTemplate): void
-    {
-        $em = $this->getEntityManager();
-        $em->detach($invoiceTemplate);
-    }
-
-    public function saveInvoice(Invoice $invoice)
+    public function saveInvoice(Invoice $invoice): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($invoice);
         $entityManager->flush();
     }
 
-    public function deleteInvoice(Invoice $invoice)
+    public function deleteInvoice(Invoice $invoice): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($invoice);
@@ -295,9 +283,9 @@ class InvoiceRepository extends EntityRepository
         return new LoaderPaginator(new InvoiceLoader($qb->getEntityManager()), $qb, $counter);
     }
 
-    public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 

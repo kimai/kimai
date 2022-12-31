@@ -6,10 +6,11 @@
         <ini name="max_execution_time" value="-1"/>
         <ini name="date.timezone" value="UTC"/>
         <ini name="intl.default_locale" value="en_US"/>
+        <ini name="date.timezone" value="Europe/Vienna"/>
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="APP_ENV" value="test" force="true"/>
-        <env name="APP_DEBUG" value="1" force="true"/>
+        <env name="APP_DEBUG" value="0" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
         <!--
             CREATE DATABASE IF NOT EXISTS `kimai2_test`;
@@ -44,7 +45,7 @@
             <directory suffix=".php">templates/</directory>
         </include>
         <exclude>
-            <directory suffix=".php">src/Migrations/</directory>
+            <directory suffix=".php">migrations/</directory>
             <directory suffix=".php">assets/</directory>
             <directory suffix=".php">bin/</directory>
             <directory suffix=".php">config/</directory>

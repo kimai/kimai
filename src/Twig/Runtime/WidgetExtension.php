@@ -9,21 +9,18 @@
 
 namespace App\Twig\Runtime;
 
+use App\Entity\User;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
+use Symfony\Component\Security\Core\Security;
+use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
 final class WidgetExtension implements RuntimeExtensionInterface
 {
-    /**
-     * @var WidgetService
-     */
-    private $service;
-
-    public function __construct(WidgetService $service)
+    public function __construct(private WidgetService $service, private Security $security)
     {
-        $this->service = $service;
     }
 
     /**
@@ -32,10 +29,10 @@ final class WidgetExtension implements RuntimeExtensionInterface
      * @return string
      * @throws WidgetException
      */
-    public function renderWidget($widget, array $options = [])
+    public function renderWidget(Environment $environment, $widget, array $options = []): string
     {
         if (!($widget instanceof WidgetInterface) && !\is_string($widget)) {
-            throw new \InvalidArgumentException('Widget must either implement WidgetInterface or be a string');
+            throw new \InvalidArgumentException('Widget must be either a WidgetInterface or a string');
         }
 
         if (\is_string($widget)) {
@@ -46,8 +43,18 @@ final class WidgetExtension implements RuntimeExtensionInterface
             $widget = $this->service->getWidget($widget);
         }
 
-        $renderer = $this->service->findRenderer($widget);
+        $user = $this->security->getUser();
+        if ($user instanceof User) {
+            $widget->setUser($user);
+        }
 
-        return $renderer->render($widget, $options);
+        $options = $widget->getOptions($options);
+
+        return $environment->render($widget->getTemplateName(), [
+            'data' => $widget->getData($options),
+            'options' => $options,
+            'title' => $widget->getTitle(),
+            'widget' => $widget,
+        ]);
     }
 }

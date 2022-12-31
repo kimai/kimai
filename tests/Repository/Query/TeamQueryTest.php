@@ -17,7 +17,7 @@ use App\Repository\Query\TeamQuery;
  */
 class TeamQueryTest extends BaseQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new TeamQuery();
 

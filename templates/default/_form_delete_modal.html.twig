@@ -1,7 +1,6 @@
-{% embed 'embeds/modal.html.twig' %}
+{% embed '@theme/embeds/modal.html.twig' %}
     {% set used = used|default(false) %}
     {% block modal_id %}form_modal{% endblock %}
-    {% block modal_class %}{% if used %}modal-danger{% endif %}{% endblock %}
     {% block modal_before %}{{ form_start(form) }}{% endblock %}
     {% block modal_title %}
         {{ title|default('confirm.delete'|trans) }}
@@ -9,7 +8,7 @@
     {% block modal_body %}
         {% if used is same as (false) %}
             {{ 'delete.not_in_use'|trans }}
-            <div class="hidden">
+            <div class="d-none">
                 {{ form_widget(form) }}
             </div>
         {% else %}
@@ -18,8 +17,8 @@
         {% endif %}
     {% endblock %}
     {% block modal_footer %}
-        <button type="submit" class="btn {% if used %}btn-outline{% else %}btn-primary{% endif %} pull-left modal-form-save" data-loading-text="{{ 'action.delete'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'action.delete'|trans }}</button>
-        <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+        <button type="submit" class="btn {% if used %}btn-danger{% else %}btn-primary{% endif %} pull-left modal-form-save" data-loading-text="{{ 'delete'|trans }}..." id="{{ block('modal_id') }}_save">{{ 'delete'|trans }}</button>
+        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
     {% endblock %}
     {% block modal_end %}{{ form_end(form) }}{% endblock %}
 {% endembed %}

@@ -10,26 +10,25 @@
 namespace App\Controller;
 
 use App\Utils\FileHelper;
+use App\Utils\PageSetup;
+use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
-use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
-/**
- * @Route(path="/doctor")
- * @Security("is_granted('system_information')")
- */
-class DoctorController extends AbstractController
+#[Route(path: '/doctor')]
+#[Security("is_granted('system_information')")]
+final class DoctorController extends AbstractController
 {
     /**
-     * PHP extensions which Kimai needs for runtime.
-     * Some are not a hard requiremenet, but some functions might not work as expected.
+     * Required PHP extensions for Kimai.
      */
     public const REQUIRED_EXTENSIONS = [
-        'gd',
         'intl',
         'json',
         'mbstring',
@@ -47,21 +46,12 @@ class DoctorController extends AbstractController
         'var/log/',
     ];
 
-    private $projectDirectory;
-    private $environment;
-    private $fileHelper;
-
-    public function __construct(string $projectDirectory, string $kernelEnvironment, FileHelper $fileHelper)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper, private CacheInterface $cache)
     {
-        $this->projectDirectory = $projectDirectory;
-        $this->environment = $kernelEnvironment;
-        $this->fileHelper = $fileHelper;
     }
 
-    /**
-     * @Route(path="/flush-log/{token}", name="doctor_flush_log", methods={"GET"})
-     * @Security("is_granted('system_configuration')")
-     */
+    #[Route(path: '/flush-log/{token}', name: 'doctor_flush_log', methods: ['GET'])]
+    #[Security("is_granted('system_configuration')")]
     public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
@@ -76,10 +66,10 @@ class DoctorController extends AbstractController
 
         if (file_exists($logfile)) {
             if (!is_writable($logfile)) {
-                $this->flashError('action.delete.error', ['%reason%' => 'Logfile cannot be written']);
+                $this->flashError('action.delete.error', 'Logfile cannot be written');
             } else {
                 if (false === file_put_contents($logfile, '')) {
-                    $this->flashError('action.delete.error', ['%reason%' => 'Failed writing to logfile']);
+                    $this->flashError('action.delete.error', 'Failed writing to logfile');
                 } else {
                     $this->flashSuccess('action.delete.success');
                 }
@@ -89,32 +79,34 @@ class DoctorController extends AbstractController
         return $this->redirectToRoute('doctor');
     }
 
-    /**
-     * @Route(path="", name="doctor", methods={"GET"})
-     */
+    #[Route(path: '', name: 'doctor', methods: ['GET'])]
     public function index(): Response
     {
         $logLines = 100;
-
         $canDeleteLogfile = $this->isGranted('system_configuration') && is_writable($this->getLogFilename());
+        $page = new PageSetup('Doctor');
+        $page->setHelp('doctor.html');
 
-        return $this->render('doctor/index.html.twig', array_merge(
-            [
-                'modules' => get_loaded_extensions(),
-                'environment' => $this->environment,
-                'info' => $this->getPhpInfo(),
-                'settings' => $this->getIniSettings(),
-                'extensions' => $this->getLoadedExtensions(),
-                'directories' => $this->getFilePermissions(),
-                'log_delete' => $canDeleteLogfile,
-                'logs' => $this->getLog(),
-                'logLines' => $logLines,
-                'logSize' => $this->getLogSize(),
-                'composer' => $this->getComposerPackages(),
-            ]
-        ));
+        return $this->render('doctor/index.html.twig', [
+            'page_setup' => $page,
+            'modules' => get_loaded_extensions(),
+            'environment' => $this->kernelEnvironment,
+            'info' => $this->getPhpInfo(),
+            'settings' => $this->getIniSettings(),
+            'extensions' => $this->getLoadedExtensions(),
+            'directories' => $this->getFilePermissions(),
+            'log_delete' => $canDeleteLogfile,
+            'logs' => $this->getLog(),
+            'logLines' => $logLines,
+            'logSize' => $this->getLogSize(),
+            'composer' => $this->getComposerPackages(),
+            'release' => $this->getNextUpdateVersion()
+        ]);
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getComposerPackages(): array
     {
         $versions = [];
@@ -124,35 +116,30 @@ class DoctorController extends AbstractController
             foreach (InstalledVersions::getInstalledPackages() as $package) {
                 $versions[$package] = InstalledVersions::getPrettyVersion($package);
             }
-        } else {
-            @trigger_error('Please upgrade your Composer to 2.x', E_USER_DEPRECATED);
 
-            // @deprecated since 1.14, will be removed with 2.0
-            $rootPackage = Versions::rootPackageName();
-            foreach (Versions::VERSIONS as $name => $version) {
-                $versions[$name] = explode('@', $version)[0];
-            }
+            // remove kimai from the package list
+            $versions = array_filter($versions, function ($version, $name) use ($rootPackage): bool {
+                if ($name === $rootPackage) {
+                    return false;
+                }
+
+                if ($version === null || $version === '*') {
+                    return false;
+                }
+
+                return true;
+            }, ARRAY_FILTER_USE_BOTH);
+
+            ksort($versions);
         }
-
-        // remove kimai from the package list
-        $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
-            if ($name === $rootPackage) {
-                return false;
-            }
-
-            if ($version === null || $version === '*') {
-                return false;
-            }
-
-            return true;
-        }, ARRAY_FILTER_USE_BOTH);
-
-        ksort($versions);
 
         return $versions;
     }
 
-    private function getLoadedExtensions()
+    /**
+     * @return array<string, bool>
+     */
+    private function getLoadedExtensions(): array
     {
         $results = [];
 
@@ -175,7 +162,7 @@ class DoctorController extends AbstractController
 
     private function getLogFilename(): string
     {
-        $logfileName = 'var/log/' . $this->environment . '.log';
+        $logfileName = 'var/log/' . $this->kernelEnvironment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
     }
@@ -218,7 +205,7 @@ class DoctorController extends AbstractController
         return $result;
     }
 
-    private function getFilePermissions()
+    private function getFilePermissions(): array
     {
         $testPaths = [];
         $baseDir = $this->projectDirectory . DIRECTORY_SEPARATOR;
@@ -241,7 +228,7 @@ class DoctorController extends AbstractController
         foreach ($testPaths as $fullUri) {
             $fullUri = rtrim($fullUri, DIRECTORY_SEPARATOR);
             $tmp = str_replace($baseDir, '', $fullUri) . DIRECTORY_SEPARATOR;
-            if ($fullUri !== false && is_readable($fullUri) && is_writable($fullUri)) {
+            if (is_readable($fullUri) && is_writable($fullUri)) {
                 $results[$tmp] = true;
             } else {
                 $results[$tmp] = false;
@@ -251,9 +238,13 @@ class DoctorController extends AbstractController
         return $results;
     }
 
-    private function getIniSettings()
+    private function getIniSettings(): array
     {
         $ini = [
+            'memory_limit',
+            'session.gc_maxlifetime',
+            'max_execution_time',
+            'date.timezone',
             'allow_url_fopen',
             'allow_url_include',
             'default_charset',
@@ -262,8 +253,6 @@ class DoctorController extends AbstractController
             'error_log',
             'error_reporting',
             'log_errors',
-            'max_execution_time',
-            'memory_limit',
             'open_basedir',
             'post_max_size',
             'sys_temp_dir',
@@ -274,7 +263,7 @@ class DoctorController extends AbstractController
         $settings = [];
         foreach ($ini as $name) {
             try {
-                $settings[$name] = ini_get($name);
+                $settings[$name] = \ini_get($name);
             } catch (\Exception $ex) {
                 $settings[$name] = "Couldn't load ini setting: " . $ex->getMessage();
             }
@@ -287,9 +276,9 @@ class DoctorController extends AbstractController
      * @author https://php.net/manual/en/function.phpinfo.php#117961
      * @return array
      */
-    private function getPhpInfo()
+    private function getPhpInfo(): array
     {
-        $plainText = function ($input) {
+        $plainText = function ($input): string {
             return trim(html_entity_decode(strip_tags($input)));
         };
 
@@ -322,5 +311,25 @@ class DoctorController extends AbstractController
         unset($phpInfo[1]);
 
         return $phpInfo;
+    }
+
+    private function getNextUpdateVersion(): ?array
+    {
+        return $this->cache->get('kimai.update_release', function (ItemInterface $item) {
+            // we cache the result, no matter if the call failed: at the end, this is "just"
+            // an update note but an expensive call
+
+            $item->expiresAfter(86400); // one day
+
+            try {
+                $version = new ReleaseVersion();
+
+                return $version->getLatestReleaseFromGithub(true);
+            } catch (\Exception $ex) {
+                // something failed, retry tomorrow
+            }
+
+            return null;
+        });
     }
 }

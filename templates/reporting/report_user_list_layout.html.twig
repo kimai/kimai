@@ -1,0 +1,25 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_form_layout %}
+    {{ form_widget(form.date) }}
+    {% if form.team is defined %}
+        {{ form_widget(form.team, {'label': false, 'placeholder': 'please_choose'}) }}
+    {% endif %}
+    {{ form_widget(form.sumType) }}
+    {% from '@theme/components/buttons.html.twig' import submit_button %}
+    {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}, 'primary') }}
+{% endblock %}
+
+{% block report %}
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, hasData: hasData, fullsize: hasData} only %}
+        {% block box_body_class %}{{ box_id }} table-responsive m-0{% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {% from "macros/widgets.html.twig" import nothing_found %}
+                {{ nothing_found() }}
+            {% else %}
+                {{ report_content|raw }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

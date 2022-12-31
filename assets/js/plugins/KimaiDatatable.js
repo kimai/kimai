@@ -9,15 +9,15 @@
  * [KIMAI] KimaiDatatable: handles functionality for the datatable
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
+import KimaiContextMenu from "../widgets/KimaiContextMenu";
 
 export default class KimaiDatatable extends KimaiPlugin {
 
     constructor(contentAreaSelector, tableSelector) {
         super();
-        this.contentArea = contentAreaSelector;
-        this.selector = tableSelector;
+        this._contentArea = contentAreaSelector;
+        this._selector = tableSelector;
     }
 
     getId() {
@@ -25,24 +25,21 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     init() {
-        const dataTable = document.querySelector(this.selector);
+        const dataTable = document.querySelector(this._selector);
 
         // not every page contains a dataTable
         if (dataTable === null) {
             return;
         }
 
-        const attributes = dataTable.dataset;
-        const events = attributes['reloadEvent'];
+        this.registerContextMenu(this._selector);
 
-        this.fixDropdowns();
-
+        const events = dataTable.dataset['reloadEvent'];
         if (events === undefined) {
             return;
         }
 
-        const self = this;
-        const handle = function() { self.reloadDatatable(); };
+        const handle = () => { this.reloadDatatable(); };
 
         for (let eventName of events.split(' ')) {
             document.addEventListener(eventName, handle);
@@ -52,55 +49,49 @@ export default class KimaiDatatable extends KimaiPlugin {
         document.addEventListener('filter-change', handle);
     }
 
-    reloadDatatable() {
-        const self = this;
-        const contentArea = this.contentArea;
-        const durations = this.getContainer().getPlugin('timesheet-duration');
-        const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
-        
-        const form = jQuery(toolbarSelector);
-        let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-        jQuery(contentArea).append(loading);
-
-        // remove the empty fields to prevent errors
-        let formData = jQuery(toolbarSelector + ' :input')
-            .filter(function(index, element) {
-                return jQuery(element).val() !== '';
-            })
-            .serialize();
-
-        jQuery.ajax({
-            url: form.attr('action'),
-            type: form.attr('method'),
-            data: formData,
-            success: function(html) {
-                jQuery(contentArea).replaceWith(
-                    jQuery(html).find(contentArea)
-                );
-                durations.updateRecords();
-                self.fixDropdowns();
-            },
-            error: function(xhr, err) {
-                form.submit();
-            }
-        });
-
+    /**
+     * @param {string} selector
+     * @private
+     */
+    registerContextMenu(selector)
+    {
+        KimaiContextMenu.createForDataTable(selector);
     }
 
-    /**
-     * show dropdown menu upwards, if it is outside the visible viewport
-     */
-    fixDropdowns() {
-        const docHeight = jQuery(document).height();
-        jQuery(this.selector + ' [data-toggle=dropdown]').each(function() {
-            const parent = jQuery(this).parent();
-            const menu = parent.find('.dropdown-menu');
+    reloadDatatable()
+    {
+        const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
 
-            if (parent && menu) {
-                if ((parent.offset().top + parent.outerHeight() + menu.outerHeight()) > docHeight) {
-                    parent.addClass('dropup').removeClass('dropdown');
-                }
-            }
+        /** @type {HTMLFormElement} form */
+        const form = document.querySelector(toolbarSelector);
+        const callback = (text) => {
+            const temp = document.createElement('div');
+            temp.innerHTML = text;
+            const newContent = temp.querySelector(this._contentArea);
+            document.querySelector(this._contentArea).replaceWith(newContent);
+            this.registerContextMenu(this._selector);
+            document.dispatchEvent(new Event('kimai.reloadedContent'));
+        };
+
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this._contentArea}));
+
+        if (form === null) {
+            this.fetch(document.location)
+                .then(response => {
+                    response.text().then(callback);
+                })
+                .catch(() => {
+                    document.location.reload();
+                });
+            return;
+        }
+
+        this.fetchForm(form)
+        .then(response => {
+            response.text().then(callback);
+        })
+        .catch(() => {
+            form.submit();
         });
     }
 }

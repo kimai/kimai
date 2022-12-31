@@ -1,28 +1,50 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% set totalDuration = 0 %}
+{% set totalRates = {} %}
+
+{% if too_many is not same as (true) and preview_show and entries is not empty %}
+    {% for row in by_customer %}
+        {% set totalDuration = totalDuration + row.duration %}
+        {% set customerCurrency = row.customer.currency %}
+        {% if totalRates[customerCurrency] is not defined %}
+            {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
+        {% endif %}
+        {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + row.rate}) %}
+    {% endfor %}
+{% endif %}
+
 {% set columns = {
+    'avatar': {'class': 'text-nowrap w-avatar d-none d-md-table-cell', 'title': false, 'orderBy': false},
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
-    'user': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'activity': {'class': 'hidden-xs hidden-sm hidden-md', 'orderBy': false},
-    'description': {'class': 'hidden-xs hidden-sm hidden-md timesheet-description', 'orderBy': false},
-    'unit_price': {'class': 'text-right hidden hidden-xs text-nowrap', 'orderBy': false},
-    'duration': {'class': 'text-right text-nowrap', 'orderBy': false},
-    'rate_internal': {'class': 'text-right hidden text-nowrap', 'orderBy': false},
-    'total_rate': {'class': 'text-right text-nowrap', 'orderBy': false},
-    'exported': {'class': 'alwaysVisible', 'orderBy': false},
+    'user': {'class': 'd-none', 'orderBy': false},
+    'project': {'class': 'd-none d-sm-table-cell', 'orderBy': false},
+    'activity': {'class': 'd-none', 'orderBy': false},
+    'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
+    'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
+    'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
+    'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
+    'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 
 {% set tableName = 'export' %}
 {% set editExported = is_granted('edit_exported_timesheet') %}
+{% set showMarkAsExportedButton = false %}
+{% set showToggleButton = false %}
+{% if entries is not empty and form.markAsExported is defined %}
+    {% set showMarkAsExportedButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_EXPORTED') %}
+    {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
+{% endif %}
 
-{% block page_title %}{{ 'export.title'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'export', (preview_show ? 'preview' : 'index')) %}
-    {{ widgets.page_actions(event.actions) }}
+{% block status %}
+    {% from "macros/status.html.twig" import status_duration, status_money %}
+    {{ status_duration(totalDuration|duration) }}
+    {% for totalCurrency, totalRate in totalRates %}
+        {{ status_money(totalRate|money(totalCurrency)) }}
+    {% endfor %}
 {% endblock %}
 
 {% block main_before %}
@@ -31,9 +53,9 @@
 
 {% block main %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/search.html.twig" as search %}
-        {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+        {% form_theme form 'form/horizontal.html.twig' %}
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
         {% block box_body %}
@@ -69,28 +91,13 @@
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
-            {% set totalDuration = 0 %}
-            {% set totalRates = {} %}
-
-            {% for row in by_customer %}
-                {% set totalDuration = totalDuration + row.duration %}
-                {% set customerCurrency = row.customer.currency %}
-                {% if totalRates[customerCurrency] is not defined %}
-                    {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
-                {% endif %}
-                {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + row.rate}) %}
-            {% endfor %}
-
-            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% embed '@theme/embeds/card.html.twig' %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
-                    {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
-                    {{ widgets.label(totalDuration|duration, 'gray') }}
-                    {% for totalCurrency, totalRate in totalRates %}
-                        {{ widgets.label(totalRate|money(totalCurrency), 'gray') }}
-                    {% endfor %}
+                    {{ 'preview'|trans }}
                 {% endblock %}
-                {% block box_body_class %}no-padding{% endblock %}
+                {% block box_attributes %}id="preview_export"{% endblock %}
+                {% block box_body_class %}p-0{% endblock %}
                 {% block box_footer %}
                     {% set buttons = {} %}
                     {% for button in renderer %}
@@ -102,44 +109,64 @@
                         {% set group = group|merge([button]) %}
                         {% set buttons = buttons|merge({(title): group}) %}
                     {% endfor %}
-                    <div class="btn-group" id="export-buttons" role="group">
-                        {% for group in buttons %}
-                            {% set button = group.0 %}
-                            {% set btnTitle = ('button.' ~ button.title)|trans %}
-                            {% if btnTitle == ('button.' ~ button.title) %}
-                                {% set btnTitle = button.title  %}
-                            {% endif %}
-                            {% if group|length == 1 %}
-                                <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                    {% if showMarkAsExportedButton %}
+                    <div class="d-flex">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
+                            <label class="form-check-label" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex">
+                        <div class="btn-group me-auto" id="export-buttons" role="group">
+                            {% for group in buttons %}
+                                {% set button = group.0 %}
+                                {% set btnTitle = ('button.' ~ button.title)|trans %}
+                                {% if btnTitle == ('button.' ~ button.title) %}
+                                    {% set btnTitle = button.title  %}
+                                {% endif %}
+                                {% if group|length == 1 %}
+                                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
                                     {{ btnTitle }}
-                                </button>
-                            {% elseif group|length > 1 %}
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{ btnTitle }} <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        {% for button in group %}
+                                {% elseif group|length > 1 %}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ btnTitle }}
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {% for button in group %}
                                             {% set btnTitle = (button.id)|trans({}, 'export') %}
                                             {% if btnTitle == button.id %}
                                                 {% set btnTitle = button.id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
                                             {% endif %}
-                                            <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ btnTitle }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                            <a href="#" class="dropdown-item startExportBtn" data-type="{{ button.id }}">{{ btnTitle }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if showToggleButton %}
+                            <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
+                                {% if form.exported.vars.value == '5' %}
+                                    {{ icon('off', true) }}
+                                    {{ 'mark_as_exported'|trans }}
+                                {% elseif form.exported.vars.value == '4' %}
+                                    {{ icon('on', true) }}
+                                    {{ 'mark_as_open'|trans }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
                     </div>
                 {% endblock %}
                 {% block box_body %}
                     <table class="table table-hover dataTable">
                         <thead>
                         <tr>
-                            <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-right hidden-xs">{{ 'label.duration'|trans }}</th>
-                            {# <th class="w-min text-right hidden-xs">{{ 'label.internalRate'|trans }}</th> #}
-                            <th class="w-min text-right">{{ 'label.total_rate'|trans }}</th>
+                            <th>{{ 'customer'|trans }}</th>
+                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
+                            <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -149,15 +176,10 @@
                                 <td>
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
-                                <td class="w-min text-right hidden-xs">
+                                <td class="w-min text-end d-none d-sm-table-cell">
                                     {{ row.duration|duration(decimal) }}
                                 </td>
-                                {#
-                                <td class="w-min text-right hidden-xs">
-                                    {{ row.internalRate|money(currency) }}
-                                </td>
-                                #}
-                                <td class="w-min text-right">
+                                <td class="w-min text-end">
                                     {{ row.rate|money(currency) }}
                                 </td>
                             </tr>
@@ -172,7 +194,7 @@
                 {% set entries = entries|slice(0, preview_limit) %}
             {% endif %}
 
-            {{ tables.datatable_header(tableName, columns, query, {}) }}
+            {{ tables.datatable_header(tableName, columns, query) }}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% if entry.fixedRate is not null %}
@@ -181,6 +203,9 @@
                     {% set rate = entry.hourlyRate %}
                 {% endif %}
                 <tr>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">
+                        {{ widgets.user_avatar(entry.user) }}
+                    </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">
                         {{ entry.begin|date_short }}
                     </td>
@@ -206,27 +231,27 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
                         {{ entry.duration|duration(decimal) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'internalRate') }}">
                         {{ entry.internalRate|money(currency) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
                         {{ entry.rate|money(currency) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
                             {% if editExported %}
-                            <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
-                                    data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                            {{ 'entryState.exported'|trans }}
-                            </button>
+                                <button type="button" class="btn btn-outline-secondary exportBtn active" data-toggle="button" aria-pressed="true"
+                                        data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                                    {{ 'entryState.exported'|trans }}
+                                </button>
                             {% else %}
-                            {{ 'entryState.exported'|trans }}
+                                {{ 'entryState.exported'|trans }}
                             {% endif %}
                         {% else %}
-                            <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
+                            <button type="button" class="btn btn-light exportBtn" data-toggle="button" aria-pressed="false"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                            {{ 'entryState.not_exported'|trans }}
+                                {{ 'entryState.not_exported'|trans }}
                             </button>
                         {% endif %}
                     {% else %}
@@ -253,125 +278,92 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-
-        function confirmToggleState(button)
+        function updateTimesheetExportState(node, id)
         {
-            var ALERT = kimai.getPlugin('alert');
-            var message = '{{ 'export.clear_all'|trans }}';
-            var hasActive = true;
+            /** @type {KimaiAlert} */
+            const ALERT = kimai.getPlugin('alert');
+            /** @type {KimaiAPI} */
+            const API = kimai.getPlugin('api');
 
-            if (!jQuery('#export-toggle-button').hasClass('export-off')) {
-                message = '{{ 'export.mark_all'|trans }}';
-                hasActive = false;
-            }
-
-            ALERT.question(message, function(value) {
-                if (!value) {
-                    return;
-                }
-                var btn = jQuery(button);
-                var exportButtons = jQuery('.exportBtn');
-                // disabling does not yet work...
-                if (exportButtons.length > 0) {
-                    btn.addClass('disabled');
-                }
-
-                // ... as the clicks are asynchronous and the each comes back too early ...
-                exportButtons.each(function () {
-                    if (hasActive === jQuery(this).hasClass('active')) {
-                        jQuery(this).click();
-                    }
-                });
-
-                // ... so the button is re-enabled immediately - that should be fixed in a future update
-                btn.removeClass('disabled');
-                if (btn.hasClass('export-off')) {
-                    btn.removeClass('export-off');
-                    btn.html('<i class="fas fa-toggle-off"></i>');
-                } else {
-                    btn.addClass('export-off');
-                    btn.html('<i class="fas fa-toggle-on"></i>');
-                }
-            });
-        }
-
-        function updateTimesheetExportState(button, id, exported)
-        {
-            var ALERT = kimai.getPlugin('alert');
-
-            // FIXME use Kimai API plugin
-            $.ajax({
-                url: '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
-                headers: {
-                    'X-AUTH-SESSION': true,
-                    'Content-Type':'application/json'
-                },
-                method: 'PATCH',
-                success: function(data) {
-                    let isShowAll = jQuery('select#exported').val() === '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}';
-                    if (exported) {
-                        {% if editExported %}
-                        button.button('exported');
-                        {% else %}
-                        if (isShowAll) {
-                            button.replaceWith('{{ 'entryState.exported'|trans }}');
-                        }
-                        {% endif %}
-                    } else {
-                        button.button('clean');
-                    }
-                    if (!isShowAll) {
-                        button.closest('tr').hide('ease', function() {
-                            jQuery(this).remove();
-                            if(jQuery(this).closest('table').find('tbody tr:visible').length === 0) {
-                                jQuery('#export-buttons button').prop('disabled', true);
-                            }
-                        });
-                    }
-                }, error: function(jqXHR, textStatus, errorThrown) {
-                    var message = 'An error occured';
-                    if (jqXHR.responseJSON !== undefined) {
-                        message = jqXHR.responseJSON.message;
-                        if (jqXHR.responseJSON.errors !== undefined)
-                        {
-                            var errors = jqXHR.responseJSON.errors.errors;
-                            for (var i = 0; i < errors.length; i++) {
-                                message += ' / ' + errors[i];
-                            }
-                        }
-                    }
-                    ALERT.error('{{ 'action.update.error'|trans({}, 'flashmessages') }}', message);
-                    button.button('reset');
-                    if (exported) {
-                        button.removeClass('active');
-                    } else {
-                        button.addClass('active');
+            API.patch(
+                '{{ path('export_timesheet', {id: 1}) }}'.replace('1', id),
+                {},
+                function(data) {
+                    const table = node.closest('table')
+                    const row = node.closest('tr');
+                    row.remove();
+                    const list = table.querySelectorAll('tbody tr');
+                    if (list.length === 0) {
+                        document.querySelector('form#export-form button.performSearch').click();
                     }
                 }
-            });
+            );
         }
 
         document.addEventListener('kimai.initialized', function() {
-            jQuery('body').on('click', '.exportBtn', function() {
-                var button = jQuery(this);
-                var id = button.attr('data-timesheet');
-                updateTimesheetExportState(button, id, !button.hasClass('active'));
-            });
+            document.addEventListener('click', function (event) {
+                const node = event.target;
+                if (node.matches('.exportBtn')) {
+                    if (node.dataset['timesheet'] !== undefined) {
+                        const id = node.dataset['timesheet'];
+                        updateTimesheetExportState(node, id);
+                    }
+                }
 
-            jQuery('#export-toggle-button').on('click', function () {
-                confirmToggleState(this);
-            });
+                {#
+                    THE GROUP OF EXPORT BUTTONS FOR ALL FORMATS
+                    Toggle the form, because by default it triggers the search
+                #}
+                if (node.matches('#export-buttons .startExportBtn')) {
+                    document.getElementById('renderer').value = node.dataset['type'];
+                    const form = document.getElementById("export-form");
+                    const previousAction = form.action;
+                    const previousMethod = form.method;
+                    const previousTarget = form.target;
+                    form.target = '_blank';
+                    form.method = 'POST';
+                    form.action = '{{ path('export_data') }}';
+                    form.submit();
+                    document.getElementById('renderer').value = '';
+                    form.target = previousTarget;
+                    form.method = previousMethod;
+                    form.action = previousAction;
+                }
+            }, false);
 
-            jQuery('body').on('click', '#export-buttons .startExportBtn', function() {
-                jQuery('#renderer').val(jQuery(this).attr('data-type'));
-                var $form = jQuery("#export-form");
-                var prevAction = $form.attr('action');
-                var prevMethod = $form.attr('method');
-                $form.attr('target', '_blank').attr('method', 'POST').attr('action', '{{ path('export_data') }}');
-                $form.submit();
-                jQuery('#renderer').val('');
-                $form.removeAttr('target').attr('action', prevAction).attr('method', prevMethod);
-            });
+            {% if showMarkAsExportedButton %}
+                document.getElementById('markAsExportedCheck').addEventListener('change', function(event) {
+                    document.getElementById('markAsExported').value = event.target.checked ? 1 : 0;
+                });
+            {% endif %}
         });
+
+        {% if showToggleButton %}
+            function confirmToggleState(doExport)
+            {
+                let ALERT = kimai.getPlugin('alert');
+                let message = '{{ 'export.clear_all'|trans }}';
+
+                if (doExport) {
+                    message = '{{ 'export.mark_all'|trans }}';
+                }
+
+                ALERT.question(message, function(value) {
+                    if (!value) {
+                        return;
+                    }
+
+                    [].slice.call(document.querySelectorAll('.exportBtn')).map(function (element) {
+                        element.click();
+                    });
+
+                    document.getElementById('toggle-button').classList.add('d-none');
+                });
+            }
+
+            document.getElementById('toggle-button').addEventListener('click', function (event) {
+                confirmToggleState({% if form.exported.vars.value == '5' %}true{% else %}false{% endif %});
+            }, false);
+        {% endif %}
     </script>
 {% endblock %}

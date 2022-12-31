@@ -11,11 +11,7 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\Regex;
 
-/**
- * @Annotation
- * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
- */
-class Duration extends Regex
+final class Duration extends Regex
 {
     public function __construct($options = null)
     {
@@ -24,7 +20,7 @@ class Duration extends Regex
             // negative times -? are allowed, because plugins could allow negative times
             '-?[0-9]{1,}',
             '-?[0-9]{1,}[,.]{1}[0-9]{1,}',
-            // ASP.NET style time spans - https://momentjs.com/docs/#/durations/
+            // ISO style time spans like 01:37
             '-?[0-9]{1,}:[0-9]{1,}:[0-9]{1,}',
             '-?[0-9]{1,}:[0-9]{1,}',
             // https://en.wikipedia.org/wiki/ISO_8601#Time_intervals

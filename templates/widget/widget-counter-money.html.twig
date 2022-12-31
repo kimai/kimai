@@ -1,0 +1,16 @@
+{% extends 'widget/widget-counter.html.twig' %}
+{% from 'macros/widgets.html.twig' import label %}
+{% block widget_data %}
+    {% if data is empty %}
+        {% set data = {(null): 0.00} %}
+    {% endif %}
+    {% if data|length > 1 %}
+        {% for currency, revenue in data %}
+            {{ label(revenue|money(currency|default(options.currency|default(null))), options.color) }}
+        {% endfor %}
+    {% else %}
+        {% for currency, revenue in data %}
+            {{ revenue|money(currency|default(options.currency|default(null))) }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

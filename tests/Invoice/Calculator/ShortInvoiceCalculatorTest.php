@@ -36,7 +36,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -89,7 +89,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
@@ -121,7 +121,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntriesDifferentRates()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -171,7 +171,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
@@ -202,7 +202,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMixedRateTypes()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -250,7 +250,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);

@@ -31,11 +31,10 @@ class TimesheetExportRepositoryTest extends TestCase
 
         $sut = new TimesheetExportRepository($repository);
 
-        /* @phpstan-ignore-next-line */
         $sut->setExported([new Timesheet(), null, new \stdClass(), new Timesheet(), new Activity()]);
         // test else for empty array
         /* @phpstan-ignore-next-line */
-        $sut->setExported([new Customer(), new Project()]);
+        $sut->setExported([new Customer('foo'), new Project()]);
     }
 
     public function testSetType()

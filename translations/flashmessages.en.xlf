@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Time recording could not be started</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
-        <target>The limit of active time records has been reached. Please stop at least one running time measurement first.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>You are editing an exported record</target>

@@ -18,7 +18,6 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\ProjectQuery;
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -35,15 +34,17 @@ class EntityWithMetaFieldsExporterTest extends TestCase
             $event->addField((new ProjectMeta())->setName('foo meta')->setIsVisible(true));
             $event->addField((new ProjectMeta())->setName('hidden meta')->setIsVisible(false));
             $event->addField((new ProjectMeta())->setName('bar meta')->setIsVisible(true));
+
+            return $event;
         });
 
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
-        $annotationExtractor = new AnnotationExtractor(new AnnotationReader());
+        $annotationExtractor = new AnnotationExtractor();
         $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 
         $project = new Project();
         $project->setName('test project');
-        $project->setCustomer((new Customer())->setName('A customer'));
+        $project->setCustomer(new Customer('A customer'));
         $project->setComment('Lorem Ipsum');
         $project->setOrderNumber('1234567890');
         $project->setBudget(123456.7890);

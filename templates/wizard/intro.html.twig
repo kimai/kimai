@@ -1,0 +1,9 @@
+{% extends 'wizard/layout.html.twig' %}
+
+{% block wizard_content %}
+    <div class="card-body text-center py-4 p-sm-5">
+        <img src="{{ asset('wizard/time-management.png') }}" height="120" class="mb-n2" alt="Illustration by Katerina Limpitsouni from https://undraw.co/">
+        <h1 class="mt-5">{{ 'wizard.intro.title'|trans({}, 'wizard') }}</h1>
+        <p class="text-muted">{{ 'wizard.intro.description'|trans({}, 'wizard') }}</p>
+    </div>
+{% endblock %}

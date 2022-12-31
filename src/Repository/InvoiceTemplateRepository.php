@@ -13,9 +13,9 @@ use App\Entity\InvoiceTemplate;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\BaseQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<InvoiceTemplate>
@@ -57,9 +57,9 @@ class InvoiceTemplateRepository extends EntityRepository
         return new QueryBuilderPaginator($qb, $counter);
     }
 
-    public function getPagerfantaForQuery(BaseQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(BaseQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
@@ -78,34 +78,15 @@ class InvoiceTemplateRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @return InvoiceTemplate
-     * @throws RepositoryException
-     */
-    public function saveTemplate(InvoiceTemplate $template)
+    public function saveTemplate(InvoiceTemplate $template): void
     {
-        try {
-            $this->getEntityManager()->persist($template);
-            $this->getEntityManager()->flush();
-        } catch (\Exception $ex) {
-            throw new RepositoryException('Could not save InvoiceTemplate');
-        }
-
-        return $template;
+        $this->getEntityManager()->persist($template);
+        $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @throws RepositoryException
-     */
-    public function removeTemplate(InvoiceTemplate $template)
+    public function removeTemplate(InvoiceTemplate $template): void
     {
-        try {
-            $this->getEntityManager()->remove($template);
-            $this->getEntityManager()->flush();
-        } catch (\Exception $ex) {
-            throw new RepositoryException('Could not remove InvoiceTemplate');
-        }
+        $this->getEntityManager()->remove($template);
+        $this->getEntityManager()->flush();
     }
 }

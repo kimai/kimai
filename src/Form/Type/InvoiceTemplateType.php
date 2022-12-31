@@ -18,15 +18,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice template.
  */
-class InvoiceTemplateType extends AbstractType
+final class InvoiceTemplateType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.template',
+            'label' => 'template',
+            'help' => 'help.invoiceTemplate',
             'class' => InvoiceTemplate::class,
             'choice_label' => 'name',
             'query_builder' => function (InvoiceTemplateRepository $repository) {
@@ -35,10 +33,7 @@ class InvoiceTemplateType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

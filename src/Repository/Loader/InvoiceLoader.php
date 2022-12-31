@@ -14,23 +14,49 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class InvoiceLoader implements LoaderInterface
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param Invoice[] $invoices
+     * @param array<int|Invoice> $results
      */
-    public function loadResults(array $invoices): void
+    public function loadResults(array $results): void
     {
-        $ids = array_map(function (Invoice $invoice) {
-            return $invoice->getId();
-        }, $invoices);
+        if (empty($results)) {
+            return;
+        }
 
-        $loader = new InvoiceIdLoader($this->entityManager);
-        $loader->loadResults($ids);
+        $ids = array_map(function ($invoice) {
+            if ($invoice instanceof Invoice) {
+                return $invoice->getId();
+            }
+
+            return $invoice;
+        }, $results);
+
+        $em = $this->entityManager;
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'customer')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.customer', 'customer')
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'user')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.user', 'user')
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'meta')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.meta', 'meta')
+            ->andWhere($qb->expr()->in('i.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }

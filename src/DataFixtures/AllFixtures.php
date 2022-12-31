@@ -11,6 +11,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -18,25 +19,24 @@ use Doctrine\Persistence\ObjectManager;
  *
  * @codeCoverageIgnore
  */
-class AllFixtures extends Fixture implements DependentFixtureInterface
+final class AllFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @return class-string[]
+     * @return array<class-string<FixtureInterface>>
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,
             CustomerFixtures::class,
+            TeamFixtures::class,
             TagFixtures::class,
             TimesheetFixtures::class,
+            InvoiceFixtures::class,
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // this is a fake fixture class, it only exists to make developers life easier
         // if we use the DependentFixtureInterface on the TimesheetFixture directly,

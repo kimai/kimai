@@ -1,8 +1,6 @@
 {% extends 'reporting/layout.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block report_title %}{{ 'report_project_daterange'|trans({}, 'reporting') }}{% endblock %}
-
 {% set showMoneyBudget = is_granted('budget_money', 'project') %}
 {% set showTimeBudget = is_granted('budget_time', 'project') %}
 {% set viewRevenue = is_granted('view_rate_other_timesheet') %}
@@ -12,12 +10,20 @@
 } %}
 {% if showTimeBudget %}
     {% set columns = columns|merge({
-        'timeBudget':    {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
+        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
     }) %}
 {% endif %}
 {% if showMoneyBudget %}
     {% set columns = columns|merge({
-        'budget':        {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
+    'duration':      {'class': 'text-end hw-min w-min', 'title': 'stats.durationMonth'|trans, 'columnClass': 'w-min'},
+}) %}
+{% if showMoneyBudget %}
+    {% set columns = columns|merge({
+        'rate':          {'class': 'text-end hw-min w-min', 'title': 'stats.amountMonth'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% set columns = columns|merge({
@@ -29,7 +35,7 @@
     }) %}
 {% endif %}
 {% set columns = columns|merge({
-    'billable':      {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+    'billable':      {'class': 'd-none d-sm-table-cell text-center hw-min w-min', 'columnClass': 'w-min'},
     'actions':       {'class': 'actions alwaysVisible'},
 }) %}
 {% set tableName = 'project_daterange_reporting' %}
@@ -38,52 +44,46 @@
     {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
+{% block report_form_layout %}
+    {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
+    <div class="btn-list w-100">
+        {{ form_widget(form.month, {'label': false}) }}
+        {{ form_widget(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
+        <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ icon('filter', true) }}
+            </button>
+            <ul class="dropdown-menu checkbox-menu">
+                {% for option in form.budgetType.children %}
+                    <li class="dropdown-item">
+                        {{ form_widget(option) }}
+                    </li>
+                {% endfor %}
+                <li class="dropdown-divider"></li>
+                <li class="dropdown-item">
+                    {{ form_widget(form.includeNoWork) }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
 
     {% set hasData = entries|length > 0 %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "macros/datatables.html.twig" as tables %}
         {% import "project/actions.html.twig" as projectActions %}
-        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-daterange-form'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_tools %}
-            {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
-        {% endblock %}
-        {% block box_title %}
-            {% if form.customer is defined %}
-                {{ form_widget(form.customer) }}
-            {% endif %}
-            {% if form.month is defined %}
-                {{ form_widget(form.month) }}
-            {% endif %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu checkbox-menu">
-                    <li>
-                        {{ form_widget(form.includeNoWork) }}
-                    </li>
-                    <li>
-                        {{ form_widget(form.budgetType) }}
-                    </li>
-                </ul>
-            </div>
-            {{ form_rest(form) }}
-        {% endblock %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}p-0{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'boxClass': ''}) }}
+                {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
 
                 {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr class="summary">
@@ -124,15 +124,4 @@
         {% endblock %}
     {% endembed %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#project-daterange-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
-        });
-    </script>
 {% endblock %}

@@ -1,5 +1,0 @@
-{% macro user_permissions(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'user_permissions', view) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}

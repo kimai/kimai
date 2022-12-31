@@ -37,9 +37,7 @@ class HomepageControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $pref = (new UserPreference())
-            ->setName('login.initial_view')
-            ->setValue('my_profile')
+        $pref = (new UserPreference('login_initial_view', 'my_profile'))
             ->setType(InitialViewType::class);
 
         $em->persist($pref);

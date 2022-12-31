@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>您尚未安装插件。</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Kimai市场</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

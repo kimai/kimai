@@ -17,14 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractProjectEvent extends Event
 {
-    /**
-     * @var Project
-     */
-    private $project;
-
-    public function __construct(Project $project)
+    public function __construct(private Project $project)
     {
-        $this->project = $project;
     }
 
     public function getProject(): Project

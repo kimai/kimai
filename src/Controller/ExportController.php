@@ -9,12 +9,13 @@
 
 namespace App\Controller;
 
+use App\Entity\ExportableItem;
 use App\Export\Base\DispositionInlineInterface;
-use App\Export\ExportItemInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,25 +24,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to export timesheet data.
- *
- * @Route(path="/export")
- * @Security("is_granted('create_export')")
  */
-class ExportController extends AbstractController
+#[Route(path: '/export')]
+#[Security("is_granted('create_export')")]
+final class ExportController extends AbstractController
 {
-    /**
-     * @var ServiceExport
-     */
-    private $export;
-
-    public function __construct(ServiceExport $export)
+    public function __construct(private ServiceExport $export)
     {
-        $this->export = $export;
     }
 
-    /**
-     * @Route(path="/", name="export", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'export', methods: ['GET'])]
     public function indexAction(Request $request): Response
     {
         $query = $this->getDefaultQuery();
@@ -84,7 +76,11 @@ class ExportController extends AbstractController
             }
         }
 
+        $page = new PageSetup('export');
+        $page->setHelp('export.html');
+
         return $this->render('export/index.html.twig', [
+            'page_setup' => $page,
             'too_many' => $tooManyResults,
             'by_customer' => $byCustomer,
             'query' => $query,
@@ -97,9 +93,7 @@ class ExportController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/data", name="export_data", methods={"POST"})
-     */
+    #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
     public function export(Request $request): Response
     {
         $query = $this->getDefaultQuery();
@@ -133,7 +127,7 @@ class ExportController extends AbstractController
         return $response;
     }
 
-    protected function getDefaultQuery(): ExportQuery
+    private function getDefaultQuery(): ExportQuery
     {
         $begin = $this->getDateTimeFactory()->getStartOfMonth();
         $end = $this->getDateTimeFactory()->getEndOfMonth();
@@ -148,10 +142,10 @@ class ExportController extends AbstractController
 
     /**
      * @param ExportQuery $query
-     * @return ExportItemInterface[]
+     * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
-    protected function getEntries(ExportQuery $query): array
+    private function getEntries(ExportQuery $query): array
     {
         if (null !== $query->getBegin()) {
             $query->getBegin()->setTime(0, 0, 0);
@@ -163,9 +157,9 @@ class ExportController extends AbstractController
         return $this->export->getExportItems($query);
     }
 
-    protected function getToolbarForm(ExportQuery $query, string $method): FormInterface
+    private function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
-        return $this->createForm(ExportToolbarForm::class, $query, [
+        return $this->createSearchForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),
             'include_user' => $this->isGranted('view_other_timesheet'),
             'include_export' => $this->isGranted('edit_export_other_timesheet'),

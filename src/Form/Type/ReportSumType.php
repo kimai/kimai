@@ -15,19 +15,13 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class ReportSumType extends AbstractType
+final class ReportSumType extends AbstractType
 {
-    private $authorizationChecker;
-
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'required' => true,
@@ -40,17 +34,14 @@ class ReportSumType extends AbstractType
 
             if ($this->authorizationChecker->isGranted('view_rate_other_timesheet')) {
                 $choices['stats.amountTotal'] = 'rate';
-                $choices['label.rate_internal'] = 'internalRate';
+                $choices['internalRate'] = 'internalRate';
             }
 
             return $choices;
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

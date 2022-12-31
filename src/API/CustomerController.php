@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -11,6 +9,7 @@ declare(strict_types=1);
 
 namespace App\API;
 
+use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
@@ -25,72 +24,44 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Attributes as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @RouteResource("Customer")
- * @SWG\Tag(name="Customer")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
- */
-class CustomerController extends BaseApiController
+#[Route(path: '/customers')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Customer')]
+final class CustomerController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Customer'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
-    /**
-     * @var CustomerRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var CustomerRateRepository
-     */
-    private $customerRateRepository;
-
-    public function __construct(ViewHandlerInterface $viewHandler, CustomerRepository $repository, EventDispatcherInterface $dispatcher, CustomerRateRepository $customerRateRepository)
-    {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->customerRateRepository = $customerRateRepository;
+    public function __construct(
+        private ViewHandlerInterface $viewHandler,
+        private CustomerRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private CustomerRateRepository $customerRateRepository
+    ) {
     }
 
     /**
-     * Returns a collection of customers
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns a collection of customer entities",
-     *      @SWG\Schema(
-     *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerCollection")
-     *      )
-     * )
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name (default: name)")
-     * @Rest\QueryParam(name="term", description="Free search term")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
+     * Returns a collection of customers (which are visible to the user)
      */
+    #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
+    #[Rest\Get(path: '', name: 'get_customers')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter customers: 1=visible, 2=hidden, 3=both')]
+    #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
+    #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -99,19 +70,23 @@ class CustomerController extends BaseApiController
         $query = new CustomerQuery();
         $query->setCurrentUser($user);
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -124,25 +99,14 @@ class CustomerController extends BaseApiController
 
     /**
      * Returns one customer
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns one customer entity",
-     *      @SWG\Schema(ref="#/definitions/CustomerEntity"),
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    #[OA\Response(response: 200, description: 'Returns one customer entity', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
+    #[Rest\Get(path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function getAction(Customer $customer): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($customer, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -150,32 +114,19 @@ class CustomerController extends BaseApiController
 
     /**
      * Creates a new customer
-     *
-     * @SWG\Post(
-     *      description="Creates a new customer and returns it afterwards",
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Returns the new created customer",
-     *          @SWG\Schema(ref="#/definitions/CustomerEntity"),
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerEditForm")
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request): Response
+    #[OA\Post(description: 'Creates a new customer and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
+    #[Rest\Post(path: '', name: 'post_customer')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function postAction(Request $request, CustomerService $customerService): Response
     {
         if (!$this->isGranted('create_customer')) {
-            throw new AccessDeniedHttpException('User cannot create customers');
+            throw $this->createAccessDeniedException('User cannot create customers');
         }
 
-        $customer = new Customer();
+        $customer = $customerService->createNewCustomer('');
 
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -204,44 +155,16 @@ class CustomerController extends BaseApiController
 
     /**
      * Update an existing customer
-     *
-     * @SWG\Patch(
-     *      description="Update an existing customer, you can pass all or just a subset of all attributes",
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Returns the updated customer",
-     *          @SWG\Schema(ref="#/definitions/CustomerEntity")
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerEditForm")
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="Customer ID to update",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function patchAction(Request $request, int $id): Response
+    #[Security("is_granted('edit', customer)")]
+    #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function patchAction(Request $request, Customer $customer): Response
     {
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('User cannot update customer');
-        }
-
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
@@ -270,37 +193,17 @@ class CustomerController extends BaseApiController
 
     /**
      * Sets the value of a meta-field for an existing customer
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/CustomerEntity")
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="Customer record ID to set the meta-field value for",
-     *      required=true,
-     * )
-     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
-     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    #[Security("is_granted('edit', customer)")]
+    #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
+    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
+    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
     {
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this customer');
-        }
-
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
@@ -308,7 +211,7 @@ class CustomerController extends BaseApiController
         $value = $paramFetcher->get('value');
 
         if (null === ($meta = $customer->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
         $meta->setValue($value);
@@ -323,39 +226,15 @@ class CustomerController extends BaseApiController
 
     /**
      * Returns a collection of all rates for one customer
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns a collection of customer rate entities",
-     *      @SWG\Schema(
-     *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerRate")
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The customer whose rates will be returned",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function getRatesAction(int $id): Response
+    #[Security("is_granted('edit', customer)")]
+    #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rates will be returned', required: true)]
+    #[Rest\Get(path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function getRatesAction(Customer $customer): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rates = $this->customerRateRepository->getRatesForCustomer($customer);
 
         $view = new View($rates, 200);
@@ -365,50 +244,20 @@ class CustomerController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an customer
-     *
-     * @SWG\Delete(
-     *      @SWG\Response(
-     *          response=204,
-     *          description="Returns no content: 204 on successful delete"
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The customer whose rate will be removed",
-     *      required=true,
-     * )
-     * @SWG\Parameter(
-     *      name="rateId",
-     *      in="path",
-     *      type="integer",
-     *      description="The rate to remove",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
+     * Deletes one rate for a customer
      */
-    public function deleteRateAction(string $id, string $rateId): Response
+    #[Security("is_granted('edit', customer)")]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rate will be removed', required: true)]
+    #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
+    #[Entity('rate', expr: 'repository.find(rateId)')]
+    public function deleteRateAction(Customer $customer, CustomerRate $rate): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
-        /** @var CustomerRate|null $rate */
-        $rate = $this->customerRateRepository->find($rateId);
-
-        if (null === $rate || $rate->getCustomer() !== $customer) {
-            throw new NotFoundException();
+        if ($rate->getCustomer() !== $customer) {
+            throw $this->createNotFoundException();
         }
 
         $this->customerRateRepository->deleteRate($rate);
@@ -420,44 +269,16 @@ class CustomerController extends BaseApiController
 
     /**
      * Adds a new rate to a customer
-     *
-     * @SWG\Post(
-     *  @SWG\Response(
-     *      response=200,
-     *      description="Returns the new created rate",
-     *      @SWG\Schema(ref="#/definitions/CustomerRate")
-     *  )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The customer to add the rate for",
-     *      required=true,
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerRateForm")
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function postRateAction(int $id, Request $request): Response
+    #[Security("is_granted('edit', customer)")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]
+    #[Rest\Post(path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function postRateAction(Customer $customer, Request $request): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rate = new CustomerRate();
         $rate->setCustomer($customer);
 

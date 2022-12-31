@@ -13,20 +13,18 @@ use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\Counter;
-use App\Widget\Type\SimpleWidget;
 use DateTime;
 
 /**
  * @covers \App\Widget\Type\Counter
- * @covers \App\Widget\Type\SimpleStatisticChart
- * @covers \App\Widget\Type\SimpleWidget
+ * @covers \App\Widget\Type\AbstractSimpleStatisticChart
  */
 class CounterTest extends AbstractSimpleStatisticsWidgetTypeTest
 {
     public function createSut(): AbstractWidgetType
     {
         $sut = new Counter($this->createMock(TimesheetRepository::class));
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
 
         return $sut;
     }
@@ -38,13 +36,12 @@ class CounterTest extends AbstractSimpleStatisticsWidgetTypeTest
 
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->expects($this->once())->method('getStatistic')->willReturnCallback(function (string $type, ?DateTime $begin, ?DateTime $end, ?User $user) {
-            self::assertEquals($type, 'active');
             self::assertNull($begin);
             self::assertNull($end);
             self::assertNull($user);
         });
         $sut = new Counter($repository);
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
         $sut->setUser($user);
         $sut->getData([]);
 
@@ -53,14 +50,13 @@ class CounterTest extends AbstractSimpleStatisticsWidgetTypeTest
 
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->expects($this->once())->method('getStatistic')->willReturnCallback(function (string $type, ?DateTime $begin, ?DateTime $end, ?User $user) {
-            self::assertEquals($type, 'active');
             self::assertNull($begin);
             self::assertNull($end);
             self::assertNotNull($user);
             self::assertEquals('bar', $user->getAlias());
         });
         $sut = new Counter($repository);
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
         $sut->setUser($user);
         $sut->setQueryWithUser(true);
         $sut->getData([]);
@@ -68,13 +64,7 @@ class CounterTest extends AbstractSimpleStatisticsWidgetTypeTest
 
     public function getDefaultOptions(): array
     {
-        return ['dataType' => 'int'];
-    }
-
-    public function testExtendsSimpleWidget()
-    {
-        $sut = $this->createSut();
-        self::assertInstanceOf(SimpleWidget::class, $sut);
+        return [];
     }
 
     public function testTemplateName()

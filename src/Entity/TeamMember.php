@@ -11,63 +11,39 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_users_teams",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "team_id"})
- *      }
- * )
- * @ORM\Entity
- *
- * @Serializer\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'kimai2_users_teams')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'team_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class TeamMember
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var User
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="memberships")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $user;
-    /**
-     * @var Team
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "User_Entity"})
-     * @SWG\Property(ref="#/definitions/Team")
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="members")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $team;
-    /**
-     * @var bool
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "Team_Entity", "User_Entity"})
-     *
-     * @ORM\Column(name="teamlead", type="boolean", nullable=false, options={"default": false})
-     * @Assert\NotNull()
-     */
-    private $teamlead = false;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'memberships')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'Team_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
+    private ?User $user = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Team', inversedBy: 'members')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'User_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/Team')]
+    private ?Team $team = null;
+    #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'Team_Entity', 'User_Entity'])]
+    private bool $teamlead = false;
 
     public function getId(): ?int
     {

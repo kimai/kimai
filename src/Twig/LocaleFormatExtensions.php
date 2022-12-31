@@ -9,81 +9,61 @@
 
 namespace App\Twig;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Constants;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Utils\LocaleFormats;
+use App\Utils\FormFormatConverter;
+use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
-use App\Utils\MomentFormatConverter;
 use DateTime;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-final class LocaleFormatExtensions extends AbstractExtension
+final class LocaleFormatExtensions extends AbstractExtension implements LocaleAwareInterface
 {
-    private $formats;
-    private $security;
+    private ?bool $fdowSunday = null;
+    private ?LocaleFormatter $formatter = null;
+    private ?string $locale = null;
 
-    /**
-     * @var bool|null
-     */
-    private $fdowSunday = null;
-    /**
-     * @var LocaleFormats|null
-     */
-    private $localeFormats;
-    /**
-     * @var LocaleFormatter|null
-     */
-    private $formatter;
-    /**
-     * @var string
-     */
-    private $locale;
-    private $userFormat;
-
-    public function __construct(LanguageFormattings $formats, Security $security)
+    public function __construct(private LocaleService $localeService, private Security $security)
     {
-        $this->formats = $formats;
-        $this->security = $security;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('month_name', [$this, 'monthName']),
             new TwigFilter('day_name', [$this, 'dayName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
-            new TwigFilter('date_full', [$this, 'dateTimeFull']),
+            new TwigFilter('date_full', [$this, 'dateTime']), // deprecated: needs to be kept for invoice and export templates
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
-            new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
             new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('chart_money', [$this, 'moneyChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
-            new TwigFilter('currency', [$this, 'currency']),
-            new TwigFilter('country', [$this, 'country']),
-            new TwigFilter('language', [$this, 'language']),
             new TwigFilter('amount', [$this, 'amount']),
+            new TwigFilter('js_format', [$this, 'convertJavascriptFormat']),
+            new TwigFilter('pattern', [$this, 'convertHtmlPattern']),
         ];
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return [
             new TwigTest('weekend', [$this, 'isWeekend']),
-            new TwigTest('today', function ($dateTime) {
+            new TwigTest('today', function ($dateTime): bool {
                 if (!$dateTime instanceof \DateTime) {
                     return false;
                 }
@@ -97,14 +77,13 @@ final class LocaleFormatExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('javascript_configurations', [$this, 'getJavascriptConfiguration']),
-            new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
             new TwigFunction('create_date', [$this, 'createDate']),
-            new TwigFunction('locales', [$this, 'getLocales']),
             new TwigFunction('month_names', [$this, 'getMonthNames']),
+            new TwigFunction('locale_format', [$this, 'getLocaleFormat']),
         ];
     }
 
@@ -113,26 +92,16 @@ final class LocaleFormatExtensions extends AbstractExtension
      *
      * @param string $locale
      */
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
         $this->formatter = null;
-        $this->localeFormats = null;
-    }
-
-    private function getLocaleFormats(): LocaleFormats
-    {
-        if (null === $this->localeFormats) {
-            $this->localeFormats = new LocaleFormats($this->formats, $this->getLocale());
-        }
-
-        return $this->localeFormats;
     }
 
     private function getFormatter(): LocaleFormatter
     {
         if (null === $this->formatter) {
-            $this->formatter = new LocaleFormatter($this->formats, $this->getLocale());
+            $this->formatter = new LocaleFormatter($this->localeService, $this->getLocale());
         }
 
         return $this->formatter;
@@ -147,11 +116,7 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->locale;
     }
 
-    /**
-     * @param DateTime $dateTime
-     * @return bool
-     */
-    public function isWeekend($dateTime): bool
+    public function isWeekend(DateTime|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTime) {
             return false;
@@ -176,43 +141,14 @@ final class LocaleFormatExtensions extends AbstractExtension
         return ($day === 0 || $day === 6);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateShort($date)
+    public function dateShort(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->dateShort($date);
+        return (string) $this->getFormatter()->dateShort($date);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateTime($date)
+    public function dateTime(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->dateTime($date);
-    }
-
-    /**
-     * @param DateTime|string $date
-     * @param bool $stripMidnight
-     * @return bool|false|string
-     */
-    public function dateTimeFull($date, bool $stripMidnight = false)
-    {
-        return $this->getFormatter()->dateTimeFull($date, $this->getUserTimeFormat(), $stripMidnight);
-    }
-
-    private function getUserTimeFormat(): string
-    {
-        if ($this->userFormat === null) {
-            /** @var User|null $user */
-            $user = $this->security->getUser();
-            $this->userFormat = $user !== null ? $user->getTimeFormat() : 'H:i';
-        }
-
-        return $this->userFormat;
+        return (string) $this->getFormatter()->dateTime($date);
     }
 
     public function createDate(string $date, ?User $user = null): \DateTime
@@ -222,15 +158,9 @@ final class LocaleFormatExtensions extends AbstractExtension
         return new DateTime($date, new \DateTimeZone($timezone));
     }
 
-    /**
-     * @param DateTime|string $date
-     * @param string $format
-     * @return false|string
-     * @throws \Exception
-     */
-    public function dateFormat($date, string $format)
+    public function dateFormat(DateTime|string|null $date, string $format): string
     {
-        return $this->getFormatter()->dateFormat($date, $format);
+        return (string) $this->getFormatter()->dateFormat($date, $format);
     }
 
     public function dateWeekday(DateTime $date): string
@@ -238,13 +168,9 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function time($date)
+    public function time(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->time($date, $this->getUserTimeFormat());
+        return (string) $this->getFormatter()->time($date);
     }
 
     /**
@@ -276,44 +202,43 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->getFormatter()->dayName($dateTime, $short);
     }
 
-    /**
-     * @param mixed $twentyFour
-     * @param mixed $twelveHour
-     * @return mixed
-     */
-    public function hour24($twentyFour, $twelveHour)
-    {
-        @trigger_error('Twig filter "hour24" is deprecated, use app.user.is24Hour() instead', E_USER_DEPRECATED);
-
-        /** @var User|null $user */
-        $user = $this->security->getUser();
-
-        if (null === $user) {
-            return true;
-        }
-
-        return $user->is24Hour();
-    }
-
     public function getJavascriptConfiguration(User $user): array
     {
-        $converter = new MomentFormatConverter();
-        $format = $this->getLocaleFormats()->getDateTypeFormat();
-
         return [
-            'formatDuration' => $this->getLocaleFormats()->getDurationFormat(),
-            'formatDate' => $converter->convert($format),
+            'formatDuration' => $this->localeService->getDurationFormat($this->locale),
+            'formatDate' => $this->localeService->getDateFormat($this->locale),
             'defaultColor' => Constants::DEFAULT_COLOR,
-            'twentyFourHours' => $user->is24Hour(),
-            'updateBrowserTitle' => (bool) $user->getPreferenceValue('theme.update_browser_title'),
+            'twentyFourHours' => $this->localeService->is24Hour($this->locale),
+            'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),
+            'timezone' => $user->getTimezone(),
         ];
     }
 
-    public function getDurationFormat(): string
+    public function getLocaleFormat(string $name): string
     {
-        @trigger_error('Twig function "get_format_duration()" is deprecated, use "javascript_configurations()" instead.', E_USER_DEPRECATED);
+        $timeFormat = $this->localeService->getTimeFormat($this->locale);
+        $dateFormat = $this->localeService->getDateFormat($this->locale);
 
-        return $this->getLocaleFormats()->getDurationFormat();
+        return match ($name) {
+            'date' => $dateFormat,
+            'time' => $timeFormat,
+            'datetime', 'date-time' => $dateFormat . ' ' . $timeFormat,
+            default => throw new \InvalidArgumentException('Unknown format name: ' . $name),
+        };
+    }
+
+    public function convertJavascriptFormat(string $format): string
+    {
+        $converter = new JavascriptFormatConverter();
+
+        return $converter->convert($format);
+    }
+
+    public function convertHtmlPattern(string $format): string
+    {
+        $converter = new FormFormatConverter();
+
+        return $converter->convertToPattern($format);
     }
 
     /**
@@ -323,90 +248,47 @@ final class LocaleFormatExtensions extends AbstractExtension
      * @param bool $decimal
      * @return string
      */
-    public function duration($duration, $decimal = false)
+    public function duration(Timesheet|int|string|null $duration, bool $decimal = false): string
     {
         return $this->getFormatter()->duration($duration, $decimal);
     }
 
     /**
      * Transforms seconds into a decimal formatted duration string.
-     *
-     * @param int|Timesheet|null $duration
-     * @return string
      */
-    public function durationDecimal($duration)
+    public function durationDecimal(Timesheet|int|string|null $duration): string
     {
         return $this->getFormatter()->durationDecimal($duration);
     }
 
-    public function durationChart($duration): string
-    {
-        return number_format(($duration / 3600), 2, '.', '');
-    }
-
-    public function moneyChart($money): string
-    {
-        return number_format($money, 2, '.', '');
-    }
-
     /**
-     * @param string|float $amount
-     * @return bool|false|string
+     * Transforms seconds into a decimal formatted duration string, for usage with the chart library.
      */
-    public function amount($amount)
+    public function durationChart(int|null $duration): string
+    {
+        if ($duration === null) {
+            $duration = 0;
+        }
+
+        return number_format(\floatval($duration / 3600), 2, '.', '');
+    }
+
+    public function moneyChart(int|float|string|null $money): string
+    {
+        if ($money === null) {
+            $money = 0;
+        }
+
+        return number_format(\floatval($money), 2, '.', '');
+    }
+
+    public function amount(null|int|float|string $amount): string
     {
         return $this->getFormatter()->amount($amount);
     }
 
-    /**
-     * Returns the currency symbol.
-     *
-     * @param string $currency
-     * @return string
-     */
-    public function currency($currency)
-    {
-        return $this->getFormatter()->currency($currency);
-    }
-
-    /**
-     * @param string $language
-     * @return string
-     */
-    public function language($language)
-    {
-        return $this->getFormatter()->language($language);
-    }
-
-    /**
-     * @param string $country
-     * @return string
-     */
-    public function country($country)
-    {
-        return $this->getFormatter()->country($country);
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $currency
-     * @param bool $withCurrency
-     * @return string
-     */
-    public function money($amount, ?string $currency = null, bool $withCurrency = true)
+    public function money(float|int|null $amount, ?string $currency = null, bool $withCurrency = true): string
     {
         return $this->getFormatter()->money($amount, $currency, $withCurrency);
-    }
-
-    /**
-     * Takes the list of codes of the locales (languages) enabled in the
-     * application and returns an array with the name of each locale written
-     * in its own language (e.g. English, Français, Español, etc.)
-     *
-     * @return array
-     */
-    public function getLocales()
-    {
-        return $this->getFormatter()->getLocales();
     }
 }

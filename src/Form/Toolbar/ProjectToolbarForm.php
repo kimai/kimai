@@ -10,18 +10,18 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ProjectQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the projects.
  */
-class ProjectToolbarForm extends AbstractToolbarForm
+final class ProjectToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
         $this->addCustomerMultiChoice($builder, [], false);
@@ -32,10 +32,7 @@ class ProjectToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, ProjectQuery::PROJECT_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ProjectQuery::class,

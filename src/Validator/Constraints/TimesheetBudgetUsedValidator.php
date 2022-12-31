@@ -10,6 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Activity\ActivityStatisticService;
+use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Timesheet;
@@ -18,7 +19,7 @@ use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
-use App\Utils\LocaleHelper;
+use App\Utils\LocaleFormatter;
 use DateTime;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -27,30 +28,23 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBudgetUsedValidator extends ConstraintValidator
 {
-    private $customerStatisticService;
-    private $projectStatisticService;
-    private $activityStatisticService;
-    private $timesheetRepository;
-    private $rateService;
-    private $configuration;
-    private $security;
-
-    public function __construct(SystemConfiguration $configuration, CustomerStatisticService $customerStatisticService, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService, AuthorizationCheckerInterface $security)
-    {
-        $this->configuration = $configuration;
-        $this->customerStatisticService = $customerStatisticService;
-        $this->projectStatisticService = $projectStatisticService;
-        $this->activityStatisticService = $activityStatisticService;
-        $this->timesheetRepository = $timesheetRepository;
-        $this->rateService = $rateService;
-        $this->security = $security;
+    public function __construct(
+        private SystemConfiguration $configuration,
+        private CustomerStatisticService $customerStatisticService,
+        private ProjectStatisticService $projectStatisticService,
+        private ActivityStatisticService $activityStatisticService,
+        private TimesheetRepository $timesheetRepository,
+        private RateServiceInterface $rateService,
+        private AuthorizationCheckerInterface $security,
+        private LocaleService $localeService
+    ) {
     }
 
     /**
      * @param Timesheet $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetBudgetUsed)) {
             throw new UnexpectedTypeException($constraint, TimesheetBudgetUsed::class);
@@ -193,10 +187,10 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate)
+    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate): void
     {
         // using the locale of the assigned user is not the best solution, but allows to be independent of the request stack
-        $helper = new LocaleHelper($timesheet->getUser()->getLanguage());
+        $helper = new LocaleFormatter($this->localeService, $timesheet->getUser()->getLanguage());
         $currency = $timesheet->getProject()->getCustomer()->getCurrency();
 
         $free = $budget - $rate;
@@ -219,7 +213,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         ;
     }
 
-    private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration)
+    private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration): void
     {
         $durationFormat = new Duration();
 

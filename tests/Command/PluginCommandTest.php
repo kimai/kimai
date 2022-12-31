@@ -30,19 +30,14 @@ class PluginCommandTest extends KernelTestCase
     public function testWithPlugins()
     {
         $plugin1 = $this->getMockBuilder(PluginInterface::class)->onlyMethods(['getName', 'getPath'])->getMock();
-        $plugin1->expects($this->any())->method('getName')->willReturn('Test-Bundle');
-        $plugin1->expects($this->once())->method('getPath')->willReturn(__DIR__);
+        $plugin1->expects($this->any())->method('getName')->willReturn('TestBundle');
+        $plugin1->expects($this->once())->method('getPath')->willReturn(__DIR__ . '/../Plugin/Fixtures/TestPlugin');
 
-        $plugin2 = $this->getMockBuilder(PluginInterface::class)->onlyMethods(['getName', 'getPath'])->getMock();
-        $plugin2->expects($this->any())->method('getName')->willReturn('Another one');
-        $plugin2->expects($this->once())->method('getPath')->willReturn('BundleDirectory');
-
-        $commandTester = $this->getCommandTester([$plugin1, $plugin2], []);
+        $commandTester = $this->getCommandTester([$plugin1], []);
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString(__DIR__, $output);
-        $this->assertStringContainsString('BundleDirectory', $output);
-        $this->assertStringContainsString('Test-Bundle', $output);
-        $this->assertStringContainsString('Another one', $output);
+        $this->assertStringContainsString('Plugin/Fixtures/TestPlugin', $output);
+        $this->assertStringContainsString('TestPlugin from composer.json', $output);
     }
 
     protected function getCommandTester(array $plugins, array $options = [])

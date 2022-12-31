@@ -1,27 +1,19 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "tags/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'tags'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.tag(tag, 'edit') }}{% endblock %}
 
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': tag.name|default('create'|trans),
+        'title': (tag.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
         'form': form,
         'back': path('tags')
     } %}
     {% embed formEditTemplate with formOptions %}
+        {% form_theme form 'form/horizontal.html.twig' %}
         {% block form_body %}
-            <div class="row">
-                <div class="col-md-10">
-                    {{ form_row(form.name) }}
-                </div>
-                <div class="col-md-2">
-                    {{ form_row(form.color) }}
-                </div>
-            </div>
+            {{ form_row(form.name) }}
+            {{ form_row(form.color) }}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

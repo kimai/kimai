@@ -1,76 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/search.html.twig" as search %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "invoice/actions.html.twig" as actions %}
-{% import "invoice/macros.html.twig" as macros %}
 
-{% set columns = {
-    'date': {'class': 'alwaysVisible text-nowrap'},
-    'user': {'class': 'hidden-xs hidden-sm text-nowrap hidden', 'orderBy': false},
-    'customer': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
-} %}
-{% for field in metaColumns %}
-    {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ field.name, 'orderBy': false}
-    }) %}
-{% endfor %}
-{% set columns = columns|merge({
-    'invoice_number': {'class': 'hidden-xs hidden-sm w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
-    'due_date': {'class': 'hidden-xs w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
-    'payment_date': {'class': 'hidden-xs hidden w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
-    'status': {'class': 'alwaysVisible w-min', 'orderBy': false},
-    'subtotal': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
-    'tax': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.tax'|trans},
-    'total_rate': {'class': 'hidden-xs text-right w-min'},
-    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
-}) %}
-
-{% set tableName = 'invoices' %}
-
-{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.invoice_listing('index', query) }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main %}
-
-    {% if entries is empty %}
-        {{ widgets.nothing_found() }}
-    {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {}) }}
-        {% for entry in entries %}
-            <tr class="modal-ajax-form open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.createdAt|date_short }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.user_avatar(entry.user) }} {{ widgets.username(entry.user) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
-                {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'invoice_number') }}">{{ widgets.label(entry.invoiceNumber, 'default') }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'due_date') }}">{{ macros.invoice_due_date(entry) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'payment_date') }}">
-                    {% if entry.paymentDate and entry.paid %}
-                        {{ widgets.label(entry.paymentDate|date_short, 'primary') }}
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'status') }}">{{ macros.invoice_status(entry) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'subtotal') }}">{{ entry.subtotal|money(entry.currency) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'tax') }}">{{ entry.tax|money(entry.currency) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">{{ entry.total|money(entry.currency) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.invoice(entry, 'index') }}</td>
-            </tr>
+{% block datatable_row %}
+    <tr class="modal-ajax-form open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
+        <td class="{{ tables.class(dataTable, 'avatar') }}">{{ widgets.user_avatar(entry.user) }}</td>
+        <td class="{{ tables.class(dataTable, 'date') }}">{{ entry.createdAt|date_short }}</td>
+        <td class="{{ tables.class(dataTable, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
+        <td class="{{ tables.class(dataTable, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
+        <td class="{{ tables.class(dataTable, 'comment') }}">{{ entry.comment }}</td>
+        {% for field in metaColumns %}
+            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}">
+                {{ tables.datatable_meta_column(entry, field) }}
+            </td>
         {% endfor %}
-        {{ tables.data_table_footer(entries, 'admin_invoice_list') }}
-    {% endif %}
-
+        <td class="{{ tables.class(dataTable, 'invoice_number') }}">{{ widgets.label(entry.invoiceNumber, 'default') }}</td>
+        <td class="{{ tables.class(dataTable, 'due_date') }}">{{ _self.invoice_due_date(entry) }}</td>
+        <td class="{{ tables.class(dataTable, 'payment_date') }}">
+            {% if entry.paymentDate and entry.paid %}
+                {{ widgets.label(entry.paymentDate|date_short, 'primary') }}
+            {% endif %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'status') }}">{{ _self.invoice_status(entry) }}</td>
+        <td class="{{ tables.class(dataTable, 'subtotal') }}">{{ entry.subtotal|money(entry.currency) }}</td>
+        <td class="{{ tables.class(dataTable, 'tax') }}">{{ entry.tax|money(entry.currency) }}</td>
+        <td class="{{ tables.class(dataTable, 'total_rate') }}">{{ entry.total|money(entry.currency) }}</td>
+        <td class="{{ tables.class(dataTable, 'actions') }}">{{ actions.invoice(entry, 'index') }}</td>
+    </tr>
 {% endblock %}
 
 {% block javascripts %}
@@ -82,9 +39,33 @@
         });
     </script>
     {% endif %}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.invoiceUpdate');
-        });
-    </script>
 {% endblock %}
+
+{% macro invoice_status(invoice) %}
+    {% from "macros/widgets.html.twig" import label %}
+    {% set overdue = invoice.overdue %}
+    {% if invoice.new and overdue %}
+        {{ label('status.new'|trans, 'danger') }}
+    {% elseif invoice.new %}
+        {{ label('status.new'|trans, 'primary') }}
+    {% elseif invoice.pending and overdue %}
+        {{ label('status.pending'|trans, 'danger') }}
+    {% elseif invoice.pending %}
+        {{ label('status.pending'|trans, 'warning') }}
+    {% elseif invoice.paid %}
+        {{ label('status.paid'|trans, 'success') }}
+    {% elseif invoice.canceled %}
+        {{ label('status.canceled'|trans, 'gray') }}
+    {% endif %}
+{% endmacro %}
+
+{% macro invoice_due_date(invoice) %}
+    {% from "macros/widgets.html.twig" import label %}
+    {% if invoice.canceled %}
+        {{ label('status.canceled'|trans, 'gray') }}
+    {% elseif invoice.overdue and not invoice.paid %}
+        {{ label(invoice.dueDate|date_short, 'danger') }}
+    {% else %}
+        {{ label(invoice.dueDate|date_short, 'primary') }}
+    {% endif %}
+{% endmacro %}

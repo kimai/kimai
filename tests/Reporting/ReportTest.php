@@ -20,7 +20,7 @@ class ReportTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $report = new Report('id', 'route', 'label');
+        $report = new Report('id', 'route', 'label', 'reporting');
         self::assertInstanceOf(ReportInterface::class, $report);
         self::assertEquals('id', $report->getId());
         self::assertEquals('route', $report->getRoute());

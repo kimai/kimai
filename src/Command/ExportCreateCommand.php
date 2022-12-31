@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Export\ServiceExport;
-use App\Mail\KimaiMailer;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ExportQuery;
@@ -19,6 +18,7 @@ use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,35 +27,22 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ExportCreateCommand extends Command
+#[AsCommand(name: 'kimai:export:create')]
+final class ExportCreateCommand extends Command
 {
-    private $serviceExport;
-    private $customerRepository;
-    private $projectRepository;
-    private $teamRepository;
-    private $userRepository;
-    private $translator;
-    private $mailer;
-
     public function __construct(
-        ServiceExport $serviceExport,
-        CustomerRepository $customerRepository,
-        ProjectRepository $projectRepository,
-        TeamRepository $teamRepository,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        KimaiMailer $mailer
+        private ServiceExport $serviceExport,
+        private CustomerRepository $customerRepository,
+        private ProjectRepository $projectRepository,
+        private TeamRepository $teamRepository,
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator,
+        private MailerInterface $mailer
     ) {
-        $this->serviceExport = $serviceExport;
-        $this->customerRepository = $customerRepository;
-        $this->projectRepository = $projectRepository;
-        $this->teamRepository = $teamRepository;
-        $this->userRepository = $userRepository;
-        $this->translator = $translator;
-        $this->mailer = $mailer;
         parent::__construct();
     }
 
@@ -65,7 +52,6 @@ class ExportCreateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:export:create')
             ->setDescription('Create exports')
             ->setHelp('Create exports by several different filters and sent them via email.')
             ->addOption('username', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the export (e.g. used for permissions and decimal setting)')
@@ -107,7 +93,7 @@ class ExportCreateCommand extends Command
             default:
                 $io->error('Unknown "exported" filter given');
 
-                return 1;
+                return Command::FAILURE;
         }
 
         $locale = $input->getOption('locale');
@@ -151,18 +137,18 @@ class ExportCreateCommand extends Command
         if ($template === null) {
             $io->error('You must pass the "template" option');
 
-            return 1;
+            return Command::FAILURE;
         }
         $renderer = $this->serviceExport->getRendererById($template);
         if ($renderer === null) {
             $io->error('Unknown export "template", available are:');
             $rows = [];
-            foreach ($this->serviceExport->getRenderer() as $renderer) {
-                $rows[] = [$renderer->getId()];
+            foreach ($this->serviceExport->getRenderer() as $tmp) {
+                $rows[] = [$tmp->getId()];
             }
             $io->table(['ID'], $rows);
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $start = $input->getOption('start');
@@ -172,7 +158,7 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
-                return 1;
+                return Command::FAILURE;
             }
         }
         if (!$start instanceof \DateTime) {
@@ -187,16 +173,12 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
-                return 1;
+                return Command::FAILURE;
             }
         }
 
         if (empty($end)) {
             $end = $dateFactory->getEndOfMonth($start);
-        }
-
-        if (!$end instanceof \DateTime) {
-            $end = $dateFactory->getEndOfMonth();
         }
 
         $end->setTime(23, 59, 59);
@@ -209,7 +191,7 @@ class ExportCreateCommand extends Command
         if (!is_dir($directory) || !is_writable($directory)) {
             $io->error('Invalid "directory" given: ' . $directory);
 
-            return 1;
+            return Command::FAILURE;
         }
 
         $subject = 'Export data available';
@@ -223,7 +205,7 @@ class ExportCreateCommand extends Command
                 if ($result === false) {
                     $io->error('Invalid "email" given: ' . $email);
 
-                    return 1;
+                    return Command::FAILURE;
                 }
                 $emails[] = $email;
             }
@@ -240,14 +222,15 @@ class ExportCreateCommand extends Command
         $query = new ExportQuery();
 
         $username = $input->getOption('username');
-        if (!empty($username)) {
-            $user = $this->userRepository->loadUserByUsername($username);
-            if (null === $user) {
+        if (\is_string($username) && !empty($username)) {
+            try {
+                $user = $this->userRepository->loadUserByIdentifier($username);
+            } catch(\Exception) {
                 $io->error(
                     sprintf('The given username "%s" could not be resolved', $username)
                 );
 
-                return 1;
+                return Command::FAILURE;
             }
             $query->setCurrentUser($user);
         }
@@ -268,7 +251,7 @@ class ExportCreateCommand extends Command
         if (\count($entries) === 0) {
             $io->success('No entries found, skipping');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $response = $renderer->render($entries, $query);
@@ -299,7 +282,7 @@ class ExportCreateCommand extends Command
             $io->success('Saved export to: ' . $file);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function savePreview(Response $response, string $directory): string

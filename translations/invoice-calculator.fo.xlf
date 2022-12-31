@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="1inO2IF" resname="label.invoice_calculator">
-        <source>label.invoice_calculator</source>
+      <trans-unit id="MviRJeB" resname="invoice_calculator">
+        <source>invoice_calculator</source>
         <target state="needs-translation">Sum calculation</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">

@@ -9,7 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -26,7 +26,7 @@ use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ExportRendererInterface;
-use App\Export\RendererInterface;
+use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -40,14 +40,14 @@ abstract class AbstractRendererTest extends KernelTestCase
 {
     /**
      * @param string $classname
-     * @return RendererInterface
+     * @return ExportRendererInterface|TimesheetExportInterface
      */
     protected function getAbstractRenderer(string $classname)
     {
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
@@ -57,7 +57,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
         $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages), $security);
+        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages), $security);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -71,8 +71,7 @@ abstract class AbstractRendererTest extends KernelTestCase
      */
     protected function render(ExportRendererInterface $renderer)
     {
-        $customer = new Customer();
-        $customer->setName('Customer Name');
+        $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
         $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
@@ -89,19 +88,21 @@ abstract class AbstractRendererTest extends KernelTestCase
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
+        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
+        $user1->method('getUserIdentifier')->willReturn('foo-bar');
 
         $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
         $user2->method('getUsername')->willReturn('hello-world');
+        $user2->method('getUserIdentifier')->willReturn('hello-world');
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setDuration(3600)
+            ->setDuration(3600) // 60 minutes
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
@@ -145,11 +146,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->addTag((new Tag())->setName('foo'))
         ;
 
+        $userKevin = new User();
+        $userKevin->setUserIdentifier('kevin');
+
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser((new User())->setUsername('kevin'))
+            ->setUser($userKevin)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))
@@ -160,11 +164,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
         ;
 
+        $userNivek = new User();
+        $userNivek->setUserIdentifier('nivek');
+
         $timesheet6 = new Timesheet();
         $timesheet6
             ->setDuration(400)
             ->setFixedRate(-100.92)
-            ->setUser((new User())->setUsername('nivek'))
+            ->setUser($userNivek)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))

@@ -10,27 +10,25 @@
 namespace App\Command;
 
 use App\User\UserService;
-use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'kimai:user:password')]
 final class ChangePasswordCommand extends AbstractUserCommand
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-        $this->userService = $userService;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:user:password')
-            ->setAliases(['fos:user:change-password'])
             ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
@@ -38,24 +36,21 @@ final class ChangePasswordCommand extends AbstractUserCommand
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:password</info> command changes the password of a user:
+                    The <info>kimai:user:password</info> command changes the password of a user:
 
-  <info>php %command.full_name% matthieu</info>
+                      <info>php %command.full_name% matthieu</info>
 
-This interactive shell will first ask you for a password.
+                    This interactive shell will first ask you for a password.
 
-You can alternatively specify the password as a second argument:
+                    You can alternatively specify the password as a second argument:
 
-  <info>php %command.full_name% susan_super newpassword</info>
+                      <info>php %command.full_name% susan_super newpassword</info>
 
-EOT
+                    EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
@@ -67,18 +62,18 @@ EOT
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 
-        $io = new CommandStyle($input, $output);
+        $io = new SymfonyStyle($input, $output);
 
         try {
             $user->setPlainPassword($password);
             $this->userService->updateUser($user, ['PasswordUpdate']);
             $io->success(sprintf('Changed password for user "%s".', $username));
         } catch (ValidationFailedException $ex) {
-            $io->validationError($ex);
+            $this->validationError($ex, $io);
 
-            return 2;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

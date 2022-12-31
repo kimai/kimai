@@ -1,0 +1,22 @@
+{% extends 'reporting/layout.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block report_form_layout %}
+    {{ form_widget(form.date) }}
+    {% if form.user is defined %}
+        {{ form_widget(form.user, {'label': false}) }}
+    {% elseif app.user != user %}
+        {{ widgets.username(user) }}
+    {% endif %}
+    {{ form_widget(form.sumType) }}
+{% endblock %}
+
+{% block report %}
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, fullsize: true} only %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_body_class %}{{ box_id }} table-responsive m-0{% endblock %}
+        {% block box_body %}
+            {{ report_content|raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

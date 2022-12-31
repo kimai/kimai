@@ -7,25 +7,25 @@
         'empty_message': empty_message|default('team.visibility_global')
     } 
 %}
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with options %}
+{% embed '@theme/embeds/card.html.twig' with options %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
         {% if route_create is not null and (teams|length == 0 or team is null) and is_granted('create_team') %}
-            <a class="btn btn-default btn-sm" href="{{ route_create }}" data-toggle="tooltip" data-placement="top" title="{{ 'team.create_default'|trans({}, 'teams') }}"><i class="{{ 'create'|icon }}"></i></a>
+            {{ widgets.card_tool_button('create', {'title': 'team.create_default', 'translation_domain': 'teams', 'url': route_create}) }}
         {% endif %}
         {% if route_edit is not null %}
-            <a class="modal-ajax-form open-edit btn btn-default btn-sm" href="{{ route_edit }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+            {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': route_edit}) }}
         {% endif %}
     {% endblock %}
     {% block box_attributes %}id="team_listing_box"{% endblock %}
     {% block box_title %}
         {{ 'permissions'|trans({}, 'actions') }}
-        {% if teams|length > 0 %}<small class="hidden-xs">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
+        {% if teams|length > 0 %}<small class="text-muted d-none d-sm-inline ms-1">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
     {% endblock %}
-    {% block box_body_class %}no-padding{% endblock %}
+    {% block box_body_class %}{% if teams|length > 0 %}p-0{% endif %}{% endblock %}
     {% block box_body %}
         {% if teams|length > 0 %}
-            {{ widgets.team_list(teams) }}
+            {{ widgets.team_list(teams, {name_class: 'w-min'}) }}
         {% else %}
             <div class="comment">{{ empty_message|default('team.visibility_global')|trans({}, 'teams') }}</div>
         {% endif %}

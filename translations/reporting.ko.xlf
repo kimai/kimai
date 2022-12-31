@@ -34,10 +34,6 @@
         <source>report_inactive_project</source>
         <target>비활성 프로젝트</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>초기 보고서</target>
-      </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>
         <target>사용자 1명의 연간 보기</target>

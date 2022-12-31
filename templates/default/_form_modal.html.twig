@@ -1,37 +1,33 @@
-{# 
-REQUIRED CHANGES NEED TO BE DONE IN THESE FILES:
- - embeds/modal.html.twig 
- - default/_form_modal.html.twig 
- #}
-<div class="modal {% block modal_class %}{% endblock %}" id="{% block modal_id %}form_modal{% endblock %}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
+<div class="modal modal-blur fade {% block modal_class %}{% endblock %}" id="{% block modal_id %}form_modal{% endblock %}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
     <div class="modal-dialog {% block modal_size %}modal-lg{% endblock %}" role="document">
         <div class="modal-content">
             {% block form_before %}{% endblock %}
             {% block modal_before %}{{ form_start(form, formStartOptions|default({})) }}{% endblock %}
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'action.close'|trans }}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="{{ block('modal_id') }}_label">
+                <h5 class="modal-title" id="{{ block('modal_id') }}_label">
                     {% block modal_title %}
                         {{ title }}
                         {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                            <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+                            <a class="form-help" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">?</a>
                         {% endif %}
                     {% endblock %}
-                </h4>
+                </h5>
+                <button type="button" class="btn-close{% if tabler_bundle.isDarkMode() %} btn-close-white{% endif %}" data-bs-dismiss="modal" aria-label="{{ 'action.close'|trans }}"></button>
             </div>
             <div class="modal-body">
                 {% block modal_body %}
+                    {{ form_errors(form) }}
                     {% block form_body %}
-                        {{ form_widget(form) }}
+                        {{ form_rest(form) }}
                     {% endblock %}
                 {% endblock %}
             </div>
             <div class="modal-footer">
                 {% block modal_footer %}
                     {% block submit_button %}
-                        <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" id="{{ block('modal_id') }}_save">{{ (submit_button|default('action.save'))|trans }}</button>
+                        <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" id="{{ block('modal_id') }}_save" data-hotkey="ctrl+Enter">{{ (submit_button|default('action.save'))|trans }}</button>
                     {% endblock %}
-                    <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
                 {% endblock %}
             </div>
             {% block modal_end %}{{ form_end(form) }}{% endblock %}

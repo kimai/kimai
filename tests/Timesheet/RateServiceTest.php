@@ -37,10 +37,15 @@ class RateServiceTest extends TestCase
         return $mock;
     }
 
+    private function createDateTime(string $datetime = null): \DateTime
+    {
+        return new \DateTime($datetime ?? 'now', new \DateTimeZone('UTC'));
+    }
+
     public function testCalculateWithTimesheetHourlyRate()
     {
         $record = new Timesheet();
-        $record->setEnd(new \DateTime());
+        $record->setEnd($this->createDateTime());
         $record->setDuration(1800);
         $record->setHourlyRate(100);
         $record->setActivity(new Activity());
@@ -54,7 +59,7 @@ class RateServiceTest extends TestCase
     public function testCalculateWithTimesheetFixedRate()
     {
         $record = new Timesheet();
-        $record->setEnd(new \DateTime());
+        $record->setEnd($this->createDateTime());
         $record->setDuration(1800);
         $record->setFixedRate(10);
         // make sure that fixed rate is always applied, even if hourly rate is set
@@ -122,7 +127,7 @@ class RateServiceTest extends TestCase
         $customerInternal,
         $customerIsFixed
     ) {
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $project = new Project();
         $project->setCustomer($customer);
@@ -132,7 +137,7 @@ class RateServiceTest extends TestCase
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setEnd(new \DateTime())
+            ->setEnd($this->createDateTime())
             ->setHourlyRate($timesheetHourly)
             ->setFixedRate($timesheetFixed)
             ->setActivity($activity)
@@ -183,13 +188,8 @@ class RateServiceTest extends TestCase
     {
         $user = new User();
 
-        $pref = new UserPreference();
-        $pref->setName(UserPreference::HOURLY_RATE);
-        $pref->setValue($rate);
-
-        $prefInt = new UserPreference();
-        $prefInt->setName(UserPreference::INTERNAL_RATE);
-        $prefInt->setValue($internalRate);
+        $pref = new UserPreference(UserPreference::HOURLY_RATE, $rate);
+        $prefInt = new UserPreference(UserPreference::INTERNAL_RATE, $internalRate);
 
         $user->setPreferences([$pref, $prefInt]);
 
@@ -199,7 +199,7 @@ class RateServiceTest extends TestCase
     public function testCalculateWithEmptyEnd()
     {
         $record = new Timesheet();
-        $record->setBegin(new \DateTime());
+        $record->setBegin($this->createDateTime());
         $record->setDuration(1800);
         $record->setFixedRate(100);
         $record->setHourlyRate(100);
@@ -219,7 +219,7 @@ class RateServiceTest extends TestCase
      */
     public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
     {
-        $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
+        $end = $this->createDateTime('12:00:00');
         $start = clone $end;
         $start->setTimestamp($end->getTimestamp() - $duration);
 
@@ -241,7 +241,7 @@ class RateServiceTest extends TestCase
 
     public function getRuleDefinitions()
     {
-        $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
+        $start = $this->createDateTime('12:00:00');
         $day = $start->format('l');
 
         return [

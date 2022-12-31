@@ -1,0 +1,51 @@
+{% if is_granted('start_own_timesheet') %}
+    {% set favorites = favorite_timesheets(app.user) %}
+    {% if favorites|length > 0 %}
+        {% from 'macros/widgets.html.twig' import label_customer, label_project, label_activity %}
+        {% set class = "btn-outline-white" %}
+        {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
+            {% set class = "btn-dark" %}
+        {% endif %}
+        <div class="nav-item dropdown d-none d-md-flex me-3 notifications-menu" data-reload="{{ path('favorites_timesheets') }}">
+            <a href="#" class="btn btn-icon {{ class}} px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="{{ 'recent.activities'|trans }}">
+                {{ icon('repeat') }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
+                <div class="card">
+                    <div class="card-header">{{ 'recent.activities'|trans }}</div>
+                    <div class="list-group list-group-flush list-group-hoverable menu">
+                        {% for favorite in favorites %}
+                            {% set entry = favorite.getTimesheet() %}
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col text-truncate" >
+                                        <a class="api-link text-decoration-none text-body d-block"
+                                           href="{{ path('restart_timesheet', {'id': entry.id}) }}" data-event="kimai.timesheetStart kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.start.error"
+                                           data-msg-success="timesheet.start.success">
+                                            {{ label_activity(entry.activity) }}
+                                            <div class="d-block text-truncate mt-n1">
+                                                {{ label_project(entry.project) }}
+                                                {{ label_customer(entry.project.customer) }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        {% if favorite.isFavorite() %}
+                                        <a href="{{ path('favorites_timesheets_remove', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions show">
+                                            <i class="text-yellow {{ 'bookmarked'|icon }}"></i>
+                                        </a>
+                                        {% else %}
+                                        <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions">
+                                            <i class="{{ 'bookmark'|icon }}"></i>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

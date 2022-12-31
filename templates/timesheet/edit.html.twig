@@ -1,7 +1,20 @@
-{% extends 'timesheet/layout-edit.html.twig' %}
-{% import "timesheet/actions.html.twig" as actions %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% from "macros/widgets.html.twig" import alert %}
 
-{% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.timesheet(timesheet, 'edit') }}{% endblock %}
-
-{% set route_back = 'timesheet' %}
+{% block main %}
+    {% if timesheet.exported %}
+        {{ alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), null, 'warning') }}
+    {% endif %}
+    {% set formOptions = {
+        'template': kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig',
+        'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
+        'form': form
+    } %}
+    {% if route_back is defined and route_back is not null %}
+        {% set formOptions = formOptions|merge({'back': path(route_back)}) %}
+    {% endif %}
+    {% if template is not defined %}
+        {% set template = 'timesheet/edit-default.html.twig' %}
+    {% endif %}
+    {% include template %}
+{% endblock %}

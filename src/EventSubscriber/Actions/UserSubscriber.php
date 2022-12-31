@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\User;
 use App\Event\PageActionsEvent;
 
-class UserSubscriber extends AbstractActionsSubscriber
+final class UserSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
@@ -31,43 +31,30 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view', $user)) {
-            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions']);
+            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUserIdentifier()]), 'translation_domain' => 'actions', 'title' => 'profile-stats']);
             $event->addDivider();
         }
 
         if ($this->isGranted('edit', $user)) {
-            $event->addActionToSubmenu('edit', 'edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
+            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
         }
+
         if ($this->isGranted('preferences', $user)) {
-            $event->addActionToSubmenu('edit', 'settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'title' => 'settings', 'translation_domain' => 'actions']);
-        }
-        if ($this->isGranted('password', $user)) {
-            $event->addActionToSubmenu('edit', 'password', ['url' => $this->path('user_profile_password', ['username' => $user->getUsername()]), 'title' => 'profile.password']);
-        }
-        if ($this->isGranted('api-token', $user)) {
-            $event->addActionToSubmenu('edit', 'api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUsername()]), 'title' => 'profile.api-token']);
-        }
-        if ($this->isGranted('teams', $user)) {
-            $event->addActionToSubmenu('edit', 'teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUsername()]), 'title' => 'profile.teams']);
-        }
-        if ($this->isGranted('roles', $user)) {
-            $event->addActionToSubmenu('edit', 'roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUsername()]), 'title' => 'profile.roles']);
+            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
         }
 
-        if ($event->hasSubmenu('edit')) {
-            $event->addDivider();
+        if ($this->isGranted('report:other') || ($this->isGranted('report:user') && $event->getUser()->getId() === $user->getId())) {
+            $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
+            $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);
+            $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_user_year', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_year']);
         }
 
-        $viewOther = $this->isGranted('view_other_timesheet');
-        if ($this->isGranted('view_reporting')) {
-            // also found in App\Controller\Reporting\ReportByUserController
-            if (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId())) {
-                $event->addAction('menu.reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting']);
-            }
+        if ($this->isGranted('view_other_timesheet') && $user->isEnabled()) {
+            $event->addActionToSubmenu('filter', 'timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet.filter', 'translation_domain' => 'actions']);
         }
 
-        if ($viewOther && $user->isEnabled()) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['users[]' => $user->getId()])]);
+        if ($this->isGranted('view_team')) {
+            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'teams']);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {

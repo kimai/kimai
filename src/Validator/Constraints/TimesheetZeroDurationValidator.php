@@ -17,18 +17,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetZeroDurationValidator extends ConstraintValidator
 {
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetZeroDuration)) {
             throw new UnexpectedTypeException($constraint, TimesheetZeroDuration::class);

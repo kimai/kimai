@@ -11,7 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -20,61 +20,34 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to do the basic installation steps for Kimai.
  *
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:install')]
 final class InstallCommand extends Command
 {
-    public const ERROR_PERMISSIONS = 1;
-    public const ERROR_CACHE_CLEAN = 2;
-    public const ERROR_CACHE_WARMUP = 4;
-    public const ERROR_DATABASE = 8;
-    public const ERROR_MIGRATIONS = 32;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private Connection $connection, private string $kernelEnvironment)
     {
         parent::__construct();
-        $this->connection = $connection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:install')
             ->setDescription('Basic installation for Kimai')
             ->setHelp('This command will perform the basic installation steps to get Kimai up and running.')
             ->addOption('no-cache', null, InputOption::VALUE_NONE, 'Skip cache re-generation')
         ;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Kimai installation running ...');
-
-        /** @var Application $application */
-        $application = $this->getApplication();
-        /** @var KernelInterface $kernel */
-        $kernel = $application->getKernel();
-        $environment = $kernel->getEnvironment();
 
         // create the database, in case it is not yet existing
         try {
@@ -82,7 +55,7 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to create database: ' . $ex->getMessage());
 
-            return self::ERROR_DATABASE;
+            return Command::FAILURE;
         }
 
         // bootstrap database ONLY via doctrine migrations, so all installation will have the correct and same state
@@ -91,22 +64,22 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to set migration status: ' . $ex->getMessage());
 
-            return self::ERROR_MIGRATIONS;
+            return Command::FAILURE;
         }
 
         if (!$input->getOption('no-cache')) {
             // flush the cache, just to make sure ... and ignore result
-            $this->rebuildCaches($environment, $io, $input, $output);
+            $this->rebuildCaches($this->kernelEnvironment, $io, $input, $output);
         }
 
         $io->success(
             sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
         );
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 
@@ -116,7 +89,7 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-            return self::ERROR_CACHE_CLEAN;
+            return Command::FAILURE;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
@@ -125,13 +98,13 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to warmup cache: ' . $ex->getMessage());
 
-            return self::ERROR_CACHE_WARMUP;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
+    private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
@@ -141,16 +114,21 @@ final class InstallCommand extends Command
         $io->writeln('');
     }
 
-    protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output): void
     {
-        if ($this->connection->isConnected()) {
-            $io->note(sprintf('Database is existing and connection could be established'));
+        try {
+            if ($this->connection->isConnected()) {
+                $io->note(sprintf('Database is existing and connection could be established'));
 
-            return;
-        }
+                return;
+            }
 
-        if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
-            throw new \Exception('Skipped database creation, aborting installation');
+            if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
+                throw new \Exception('Skipped database creation, aborting installation');
+            }
+        } catch (\Exception $exception) {
+            // this likely means that the database does not exist. the latest doctrine release
+            // changed the behavior: in previous version this code did not throw an exception.
         }
 
         $options = ['--if-not-exists' => true];
@@ -170,7 +148,7 @@ final class InstallCommand extends Command
      * @param bool $default
      * @return bool
      */
-    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false)
+    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false): bool
     {
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');

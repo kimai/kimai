@@ -17,26 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice number generator.
  */
-class InvoiceNumberGeneratorType extends AbstractType
+final class InvoiceNumberGeneratorType extends AbstractType
 {
-    /**
-     * @var ServiceInvoice
-     */
-    protected $service;
-
-    /**
-     * InvoiceNumberGeneratorType constructor.
-     * @param ServiceInvoice $service
-     */
-    public function __construct(ServiceInvoice $service)
+    public function __construct(private ServiceInvoice $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $renderer = [];
         foreach ($this->service->getNumberGenerator() as $generator) {
@@ -44,7 +31,7 @@ class InvoiceNumberGeneratorType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_number_generator',
+            'label' => 'invoice_number_generator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
                 return $renderer;
@@ -54,10 +41,7 @@ class InvoiceNumberGeneratorType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

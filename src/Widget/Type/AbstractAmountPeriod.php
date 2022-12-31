@@ -13,44 +13,47 @@ use App\Event\RevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-abstract class AbstractAmountPeriod extends SimpleStatisticChart
+abstract class AbstractAmountPeriod extends AbstractWidget
 {
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($repository);
-        $this->dispatcher = $dispatcher;
     }
 
     public function getTitle(): string
     {
-        return 'stats.' . $this->getId();
+        return 'stats.' . lcfirst($this->getId());
     }
 
     public function getTemplateName(): string
     {
-        return 'widget/widget-counter.html.twig';
+        return 'widget/widget-counter-money.html.twig';
     }
 
     public function getOptions(array $options = []): array
     {
         return array_merge([
             'icon' => 'money',
-            'dataType' => 'money',
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    protected function getRevenue(?string $begin, ?string $end, array $options = [])
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
-        $this->setQueryWithUser(false);
+        $user = $this->getUser();
+        $timezone = new \DateTimeZone($user->getTimezone());
 
-        $data = parent::getData($options);
+        if ($begin !== null) {
+            $begin = new \DateTime($begin, $timezone);
+        }
 
-        $event = new RevenueStatisticEvent($this->begin, $this->end);
-        if ($data !== null) {
-            $event->addRevenue($data);
+        if ($end !== null) {
+            $end = new \DateTime($end, $timezone);
+        }
+
+        $data = $this->repository->getRevenue($begin, $end, null);
+
+        $event = new RevenueStatisticEvent($begin, $end);
+        foreach ($data as $row) {
+            $event->addRevenue($row->getCurrency(), $row->getAmount());
         }
         $this->dispatcher->dispatch($event);
 

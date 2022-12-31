@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Η καταγραφή ωραρίου δεν μπόρεσε να ξεκινήσει</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Έχει συμπληρωθεί το όριο των ενεργών καταγραφών ωραρίου, παρακαλούμε σταματήστε τουλάχιστον μία εκτελούμενη μέτρηση ωραρίου.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Η εγγραφή που επεξεργάζεστε έχει ήδη εξαχθεί</target>

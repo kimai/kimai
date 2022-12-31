@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>Пожертвовать на будущее Kimai</target>
+        <target>Пожертвовать</target>
       </trans-unit>
       <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
@@ -29,10 +29,6 @@
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Поддержка</target>
-      </trans-unit>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target>О Kimai</target>
       </trans-unit>
     </body>
   </file>

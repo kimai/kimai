@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -18,58 +16,34 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @RouteResource("Tag")
- * @SWG\Tag(name="Tag")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
- */
+#[Route(path: '/tags')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
-    /**
-     * @var TagRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-
-    public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository)
+    public function __construct(private ViewHandlerInterface $viewHandler, private TagRepository $repository)
     {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
     }
 
     /**
      * Fetch all existing tags
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns the collection of all existing tags as string array",
-     *      @SWG\Schema(
-     *          type="array",
-     *          @SWG\Items(type="string")
-     *      )
-     * )
-     *
-     * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
+    #[Rest\Get(name: 'get_tags')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $filter = $paramFetcher->get('name');
@@ -84,29 +58,16 @@ final class TagController extends BaseApiController
 
     /**
      * Creates a new tag
-     *
-     * @SWG\Post(
-     *      description="Creates a new tag and returns it afterwards",
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Returns the new created tag",
-     *          @SWG\Schema(ref="#/definitions/TagEntity"),
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TagEditForm")
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(description: 'Creates a new tag and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created tag', content: new OA\JsonContent(ref: '#/components/schemas/TagEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TagEditForm'))]
+    #[Rest\Post(name: 'post_tag')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
-        if (!$this->isGranted('manage_tag')) {
-            throw new AccessDeniedHttpException('User cannot create tags');
+        if (!$this->isGranted('manage_tag') && !$this->isGranted('create_tag')) {
+            throw $this->createAccessDeniedException('User cannot create tags');
         }
 
         $tag = new Tag();
@@ -132,34 +93,15 @@ final class TagController extends BaseApiController
 
     /**
      * Delete a tag
-     *
-     * @SWG\Delete(
-     *      @SWG\Response(
-     *          response=204,
-     *          description="HTTP code 204 for a successful delete"
-     *      ),
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="Tag ID to delete",
-     *      required=true,
-     * )
-     *
-     * @Security("is_granted('delete_tag')")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function deleteAction(int $id): Response
+    #[Security("is_granted('delete_tag')")]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'HTTP code 204 for a successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Tag ID to delete', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}', name: 'delete_tag')]
+    public function deleteAction(Tag $tag): Response
     {
-        $tag = $this->repository->find($id);
-
-        if (null === $tag) {
-            throw new NotFoundException();
-        }
-
         $this->repository->deleteTag($tag);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);

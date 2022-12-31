@@ -9,73 +9,44 @@
 
 namespace App\Form\Model;
 
+use App\Form\Type\YesNoType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraint;
 
 final class Configuration
 {
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var string|null
-     */
-    private $label;
-    /**
-     * @var string
-     */
-    private $translationDomain = 'messages';
-    /**
-     * @var mixed
-     */
-    private $value;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var array
-     */
-    private $options = [];
-    /**
-     * @var bool
-     */
-    private $enabled = true;
-    /**
-     * @var bool
-     */
-    private $required = true;
+    private ?string $label = null;
+    private string $translationDomain = 'messages';
+    private string|int|null|bool|array $value = null;
+    private ?string $type = null;
+    private array $options = [];
+    private bool $enabled = true;
+    private bool $required = true;
     /**
      * @var Constraint[]
      */
-    private $constraints = [];
+    private array $constraints = [];
 
-    public function getName(): ?string
+    public function __construct(private string $name)
+    {
+    }
+
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): Configuration
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): string|int|null|bool|object
     {
         return $this->value;
     }
 
-    /**
-     * @param mixed $value
-     * @return Configuration
-     */
-    public function setValue($value): Configuration
+    public function setValue(string|int|null|bool|object $value): Configuration
     {
+        if ($this->type === CheckboxType::class || $this->type === YesNoType::class) {
+            $value = (bool) $value;
+        }
+
         $this->value = $value;
 
         return $this;

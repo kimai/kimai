@@ -30,20 +30,4 @@ class CustomerStatisticTest extends AbstractTimesheetCountedStatisticTest
     {
         $this->assertJsonSerialize(new CustomerStatistic());
     }
-
-    /**
-     * @group legacy
-     */
-    public function testAdditionalSetter()
-    {
-        $sut = new CustomerStatistic();
-
-        self::assertEquals(0, $sut->getActivityAmount());
-        $sut->setActivityAmount(13);
-        self::assertEquals(13, $sut->getActivityAmount());
-
-        self::assertEquals(0, $sut->getProjectAmount());
-        $sut->setProjectAmount(2);
-        self::assertEquals(2, $sut->getProjectAmount());
-    }
 }

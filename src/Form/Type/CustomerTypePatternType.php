@@ -18,28 +18,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used when rendering a custom select.
  */
-class CustomerTypePatternType extends AbstractType
+final class CustomerTypePatternType extends AbstractType
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $name = $this->translator->trans('label.name');
-        $company = $this->translator->trans('label.company');
-        $number = $this->translator->trans('label.number');
-        $comment = $this->translator->trans('label.description');
+        $name = $this->translator->trans('name');
+        $company = $this->translator->trans('company');
+        $number = $this->translator->trans('number');
+        $comment = $this->translator->trans('description');
         $spacer = CustomerHelper::SPACER;
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $name => CustomerHelper::PATTERN_NAME,
                 $company => CustomerHelper::PATTERN_COMPANY,
@@ -56,10 +50,7 @@ class CustomerTypePatternType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

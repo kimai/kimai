@@ -9,32 +9,42 @@
  * [KIMAI] KimaiPaginatedBoxWidget: handles box widgets that have a pagination
  */
 
-import jQuery from "jquery";
+import KimaiContextMenu from "./KimaiContextMenu";
 
 export default class KimaiPaginatedBoxWidget {
 
     constructor(boxId) {
         this.selector = boxId;
-        this.overlay = jQuery('<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>');
-        this.widget = jQuery(this.selector);
-        this.href = this.widget.data('href');
-        this.events = this.widget.data('reload').split(' ');
+        const widget = document.querySelector(this.selector);
+        this.href = widget.dataset['href'];
 
-        const self = this;
+        if (widget.dataset['reload'] !== undefined) {
+            this.events = widget.dataset['reload'].split(' ');
+            const reloadPage = () => {
+                let url = null;
+                if (document.querySelector(this.selector).dataset['reloadHref'] !== undefined) {
+                    url = document.querySelector(this.selector).dataset['reloadHref'];
+                } else {
+                    url = document.querySelector(this.selector + ' ul.pagination li.active a').href;
+                }
+                this.loadPage(url);
+            };
 
-        const reloadPage = function (event) {
-            const page = jQuery(self.selector + ' .box-tools').data('page');
-            const url = self._buildUrl(page);
-            self.loadPage(url);
-        };
-
-        for (const eventName of this.events) {
-            document.addEventListener(eventName, reloadPage);
+            for (const eventName of this.events) {
+                document.addEventListener(eventName, reloadPage);
+            }
         }
 
-        this.widget.on('click', '.box-tools ul.pagination a', function (event) {
-            event.preventDefault();
-            self.loadPage(jQuery(event.currentTarget).attr('href'));
+        document.body.addEventListener('click', (event) => {
+            let link = event.target;
+            // could be an icon
+            if (!link.matches(this.selector + ' a.pagination-link')) {
+                link = link.parentNode;
+            }
+            if (link.matches(this.selector + ' a.pagination-link')) {
+                event.preventDefault();
+                this.loadPage(link.href);
+            }
         });
     }
     
@@ -42,56 +52,54 @@ export default class KimaiPaginatedBoxWidget {
         return new KimaiPaginatedBoxWidget(elementId);
     }
     
-    _showOverlay() {
-        this.widget.append(this.overlay);
-    }
-    
-    _hideOverlay() {
-        jQuery(this.overlay).remove();
-    }
-    
     loadPage(url) {
-        const self = this;
         const selector = this.selector;
-        
-        self._showOverlay();
 
-        jQuery.ajax({
-            url: url,
-            data: {},
-            success: function (response) {
-                const html = jQuery(response);
-                jQuery(selector + ' .box-tools').replaceWith(html.find('.box-tools'));
-                jQuery(selector + ' .box-body').replaceWith(html.find('.box-body'));
-                jQuery(selector + ' .box-title').replaceWith(html.find('.box-title'));
-                if (jQuery(selector + ' .box-footer').length > 0) {
-                    jQuery(selector + ' .box-footer').replaceWith(html.find('.box-footer'));
-                }
-                jQuery(selector + ' .box-body [data-toggle="tooltip"]').tooltip();
-                self.widget.removeData('error-retry');
-                self._hideOverlay();
-            },
-            dataType: 'html',
-            error: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status !== undefined && jqXHR.status === 500) {
-                    if (self.widget.data('error-retry') !== undefined) {
-                        // TODO show error message ?
-                        return;
-                    }
-                    const page = jQuery(selector + ' .box-tools').data('page');
-                    if (page > 1) {
-                        self.widget.data('error-retry', 1);
-                        var url = self._buildUrl(page - 1);
-                        self.loadPage(url);
-                    }
-                }
-                self._hideOverlay();
+        // this event will render a spinning loader
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.selector}));
+
+        // and this event will hide it afterwards
+        const hideOverlay = () => {
+            document.dispatchEvent(new Event('kimai.reloadedContent'));
+        }
+
+        window.kimai.getPlugin('fetch').fetch(url)
+            .then(response => {
+                response.text().then((text) => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    // previously the parts .card-header .card-body .card-title .card-footer were replaced
+                    // but the layout allows eg. ".list-group .list-group-flush" instead of .card-body
+                    // so we directly replace the entire HTML
+                    // the HTML needs to be parsed for script tags, which can be included (e.g. paginated chart widget)
+                    document.querySelector(selector).replaceWith(this._makeScriptExecutable(temp.firstElementChild));
+                    KimaiContextMenu.createForDataTable(selector + ' table.dataTable');
+                    hideOverlay();
+                });
+            })
+            .catch(() => {
+                // this is not yet a plugin, so the alert is not available here
+                window.kimai.getPlugin('alert').error('Failed loading selected page');
+                hideOverlay();
+            });
+    }
+
+    /**
+     * @param {Element|ChildNode} node
+     * @returns {Element}
+     * @private
+     */
+    _makeScriptExecutable(node) {
+        if (node.tagName !== undefined && node.tagName === 'SCRIPT') {
+            const script  = document.createElement('script');
+            script.text = node.innerHTML;
+            node.parentNode.replaceChild(script, node );
+        } else {
+            for (const child of node.childNodes) {
+                this._makeScriptExecutable(child);
             }
-        });        
+        }
+
+        return node;
     }
-    
-    _buildUrl(page) {
-        return this.href.replace('1', page);
-    }
-    
 }

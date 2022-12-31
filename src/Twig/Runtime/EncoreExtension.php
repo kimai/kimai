@@ -16,22 +16,14 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscriberInterface
 {
-    /**
-     * @var string
-     */
-    private $publicDir;
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private string $publicDir;
 
-    public function __construct(ContainerInterface $container, string $projectDirectory)
+    public function __construct(private ContainerInterface $container, string $projectDirectory)
     {
-        $this->container = $container;
         $this->publicDir = $projectDirectory . '/public';
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             EntrypointLookupInterface::class,

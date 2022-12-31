@@ -18,13 +18,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 abstract class AbstractTimesheetMultipleEvent extends Event
 {
     /**
-     * @var Timesheet[]
+     * @param array<Timesheet> $timesheets
      */
-    private $timesheets;
-
-    public function __construct(array $timesheets)
+    public function __construct(private array $timesheets)
     {
-        $this->timesheets = $timesheets;
     }
 
     public function getTimesheets(): array

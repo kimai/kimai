@@ -2,57 +2,85 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block page_title %}{{ 'menu.plugin'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'plugins', 'index') %}
-    {{ widgets.page_actions(event.actions) }}
-{% endblock %}
-
 {% block main %}
 
     {% if plugins|length == 0 %}
         {{ widgets.callout('warning', 'plugin.none_installed'|trans({}, 'plugins')) }}
     {% else %}
+        {% embed '@theme/embeds/card.html.twig' %}
+            {% block box_title %}{{ 'plugin.installed'|trans }}{% endblock %}
+            {% block box_body_class %}p-0{% endblock %}
+            {% block box_body %}
+                {% set columns = {
+                    'name': {'class': 'alwaysVisible'},
+                    'description': {'class': 'd-none d-md-table-cell'},
+                    'version': {'class': 'text-center w-min'},
+                    'actions': {'class': 'actions alwaysVisible'},
+                } %}
 
-        {% set columns = {
-            'name': {'class': 'alwaysVisible'},
-            'version': {'class': ' w-min'},
-            'description': {'class': 'hidden-xs'},
-            'required_version': {'class': 'hidden-xs hidden-sm w-min'},
-            'actions': {'class': 'actions alwaysVisible'},
-        } %}
+                {% set tableName = 'plugins' %}
 
-        {% set tableName = 'plugins' %}
+                {% import "macros/datatables.html.twig" as tables %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {{ tables.datatable_header(tableName, columns, null, {columnConfig: false}) }}
+                {% for plugin in plugins|sort((p1, p2) => p1.name|lower <=> p2.name|lower) %}
+                    <tr>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                            {% if plugin.id != plugin.name %}
+                                <span data-toggle="tooltip" data-placement="top" title="{{ plugin.id }}">{{ plugin.name }}</span>
+                            {% else %}
+                                {{ plugin.name }}
+                            {% endif %}
+                        </td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                            {% set event = actions(app.user, 'plugin', 'index', {'plugin': plugin}) %}
+                            {{ widgets.table_actions(event.actions) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                {{ tables.data_table_footer(plugins) }}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 
-        {{ tables.datatable_header(tableName, columns, null, {}) }}
-        {% for plugin in plugins|sort((p1, p2) => p1.name|lower <=> p2.name|lower) %}
-            <tr>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {% if plugin.id != plugin.name %}
-                        <span data-toggle="tooltip" data-placement="top" title="{{ plugin.id }}">{{ plugin.name }}</span>
-                    {% else %}
-                        {{ plugin.name }}
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'required_version') }}">
-                    {% if plugin.metadata.kimaiVersion > constant('App\\Constants::VERSION') %}
-                        {{ widgets.label(plugin.metadata.kimaiVersion, 'danger') }}
-                    {% elseif plugin.metadata.kimaiVersion < constant('App\\Constants::VERSION') %}
-                        {{ widgets.label(plugin.metadata.kimaiVersion, 'warning') }}
-                    {% else %}
-                        {{ widgets.label(plugin.metadata.kimaiVersion, 'success') }}
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                    {% set event = actions(app.user, 'plugin', 'index', {'plugin': plugin}) %}
-                    {{ widgets.table_actions(event.actions) }}
-                </td>
-            </tr>
-        {% endfor %}
-        {{ tables.data_table_footer(plugins) }}
+    {% if extensions|length > 0 %}
+        {% embed '@theme/embeds/card.html.twig' %}
+            {% from "macros/widgets.html.twig" import card_tool_button %}
+            {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
+            {% block box_body_class %}p-0{% endblock %}
+            {% block box_tools %}
+                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false, 'class': 'btn-warning'}) }}
+            {% endblock %}
+            {% block box_body %}
+                {% set columns = {
+                    'name': {'class': 'alwaysVisible'},
+                    'description': {'class': 'd-none d-md-table-cell'},
+                    'actions': {'class': 'actions alwaysVisible'},
+                } %}
 
+                {% set tableName = 'extensions' %}
+
+                {% import "macros/datatables.html.twig" as tables %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {{ tables.datatable_header(tableName, columns, null, {columnConfig: false}) }}
+                {% for extension in extensions|filter(e => e.bundle is not null and e.bundle not in installed) %}
+                    <tr>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
+                            <a href="{{ extension.url }}" title="{{ 'homepage'|trans }}" target="_blank">{{ extension.name }}</a>
+                        </td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                            {% if extension.buy is defined and extension.buy is not empty %}
+                                <a class="btn btn-icon btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                {{ tables.data_table_footer(plugins) }}
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
 {% endblock %}

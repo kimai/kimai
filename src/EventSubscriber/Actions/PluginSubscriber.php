@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Event\PageActionsEvent;
 use App\Plugin\Plugin;
 
-class PluginSubscriber extends AbstractActionsSubscriber
+final class PluginSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

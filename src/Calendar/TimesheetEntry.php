@@ -18,36 +18,25 @@ use App\Entity\Timesheet;
  */
 final class TimesheetEntry implements DragAndDropEntry
 {
-    /**
-     * @var Timesheet
-     */
-    private $timesheet;
-    /**
-     * @var string
-     */
-    private $color;
-    /**
-     * @var bool
-     */
-    private $copy;
-
-    public function __construct(Timesheet $timesheet, string $color, bool $copy = false)
+    public function __construct(private Timesheet $timesheet, private string $color, private bool $copy = false)
     {
-        $this->timesheet = $timesheet;
-        $this->color = $color;
-        $this->copy = $copy;
     }
 
     public function getData(): array
     {
         $data = [
-            'activity' => $this->timesheet->getActivity() !== null ? $this->timesheet->getActivity()->getId() : null,
-            'project' => $this->timesheet->getProject() !== null ? $this->timesheet->getProject()->getId() : null,
+            'activity' => $this->timesheet->getActivity()?->getId(),
+            'project' => $this->timesheet->getProject()?->getId(),
         ];
 
         if ($this->copy) {
+            $tags = null;
+            if (!empty($this->timesheet->getTagsAsArray())) {
+                $tags = implode(',', $this->timesheet->getTagsAsArray());
+            }
+
             $data['description'] = $this->timesheet->getDescription();
-            $data['tags'] = implode(',', $this->timesheet->getTagsAsArray());
+            $data['tags'] = $tags;
         }
 
         return $data;

@@ -10,18 +10,18 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\CustomerQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the customer.
  */
-class CustomerToolbarForm extends AbstractToolbarForm
+final class CustomerToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
         $this->addVisibilityChoice($builder);
@@ -31,10 +31,7 @@ class CustomerToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, CustomerQuery::CUSTOMER_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CustomerQuery::class,

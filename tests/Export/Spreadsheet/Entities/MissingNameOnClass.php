@@ -11,9 +11,7 @@ namespace App\Tests\Export\Spreadsheet\Entities;
 
 use App\Export\Annotation as Exporter;
 
-/**
- * @Exporter\Expose(label="label.accessor", exp="foo")
- */
+#[Exporter\Expose(label: 'accessor', exp: 'foo')]
 class MissingNameOnClass
 {
 }

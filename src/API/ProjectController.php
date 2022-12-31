@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -18,6 +16,7 @@ use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
+use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
@@ -26,85 +25,53 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Attributes as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 
-/**
- * @RouteResource("Project")
- * @SWG\Tag(name="Project")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
- */
-class ProjectController extends BaseApiController
+#[Route(path: '/projects')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Project')]
+final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
-    /**
-     * @var ProjectRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ProjectRateRepository
-     */
-    private $projectRateRepository;
-    /**
-     * @var ProjectService
-     */
-    private $projectService;
-
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository, ProjectService $projectService)
-    {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->projectRateRepository = $projectRateRepository;
-        $this->projectService = $projectService;
+    public function __construct(
+        private ViewHandlerInterface $viewHandler,
+        private ProjectRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private ProjectRateRepository $projectRateRepository,
+        private ProjectService $projectService
+    ) {
     }
 
     /**
-     * Returns a collection of projects.
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns a collection of project entities",
-     *      @SWG\Schema(
-     *          type="array",
-     *          @SWG\Items(ref="#/definitions/ProjectCollection")
-     *      )
-     * )
-     * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
-     * @Rest\QueryParam(name="customers", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of customer IDs to filter projects")
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default: 1)")
-     * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)")
-     * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)")
-     * @Rest\QueryParam(name="ignoreDates", requirements="1", strict=true, nullable=true, description="If set, start and end are completely ignored. Allowed values: 1 (default: off)")
-     * @Rest\QueryParam(name="globalActivities", requirements="0|1", strict=true, nullable=true, description="If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
-     * @Rest\QueryParam(name="term", description="Free search term")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
+     * Returns a collection of projects (which are visible to the user)
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
+    #[Rest\Get(path: '', name: 'get_projects')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter projects')]
+    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter projects: 1=visible, 2=hidden, 3=both')]
+    #[Rest\QueryParam(name: 'start', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)')]
+    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)')]
+    #[Rest\QueryParam(name: 'ignoreDates', requirements: 1, strict: true, nullable: true, description: 'If set, start and end are completely ignored. Allowed values: 1 (default: off)')]
+    #[Rest\QueryParam(name: 'globalActivities', requirements: '0|1', strict: true, nullable: true, description: "If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")]
+    #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
+    #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -112,30 +79,38 @@ class ProjectController extends BaseApiController
         $query = new ProjectQuery();
         $query->setCurrentUser($user);
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
-        if (!empty($customers = $paramFetcher->get('customers'))) {
-            if (!\is_array($customers)) {
-                $customers = explode(',', $customers);
-            }
-            $query->setCustomers($customers);
+        /** @var array<int> $customers */
+        $customers = $paramFetcher->get('customers');
+        $customer = $paramFetcher->get('customer');
+        if (\is_string($customer) && $customer !== '') {
+            $customers[] = $customer;
         }
 
-        if (!empty($customer = $paramFetcher->get('customer'))) {
+        foreach (array_unique($customers) as $customerId) {
+            $customer = $customerRepository->find($customerId);
+            if ($customer === null) {
+                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+            }
             $query->addCustomer($customer);
         }
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (null !== ($globalActivities = $paramFetcher->get('globalActivities'))) {
+        $globalActivities = $paramFetcher->get('globalActivities');
+        if ($globalActivities !== null) {
             $query->setGlobalActivities((bool) $globalActivities);
         }
 
@@ -146,22 +121,26 @@ class ProjectController extends BaseApiController
 
         if (!$ignoreDates) {
             $factory = $this->getDateTimeFactory();
-            if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
+            $now = $factory->createDateTime();
+            $begin = $paramFetcher->get('start');
+            $end = $paramFetcher->get('end');
+
+            if (\is_string($begin) && $begin !== '') {
                 $query->setProjectStart($factory->createDateTime($begin));
             }
 
-            if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
+            if (\is_string($end) && $end !== '') {
                 $query->setProjectEnd($factory->createDateTime($end));
             }
 
-            if (empty($begin) && empty($end)) {
-                $now = $factory->createDateTime();
+            if ($query->getProjectStart() === null && $query->getProjectEnd() === null) {
                 $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -174,25 +153,14 @@ class ProjectController extends BaseApiController
 
     /**
      * Returns one project
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns one project entity",
-     *      @SWG\Schema(ref="#/definitions/ProjectEntity"),
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    #[OA\Response(response: 200, description: 'Returns one project entity', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
+    #[Rest\Get(path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function getAction(Project $project): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -200,36 +168,23 @@ class ProjectController extends BaseApiController
 
     /**
      * Creates a new project
-     *
-     * @SWG\Post(
-     *      description="Creates a new project and returns it afterwards",
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Returns the new created project",
-     *          @SWG\Schema(ref="#/definitions/ProjectEntity"),
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(description: 'Creates a new project and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
+    #[Rest\Post(path: '', name: 'post_project')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_project')) {
-            throw new AccessDeniedHttpException('User cannot create projects');
+            throw $this->createAccessDeniedException('User cannot create projects');
         }
 
         $project = $this->projectService->createNewProject();
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'date_format' => self::DATE_FORMAT,
+            'date_format' => self::DATE_ONLY_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
             'include_time' => $this->isGranted('time', $project),
         ]);
@@ -253,44 +208,16 @@ class ProjectController extends BaseApiController
 
     /**
      * Update an existing project
-     *
-     * @SWG\Patch(
-     *      description="Update an existing project, you can pass all or just a subset of all attributes",
-     *      @SWG\Response(
-     *          response=200,
-     *          description="Returns the updated project",
-     *          @SWG\Schema(ref="#/definitions/ProjectEntity")
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="Project ID to update",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function patchAction(Request $request, int $id): Response
+    #[Security("is_granted('edit', project)")]
+    #[OA\Patch(description: 'Update an existing project, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Project ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function patchAction(Request $request, Project $project): Response
     {
-        $project = $this->repository->find($id);
-
-        if (null === $project) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('User cannot update project');
-        }
-
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
 
@@ -321,37 +248,17 @@ class ProjectController extends BaseApiController
 
     /**
      * Sets the value of a meta-field for an existing project
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/ProjectEntity")
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="Project record ID to set the meta-field value for",
-     *      required=true,
-     * )
-     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
-     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    #[Security("is_granted('edit', project)")]
+    #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Project record ID to set the meta-field value for', required: true)]
+    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
+    public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
     {
-        $project = $this->repository->find($id);
-
-        if (null === $project) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this project');
-        }
-
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
 
@@ -359,7 +266,7 @@ class ProjectController extends BaseApiController
         $value = $paramFetcher->get('value');
 
         if (null === ($meta = $project->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
         $meta->setValue($value);
@@ -374,39 +281,15 @@ class ProjectController extends BaseApiController
 
     /**
      * Returns a collection of all rates for one project
-     *
-     * @SWG\Response(
-     *      response=200,
-     *      description="Returns a collection of project rate entities",
-     *      @SWG\Schema(
-     *          type="array",
-     *          @SWG\Items(ref="#/definitions/ProjectRate")
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The project whose rates will be returned",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
-    public function getRatesAction(int $id): Response
+    #[Security("is_granted('edit', project)")]
+    #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rates will be returned', required: true)]
+    #[Rest\Get(path: '/{id}/rates', name: 'get_project_rates', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function getRatesAction(Project $project): Response
     {
-        /** @var Project|null $project */
-        $project = $this->repository->find($id);
-
-        if (null === $project) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rates = $this->projectRateRepository->getRatesForProject($project);
 
         $view = new View($rates, 200);
@@ -416,50 +299,20 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an project
-     *
-     * @SWG\Delete(
-     *      @SWG\Response(
-     *          response=204,
-     *          description="Returns no content: 204 on successful delete"
-     *      )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The project whose rate will be removed",
-     *      required=true,
-     * )
-     * @SWG\Parameter(
-     *      name="rateId",
-     *      in="path",
-     *      type="integer",
-     *      description="The rate to remove",
-     *      required=true,
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
+     * Deletes one rate for a project
      */
-    public function deleteRateAction(string $id, string $rateId): Response
+    #[Security("is_granted('edit', project)")]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rate will be removed', required: true)]
+    #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_project_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
+    #[Entity('rate', expr: 'repository.find(rateId)')]
+    public function deleteRateAction(Project $project, ProjectRate $rate): Response
     {
-        /** @var Project|null $project */
-        $project = $this->repository->find($id);
-
-        if (null === $project) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
-        /** @var ProjectRate|null $rate */
-        $rate = $this->projectRateRepository->find($rateId);
-
-        if (null === $rate || $rate->getProject() !== $project) {
-            throw new NotFoundException();
+        if ($rate->getProject() !== $project) {
+            throw $this->createNotFoundException();
         }
 
         $this->projectRateRepository->deleteRate($rate);
@@ -470,45 +323,17 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to an project
-     *
-     * @SWG\Post(
-     *  @SWG\Response(
-     *      response=200,
-     *      description="Returns the new created rate",
-     *      @SWG\Schema(ref="#/definitions/ProjectRate")
-     *  )
-     * )
-     * @SWG\Parameter(
-     *      name="id",
-     *      in="path",
-     *      type="integer",
-     *      description="The project to add the rate for",
-     *      required=true,
-     * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
-     *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectRateForm")
-     * )
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
+     * Adds a new rate to a project
      */
-    public function postRateAction(int $id, Request $request): Response
+    #[Security("is_granted('edit', project)")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The project to add the rate for', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectRateForm'))]
+    #[Rest\Post(path: '/{id}/rates', name: 'post_project_rate', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    public function postRateAction(Project $project, Request $request): Response
     {
-        /** @var Project|null $project */
-        $project = $this->repository->find($id);
-
-        if (null === $project) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $project)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rate = new ProjectRate();
         $rate->setProject($project);
 

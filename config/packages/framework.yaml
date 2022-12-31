@@ -1,37 +1,34 @@
 framework:
     secret: '%env(APP_SECRET)%'
     default_locale: en
-    csrf_protection: ~
-    #http_method_override: true
+    csrf_protection: true
+    http_method_override: false
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
-    #session:
-    #    handler_id:  session.handler.native_file
-    #    save_path:   "%kernel.project_dir%/var/sessions/%kernel.environment%"
-
     session:
         handler_id: App\Security\SessionHandler
         cookie_secure: auto
-        cookie_httponly: true
         cookie_samesite: lax
+        cookie_httponly: true
+        storage_factory_id: session.storage.factory.native
 
     #esi: ~
     #fragments: ~
     php_errors:
         log: true
 
-    cache:
-        # The app cache caches to the filesystem by default. Other options include:
+    mailer:
+        # prevent that emails are sent out in dev systems
+        dsn: 'null://null'
 
-        # Redis
-        #app: cache.adapter.redis
-        #default_redis_provider: redis://localhost
+when@prod:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_URL)%'
 
-        # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-        #app: cache.adapter.apcu
-
-    #available with Symfony 4.1
-    #validation:
-        # possible values: 'loose', 'strict', 'html5'
-        #email_validation_mode: 'html5'
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file

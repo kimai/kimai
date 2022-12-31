@@ -1,42 +1,34 @@
 {% set projectStats = data %}
-{% set title = options.title|default('label.my_team_projects') %}
-{% set widgetId = options.id %}
+{% set title = options.title|default('my_team_projects') %}
 
-{% if projectStats|length > 0 %}
-<div class="row">
-    <div class="col-md-12">
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-            {% import "macros/widgets.html.twig" as widgets %}
-            {% import "macros/progressbar.html.twig" as progress %}
-            {% block box_attributes %}id="{{ widgetId }}"{% endblock %}
-            {% block box_body_class %}no-padding box-body-scrollable{% endblock %}
-            {% block box_title %}
-                {% if not title is empty %}{{ title|trans }}{% endif %}
-            {% endblock %}
-            {% block box_body %}
-                <table class="table table-hover dataTable" role="grid">
-                    <tbody>
-                    {% for row in projectStats|sort((a, b) => a.entity.name <=> b.entity.name) %}
-                        {% set project = row.entity %}
-                        <tr{% if is_granted('details', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
-                            <td>
-                                {{ widgets.label_project(project) }}
-                                <br>
-                                <small>{{ widgets.label_customer(project.customer) }}</small>
-                            </td>
-                            <td style="width:50%">
-                                {% if row.hasBudget() and is_granted('budget', row.entity) %}
-                                    {{ progress.progressbar_budget(row, row.entity.customer.currency) }}
-                                {% elseif row.hasTimeBudget() and is_granted('time', row.entity) %}
-                                    {{ progress.progressbar_timebudget(row) }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>                
-            {% endblock %}
-        {% endembed %}
-    </div>
-</div>
-{% endif %}
+{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% block box_body_class %}p-0 box-body-scrollable{% endblock %}
+    {% block box_title %}
+        {% if not title is empty %}{{ title|trans }}{% endif %}
+    {% endblock %}
+    {% block box_body %}
+        <table class="table table-hover dataTable" role="grid">
+            <tbody>
+            {% for row in projectStats|sort((a, b) => a.entity.name <=> b.entity.name) %}
+                {% set project = row.entity %}
+                <tr{% if is_granted('details', project) %} class="alternative-link open-edit" data-href="{{ path('project_details', {'id': project.id}) }}"{% endif %}>
+                    <td>
+                        {{ widgets.label_project(project) }}
+                        <br>
+                        <small>{{ widgets.label_customer(project.customer) }}</small>
+                    </td>
+                    <td style="width:50%">
+                        {% if row.hasBudget() and is_granted('budget', row.entity) %}
+                            {{ progress.progressbar_budget(row, row.entity.customer.currency) }}
+                        {% elseif row.hasTimeBudget() and is_granted('time', row.entity) %}
+                            {{ progress.progressbar_timebudget(row) }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+{% endembed %}

@@ -27,7 +27,7 @@ class BudgetStatisticModelTest extends TestCase
 
     protected function getEntity(): EntityWithBudget
     {
-        return new Customer();
+        return new Customer('foo');
     }
 
     public function testDefaults()

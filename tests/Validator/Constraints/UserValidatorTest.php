@@ -54,7 +54,10 @@ class UserValidatorTest extends ConstraintValidatorTestCase
 
     public function testEmptyUserIsValid()
     {
-        $this->validator->validate(new UserEntity(), new User(['message' => 'myMessage']));
+        $user = new UserEntity();
+        $user->setUserIdentifier('foo');
+        $user->setEmail('test');
+        $this->validator->validate($user, new User(['message' => 'myMessage']));
 
         $this->assertNoViolation();
     }
@@ -62,7 +65,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
     public function testUserIsValidWithEmptyRepository()
     {
         $user = new UserEntity();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $user->setEmail('foo@example.com');
 
         $this->validator->validate($user, new User(['message' => 'myMessage']));
@@ -83,7 +86,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         $this->validator->initialize($this->context);
 
         $user = new UserEntity();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $user->setEmail('foo@example.com');
 
         $this->validator->validate($user, new User());

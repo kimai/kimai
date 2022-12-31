@@ -1,11 +1,7 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "customer/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'customers'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.customer(customer, 'rates') }}{% endblock %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 
 {% block main %}
-    {{ include(app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
+    {{ include(kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
         'title': customer.name,
         'form': form,
         'back': path('admin_customer')

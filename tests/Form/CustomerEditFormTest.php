@@ -20,7 +20,7 @@ class CustomerEditFormTest extends TypeTestCase
 {
     public function testWithNewProject()
     {
-        $model = new Customer();
+        $model = new Customer('foo');
         $form = $this->factory->createBuilder(CustomerEditForm::class, $model);
 
         $attr = $form->getFormConfig()->getOption('attr');
@@ -39,7 +39,7 @@ class CustomerEditFormTest extends TypeTestCase
 
     public function testWithBudget()
     {
-        $model = new Customer();
+        $model = new Customer('foo');
         $form = $this->factory->createBuilder(CustomerEditForm::class, $model, [
             'include_budget' => true,
         ]);
@@ -50,7 +50,7 @@ class CustomerEditFormTest extends TypeTestCase
 
     public function testWithTimeBudget()
     {
-        $model = new Customer();
+        $model = new Customer('foo');
         $form = $this->factory->createBuilder(CustomerEditForm::class, $model, [
             'include_time' => true,
         ]);
@@ -61,7 +61,7 @@ class CustomerEditFormTest extends TypeTestCase
 
     public function testWithBudgetAndTimeBudget()
     {
-        $model = new Customer();
+        $model = new Customer('foo');
         $form = $this->factory->createBuilder(CustomerEditForm::class, $model, [
             'include_budget' => true,
             'include_time' => true,

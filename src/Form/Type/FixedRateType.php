@@ -16,12 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to set the fixed rate.
  */
-class FixedRateType extends AbstractType
+final class FixedRateType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -30,14 +27,11 @@ class FixedRateType extends AbstractType
                 'description' => 'Fixed rate',
             ],
             'required' => false,
-            'label' => 'label.fixedRate',
+            'label' => 'fixedRate',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return MoneyType::class;
     }

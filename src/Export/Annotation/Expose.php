@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the Kimai time-tracking app.
  *
@@ -11,47 +9,16 @@ declare(strict_types=1);
 
 namespace App\Export\Annotation;
 
-use Doctrine\Common\Annotations\Annotation\Enum;
-use Doctrine\Common\Annotations\Annotation\Required;
-
-/**
- * Annotation class for @Expose().
- *
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD"})
- */
+#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD)]
 final class Expose
 {
-    /**
-     * @var string
-     * @Required
-     */
-    public $label;
-    /**
-     * @var string
-     */
-    public $name;
-    /**
-     * @Enum({"string", "datetime", "date", "time", "integer", "float", "duration", "boolean", "array"})
-     */
-    public $type = 'string';
-    /**
-     * @var string
-     */
-    public $exp = null;
+    public string $type = 'string';
 
-    public function __construct(array $data)
+    public function __construct(public ?string $name = null, public ?string $label = null, string $type = 'string', public ?string $exp = null)
     {
-        if (isset($data['value'])) {
-            $this->name = $data['value'];
-            unset($data['value']);
+        if (!\in_array($type, ['string', 'datetime', 'date', 'time', 'integer', 'float', 'duration', 'boolean', 'array'])) {
+            throw new \InvalidArgumentException(sprintf('Unknown type "%s" on annotation "%s".', $type, self::class));
         }
-
-        foreach ($data as $key => $value) {
-            if (!property_exists(self::class, $key)) {
-                throw new \InvalidArgumentException(sprintf('Unknown property "%s" on annotation "%s".', $key, self::class));
-            }
-            $this->{$key} = $value;
-        }
+        $this->type = $type;
     }
 }

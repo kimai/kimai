@@ -15,26 +15,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerTeamPermissionForm extends AbstractType
+final class CustomerTeamPermissionForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('teams', TeamType::class, [
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false,
-            ])
-        ;
+        $builder->add('teams', TeamType::class, [
+            'multiple' => true,
+            'expanded' => true,
+            'by_reference' => false,
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Customer::class,

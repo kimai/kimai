@@ -14,90 +14,61 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="kimai2_user_preferences",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "name"})
- *      }
- * )
- *
- * @Serializer\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'kimai2_user_preferences')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'name'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
     public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
     public const LOCALE = 'language';
-    public const HOUR_24 = 'hours_24';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
 
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="preferences")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Assert\NotNull()
-     */
-    private $user;
-    /**
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
-     */
-    private $name;
-    /**
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="value", type="string", length=255, nullable=true)
-     */
-    private $value;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var bool
-     */
-    private $enabled = true;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'preferences')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[Assert\NotNull]
+    private ?User $user = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private string $name;
+    #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?string $value;
+    private ?string $type = null;
+    private bool $enabled = true;
     /**
      * @var Constraint[]
      */
-    private $constraints = [];
+    private array $constraints = [];
     /**
      * An array of options for the form element
      * @var array
      */
-    private $options = [];
-    /**
-     * @var int
-     */
-    private $order = 1000;
-    /**
-     * @var string
-     */
-    private $section = 'default';
+    private array $options = [];
+    private int $order = 1000;
+    private string $section = 'default';
+
+    public function __construct(string $name, string|int|float|bool|null $value = null)
+    {
+        $this->name = $this->sanitizeName($name);
+        $this->value = $value;
+    }
 
     public function getId(): ?int
     {
@@ -129,35 +100,32 @@ class UserPreference
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->sanitizeName($this->name);
     }
 
-    public function setName(string $name): UserPreference
+    public function matches(string $name): bool
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->sanitizeName($name) === $this->getName();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function sanitizeName(?string $name): string
     {
-        switch ($this->type) {
-            case YesNoType::class:
-            case CheckboxType::class:
-                return (bool) $this->value;
-            case IntegerType::class:
-                return (int) $this->value;
-        }
+        return str_replace(['.', '-'], '_', $name);
+    }
 
-        return $this->value;
+    public function getValue(): bool|int|float|string|null
+    {
+        return match ($this->type) {
+            YesNoType::class, CheckboxType::class => (bool) $this->value,
+            IntegerType::class => (int) $this->value,
+            NumberType::class => (float) $this->value,
+            default => $this->value,
+        };
     }
 
     /**
      * Given $value will not be serialized before its stored, so it should be one of the types:
-     * integer, string or boolean
+     * integer, float, string, boolean or null
      *
      * @param mixed $value
      * @return UserPreference
@@ -228,7 +196,7 @@ class UserPreference
     /**
      * @return Constraint[]
      */
-    public function getConstraints()
+    public function getConstraints(): array
     {
         return $this->constraints;
     }

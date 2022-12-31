@@ -20,7 +20,7 @@ abstract class AbstractCustomerEventTest extends TestCase
 
     public function testGetterAndSetter()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $sut = $this->createCustomerEvent($customer);
 
         self::assertInstanceOf(Event::class, $sut);

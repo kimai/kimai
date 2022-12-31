@@ -25,7 +25,7 @@ class TeamVoterTest extends AbstractVoterTest
      */
     public function testVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TeamVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
@@ -39,7 +39,7 @@ class TeamVoterTest extends AbstractVoterTest
         $user3 = $this->getUser(3, User::ROLE_ADMIN);
         $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
-        $team = new Team();
+        $team = new Team('foo');
 
         $result = VoterInterface::ACCESS_ABSTAIN;
 

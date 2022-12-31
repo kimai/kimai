@@ -21,9 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to edit entity meta fields.
  */
-class MetaFieldsCollectionType extends AbstractType
+final class MetaFieldsCollectionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -32,6 +32,16 @@ class MetaFieldsCollectionType extends AbstractType
                 $collection = $event->getData();
                 foreach ($collection as $collectionItem) {
                     $collection->removeElement($collectionItem);
+
+                    if (!($collectionItem instanceof MetaTableTypeInterface)) {
+                        continue;
+                    }
+
+                    // prevents unconfigured values from showing up in the form
+                    if (null === $collectionItem->getType()) {
+                        continue;
+                    }
+
                     $collection->set($collectionItem->getName(), $collectionItem);
                 }
             },
@@ -40,7 +50,7 @@ class MetaFieldsCollectionType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'entry_type' => EntityMetaDefinitionType::class,
@@ -51,10 +61,7 @@ class MetaFieldsCollectionType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return CollectionType::class;
     }

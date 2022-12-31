@@ -14,7 +14,6 @@ use App\Entity\Project;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,11 +25,11 @@ class AnnotatedObjectExporterTest extends TestCase
     public function testExport()
     {
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
-        $annotationExtractor = new AnnotationExtractor(new AnnotationReader());
+        $annotationExtractor = new AnnotationExtractor();
 
         $project = new Project();
         $project->setName('test project');
-        $project->setCustomer((new Customer())->setName('A customer'));
+        $project->setCustomer(new Customer('A customer'));
         $project->setComment('Lorem Ipsum');
         $project->setOrderNumber('1234567890');
         $project->setBudget(123456.7890);

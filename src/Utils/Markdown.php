@@ -10,41 +10,36 @@
 namespace App\Utils;
 
 /**
- * Parse markdown syntax and return HTML.
+ * Parse Markdown syntax and return HTML.
  */
 final class Markdown
 {
-    /**
-     * @var ParsedownExtension
-     */
-    private $parser;
+    private ?ParsedownExtension $parser = null;
+    private ?\Parsedown $parserFull = null;
 
-    public function toHtml(string $text, bool $safe = true): string
+    public function toHtml(string $text): string
     {
         if ($this->parser === null) {
             $this->parser = new ParsedownExtension();
             $this->parser->setUrlsLinked(true);
             $this->parser->setBreaksEnabled(true);
+            $this->parser->setSafeMode(true);
+            $this->parser->setMarkupEscaped(true);
         }
-
-        if ($safe !== true) {
-            @trigger_error('Only safe mode is supported in Markdown since 1.16.3 to prevent XSS attacks. Parameter $safe will be removed with 2.0', E_USER_DEPRECATED);
-        }
-
-        $this->parser->setSafeMode(true);
-        $this->parser->setMarkupEscaped(true);
 
         return $this->parser->text($text);
     }
 
     public function withFullMarkdownSupport(string $text): string
     {
-        $parser = new \Parsedown();
-        $parser->setUrlsLinked(true);
-        $parser->setBreaksEnabled(true);
-        $parser->setSafeMode(true);
-        $parser->setMarkupEscaped(true);
+        if ($this->parserFull === null) {
+            $this->parserFull = new \Parsedown();
+            $this->parserFull->setUrlsLinked(true);
+            $this->parserFull->setBreaksEnabled(true);
+            $this->parserFull->setSafeMode(true);
+            $this->parserFull->setMarkupEscaped(true);
+        }
 
-        return $parser->text($text);
+        return $this->parserFull->text($text);
     }
 }

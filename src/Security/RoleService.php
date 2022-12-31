@@ -9,55 +9,43 @@
 
 namespace App\Security;
 
-use App\Entity\Role;
 use App\Repository\RoleRepository;
 
 final class RoleService
 {
     /**
-     * @var array
+     * @var array<string>
      */
-    private $roles;
-    /**
-     * @var string[]
-     */
-    private $roleNames = [];
-    /**
-     * @var RoleRepository
-     */
-    private $repository;
+    private array $roleNames = [];
+    private bool $isInitialized = false;
 
-    public function __construct(RoleRepository $repository, array $roles)
+    /**
+     * @param RoleRepository $repository
+     * @param array<string> $roles as defined in security.yaml
+     */
+    public function __construct(private RoleRepository $repository, private array $roles)
     {
-        $this->repository = $repository;
-        $this->roles = $roles;
     }
 
-    private function cacheNames()
-    {
-        if (empty($this->roleNames)) {
-            $roles = [];
-            foreach ($this->roles as $key => $value) {
-                $roles[] = $key;
-                if (\is_array($value)) {
-                    foreach ($value as $name) {
-                        $roles[] = $name;
-                    }
-                }
-            }
-
-            /** @var Role $item */
-            foreach ($this->repository->findAll() as $item) {
-                $roles[] = $item->getName();
-            }
-
-            $this->roleNames = array_values(array_unique($roles));
-        }
-    }
-
+    /**
+     * Returns a list of UPPERCASE role names.
+     *
+     * @return string[]
+     */
     public function getAvailableNames(): array
     {
-        $this->cacheNames();
+        if (!$this->isInitialized) {
+            $roles = [];
+            foreach ($this->repository->findAll() as $item) {
+                if ($item->getName() === null) {
+                    continue;
+                }
+                $roles[] = strtoupper($item->getName());
+            }
+
+            $this->roleNames = array_values(array_unique(array_merge($this->roles, $roles)));
+            $this->isInitialized = true;
+        }
 
         return $this->roleNames;
     }

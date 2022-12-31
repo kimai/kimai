@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target>Σχετικά με το Kimai</target>
-      </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Υποστήριξη</target>
@@ -20,7 +16,7 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>Δωρίστε για το μέλλον του Kimai</target>
+        <target>Δωρίστε</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>

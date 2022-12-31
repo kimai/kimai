@@ -9,26 +9,20 @@
 
 namespace App\Repository;
 
+use App\Entity\ExportableItem;
 use App\Entity\Timesheet;
-use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Repository\Query\InvoiceQuery;
 
 final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInterface
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
      * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @return ExportableItem[]
      */
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable
     {
@@ -36,9 +30,9 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
     }
 
     /**
-     * @param InvoiceItemInterface[] $invoiceItems
+     * @param ExportableItem[] $invoiceItems
      */
-    public function setExported(array $invoiceItems)
+    public function setExported(array $invoiceItems): void
     {
         $timesheets = [];
 

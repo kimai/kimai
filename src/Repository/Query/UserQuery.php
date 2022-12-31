@@ -18,23 +18,22 @@ class UserQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
-    public const USER_ORDER_ALLOWED = ['id', 'alias', 'username', 'title', 'email'];
+    public const USER_ORDER_ALLOWED = ['alias', 'user', 'username', 'title', 'email'];
 
-    /**
-     * @var string|null
-     */
-    private $role;
+    private ?string $role = null;
     /**
      * @var Team[]
      */
-    private $searchTeams = [];
+    private array $searchTeams = [];
+    private ?bool $systemAccount = null;
 
     public function __construct()
     {
         $this->setDefaults([
-            'orderBy' => 'username',
+            'orderBy' => 'user',
             'searchTeams' => [],
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
+            'systemAccount' => null,
         ]);
     }
 
@@ -64,5 +63,15 @@ class UserQuery extends BaseQuery implements VisibilityInterface
         $this->role = $role;
 
         return $this;
+    }
+
+    public function getSystemAccount(): ?bool
+    {
+        return $this->systemAccount;
+    }
+
+    public function setSystemAccount(?bool $systemAccount): void
+    {
+        $this->systemAccount = $systemAccount;
     }
 }

@@ -1,0 +1,352 @@
+
+{% block quick_entry_week_row %}
+    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+        <td>
+            {{ form_row(form.project) }}
+        </td>
+        <td>
+            {{ form_row(form.activity) }}
+        </td>
+        {% for timesheet in form.timesheets %}
+            <td class="text-center{% if timesheet.vars.data.begin is weekend %} weekend{% endif %}{% if timesheet.vars.data.begin is today %} today{% endif %}">
+                {{ form_widget(timesheet) }}
+            </td>
+        {% endfor %}
+        <td class="text-nowrap text-center total qe-totals-row"></td>
+    </tr>
+{% endblock %}
+
+{% block _team_edit_form_members_entry_user_widget %}
+    {#  this will convert the select box into a hidden field, which are exchangeable from an HTML perspective #}
+    {%- set type = 'hidden' -%}
+    {{ block('form_widget_simple') }}
+{% endblock %}
+
+{% block _team_edit_form_members_entry_teamlead_widget %}
+    {% set attr = attr|merge({'class' : 'form-selectgroup-input '}) %}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{% endblock %}
+
+{% block _team_edit_form_members_widget %}
+    <p>{{ 'team.configure_teamlead.help'|trans }}</p>
+    {{ form_widget(form, {row_attr: {class: 'mb-1'}}) }}
+{% endblock %}
+
+{% block team_member_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block team_member_widget %}
+    {% import 'macros/widgets.html.twig' as widgets%}
+    {% set data = {} %}
+    {% set user = null %}
+    {% if form.vars.data is not null and form.vars.data.user is not null %}
+        {% set user = form.vars.data.user %}
+        {% set data = {id: user.id, color: user.color|colorize(user.displayName), title: user.title, username: user.userIdentifier, alias: user.alias, initials: user.initials, accountnumber: user.accountNumber, display: user.displayName} %}
+    {% endif %}
+    <div class="row mb-1"{% for key, value in data %} data-{{ key }}="{{ value }}"{% endfor %}>
+        <div class="col-xs-12">
+            <label class="form-selectgroup-item flex-fill">
+                {{ form_widget(form.teamlead) }}
+                <div class="form-selectgroup-label d-flex align-items-center p-3">
+                    <div class="me-3">
+                        <span class="form-selectgroup-check"></span>
+                    </div>
+                    <div class="form-selectgroup-label-content d-flex align-items-center me-2">
+                        {% if user is not null %}
+                            {{ widgets.user_avatar(form.vars.data.user) }}
+                        {% else %}
+                            {{ widgets.avatar('__INITIALS__', '__COLOR__', '__DISPLAY__') }}
+                        {% endif %}
+                    </div>
+                    <div class="form-selectgroup-label-content d-flex align-items-center">
+                        <div class="text-start">
+                            <div class="font-weight-medium">
+                                {% if user is not null %}
+                                    {{ form.vars.data.user.displayName }}
+                                {% else %}
+                                    __DISPLAY__
+                                {% endif %}
+                                {{ form_widget(form.user) }}
+                                {{ form_errors(form.user) }}
+                            </div>
+                            {% if user is not null %}
+                                <div class="text-muted">{{- form.vars.data.user.title -}}</div>
+                            {% else %}
+                                <div class="text-muted">__TITLE__</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="ms-auto">
+                        <a href="#" class="btn btn-icon remove-member">{{ icon('trash', true) }}</a>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+{% endblock team_member_widget %}
+
+{% block date_widget -%}
+    {% set format = locale_format('date') %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-datepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{- block('form_widget_simple') -}}
+    </div>
+{%- endblock date_widget %}
+
+{% block time_widget -%}
+    {%- set format = locale_format('time') -%}
+    {%- set jsFormat = format|js_format -%}
+    {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{ block('form_widget_simple') }}
+        {% set time_presets = form_time_presets(app.user.timezone, format) %}
+        {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
+        <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu dropdown-menu-end pre-scrollable">
+            <div class="dropdown-menu-columns">
+                {% for index in [0, 1, 2, 3] %}
+                    <div class="dropdown-menu-column" style="min-width: 4rem">
+                        {% for value in time_presets %}
+                            {% if loop.index0 % 4 == index %}
+                                <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{%- endblock time_widget %}
+
+{% block daterange_widget %}
+    {% set format = locale_format('date')|js_format %}
+    {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
+    <div class="input-group">
+        {% if ranges is defined %}
+        <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu dropdown-menu-start pre-scrollable">
+            {% for title, range in ranges %}
+                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ ('daterangepicker.' ~ title)|trans({}, 'daterangepicker') }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock daterange_widget %}
+
+{% block duration_widget %}
+    <div class="duration-widget">
+        {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
+            <div class="input-group">
+                <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                <div class="dropdown-menu dropdown-menu-start pre-scrollable">
+                    <div class="dropdown-menu-columns">
+                        {% for index in [0, 1, 2, 3] %}
+                            <div class="dropdown-menu-column" style="min-width: 4rem">
+                                {% for value in form.vars.duration_presets %}
+                                    {% if loop.index0 % 4 == index %}
+                                        <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {{ block('form_widget_simple') }}
+                {% if form.vars.toggle is defined and form.vars.toggle %}
+                    <div class="input-group-text add-on">
+                        <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            {{ block('form_widget_simple') }}
+        {% endif %}
+    </div>
+{% endblock duration_widget %}
+
+{% block date_time_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="row">
+            <div class="col-sm-6">
+                {{- form_widget(form.date, { datetime: true } ) -}}
+                {{- form_errors(form.date) -}}
+            </div>
+            <div class="col-sm-6">
+            {{- form_widget(form.time, { datetime: true } ) -}}
+            {{- form_errors(form.time) -}}
+            </div>
+        </div>
+    </div>
+{%- endblock date_time_widget %}
+
+{% block text_widget -%}
+    {% if icon is not empty %}
+        <div class="input-group">
+            <div class="input-group-text">
+                <i class="{{ icon|icon(false, icon) }}"></i>
+            </div>
+            {{ block('form_widget_simple') }}
+        </div>
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{%- endblock text_widget %}
+
+{% block mail_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon('mail') }}
+        </div>
+        {{ block('email_widget') }}
+    </div>
+{%- endblock mail_widget %}
+
+{# user password fields, search for "secret" block_prefix #}
+{% block secret_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon('password') }}
+        </div>
+        {{ block('password_widget') }}
+    </div>
+{%- endblock secret_widget %}
+
+{% block yearpicker_widget -%}
+    {%- set functionName = 'year_' ~ form.vars.id %}
+    <div class="btn-group">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event-bubbles="change">
+            {{ icon('left') }}
+        </a>
+        <a class="btn" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_month_name">
+                {% if show_range %}
+                    {{ year|date_short }} &ndash; {{ nextYear|date_short }}
+                {% else %}
+                    {{ year|date_format('Y') }}
+                {% endif %}
+            </span>
+        </a>
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextYear|report_date }}" data-event-bubbles="change">
+            {{ icon('right') }}
+        </a>
+    </div>
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+{%- endblock yearpicker_widget %}
+
+{% block monthpicker_widget -%}
+    {%- set functionName = 'month_' ~ form.vars.id %}
+    <div class="btn-group">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event-bubbles="change">
+            {{ icon('left') }}
+        </a>
+        <a class="btn" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
+        </a>
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event-bubbles="change">
+            {{ icon('right') }}
+        </a>
+    </div>
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+{%- endblock monthpicker_widget %}
+
+{% block weekpicker_widget -%}
+    {%- set functionName = 'week_' ~ form.vars.id %}
+    <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event-bubbles="change">
+            {{ icon('left') }}
+        </a>
+        <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}">
+                {{ week|month_name(true) }}
+                &ndash;
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
+            </span>
+        </a>
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextWeek|report_date }}" data-event-bubbles="change">
+            {{ icon('right') }}
+        </a>
+    </div>
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+{%- endblock weekpicker_widget %}
+
+{% block tags_widget %}
+    {% if form.vars.choices is defined %}
+        {{ block('choice_widget_collapsed') }}
+    {% else %}
+        {{ block('form_widget_simple') }}
+    {% endif %}
+{% endblock tags_widget %}
+
+{% block report_sum_widget %}
+    <div class="dropdown"{% if form.vars.choices|length <= 1 %} style="display: none"{% endif %}>
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('display', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock report_sum_widget %}
+
+{# customer phone/fax, search for "phone" block_prefix #}
+{% block phone_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon(attr.icon ?? 'phone') }}
+        </div>
+        {{ block('tel_widget') }}
+    </div>
+{%- endblock phone_widget %}
+
+{# customer homepage, search for "homepage" block_prefix #}
+{% block homepage_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            https://
+        </div>
+        {{ block('url_widget') }}
+    </div>
+{%- endblock homepage_widget %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="invalid-feedback d-block{% if form is rootform and loop.last %} mb-3{% endif %}">{{ error.message }}</div>
+        {%- endfor -%}
+    {%- endif %}
+{%- endblock form_errors %}
+
+{%- block meta_fields_collection_row -%}
+    <div{% with {attr: row_attr|merge({class: (row_attr.class|default(form.parent.vars.name ~ '_row_' ~ form.vars.name))|trim})} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock meta_fields_collection_row %}
+
+{%- block meta_fields_collection_widget -%}
+    {% for meta in form|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+        {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+    {% endfor %}
+{%- endblock meta_fields_collection_widget %}

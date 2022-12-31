@@ -11,11 +11,11 @@ namespace App\Tests\Configuration;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Configuration;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\SystemConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
  */
 class SystemConfigurationTest extends TestCase
 {
@@ -28,7 +28,7 @@ class SystemConfigurationTest extends TestCase
     {
         $loader = new TestConfigLoader($loaderSettings);
 
-        return new SystemConfiguration($loader, $settings);
+        return SystemConfigurationFactory::create($loader, $settings);
     }
 
     protected function getDefaultSettings()
@@ -42,11 +42,10 @@ class SystemConfigurationTest extends TestCase
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
                 ],
-                'mode' => 'duration_only',
+                'mode' => 'punch',
                 'markdown_content' => false,
                 'active_entries' => [
                     'hard_limit' => 99,
-                    'soft_limit' => 15,
                 ],
                 'default_begin' => 'now',
                 'duration_increment' => 10,
@@ -67,7 +66,6 @@ class SystemConfigurationTest extends TestCase
             ],
             'calendar' => [
                 'businessHours' => [
-                    'days' => [2, 4, 6],
                     'begin' => '07:49',
                     'end' => '19:27'
                 ],
@@ -100,13 +98,9 @@ class SystemConfigurationTest extends TestCase
             'theme' => [
                 'color_choices' => 'Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000',
                 'colors_limited' => true,
-                'tags_create' => true,
                 'branding' => [
                     'logo' => null,
-                    'mini' => null,
                     'company' => 'Acme Corp.',
-                    'title' => 'Fantastic Time-Tracking',
-                    'translation' => null,
                 ],
             ],
         ];
@@ -126,14 +120,7 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
             (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
-            (new Configuration())->setName('theme.colors_limited')->setValue(false),
         ];
-    }
-
-    public function testPrefix()
-    {
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals('kimai', $sut->getPrefix());
     }
 
     public function testDefaultWithoutLoader()
@@ -143,11 +130,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('GBP', $sut->find('defaults.customer.currency'));
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
-        $this->assertTrue($sut->find('theme.colors_limited'));
-        $this->assertTrue($sut->isThemeColorsLimited());
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
-        $this->assertEquals('Fantastic Time-Tracking', $sut->getBrandingTitle());
-        $this->assertTrue($sut->isAllowTagCreation());
     }
 
     public function testDefaultWithLoader()
@@ -158,8 +141,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertTrue($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(7, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertFalse($sut->isSamlActive());
-        $this->assertFalse($sut->find('theme.colors_limited'));
-        $this->assertEquals('Europe/London', $sut->default('defaults.customer.timezone'));
     }
 
     public function testDefaultWithMixedConfigs()
@@ -172,8 +153,17 @@ class SystemConfigurationTest extends TestCase
         ]);
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertTrue($sut->isSamlActive());
-        $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
+        $this->assertEquals('Silver|#c0c0c0', $sut->getThemeColorChoices());
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
+    }
+
+    public function testOffsetUnsetThrowsException()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('SystemBundleConfiguration does not support offsetUnset()');
+
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $sut->offsetUnset('dfsdf');
     }
 
     public function testUnknownConfigs()
@@ -182,14 +172,26 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
         $this->assertEquals('hello', $sut->find('timesheet.foo'));
+        $this->assertEquals('hello', $sut->offsetGet('timesheet.foo'));
+        $this->assertTrue($sut->has('timesheet.foo'));
+        $this->assertTrue($sut->offsetExists('timesheet.foo'));
+        $this->assertFalse($sut->has('timesheet.yyyyyyyyy'));
+        $this->assertFalse($sut->offsetExists('timesheet.yyyyyyyyy'));
         $this->assertFalse($sut->has('xxxxxxxx.yyyyyyyyy'));
+        $this->assertFalse($sut->offsetExists('xxxxxxxx.yyyyyyyyy'));
         $this->assertNull($sut->find('xxxxxxxx.yyyyyyyyy'));
+        $this->assertNull($sut->offsetGet('xxxxxxxx.yyyyyyyyy'));
+
+        $sut->offsetSet('xxxxxxxx.yyyyyyyyy', 'foooo-bar!');
+        $this->assertTrue($sut->has('xxxxxxxx.yyyyyyyyy'));
+        $this->assertTrue($sut->offsetExists('xxxxxxxx.yyyyyyyyy'));
+        $this->assertEquals('foooo-bar!', $sut->find('xxxxxxxx.yyyyyyyyy'));
+        $this->assertEquals('foooo-bar!', $sut->offsetGet('xxxxxxxx.yyyyyyyyy'));
     }
 
     public function testCalendarWithoutLoader()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals([2, 4, 6], $sut->getCalendarBusinessDays());
         $this->assertEquals('07:49', $sut->getCalendarBusinessTimeBegin());
         $this->assertEquals('19:27', $sut->getCalendarBusinessTimeEnd());
         $this->assertEquals('06:00:00', $sut->getCalendarTimeframeBegin());
@@ -243,12 +245,8 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(99, $sut->getTimesheetActiveEntriesHardLimit());
         $this->assertFalse($sut->isTimesheetAllowFutureTimes());
         $this->assertFalse($sut->isTimesheetMarkdownEnabled());
-        $this->assertEquals('duration_only', $sut->getTimesheetTrackingMode());
+        $this->assertEquals('punch', $sut->getTimesheetTrackingMode());
         $this->assertEquals('now', $sut->getTimesheetDefaultBeginTime());
-        $this->assertFalse($sut->isTimesheetLockdownActive());
-        $this->assertEquals('', $sut->getTimesheetLockdownPeriodStart());
-        $this->assertEquals('', $sut->getTimesheetLockdownPeriodEnd());
-        $this->assertEquals('', $sut->getTimesheetLockdownGracePeriod());
         $this->assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
         $this->assertEquals('', $sut->getTimesheetDefaultRoundingDays());
         $this->assertEquals('', $sut->getTimesheetDefaultRoundingMode());
@@ -256,17 +254,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
         $this->assertEquals(10, $sut->getTimesheetIncrementDuration());
-        $this->assertEquals(5, $sut->getTimesheetIncrementBegin());
-        $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedSettingsWithoutLoader()
-    {
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals(99, $sut->getTimesheetActiveEntriesSoftLimit());
+        $this->assertEquals(5, $sut->getTimesheetIncrementMinutes());
     }
 
     public function testTimesheetWithLoader()
@@ -277,10 +265,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertTrue($sut->isTimesheetMarkdownEnabled());
         $this->assertEquals('default', $sut->getTimesheetTrackingMode());
         $this->assertEquals('07:00', $sut->getTimesheetDefaultBeginTime());
-        $this->assertTrue($sut->isTimesheetLockdownActive());
-        $this->assertEquals('first day of last month', $sut->getTimesheetLockdownPeriodStart());
-        $this->assertEquals('last day of last month', $sut->getTimesheetLockdownPeriodEnd());
-        $this->assertEquals('+5 days', $sut->getTimesheetLockdownGracePeriod());
         $this->assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
         $this->assertEquals('', $sut->getTimesheetDefaultRoundingDays());
         $this->assertEquals('', $sut->getTimesheetDefaultRoundingMode());
@@ -288,7 +272,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
         $this->assertEquals(10, $sut->getTimesheetIncrementDuration());
-        $this->assertEquals(5, $sut->getTimesheetIncrementBegin());
-        $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
+        $this->assertEquals(5, $sut->getTimesheetIncrementMinutes());
     }
 }

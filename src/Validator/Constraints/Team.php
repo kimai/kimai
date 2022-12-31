@@ -9,14 +9,10 @@
 
 namespace App\Validator\Constraints;
 
-use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
- */
-class Team extends Constraint
+#[\Attribute(\Attribute::TARGET_CLASS)]
+final class Team extends Constraint
 {
     public const MISSING_TEAMLEAD = 'kimai-team-001';
 
@@ -24,9 +20,9 @@ class Team extends Constraint
         self::MISSING_TEAMLEAD => 'At least one team leader must be assigned to the team.',
     ];
 
-    public $message = 'The team has invalid settings.';
+    public string $message = 'The team has invalid settings.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

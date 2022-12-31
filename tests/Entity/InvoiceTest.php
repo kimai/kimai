@@ -139,15 +139,14 @@ class InvoiceTest extends TestCase
     protected function getInvoiceModel(\DateTime $created): InvoiceModel
     {
         $user = new User();
-        $user->setUsername('one-user');
+        $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');
-        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
-        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+        $user->addPreference(new UserPreference('kitty', 'kat'));
+        $user->addPreference(new UserPreference('hello', 'world'));
 
-        $customer = new Customer();
-        $customer->setName('customer,with/special#name');
+        $customer = new Customer('customer,with/special#name');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
         $customer->setVatId('kjuo8967');
@@ -187,7 +186,7 @@ class InvoiceTest extends TestCase
         $entries = [$timesheet];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
@@ -250,8 +249,6 @@ class InvoiceTest extends TestCase
     {
         $sut = new Invoice();
 
-        self::assertNull($sut->getMetaFieldValue('foo'));
-
         $meta = new InvoiceMeta();
         $meta->setName('foo')->setValue('bar2')->setType('test');
         self::assertInstanceOf(Invoice::class, $sut->setMetaField($meta));
@@ -260,7 +257,6 @@ class InvoiceTest extends TestCase
         self::assertSame($result, $meta);
         self::assertEquals('test', $result->getType());
         self::assertEquals('bar2', $result->getValue());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $meta2 = new InvoiceMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
@@ -271,7 +267,6 @@ class InvoiceTest extends TestCase
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
         self::assertEquals('test2', $result->getType());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $sut->setMetaField((new InvoiceMeta())->setName('blub')->setIsVisible(true));
         $sut->setMetaField((new InvoiceMeta())->setName('blab')->setIsVisible(true));

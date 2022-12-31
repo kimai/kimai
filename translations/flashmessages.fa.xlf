@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target state="translated">ثبت زمان شروع نشد</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
-        <target state="translated">به حد مجاز رکوردهای زمانی فعال رسیده است. لطفاً ابتدا حداقل یک اندازه گیری زمان اجرا را متوقف کنید.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target state="translated">شما در حال ویرایش یک رکورد صادر شده هستید</target>

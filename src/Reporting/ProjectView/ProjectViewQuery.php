@@ -15,31 +15,12 @@ use DateTime;
 
 final class ProjectViewQuery
 {
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var DateTime
-     */
-    private $today;
-    /**
-     * @var User|null
-     */
-    private $user;
-    /**
-     * @var bool
-     */
-    private $includeNoBudget = false;
-    /**
-     * @var bool
-     */
-    private $includeNoWork = false;
+    private ?Customer $customer = null;
+    private bool $includeNoWork = false;
+    private ?bool $budgetType = true;
 
-    public function __construct(DateTime $today, User $user)
+    public function __construct(private DateTime $today, private User $user)
     {
-        $this->today = $today;
-        $this->user = $user;
     }
 
     public function getUser(): ?User
@@ -47,14 +28,27 @@ final class ProjectViewQuery
         return $this->user;
     }
 
-    public function isIncludeNoBudget(): bool
+    public function getBudgetType(): ?bool
     {
-        return $this->includeNoBudget;
+        return $this->budgetType;
     }
 
-    public function setIncludeNoBudget(bool $includeNoBudget): void
+    /**
+     * @internal
+     */
+    public function setBudgetType(?bool $budgetType): void
     {
-        $this->includeNoBudget = $includeNoBudget;
+        $this->budgetType = $budgetType;
+    }
+
+    public function isIncludeWithoutBudget(): bool
+    {
+        return $this->budgetType === false;
+    }
+
+    public function isIncludeWithBudget(): bool
+    {
+        return $this->budgetType === true;
     }
 
     public function isIncludeNoWork(): bool

@@ -17,14 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractTimesheetEvent extends Event
 {
-    /**
-     * @var Timesheet
-     */
-    private $timesheet;
-
-    public function __construct(Timesheet $timesheet)
+    public function __construct(private Timesheet $timesheet)
     {
-        $this->timesheet = $timesheet;
     }
 
     public function getTimesheet(): Timesheet

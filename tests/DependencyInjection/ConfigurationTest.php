@@ -51,21 +51,6 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
-    /**
-     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
-     * @group legacy
-     */
-    public function testValidatePluginDir()
-    {
-        $config = $this->getMinConfig();
-        $config['plugin_dir'] = '/tmp/';
-
-        $finalizedConfig = $this->getCompiledConfig($config);
-        $finalizedConfig['plugin_dir'] = '/tmp/';
-
-        $this->assertConfig($config, $finalizedConfig);
-    }
-
     public function testValidateLdapConfigUserBaseDn()
     {
         $this->expectException(InvalidConfigurationException::class);
@@ -291,7 +276,6 @@ class ConfigurationTest extends TestCase
                 ],
                 'rates' => [],
                 'active_entries' => [
-                    'soft_limit' => 1,
                     'hard_limit' => 1,
                 ],
                 'rules' => [
@@ -304,10 +288,11 @@ class ConfigurationTest extends TestCase
                     'allow_overbooking_budget' => true,
                     'lockdown_period_timezone' => null,
                     'break_warning_duration' => 0,
-                    'long_running_duration' => 0,
+                    'long_running_duration' => 480,
+                    'require_activity' => true,
                 ],
-                'duration_increment' => null,
-                'time_increment' => null,
+                'duration_increment' => 15,
+                'time_increment' => 15,
             ],
             'user' => [
                 'registration' => false,
@@ -323,7 +308,6 @@ class ConfigurationTest extends TestCase
                     0 => 'var/invoices/',
                     1 => 'templates/invoice/renderer/',
                 ],
-                'simple_form' => false,
                 'number_format' => '{Y}/{cy,3}',
             ],
             'export' => [
@@ -334,19 +318,11 @@ class ConfigurationTest extends TestCase
                     1 => 'templates/export/renderer/',
                 ],
             ],
-            'languages' => [],
             'calendar' => [
                 'week_numbers' => true,
                 'day_limit' => 4,
                 'slot_duration' => '00:30:00',
                 'businessHours' => [
-                    'days' => [
-                        0 => 1,
-                        1 => 2,
-                        2 => 3,
-                        3 => 4,
-                        4 => 5,
-                    ],
                     'begin' => '08:00',
                     'end' => '20:00',
                 ],
@@ -360,47 +336,23 @@ class ConfigurationTest extends TestCase
                     ],
                 ],
                 'weekends' => true,
-                'dragdrop_amount' => 10,
+                'dragdrop_amount' => 5,
                 'dragdrop_data' => false,
                 'title_pattern' => '{activity}',
             ],
             'theme' => [
-                'active_warning' => 3,
-                'box_color' => 'blue',
-                'select_type' => 'selectpicker',
                 'show_about' => true,
-                'chart' => [
-                    'background_color' => '#3c8dbc',
-                    'border_color' => '#3b8bba',
-                    'grid_color' => 'rgba(0,0,0,.05)',
-                    'height' => '200',
-                ],
                 'branding' => [
                     'logo' => null,
                     'mini' => null,
                     'company' => null,
                     'title' => null,
-                    'translation' => null,
-                ],
-                'autocomplete_chars' => 3,
-                'tags_create' => true,
-                'calendar' => [
-                    'background_color' => '#d2d6de'
                 ],
                 'colors_limited' => true,
                 'color_choices' => 'Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA',
-                'random_colors' => true,
                 'avatar_url' => false,
             ],
-            'industry' => [
-                'translation' => null,
-            ],
-            'dashboard' => [],
-            'widgets' => [],
             'defaults' => [
-                'timesheet' => [
-                    'billable' => true,
-                ],
                 'customer' => [
                     'timezone' => null,
                     'country' => 'DE',
@@ -409,7 +361,7 @@ class ConfigurationTest extends TestCase
                 'user' => [
                     'timezone' => null,
                     'language' => 'en',
-                    'theme' => null,
+                    'theme' => 'default',
                     'currency' => 'EUR',
                 ],
             ],
@@ -460,6 +412,7 @@ class ConfigurationTest extends TestCase
                 'connection' => [
                     'organization' => []
                 ],
+                'provider' => null,
             ],
             'company' => [
                 'financial_year' => null,
@@ -471,6 +424,12 @@ class ConfigurationTest extends TestCase
             ],
             'project' => [
                 'copy_teams_on_create' => false,
+            ],
+            'activity' => [
+                'allow_inline_create' => false,
+            ],
+            'customer' => [
+                'number_format' => '{cc,4}',
             ],
         ];
 

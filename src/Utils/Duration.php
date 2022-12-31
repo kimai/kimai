@@ -12,21 +12,12 @@ namespace App\Utils;
 /**
  * Convert duration strings into seconds.
  */
-class Duration
+final class Duration
 {
     public const FORMAT_COLON = 'colon';
     public const FORMAT_NATURAL = 'natural';
     public const FORMAT_DECIMAL = 'decimal';
-
-    /**
-     * @deprecated since 1.13
-     */
-    public const FORMAT_SECONDS = 'seconds';
-    /**
-     * @deprecated since 1.21
-     */
-    public const FORMAT_WITH_SECONDS = '%h:%m';
-    public const FORMAT_NO_SECONDS = '%h:%m';
+    public const FORMAT_DEFAULT = '%h:%m';
 
     /**
      * Transforms seconds into a duration string.
@@ -35,7 +26,7 @@ class Duration
      * @param string $format
      * @return string|null
      */
-    public function format(?int $seconds, string $format = self::FORMAT_NO_SECONDS)
+    public function format(?int $seconds, string $format = self::FORMAT_DEFAULT): ?string
     {
         if (null === $seconds) {
             return null;
@@ -50,12 +41,11 @@ class Duration
 
         $hour = (int) floor($seconds / 3600);
         $minute = (int) floor((int) ($seconds / 60) % 60);
-
-        $hour = $hour > 9 ? $hour : '0' . $hour;
         $minute = $minute > 9 ? $minute : '0' . $minute;
-        $formatted = str_replace('%h', $hour, $format);
 
-        return str_replace('%m', $minute, $formatted);
+        $formatted = str_replace('%h', (string) $hour, $format);
+
+        return str_replace('%m', (string) $minute, $formatted);
     }
 
     /**
@@ -70,11 +60,7 @@ class Duration
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
-        if (strpos($duration, '.') !== false || strpos($duration, ',') !== false) {
-            return $this->parseDuration($duration, self::FORMAT_DECIMAL);
-        }
-
-        if (is_numeric($duration) && $duration == (int) $duration) {
+        if (str_contains($duration, '.') || str_contains($duration, ',') || is_numeric($duration)) {
             return $this->parseDuration($duration, self::FORMAT_DECIMAL);
         }
 
@@ -95,32 +81,15 @@ class Duration
             return 0;
         }
 
-        switch ($mode) {
-            case self::FORMAT_COLON:
-                $seconds = $this->parseColonFormat($duration);
-                break;
-
-            case self::FORMAT_NATURAL:
-                $seconds = $this->parseNaturalFormat($duration);
-                break;
-
-            case self::FORMAT_DECIMAL:
-                $seconds = $this->parseDecimalFormat($duration);
-                break;
-
-            case self::FORMAT_SECONDS:
-                @trigger_error('Duration format FORMAT_SECONDS is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-                $seconds = (int) $duration;
-                break;
-
-            default:
-                throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode));
-        }
-
-        return $seconds;
+        return match ($mode) {
+            self::FORMAT_COLON => $this->parseColonFormat($duration),
+            self::FORMAT_NATURAL => $this->parseNaturalFormat($duration),
+            self::FORMAT_DECIMAL => $this->parseDecimalFormat($duration),
+            default => throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode)),
+        };
     }
 
-    protected function parseNaturalFormat(string $duration): int
+    private function parseNaturalFormat(string $duration): int
     {
         try {
             $interval = new \DateInterval('PT' . strtoupper($duration));
@@ -133,7 +102,7 @@ class Duration
         }
     }
 
-    protected function parseDecimalFormat(string $duration): int
+    private function parseDecimalFormat(string $duration): int
     {
         $duration = str_replace(',', '.', $duration);
         $duration = (float) $duration;
@@ -142,7 +111,7 @@ class Duration
         return (int) $duration;
     }
 
-    protected function parseColonFormat(string $duration): int
+    private function parseColonFormat(string $duration): int
     {
         $parts = explode(':', $duration);
         if (\count($parts) < 2 || \count($parts) > 3) {
@@ -168,7 +137,7 @@ class Duration
 
         $seconds = 0;
 
-        if (3 == \count($parts)) {
+        if (3 === \count($parts)) {
             $seconds += (int) array_pop($parts);
         }
 

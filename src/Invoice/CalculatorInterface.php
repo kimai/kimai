@@ -19,14 +19,14 @@ interface CalculatorInterface
      *
      * @return InvoiceItem[]
      */
-    public function getEntries();
+    public function getEntries(): array;
 
     /**
      * Set the invoice model and can be used to fetch the customer.
      *
      * @param InvoiceModel $model
      */
-    public function setModel(InvoiceModel $model);
+    public function setModel(InvoiceModel $model): void;
 
     /**
      * Returns the subtotal before taxes.
@@ -50,19 +50,11 @@ interface CalculatorInterface
     public function getTotal(): float;
 
     /**
-     * Returns the currency for the invoices amounts.
-     *
-     * @deprecated since 1.8 will be removed with 2.0
-     * @return string
-     */
-    public function getCurrency(): string;
-
-    /**
      * Returns the percentage for the value-added tax (VAT) calculation.
      *
      * @return float
      */
-    public function getVat(): ?float;
+    public function getVat(): float;
 
     /**
      * Returns the total amount of worked time in seconds.

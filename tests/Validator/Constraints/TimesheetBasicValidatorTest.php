@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetBasic;
 use App\Validator\Constraints\TimesheetBasicValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -32,7 +33,9 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator()
     {
-        return new TimesheetBasicValidator();
+        $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['rules' => ['require_activity' => true]]]);
+
+        return new TimesheetBasicValidator($configuration);
     }
 
     public function testConstraintIsInvalid()
@@ -55,7 +58,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
 
         $this->buildViolation('You must submit a begin date.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetBasic::MISSING_BEGIN_ERROR)
             ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
@@ -85,7 +88,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             // therefor sub-constraints will not be executed :-(
             /*
             ->buildNextViolation('The begin date cannot be in the future.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
             */
             ->assertRaised();
@@ -102,7 +105,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
 
         $this->buildViolation('End date must not be earlier then start date.')
-            ->atPath('property.path.end')
+            ->atPath('property.path.end_date')
             ->setCode(TimesheetBasic::END_BEFORE_BEGIN_ERROR)
             ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
@@ -120,7 +123,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $activity = new Activity();
         $project1 = new Project();
         $project2 = new Project();
-        $project2->setCustomer(new Customer());
+        $project2->setCustomer(new Customer('foo'));
         $activity->setProject($project1);
 
         $timesheet = new Timesheet();
@@ -142,7 +145,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     public function testDisabledValuesDuringStart()
     {
         $begin = new \DateTime('-10 hour');
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->setVisible(false);
         $activity = new Activity();
         $activity->setVisible(false);
@@ -175,26 +178,26 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     public function getProjectStartEndTestData()
     {
         yield [new \DateTime(), new \DateTime(), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
-            ['end', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime('-2 hour'), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-12 hour'), [
-            ['begin', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-2 hour'), [
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime(), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
     }
 
@@ -207,7 +210,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin(new \DateTime('-10 hour'));
         $timesheet->setEnd(new \DateTime('-1 hour'));
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = new Project();
         $project->setStart($start);
         $project->setEnd($end);
@@ -224,7 +227,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
                 $assertion = $this->buildViolation($violation[2])
                     ->atPath('property.path.' . $violation[0])
                     ->setCode($violation[1])
-                    ;
+                ;
             } else {
                 $assertion = $assertion->buildNextViolation($violation[2])
                     ->atPath('property.path.' . $violation[0])

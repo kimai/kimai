@@ -19,25 +19,27 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimesheetApiEditForm extends TimesheetEditForm
+final class TimesheetApiEditForm extends TimesheetEditForm
 {
-    protected function addBillable(FormBuilderInterface $builder, array $options)
+    protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['include_billable']) {
             return;
         }
 
-        $builder->add('billable', BillableType::class, []);
+        $builder->add('billable', BillableType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $data = $event->getData();
                 if (\array_key_exists('billable', $data)) {
+                    $data['billableMode'] = Timesheet::BILLABLE_AUTOMATIC;
                     $event->getForm()->add('billableMode', TimesheetBillableType::class, []);
-                    if ($data['billable'] === true) {
+                    $billable = $data['billable'] === null ? false : (bool) $data['billable'];
+                    if ($billable === true) {
                         $data['billableMode'] = Timesheet::BILLABLE_YES;
-                    } elseif ($data['billable'] === false) {
+                    } elseif ($billable === false) {
                         $data['billableMode'] = Timesheet::BILLABLE_NO;
                     }
                 }
@@ -46,14 +48,13 @@ class TimesheetApiEditForm extends TimesheetEditForm
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('metaFields');
+        if ($builder->has('metaFields')) {
+            $builder->remove('metaFields');
+        }
 
         if ($builder->has('duration')) {
             $builder->remove('duration');
@@ -61,6 +62,11 @@ class TimesheetApiEditForm extends TimesheetEditForm
 
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
+        }
+
+        // TODO this is only a quick fix, see bugs reports
+        if ($builder->has('duration')) {
+            $builder->remove('duration');
         }
 
         if ($builder->has('tags')) {
@@ -72,7 +78,22 @@ class TimesheetApiEditForm extends TimesheetEditForm
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
+    {
+        $builder->add('begin', DateTimeApiType::class, array_merge($dateTimeOptions, [
+            'label' => 'begin',
+        ]));
+    }
+
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
+    {
+        $builder->add('end', DateTimeApiType::class, array_merge($dateTimeOptions, [
+            'label' => 'end',
+            'required' => false,
+        ]));
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

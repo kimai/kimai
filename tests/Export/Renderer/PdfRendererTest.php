@@ -10,12 +10,11 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\PDFRenderer;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\HtmlToPdfConverter;
-use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
 /**
@@ -26,22 +25,6 @@ use Twig\Environment;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
-    public function testDisposition()
-    {
-        $sut = new PDFRenderer(
-            $this->createMock(Environment::class),
-            $this->createMock(HtmlToPdfConverter::class),
-            $this->createMock(ProjectStatisticService::class)
-        );
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-        $sut->setDispositionInline(false);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-        $sut->setDispositionInline(true);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_INLINE, $sut->getDisposition());
-        $sut->setDispositionInline(false);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-    }
-
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
@@ -64,8 +47,8 @@ class PdfRendererTest extends AbstractRendererTest
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
-        $stack = $kernel->getContainer()->get('request_stack');
+        $twig = self::getContainer()->get('twig');
+        $stack = self::getContainer()->get('request_stack');
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
         $converter = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
         $request = new Request();
@@ -74,12 +57,15 @@ class PdfRendererTest extends AbstractRendererTest
 
         $sut = new PDFRenderer($twig, $converter, $this->createMock(ProjectStatisticService::class));
 
-        $response = $this->render($sut);
-
         $prefix = date('Ymd');
+
+        $response = $this->render($sut);
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
         $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
-
         $this->assertNotEmpty($response->getContent());
+
+        $sut->setDispositionInline(true);
+        $response = $this->render($sut);
+        $this->assertEquals('inline; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
     }
 }

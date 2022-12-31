@@ -9,7 +9,7 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,11 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * This is one of the cases where I don't feel like it is necessary to add tests, so lets "cheat" with:
  * @codeCoverageIgnore
  */
-class ResetDevelopmentCommand extends AbstractResetCommand
+#[AsCommand(name: 'kimai:reset:dev', description: 'Resets the "development" environment')]
+final class ResetDevelopmentCommand extends AbstractResetCommand
 {
-    protected function getEnvName(): string
+    public function __construct(string $kernelEnvironment)
     {
-        return 'dev';
+        parent::__construct($kernelEnvironment);
     }
 
     protected function loadData(InputInterface $input, OutputInterface $output): void

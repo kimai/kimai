@@ -14,83 +14,53 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait MetaTableTypeTrait
 {
-    /**
-     * @var int|null
-     *
-     * @Serializer\Exclude()
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[Serializer\Exclude]
+    private ?int $id = null;
     /**
      * Name of the meta (custom) field
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?string $name = null;
     /**
      * Value of the meta (custom) field
      *
-     * @var string|null
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="value", type="text", length=65535, nullable=true)
-     * @Assert\Length(max=65535, allowEmptyString=true)
+     * ATTENTION:
+     * This field can be used to temporary hold data in another format (e.g. array) during form transformation,
      */
-    private $value;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": false})
-     * @Assert\NotNull()
-     */
-    private $visible = false;
-
-    /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var bool
-     */
-    private $required = false;
-
+    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[Assert\Length(max: 65535)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private mixed $value = null;
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
+    private bool $visible = false;
+    private ?string $label = null;
+    private ?string $type = null;
+    private bool $required = false;
     /**
      * @var Constraint[]
      */
-    private $constraints = [];
-
+    private array $constraints = [];
     /**
      * An array of options for the form element
-     * @var array
+     * @var array<string, mixed>
      */
-    private $options = [];
-    /**
-     * @var int
-     */
-    private $order = 0;
+    private array $options = [];
+    private int $order = 0;
 
     public function getName(): ?string
     {
@@ -108,20 +78,18 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    /**
-     * @return int|bool|string|null
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
-        switch ($this->type) {
-            case YesNoType::class:
-            case CheckboxType::class:
-                return (bool) $this->value;
-            case IntegerType::class:
-                return (int) $this->value;
+        if ($this->value === null) {
+            return null;
         }
 
-        return $this->value;
+        return match ($this->type) {
+            YesNoType::class, CheckboxType::class => (\is_string($this->value) || \is_int($this->value)) ? (bool) $this->value : $this->value,
+            IntegerType::class => (\is_string($this->value) || \is_int($this->value)) ? (int) $this->value : $this->value,
+            NumberType::class => (\is_string($this->value) || \is_float($this->value)) ? (float) $this->value : $this->value,
+            default => $this->value,
+        };
     }
 
     /**
@@ -130,7 +98,7 @@ trait MetaTableTypeTrait
      * @param mixed $value
      * @return MetaTableTypeInterface
      */
-    public function setValue($value): MetaTableTypeInterface
+    public function setValue(mixed $value): MetaTableTypeInterface
     {
         // unchecked checkboxes / false bool would save an empty string in the database
         // those cannot be searched in the database
@@ -138,7 +106,11 @@ trait MetaTableTypeTrait
             switch ($this->type) {
                 case YesNoType::class:
                 case CheckboxType::class:
-                    $value = (int) $value;
+                    if (\is_string($value) || \is_bool($value)) {
+                        $value = (int) $value;
+                    } else {
+                        throw new \InvalidArgumentException('Failed converting meta-field bool value');
+                    }
             }
         }
 
@@ -239,13 +211,17 @@ trait MetaTableTypeTrait
         return $this->label;
     }
 
-    public function setLabel(string $label): MetaTableTypeInterface
+    public function setLabel(?string $label): MetaTableTypeInterface
     {
         $this->label = $label;
 
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return MetaTableTypeInterface
+     */
     public function setOptions(array $options): MetaTableTypeInterface
     {
         $this->options = $options;
@@ -253,6 +229,9 @@ trait MetaTableTypeTrait
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;

@@ -9,20 +9,26 @@
 
 namespace App\Form\Toolbar;
 
+use App\Form\Type\DatePickerType;
+use App\Form\Type\InvoiceTemplateType;
+use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering timesheet entries for invoices.
  */
-class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
+final class InvoiceToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    use ToolbarFormTrait;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
+        $this->addTemplateChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
+        $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
+        $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
@@ -31,14 +37,26 @@ class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
         $this->addActivityMultiChoice($builder, $options, true);
         $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);
+        $builder->add('invoiceDate', DatePickerType::class, [
+            'required' => true,
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    protected function addTemplateChoice(FormBuilderInterface $builder): void
     {
-        parent::configureOptions($resolver);
-        $resolver->setDefault('include_user', true);
+        $builder->add('template', InvoiceTemplateType::class, [
+            'required' => true,
+            'placeholder' => null,
+        ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => InvoiceQuery::class,
+            'csrf_protection' => false,
+            'include_user' => true,
+            'timezone' => date_default_timezone_get(),
+        ]);
     }
 }

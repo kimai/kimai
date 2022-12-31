@@ -17,13 +17,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class QuickEntryVoter extends Voter
 {
-    private $permissionManager;
-    private $trackingModeService;
-
-    public function __construct(RolePermissionManager $permissionManager, TrackingModeService $trackingModeService)
+    public function __construct(private RolePermissionManager $permissionManager, private TrackingModeService $trackingModeService)
     {
-        $this->permissionManager = $permissionManager;
-        $this->trackingModeService = $trackingModeService;
     }
 
     /**
@@ -31,7 +26,7 @@ final class QuickEntryVoter extends Voter
      * @param mixed $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return 'quick-entry' === $attribute;
     }
@@ -42,7 +37,7 @@ final class QuickEntryVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

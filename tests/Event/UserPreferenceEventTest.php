@@ -23,8 +23,7 @@ class UserPreferenceEventTest extends TestCase
     {
         $user = new User();
         $user->setAlias('foo');
-        $pref = new UserPreference();
-        $pref->setName('foo')->setValue('bar');
+        $pref = new UserPreference('foo', 'bar');
 
         $sut = new UserPreferenceEvent($user, []);
 
@@ -42,36 +41,12 @@ class UserPreferenceEventTest extends TestCase
 
         $user = new User();
         $user->setAlias('foo');
-        $pref = new UserPreference();
-        $pref->setName('foo')->setValue('bar');
-
-        $pref2 = new UserPreference();
-        $pref2->setName('foo')->setValue('hello');
+        $pref = new UserPreference('foo', 'bar');
+        $pref2 = new UserPreference('foo', 'hello');
 
         $sut = new UserPreferenceEvent($user, []);
 
         $sut->addPreference($pref);
         $sut->addPreference($pref2);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecations()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $user = new User();
-        $user->setAlias('foo');
-        $pref = new UserPreference();
-        $pref->setName('foo')->setValue('bar');
-
-        $pref2 = new UserPreference();
-        $pref2->setName('foo')->setValue('hello');
-
-        $sut = new UserPreferenceEvent($user, []);
-
-        $sut->addUserPreference($pref); // change me, once the deprecated method will be deleted
-        $sut->addUserPreference($pref2); // change me, once the deprecated method will be deleted
     }
 }

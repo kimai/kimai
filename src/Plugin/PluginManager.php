@@ -9,73 +9,54 @@
 
 namespace App\Plugin;
 
-use App\Constants;
-
-class PluginManager
+final class PluginManager
 {
     /**
-     * @var Plugin[]
+     * @var array<Plugin>|null
      */
-    private $plugins = [];
+    private ?array $plugins = null;
+    /**
+     * @var iterable<PluginInterface>
+     */
+    private iterable $bundles;
 
     /**
-     * @param PluginInterface[] $plugins
+     * @param iterable<PluginInterface> $plugins
      */
     public function __construct(iterable $plugins)
     {
-        foreach ($plugins as $plugin) {
-            $this->addPlugin($plugin);
-        }
-    }
-
-    /**
-     * @param PluginInterface $plugin
-     */
-    public function addPlugin(PluginInterface $plugin)
-    {
-        if (isset($this->plugins[$plugin->getName()])) {
-            return;
-        }
-
-        $this->plugins[$plugin->getName()] = $this->createPlugin($plugin);
+        $this->bundles = $plugins;
     }
 
     /**
      * @return Plugin[]
      */
-    public function getPlugins()
+    public function getPlugins(): array
     {
+        if ($this->plugins === null) {
+            $plugins = [];
+
+            foreach ($this->bundles as $bundle) {
+                $plugins[$bundle->getName()] = new Plugin($bundle);
+            }
+
+            $this->plugins = array_values($plugins);
+        }
+
         return $this->plugins;
     }
 
-    /**
-     * @param string $name
-     * @return Plugin|null
-     */
     public function getPlugin(string $name): ?Plugin
     {
-        if (!isset($this->plugins[$name])) {
-            return null;
+        $plugins = $this->getPlugins();
+
+        foreach ($plugins as $plugin) {
+            if ($plugin->getName() === $name) {
+                return $plugin;
+            }
         }
 
-        return $this->plugins[$name];
-    }
-
-    /**
-     * @param PluginInterface $bundle
-     * @return Plugin
-     */
-    protected function createPlugin(PluginInterface $bundle)
-    {
-        $plugin = new Plugin();
-        $plugin
-            ->setId($bundle->getName())
-            ->setName($bundle->getName())
-            ->setPath($bundle->getPath())
-            ->setMetadata(new PluginMetadata())
-        ;
-
-        return $plugin;
+        return null;
     }
 
     /**
@@ -83,33 +64,11 @@ class PluginManager
      * This is not pre-filled by default, as it would mean to parse several composer.json on each request.
      *
      * @param Plugin $plugin
+     * @throws \Exception
      */
-    public function loadMetadata(Plugin $plugin)
+    public function loadMetadata(Plugin $plugin): void
     {
-        $composer = $plugin->getPath() . '/composer.json';
-        if (!file_exists($composer) || !is_readable($composer)) {
-            return;
-        }
-
-        $json = json_decode(file_get_contents($composer), true);
-
-        $reqVersion = $json['extra']['kimai']['require'] ?? 'unknown';
-        // the version field is required if we use composer to install a plugin via var/packages/
-        $version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
-        $description = $json['description'] ?? '';
-
-        $homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
-
-        if (\array_key_exists('name', $json['extra']['kimai'])) {
-            $plugin->setName($json['extra']['kimai']['name']);
-        }
-
-        $plugin
-            ->getMetadata()
-            ->setHomepage($homepage)
-            ->setKimaiVersion($reqVersion)
-            ->setVersion($version)
-            ->setDescription($description)
-        ;
+        $meta = PluginMetadata::loadFromComposer($plugin->getPath());
+        $plugin->setMetadata($meta);
     }
 }

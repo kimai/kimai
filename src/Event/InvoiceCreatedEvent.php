@@ -15,13 +15,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoiceCreatedEvent extends Event
 {
-    private $invoice;
-    private $model;
-
-    public function __construct(Invoice $invoice, InvoiceModel $model)
+    public function __construct(private Invoice $invoice, private InvoiceModel $model)
     {
-        $this->invoice = $invoice;
-        $this->model = $model;
     }
 
     public function getInvoice(): Invoice

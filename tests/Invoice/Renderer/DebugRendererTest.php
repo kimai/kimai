@@ -9,11 +9,11 @@
 
 namespace App\Tests\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use App\Model\InvoiceDocument;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ class DebugRendererTest extends TestCase
 
     public function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true, [['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet2'], ['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet3']]];
+        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true, [['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], ['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet3']]];
         yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
     }
 
@@ -69,11 +69,10 @@ class DebugRendererTest extends TestCase
         }
 
         $begin = $model->getQuery()->getBegin();
-        self::assertEquals($begin->format('m'), $data['model']['query.month_number']);
-        self::assertEquals($begin->format('d'), $data['model']['query.day']);
-        // TODO check values or formats?
-        self::assertEquals('2020.08.12', $data['model']['invoice.first']);
-        self::assertEquals('2021.03.12', $data['model']['invoice.last']);
+        self::assertEquals($begin->format('m'), $data['model']['query.begin_month_number']);
+        self::assertEquals($begin->format('d'), $data['model']['query.begin_day']);
+        self::assertEquals('20.08.12', $data['model']['invoice.first']);
+        self::assertEquals('21.03.12', $data['model']['invoice.last']);
     }
 
     protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0)
@@ -108,16 +107,16 @@ class DebugRendererTest extends TestCase
             'template.vat_id',
             'template.contact',
             'template.payment_details',
-            'query.begin',
             'query.day',
-            'query.end',
             'query.month',
             'query.month_number',
             'query.year',
+            'query.begin',
             'query.begin_day',
             'query.begin_month',
             'query.begin_month_number',
             'query.begin_year',
+            'query.end',
             'query.end_day',
             'query.end_month',
             'query.end_month_number',
@@ -141,6 +140,7 @@ class DebugRendererTest extends TestCase
             'customer.time_budget_open_plain',
             'customer.mobile',
             'customer.meta.foo-customer',
+            'customer.invoice_text',
             'activity.id',
             'activity.name',
             'activity.comment',
@@ -157,12 +157,6 @@ class DebugRendererTest extends TestCase
             'user.meta.kitty',
             'testFromModelHydrator',
         ];
-
-        if ($activityCounter === 1) {
-            $keys = array_merge($keys, [
-                'activity',
-            ]);
-        }
 
         if ($activityCounter > 1) {
             $keys = array_merge($keys, [
@@ -198,11 +192,7 @@ class DebugRendererTest extends TestCase
                 'project.time_budget_open',
                 'project.time_budget_open_plain',
             ]);
-            if ($projectCounter === 1) {
-                $keys = array_merge($keys, [
-                    'project',
-                ]);
-            }
+
             if ($projectCounter > 1) {
                 $keys = array_merge($keys, [
                     'project.1.id',

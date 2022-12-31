@@ -32,12 +32,12 @@ class TagControllerTest extends ControllerBaseTest
         return $this->importFixture($fixture);
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/admin/tags/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importTags();
@@ -47,7 +47,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_admin_tags', 10);
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importTags();
@@ -65,7 +65,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_admin_tags', 2);
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/tags/create');
@@ -86,7 +86,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertEquals('A tAG Name!', $editForm->get('tag_edit_form[name]')->getValue());
     }
 
-    public function testEditAction()
+    public function testEditAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $tags = $this->importTags();
@@ -105,7 +105,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertEquals('Test 2 updated', $editForm->get('tag_edit_form[name]')->getValue());
     }
 
-    public function testMultiDeleteAction()
+    public function testMultiDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importTags();
@@ -127,7 +127,6 @@ class TagControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/admin/tags/multi-delete'),
                 'entities' => implode(',', $ids)
             ]
         ]);

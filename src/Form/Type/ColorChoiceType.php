@@ -14,70 +14,51 @@ use App\Constants;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ColorChoiceType extends AbstractType implements DataTransformerInterface
+final class ColorChoiceType extends AbstractType implements DataTransformerInterface
 {
-    public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
-
-    private $systemConfiguration;
-    /**
-     * @var bool|null
-     */
-    private $limitedColors;
-
-    public function __construct(SystemConfiguration $systemConfiguration)
+    public function __construct(private SystemConfiguration $systemConfiguration)
     {
-        $this->systemConfiguration = $systemConfiguration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
 
-    private function isLimitedColors(): bool
-    {
-        if (null === $this->limitedColors) {
-            $this->limitedColors = $this->systemConfiguration->isThemeColorsLimited();
-        }
-
-        return $this->limitedColors;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $options = [
             'documentation' => [
                 'type' => 'string',
-                'description' => sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
+                'description' => sprintf('The hexadecimal color code (default: %s)', Constants::DEFAULT_COLOR),
             ],
-            'label' => 'label.color',
+            'label' => 'color',
             'empty_data' => null,
         ];
 
-        if ($this->isLimitedColors()) {
-            $choices = [];
-            $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
+        $choices = [];
+        $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
 
-            foreach ($colors as $name => $color) {
-                $choices[$name] = $color;
-            }
-
-            $options['choices'] = $choices;
-            $options['search'] = false;
-            $options['attr']['data-renderer'] = 'color';
+        foreach ($colors as $name => $color) {
+            $choices[$name] = $color;
         }
 
+        $options['choices'] = $choices;
+        $options['search'] = false;
+
         $resolver->setDefaults($options);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-renderer' => 'color',
+        ]);
     }
 
     private function convertStringToColorArray(string $config): array
@@ -111,39 +92,18 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
         return array_unique($colors);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function transform($data)
+    public function transform(mixed $data): mixed
     {
-        if (empty($data) && !$this->isLimitedColors()) {
-            return self::DEFAULT_COLOR;
-        }
-
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function reverseTransform($data)
+    public function reverseTransform(mixed $value): mixed
     {
-        if (null === $data && !$this->isLimitedColors()) {
-            return self::DEFAULT_COLOR;
-        }
-
-        return null === $data ? null : $data;
+        return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
-        if ($this->isLimitedColors()) {
-            return ChoiceType::class;
-        }
-
-        return ColorType::class;
+        return ChoiceType::class;
     }
 }

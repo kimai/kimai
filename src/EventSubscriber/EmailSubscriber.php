@@ -18,11 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class EmailSubscriber implements EventSubscriberInterface
 {
-    private $mailer;
-
-    public function __construct(KimaiMailer $mailer)
+    public function __construct(private KimaiMailer $mailer)
     {
-        $this->mailer = $mailer;
     }
 
     public static function getSubscribedEvents(): array
@@ -32,7 +29,7 @@ final class EmailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onMailEvent(EmailEvent $event)
+    public function onMailEvent(EmailEvent $event): void
     {
         $this->mailer->send($event->getEmail());
     }

@@ -17,15 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a visibility.
  */
-class VisibilityType extends AbstractType
+final class VisibilityType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.visible',
+            'label' => 'visible',
             'choices' => [
                 'both' => VisibilityInterface::SHOW_BOTH,
                 'yes' => VisibilityInterface::SHOW_VISIBLE,
@@ -34,10 +31,7 @@ class VisibilityType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

@@ -9,21 +9,14 @@
  * [KIMAI] KimaiReloadPageWidget: a simple helper to reload the page on events
  */
 
-import jQuery from "jquery";
-
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
-        this.overlay = jQuery('<div class="overlay-wrapper"><div class="overlay"><div class="fas fa-sync fa-spin"></div></div></div>');
-        this.widget = jQuery('div.content-wrapper');
-
-        const self = this;
-
-        const reloadPage = function (event) {
+        const reloadPage = () => {
             if (fullReload) {
-                document.location.reload(true);
+                document.location.reload();
             } else {
-                self.loadPage(document.location);
+                this._loadPage(document.location);
             }
         };
 
@@ -40,34 +33,31 @@ export default class KimaiReloadPageWidget {
     }
     
     _showOverlay() {
-        this.widget.append(this.overlay);
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: 'div.page-wrapper'}));
     }
-    
-    _hideOverlay() {
-        jQuery(this.overlay).remove();
-    }
-    
-    loadPage(url) {
-        const self = this;
-        
-        self._showOverlay();
 
-        jQuery.ajax({
-            url: url,
-            data: {},
-            success: function (response) {
-                jQuery('section.content').replaceWith(
-                    jQuery(response).find('section.content')
-                );
-                document.dispatchEvent(new Event('kimai.reloadPage'));
-                self._hideOverlay();
-            },
-            dataType: 'html',
-            error: function(jqXHR, textStatus, errorThrown) {
-                self._hideOverlay();
+    _hideOverlay() {
+        document.dispatchEvent(new Event('kimai.reloadedContent'));
+    }
+
+    _loadPage(url) {
+        this._showOverlay();
+
+        window.kimai.getPlugin('fetch').fetch(url)
+            .then(response => {
+                response.text().then((text) => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    const newContent = temp.querySelector('section.content');
+                    document.querySelector('section.content').replaceWith(newContent);
+                    document.dispatchEvent(new Event('kimai.reloadPage'));
+                    this._hideOverlay();
+                });
+            })
+            .catch(() => {
+                this._hideOverlay();
                 document.location = url;
-            }
-        });        
+            });
     }
 
 }

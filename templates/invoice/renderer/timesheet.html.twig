@@ -2,7 +2,9 @@
 {% extends 'invoice/layout.html.twig' %}
 
 {% block invoice %}
-    {% set isDecimal = model.template.decimalDuration|default(false) %}
+    {% set isDecimal = true %}
+    {% set project = model.query.project %}
+    {% set activity = model.query.activity %}
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
@@ -13,7 +15,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <table class="table no-border table-condensed">
+        <table class="table no-border table-sm">
                 <tr>
                     <th>{{ 'invoice.from'|trans }}</th>
                     <td contenteditable="true">
@@ -25,7 +27,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ 'label.date'|trans }}</th>
+                    <th>{{ 'date'|trans }}</th>
                     <td contenteditable="true">
                         {% if model.query.begin|date('m') != model.query.end|date('m') or model.query.begin|date('Y') != model.query.end|date('Y') %}
                             {{ model.query.begin|date_short }} - {{ model.query.end|date_short }}
@@ -35,28 +37,28 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ 'label.customer'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
                     <td contenteditable="true">
                         {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
                         {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
                     </td>
                 </tr>
-                {% if model.query.project is not empty %}
+                {% if project is not null %}
                     <tr>
-                        <th>{{ 'label.project'|trans }}</th>
+                        <th>{{ 'project'|trans }}</th>
                         <td contenteditable="true">
-                            {{ model.query.project.name }}
-                            {% if model.query.project.orderNumber is not empty %}
-                                ({{ 'label.orderNumber'|trans }}: {{ model.query.project.orderNumber }})
+                            {{ project.name }}
+                            {% if project.orderNumber is not empty %}
+                                ({{ 'orderNumber'|trans }}: {{ project.orderNumber }})
                             {% endif %}
                         </td>
                     </tr>
                 {% endif %}
-                {% if model.query.activity is not empty %}
+                {% if activity is not null %}
                     <tr>
-                        <th>{{ 'label.activity'|trans }}</th>
+                        <th>{{ 'activity'|trans }}</th>
                         <td contenteditable="true">
-                            {{ model.query.activity.name }}
+                            {{ activity.name }}
                         </td>
                     </tr>
                 {% endif %}
@@ -69,12 +71,12 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>{{ 'label.date'|trans }}</th>
+                    <th>{{ 'date'|trans }}</th>
                     {% if model.query.user is empty %}
-                    <th>{{ 'label.user'|trans }}</th>
+                    <th>{{ 'user'|trans }}</th>
                     {% endif %}
-                    <th>{{ 'label.activity'|trans }}</th>
-                    <th class="text-right">{{ 'label.hours'|trans }}</th>
+                    <th>{{ 'activity'|trans }}</th>
+                    <th class="text-right">{{ 'hours'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,7 +114,7 @@
     <div class="row">
         <div class="col-xs-12">
             {% if model.template.paymentTerms is not empty %}
-                <p class="lead">{{ 'label.payment_terms'|trans }}</p>
+                <p class="lead">{{ 'payment_terms'|trans }}</p>
 
                 <p class="text-muted well well-sm no-shadow" contenteditable="true" style="margin-bottom: 100px">
                     {{ model.template.paymentTerms|trim|nl2br }}

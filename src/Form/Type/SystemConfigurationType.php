@@ -21,13 +21,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to edit a system configuration.
  */
-class SystemConfigurationType extends AbstractType
+final class SystemConfigurationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -45,7 +45,7 @@ class SystemConfigurationType extends AbstractType
                 }
 
                 $required = $preference->isRequired();
-                if (CheckboxType::class == $preference->getType() || YesNoType::class == $preference->getType()) {
+                if (CheckboxType::class === $preference->getType() || YesNoType::class === $preference->getType()) {
                     $required = false;
                 }
 
@@ -55,7 +55,7 @@ class SystemConfigurationType extends AbstractType
                 }
 
                 $options = [
-                    'label' => 'label.' . ($preference->getLabel() ?? $preference->getName()),
+                    'label' => $preference->getLabel() ?? $preference->getName(),
                     'constraints' => $preference->getConstraints(),
                     'required' => $required,
                     'disabled' => !$preference->isEnabled(),
@@ -68,7 +68,7 @@ class SystemConfigurationType extends AbstractType
         $builder->add('name', HiddenType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Configuration::class,

@@ -9,30 +9,17 @@
 
 namespace App\Export\Renderer;
 
+use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
-use App\Utils\HtmlToPdfConverter;
 use Twig\Environment;
 
 final class PdfRendererFactory
 {
-    /**
-     * @var Environment
-     */
-    private $twig;
-    /**
-     * @var HtmlToPdfConverter
-     */
-    private $converter;
-    /**
-     * @var ProjectStatisticService
-     */
-    private $projectStatisticService;
-
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectStatisticService)
-    {
-        $this->twig = $twig;
-        $this->converter = $converter;
-        $this->projectStatisticService = $projectStatisticService;
+    public function __construct(
+        private Environment $twig,
+        private HtmlToPdfConverter $converter,
+        private ProjectStatisticService $projectStatisticService
+    ) {
     }
 
     public function create(string $id, string $template): PDFRenderer

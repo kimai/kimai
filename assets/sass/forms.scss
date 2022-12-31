@@ -1,67 +1,38 @@
-/* Currently only used in batch-update form for timesheets, to highlight sections of combined fields */
-form .box-body fieldset {
-    border-radius: $box-border-radius;
-    padding: 10px;
-    &:hover {
-        background-color: $highlight-bg;
+/* bootstrap thead.sticky-top has z-index 1020 and the reporting form dropdowns hide behind that */
+.checkbox-menu.show {
+    z-index: 1021;
+}
+
+/* make sure that at least xx:yy fits into the widget */
+.duration-widget {
+    .input-group {
+        min-width: 110px;
+    }
+    input.duration-input {
+        min-width: 55px;
     }
 }
 
-/* To be used with .form-horizontal - to reduce the space between rows, eg. used in the search modals */
-form.form-narrow {
-    .form-group {
-        margin: 0 0 5px 0;
+#report-form {
+    div.btn-list {
+        width: 100%;
+        div.selectpicker {
+            min-width: 200px;
+            max-width: 400px;
+        }
+
+        li.dropdown-item {
+            .form-check {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 
-/* Mark as exported checkbox in export and invoice create screen */
-.form-horizontal {
-    .checkbox {
-        min-height: 20px;
-    }
-}
-
-/* bootstrap3 hack because the filter look plain ugly without it (see report: project month) */
-.checkbox-menu li label {
-    display: block;
-    padding: 5px 15px 5px 10px !important;
-    clear: both;
-    font-weight: normal;
-    line-height: 1.42857143;
-    color: #333;
-    white-space: nowrap;
-    margin:0;
-    transition: background-color .4s ease;
-}
-.checkbox-menu li div.checkbox {
-    display: block;
-    width: 100%;
-}
-.checkbox-menu li div.radio {
-    display: block;
-    width: 100%;
-}
-.checkbox-menu li input {
-    margin: 0 5px !important;
-    position: relative;
-}
-
-.checkbox-menu li.active label {
-    background-color: #cbcbff;
-    font-weight:bold;
-}
-
-.checkbox-menu li label:hover,
-.checkbox-menu li label:focus {
-    background-color: #f5f5f5;
-}
-
-.checkbox-menu li.active label:hover,
-.checkbox-menu li.active label:focus {
-    background-color: #b8b8ff;
-}
-
-.duration-input {
-    min-width:50px;
-    padding: 6px;
+.color-choice-item {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: var(--tblr-border-radius);
 }

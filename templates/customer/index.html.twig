@@ -1,107 +1,59 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% set columns = {
-    'name': {'class': 'alwaysVisible'},
-    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
-    'number': {'class': 'hidden-xs hidden-sm hidden'},
-    'company': {'class': 'hidden-xs hidden-sm hidden'},
-    'vat_id': {'class': 'hidden-xs hidden-sm hidden'},
-    'contact': {'class': 'hidden-xs hidden-sm hidden'},
-    'address': {'class': 'hidden-xs hidden-sm hidden'},
-    'country': {'class': 'hidden-xs hidden-sm hidden'},
-    'currency': {'class': 'hidden-xs hidden-sm hidden'},
-    'phone': {'class': 'hidden-xs hidden-sm hidden'},
-    'fax': {'class': 'hidden-xs hidden-sm hidden'},
-    'mobile': {'class': 'hidden-xs hidden-sm hidden'},
-    'email': {'class': 'hidden-xs hidden-sm hidden'},
-    'homepage': {'class': 'hidden-xs hidden-sm hidden'},
-} %}
-{% for field in metaColumns %}
-    {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ field.name, 'orderBy': false}
-    }) %}
-{% endfor %}
-{% if is_granted('budget_money', 'customer') %}
-    {% set columns = columns|merge({
-        'budget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.budget'|trans},
-    }) %}
-{% endif %}
-{% if is_granted('budget_time', 'customer') %}
-    {% set columns = columns|merge({
-        'timeBudget': {'class': 'hidden-xs hidden-sm hidden text-right w-min', 'title': 'label.timeBudget'|trans},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'team': {'class': 'text-center w-min', 'orderBy': false},
-    'visible': {'class': 'text-center hidden w-min'},
-    'actions': {'class': 'actions alwaysVisible'},
-}) %}
+{% block datatable_row_attr %} {{ widgets.customer_row_attr(entry, now) }}{% endblock %}
 
-{% set tableName = 'customer_admin' %}
-
-{% block page_title %}{{ 'customers'|trans }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.customers('index', query) }}{% endblock %}
-
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main %}
-
-    {% if entries.count == 0 %}
-        {{ widgets.nothing_found('kimai.customerUpdate kimai.customerTeamUpdate') }}
-    {% else %}
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.customerUpdate kimai.customerDelete kimai.customerTeamUpdate'}) }}
-
-        {% for entry in entries %}
-            <tr {{ widgets.customer_row_attr(entry, now) }}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(entry.name, entry.color) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'number') }}">{{ entry.number }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'company') }}">{{ entry.company }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'vat_id') }}">{{ entry.vatId }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'contact') }}">{{ entry.contact }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'address') }}">{{ entry.address }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'country') }}">{{ entry.country|country }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'currency') }}">{{ entry.currency|currency }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'phone') }}">{{ entry.phone }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'fax') }}">{{ entry.fax }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'mobile') }}">{{ entry.mobile }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'homepage') }}">{{ entry.homepage }}</td>
-                {% for field in metaColumns %}
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                        {{ tables.datatable_meta_column(entry, field) }}
-                    </td>
-                {% endfor %}
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                    {% if entry.hasBudget() and is_granted('budget', entry) %}
-                        {{ entry.budget|money(entry.currency) }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                    {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                        {{ entry.timeBudget|duration }}
-                    {% else %}
-                        &ndash;
-                    {% endif %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">{{ actions.customer(entry, 'index') }}</td>
-            </tr>
-        {% endfor %}
-
-        {{ tables.data_table_footer(entries, 'admin_customer_paginated') }}
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'number' %}
+        {{ entry.number }}
+    {% elseif column == 'company' %}
+        {{ entry.company }}
+    {% elseif column == 'vat_id' %}
+        {{ entry.vatId }}
+    {% elseif column == 'contact' %}
+        {{ entry.contact }}
+    {% elseif column == 'address' %}
+        {{ entry.address }}
+    {% elseif column == 'country' %}
+        {{ entry.country|country_name }}
+    {% elseif column == 'currency' %}
+        {{ entry.currency|currency_name }}
+    {% elseif column == 'phone' %}
+        {{ entry.phone }}
+    {% elseif column == 'fax' %}
+        {{ entry.fax }}
+    {% elseif column == 'mobile' %}
+        {{ entry.mobile }}
+    {% elseif column == 'email' %}
+        {{ entry.email }}
+    {% elseif column == 'homepage' %}
+        {{ entry.homepage }}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money(entry.currency) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.customer(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
     {% endif %}
-
 {% endblock %}

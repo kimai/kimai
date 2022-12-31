@@ -47,10 +47,6 @@ class DeactivateUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:deactivate');
         self::assertInstanceOf(DeactivateUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:deactivate');
-        self::assertInstanceOf(DeactivateUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username)
@@ -80,7 +76,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('john_user');
+        $user = $userRepository->loadUserByIdentifier('john_user');
         self::assertInstanceOf(User::class, $user);
         self::assertFalse($user->isEnabled());
     }

@@ -12,38 +12,43 @@ namespace App\Reporting\ProjectDetails;
 use App\Form\Type\ProjectType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectDetailsForm extends AbstractType
+final class ProjectDetailsForm extends AbstractType
 {
-    /**
-     * Simplify cross linking between pages by removing the block prefix.
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('project', ProjectType::class, [
+        $projectOptions = [
             'ignore_date' => true,
             'required' => false,
-            'label' => false,
             'width' => false,
             'join_customer' => true,
-        ]);
+        ];
+
+        $builder->add('project', ProjectType::class, $projectOptions);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($projectOptions) {
+                $data = $event->getData();
+                if (isset($data['project']) && !empty($data['project'])) {
+                    $projectId = $data['project'];
+                    $projects = [];
+                    if (\is_int($projectId) || \is_string($projectId)) {
+                        $projects = [$projectId];
+                    }
+
+                    $event->getForm()->add('project', ProjectType::class, array_merge($projectOptions, [
+                        'projects' => $projects
+                    ]));
+                }
+            }
+        );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ProjectDetailsQuery::class,
