@@ -1,6 +1,6 @@
 {
     "name": "kimai/kimai",
-    "license": "MIT",
+    "license": "AGPL-3.0",
     "type": "project",
     "description": "Kimai - Time Tracking",
     "authors": [
@@ -10,7 +10,7 @@
         },
         {
             "name": "All contributors",
-            "homepage": "https://github.com/kevinpapst/kimai2/contributors"
+            "homepage": "https://github.com/kimai/kimai/contributors"
         }
     ],
     "require": {

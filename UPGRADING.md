@@ -8,7 +8,7 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-## [2.0](https://github.com/kevinpapst/kimai2/releases/tag/2.0)
+## [2.0](https://github.com/kimai/kimai/releases/tag/2.0)
 
 **!! This release requires minimum PHP version to 8.1 !!**
 
