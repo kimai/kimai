@@ -1,6 +1,6 @@
 {
     "name": "kimai/kimai",
-    "license": "AGPL-3.0",
+    "license": "AGPL-3.0-or-later",
     "type": "project",
     "description": "Kimai - Time Tracking",
     "authors": [
