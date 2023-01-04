@@ -278,6 +278,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
         if (duration.indexOf(':') !== -1) {
             const [, hours, minutes, seconds] = duration.match(/(\d+):(\d+)(?::(\d+))*/);
             luxonDuration = Duration.fromObject({hours: hours, minutes: minutes, seconds: seconds});
+            if(duration.substring(1,-1) === "-"){
+                luxonDuration = luxonDuration.mapUnits(x => x * -1);
+            }
         } else if (duration.indexOf('.') !== -1 || duration.indexOf(',') !== -1) {
             duration = duration.replace(/,/, '.');
             duration = (parseFloat(duration) * 3600).toString();
