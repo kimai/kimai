@@ -161,7 +161,7 @@ final class InvoiceDocumentRepository
                 continue;
             }
 
-            $finder = Finder::create()->ignoreDotFiles(true)->files()->in($searchDir)->name('*.*');
+            $finder = Finder::create()->ignoreDotFiles(true)->files()->in($searchDir)->depth(0)->name('*.*');
             foreach ($finder->getIterator() as $file) {
                 $doc = new InvoiceDocument($file);
                 // the first found invoice document wins
