@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Model\InvoiceDocument;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 final class InvoiceDocumentRepository
 {
@@ -21,6 +22,9 @@ final class InvoiceDocumentRepository
      */
     private array $documentDirs = [];
 
+    /**
+     * @param array<string> $directories
+     */
     public function __construct(array $directories)
     {
         foreach ($directories as $directory) {
@@ -31,23 +35,19 @@ final class InvoiceDocumentRepository
     /**
      * @CloudRequired
      */
-    public function addDirectory(string $directory)
+    public function addDirectory(string $directory): void
     {
         $this->documentDirs[] = $directory;
-
-        return $this;
     }
 
     /**
      * @CloudRequired
      */
-    public function removeDirectory(string $directory)
+    public function removeDirectory(string $directory): void
     {
         if (($key = array_search($directory, $this->documentDirs)) !== false) {
             unset($this->documentDirs[$key]);
         }
-
-        return $this;
     }
 
     /**
@@ -59,7 +59,12 @@ final class InvoiceDocumentRepository
             throw new \InvalidArgumentException('Cannot delete built-in invoice template');
         }
 
-        @unlink(realpath($invoiceDocument->getFilename()));
+        $realpath = realpath($invoiceDocument->getFilename());
+        if ($realpath === false) {
+            throw new \InvalidArgumentException('Template does not exist: ' . $invoiceDocument->getFilename());
+        }
+
+        @unlink($realpath);
     }
 
     public function getUploadDirectory(): string
@@ -135,6 +140,7 @@ final class InvoiceDocumentRepository
     /**
      * Returns an array of invoice documents.
      *
+     * @param array<string> $paths
      * @return InvoiceDocument[]
      */
     private function findByPaths(array $paths): array
@@ -154,6 +160,7 @@ final class InvoiceDocumentRepository
             }
 
             $finder = Finder::create()->ignoreDotFiles(true)->files()->in($searchDir)->name('*.*');
+            /** @var SplFileInfo $file */
             foreach ($finder->getIterator() as $file) {
                 $doc = new InvoiceDocument($file);
                 // the first found invoice document wins
