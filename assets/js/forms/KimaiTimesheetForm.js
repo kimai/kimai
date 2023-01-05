@@ -278,23 +278,39 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             this._setDurationAsString(null);
             return;
         }
-
+        
         const begin = this._getBegin();
-        let end = this._getEnd();
-        const seconds = duration.as('seconds');
+        const end = this._getEnd();
+        let seconds = duration.as('seconds');
 
-        if (seconds < 0) {
-            end = null;
+        let sourceField = this._beginTime;
+        let sourceValue = begin;
+        let targetField = this._endTime;
+        let targetFieldDate = null;
+    
+        //correction for one special case:
+        if (begin === null && end !== null && seconds > 0){
+            seconds *= -1
         }
 
-        if (begin === null && end === null) {
-            const newBegin = DateTime.now();
-            this._applyDateToField(newBegin, this._beginDate, this._beginTime);
-            this._applyDateToField(newBegin.plus({seconds: seconds}), null, this._endTime);
-        } else if (begin === null && end !== null) {
-            this._applyDateToField(end.minus({seconds: seconds}), this._beginDate, this._beginTime);
-        } else if (begin !== null && seconds > 0) {
-            this._applyDateToField(begin.plus({seconds: seconds}), null, this._endTime);
+        if (seconds < 0){
+            sourceField = this._endTime;
+            sourceValue = end;
+            targetField = this._beginTime;
+            targetFieldDate = this._beginDate;
+        }
+
+        if (sourceValue === null){
+            sourceValue = DateTime.now();
+        }
+
+        const targetValue = sourceValue.plus({seconds: seconds});
+
+        this._applyDateToField(sourceValue, null, sourceField);
+        this._applyDateToField(targetValue, targetFieldDate, targetField);
+        
+        if (this._duration.value.substring(1,-1) === "-"){
+            this._duration.value = this._duration.value.substring(1);
         }
     }
 
