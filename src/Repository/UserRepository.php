@@ -34,6 +34,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
+ * @template-implements PasswordUpgraderInterface<User>
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
 {
@@ -58,7 +59,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         $entityManager->flush();
     }
 
-    public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!($user instanceof User)) {
             return;

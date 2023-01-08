@@ -6451,7 +6451,7 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Strict comparison using \\!\\=\\= between null and array\\<array\\{id\\: int\\|numeric\\-string, duration\\: int\\|numeric\\-string, rate\\: float\\|int\\|numeric\\-string, internalRate\\: float\\|int\\|numeric\\-string, counter\\: int\\<0, max\\>\\|numeric\\-string, billable\\: bool, exported\\: bool\\}\\> will always evaluate to true\\.$#"
+            message: "#^Strict comparison using \\!\\=\\= between null and list\\<array\\{id\\: int\\|numeric\\-string, duration\\: int\\|numeric\\-string, rate\\: float\\|int\\|numeric\\-string, internalRate\\: float\\|int\\|numeric\\-string, counter\\: int\\<0, max\\>\\|numeric\\-string, billable\\: bool, exported\\: bool\\}\\> will always evaluate to true\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
 
@@ -6801,11 +6801,6 @@ parameters:
             path: src/Repository/Paginator/LoaderPaginator.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Paginator\\\\LoaderPaginator\\:\\:getResults\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/Paginator/LoaderPaginator.php
-
-        -
             message: "#^Parameter \\#1 \\$results of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\) expects array, mixed given\\.$#"
             count: 1
             path: src/Repository/Paginator/LoaderPaginator.php
@@ -6827,11 +6822,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\Paginator\\\\QueryBuilderPaginator\\:\\:getNbResults\\(\\) should return int\\<0, max\\> but returns int\\.$#"
-            count: 1
-            path: src/Repository/Paginator/QueryBuilderPaginator.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Paginator\\\\QueryBuilderPaginator\\:\\:getResults\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/Paginator/QueryBuilderPaginator.php
 
