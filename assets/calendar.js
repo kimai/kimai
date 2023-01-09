@@ -33,6 +33,7 @@ require('fullcalendar/dist/locale/ru');
 require('fullcalendar/dist/locale/sk');
 require('fullcalendar/dist/locale/sv');
 require('fullcalendar/dist/locale/tr');
+require('fullcalendar/dist/locale/uk');
 require('fullcalendar/dist/locale/zh-cn');
 require('fullcalendar/dist/locale/vi');
 require('fullcalendar/dist/locale/en-gb'); // the last imported file is used as fallback for locales that do not exist (like EO)

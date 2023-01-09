@@ -39,6 +39,7 @@ require('select2/dist/js/i18n/ru');
 require('select2/dist/js/i18n/sk');
 require('select2/dist/js/i18n/sv');
 require('select2/dist/js/i18n/tr');
+require('select2/dist/js/i18n/uk');
 require('select2/dist/js/i18n/vi');
 require('select2/dist/js/i18n/zh-CN');
 
@@ -74,6 +75,7 @@ require('moment/locale/ru');
 require('moment/locale/sk');
 require('moment/locale/sv');
 require('moment/locale/tr');
+require('moment/locale/uk');
 require('moment/locale/vi');
 require('moment/locale/zh-cn');
 
