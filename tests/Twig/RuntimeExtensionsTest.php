@@ -49,6 +49,7 @@ class RuntimeExtensionsTest extends TestCase
             'encore_entry_css_source',
             'render_widget',
             'icon',
+            'qr_code_data_uri',
         ];
 
         $i = 0;
