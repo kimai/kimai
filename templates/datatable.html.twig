@@ -27,19 +27,21 @@
         {% block datatable_before %}{% endblock %}
 
         {% set sortedColumns = dataTable.sortedColumnNames %}
-        {% for entry in dataTable %}
-            {% block datatable_row %}
-                <tr{% block datatable_row_attr %}{% endblock %}>
-                    {% for column, data in sortedColumns %}
-                        {% block datatable_column %}
-                            <td class="{{ tables.class(dataTable, column) }}"{% block datatable_column_attr %}{% endblock %}>
-                                {% block datatable_column_value %}{% endblock %}
-                            </td>
-                        {% endblock %}
-                    {% endfor %}
-                </tr>
-            {% endblock %}
-        {% endfor %}
+        {% block datatable_outer %}
+            {% for entry in dataTable %}
+                {% block datatable_row %}
+                    <tr{% block datatable_row_attr %}{% endblock %}>
+                        {% for column, data in sortedColumns %}
+                            {% block datatable_column %}
+                                <td class="{{ tables.class(dataTable, column) }}"{% block datatable_column_attr %}{% endblock %}>
+                                    {% block datatable_column_value %}{% endblock %}
+                                </td>
+                            {% endblock %}
+                        {% endfor %}
+                    </tr>
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
 
         {% block datatable_after %}{% endblock %}
 
