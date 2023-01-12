@@ -462,6 +462,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">התקציב מנוצל, סליחה.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">אירעה תקלה בשמירה.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">יש לך רשומת תיעוד שעות פעילה שלא ניתן לעצור אוטומטית.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">הערך שסופק לא תקף לתצורת יום-שעה.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">הקוד שסופק אינו בתצורת קוד חד־פעמי (TOTP) נכונה.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">זה אינו שם תקף לתפקיד משתמש.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

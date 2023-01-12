@@ -40,6 +40,10 @@
         <source>Single service date</source>
         <target state="translated">Єдина сервісна дата</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Ви можете отримати додаткові шаблони тут</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

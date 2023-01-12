@@ -23,8 +23,8 @@
         <target>Hesabınızı etkinleştirin</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Lütfen bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirin.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Lütfen bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirin.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

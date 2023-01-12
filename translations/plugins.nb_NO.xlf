@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>Du har ikke installert noen programtillegg enda.</target>
       </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Flere utvidelser</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Nye programtillegg fra markedsplassen</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Kjøp nå</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

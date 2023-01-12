@@ -23,8 +23,8 @@
         <target>Attiva il tuo account</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Ti sei registrato/a con l'indirizzo %email%. Si prega di provvedere ad attivare l'account prima che il collegamento scada.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Ti sei registrato al cronometro Kimai con l'indirizzo %email%. Si prega di provvedere ad attivare l'account prima che il collegamento scada.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

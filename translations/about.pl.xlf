@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
-        <target>Wsparcie</target>
+        <target state="translated">Forum</target>
       </trans-unit>
       <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>

@@ -290,6 +290,18 @@
         <source>quick_entry.recent_activity_weeks</source>
         <target state="translated">دریافت ورودی‌های X هفته گذشته (خالی یا 0 برای همیشه)</target>
       </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">جایگزین مجاز: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">فرمت شماره مشتری</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">اجازه ایجاد فعالیت‌ها به شکل ردیابی زمان را بدهید</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

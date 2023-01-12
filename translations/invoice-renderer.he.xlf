@@ -42,6 +42,10 @@
         <source>text</source>
         <target>טקסט</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">כאן ניתן להוריד תבניות נוספות</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
-        <target>Slutt-dato må ikke være før start-dato.</target>
+        <target state="translated">Slutt-dato kan ikke være før start-dato.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked. Please choose a later date.</source>
-        <target state="needs-translation">Denne perioden er låst. Velg en senere dato.</target>
+        <target state="translated">Denne perioden er låst. Velg en senere dato.</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
@@ -85,6 +85,26 @@
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Budsjettet er oppbrukt.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Angitt verdi er ikke et gyldig dag-tid -format.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Angitt kode er ikke riktig TOTP-symbol.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Dette er ikke et gyldig navn for en brukerrolle.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Du har en aktiv tidsoppføring som ikke kan stoppes automatisk.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Kunne ikke lagre.</target>
       </trans-unit>
     </body>
   </file>

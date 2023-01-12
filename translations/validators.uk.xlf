@@ -88,4 +88,28 @@
       </trans-unit>
     </body>
   </file>
+  <file original="validators.en.xlf" source-language="en" target-language="uk" datatype="plaintext">
+    <body>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Виникла проблема зі збереженням.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">У Вас активний запис часу, який не можна зупинити автоматично.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Задане значення не є дійсним денним форматом.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Наведений код не є коректним токеном TOTP.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Це неприпустиме ім'я для користувацької ролі.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
