@@ -99,7 +99,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser2', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] email: The email is already used.', $output);
+        $this->assertStringContainsString('[ERROR] email: This e-mail address is already in use.', $output);
     }
 
     public function testUserEmail(): void

@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
-        <target state="translated">Фільтр діяльності</target>
+        <target state="translated">Фільтри діяльності</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -101,6 +101,18 @@
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target state="translated">Фільтрувати дані</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard">
+        <source>vcard</source>
+        <target state="translated">Візитна картка</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add">
+        <source>Add widget</source>
+        <target state="translated">Додати віджет</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove">
+        <source>Remove widget</source>
+        <target state="translated">Видалити віджет</target>
       </trans-unit>
     </body>
   </file>

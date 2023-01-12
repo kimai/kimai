@@ -80,9 +80,12 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
 
             $prefs = $this->getUserPreferences($user, $userData[7]);
             $user->setPreferences($prefs);
+            // better to be able to test the wizard in demo installations
+            /*
             foreach (User::WIZARDS as $wizard) {
                 $user->setWizardAsSeen($wizard);
             }
+            */
             $manager->persist($prefs[0]);
             $manager->persist($prefs[1]);
         }

@@ -5,9 +5,8 @@
 <p align="center">
     <a href="https://github.com/kimai/kimai/actions"><img alt="CI Status" src="https://github.com/kimai/kimai/workflows/CI/badge.svg"></a>
     <a href="https://codecov.io/gh/kimai/kimai"><img alt="Code Coverage" src="https://codecov.io/gh/kimai/kimai/branch/main/graph/badge.svg"></a>
-    <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
-    <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
-    <a href="https://twitter.com/kimai_org" rel="me"><img alt="Twitter" src="https://img.shields.io/badge/follow-%40kimai__org-00acee"></a>
+    <a href="https://packagist.org/packages/kimai/kimai"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
+    <a href="https://www.gnu.org/licenses/agpl-3.0.en.html"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
     <a href="https://phpc.social/@kimai" rel="me"><img alt="Mastodon" src="https://img.shields.io/badge/toot-%40kimai-8c8dff"></a>
 </p>
 
@@ -75,11 +74,11 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
-- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms like Slant, Product Hunt, Softpedia or AlternativeTo, you can tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every bit helps!
-- Answer questions: You know the answer to another user's problem? Share your knowledge!
-- Make a feature request: Something can be done better? Something essential missing? Let us know!
-- Report bugs
-- You don't have to be programmer to help. The documentation and translation could use some love as well.
-- Sponsor the project, free software still costs money
+- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms like Slant, Product Hunt, Softpedia or AlternativeTo, you can toot or tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every bit helps!
+- Answer questions: You know the answer to another user's problem? Share your knowledge.
+- Something can be done better? An essential feature is missing? Create a feature request.
+- Report bugs: that shouldn't happen too often.
+- You don't have to be programmer, the documentation and translation could use some love as well.
+- Sponsor the project: free software costs money to create!
 
 There is one simple rule in our "Code of conduct": Don't be an ass! 

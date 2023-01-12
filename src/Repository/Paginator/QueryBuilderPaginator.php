@@ -23,6 +23,9 @@ final class QueryBuilderPaginator implements PaginatorInterface
         return $this->results;
     }
 
+    /**
+     * @return iterable<array-key, iterable<mixed>>
+     */
     public function getSlice(int $offset, int $length): iterable
     {
         $query = $this->query
@@ -33,9 +36,13 @@ final class QueryBuilderPaginator implements PaginatorInterface
         return $this->getResults($query);
     }
 
+    /**
+     * @param Query<null, mixed> $query
+     * @return iterable<array-key, iterable<mixed>>
+     */
     private function getResults(Query $query)
     {
-        return $query->execute();
+        return $query->execute(); // @phpstan-ignore-line
     }
 
     public function getAll(): iterable

@@ -11,8 +11,8 @@
         <target>The entered passwords don't match.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
-        <source>The email is already used.</source>
-        <target>The email is already used.</target>
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">This e-mail address is already in use.</target>
       </trans-unit>
       <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
@@ -23,8 +23,8 @@
         <target>An equal username is already used.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal email is already used.</source>
-        <target>An equal email is already used.</target>
+        <source>An equal e-mail address is already i use.</source>
+        <target state="translated">An equal e-mail address is already i use.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>

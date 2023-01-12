@@ -25,6 +25,14 @@
                     document.body.classList.add('theme-' + skinChooser.value);
                 });
             }
+
+            const localeChooser = document.getElementById('form_language');
+            if (localeChooser !== null) {
+                localeChooser.addEventListener('change', (ev) => {
+                    document.getElementById('form_reload').value = '1';
+                    ev.target.form.submit();
+                });
+            }
         });
     </script>
 {% endblock %}

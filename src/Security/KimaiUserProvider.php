@@ -10,6 +10,7 @@
 namespace App\Security;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\User;
 use App\Ldap\LdapUserProvider;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -17,6 +18,9 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @template-implements PasswordUpgraderInterface<User>
+ */
 final class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     private ?ChainUserProvider $provider = null;

@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target state="translated">شما هنوز هیچ افزونه ای نصب نکرده اید.</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">اکنون خریداری کنید</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">پسوندهای بیشتر</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">پلاگین های جدید از بازار</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

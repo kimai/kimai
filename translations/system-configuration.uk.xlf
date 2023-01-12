@@ -322,6 +322,18 @@
         <source>copy_teams_on_create</source>
         <target state="translated">При створенні нових записів приймати команди (teams) від користувача, який увійшов в систему</target>
       </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Дозволити створення дій (діяльностей) у формі обліку часу</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Формат номера клієнта</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">Дозволений замінник: %replacer%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -246,8 +246,8 @@
         <target state="translated">Müşteri</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
-        <source>email</source>
-        <target state="translated">Eposta</target>
+        <source>E-mail</source>
+        <target state="translated">E-posta</target>
       </trans-unit>
       <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>
@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
-        <target state="translated">Sütün görünürlüğünü değiştir</target>
+        <target state="translated">Ekranı özelleştir</target>
       </trans-unit>
       <trans-unit id="_0tuMNE" resname="fixedRate">
         <source>fixedRate</source>
@@ -659,7 +659,7 @@
       </trans-unit>
       <trans-unit id="XN4PEpj" resname="template">
         <source>template</source>
-        <target state="translated">Şablon</target>
+        <target state="translated">Fatura şablonu</target>
       </trans-unit>
       <trans-unit id="ohNu8DK" resname="due_days">
         <source>due_days</source>
@@ -871,8 +871,8 @@
         <target>Bugün, %day%</target>
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
-        <source>Allowed character: A-Z and _</source>
-        <target>İzin verilen karakterler: A-Z ve _</target>
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">İzin verilen karakterler: A-Z ve _ (en az 5 büyük harf)</target>
       </trans-unit>
       <trans-unit id="G.GEdlk" resname="user_role.title">
         <source>user_role.title</source>
@@ -916,7 +916,7 @@
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
-        <target>Süresi ne olursa olsun her kayıt aynı değeri alır</target>
+        <target state="translated">Süresi ne olursa olsun her kayıt aynı fiyatı alır</target>
       </trans-unit>
       <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
-        <target>Alınacak saatlik ücret</target>
+        <target state="translated">Alınacak saatlik ücret</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
@@ -956,11 +956,11 @@
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target>Ücretler</target>
+        <target state="translated">Fiyatlar</target>
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>Henüz hiçbir saatlik ücret yapılandırılmadı.</target>
+        <target state="translated">Herhangi bir fiyat yapılandırılmadı.</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -1079,8 +1079,8 @@
         <target>Parolanızı sıfırlamak için tıklamanız gereken bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, spam klasörünüze bakın veya tekrar deneyin.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>%email% adresine, hesabınızı etkinleştirmek için tıklamanız gereken etkinleştirme bağlantısı içeren bir e-posta gönderildi.</target>
+        <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
+        <target state="translated">Hesabınızı etkinleştirmek için tıklanabilir bir etkinleştirme bağlantısı içeren e-posta %email% adresine gönderildi.</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>Haftalık çalışma saatleri</target>
+        <target state="translated">Haftalık saatler</target>
       </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
@@ -1201,6 +1201,250 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target state="translated">Kimai Hakkında</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">Kilidini aç</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">Uygulamalar</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">Görünürlüğü seçilen takımlarla sınırlar.</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">Fatura metni</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Bu metin nesnenin adının yerine geçerek fatura kalemleri için daha ayrıntılı etiketlere izin verir.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Ayar kapalıysa, nesne açılır kutularda ve liste görünümlerinde görüntülenmez.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Tasarım</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Ayar kapalıysa, gelecekteki tüm zaman kayıtları "faturalandırılamaz" olarak işaretlenecektir.</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Sürükle &amp; bırak yöntemini kullanarak widget'larınızı yeniden düzenleyebilirsiniz. Widget eklemek bekleyen değişiklikleri kaydeder.</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">Masaüstü</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">İki Adımlı (TOTP)</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">Uygulamanızdaki görüntüyü tarayarak yeni bir aygıtı etkinleştirebilirsiniz.</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">Oturum açma işlemini tamamlamak için lütfen onay kodunu girin.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">Onay kodu</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">Sık kullanılanlar</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">Bildirimler</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">Bildirimleri kabul ettiğiniz için teşekkürler!</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help">
+        <source>active.help</source>
+        <target state="translated">Devre dışı bırakılan kullanıcılar artık oturum açamaz ve raporlarda ve seçim kutularında gizlenir</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account">
+        <source>system_account</source>
+        <target state="translated">Sistem-Hesap</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help">
+        <source>system_account.help</source>
+        <target state="translated">Raporlarda ve açılır listelerde gizlenecek</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed">
+        <source>plugin.installed</source>
+        <target state="translated">Kurulu eklentiler</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Bu haftaki çalışma saatlerim</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Bu ayki çalışma saatlerim</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Bu yılki çalışma saatlerim</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Toplam çalışma saatlerim</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Bugünkü gelirim</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Bu haftaki gelirim</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Bu ayki gelirim</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Bu yılki gelirim</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Toplam gelirim</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices">
+        <source>all_invoices</source>
+        <target state="translated">Fatura geçmişi</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target state="translated">Fatura oluştur</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Bugünkü çalışma saatlerim</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Lütfen bu hesap için iki adımlı kimlik doğrulamayı etkinleştirecek olan kodu onaylayın.</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Bu metin fatura belgelerinde kullanılır ve örneğin diğer teslimat koşullarını belirtmek için kullanılabilir.</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Hesabın kilidini aç</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">Tam erişim için lütfen parolanızı girin</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">Tablo sütunları</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open">
+        <source>mark_as_open</source>
+        <target state="translated">Açık olarak işaretle</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Bu müşteri için faturalar öntanımlı olarak bu şablonla oluşturulur. Gerekirse fatura oluşturma sırasında değiştirilebilir.</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">Fatura bu şablon ile oluşturulur.</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target state="translated">Ayar kapalıysa, süreler yalnızca projeye özgü etkinliklerle kaydedilebilir.</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target state="translated">Bir proje seçmezseniz, bu etkinlik genel olur ve herhangi bir projeyle birleştirilebilir. Bir proje seçerseniz, etkinlik yalnızca o projeyle kullanılabilir. Ayar daha sonra değiştirilemez.</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">Arama filtresini sıfırla</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Bildirimleri reddettiniz. Lütfen bunları nasıl açacağınızı öğrenmek için web tarayıcınızın belgelerine bakın.</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light">
+        <source>skin.light</source>
+        <target state="translated">Parlak</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget">
+        <source>includeWithBudget</source>
+        <target state="translated">Bütçeli kayıtları göster</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">Seçilen / vurgulanan kullanıcılar takım liderleridir.</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">%total% içinden %start% ile %end% arasındaki kayıtları göster.</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark">
+        <source>skin.dark</source>
+        <target state="translated">Koyu</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target state="translated">API kullanılamıyor</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro">
+        <source>api_password.intro</source>
+        <target state="translated">API parolası Kimai ve uygulamalarınız arasındaki iletişim için kullanılır</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity">
+        <source>no_activity</source>
+        <target state="translated">Etkinlik olmadan</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target state="translated">Devre dışı bırakıldı</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">"%input%" için sonuç bulunamadı</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">"%input%" adıyla yeni oluştur</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">Genişletilmiş ayarlar</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">Henüz bir API parolası girmediniz. Güvenlik nedeniyle, bir parola kaydedinceye kadar API'yi kullanamazsınız.</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">Lütfen seçin</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">Etkinleştirildi</target>
       </trans-unit>
     </body>
   </file>

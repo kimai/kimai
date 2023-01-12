@@ -30,6 +30,10 @@
         <source>team.activity_visibility_inherited</source>
         <target state="translated">Działanie ma ograniczony dostęp, ponieważ uprawnienia zespołu są ustawione dla projektu lub klienta.</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="translated">Członek</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

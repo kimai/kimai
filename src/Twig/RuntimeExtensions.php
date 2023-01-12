@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use App\Twig\Runtime\EncoreExtension;
 use App\Twig\Runtime\MarkdownExtension;
+use App\Twig\Runtime\QrCodeExtension;
 use App\Twig\Runtime\ThemeExtension;
 use App\Twig\Runtime\TimesheetExtension;
 use App\Twig\Runtime\WidgetExtension;
@@ -35,6 +36,7 @@ final class RuntimeExtensions extends AbstractExtension
             new TwigFunction('encore_entry_css_source', [EncoreExtension::class, 'getEncoreEntryCssSource']),
             new TwigFunction('render_widget', [WidgetExtension::class, 'renderWidget'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('icon', [RuntimeExtension::class, 'createIcon'], ['is_safe' => ['html']]),
+            new TwigFunction('qr_code_data_uri', [QrCodeExtension::class, 'qrCodeDataUriFunction']),
         ];
     }
 

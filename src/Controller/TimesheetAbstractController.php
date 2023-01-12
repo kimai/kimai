@@ -77,18 +77,18 @@ abstract class TimesheetAbstractController extends AbstractController
         $table->setPaginationRoute($paginationRoute);
         $table->setReloadEvents('kimai.timesheetUpdate kimai.timesheetDelete');
 
-        $table->addColumn('date', ['class' => 'alwaysVisible', 'orderBy' => 'begin']);
+        $table->addColumn('date', ['class' => 'alwaysVisible text-nowrap', 'orderBy' => 'begin']);
 
         if ($this->canSeeStartEndTime()) {
-            $table->addColumn('starttime', ['class' => 'd-none d-sm-table-cell text-center', 'orderBy' => 'begin']);
-            $table->addColumn('endtime', ['class' => 'd-none d-sm-table-cell text-center', 'orderBy' => 'end']);
+            $table->addColumn('starttime', ['class' => 'd-none d-sm-table-cell text-center text-nowrap', 'orderBy' => 'begin']);
+            $table->addColumn('endtime', ['class' => 'd-none d-sm-table-cell text-center text-nowrap', 'orderBy' => 'end']);
         }
 
         $table->addColumn('duration', ['class' => 'text-end text-nowrap']);
 
         if ($canSeeRate) {
-            $table->addColumn('hourlyRate', ['class' => 'text-end d-none']);
-            $table->addColumn('rate', ['class' => 'text-end']);
+            $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
+            $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
         }
 
         $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);
@@ -98,7 +98,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $table->addColumn('tags', ['class' => 'd-none badges', 'orderBy' => false]);
 
         foreach ($metaColumns as $metaColumn) {
-            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
         }
 
         if ($canSeeUsername) {
@@ -116,11 +116,8 @@ abstract class TimesheetAbstractController extends AbstractController
             'page_setup' => $page,
             'dataTable' => $table,
             'action_single' => $this->getActionNameSingle(),
-            'canSeeUsername' => $canSeeUsername,
-            'canSeeRate' => $canSeeRate,
             'stats' => $result->getStatistic(),
             'showSummary' => $this->includeSummary(),
-            'showStartEndTime' => $this->canSeeStartEndTime(),
             'metaColumns' => $metaColumns,
             'allowMarkdown' => $this->hasMarkdownSupport(),
             'editRoute' => $this->getEditRoute()

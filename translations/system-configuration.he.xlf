@@ -286,6 +286,18 @@
         <source>copy_teams_on_create</source>
         <target state="translated">השתלטות על צוותים מהמשתמש שהמערכת בעת יצירת רשומות חדשות</target>
       </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">מחליף מורשה: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">תצורת מספר לקוח</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">לאפשר יצירת פעילויות בצורה של מעקב אחר שעות</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

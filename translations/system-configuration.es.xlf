@@ -294,6 +294,18 @@
         <source>saml_activate</source>
         <target state="translated">Inicio de sesión SAML</target>
       </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">Sustitutos permitidos: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Formato del número de cliente</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Permitir la creación de actividades en el formulario del parte de horas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

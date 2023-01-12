@@ -271,8 +271,8 @@
         <target>לקוח</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
-        <source>email</source>
-        <target>דוא״ל</target>
+        <source>E-mail</source>
+        <target state="translated">דוא״ל</target>
       </trans-unit>
       <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>
@@ -1007,8 +1007,8 @@
         <target>נשלחה הודעה בדוא״ל. היא מכילה קישור שיש ללחוץ עליו כדי לאפס את הסיסמה שלך. לתשומת לבך: ניתן לבקש סיסמה חדשה אחת לכל %tokenLifetime% שעות. אם לא קיבלת הודעה בדוא״ל מוטב לבדוק בתיקיית הספאם שלך או לנסות שוב.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>נשלחה הודעה בדוא״ל אל %email%. היא מכילה קישור אימות עליו יש ללחוץ כדי להפעיל את החשבון שלך.</target>
+        <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
+        <target state="translated">הודעה שמכילה קישור לחיץ להפעלת החשבון שלך נשלחה בדוא״ל אל %email%.</target>
       </trans-unit>
       <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
@@ -1137,6 +1137,70 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>על אודות קימאי</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">הטקסט הזה משמש במסמכי חשבוניות ואפשר להשתמש בו, למשל, לציון תנאי שילוח נוספים.</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">להגביל חשיפה לצוותים הנבחרים.</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">בחרת לדחות התראות. נא לפנות לתיעוד הדפדפן שלך כדי להבין איך להפעיל אותן.</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">מועדפים</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">איפוס מסנן חיפוש</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">שחרור חשבון</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">נא למלא את הסיסמה שלך לקבלת גישה מלאה</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">שחרור</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">יישומים</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">טקסט חשבונית</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">הטקסט הזה מחליף את שם הפריט, מה שמאפשר תוויות מפורטות יותר על פריטים בחשבונית.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">אם ההגדרה הזאת כבויה, הפריט לא מוצג בתיבות נפתחות ותצוגות רשימה.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">עיצוב</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">אם ההגדרה כבוי, כל רשומות הזמן שיתועדו בעתיד יסומנו בתור „לא לחיוב”.</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">תודה שהסכמת לקבל התראות!</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">התראות</target>
       </trans-unit>
     </body>
   </file>
