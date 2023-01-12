@@ -65,7 +65,7 @@ class CustomerTest extends AbstractEntityTest
         self::assertEquals('foo-bar', $sut->getName());
         self::assertEquals('foo-bar', (string) $sut);
 
-        self::assertInstanceOf(Customer::class, $sut->setVisible(false));
+        $sut->setVisible(false);
         self::assertFalse($sut->isVisible());
 
         $sut->setVisible(false);
@@ -73,7 +73,7 @@ class CustomerTest extends AbstractEntityTest
         $sut->setVisible(true);
         self::assertTrue($sut->isVisible());
 
-        self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
+        $sut->setComment('hello world');
         self::assertEquals('hello world', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
@@ -85,35 +85,38 @@ class CustomerTest extends AbstractEntityTest
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
-        self::assertInstanceOf(Customer::class, $sut->setCompany('test company'));
+        $sut->setCompany('test company');
         self::assertEquals('test company', $sut->getCompany());
 
-        self::assertInstanceOf(Customer::class, $sut->setContact('test contact'));
+        $sut->setContact('test contact');
         self::assertEquals('test contact', $sut->getContact());
 
-        self::assertInstanceOf(Customer::class, $sut->setPhone('0123456789'));
+        $sut->setPhone('0123456789');
         self::assertEquals('0123456789', $sut->getPhone());
 
-        self::assertInstanceOf(Customer::class, $sut->setFax('asdfghjkl'));
+        $sut->setFax('asdfghjkl');
         self::assertEquals('asdfghjkl', $sut->getFax());
 
-        self::assertInstanceOf(Customer::class, $sut->setMobile('76576534'));
+        $sut->setMobile('76576534');
         self::assertEquals('76576534', $sut->getMobile());
 
-        self::assertInstanceOf(Customer::class, $sut->setEmail('test@example.com'));
+        $sut->setEmail('test@example.com');
         self::assertEquals('test@example.com', $sut->getEmail());
 
-        self::assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
+        $sut->setHomepage('https://www.example.com');
         self::assertEquals('https://www.example.com', $sut->getHomepage());
 
-        self::assertInstanceOf(Customer::class, $sut->setVatId('ID 1234567890'));
+        $sut->setVatId('ID 1234567890');
         self::assertEquals('ID 1234567890', $sut->getVatId());
 
-        self::assertInstanceOf(Customer::class, $sut->setCountry(null));
+        $sut->setCountry(null);
         self::assertNull($sut->getCountry());
 
-        self::assertInstanceOf(Customer::class, $sut->setCurrency('USD'));
+        $sut->setCurrency('USD');
         self::assertEquals('USD', $sut->getCurrency());
+
+        $sut->setCurrency(null);
+        self::assertNull($sut->getCurrency());
     }
 
     public function testMetaFields()

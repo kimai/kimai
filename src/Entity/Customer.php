@@ -107,7 +107,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'currency')]
-    private string $currency = self::DEFAULT_CURRENCY;
+    private ?string $currency = self::DEFAULT_CURRENCY;
     #[ORM\Column(name: 'phone', type: 'string', length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
@@ -197,11 +197,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->id;
     }
 
-    public function setName(?string $name): Customer
+    public function setName(?string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -209,11 +207,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->name;
     }
 
-    public function setNumber(?string $number): Customer
+    public function setNumber(?string $number): void
     {
         $this->number = $number;
-
-        return $this;
     }
 
     public function getNumber(): ?string
@@ -221,11 +217,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->number;
     }
 
-    public function setComment(?string $comment): Customer
+    public function setComment(?string $comment): void
     {
         $this->comment = $comment;
-
-        return $this;
     }
 
     public function getComment(): ?string
@@ -233,11 +227,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->comment;
     }
 
-    public function setVisible(bool $visible): Customer
+    public function setVisible(bool $visible): void
     {
         $this->visible = $visible;
-
-        return $this;
     }
 
     public function isVisible(): bool
@@ -255,11 +247,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->billable;
     }
 
-    public function setCompany(?string $company): Customer
+    public function setCompany(?string $company): void
     {
         $this->company = $company;
-
-        return $this;
     }
 
     public function getCompany(): ?string
@@ -272,18 +262,14 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->vatId;
     }
 
-    public function setVatId(?string $vatId): Customer
+    public function setVatId(?string $vatId): void
     {
         $this->vatId = $vatId;
-
-        return $this;
     }
 
-    public function setContact(?string $contact): Customer
+    public function setContact(?string $contact): void
     {
         $this->contact = $contact;
-
-        return $this;
     }
 
     public function getContact(): ?string
@@ -291,11 +277,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->contact;
     }
 
-    public function setAddress(?string $address): Customer
+    public function setAddress(?string $address): void
     {
         $this->address = $address;
-
-        return $this;
     }
 
     public function getAddress(): ?string
@@ -303,11 +287,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->address;
     }
 
-    public function setCountry(?string $country): Customer
+    public function setCountry(?string $country): void
     {
         $this->country = $country;
-
-        return $this;
     }
 
     public function getCountry(): ?string
@@ -315,23 +297,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->country;
     }
 
-    public function setCurrency(string $currency): Customer
+    public function setCurrency(?string $currency): void
     {
         $this->currency = $currency;
-
-        return $this;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    public function setPhone(?string $phone): Customer
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
-
-        return $this;
     }
 
     public function getPhone(): ?string
@@ -339,11 +317,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->phone;
     }
 
-    public function setFax(?string $fax): Customer
+    public function setFax(?string $fax): void
     {
         $this->fax = $fax;
-
-        return $this;
     }
 
     public function getFax(): ?string
@@ -351,11 +327,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->fax;
     }
 
-    public function setMobile(?string $mobile): Customer
+    public function setMobile(?string $mobile): void
     {
         $this->mobile = $mobile;
-
-        return $this;
     }
 
     public function getMobile(): ?string
@@ -363,11 +337,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->mobile;
     }
 
-    public function setEmail(?string $mail): Customer
+    public function setEmail(?string $mail): void
     {
         $this->email = $mail;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -375,11 +347,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->email;
     }
 
-    public function setHomepage(?string $homepage): Customer
+    public function setHomepage(?string $homepage): void
     {
         $this->homepage = $homepage;
-
-        return $this;
     }
 
     public function getHomepage(): ?string
@@ -387,11 +357,9 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->homepage;
     }
 
-    public function setTimezone(string $timezone): Customer
+    public function setTimezone(?string $timezone): void
     {
         $this->timezone = $timezone;
-
-        return $this;
     }
 
     public function getTimezone(): ?string
