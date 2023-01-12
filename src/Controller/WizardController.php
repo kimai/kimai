@@ -16,6 +16,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\User\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,18 +43,17 @@ final class WizardController extends AbstractController
 
         if ($wizard === 'profile') {
             $data = [
-                'language' => $request->getLocale(),
-                'timezone' => $user->getTimezone(),
+                UserPreference::LOCALE => $request->getLocale(),
+                UserPreference::TIMEZONE => $user->getTimezone(),
+                UserPreference::SKIN => $user->getSkin(),
+                'reload' => '0',
             ];
 
             $form = $this->createFormBuilder($data)
                 ->add(UserPreference::LOCALE, LanguageType::class)
                 ->add(UserPreference::TIMEZONE, TimezoneType::class)
-                ->add(UserPreference::SKIN, SkinType::class, [
-                    'attr' => [
-                        'onchange' => "document.body.classList.remove('theme-light');document.body.classList.remove('theme-light');"
-                    ],
-                ])
+                ->add(UserPreference::SKIN, SkinType::class)
+                ->add('reload', HiddenType::class)
                 ->setAction($this->generateUrl('wizard', ['wizard' => 'profile']))
                 ->setMethod('POST')
                 ->getForm();
@@ -69,7 +69,11 @@ final class WizardController extends AbstractController
                 $user->setWizardAsSeen('profile');
                 $userService->updateUser($user);
 
-                return $this->redirectToRoute('wizard', ['wizard' => 'done', '_locale' => $data['language']]);
+                if ($data['reload'] === '1') {
+                    return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $data['language']]);
+                } else {
+                    return $this->redirectToRoute('wizard', ['wizard' => 'done', '_locale' => $data['language']]);
+                }
             }
 
             return $this->render('wizard/profile.html.twig', [

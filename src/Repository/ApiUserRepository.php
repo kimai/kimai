@@ -15,6 +15,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @template-implements PasswordUpgraderInterface<User>
+ */
 class ApiUserRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
     public function __construct(private UserRepository $userRepository)

@@ -2303,11 +2303,6 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\KimaiImporterCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/KimaiImporterCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/PluginCommandTest.php

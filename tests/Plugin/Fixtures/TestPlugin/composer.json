@@ -5,8 +5,7 @@
   "type": "kimai-plugin",
   "version": "1.0",
   "require": {
-    "kimai/kimai2-composer": "*",
-    "kevinpapst/kimai2": "*"
+    "kimai/kimai": "*"
   },
   "keywords": [
     "kimai",

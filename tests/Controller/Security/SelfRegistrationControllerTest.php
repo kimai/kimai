@@ -116,7 +116,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
-        $this->assertStringContainsString('An email has been sent to register@example.com. It contains an activation link you must click to activate your account.', $content);
+        $this->assertStringContainsString('An e-mail has been sent to register@example.com. It contains a link you must click to activate your account.', $content);
         $this->assertStringContainsString('<a href="/en/login">', $content);
     }
 

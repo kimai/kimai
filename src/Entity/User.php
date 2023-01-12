@@ -439,6 +439,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (bool) $this->getPreferenceValue('export_decimal', false, false);
     }
 
+    public function getSkin(): string
+    {
+        return (string) $this->getPreferenceValue(UserPreference::SKIN, 'default', false);
+    }
+
     public function setTimezone(?string $timezone)
     {
         if ($timezone === null) {
