@@ -9,9 +9,6 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";
-//@import "~bootstrap/scss/normalize";
-//@import "~bootstrap/scss/print";
-//@import "~bootstrap/scss/scaffolding";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
@@ -19,12 +16,12 @@
 @import "~bootstrap/scss/list-group";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/utilities";
-//@import "~bootstrap/scss/responsive-utilities";
 
 body {
     font-family: $font-family-sans-serif;
     
     &.invoice_print {
+        --bs-body-font-size: 13px;
         background-color: #eee;
 
         .table.no-border, .table.no-border td, .table.no-border th {
@@ -33,6 +30,38 @@ body {
 
         h1, h2, h3 {
             font-family: $font-family-sans-serif;
+        }
+
+        .mt-2 {
+            margin-top: 2em;
+        }
+
+        .mb-3 {
+            margin-bottom: 3em;
+        }
+
+        .pt-1 {
+            padding-top: 1em;
+        }
+
+        .pb-4 {
+            padding-bottom: 4em;
+        }
+
+        .ps-0 {
+            padding-left: 0;
+        }
+
+        .bt-1 {
+            border-top: 1px solid #000000;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        .text-end {
+            text-align: right;
         }
 
         .invoice {
@@ -48,7 +77,7 @@ body {
 
         .page-header {
             margin: 10px 0 20px 0;
-            font-size: 22px;
+            font-size: 20px;
 
             > small {
                 color: #666;
@@ -79,14 +108,11 @@ body {
         }
 
         .invoice-items {
-            margin-top: 2em;
-            margin-bottom: 3em;
-
             .table {
                 thead th {
                     font-weight: bold;
                     border-bottom: 1px solid #ddd;
-                    padding-bottom: 15px
+                    padding-bottom: 10px
                 }
 
                 tfoot {
@@ -105,7 +131,6 @@ body {
                     }
                 }
             }
-
         }
 
         .footer {

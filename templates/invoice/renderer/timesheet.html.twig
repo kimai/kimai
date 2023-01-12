@@ -15,9 +15,9 @@
 
     <div class="row">
         <div class="col-xs-12">
-        <table class="table no-border table-sm">
+            <table class="table no-border table-sm">
                 <tr>
-                    <th>{{ 'invoice.from'|trans }}</th>
+                    <th class="ps-0">{{ 'invoice.from'|trans }}</th>
                     <td contenteditable="true">
                         {% if model.query.user is not empty %}
                             {{ widgets.username(model.query.user) }}
@@ -27,7 +27,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ 'date'|trans }}</th>
+                    <th class="ps-0">{{ 'date'|trans }}</th>
                     <td contenteditable="true">
                         {% if model.query.begin|date('m') != model.query.end|date('m') or model.query.begin|date('Y') != model.query.end|date('Y') %}
                             {{ model.query.begin|date_short }} - {{ model.query.end|date_short }}
@@ -37,7 +37,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>{{ 'customer'|trans }}</th>
+                    <th class="ps-0">{{ 'customer'|trans }}</th>
                     <td contenteditable="true">
                         {% if model.customer.number is not empty %}[{{ model.customer.number }}]{% endif %}
                         {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
@@ -45,7 +45,7 @@
                 </tr>
                 {% if project is not null %}
                     <tr>
-                        <th>{{ 'project'|trans }}</th>
+                        <th class="ps-0">{{ 'project'|trans }}</th>
                         <td contenteditable="true">
                             {{ project.name }}
                             {% if project.orderNumber is not empty %}
@@ -56,7 +56,7 @@
                 {% endif %}
                 {% if activity is not null %}
                     <tr>
-                        <th>{{ 'activity'|trans }}</th>
+                        <th class="ps-0">{{ 'activity'|trans }}</th>
                         <td contenteditable="true">
                             {{ activity.name }}
                         </td>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="row invoice-items">
+    <div class="row invoice-items mt-2 mb-3">
         <div class="col-xs-12 table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -122,16 +122,8 @@
             {% endif %}
 
             <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <th style="padding-bottom: 60px">{{ 'invoice.signature_user'|trans }}</th>
-                    </tr>
-                    <tr>
-                        <th>{{ 'invoice.signature_customer'|trans }}</th>
-                    </tr>
-                    </tbody>
-                </table>
+                <p class="bt-1 pb-4 pt-1">{{ 'invoice.signature_user'|trans }}</p>
+                <p class="bt-1 pb-4 pt-1">{{ 'invoice.signature_customer'|trans }}</p>
             </div>
         </div>
     </div>
