@@ -63,4 +63,4 @@ nelmio_api_doc:
                     in: header
         security:
             - X-AUTH-USER: []
-            - X-AUTH-TOKEN: []
+              X-AUTH-TOKEN: []
