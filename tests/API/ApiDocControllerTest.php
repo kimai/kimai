@@ -110,7 +110,7 @@ class ApiDocControllerTest extends ControllerBaseTest
 
         $this->assertArrayHasKey('security', $json);
         $this->assertArrayHasKey('X-AUTH-USER', $json['security'][0]);
-        $this->assertArrayHasKey('X-AUTH-TOKEN', $json['security'][1]);
+        $this->assertArrayHasKey('X-AUTH-TOKEN', $json['security'][0]);
 
         $this->assertArrayHasKey('components', $json);
         $this->assertArrayHasKey('schemas', $json['components']);
