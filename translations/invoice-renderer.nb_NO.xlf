@@ -40,6 +40,10 @@
         <source>service-date</source>
         <target state="needs-translation">Frilanser</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Du kan laste ned ytterligere maler her</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

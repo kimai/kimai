@@ -42,6 +42,10 @@
         <source>text</source>
         <target state="translated">文本</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">您可以在此处下载更多模板</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

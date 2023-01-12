@@ -220,7 +220,7 @@
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
-        <target state="needs-translation">Kommainndelt liste over HTML-fargekoder. Fargenavn kan settes ved å innlede fargekoden med et navn og «|»-skilletegn, f.eks. Hvit|#ffffff,Svart|#000000.</target>
+        <target state="translated">Kommainndelt liste over HTML-fargekoder. Fargenavn kan settes ved å innlede fargekoden med et navn og «|»-skilletegn, f.eks. Hvit|#ffffff,Svart|#000000.</target>
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
@@ -289,6 +289,18 @@
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="needs-translation">Ta over lag fra innlogget bruker ved opprettelse av nye oppføringer</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">Tillatt erstatter: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Format for kundenummer</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Tillat opprettelse av aktiviteter i tidssporingsskjema</target>
       </trans-unit>
     </body>
   </file>

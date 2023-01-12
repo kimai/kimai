@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="email.en.xlf">
     <body>
@@ -23,8 +23,8 @@
         <target>Activate your account</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>You signed up at the Kimai time-tracker with the email %email%. Please activate your account in the next few hours, before the link expires.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

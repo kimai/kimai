@@ -15,9 +15,9 @@
         <source>no</source>
         <target>No</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both">
+      <trans-unit id=".3dyBTq" resname="both" approved="yes">
         <source>Both</source>
-        <target state="needs-translation">Both</target>
+        <target state="final">Both</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
@@ -153,12 +153,12 @@
         <target>Missing permission. Redirect to login?</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">An e-mail has been sent to %email%. It contains a link you must click to activate your account.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes">
         <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+        <target state="final">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -396,8 +396,8 @@
         <target>Customer</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
-        <source>email</source>
-        <target>Email</target>
+        <source>E-mail</source>
+        <target state="translated">E-mail</target>
       </trans-unit>
       <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>
@@ -621,8 +621,8 @@
         <target>Thank you for agreeing to notifications!</target>
       </trans-unit>
       <trans-unit id="BrOQ92O" resname="notifications.denied">
-        <source>notifications.denied</source>
-        <target>You have rejected notifications. Please refer to your browser documentation to find out how to enable them..</target>
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</target>
       </trans-unit>
       <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
@@ -758,8 +758,8 @@
         <target>User role</target>
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
-        <source>Allowed character: A-Z and _</source>
-        <target>Allowed character: A-Z and _ (min. 5 uppercase character)</target>
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">Allowed character: A-Z and _ (min. 5 uppercase characters)</target>
       </trans-unit>
       <!-- Plugins -->
       <trans-unit id="XKTzhQz" resname="version">

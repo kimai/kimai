@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>Aún no tiene ningún complemento instalado.</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Compre ahora</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Más extensiones</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Nuevos complementos del mercado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1162,7 +1162,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>Еженедельное рабочее время</target>
+        <target state="translated">Время за неделю</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>

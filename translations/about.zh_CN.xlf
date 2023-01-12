@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="about.en.xlf">
     <body>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
-        <target>支持</target>
+        <target state="translated">论坛</target>
       </trans-unit>
       <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>为Kimai的未来捐款</target>
+        <target state="translated">捐款</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>

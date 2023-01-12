@@ -30,6 +30,10 @@
         <source>team.activity_visibility_inherited</source>
         <target>לפעילות יש גישה מוגבלת, כיוון שמוגדרות הרשאות קבוצתיות למיזם ו/או ללקוח.</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="translated">חבר</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Agrupado pelo usuário - uma entrada por usuário</target>
+        <target state="translated">Usuário: uma entrada por usuário</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

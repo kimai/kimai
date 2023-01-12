@@ -38,6 +38,14 @@
         <source>daterangepicker.customRange</source>
         <target state="translated">Власний період</target>
       </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Загальний період</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+        <source>This year — until today</source>
+        <target state="translated">Цей рік — до сьогодні</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

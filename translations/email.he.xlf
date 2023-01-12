@@ -16,19 +16,19 @@
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
-        <target>ברוך הבא %username%</target>
+        <target state="translated">ברוך בואך %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
-        <target>הפעל את החשבון שלך</target>
+        <target state="translated">הפעלת החשבון שלך</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>נרשמת למערכת דיווח השעות עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">נרשמת למערכת דיווח השעות Kimai עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target>אפס את הסיסמה שלך</target>
+        <target state="translated">איפוס הסיסמה שלך</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
