@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
-        <target>Støtte</target>
+        <target state="translated">Forum</target>
       </trans-unit>
       <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>Doner til fremtidens Kimai</target>
+        <target state="translated">Doner</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>

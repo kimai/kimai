@@ -380,7 +380,7 @@
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Numărul maxim de ore {{ valoare }} permise.</target>
+        <target state="translated">Numărul maxim de ore {{ value }} permise.</target>
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>

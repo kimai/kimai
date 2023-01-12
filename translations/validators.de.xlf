@@ -30,9 +30,9 @@
         <source>This value is not a valid role.</source>
         <target>Dieser Wert ist keine gültige Rolle.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes">
         <source>End date must not be earlier then start date.</source>
-        <target state="translated">Das Enddatum darf nicht vor dem Startdatum liegen.</target>
+        <target state="final">Das Enddatum darf nicht vor dem Startdatum liegen.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>

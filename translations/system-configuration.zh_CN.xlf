@@ -286,6 +286,18 @@
         <source>copy_teams_on_create</source>
         <target state="translated">创建新条目时从登录用户接管团队</target>
       </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">允许以时间跟踪形式创建活动</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">客户编号格式</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">允许的替代品：%replacer%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

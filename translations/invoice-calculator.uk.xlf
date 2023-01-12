@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Діяльність: один запис на одну діяльність</target>
+        <target state="translated">Дії (діяльності): один запис на одну діяльність</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>

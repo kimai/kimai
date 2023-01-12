@@ -86,6 +86,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">抱歉，预算用完了。</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">保存时出现问题。</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">给定的代码不是正确的 TOTP 令牌。</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">你有一个活跃的时间记录不能自动停止。</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">给定的值不是有效的日间格式。</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">这不是一个有效的用户角色名称。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

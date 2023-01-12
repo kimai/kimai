@@ -86,6 +86,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Desculpe, não há orçamento.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Houve um problema ao salvar.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Você tem um registro de tempo ativo que não pode ser interrompido automaticamente.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">O valor informado não é um formato de dia válido.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">O código fornecido não é um token TOTP correto.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Este não é um nome válido para uma função do usuário.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
