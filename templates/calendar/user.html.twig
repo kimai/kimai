@@ -149,7 +149,7 @@
             {% elseif config.entryTitlePattern == constant('\\App\\Form\\Type\\CalendarTitlePatternType::PATTERN_CUSTOMER_DESCRIPTION') %}
                 title = apiItem.project.customer.name + description;
             {% elseif config.entryTitlePattern == constant('\\App\\Form\\Type\\CalendarTitlePatternType::PATTERN_PROJECT_CUSTOMER') %}
-                title = apiItem.project.name + apiItem.project.customer.name;
+                title = apiItem.project.name + '{{ constant('\\App\\Form\\Type\\CalendarTitlePatternType::SPACER') }}' + apiItem.project.customer.name;
             {% endif %}
 
             if (title === '' || title === null) {
