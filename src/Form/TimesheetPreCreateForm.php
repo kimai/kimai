@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Form\Type\DescriptionType;
+use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\AbstractType;
@@ -29,6 +30,7 @@ class TimesheetPreCreateForm extends AbstractType
         $this->addActivity($builder, null, null, ['required' => false]);
         $builder->add('description', DescriptionType::class, ['required' => false]);
         $builder->add('tags', TagsInputType::class, ['required' => false]);
+        $builder->add('metaFields', MetaFieldsCollectionType::class);
         if ($options['include_user']) {
             $builder->add('user', UserType::class, ['required' => false]);
         }
