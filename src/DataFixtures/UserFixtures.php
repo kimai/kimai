@@ -72,8 +72,8 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
             $user->setRoles([$userData[4]]);
             $user->setAvatar($userData[5]);
             $user->setEnabled($userData[6]);
-            $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-            $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
+            $user->setPassword($this->passwordHasher->hashPassword($user, $userData[8]));
+            $user->setApiToken($this->passwordHasher->hashPassword($user, $userData[9]));
             $manager->persist($user);
 
             $prefs = $this->getUserPreferences($user, $userData[7]);
@@ -167,6 +167,8 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         // avatar = $userData[5]
         // enabled = $userData[6]
         // timezone = $userData[7]
+        // password = $userData[8]
+        // api = $userData[9]
 
         return [
             [
@@ -178,6 +180,20 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 self::DEFAULT_AVATAR,
                 true,
                 'America/Vancouver',
+                self::DEFAULT_PASSWORD,
+                self::DEFAULT_API_TOKEN,
+            ],
+            [
+                'John Doe',
+                'Developer',
+                'user',
+                'user@example.com',
+                User::ROLE_USER,
+                self::DEFAULT_AVATAR,
+                true,
+                'America/Vancouver',
+                'password',
+                'password',
             ],
             // inactive user to test login
             [
@@ -189,6 +205,8 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 self::DEFAULT_AVATAR,
                 false,
                 'Australia/Sydney',
+                self::DEFAULT_PASSWORD,
+                self::DEFAULT_API_TOKEN,
             ],
             [
                 'Tony Maier',
@@ -199,6 +217,20 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg',
                 true,
                 'Asia/Bangkok',
+                self::DEFAULT_PASSWORD,
+                self::DEFAULT_API_TOKEN,
+            ],
+            [
+                'Tony Maier',
+                'Head of Sales',
+                'teamlead',
+                'teamlead@example.com',
+                User::ROLE_TEAMLEAD,
+                'https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg',
+                true,
+                'Asia/Bangkok',
+                'password',
+                'password',
             ],
             // no avatar to test default image macro
             [
@@ -210,6 +242,20 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 null,
                 true,
                 'Europe/London',
+                self::DEFAULT_PASSWORD,
+                self::DEFAULT_API_TOKEN,
+            ],
+            [
+                'Anna Smith',
+                'Administrator',
+                'administrator',
+                'administrator@example.com',
+                User::ROLE_ADMIN,
+                null,
+                true,
+                'Europe/London',
+                'password',
+                'password',
             ],
             // no alias to test twig username macro
             [
@@ -221,7 +267,21 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 '/touch-icon-192x192.png',
                 true,
                 'Europe/Berlin',
-            ]
+                self::DEFAULT_PASSWORD,
+                self::DEFAULT_API_TOKEN,
+            ],
+            [
+                null,
+                'Super Administrator',
+                'super_admin',
+                'super_admin@example.com',
+                User::ROLE_SUPER_ADMIN,
+                '/touch-icon-192x192.png',
+                true,
+                'Europe/Berlin',
+                'password',
+                'password',
+            ],
         ];
     }
 }
