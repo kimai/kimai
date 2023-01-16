@@ -59,10 +59,8 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
 
     /**
      * Default users for all test cases
-     *
-     * @param ObjectManager $manager
      */
-    private function loadDefaultAccounts(ObjectManager $manager)
+    private function loadDefaultAccounts(ObjectManager $manager): void
     {
         $allUsers = $this->getUserDefinition();
         foreach ($allUsers as $userData) {
@@ -117,11 +115,9 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * Generate randomized test users, which don't have API access.
-     *
-     * @param ObjectManager $manager
+     * Generate randomized test users, without API access.
      */
-    private function loadTestUsers(ObjectManager $manager)
+    private function loadTestUsers(ObjectManager $manager): void
     {
         $faker = Factory::create();
         $existingName = [];
@@ -161,10 +157,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $manager->clear();
     }
 
-    /**
-     * @return array
-     */
-    protected function getUserDefinition(): array
+    private function getUserDefinition(): array
     {
         // alias = $userData[0]
         // title = $userData[1]

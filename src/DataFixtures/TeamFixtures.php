@@ -40,7 +40,7 @@ final class TeamFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, User>
      */
-    protected function getAllUsers(ObjectManager $manager): array
+    private function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
         /** @var User[] $entries */
@@ -56,7 +56,7 @@ final class TeamFixtures extends Fixture
      * @param ObjectManager $manager
      * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager): array
+    private function getAllProjects(ObjectManager $manager): array
     {
         $all = [];
 

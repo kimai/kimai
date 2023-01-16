@@ -117,6 +117,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         }
 
         $allTags = $this->getAllTags($manager);
+        /** @var array<Timesheet> $entries */
         $entries = $this->findRandom($manager, Timesheet::class, min($all, self::ADD_TAGS_MAX_ENTRIES));
         foreach ($entries as $temp) {
             $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
@@ -132,9 +133,17 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $manager->clear();
     }
 
-    private function findRandom(ObjectManager $manager, string $class, int $amount)
+    /**
+     * @template T of object
+     * @param ObjectManager $manager
+     * @param class-string<T> $class
+     * @param int $amount
+     * @return array<int, T>
+     */
+    private function findRandom(ObjectManager $manager, string $class, int $amount): array
     {
         $qb = $manager->getRepository($class)->createQueryBuilder('entity');
+        /** @var array<int> $limits */
         $limits = $qb
             ->select('MIN(entity.id)', 'MAX(entity.id)')
             ->getQuery()
@@ -150,18 +159,17 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
         $qb = $manager->getRepository($class)->createQueryBuilder('entity');
 
-        return $qb
-            ->where($qb->expr()->in('entity.id', $ids))
-            ->setMaxResults($amount)
-            ->getQuery()
-            ->getResult();
+        /** @var array<int, T> $result */
+        $result = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
+
+        return $result;
     }
 
     /**
      * @param ObjectManager $manager
      * @return array<int|string, Tag>
      */
-    protected function getAllTags(ObjectManager $manager): array
+    private function getAllTags(ObjectManager $manager): array
     {
         return $this->findRandom($manager, Tag::class, 50);
     }
@@ -170,7 +178,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      * @param ObjectManager $manager
      * @return array<int|string, User>
      */
-    protected function getAllUsers(ObjectManager $manager): array
+    private function getAllUsers(ObjectManager $manager): array
     {
         $all = [];
         /** @var User[] $entries */
@@ -186,7 +194,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      * @param ObjectManager $manager
      * @return array<int|string, Project>
      */
-    protected function getAllProjects(ObjectManager $manager): array
+    private function getAllProjects(ObjectManager $manager): array
     {
         return $this->findRandom($manager, Project::class, 50);
     }
@@ -195,12 +203,12 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      * @param ObjectManager $manager
      * @return array<int|string, Activity>
      */
-    protected function getAllActivities(ObjectManager $manager): array
+    private function getAllActivities(ObjectManager $manager): array
     {
         return $this->findRandom($manager, Activity::class, 50);
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate): Timesheet
     {
         $start = $this->getRandomFirstDay();
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
