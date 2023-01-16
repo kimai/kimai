@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target state="translated">Jeszcze nie zainstalowałeś żadnych wtyczek.</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Kup teraz</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Więcej rozszerzeń</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Nowe wtyczki z sklepu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

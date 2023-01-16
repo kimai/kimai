@@ -86,6 +86,26 @@
         <source>A project needs to be selected.</source>
         <target state="translated">Należy wybrać projekt.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Wystąpił problem z zapisem.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Podana wartość nie jest prawidłowym formatem czasu dziennego.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Podany kod nie jest prawidłowym tokenem TOTP.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">To nie jest prawidłowa nazwa dla roli użytkownika.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Masz aktywny zapis czasu, który nie może być zatrzymany automatycznie.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
