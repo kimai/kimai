@@ -167,14 +167,13 @@ abstract class TimesheetAbstractController extends AbstractController
 
     protected function create(Request $request): Response
     {
-        $entry = $this->service->createNewTimesheet($this->getUser());
+        $entry = $this->service->createNewTimesheet($this->getUser(), $request);
 
         $preForm = $this->createFormForGetRequest(TimesheetPreCreateForm::class, $entry, [
             'include_user' => $this->includeUserInForms('create'),
         ]);
         $preForm->submit($request->query->all(), false);
 
-        $this->service->prepareNewTimesheet($entry, $request);
         $createForm = $this->getCreateForm($entry);
         $createForm->handleRequest($request);
 
