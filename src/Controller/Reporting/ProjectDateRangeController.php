@@ -14,14 +14,16 @@ use App\Form\Model\DateRange;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
 use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProjectDateRangeController extends AbstractController
 {
     #[Route(path: '/reporting/project_daterange', name: 'report_project_daterange', methods: ['GET', 'POST'])]
-    #[Security("is_granted('report:project') and is_granted('budget_any', 'project')")]
+    #[IsGranted('report:project')]
+    #[IsGranted(new Expression("is_granted('budget_any', 'project')"))]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

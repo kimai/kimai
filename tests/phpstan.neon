@@ -10983,11 +10983,6 @@ parameters:
             path: Utils/StringHelperTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ColorChoicesValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/ColorChoicesValidatorTest.php
@@ -11013,11 +11008,6 @@ parameters:
             path: Validator/Constraints/ColorChoicesValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:getInvalidData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/DateTimeFormatValidatorTest.php
@@ -11041,11 +11031,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:testValidationError\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:getInvalidData\\(\\) has no return type specified\\.$#"
@@ -11083,11 +11068,6 @@ parameters:
             path: Validator/Constraints/DurationValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/HexColorValidatorTest.php
@@ -11118,11 +11098,6 @@ parameters:
             path: Validator/Constraints/HexColorValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ProjectValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ProjectValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ProjectValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/ProjectValidatorTest.php
@@ -11136,11 +11111,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ProjectValidatorTest\\:\\:testGetTargets\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/ProjectValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\QuickEntryModelValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/QuickEntryModelValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\QuickEntryModelValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
@@ -11178,11 +11148,6 @@ parameters:
             path: Validator/Constraints/QuickEntryModelValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\QuickEntryTimesheetValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/QuickEntryTimesheetValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\QuickEntryTimesheetValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/QuickEntryTimesheetValidatorTest.php
@@ -11199,11 +11164,6 @@ parameters:
 
         -
             message: "#^Cannot cast mixed to string\\.$#"
-            count: 1
-            path: Validator/Constraints/RoleValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\RoleValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/RoleValidatorTest.php
 
@@ -11238,11 +11198,6 @@ parameters:
             path: Validator/Constraints/RoleValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TeamValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TeamValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TeamValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TeamValidatorTest.php
@@ -11251,11 +11206,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TeamValidatorTest\\:\\:testMissingTeamlead\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TeamValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimeFormatValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:getInvalidTimes\\(\\) has no return type specified\\.$#"
@@ -11289,16 +11239,6 @@ parameters:
 
         -
             message: "#^Cannot call method assertRaised\\(\\) on Symfony\\\\Component\\\\Validator\\\\Test\\\\ConstraintViolationAssertion\\|null\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBasicValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBasicValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
@@ -11358,16 +11298,6 @@ parameters:
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:createValidator\\(\\) has parameter \\$rawData with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:getViolationTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
@@ -11423,16 +11353,6 @@ parameters:
             path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetExportedValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetExportedValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetExportedValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetExportedValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetExportedValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetExportedValidatorTest.php
@@ -11468,16 +11388,6 @@ parameters:
             path: Validator/Constraints/TimesheetExportedValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetFutureTimesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetFutureTimesValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetFutureTimesValidatorTest.php
@@ -11496,16 +11406,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidatorTest\\:\\:testInvalidValueThrowsException\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetFutureTimesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:getConfigTestData\\(\\) has no return type specified\\.$#"
@@ -11558,16 +11458,6 @@ parameters:
             path: Validator/Constraints/TimesheetLockdownValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLongRunningValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLongRunningValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetLongRunningValidatorTest.php
@@ -11613,16 +11503,6 @@ parameters:
             path: Validator/Constraints/TimesheetLongRunningValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUpdateValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetMultiUpdateValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUpdateValidatorTest\\:\\:createValidator\\(\\) has parameter \\$isGranted with no type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetMultiUpdateValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUpdateValidatorTest\\:\\:testActivityWithoutProject\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetMultiUpdateValidatorTest.php
@@ -11653,16 +11533,6 @@ parameters:
             path: Validator/Constraints/TimesheetMultiUpdateValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUserValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetMultiUserValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUserValidatorTest\\:\\:createValidator\\(\\) has parameter \\$isGranted with no type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetMultiUserValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUserValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetMultiUserValidatorTest.php
@@ -11671,16 +11541,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetMultiUserValidatorTest\\:\\:testEmptyTimesheet\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetMultiUserValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetOverlappingValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetOverlappingValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
@@ -11713,16 +11573,6 @@ parameters:
             path: Validator/Constraints/TimesheetOverlappingValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetRestartValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetRestartValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetRestartValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetRestartValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetRestartValidatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetRestartValidatorTest.php
@@ -11743,16 +11593,6 @@ parameters:
             path: Validator/Constraints/TimesheetRestartValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetValidatorTest.php
@@ -11761,16 +11601,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetValidatorTest\\:\\:testInvalidValueThrowsException\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:createMyValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetZeroDurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetZeroDurationValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:prepareTimesheet\\(\\) has no return type specified\\.$#"
@@ -11796,11 +11626,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:testZeroDurationIsDisallowed\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetZeroDurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\UserValidatorTest\\:\\:createValidator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/UserValidatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\UserValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"

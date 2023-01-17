@@ -11,16 +11,16 @@ namespace App\Controller;
 
 use App\Configuration\LocaleService;
 use App\Entity\User;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Homepage controller is a redirect controller with user specific logic.
  */
 #[Route(path: '/homepage')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class HomepageController extends AbstractController
 {
     public const DEFAULT_ROUTE = 'timesheet';

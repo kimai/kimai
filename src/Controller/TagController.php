@@ -18,14 +18,14 @@ use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/admin/tags')]
-#[Security("is_granted('view_tag')")]
+#[IsGranted('view_tag')]
 final class TagController extends AbstractController
 {
     /**
@@ -76,7 +76,7 @@ final class TagController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'tags_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_tag')")]
+    #[IsGranted('manage_tag')]
     public function editAction(Tag $tag, TagRepository $repository, Request $request)
     {
         $editForm = $this->createForm(TagEditForm::class, $tag, [
@@ -108,7 +108,7 @@ final class TagController extends AbstractController
     }
 
     #[Route(path: '/create', name: 'tags_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_tag')")]
+    #[IsGranted('manage_tag')]
     public function createAction(TagRepository $repository, Request $request)
     {
         $tag = new Tag();
@@ -142,7 +142,7 @@ final class TagController extends AbstractController
     }
 
     #[Route(path: '/multi-delete', name: 'tags_multi_delete', methods: ['POST'])]
-    #[Security("is_granted('delete_tag')")]
+    #[IsGranted('delete_tag')]
     public function multiDelete(TagRepository $repository, Request $request)
     {
         $form = $this->getMultiUpdateForm($repository);

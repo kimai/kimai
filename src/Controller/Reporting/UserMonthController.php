@@ -13,14 +13,14 @@ use App\Model\DailyStatistic;
 use App\Reporting\MonthByUser\MonthByUser;
 use App\Reporting\MonthByUser\MonthByUserForm;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/reporting/user')]
-#[Security("is_granted('report:user')")]
+#[IsGranted('report:user')]
 final class UserMonthController extends AbstractUserReportController
 {
     /**

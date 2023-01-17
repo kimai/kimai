@@ -23,15 +23,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetBasic
  * @covers \App\Validator\Constraints\TimesheetBasicValidator
+ * @extends ConstraintValidatorTestCase<TimesheetBasicValidator>
  */
 class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetBasicValidator
     {
         return $this->createMyValidator();
     }
 
-    protected function createMyValidator()
+    protected function createMyValidator(): TimesheetBasicValidator
     {
         $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['rules' => ['require_activity' => true]]]);
 

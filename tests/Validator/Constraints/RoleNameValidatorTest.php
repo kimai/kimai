@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\RoleName
  * @covers \App\Validator\Constraints\RoleNameValidator
+ * @extends ConstraintValidatorTestCase<RoleNameValidator>
  */
 class RoleNameValidatorTest extends ConstraintValidatorTestCase
 {

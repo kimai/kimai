@@ -18,10 +18,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\DateTimeFormat
  * @covers \App\Validator\Constraints\DateTimeFormatValidator
+ * @extends ConstraintValidatorTestCase<DateTimeFormatValidator>
  */
 class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): DateTimeFormatValidator
     {
         return new DateTimeFormatValidator();
     }

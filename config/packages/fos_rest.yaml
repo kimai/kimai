@@ -4,7 +4,7 @@ fos_rest:
     cache_dir: '%kernel.cache_dir%/fos_rest'
     routing_loader: false
     body_converter:
-        enabled: true
+        enabled: false
     serializer:
         serialize_null: true
     view:

@@ -24,15 +24,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetLockdown
  * @covers \App\Validator\Constraints\TimesheetLockdownValidator
+ * @extends ConstraintValidatorTestCase<TimesheetLockdownValidator>
  */
 class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetLockdownValidator
     {
         return $this->createMyValidator(false, false, null, null, null);
     }
 
-    protected function createMyValidator(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $start, ?string $end, ?string $grace)
+    protected function createMyValidator(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $start, ?string $end, ?string $grace): TimesheetLockdownValidator
     {
         $auth = $this->createMock(Security::class);
         $auth->method('getUser')->willReturn(new User());
@@ -74,7 +75,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     public function testValidatorWithoutNowConstraint()

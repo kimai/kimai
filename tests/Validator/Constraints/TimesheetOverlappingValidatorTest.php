@@ -22,15 +22,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetOverlapping
  * @covers \App\Validator\Constraints\TimesheetOverlappingValidator
+ * @extends ConstraintValidatorTestCase<TimesheetOverlappingValidator>
  */
 class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetOverlappingValidator
     {
         return $this->createMyValidator(false, true);
     }
 
-    protected function createMyValidator(bool $allowOverlappingRecords = false, bool $hasRecords = true)
+    protected function createMyValidator(bool $allowOverlappingRecords = false, bool $hasRecords = true): TimesheetOverlappingValidator
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -57,7 +58,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     public function testOverlappingDisallowedWithRecords()

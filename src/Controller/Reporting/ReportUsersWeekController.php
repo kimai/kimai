@@ -19,13 +19,13 @@ use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/reporting/users')]
-#[Security("is_granted('report:other')")]
+#[IsGranted('report:other')]
 final class ReportUsersWeekController extends AbstractController
 {
     #[Route(path: '/week', name: 'report_weekly_users', methods: ['GET', 'POST'])]

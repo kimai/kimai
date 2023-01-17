@@ -16,17 +16,17 @@ use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to export timesheet data.
  */
 #[Route(path: '/export')]
-#[Security("is_granted('create_export')")]
+#[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
     public function __construct(private ServiceExport $export)

@@ -11,15 +11,15 @@ namespace App\Controller;
 
 use App\Reporting\ReportingService;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to render reports.
  */
 #[Route(path: '/reporting')]
-#[Security("is_granted('view_reporting')")]
+#[IsGranted('view_reporting')]
 final class ReportingController extends AbstractController
 {
     #[Route(path: '/', name: 'reporting', methods: ['GET'])]

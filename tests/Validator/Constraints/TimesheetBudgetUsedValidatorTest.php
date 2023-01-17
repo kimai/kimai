@@ -40,10 +40,14 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetBudgetUsed
  * @covers \App\Validator\Constraints\TimesheetBudgetUsedValidator
+ * @extends ConstraintValidatorTestCase<TimesheetBudgetUsedValidator>
  */
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(bool $isAllowed = false, ?ActivityBudgetStatisticModel $activityStatisticModel = null, ?ProjectBudgetStatisticModel $projectStatisticModel = null, ?CustomerBudgetStatisticModel $customerStatisticModel = null, ?array $rawData = null, ?Rate $rate = null)
+    /**
+     * @param array<mixed>|null $rawData
+     */
+    protected function createValidator(bool $isAllowed = false, ?ActivityBudgetStatisticModel $activityStatisticModel = null, ?ProjectBudgetStatisticModel $projectStatisticModel = null, ?CustomerBudgetStatisticModel $customerStatisticModel = null, ?array $rawData = null, ?Rate $rate = null): TimesheetBudgetUsedValidator
     {
         $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['rules' => ['allow_overbooking_budget' => $isAllowed]]]);
 
@@ -117,7 +121,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new TimesheetBudgetUsed());
+        $this->validator->validate('foo', new TimesheetBudgetUsed()); // @phpstan-ignore-line
     }
 
     public function testWithMissingEnd()

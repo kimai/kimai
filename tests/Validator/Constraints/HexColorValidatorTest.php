@@ -18,10 +18,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\HexColor
  * @covers \App\Validator\Constraints\HexColorValidator
+ * @extends ConstraintValidatorTestCase<HexColorValidator>
  */
 class HexColorValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): HexColorValidator
     {
         return new HexColorValidator();
     }

@@ -21,15 +21,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetFutureTimes
  * @covers \App\Validator\Constraints\TimesheetFutureTimesValidator
+ * @extends ConstraintValidatorTestCase<TimesheetFutureTimesValidator>
  */
 class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetFutureTimesValidator
     {
         return $this->createMyValidator(false);
     }
 
-    protected function createMyValidator(bool $allowFutureTimes = false)
+    protected function createMyValidator(bool $allowFutureTimes = false): TimesheetFutureTimesValidator
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -59,7 +60,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     public function testFutureBeginIsDisallowed()

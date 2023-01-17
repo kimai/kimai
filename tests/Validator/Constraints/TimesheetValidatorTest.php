@@ -19,15 +19,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\Timesheet
  * @covers \App\Validator\Constraints\TimesheetValidator
+ * @extends ConstraintValidatorTestCase<TimesheetValidator>
  */
 class TimesheetValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetValidator
     {
         return $this->createMyValidator();
     }
 
-    protected function createMyValidator(bool $isGranted = true)
+    protected function createMyValidator(bool $isGranted = true): TimesheetValidator
     {
         return new TimesheetValidator([]);
     }
@@ -43,6 +44,6 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 }

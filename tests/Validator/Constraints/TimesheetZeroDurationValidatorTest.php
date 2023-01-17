@@ -21,15 +21,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetZeroDuration
  * @covers \App\Validator\Constraints\TimesheetZeroDurationValidator
+ * @extends ConstraintValidatorTestCase<TimesheetZeroDurationValidator>
  */
 class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetZeroDurationValidator
     {
         return $this->createMyValidator(false);
     }
 
-    protected function createMyValidator(bool $allowZeroDuration = false)
+    protected function createMyValidator(bool $allowZeroDuration = false): TimesheetZeroDurationValidator
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -54,7 +55,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
+        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.'])); // @phpstan-ignore-line
     }
 
     private function prepareTimesheet()

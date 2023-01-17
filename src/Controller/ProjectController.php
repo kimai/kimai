@@ -40,20 +40,21 @@ use App\Repository\TeamRepository;
 use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to manage projects.
  */
 #[Route(path: '/admin/project')]
-#[Security("is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project')")]
+#[IsGranted(new Expression("is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project')"))]
 final class ProjectController extends AbstractController
 {
     public function __construct(private ProjectRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ProjectService $projectService)
@@ -132,7 +133,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/permissions', name: 'admin_project_permissions', methods: ['GET', 'POST'])]
-    #[Security("is_granted('permissions', project)")]
+    #[IsGranted('permissions', 'project')]
     public function teamPermissions(Project $project, Request $request)
     {
         $form = $this->createForm(ProjectTeamPermissionForm::class, $project, [
@@ -165,14 +166,14 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/create/{customer}', name: 'admin_project_create_with_customer', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_project')")]
+    #[IsGranted('create_project')]
     public function createWithCustomerAction(Request $request, Customer $customer)
     {
         return $this->createProject($request, $customer);
     }
 
     #[Route(path: '/create', name: 'admin_project_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_project')")]
+    #[IsGranted('create_project')]
     public function createAction(Request $request)
     {
         return $this->createProject($request, null);
@@ -204,7 +205,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/comment_delete/{token}', name: 'project_comment_delete', methods: ['GET'])]
-    #[Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")]
+    #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
     public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $projectId = $comment->getProject()->getId();
@@ -227,7 +228,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/comment_add', name: 'project_comment_add', methods: ['POST'])]
-    #[Security("is_granted('comments', project)")]
+    #[IsGranted('comments', 'project')]
     public function addCommentAction(Project $project, Request $request)
     {
         $comment = new ProjectComment($project);
@@ -247,7 +248,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/comment_pin/{token}', name: 'project_comment_pin', methods: ['GET'])]
-    #[Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")]
+    #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
     public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $projectId = $comment->getProject()->getId();
@@ -271,7 +272,8 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
-    #[Security("is_granted('create_team') and is_granted('permissions', project)")]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'project')]
     public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository)
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
@@ -295,7 +297,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/activities/{page}', defaults: ['page' => 1], name: 'project_activities', methods: ['GET', 'POST'])]
-    #[Security("is_granted('view', project)")]
+    #[IsGranted('view', 'project')]
     public function activitiesAction(Project $project, int $page, ActivityRepository $activityRepository)
     {
         $query = new ActivityQuery();
@@ -319,7 +321,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/details', name: 'project_details', methods: ['GET', 'POST'])]
-    #[Security("is_granted('view', project)")]
+    #[IsGranted('view', 'project')]
     public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $event = new ProjectMetaDefinitionEvent($project);
@@ -380,14 +382,14 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/rate/{rate}', name: 'admin_project_rate_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     public function editRateAction(Project $project, ProjectRate $rate, Request $request, ProjectRateRepository $repository): Response
     {
         return $this->rateFormAction($project, $rate, $request, $repository, $this->generateUrl('admin_project_rate_edit', ['id' => $project->getId(), 'rate' => $rate->getId()]));
     }
 
     #[Route(path: '/{id}/rate', name: 'admin_project_rate_add', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     public function addRateAction(Project $project, Request $request, ProjectRateRepository $repository): Response
     {
         $rate = new ProjectRate();
@@ -424,7 +426,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_project_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     public function editAction(Project $project, Request $request)
     {
         $editForm = $this->createEditForm($project);
@@ -449,7 +451,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/duplicate/{token}', name: 'admin_project_duplicate', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager)
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.duplicate', $token))) {
@@ -468,7 +470,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_project_delete', methods: ['GET', 'POST'])]
-    #[Security("is_granted('delete', project)")]
+    #[IsGranted('delete', 'project')]
     public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService)
     {
         $stats = $statisticService->getProjectStatistics($project);

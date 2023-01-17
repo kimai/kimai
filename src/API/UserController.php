@@ -23,16 +23,16 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/users')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 #[OA\Tag(name: 'User')]
 final class UserController extends BaseApiController
 {
@@ -51,7 +51,7 @@ final class UserController extends BaseApiController
     /**
      * Returns the collection of users (which are visible to the user)
      */
-    #[Security("is_granted('view_user')")]
+    #[IsGranted('view_user')]
     #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
     #[Rest\Get(path: '', name: 'get_users')]
     #[ApiSecurity(name: 'apiUser')]
@@ -95,7 +95,7 @@ final class UserController extends BaseApiController
     /**
      * Return one user entity
      */
-    #[Security("is_granted('view', profile)")]
+    #[IsGranted('view', 'profile')]
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to fetch', required: true)]
     #[Rest\Get(path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
@@ -131,7 +131,7 @@ final class UserController extends BaseApiController
     /**
      * Creates a new user
      */
-    #[Security("is_granted('create_user')")]
+    #[IsGranted('create_user')]
     #[OA\Post(description: 'Creates a new user and returns it afterwards')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
     #[Rest\Post(path: '', name: 'post_user')]
@@ -184,7 +184,7 @@ final class UserController extends BaseApiController
     /**
      * Update an existing user
      */
-    #[Security("is_granted('edit', profile)")]
+    #[IsGranted('edit', 'profile')]
     #[OA\Patch(description: 'Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]

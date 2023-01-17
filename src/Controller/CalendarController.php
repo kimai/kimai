@@ -15,16 +15,16 @@ use App\Entity\User;
 use App\Form\CalendarForm;
 use App\Timesheet\TrackingModeService;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to display calendars.
  */
 #[Route(path: '/calendar')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class CalendarController extends AbstractController
 {
     public function __construct(private CalendarService $calendarService, private SystemConfiguration $configuration, private TrackingModeService $service)

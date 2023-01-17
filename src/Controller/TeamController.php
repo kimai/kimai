@@ -18,14 +18,14 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/admin/teams')]
-#[Security("is_granted('view_team')")]
+#[IsGranted('view_team')]
 final class TeamController extends AbstractController
 {
     public function __construct(private TeamRepository $repository)
@@ -81,14 +81,15 @@ final class TeamController extends AbstractController
      * @return Response
      */
     #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_team')")]
+    #[IsGranted('create_team')]
     public function createTeam(Request $request): Response
     {
         return $this->renderEditScreen(new Team(''), $request, true);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'team_duplicate', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', team) and is_granted('create_team')")]
+    #[IsGranted('create_team')]
+    #[IsGranted('edit', 'team')]
     public function duplicateTeam(Team $team, Request $request)
     {
         $newTeam = clone $team;
@@ -103,14 +104,14 @@ final class TeamController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_team_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', team)")]
+    #[IsGranted('edit', 'team')]
     public function editAction(Team $team, Request $request)
     {
         return $this->renderEditScreen($team, $request);
     }
 
     #[Route(path: '/{id}/edit_member', name: 'admin_team_member', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', team)")]
+    #[IsGranted('edit', 'team')]
     public function editMemberAction(Team $team, Request $request)
     {
         $editForm = $this->createForm(TeamEditForm::class, $team, [

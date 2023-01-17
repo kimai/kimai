@@ -17,15 +17,15 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to enter times in weekly form.
  */
 #[Route(path: '/quick_entry')]
-#[Security("is_granted('quick-entry')")]
+#[IsGranted('quick-entry')]
 final class QuickEntryController extends AbstractController
 {
     public function __construct(private SystemConfiguration $configuration, private TimesheetService $timesheetService, private TimesheetRepository $repository)

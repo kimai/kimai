@@ -19,10 +19,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimeFormat
  * @covers \App\Validator\Constraints\TimeFormatValidator
+ * @extends ConstraintValidatorTestCase<TimeFormatValidator>
  */
 class TimeFormatValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimeFormatValidator
     {
         return new TimeFormatValidator();
     }

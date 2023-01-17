@@ -18,13 +18,14 @@ use App\Reporting\CustomerMonthlyProjects\CustomerMonthlyProjectsRepository;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/reporting/customer/monthly_projects')]
-#[Security("is_granted('report:customer') and is_granted('report:other')")]
+#[IsGranted('report:customer')]
+#[IsGranted('report:other')]
 final class CustomerMonthlyProjectsController extends AbstractController
 {
     #[Route(path: '/view', name: 'report_customer_monthly_projects', methods: ['GET', 'POST'])]

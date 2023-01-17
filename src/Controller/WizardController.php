@@ -15,18 +15,18 @@ use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\User\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/wizard')]
-#[Security("is_granted('IS_AUTHENTICATED_FULLY')")]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 final class WizardController extends AbstractController
 {
     #[Route(path: '/{wizard}', name: 'wizard', methods: ['GET', 'POST'])]
-    #[Security("is_granted('view_own_timesheet')")]
+    #[IsGranted('view_own_timesheet')]
     public function wizard(Request $request, UserService $userService, string $wizard): Response
     {
         $user = $this->getUser();

@@ -11,15 +11,15 @@ namespace App\Controller;
 
 use App\Plugin\PluginManager;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route(path: '/admin/plugins')]
-#[Security("is_granted('plugins')")]
+#[IsGranted('plugins')]
 final class PluginController extends AbstractController
 {
     #[Route(path: '/', name: 'plugins', methods: ['GET'])]

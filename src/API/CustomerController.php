@@ -26,15 +26,15 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/customers')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 #[OA\Tag(name: 'Customer')]
 final class CustomerController extends BaseApiController
 {
@@ -156,7 +156,7 @@ final class CustomerController extends BaseApiController
     /**
      * Update an existing customer
      */
-    #[Security("is_granted('edit', customer)")]
+    #[IsGranted('edit', 'customer')]
     #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to update', required: true)]
@@ -194,7 +194,7 @@ final class CustomerController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing customer
      */
-    #[Security("is_granted('edit', customer)")]
+    #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
@@ -227,7 +227,7 @@ final class CustomerController extends BaseApiController
     /**
      * Returns a collection of all rates for one customer
      */
-    #[Security("is_granted('edit', customer)")]
+    #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rates will be returned', required: true)]
     #[Rest\Get(path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
@@ -246,15 +246,14 @@ final class CustomerController extends BaseApiController
     /**
      * Deletes one rate for a customer
      */
-    #[Security("is_granted('edit', customer)")]
+    #[IsGranted('edit', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
-    #[Entity('rate', expr: 'repository.find(rateId)')]
-    public function deleteRateAction(Customer $customer, CustomerRate $rate): Response
+    public function deleteRateAction(Customer $customer, #[MapEntity(mapping: ['rateId' => 'id'])] CustomerRate $rate): Response
     {
         if ($rate->getCustomer() !== $customer) {
             throw $this->createNotFoundException();
@@ -270,7 +269,7 @@ final class CustomerController extends BaseApiController
     /**
      * Adds a new rate to a customer
      */
-    #[Security("is_granted('edit', customer)")]
+    #[IsGranted('edit', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]

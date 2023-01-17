@@ -25,19 +25,20 @@ use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to manage users in the admin part of the site.
  */
 #[Route(path: '/admin/user')]
-#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_user')")]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[IsGranted('view_user')]
 final class UserController extends AbstractController
 {
     public function __construct(private UserPasswordHasherInterface $passwordHasher, private UserRepository $repository, private EventDispatcherInterface $dispatcher)
@@ -110,7 +111,7 @@ final class UserController extends AbstractController
     }
 
     #[Route(path: '/create', name: 'admin_user_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_user')")]
+    #[IsGranted('create_user')]
     public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository): Response
     {
         $user = $this->createNewDefaultUser($config);
@@ -139,7 +140,7 @@ final class UserController extends AbstractController
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_user_delete', methods: ['GET', 'POST'])]
-    #[Security("is_granted('delete', userToDelete)")]
+    #[IsGranted('delete', 'userToDelete')]
     public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository, UserService $userService): Response
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
@@ -191,7 +192,7 @@ final class UserController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'user_export', methods: ['GET'])]
-    #[Security("is_granted('view_user')")]
+    #[IsGranted('view_user')]
     public function exportAction(Request $request, UserExporter $exporter)
     {
         $query = new UserQuery();
