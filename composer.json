@@ -68,7 +68,7 @@
         "symfony/translation": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/validator": "^6.0",
-        "symfony/webpack-encore-bundle": "^1.5",
+        "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "^6.0",
         "twig/cssinliner-extra": "^3.0",
         "twig/extra-bundle": "^3.0",
@@ -196,7 +196,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "6.0.*"
+            "require": "6.2.*"
         }
     }
 }
