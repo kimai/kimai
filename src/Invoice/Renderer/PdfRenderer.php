@@ -15,6 +15,7 @@ use App\Export\Base\DispositionInlineTrait;
 use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
+use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -60,6 +61,8 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
         }
 
         $response = new Response($content);
+
+        $filename = FileHelper::convertToAsciiFilename($filename);
 
         $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
 
