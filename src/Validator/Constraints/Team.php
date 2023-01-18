@@ -16,7 +16,7 @@ final class Team extends Constraint
 {
     public const MISSING_TEAMLEAD = 'kimai-team-001';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::MISSING_TEAMLEAD => 'At least one team leader must be assigned to the team.',
     ];
 

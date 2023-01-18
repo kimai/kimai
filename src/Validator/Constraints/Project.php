@@ -16,7 +16,7 @@ final class Project extends Constraint
 {
     public const END_BEFORE_BEGIN_ERROR = 'kimai-project-00';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
     ];
 

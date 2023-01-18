@@ -13,7 +13,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Validator\Constraints\TimesheetExported;
 use App\Validator\Constraints\TimesheetExportedValidator;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

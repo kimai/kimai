@@ -165,7 +165,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 180)]
-    #[Assert\Email(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Email(mode: 'html5', groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
     #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]

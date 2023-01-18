@@ -16,7 +16,7 @@ final class TimesheetMultiUser extends Constraint
 {
     public const MISSING_USER_OR_TEAM = 'ts-multi-user-01';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::MISSING_USER_OR_TEAM => 'You must select at least one user or team.',
     ];
 

@@ -12,9 +12,9 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Utils\MenuItemModel;
 use KevinPapst\TablerBundle\Event\UserDetailsEvent;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @internal

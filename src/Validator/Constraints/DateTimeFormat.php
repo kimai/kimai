@@ -15,7 +15,7 @@ final class DateTimeFormat extends Constraint
 {
     public const INVALID_FORMAT = 'kimai-datetime-00';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::INVALID_FORMAT => 'The given value is not a valid datetime format.',
     ];
 

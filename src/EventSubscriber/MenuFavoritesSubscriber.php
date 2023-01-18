@@ -12,8 +12,8 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 final class MenuFavoritesSubscriber implements EventSubscriberInterface
 {

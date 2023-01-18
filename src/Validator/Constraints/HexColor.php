@@ -16,7 +16,7 @@ final class HexColor extends Constraint
 {
     public const HEX_COLOR_ERROR = 'xd5hffg-dsfef3-426a-83d7-2g8jkfr56d84';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::HEX_COLOR_ERROR => 'HEX_COLOR_ERROR',
     ];
 

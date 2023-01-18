@@ -16,7 +16,7 @@ use App\Entity\UserPreference;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;

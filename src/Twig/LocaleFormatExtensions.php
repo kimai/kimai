@@ -17,7 +17,7 @@ use App\Utils\FormFormatConverter;
 use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
 use DateTime;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

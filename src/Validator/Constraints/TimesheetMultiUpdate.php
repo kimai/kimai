@@ -22,7 +22,7 @@ final class TimesheetMultiUpdate extends Constraint
     public const DISABLED_CUSTOMER_ERROR = 'ts-multi-update-89';
     public const HOURLY_RATE_FIXED_RATE = 'ts-multi-update-90';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::MISSING_ACTIVITY_ERROR => 'You need to choose an activity, if the project should be changed.',
         self::MISSING_PROJECT_ERROR => 'A project needs to be selected.',
         self::ACTIVITY_PROJECT_MISMATCH_ERROR => 'Project mismatch: chosen project does not match the activity project.',

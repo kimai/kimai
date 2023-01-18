@@ -19,7 +19,7 @@ final class User extends Constraint
     public const USER_EXISTING_EMAIL_AS_NAME = 'kimai-user-02';
     public const USER_EXISTING_NAME_AS_EMAIL = 'kimai-user-03';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::USER_EXISTING_EMAIL => 'The email is already used.',
         self::USER_EXISTING_NAME => 'The username is already used.',
         self::USER_EXISTING_EMAIL_AS_NAME => 'An equal username is already used.',

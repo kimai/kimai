@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 

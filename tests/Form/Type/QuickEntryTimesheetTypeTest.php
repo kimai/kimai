@@ -14,7 +14,7 @@ use App\Entity\User;
 use App\Form\Type\QuickEntryTimesheetType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * @covers \App\Form\Type\QuickEntryTimesheetType

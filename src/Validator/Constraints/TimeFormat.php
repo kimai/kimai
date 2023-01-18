@@ -15,7 +15,7 @@ final class TimeFormat extends Constraint
 {
     public const INVALID_FORMAT = 'kimai-time-00';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::INVALID_FORMAT => 'The given value is not a valid time.',
     ];
 

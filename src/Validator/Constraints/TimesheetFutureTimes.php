@@ -13,7 +13,7 @@ final class TimesheetFutureTimes extends TimesheetConstraint
 {
     public const BEGIN_IN_FUTURE_ERROR = 'kimai-timesheet-future-times-01';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::BEGIN_IN_FUTURE_ERROR => 'The begin date cannot be in the future.',
     ];
 

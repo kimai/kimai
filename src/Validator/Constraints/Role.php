@@ -16,7 +16,7 @@ final class Role extends Constraint
 {
     public const ROLE_ERROR = 'xd5hffg-dsfef3-426a-83d7-1f2d33hs5d84';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::ROLE_ERROR => 'ROLE_ERROR',
     ];
 
