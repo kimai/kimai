@@ -14,10 +14,10 @@ use App\Twig\Runtime\WidgetExtension;
 use App\Widget\Type\More;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Twig\Environment;
 
 /**
