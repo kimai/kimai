@@ -21,6 +21,7 @@ use App\Form\API\TimesheetApiEditForm;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
@@ -75,19 +76,22 @@ class TimesheetController extends BaseApiController
      * @var TimesheetService
      */
     private $service;
+    private $userRepository;
 
     public function __construct(
         ViewHandlerInterface $viewHandler,
         TimesheetRepository $repository,
         TagRepository $tagRepository,
         EventDispatcherInterface $dispatcher,
-        TimesheetService $service
+        TimesheetService $service,
+        UserRepository $userRepository
     ) {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
         $this->tagRepository = $tagRepository;
         $this->dispatcher = $dispatcher;
         $this->service = $service;
+        $this->userRepository = $userRepository;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -491,9 +495,13 @@ class TimesheetController extends BaseApiController
 
         if ($this->isGranted('view_other_timesheet') && null !== ($reqUser = $paramFetcher->get('user'))) {
             if ('all' === $reqUser) {
-                $reqUser = null;
+                $user = null;
+            } else {
+                $user = $this->userRepository->getUserById($reqUser);
+                if ($user === null) {
+                    throw $this->createNotFoundException('Unknown User ID');
+                }
             }
-            $user = $reqUser;
         }
 
         if (null !== ($reqLimit = $paramFetcher->get('size'))) {
