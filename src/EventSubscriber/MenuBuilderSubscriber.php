@@ -14,9 +14,9 @@ use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * Class MenuBuilder configures the main navigation.

@@ -13,7 +13,7 @@ final class TimesheetLockdown extends TimesheetConstraint
 {
     public const PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::PERIOD_LOCKED => 'This period is locked, please choose a later date.',
     ];
 

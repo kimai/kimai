@@ -37,7 +37,7 @@ use App\Repository\Query\InvoiceQuery;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -46,13 +46,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Controller used to create invoices and manage invoice templates.
  */
 #[Route(path: '/invoice')]
-#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_invoice')")]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[IsGranted('view_invoice')]
 final class InvoiceController extends AbstractController
 {
     public function __construct(
@@ -64,7 +66,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/', name: 'invoice', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_invoice')")]
+    #[IsGranted('create_invoice')]
     public function indexAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
@@ -127,7 +129,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/preview/{customer}/{token}', name: 'invoice_preview', methods: ['GET'])]
-    #[Security("is_granted('access', customer) and is_granted('create_invoice')")]
+    #[IsGranted('create_invoice')]
+    #[IsGranted('access', 'customer')]
     public function previewAction(Customer $customer, string $token, Request $request): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
@@ -167,7 +170,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/save-invoice/{customer}/{token}', name: 'invoice_create', methods: ['GET'])]
-    #[Security("is_granted('access', customer) and is_granted('create_invoice')")]
+    #[IsGranted('create_invoice')]
+    #[IsGranted('access', 'customer')]
     public function createInvoiceAction(Customer $customer, string $token, Request $request, CustomerRepository $customerRepository): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
@@ -214,7 +218,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/change-status/{id}/{status}/{token}', name: 'admin_invoice_status', methods: ['GET', 'POST'])]
-    #[Security("is_granted('access', invoice.getCustomer()) and is_granted('create_invoice')")]
+    #[IsGranted('create_invoice')]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
     public function changeStatusAction(Invoice $invoice, string $status, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
@@ -250,7 +255,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/edit/{id}', name: 'admin_invoice_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('access', invoice.getCustomer()) and is_granted('create_invoice')")]
+    #[IsGranted('create_invoice')]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
     public function editAction(Invoice $invoice, Request $request): Response
     {
         $form = $this->createInvoiceEditForm($invoice);
@@ -275,7 +281,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/delete/{id}/{token}', name: 'admin_invoice_delete', methods: ['GET'])]
-    #[Security("is_granted('access', invoice.getCustomer()) and is_granted('delete_invoice')")]
+    #[IsGranted('delete_invoice')]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
     public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
@@ -297,7 +304,8 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/download/{id}', name: 'admin_invoice_download', methods: ['GET'])]
-    #[Security("is_granted('access', invoice.getCustomer()) and is_granted('view_invoice')")]
+    #[IsGranted('view_invoice')]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
     public function downloadAction(Invoice $invoice): Response
     {
         $file = $this->service->getInvoiceFile($invoice);
@@ -312,7 +320,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/show/{page}', defaults: ['page' => 1], requirements: ['page' => '[1-9]\d*'], name: 'admin_invoice_list', methods: ['GET'])]
-    #[Security("is_granted('view_invoice')")]
+    #[IsGranted('view_invoice')]
     public function showInvoicesAction(Request $request, int $page): Response
     {
         $invoice = null;
@@ -371,7 +379,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'invoice_export', methods: ['GET'])]
-    #[Security("is_granted('view_invoice')")]
+    #[IsGranted('view_invoice')]
     public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
     {
         $query = new InvoiceArchiveQuery();
@@ -394,7 +402,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/template/{page}', requirements: ['page' => '[1-9]\d*'], defaults: ['page' => 1], name: 'admin_invoice_template', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function listTemplateAction(int $page): Response
     {
         $query = new BaseQuery();
@@ -431,14 +439,14 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/template/{id}/edit', name: 'admin_invoice_template_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function editTemplateAction(InvoiceTemplate $template, Request $request): Response
     {
         return $this->renderTemplateForm($template, $request);
     }
 
     #[Route(path: '/document_upload', name: 'admin_invoice_document_upload', methods: ['GET', 'POST'])]
-    #[Security("is_granted('upload_invoice_template')")]
+    #[IsGranted('upload_invoice_template')]
     public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository)
     {
         $dir = $documentRepository->getUploadDirectory();
@@ -538,7 +546,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/document/{id}/delete/{token}', name: 'invoice_document_delete', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function deleteDocument(string $id, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository): Response
     {
         $document = $documentRepository->findByName($id);
@@ -581,14 +589,14 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/template/create/{id}', name: 'admin_invoice_template_copy', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function copyTemplateAction(Request $request, InvoiceTemplate $copyFrom): Response
     {
         return $this->createTemplate($request, $copyFrom);
     }
 
     #[Route(path: '/template/create', name: 'admin_invoice_template_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function createTemplateAction(Request $request): Response
     {
         return $this->createTemplate($request, null);
@@ -608,7 +616,7 @@ final class InvoiceController extends AbstractController
     }
 
     #[Route(path: '/template/{id}/delete/{csrfToken}', name: 'admin_invoice_template_delete', methods: ['GET', 'POST'])]
-    #[Security("is_granted('manage_invoice_template')")]
+    #[IsGranted('manage_invoice_template')]
     public function deleteTemplate(InvoiceTemplate $template, string $csrfToken, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $csrfToken))) {

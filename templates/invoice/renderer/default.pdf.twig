@@ -32,10 +32,10 @@
         <tr>
             <td>
                 <strong>{{ 'contact'|trans }}</strong>:
-                {{ model.template.contact|nl2str(' &ndash; ') }}
+                {{ model.template.contact|nl2str(' – ') }}
                 <br>
                 <strong>{{ 'invoice_bank_account'|trans }}</strong>:
-                {{ model.template.paymentDetails|nl2str(' &ndash; ') }}
+                {{ model.template.paymentDetails|nl2str(' – ') }}
             </td>
             <td align="right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}

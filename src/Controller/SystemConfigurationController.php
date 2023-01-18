@@ -36,7 +36,6 @@ use App\Utils\PageSetup;
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -47,6 +46,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -57,7 +57,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  * Controller used for executing system relevant tasks.
  */
 #[Route(path: '/admin/system-config')]
-#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('system_configuration')")]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[IsGranted('system_configuration')]
 final class SystemConfigurationController extends AbstractController
 {
     public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration, private LockdownService $lockdownService)

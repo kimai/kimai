@@ -13,19 +13,19 @@ use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
 use App\Form\TimesheetEditForm;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/timesheet')]
-#[Security("is_granted('view_own_timesheet')")]
+#[IsGranted('view_own_timesheet')]
 final class TimesheetController extends TimesheetAbstractController
 {
     #[Route(path: '/', defaults: ['page' => 1], name: 'timesheet', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'timesheet_paginated', methods: ['GET'])]
-    #[Security("is_granted('view_own_timesheet')")]
+    #[IsGranted('view_own_timesheet')]
     public function indexAction(int $page, Request $request): Response
     {
         $query = $this->createDefaultQuery();
@@ -35,42 +35,42 @@ final class TimesheetController extends TimesheetAbstractController
     }
 
     #[Route(path: '/export/', name: 'timesheet_export', methods: ['GET', 'POST'])]
-    #[Security("is_granted('export_own_timesheet')")]
+    #[IsGranted('export_own_timesheet')]
     public function exportAction(Request $request, ServiceExport $serviceExport): Response
     {
         return $this->export($request, $serviceExport);
     }
 
     #[Route(path: '/{id}/edit', name: 'timesheet_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', entry)")]
+    #[IsGranted('edit', 'entry')]
     public function editAction(Timesheet $entry, Request $request): Response
     {
         return $this->edit($entry, $request);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'timesheet_duplicate', methods: ['GET', 'POST'])]
-    #[Security("is_granted('duplicate', entry)")]
+    #[IsGranted('duplicate', 'entry')]
     public function duplicateAction(Timesheet $entry, Request $request): Response
     {
         return $this->duplicate($entry, $request);
     }
 
     #[Route(path: '/multi-update', name: 'timesheet_multi_update', methods: ['POST'])]
-    #[Security("is_granted('edit_own_timesheet')")]
+    #[IsGranted('edit_own_timesheet')]
     public function multiUpdateAction(Request $request): Response
     {
         return $this->multiUpdate($request);
     }
 
     #[Route(path: '/multi-delete', name: 'timesheet_multi_delete', methods: ['POST'])]
-    #[Security("is_granted('delete_own_timesheet')")]
+    #[IsGranted('delete_own_timesheet')]
     public function multiDeleteAction(Request $request): Response
     {
         return $this->multiDelete($request);
     }
 
     #[Route(path: '/create', name: 'timesheet_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_own_timesheet')")]
+    #[IsGranted('create_own_timesheet')]
     public function createAction(Request $request): Response
     {
         return $this->create($request);

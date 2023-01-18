@@ -13,7 +13,7 @@ final class TimesheetOverlapping extends TimesheetConstraint
 {
     public const RECORD_OVERLAPPING = 'kimai-timesheet-overlapping-01';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::RECORD_OVERLAPPING => 'You already have an entry for this time.',
     ];
 

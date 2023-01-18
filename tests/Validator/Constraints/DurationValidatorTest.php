@@ -19,10 +19,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\Duration
  * @covers \App\Validator\Constraints\DurationValidator
+ * @extends ConstraintValidatorTestCase<DurationValidator>
  */
 class DurationValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): DurationValidator
     {
         return new DurationValidator();
     }

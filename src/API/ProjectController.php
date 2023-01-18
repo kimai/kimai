@@ -27,16 +27,16 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/projects')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
@@ -209,7 +209,7 @@ final class ProjectController extends BaseApiController
     /**
      * Update an existing project
      */
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     #[OA\Patch(description: 'Update an existing project, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project ID to update', required: true)]
@@ -249,7 +249,7 @@ final class ProjectController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing project
      */
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
@@ -282,7 +282,7 @@ final class ProjectController extends BaseApiController
     /**
      * Returns a collection of all rates for one project
      */
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rates will be returned', required: true)]
     #[Rest\Get(path: '/{id}/rates', name: 'get_project_rates', requirements: ['id' => '\d+'])]
@@ -301,15 +301,14 @@ final class ProjectController extends BaseApiController
     /**
      * Deletes one rate for a project
      */
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_project_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
-    #[Entity('rate', expr: 'repository.find(rateId)')]
-    public function deleteRateAction(Project $project, ProjectRate $rate): Response
+    public function deleteRateAction(Project $project, #[MapEntity(mapping: ['rateId' => 'id'])] ProjectRate $rate): Response
     {
         if ($rate->getProject() !== $project) {
             throw $this->createNotFoundException();
@@ -325,7 +324,7 @@ final class ProjectController extends BaseApiController
     /**
      * Adds a new rate to a project
      */
-    #[Security("is_granted('edit', project)")]
+    #[IsGranted('edit', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectRateForm'))]

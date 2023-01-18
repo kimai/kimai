@@ -92,7 +92,7 @@ final class InvoiceFixtures extends Fixture
         ];
     }
 
-    protected function generatePaymentDetails(Generator $faker): string
+    private function generatePaymentDetails(Generator $faker): string
     {
         return
             'Acme Bank' . PHP_EOL .
@@ -101,7 +101,7 @@ final class InvoiceFixtures extends Fixture
         ;
     }
 
-    protected function generateContact(Generator $faker): string
+    private function generateContact(Generator $faker): string
     {
         return
             'Phone: ' . $faker->phoneNumber() . PHP_EOL .
@@ -110,7 +110,7 @@ final class InvoiceFixtures extends Fixture
         ;
     }
 
-    protected function generateAddress(Generator $faker): string
+    private function generateAddress(Generator $faker): string
     {
         return
             $faker->streetAddress() . PHP_EOL .

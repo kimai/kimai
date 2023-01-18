@@ -19,10 +19,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\Project
  * @covers \App\Validator\Constraints\ProjectValidator
+ * @extends ConstraintValidatorTestCase<ProjectValidator>
  */
 class ProjectValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ProjectValidator
     {
         return new ProjectValidator();
     }

@@ -22,10 +22,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetMultiUpdate
  * @covers \App\Validator\Constraints\TimesheetMultiUpdateValidator
+ * @extends ConstraintValidatorTestCase<TimesheetMultiUpdateValidator>
  */
 class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator($isGranted = true)
+    protected function createValidator(): TimesheetMultiUpdateValidator
     {
         return new TimesheetMultiUpdateValidator();
     }

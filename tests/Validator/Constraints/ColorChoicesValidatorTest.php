@@ -18,10 +18,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\ColorChoices
  * @covers \App\Validator\Constraints\ColorChoicesValidator
+ * @extends ConstraintValidatorTestCase<ColorChoicesValidator>
  */
 class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ColorChoicesValidator
     {
         return new ColorChoicesValidator();
     }

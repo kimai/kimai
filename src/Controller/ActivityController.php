@@ -35,18 +35,19 @@ use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Controller used to manage activities.
  */
 #[Route(path: '/admin/activity')]
-#[Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")]
+#[IsGranted(new Expression("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')"))]
 final class ActivityController extends AbstractController
 {
     public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
@@ -122,7 +123,7 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/details', name: 'activity_details', methods: ['GET', 'POST'])]
-    #[Security("is_granted('view', activity)")]
+    #[IsGranted('view', 'activity')]
     public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -172,14 +173,14 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/rate/{rate}', name: 'admin_activity_rate_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', activity)")]
+    #[IsGranted('edit', 'activity')]
     public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
     {
         return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
     }
 
     #[Route(path: '/{id}/rate', name: 'admin_activity_rate_add', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', activity)")]
+    #[IsGranted('edit', 'activity')]
     public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository): Response
     {
         $rate = new ActivityRate();
@@ -216,14 +217,14 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_activity')")]
+    #[IsGranted('create_activity')]
     public function createWithProjectAction(Request $request, Project $project): Response
     {
         return $this->createActivity($request, $project);
     }
 
     #[Route(path: '/create', name: 'admin_activity_create', methods: ['GET', 'POST'])]
-    #[Security("is_granted('create_activity')")]
+    #[IsGranted('create_activity')]
     public function createAction(Request $request): Response
     {
         return $this->createActivity($request, null);
@@ -258,7 +259,7 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/permissions', name: 'admin_activity_permissions', methods: ['GET', 'POST'])]
-    #[Security("is_granted('permissions', activity)")]
+    #[IsGranted('permissions', 'activity')]
     public function teamPermissionsAction(Activity $activity, Request $request): Response
     {
         $form = $this->createForm(ActivityTeamPermissionForm::class, $activity, [
@@ -291,7 +292,8 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
-    #[Security("is_granted('create_team') and is_granted('permissions', activity)")]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'activity')]
     public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
@@ -315,7 +317,7 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_activity_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', activity)")]
+    #[IsGranted('edit', 'activity')]
     public function editAction(Activity $activity, Request $request): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -343,7 +345,7 @@ final class ActivityController extends AbstractController
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_activity_delete', methods: ['GET', 'POST'])]
-    #[Security("is_granted('delete', activity)")]
+    #[IsGranted('delete', 'activity')]
     public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService): Response
     {
         $stats = $statisticService->getActivityStatistics($activity);

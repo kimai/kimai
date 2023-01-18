@@ -14,14 +14,16 @@ use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDetails\ProjectDetailsForm;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
 use App\Utils\PageSetup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProjectDetailsController extends AbstractController
 {
     #[Route(path: '/reporting/project_details', name: 'report_project_details', methods: ['GET'])]
-    #[Security("is_granted('report:project') and is_granted('details', 'project')")]
+    #[IsGranted('report:project')]
+    #[IsGranted(new Expression("is_granted('details', 'project')"))]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

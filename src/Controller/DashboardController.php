@@ -16,19 +16,19 @@ use App\Repository\BookmarkRepository;
 use App\Utils\PageSetup;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Dashboard controller for the admin area.
  */
 #[Route(path: '/dashboard')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class DashboardController extends AbstractController
 {
     public const BOOKMARK_TYPE = 'dashboard';

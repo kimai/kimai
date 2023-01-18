@@ -21,10 +21,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\Team
  * @covers \App\Validator\Constraints\TeamValidator
+ * @extends ConstraintValidatorTestCase<TeamValidator>
  */
 class TeamValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TeamValidator
     {
         return new TeamValidator();
     }
@@ -33,7 +34,7 @@ class TeamValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new NotBlank());
+        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
     }
 
     public function testMissingTeamlead()

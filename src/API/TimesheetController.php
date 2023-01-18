@@ -33,16 +33,17 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route(path: '/timesheets')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 #[OA\Tag(name: 'Timesheet')]
 final class TimesheetController extends BaseApiController
 {
@@ -69,7 +70,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Returns a collection of timesheet records (which are visible to the user)
      */
-    #[Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")]
+    #[IsGranted(new Expression("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')"))]
     #[OA\Response(response: 200, description: 'Returns a collection of timesheet records. The datetime fields are given in the users local time including the timezone offset (ISO-8601).', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
     #[Rest\Get(path: '', name: 'get_timesheets')]
     #[ApiSecurity(name: 'apiUser')]
@@ -256,7 +257,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Returns one timesheet record
      */
-    #[Security("is_granted('view', timesheet)")]
+    #[IsGranted('view', 'timesheet')]
     #[OA\Response(response: 200, description: 'Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to fetch', required: true)]
     #[Rest\Get(path: '/{id}', name: 'get_timesheet', requirements: ['id' => '\d+'])]
@@ -273,7 +274,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Creates a new timesheet record
      */
-    #[Security("is_granted('create_own_timesheet')")]
+    #[IsGranted('create_own_timesheet')]
     #[OA\Post(description: 'Creates a new timesheet record for the current user and returns it afterwards.', responses: [new OA\Response(response: 200, description: 'Returns the new created timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEditForm'))]
     #[Rest\Post(path: '', name: 'post_timesheet')]
@@ -328,7 +329,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Update an existing timesheet record
      */
-    #[Security("is_granted('edit', timesheet)")]
+    #[IsGranted('edit', 'timesheet')]
     #[OA\Patch(description: 'Update an existing timesheet record, you can pass all or just a subset of the attributes.', responses: [new OA\Response(response: 200, description: 'Returns the updated timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to update', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEditForm'))]
@@ -373,7 +374,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Delete an existing timesheet record
      */
-    #[Security("is_granted('delete', timesheet)")]
+    #[IsGranted('delete', 'timesheet')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one timesheet record')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to delete', required: true)]
     #[ApiSecurity(name: 'apiUser')]
@@ -391,7 +392,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Returns the collection of recent user activities
      */
-    #[Security("is_granted('view_own_timesheet')")]
+    #[IsGranted('view_own_timesheet')]
     #[OA\Response(response: 200, description: 'Returns the collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Rest\Get(path: '/recent', name: 'recent_timesheet')]
     #[ApiSecurity(name: 'apiUser')]
@@ -427,7 +428,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Returns the collection of active timesheet records
      */
-    #[Security("is_granted('view_own_timesheet')")]
+    #[IsGranted('view_own_timesheet')]
     #[OA\Response(response: 200, description: 'Returns the collection of active timesheet records for the current user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Rest\Get(path: '/active', name: 'active_timesheet')]
     #[ApiSecurity(name: 'apiUser')]
@@ -448,7 +449,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Stops an active timesheet record
      */
-    #[Security("is_granted('stop', timesheet)")]
+    #[IsGranted('stop', 'timesheet')]
     #[OA\Response(response: 200, description: 'Stops an active timesheet record and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to stop', required: true)]
     #[Rest\Patch(path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
@@ -467,7 +468,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Restarts a previously stopped timesheet record for the current user
      */
-    #[Security("is_granted('start', timesheet)")]
+    #[IsGranted('start', 'timesheet')]
     #[OA\Response(response: 200, description: 'Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to restart', required: true)]
     #[Rest\Patch(path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
@@ -529,7 +530,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Duplicates an existing timesheet record
      */
-    #[Security("is_granted('duplicate', timesheet)")]
+    #[IsGranted('duplicate', 'timesheet')]
     #[OA\Response(response: 200, description: 'Duplicates a timesheet record, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to duplicate', required: true)]
     #[Rest\Patch(path: '/{id}/duplicate', name: 'duplicate_timesheet', requirements: ['id' => '\d+'])]
@@ -552,7 +553,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Switch the export state of a timesheet record to (un-)lock it
      */
-    #[Security("is_granted('edit_export', timesheet)")]
+    #[IsGranted('edit_export', 'timesheet')]
     #[OA\Response(response: 200, description: 'Switches the exported state on the record and therefor locks / unlocks it for further updates. Needs edit_export_*_timesheet permission.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to switch export state', required: true)]
     #[Rest\Patch(path: '/{id}/export', name: 'export_timesheet', requirements: ['id' => '\d+'])]
@@ -577,7 +578,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing timesheet.
      */
-    #[Security("is_granted('edit', timesheet)")]
+    #[IsGranted('edit', 'timesheet')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]

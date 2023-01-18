@@ -11,6 +11,7 @@ namespace App\Utils;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class ProfileManager
 {
@@ -52,7 +53,7 @@ final class ProfileManager
         return $profile;
     }
 
-    public function setProfile(Session $session, string $profile): void
+    public function setProfile(SessionInterface $session, string $profile): void
     {
         if ($profile === self::PROFILE_MOBILE) {
             $session->set(self::SESSION_PROFILE, $profile);

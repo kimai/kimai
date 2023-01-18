@@ -18,7 +18,7 @@ use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetRestart;
 use App\Validator\Constraints\TimesheetRestartValidator;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -26,15 +26,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetRestart
  * @covers \App\Validator\Constraints\TimesheetRestartValidator
+ * @extends ConstraintValidatorTestCase<TimesheetRestartValidator>
  */
 class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetRestartValidator
     {
         return $this->createMyValidator(false, 'default');
     }
 
-    protected function createMyValidator(bool $allowed, string $trackingMode)
+    protected function createMyValidator(bool $allowed, string $trackingMode): TimesheetRestartValidator
     {
         $auth = $this->createMock(Security::class);
         $auth->method('getUser')->willReturn(new User());
@@ -56,7 +57,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     /**

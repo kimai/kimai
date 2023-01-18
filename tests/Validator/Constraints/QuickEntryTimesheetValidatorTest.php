@@ -14,23 +14,24 @@ use App\Entity\Timesheet;
 use App\Validator\Constraints\QuickEntryTimesheet;
 use App\Validator\Constraints\QuickEntryTimesheetValidator;
 use App\Validator\Constraints\TimesheetBasic;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
  * @covers \App\Validator\Constraints\QuickEntryTimesheet
  * @covers \App\Validator\Constraints\QuickEntryTimesheetValidator
+ * @extends ConstraintValidatorTestCase<QuickEntryTimesheetValidator>
  */
 class QuickEntryTimesheetValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createConstraint(): Constraint
+    protected function createConstraint(): QuickEntryTimesheet
     {
         return new QuickEntryTimesheet();
     }
 
-    protected function createValidator()
+    protected function createValidator(): ConstraintValidatorInterface
     {
         return new QuickEntryTimesheetValidator([new TimesheetBasic()]);
     }

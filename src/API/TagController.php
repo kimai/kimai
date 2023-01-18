@@ -18,13 +18,13 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/tags')]
-#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 #[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
@@ -94,7 +94,7 @@ final class TagController extends BaseApiController
     /**
      * Delete a tag
      */
-    #[Security("is_granted('delete_tag')")]
+    #[IsGranted('delete_tag')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'HTTP code 204 for a successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Tag ID to delete', required: true)]
     #[ApiSecurity(name: 'apiUser')]

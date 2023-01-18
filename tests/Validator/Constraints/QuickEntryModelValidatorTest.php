@@ -22,10 +22,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\QuickEntryModel
  * @covers \App\Validator\Constraints\QuickEntryModelValidator
+ * @extends ConstraintValidatorTestCase<QuickEntryModelValidator>
  */
 class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): QuickEntryModelValidator
     {
         return new QuickEntryModelValidator();
     }

@@ -13,16 +13,16 @@ use App\Utils\FileHelper;
 use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route(path: '/doctor')]
-#[Security("is_granted('system_information')")]
+#[IsGranted('system_information')]
 final class DoctorController extends AbstractController
 {
     /**
@@ -51,7 +51,7 @@ final class DoctorController extends AbstractController
     }
 
     #[Route(path: '/flush-log/{token}', name: 'doctor_flush_log', methods: ['GET'])]
-    #[Security("is_granted('system_configuration')")]
+    #[IsGranted('system_configuration')]
     public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {

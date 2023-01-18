@@ -13,7 +13,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Validator\Constraints\TimesheetExported;
 use App\Validator\Constraints\TimesheetExportedValidator;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -21,15 +21,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetExported
  * @covers \App\Validator\Constraints\TimesheetExportedValidator
+ * @extends ConstraintValidatorTestCase<TimesheetExportedValidator>
  */
 class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetExportedValidator
     {
         return $this->createMyValidator(true);
     }
 
-    protected function createMyValidator(bool $allowEdit)
+    protected function createMyValidator(bool $allowEdit): TimesheetExportedValidator
     {
         $auth = $this->createMock(Security::class);
         $auth->method('getUser')->willReturn(new User());
@@ -58,7 +59,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetExported(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetExported(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     public function testTriggersOnMissingPermission()

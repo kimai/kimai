@@ -13,14 +13,16 @@ use App\Controller\AbstractController;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectInactive\ProjectInactiveForm;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProjectInactiveController extends AbstractController
 {
     #[Route(path: '/reporting/project_inactive', name: 'report_project_inactive', methods: ['GET', 'POST'])]
-    #[Security("is_granted('report:project') and is_granted('budget_any', 'project')")]
+    #[IsGranted('report:project')]
+    #[IsGranted(new Expression("is_granted('budget_any', 'project')"))]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

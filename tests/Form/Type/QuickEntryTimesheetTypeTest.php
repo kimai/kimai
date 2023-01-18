@@ -12,9 +12,9 @@ namespace App\Tests\Form\Type;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\QuickEntryTimesheetType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @covers \App\Form\Type\QuickEntryTimesheetType

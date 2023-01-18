@@ -467,11 +467,19 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer('foo-bar-1'))->setVisible(false)->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = new Customer('foo-bar-1');
+        $customer->setVisible(false);
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
         $em->persist($customer);
-        $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
+        $project = new Project();
+        $project->setName('foo-bar-2');
+        $project->setVisible(true);
+        $project->setCustomer($customer);
         $em->persist($project);
-        $activity = (new Activity())->setName('foo-bar-3')->setVisible(true);
+        $activity = new Activity();
+        $activity->setName('foo-bar-3');
+        $activity->setVisible(true);
         $em->persist($activity);
         $em->flush();
 
@@ -493,11 +501,19 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer('foo-bar-1'))->setVisible(true)->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = new Customer('foo-bar-1');
+        $customer->setVisible(true);
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
         $em->persist($customer);
-        $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
+        $project = new Project();
+        $project->setName('foo-bar-2');
+        $project->setVisible(true);
+        $project->setCustomer($customer);
         $em->persist($project);
-        $activity = (new Activity())->setName('foo-bar-3')->setVisible(false);
+        $activity = new Activity();
+        $activity->setName('foo-bar-3');
+        $activity->setVisible(false);
         $em->persist($activity);
         $em->flush();
 
@@ -517,12 +533,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer('foo-bar-1'))->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = new Customer('foo-bar-1');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
         $customer->setBillable(false);
         $em->persist($customer);
-        $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);
+        $project = new Project();
+        $project->setName('foo-bar-2');
+        $project->setCustomer($customer);
         $em->persist($project);
-        $activity = (new Activity())->setName('foo-bar-3');
+        $activity = new Activity();
+        $activity->setName('foo-bar-3');
         $em->persist($activity);
         $em->flush();
 
@@ -547,12 +568,17 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer('foo-bar-1'))->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = new Customer('foo-bar-1');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
         $customer->setBillable(false);
         $em->persist($customer);
-        $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);
+        $project = new Project();
+        $project->setName('foo-bar-2');
+        $project->setCustomer($customer);
         $em->persist($project);
-        $activity = (new Activity())->setName('foo-bar-3');
+        $activity = new Activity();
+        $activity->setName('foo-bar-3');
         $em->persist($activity);
         $em->flush();
 

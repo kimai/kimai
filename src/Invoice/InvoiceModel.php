@@ -229,12 +229,11 @@ final class InvoiceModel
 
     public function getCurrency(): string
     {
-        if (null === $this->getCustomer()) {
-            // this should be set from the configuration
-            return Customer::DEFAULT_CURRENCY;
+        if (null !== $this->getCustomer() && $this->getCustomer()->getCurrency() !== null) {
+            return $this->getCustomer()->getCurrency();
         }
 
-        return $this->getCustomer()->getCurrency();
+        return Customer::DEFAULT_CURRENCY;
     }
 
     public function toArray(): array

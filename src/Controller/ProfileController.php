@@ -32,18 +32,19 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * User profile controller
  */
 #[Route(path: '/profile')]
-#[Security("(is_granted('view_own_profile') or is_granted('view_other_profile'))")]
+#[IsGranted(new Expression("is_granted('view_own_profile') or is_granted('view_other_profile')"))]
 final class ProfileController extends AbstractController
 {
     #[Route(path: '/', name: 'my_profile', methods: ['GET'])]
@@ -53,7 +54,7 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}', name: 'user_profile', methods: ['GET'])]
-    #[Security("is_granted('view', profile)")]
+    #[IsGranted('view', 'profile')]
     public function indexAction(User $profile, TimesheetRepository $repository, TimesheetStatisticService $statisticService): Response
     {
         $dateFactory = $this->getDateTimeFactory();
@@ -79,7 +80,7 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/edit', name: 'user_profile_edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('edit', profile)")]
+    #[IsGranted('edit', 'profile')]
     public function editAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
         $form = $this->createEditForm($profile);
@@ -101,7 +102,8 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/password', name: 'user_profile_password', methods: ['GET', 'POST'])]
-    #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('password', profile)")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('password', 'profile')]
     public function passwordAction(User $profile, Request $request, UserService $userService): Response
     {
         $form = $this->createPasswordForm($profile);
@@ -123,7 +125,8 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]
-    #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('api-token', profile)")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('api-token', 'profile')]
     public function apiTokenAction(User $profile, Request $request, UserService $userService): Response
     {
         $form = $this->createApiTokenForm($profile);
@@ -145,7 +148,8 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/roles', name: 'user_profile_roles', methods: ['GET', 'POST'])]
-    #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('roles', profile)")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('roles', 'profile')]
     public function rolesAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
         $isSuperAdmin = $profile->isSuperAdmin();
@@ -175,7 +179,7 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/teams', name: 'user_profile_teams', methods: ['GET', 'POST'])]
-    #[Security("is_granted('teams', profile)")]
+    #[IsGranted('teams', 'profile')]
     public function teamsAction(User $profile, Request $request, UserRepository $userRepository, TeamRepository $teamRepository): Response
     {
         $originalMembers = new ArrayCollection();
@@ -210,7 +214,7 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/prefs', name: 'user_profile_preferences', methods: ['GET', 'POST'])]
-    #[Security("is_granted('preferences', profile)")]
+    #[IsGranted('preferences', 'profile')]
     public function preferencesAction(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserRepository $userRepository): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
@@ -336,7 +340,8 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/2fa', name: 'user_profile_2fa', methods: ['GET', 'POST'])]
-    #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('2fa', profile)")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('2fa', 'profile')]
     public function twoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
         if (!$profile->hasTotpSecret()) {
@@ -382,7 +387,8 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/2fa_deactivate', name: 'user_profile_2fa_deactivate', methods: ['POST'])]
-    #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('2fa', profile)")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('2fa', 'profile')]
     public function deactivateTwoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
         if ($profile->hasTotpSecret()) {
@@ -401,7 +407,7 @@ final class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{username}/totp.png', name: 'user_profile_2fa_image', methods: ['GET'])]
-    #[Security("is_granted('2fa', profile)")]
+    #[IsGranted('2fa', 'profile')]
     public function displayTotpQrCode(User $profile, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
         if (!$profile->hasTotpSecret()) {

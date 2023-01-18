@@ -138,11 +138,11 @@
 
 <footer class="footer">
     <p>
-        <strong>{{ 'address'|trans }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|nl2str(' &ndash; ') }}
+        <strong>{{ 'address'|trans }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|nl2str(' – ') }}
         <br>
-        <strong>{{ 'invoice_bank_account'|trans }}</strong>: {{ model.template.paymentDetails|nl2str(' &ndash; ') }}
+        <strong>{{ 'invoice_bank_account'|trans }}</strong>: {{ model.template.paymentDetails|nl2str(' – ') }}
         <br>
-        <strong>{{ 'contact'|trans }}</strong>: {{ model.template.contact|nl2str(' &ndash; ') }}
+        <strong>{{ 'contact'|trans }}</strong>: {{ model.template.contact|nl2str(' – ') }}
     </p>
 </footer>
 {% endblock %}

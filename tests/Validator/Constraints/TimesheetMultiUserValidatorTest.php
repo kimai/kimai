@@ -19,10 +19,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetMultiUser
  * @covers \App\Validator\Constraints\TimesheetMultiUserValidator
+ * @extends ConstraintValidatorTestCase<TimesheetMultiUserValidator>
  */
 class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator($isGranted = true)
+    protected function createValidator(): TimesheetMultiUserValidator
     {
         return new TimesheetMultiUserValidator();
     }

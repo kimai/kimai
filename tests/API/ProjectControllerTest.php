@@ -111,25 +111,45 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
-        $customer2 = (new Customer('first one'))->setVisible(false)->setCountry('de')->setTimezone('Europe/Berlin');
+        $customer2 = new Customer('first one');
+        $customer2->setVisible(false);
+        $customer2->setCountry('de');
+        $customer2->setTimezone('Europe/Berlin');
         $em->persist($customer2);
 
-        $customer3 = (new Customer('second one'))->setCountry('at')->setTimezone('Europe/Vienna');
+        $customer3 = new Customer('second one');
+        $customer3->setCountry('at');
+        $customer3->setTimezone('Europe/Vienna');
         $em->persist($customer3);
 
-        $project = (new Project())->setName('first')->setVisible(false)->setCustomer($customer2);
+        $project = new Project();
+        $project->setName('first');
+        $project->setVisible(false);
+        $project->setCustomer($customer2);
         $em->persist($project);
 
-        $project = (new Project())->setName('second')->setVisible(false)->setCustomer($customer);
+        $project = new Project();
+        $project->setName('second');
+        $project->setVisible(false);
+        $project->setCustomer($customer);
         $em->persist($project);
 
-        $project = (new Project())->setName('third')->setVisible(true)->setCustomer($customer2);
+        $project = new Project();
+        $project->setName('third');
+        $project->setVisible(true);
+        $project->setCustomer($customer2);
         $em->persist($project);
 
-        $project = (new Project())->setName('fourth')->setVisible(true)->setCustomer($customer3);
+        $project = new Project();
+        $project->setName('fourth');
+        $project->setVisible(true);
+        $project->setCustomer($customer3);
         $em->persist($project);
 
-        $project = (new Project())->setName('fifth')->setVisible(true)->setCustomer($customer);
+        $project = new Project();
+        $project->setName('fifth');
+        $project->setVisible(true);
+        $project->setCustomer($customer);
 
         // add meta fields
         $meta = new ProjectMeta();
@@ -227,25 +247,23 @@ class ProjectControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $em = $this->getEntityManager();
 
-        $customer = (new Customer('first one'))
-            ->setVisible(true)
-            ->setCountry('de')
-            ->setTimezone('Europe/Berlin')
-        ;
+        $customer = new Customer('first one');
+        $customer->setVisible(true);
+        $customer->setCountry('de');
+        $customer->setTimezone('Europe/Berlin');
         $em->persist($customer);
 
         $orderDate = new \DateTime('2019-11-29 14:35:17', new \DateTimeZone('Pacific/Tongatapu'));
         $startDate = new \DateTime('2020-01-07 18:19:20', new \DateTimeZone('Pacific/Tongatapu'));
         $endDate = new \DateTime('2021-03-23 00:00:01', new \DateTimeZone('Pacific/Tongatapu'));
 
-        $project = (new Project())
-            ->setName('first')
-            ->setVisible(true)
-            ->setCustomer($customer)
-            ->setOrderDate($orderDate)
-            ->setStart($startDate)
-            ->setEnd($endDate)
-        ;
+        $project = new Project();
+        $project->setName('first');
+        $project->setVisible(true);
+        $project->setCustomer($customer);
+        $project->setOrderDate($orderDate);
+        $project->setStart($startDate);
+        $project->setEnd($endDate);
         $em->persist($project);
         $em->flush();
 

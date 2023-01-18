@@ -21,10 +21,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\User
  * @covers \App\Validator\Constraints\UserValidator
+ * @extends ConstraintValidatorTestCase<UserValidator>
  */
 class UserValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): UserValidator
     {
         $userService = $this->createMock(UserService::class);
 
@@ -35,19 +36,19 @@ class UserValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new NotBlank());
+        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
     }
 
     public function testNullIsValid()
     {
-        $this->validator->validate(null, new User(['message' => 'myMessage']));
+        $this->validator->validate(null, new User(['message' => 'myMessage'])); // @phpstan-ignore-line
 
         $this->assertNoViolation();
     }
 
     public function testNonUserIsValid()
     {
-        $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage']));
+        $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage'])); // @phpstan-ignore-line
 
         $this->assertNoViolation();
     }

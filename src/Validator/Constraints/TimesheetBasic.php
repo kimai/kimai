@@ -23,7 +23,7 @@ final class TimesheetBasic extends TimesheetConstraint
     public const PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
     public const PROJECT_DISALLOWS_GLOBAL_ACTIVITY = 'kimai-timesheet-93';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
         self::MISSING_ACTIVITY_ERROR => 'An activity needs to be selected.',

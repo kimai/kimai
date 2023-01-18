@@ -21,15 +21,16 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @covers \App\Validator\Constraints\TimesheetLongRunning
  * @covers \App\Validator\Constraints\TimesheetLongRunningValidator
+ * @extends ConstraintValidatorTestCase<TimesheetLongRunningValidator>
  */
 class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): TimesheetLongRunningValidator
     {
         return $this->createMyValidator(120);
     }
 
-    protected function createMyValidator(int $minutes)
+    protected function createMyValidator(int $minutes): TimesheetLongRunningValidator
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -54,7 +55,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLongRunning(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetLongRunning(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
     public function testLongRunningTriggers()
