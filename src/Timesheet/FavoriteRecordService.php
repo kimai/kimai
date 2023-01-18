@@ -62,7 +62,7 @@ final class FavoriteRecordService
             $bookmark = new Bookmark();
             $bookmark->setUser($user);
             $bookmark->setType('favorite');
-            $bookmark->setName('timesheet');
+            $bookmark->setName('recent');
         }
 
         return $bookmark;
