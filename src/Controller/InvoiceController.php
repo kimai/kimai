@@ -410,7 +410,7 @@ final class InvoiceController extends AbstractController
      * @Route(path="/document_upload", name="admin_invoice_document_upload", methods={"GET", "POST"})
      * @Security("is_granted('upload_invoice_template')")
      */
-    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig)
+    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration)
     {
         $dir = $documentRepository->getUploadDirectory();
         $invoiceDir = $dir;
@@ -480,7 +480,12 @@ final class InvoiceController extends AbstractController
                 $extension = null;
                 $success = true;
 
-                foreach (InvoiceDocumentUploadForm::EXTENSIONS as $ext) {
+                $allowed = InvoiceDocumentUploadForm::EXTENSIONS_NO_TWIG;
+                if ((bool) $systemConfiguration->find('invoice.upload_twig') === true) {
+                    $allowed = InvoiceDocumentUploadForm::EXTENSIONS;
+                }
+
+                foreach ($allowed as $ext) {
                     $len = \strlen($ext);
                     if (substr_compare($originalName, $ext, -$len) === 0) {
                         $extension = $ext;
