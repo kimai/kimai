@@ -793,6 +793,36 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
     }
 
+    public function testGetRecentActionForUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $start = new \DateTime('-10 days');
+
+        $user = $this->getUserByRole(User::ROLE_ADMIN);
+        $fixture = new TimesheetFixtures();
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setAmount(10);
+        $fixture->setUser($user);
+        $fixture->setStartDate($start);
+        $this->importFixture($fixture);
+
+        $query = [
+            'user' => $user->getId(),
+            'size' => 2,
+            'begin' => $start->format(self::DATE_FORMAT_HTML5),
+        ];
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(1, \count($result));
+        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
+    }
+
     public function testActiveAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

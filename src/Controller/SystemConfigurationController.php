@@ -432,6 +432,7 @@ final class SystemConfigurationController extends AbstractController
                         ])
                         ->setRequired(true)
                         ->setType(TextType::class)
+                        ->setConstraints([new NotBlank()])
                         ->setTranslationDomain('system-configuration'),
                 ]),
             $authentication,
