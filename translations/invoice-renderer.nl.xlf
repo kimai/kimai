@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Attentie: Bestaande bestanden zullen overschreven worden. Toegestaande bestandstypes zijn: DOCX, ODS, XLSX.</target>
+        <target>Attentie: Bestaande bestanden zullen overschreven worden. Toegestaande bestandstypes zijn: %extensions%.</target>
       </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">

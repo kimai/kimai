@@ -495,6 +495,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('invoice.number_format')
                         ->setRequired(true)
                         ->setType(TextType::class)
+                        ->setConstraints([new NotBlank()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
                         ->setName('invoice.simple_form')

@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>주의: 기존 파일을 덮어씁니다. 허용되는 파일 형식은 DOCX, ODS, XLSX입니다.</target>
+        <target>주의: 기존 파일을 덮어씁니다. 허용되는 파일 형식은 %extensions%입니다.</target>
       </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>

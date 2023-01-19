@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="translated">Pozor: existující soubory budou přepsány. Povolené typy jsou: DOCX, ODS, XLSX.</target>
+        <target state="translated">Pozor: existující soubory budou přepsány. Povolené typy jsou: %extensions%.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
