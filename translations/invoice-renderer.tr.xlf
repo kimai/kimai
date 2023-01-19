@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Dikkat: mevcut dosyaların üzerine yazılacaktır. İzin verilen dosya türleri: DOCX, ODS, XLSX.</target>
+        <target>Dikkat: mevcut dosyaların üzerine yazılacaktır. İzin verilen dosya türleri: %extensions%.</target>
       </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>

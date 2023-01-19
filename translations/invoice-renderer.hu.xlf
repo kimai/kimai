@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Figyelem: a meglévő fájlok felülíródnak. A megengedett fájltípusok: DOCX, ODS, XLSX.</target>
+        <target>Figyelem: a meglévő fájlok felülíródnak. A megengedett fájltípusok: %extensions%.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>

@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Attention : les fichiers existants seront écrasés. Les types de fichiers autorisés sont : DOCX, ODS, XLSX.</target>
+        <target>Attention : les fichiers existants seront écrasés. Les types de fichiers autorisés sont : %extensions%.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>

@@ -333,6 +333,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('number_format')
                     ->defaultValue('{Y}/{cy,3}')
                 ->end()
+                ->booleanNode('upload_twig')
+                    ->defaultTrue()
+                ->end()
             ->end()
         ;
 

@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: DOCX, ODS, XLSX.</target>
+        <target>Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: %extensions%.</target>
       </trans-unit>
     </body>
   </file>

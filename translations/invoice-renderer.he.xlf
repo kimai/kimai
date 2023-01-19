@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>שים לב: קבצים קיימים ידרסו וימחקו. סוגי קבצים מותרים: DOCX, ODS, XLSX.</target>
+        <target>שים לב: קבצים קיימים ידרסו וימחקו. סוגי קבצים מותרים: %extensions%.</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>

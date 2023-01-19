@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Oprez: postojeće datoteke će se prepisati. Dopuštene vrste datoteka su: DOCX, ODS, XLSX.</target>
+        <target>Oprez: postojeće datoteke će se prepisati. Dopuštene vrste datoteka su: %extensions%.</target>
       </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">

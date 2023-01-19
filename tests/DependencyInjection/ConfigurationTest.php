@@ -325,6 +325,7 @@ class ConfigurationTest extends TestCase
                 ],
                 'simple_form' => false,
                 'number_format' => '{Y}/{cy,3}',
+                'upload_twig' => true,
             ],
             'export' => [
                 'documents' => [

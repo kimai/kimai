@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="needs-translation">Achtung: existierende Dateien werden überschrieben. Erlaubte Dateitypen sind: DOCX, ODS, XLSX</target>
+        <target state="needs-translation">Achtung: existierende Dateien werden überschrieben. Erlaubte Dateitypen sind: %extensions%</target>
       </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
