@@ -47,7 +47,7 @@ final class UserController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_user', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_user_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request): Response
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new UserQuery();
         $query->setCurrentUser($this->getUser());

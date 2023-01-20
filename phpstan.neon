@@ -991,21 +991,6 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\ActivityController\\:\\:detailsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ActivityController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ActivityController\\:\\:indexAction\\(\\) has parameter \\$page with no type specified\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
@@ -1074,71 +1059,6 @@ parameters:
             message: "#^Cannot access offset 'user' on mixed\\.$#"
             count: 2
             path: src/Controller/CalendarController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:addCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:createAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:createDefaultTeamAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:deleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:deleteCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:detailsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:indexAction\\(\\) has parameter \\$page with no type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:pinCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:projectsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\CustomerController\\:\\:teamPermissionsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
 
         -
             message: "#^Parameter \\#1 \\$address of method JeroenDesloovere\\\\VCard\\\\VCard\\:\\:addEmail\\(\\) expects string, string\\|null given\\.$#"
@@ -1332,86 +1252,6 @@ parameters:
 
         -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:activitiesAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:addCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:createAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:createDefaultTeamAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:createProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:createWithCustomerAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:deleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:deleteCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:detailsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:duplicateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:indexAction\\(\\) has parameter \\$page with no type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:pinCommentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\ProjectController\\:\\:teamPermissions\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
 
@@ -1972,11 +1812,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Controller\\\\UserController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/UserController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\UserController\\:\\:indexAction\\(\\) has parameter \\$page with no type specified\\.$#"
             count: 1
             path: src/Controller/UserController.php
 

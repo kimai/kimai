@@ -56,7 +56,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_activity', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_activity_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request): Response
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new ActivityQuery();
         $query->setCurrentUser($this->getUser());

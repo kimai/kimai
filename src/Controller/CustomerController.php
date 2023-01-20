@@ -63,7 +63,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_customer', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_customer_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request): Response
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
         $query->setCurrentUser($this->getUser());
