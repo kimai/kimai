@@ -23,20 +23,20 @@ final class CustomerValidator extends ConstraintValidator
     }
 
     /**
-     * @param CustomerEntity $customer
+     * @param CustomerEntity|mixed $value
      * @param Constraint $constraint
      */
-    public function validate(mixed $customer, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof Customer)) {
             throw new UnexpectedTypeException($constraint, Customer::class);
         }
 
-        if (!($customer instanceof CustomerEntity)) {
-            throw new UnexpectedTypeException($customer, CustomerEntity::class);
+        if (!($value instanceof CustomerEntity)) {
+            throw new UnexpectedTypeException($value, CustomerEntity::class);
         }
 
-        if ((bool) $this->systemConfiguration->find('customer.rules.allow_duplicate_number') === false && (($number = $customer->getNumber()) !== null)) {
+        if ((bool) $this->systemConfiguration->find('customer.rules.allow_duplicate_number') === false && (($number = $value->getNumber()) !== null)) {
             $tmp = $this->customerRepository->findOneBy(['number' => $number]);
             if ($tmp !== null) {
                 $this->context->buildViolation(Customer::getErrorName(Customer::CUSTOMER_NUMBER_EXISTING))
