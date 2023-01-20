@@ -460,6 +460,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setRequired(true)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('customer.rules.allow_duplicate_number'))
+                        ->setLabel('customer.allow_duplicate_number')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('project'))
                 ->setConfiguration([
