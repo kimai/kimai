@@ -10,7 +10,6 @@
 namespace App\Form;
 
 use App\Configuration\SystemConfiguration;
-use App\Configuration\SystemConfiguration;
 use App\Repository\InvoiceDocumentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -27,9 +26,10 @@ final class InvoiceDocumentUploadForm extends AbstractType
     public const EXTENSIONS_NO_TWIG = ['.docx', '.xlsx', '.ods'];
     public const FILENAME_RULE = 'Any-Latin; Latin-ASCII; [^A-Za-z0-9_\-] remove; Lower()';
 
-    private $extensions = [];
+    /** @var array<string>  */
+    private array $extensions = [];
 
-    public function __construct(private InvoiceDocumentRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(private InvoiceDocumentRepository $repository, private SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -72,7 +72,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
         ;
     }
 
-    public function validateDocument($value, ExecutionContextInterface $context)
+    public function validateDocument($value, ExecutionContextInterface $context): void
     {
         if (!($value instanceof UploadedFile)) {
             return;
