@@ -431,6 +431,9 @@ class ConfigurationTest extends TestCase
             ],
             'customer' => [
                 'number_format' => '{cc,4}',
+                'rules' => [
+                    'allow_duplicate_number' => false,
+                ],
             ],
         ];
 
