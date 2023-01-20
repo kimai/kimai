@@ -105,7 +105,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
             }
         }
 
-        if ($extension === null) {
+        if ($extension === null || $nameWithoutExtension === null) {
             $context->buildViolation('This invoice document cannot be used, allowed file extensions are: %extensions%')
                 ->setParameters(['%extensions%' => implode(', ', $this->extensions)])
                 ->setTranslationDomain('validators')

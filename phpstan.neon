@@ -1291,11 +1291,6 @@ parameters:
             path: src/Controller/InvoiceController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\InvoiceController\\:\\:uploadDocumentAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/InvoiceController.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|false given\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
@@ -3839,11 +3834,6 @@ parameters:
             message: "#^Property App\\\\Form\\\\Helper\\\\ProjectHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/ProjectHelper.php
-
-        -
-            message: "#^Method App\\\\Form\\\\InvoiceDocumentUploadForm\\:\\:validateDocument\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/InvoiceDocumentUploadForm.php
 
         -
             message: "#^Method App\\\\Form\\\\InvoiceDocumentUploadForm\\:\\:validateDocument\\(\\) has parameter \\$value with no type specified\\.$#"
