@@ -58,8 +58,7 @@ final class TimesheetController extends BaseApiController
         private TimesheetRepository $repository,
         private TagRepository $tagRepository,
         private EventDispatcherInterface $dispatcher,
-        private TimesheetService $service,
-        private UserRepository $userRepository
+        private TimesheetService $service
     ) {
     }
 

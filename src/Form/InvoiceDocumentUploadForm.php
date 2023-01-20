@@ -26,7 +26,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
     public const EXTENSIONS_NO_TWIG = ['.docx', '.xlsx', '.ods'];
     public const FILENAME_RULE = 'Any-Latin; Latin-ASCII; [^A-Za-z0-9_\-] remove; Lower()';
 
-    /** @var array<string>  */
+    /** @var array<string> */
     private array $extensions = [];
 
     public function __construct(private InvoiceDocumentRepository $repository, private SystemConfiguration $systemConfiguration)
