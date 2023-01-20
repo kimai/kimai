@@ -8,13 +8,17 @@
             {% block box_title %}
                 {{ 'upload'|trans }}
             {% endblock %}
-            {% block box_body %}
+            {% block box_before %}
                 {{ form_start(form) }}
+            {% endblock %}
+            {% block box_after %}
+                {{ form_end(form) }}
+            {% endblock %}
+            {% block box_body %}
                 {{ form_row(form.document) }}
                 <p>
                 <a href="https://github.com/kimai/invoice-templates" target="_blank">{{ 'download_invoice_renderer'|trans({}, 'invoice-renderer') }}</a>
                 </p>
-                {{ form_end(form) }}
             {% endblock %}
             {% block box_footer %}
                 <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>

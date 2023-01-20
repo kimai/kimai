@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="translated">Obs: redan exsiterande filer kommer att skrivas över. Tillåtna fil typer är: DOCX, ODS, XLSX.</target>
+        <target state="translated">Obs: redan exsiterande filer kommer att skrivas över. Tillåtna fil typer är: %extensions%.</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
