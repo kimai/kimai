@@ -322,6 +322,9 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('number_format')
                     ->defaultValue('{Y}/{cy,3}')
                 ->end()
+                ->booleanNode('upload_twig')
+                    ->defaultTrue()
+                ->end()
             ->end()
         ;
 
@@ -530,6 +533,14 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('number_format')
                     ->defaultValue('{cc,4}')
+                ->end()
+                ->arrayNode('rules')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('allow_duplicate_number')
+                            ->defaultFalse()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;

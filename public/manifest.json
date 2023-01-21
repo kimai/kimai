@@ -1,21 +1,31 @@
 {
   "name": "Kimai Time-Tracker",
-  "short_name": "Kimai 2",
+  "short_name": "Kimai",
   "icons": [
     {
-      "src": "favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png",
-      "density": "0.75"
+      "src": "/apple-touch-icon.png",
+      "sizes": "152x152",
+      "type": "image/png"
     },
     {
-      "src": "touch-icon-192x192.png",
+      "src": "/touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/touch-icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "density": "4.0"
+      "type": "image/png"
+    },
+    {
+      "src": "/touch-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
+  "scope": "./",
+  "start_url": "./",
+  "theme-color": "#1d273b",
   "background_color": "#ffffff",
   "display": "standalone"
 }

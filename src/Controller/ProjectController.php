@@ -63,7 +63,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_project', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_project_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request)
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new ProjectQuery();
         $query->setCurrentUser($this->getUser());
@@ -134,7 +134,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/permissions', name: 'admin_project_permissions', methods: ['GET', 'POST'])]
     #[IsGranted('permissions', 'project')]
-    public function teamPermissions(Project $project, Request $request)
+    public function teamPermissions(Project $project, Request $request): Response
     {
         $form = $this->createForm(ProjectTeamPermissionForm::class, $project, [
             'action' => $this->generateUrl('admin_project_permissions', ['id' => $project->getId()]),
@@ -167,19 +167,19 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/create/{customer}', name: 'admin_project_create_with_customer', methods: ['GET', 'POST'])]
     #[IsGranted('create_project')]
-    public function createWithCustomerAction(Request $request, Customer $customer)
+    public function createWithCustomerAction(Request $request, Customer $customer): Response
     {
         return $this->createProject($request, $customer);
     }
 
     #[Route(path: '/create', name: 'admin_project_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_project')]
-    public function createAction(Request $request)
+    public function createAction(Request $request): Response
     {
         return $this->createProject($request, null);
     }
 
-    private function createProject(Request $request, ?Customer $customer = null)
+    private function createProject(Request $request, ?Customer $customer = null): Response
     {
         $project = $this->projectService->createNewProject($customer);
 
@@ -206,7 +206,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/comment_delete/{token}', name: 'project_comment_delete', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
-    public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
+    public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $projectId = $comment->getProject()->getId();
 
@@ -229,7 +229,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/comment_add', name: 'project_comment_add', methods: ['POST'])]
     #[IsGranted('comments', 'project')]
-    public function addCommentAction(Project $project, Request $request)
+    public function addCommentAction(Project $project, Request $request): Response
     {
         $comment = new ProjectComment($project);
         $form = $this->getCommentForm($comment);
@@ -249,7 +249,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/comment_pin/{token}', name: 'project_comment_pin', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
-    public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
+    public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $projectId = $comment->getProject()->getId();
 
@@ -274,16 +274,14 @@ final class ProjectController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'project')]
-    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository)
+    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
-        if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', 'Team already existing');
 
-            return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+        if (null === $defaultTeam) {
+            $defaultTeam = new Team($project->getName());
         }
 
-        $defaultTeam = new Team($project->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addProject($project);
 
@@ -298,7 +296,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/activities/{page}', defaults: ['page' => 1], name: 'project_activities', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'project')]
-    public function activitiesAction(Project $project, int $page, ActivityRepository $activityRepository)
+    public function activitiesAction(Project $project, int $page, ActivityRepository $activityRepository): Response
     {
         $query = new ActivityQuery();
         $query->setCurrentUser($this->getUser());
@@ -322,7 +320,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/details', name: 'project_details', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'project')]
-    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, CsrfTokenManagerInterface $csrfTokenManager)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -427,7 +425,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'admin_project_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'project')]
-    public function editAction(Project $project, Request $request)
+    public function editAction(Project $project, Request $request): Response
     {
         $editForm = $this->createEditForm($project);
         $editForm->handleRequest($request);
@@ -452,7 +450,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/duplicate/{token}', name: 'admin_project_duplicate', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'project')]
-    public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager)
+    public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.duplicate', $token))) {
             $this->flashError('action.csrf.error');
@@ -471,7 +469,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/delete', name: 'admin_project_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'project')]
-    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService)
+    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService): Response
     {
         $stats = $statisticService->getProjectStatistics($project);
 
@@ -514,7 +512,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'project_export', methods: ['GET'])]
-    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new ProjectQuery();
         $query->setCurrentUser($this->getUser());

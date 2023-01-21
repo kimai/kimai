@@ -309,6 +309,7 @@ class ConfigurationTest extends TestCase
                     1 => 'templates/invoice/renderer/',
                 ],
                 'number_format' => '{Y}/{cy,3}',
+                'upload_twig' => true,
             ],
             'export' => [
                 'documents' => [
@@ -430,6 +431,9 @@ class ConfigurationTest extends TestCase
             ],
             'customer' => [
                 'number_format' => '{cc,4}',
+                'rules' => [
+                    'allow_duplicate_number' => false,
+                ],
             ],
         ];
 

@@ -56,7 +56,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_activity', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_activity_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request)
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new ActivityQuery();
         $query->setCurrentUser($this->getUser());
@@ -124,7 +124,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/{id}/details', name: 'activity_details', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'activity')]
-    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
+    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -297,13 +297,11 @@ final class ActivityController extends AbstractController
     public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
-        if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', 'Team already existing');
 
-            return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+        if (null === $defaultTeam) {
+            $defaultTeam = new Team($activity->getName());
         }
 
-        $defaultTeam = new Team($activity->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addActivity($activity);
 

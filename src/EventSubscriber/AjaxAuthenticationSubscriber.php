@@ -9,6 +9,8 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -19,6 +21,10 @@ use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
 
 final class AjaxAuthenticationSubscriber implements EventSubscriberInterface
 {
+    public function __construct(private Security $security)
+    {
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -29,6 +35,12 @@ final class AjaxAuthenticationSubscriber implements EventSubscriberInterface
     public function onCoreException(ExceptionEvent $event): void
     {
         $request = $event->getRequest();
+
+        // do not act upon requests which were triggered by fully logged-in users
+        if ($this->security->getUser() instanceof User && $this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return;
+        }
+
         $header = $request->headers->get('X-Requested-With');
 
         if ($request->isXmlHttpRequest() || ($header !== null && str_contains(strtolower($header), 'kimai'))) {

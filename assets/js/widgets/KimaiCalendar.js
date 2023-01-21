@@ -376,7 +376,18 @@ export default class KimaiCalendar {
                         return;
                     }
                     this.hidePopover(eventClickInfo.el);
-                    MODAL.openUrlInModal(this.options.url.edit(event.id));
+
+                    if (!event.extendedProps.exported || this.hasPermission('edit_exported')) {
+                        MODAL.openUrlInModal(
+                            this.options.url.edit(event.id), (reason) => {
+                                // 403 = user is not allowed to edit the entry (e.g. lockdown mode)
+                                if (reason.status !== 403) {
+                                    // keep the log, it might help with debugging
+                                    console.log(reason);
+                                }
+                            }
+                        );
+                    }
                 },
             }};
 
@@ -506,6 +517,8 @@ export default class KimaiCalendar {
     }
 
     /**
+     * Only used on manipulated timesheets!
+     *
      * @param {object} apiItem
      * @return {{activity, color: *, start, description, project, end, id, title: *, textColor: *, customer, tags: ([number,number,[],string,string]|*)}}
      * @private
@@ -538,6 +551,7 @@ export default class KimaiCalendar {
             timesheet: apiItem.id,
             title: title,
             description: apiItem.description,
+            exported: apiItem.exported,
             start: apiItem.begin,
             end: apiItem.end,
             activity: apiItem.activity.name,
@@ -591,6 +605,12 @@ export default class KimaiCalendar {
     changeHandler(eventArg) {
         /** @type {EventApi} event */
         const event = eventArg.event;
+
+        if (event.extendedProps.exported && !this.hasPermission('edit_exported')) {
+            eventArg.revert();
+            return;
+        }
+
         /** @type {KimaiAPI} API */
         const API = this.kimai.getPlugin('api');
         /** @type {KimaiAlert} ALERT */

@@ -63,7 +63,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_customer', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_customer_paginated', methods: ['GET'])]
-    public function indexAction($page, Request $request)
+    public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
         $query->setCurrentUser($this->getUser());
@@ -141,7 +141,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/create', name: 'admin_customer_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_customer')]
-    public function createAction(Request $request, CustomerService $customerService)
+    public function createAction(Request $request, CustomerService $customerService): Response
     {
         $customer = $customerService->createNewCustomer('');
 
@@ -150,7 +150,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/permissions', name: 'admin_customer_permissions', methods: ['GET', 'POST'])]
     #[IsGranted('permissions', 'customer')]
-    public function teamPermissionsAction(Customer $customer, Request $request)
+    public function teamPermissionsAction(Customer $customer, Request $request): Response
     {
         $form = $this->createForm(CustomerTeamPermissionForm::class, $customer, [
             'action' => $this->generateUrl('admin_customer_permissions', ['id' => $customer->getId()]),
@@ -183,7 +183,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/comment_delete/{token}', name: 'customer_comment_delete', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
+    public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $customerId = $comment->getCustomer()->getId();
 
@@ -206,7 +206,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/comment_add', name: 'customer_comment_add', methods: ['POST'])]
     #[IsGranted('comments', 'customer')]
-    public function addCommentAction(Customer $customer, Request $request)
+    public function addCommentAction(Customer $customer, Request $request): Response
     {
         $comment = new CustomerComment($customer);
         $form = $this->getCommentForm($comment);
@@ -226,7 +226,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/comment_pin/{token}', name: 'customer_comment_pin', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
+    public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $customerId = $comment->getCustomer()->getId();
 
@@ -251,16 +251,14 @@ final class CustomerController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository)
+    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
-        if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', 'Team already existing');
 
-            return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+        if (null === $defaultTeam) {
+            $defaultTeam = new Team($customer->getName());
         }
 
-        $defaultTeam = new Team($customer->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
@@ -275,7 +273,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/projects/{page}', defaults: ['page' => 1], name: 'customer_projects', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'customer')]
-    public function projectsAction(Customer $customer, int $page, ProjectRepository $projectRepository)
+    public function projectsAction(Customer $customer, int $page, ProjectRepository $projectRepository): Response
     {
         $query = new ProjectQuery();
         $query->setCurrentUser($this->getUser());
@@ -298,7 +296,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/details', name: 'customer_details', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'customer')]
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService): Response
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -462,14 +460,14 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'admin_customer_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'customer')]
-    public function editAction(Customer $customer, Request $request)
+    public function editAction(Customer $customer, Request $request): Response
     {
         return $this->renderCustomerForm($customer, $request);
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'customer')]
-    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService)
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService): Response
     {
         $stats = $statisticService->getCustomerStatistics($customer);
 
@@ -511,7 +509,7 @@ final class CustomerController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'customer_export', methods: ['GET'])]
-    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new CustomerQuery();
         $query->setCurrentUser($this->getUser());

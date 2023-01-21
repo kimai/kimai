@@ -71,7 +71,11 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         return Modal.getOrCreateInstance(this._getModalElement())
     }
 
-    openUrlInModal(url)
+    /**
+     * @param {string} url
+     * @param {function(Response)} error the callback to execute if the fetch failed
+     */
+    openUrlInModal(url, error)
     {
         const headers = new Headers();
         headers.append('X-Requested-With', 'Kimai-Modal');
@@ -91,8 +95,12 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 this._openFormInModal(html);
             });
         })
-        .catch(() =>  {
-            window.location = url;
+        .catch((reason) =>  {
+            if (error === undefined || error === null) {
+                window.location = url;
+            } else {
+                error(reason);
+            }
         });
     }
 
