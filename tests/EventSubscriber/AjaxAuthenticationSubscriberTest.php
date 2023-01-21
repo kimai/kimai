@@ -9,8 +9,10 @@
 
 namespace App\Tests\EventSubscriber;
 
+use App\Entity\User;
 use App\EventSubscriber\AjaxAuthenticationSubscriber;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -24,26 +26,46 @@ use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
  */
 class AjaxAuthenticationSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = AjaxAuthenticationSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(KernelEvents::EXCEPTION, $events);
+        /** @var string $methodName */
         $methodName = $events[KernelEvents::EXCEPTION][0];
         $this->assertTrue(method_exists(AjaxAuthenticationSubscriber::class, $methodName));
     }
 
-    public function getTestHeader()
+    /**
+     * @return array<array<string>>
+     */
+    public function getTestHeader(): array
     {
-        yield ['XMLHttpRequest'];
-        yield ['Kimai'];
+        return [
+            ['XMLHttpRequest'],
+            ['Kimai']
+        ];
+    }
+
+    private function getSut(bool $loggedIn = false): AjaxAuthenticationSubscriber
+    {
+        $security = $this->createMock(Security::class);
+        if ($loggedIn) {
+            $user = new User();
+            $security->method('getUser')->willReturn($user);
+            $security->method('isGranted')->willReturn(true);
+        }
+
+        $sut = new AjaxAuthenticationSubscriber($security);
+
+        return $sut;
     }
 
     /**
      * @dataProvider getTestHeader
      */
-    public function testAuthenticationExpiredException(string $requestedWith)
+    public function testAuthenticationExpiredException(string $requestedWith): void
     {
-        $sut = new AjaxAuthenticationSubscriber();
+        $sut = $this->getSut();
 
         $exception = new AuthenticationExpiredException();
         $kernel = $this->createMock(HttpKernelInterface::class);
@@ -65,9 +87,9 @@ class AjaxAuthenticationSubscriberTest extends TestCase
     /**
      * @dataProvider getTestHeader
      */
-    public function testAuthenticationException(string $requestedWith)
+    public function testAuthenticationException(string $requestedWith): void
     {
-        $sut = new AjaxAuthenticationSubscriber();
+        $sut = $this->getSut();
 
         $exception = new AuthenticationException();
         $kernel = $this->createMock(HttpKernelInterface::class);
@@ -89,9 +111,9 @@ class AjaxAuthenticationSubscriberTest extends TestCase
     /**
      * @dataProvider getTestHeader
      */
-    public function testAccessDeniedException(string $requestedWith)
+    public function testAccessDeniedException(string $requestedWith): void
     {
-        $sut = new AjaxAuthenticationSubscriber();
+        $sut = $this->getSut();
 
         $exception = new AccessDeniedException();
         $kernel = $this->createMock(HttpKernelInterface::class);
@@ -108,5 +130,24 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals(403, $response->getStatusCode());
         self::assertTrue($response->headers->has('Login-Required'));
         self::assertEquals('1', $response->headers->get('Login-Required'));
+    }
+
+    /**
+     * @dataProvider getTestHeader
+     */
+    public function testAccessDeniedExceptionWithLoggedInUser(string $requestedWith): void
+    {
+        $sut = $this->getSut(true);
+
+        $exception = new AccessDeniedException();
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $request = new Request();
+        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => $requestedWith]);
+
+        $event = new ExceptionEvent($kernel, $request, 1, $exception);
+
+        $sut->onCoreException($event);
+
+        self::assertNull($event->getResponse());
     }
 }

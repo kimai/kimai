@@ -6038,36 +6038,6 @@ parameters:
             path: EventSubscriber/Actions/UsersSubscriberTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\AjaxAuthenticationSubscriberTest\\:\\:getTestHeader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\AjaxAuthenticationSubscriberTest\\:\\:testAccessDeniedException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\AjaxAuthenticationSubscriberTest\\:\\:testAuthenticationException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\AjaxAuthenticationSubscriberTest\\:\\:testAuthenticationExpiredException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\AjaxAuthenticationSubscriberTest\\:\\:testGetSubscribedEvents\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/AjaxAuthenticationSubscriberTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\EmailSubscriberTest\\:\\:testGetSubscribedEvents\\(\\) has no return type specified\\.$#"
             count: 1
             path: EventSubscriber/EmailSubscriberTest.php

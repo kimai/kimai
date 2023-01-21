@@ -69,6 +69,7 @@
     {% set editRoute = 'timesheet_edit' %}
     {% set canCreate = is_granted('create_own_timesheet') %}
     {% set canEdit = is_granted('edit_own_timesheet') %}
+    {% set canEditExported = is_granted('edit_exported_timesheet') %}
     {% set isForeignEdit = false %}
     {% if user != app.user %}
         {% set isForeignEdit = true %}
@@ -104,6 +105,7 @@
                 },
                 permissions: {
                     edit: {% if canEdit %}true{% else %}false{% endif %},
+                    edit_exported: {% if canEditExported %}true{% else %}false{% endif %},
                     create: {% if canCreate %}true{% else %}false{% endif %},
                     edit_begin: {% if can_edit_begin %}true{% else %}false{% endif %},
                     edit_end: {% if can_edit_end %}true{% else %}false{% endif %},
