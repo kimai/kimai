@@ -298,6 +298,10 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">לאפשר יצירת פעילויות בצורה של מעקב אחר שעות</target>
       </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">לאפשר מספר חשבון כפול</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -613,9 +613,9 @@
         <source>invoice.number</source>
         <target>Número da Fatura</target>
       </trans-unit>
-      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal" approved="yes">
         <source>invoice.subtotal</source>
-        <target>Subtotal</target>
+        <target state="final">Subtotal</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>

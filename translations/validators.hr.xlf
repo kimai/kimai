@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
-        <target>Zadana vrijednost nije valjano vrijeme.</target>
+        <target state="translated">Zadana vrijednost nije ispravno vrijeme.</target>
       </trans-unit>
       <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
-        <target>Ova vrijednost nije valjana uloga.</target>
+        <target state="translated">Ova vrijednost nije ispravna uloga.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>
@@ -85,6 +85,26 @@
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Žao nam je, ali budžet je potrošen.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Došlo je do problema pri spremanju.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Imaš jedno aktivno snimanje vremena koje se ne može automatski prekinuti.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Navedena vrijednost nije ispravni format za dan i vrijeme.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Navedeni kod nije ispravni TOTP token.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Ovo nije ispravno ime za korisničku ulogu.</target>
       </trans-unit>
     </body>
   </file>

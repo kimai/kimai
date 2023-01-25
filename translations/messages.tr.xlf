@@ -456,7 +456,7 @@
       </trans-unit>
       <trans-unit id="pcWhXux" resname="homepage">
         <source>homepage</source>
-        <target state="translated">Anasayfa</target>
+        <target state="translated">Ana sayfa</target>
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>

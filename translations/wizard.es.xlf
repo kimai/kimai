@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="wizard.en.xlf">
+    <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+        <source>wizard.intro.title</source>
+        <target state="translated">Bienvenidos a Kimai</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+        <source>wizard.intro.description</source>
+        <target state="translated">Este asistente le ayudará a personalizar Kimai según sus necesidades.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator">
+        <source>wizard.separator</source>
+        <target state="translated">Tu configuración</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title">
+        <source>wizard.profile.title</source>
+        <target state="translated">Tu perfil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description">
+        <source>wizard.profile.description</source>
+        <target state="translated">Algunos ajustes básicos para facilitar tu trabajo con Kimai.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title">
+        <source>wizard.done.title</source>
+        <target state="translated">Enhorabuena</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description">
+        <source>wizard.done.description</source>
+        <target state="translated">Los ajustes más importantes ya están completos. Hay muchos más que puedes personalizar más adelante en tu perfil de usuario.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
