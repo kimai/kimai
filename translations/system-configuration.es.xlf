@@ -306,6 +306,10 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Permitir la creación de actividades en el formulario del parte de horas</target>
       </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Permitir duplicar el número de la cuenta</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

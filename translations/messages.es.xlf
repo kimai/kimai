@@ -62,7 +62,7 @@
             -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
-        <target>Contraseña</target>
+        <target state="translated">Contraseña</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -432,7 +432,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>Contacto</target>
+        <target state="translated">Contacto</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

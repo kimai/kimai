@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target>Oprez: postojeće datoteke će se prepisati. Dopuštene vrste datoteka su: %extensions%.</target>
+        <target state="translated">Oprez: postojeće datoteke će se prepisati. Dozvoljene vrste datoteka su: %extensions%.</target>
       </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
@@ -39,6 +39,10 @@
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Datum usluge</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Ovdje možeš preuzeti daljnje predloške</target>
       </trans-unit>
     </body>
   </file>

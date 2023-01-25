@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit resname="action.csrf.error" id="bOE_q5R">
         <source>action.csrf.error</source>
-        <target>Radnja se nije mogla izvesti: nevažeći sigurnosni token.</target>
+        <target state="translated">Radnja se nije mogla izvesti: neispravan sigurnosni token.</target>
       </trans-unit>
     </body>
   </file>

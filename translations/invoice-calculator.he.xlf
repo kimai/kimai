@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>פרויקט: רשומה אחת לפרויקט</target>
+        <target state="translated">מיזם: רשומה אחת למיזם</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>

@@ -298,6 +298,10 @@
         <source>customer.number_format</source>
         <target state="translated">Müşteri numarası biçimi</target>
       </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Yinelenen hesap numarasına izin ver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
