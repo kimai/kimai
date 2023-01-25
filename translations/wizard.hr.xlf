@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hr" datatype="plaintext" original="wizard.en.xlf">
+    <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+        <source>wizard.intro.title</source>
+        <target state="translated">Dobro došao, dobro došla u Kimai</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+        <source>wizard.intro.description</source>
+        <target state="translated">Ovaj čarobnjak će ti pomoći prilagoditi Kimai tvojim potrebama.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator">
+        <source>wizard.separator</source>
+        <target state="translated">Tvoje postavke</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title">
+        <source>wizard.profile.title</source>
+        <target state="translated">Tvoj profil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description">
+        <source>wizard.profile.description</source>
+        <target state="translated">Neke osnovne postavke koje će ti olakšati rad s Kimaijem.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title">
+        <source>wizard.done.title</source>
+        <target state="translated">Čestitamo</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description">
+        <source>wizard.done.description</source>
+        <target state="translated">Najvažnije postavke su sada postavljene. Postoji mnogo više postavki koje kasnije možeš prilagoditi u tvom korisničkom profilu.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

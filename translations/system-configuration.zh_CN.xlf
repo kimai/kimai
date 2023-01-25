@@ -298,6 +298,10 @@
         <source>allowed_replacer</source>
         <target state="translated">允许的替代品：%replacer%</target>
       </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">允许重复的帐号</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

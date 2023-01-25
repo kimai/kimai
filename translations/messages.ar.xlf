@@ -38,7 +38,7 @@
             -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
-        <target>كلمه السر</target>
+        <target state="translated">الكلمة السرية</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>جهة الإتصال</target>
+        <target state="translated">للاتصال</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -1199,6 +1199,46 @@
       <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">عرض بغض النظر عن "نوع الدخل"</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">أعمدة الجدول</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">يمكنك تفعيل جهاز جديد بمسح الصورة في تطبيقك.</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">التطبيقات</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">التصميم</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">الملف التعريفي</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">المفضّلة</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">الرجاء إدخال كلمة المرور الخاصة بك للوصول الكامل</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">إلغاء القُفْل</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">نص الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">سطح المكتب</target>
       </trans-unit>
     </body>
   </file>
