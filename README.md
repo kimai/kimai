@@ -14,32 +14,31 @@
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
 It is built with modern technologies such as [Symfony](https://github.com/symfony/symfony), [Bootstrap](https://github.com/twbs/bootstrap), 
-[RESTful API](https://github.com/FriendsOfSymfony/FOSRestBundle), [Doctrine](https://github.com/doctrine/),
-[Tabler](https://github.com/kevinpapst/TablerBundle/), [Webpack](https://github.com/webpack/webpack), ES6 and [many](composer.json) [more](package.json).
+[JSON API](https://github.com/FriendsOfSymfony/FOSRestBundle), [Doctrine](https://github.com/doctrine/),
+[Tabler](https://github.com/kevinpapst/TablerBundle/), ES6 and [many](composer.json) [more](package.json).
 
 ## Introduction
 
 - [Home](https://www.kimai.org) - Kimai project homepage
 - [Blog](https://www.kimai.org/blog/) - Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) - Learn how to use Kimai
-- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai in your language
-- [Migration](https://www.kimai.org/documentation/migration-v1.html) - Import data from Kimai 1 
+- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai is translated at Weblate
 
 ### Requirements
 
 - PHP 8.1 minimum
 - MariaDB or MySQL
-- A webserver and subdomain
+- A webserver and subdomain (subdirectory does not work)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
 
 ### About
 
-The evolution of the most known(?) open source project time-tracker Kimai. It is stable, production ready and ships
-with many advanced features, including but not limited to: 
+Kimai is a professional grade time-tracking application, build to track your project times.
+It ships with many advanced features, including but not limited to: 
 
-JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
-authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
-user/customer/project specific rates, advanced search & filtering, money and time budgets, reporting, support for plugins 
+JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user - multi-timezones - multi-language, 
+authentication via SAML/LDAP/Database, support for 2FA with TOTP, customizable role and team permissions, responsive and ready for your mobile device, 
+user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for plugins 
 and so many more.
 
 ## Installation
@@ -64,8 +63,10 @@ and so many more.
 You can see a rough development roadmap in the [Milestones](https://github.com/kimai/kimai/milestones) sections.
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kimai/kimai/issues) are welcome.
 
-Release versions will be created on a regular basis, every couple of weeks.
-Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch. 
+Release versions will be created on a regular basis, every couple of weeks latest.
+Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
+
+For the time being and until 2.0 landed everywhere, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive bug fixes. 
 
 ## Contributing
 
@@ -74,11 +75,11 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
-- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms like Slant, Product Hunt, Softpedia or AlternativeTo, you can toot or tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every bit helps!
+- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit or any of your favorite social media platforms. Every bit helps!
 - Answer questions: You know the answer to another user's problem? Share your knowledge.
 - Something can be done better? An essential feature is missing? Create a feature request.
-- Report bugs: that shouldn't happen too often.
-- You don't have to be programmer, the documentation and translation could use some love as well.
+- Report bugs makes Kimai better for everyone.
+- You don't have to be programmer, the documentation and translation could always use some attention.
 - Sponsor the project: free software costs money to create!
 
-There is one simple rule in our "Code of conduct": Don't be an ass! 
+There is one simple rule in our "Code of conduct": Don't be an ass!
