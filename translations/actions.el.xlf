@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Λήψη</target>
+        <target state="translated">Λήψη</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>

@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Pobieranie</target>
+        <target state="translated">Pobieranie</target>
       </trans-unit>
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>

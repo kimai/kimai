@@ -517,8 +517,8 @@
         <target>P.IVA</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target state="needs-translation">Contatto</target>
+        <source>Contact</source>
+        <target state="translated">Contatto</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

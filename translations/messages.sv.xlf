@@ -53,7 +53,7 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
+        <source>Password</source>
         <target state="translated">Lösenord</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
@@ -391,7 +391,7 @@
         <target state="translated">Moms</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
+        <source>Contact</source>
         <target state="translated">Kontakt</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
@@ -680,9 +680,9 @@
         <source>export</source>
         <target state="translated">Exportera</target>
       </trans-unit>
-      <trans-unit id="vjmoQGo" resname="export.period">
+      <trans-unit id="vjmoQGo" resname="export.period" approved="yes">
         <source>export.period</source>
-        <target>Period</target>
+        <target state="final">Period</target>
       </trans-unit>
       <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>

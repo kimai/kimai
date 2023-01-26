@@ -60,9 +60,9 @@
       <!--
               Login / Security
             -->
-      <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target state="translated">Contraseña</target>
+      <trans-unit id="XohImNo" resname="password" approved="yes">
+        <source>Password</source>
+        <target state="final">Contraseña</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -430,9 +430,9 @@
         <source>vat</source>
         <target>Impuesto</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target state="translated">Contacto</target>
+      <trans-unit id="CT59X9u" resname="contact" approved="yes">
+        <source>Contact</source>
+        <target state="final">Contacto</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

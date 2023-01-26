@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Ladda ner</target>
+        <target state="translated">Ladda ner</target>
       </trans-unit>
       <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>

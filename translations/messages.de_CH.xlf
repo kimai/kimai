@@ -477,9 +477,9 @@
         <source>address</source>
         <target>Adresse</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kontakt</target>
+      <trans-unit id="CT59X9u" resname="contact" approved="yes">
+        <source>Contact</source>
+        <target state="final">Kontakt</target>
       </trans-unit>
       <trans-unit id="8WjM3ZF" resname="company">
         <source>company</source>
@@ -869,9 +869,9 @@
         <source>password_repeat</source>
         <target>Passwort wiederholen</target>
       </trans-unit>
-      <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Passwort</target>
+      <trans-unit id="XohImNo" resname="password" approved="yes">
+        <source>Password</source>
+        <target state="final">Passwort</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>

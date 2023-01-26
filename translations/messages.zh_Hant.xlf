@@ -125,7 +125,7 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
+        <source>Password</source>
         <target state="translated">密碼</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
@@ -514,7 +514,7 @@
         <target state="translated">稅率</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
+        <source>Contact</source>
         <target state="translated">聯絡人</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">

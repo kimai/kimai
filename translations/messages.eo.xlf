@@ -81,8 +81,8 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Pasvorto</target>
+        <source>Password</source>
+        <target state="translated">Pasvorto</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -490,8 +490,8 @@
         <target>AVI-ID</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kontakto</target>
+        <source>Contact</source>
+        <target state="translated">Kontakto</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

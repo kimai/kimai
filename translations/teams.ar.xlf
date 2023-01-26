@@ -30,6 +30,10 @@
         <source>teams.project_access</source>
         <target>منح الوصول إلى المشاريع</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="translated">عضو</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -81,7 +81,7 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
+        <source>Password</source>
         <target state="translated">Salasana</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
@@ -526,7 +526,7 @@
         <target state="translated">VAT-ID</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
+        <source>Contact</source>
         <target state="translated">Yhteystiedot</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">

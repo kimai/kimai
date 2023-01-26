@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Dette data vil også blive slettet!
-                    Alternativt kan du vælge et indlæg hvortil data skal flyttes til:
-                </target>
+        <target>Dette data vil også blive slettet! Alternativt kan du vælge et indlæg hvortil data skal flyttes til:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -68,8 +65,8 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Kodeord</target>
+        <source>Password</source>
+        <target state="translated">Kodeord</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -450,8 +447,8 @@
         <target>VAT-ID</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kontakt</target>
+        <source>Contact</source>
+        <target state="translated">Kontakt</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

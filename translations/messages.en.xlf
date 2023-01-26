@@ -124,9 +124,9 @@
         <target>Display of entries in selection lists</target>
       </trans-unit>
       <!-- Login / Security -->
-      <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Password</target>
+      <trans-unit id="XohImNo" resname="password" approved="yes">
+        <source>Password</source>
+        <target state="final">Password</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -684,9 +684,9 @@
         <source>tax_rate</source>
         <target>Tax rate</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Contact</target>
+      <trans-unit id="CT59X9u" resname="contact" approved="yes">
+        <source>Contact</source>
+        <target state="final">Contact</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

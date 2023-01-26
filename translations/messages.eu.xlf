@@ -69,8 +69,8 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Pasahitza</target>
+        <source>Password</source>
+        <target state="translated">Pasahitza</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -458,8 +458,8 @@
         <target>Zerga ID-a</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kontaktua</target>
+        <source>Contact</source>
+        <target state="translated">Kontaktua</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

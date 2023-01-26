@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Ezek az adatok és törlésre kerülnek!
-                    Esetleg válassz egy másik elemet, ahova ezek az adatok áthelyezésre kerülnek:
-                </target>
+        <target>Ezek az adatok és törlésre kerülnek! Esetleg válassz egy másik elemet, ahova ezek az adatok áthelyezésre kerülnek:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -55,13 +52,13 @@
       <!--
               Login / Security
             -->
-      <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Jelszó</target>
+      <trans-unit id="XohImNo" resname="password" approved="yes">
+        <source>Password</source>
+        <target state="final">Jelszó</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
-        <target>Jelsző ismétlése</target>
+        <target state="translated">Jelszó ismétlése</target>
       </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
@@ -390,8 +387,8 @@
         <target>Áfa</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kapcsolat</target>
+        <source>Contact</source>
+        <target state="needs-translation">Kapcsolat</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -1196,6 +1193,66 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>A Kimai névjegye</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Ezt a szöveget a számla bizonylatokban használják, és használható pl. jegyezze meg a további szállítási feltételeket.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Ez a szöveg helyettesíti az objektum nevét, így részletesebb címkéket tesz lehetővé a számlatételekhez.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Tervezés</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Ha a beállítás ki van kapcsolva, a jövőben rögzített összes időbejegyzés „nem számlázható”-ként lesz megjelölve.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Ha a beállítás ki van kapcsolva, az objektum nem jelenik meg a legördülő listákban és a listanézetekben.</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">A widgeteket a fogd és vidd funkcióval átrendezheti. A widgetek hozzáadása menti a függőben lévő módosításokat.</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Fiók feloldása</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">Add meg a jelszavadat a teljes hozzáféréshez</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">Feloldás</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">Alkalmazások</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">A láthatóságot a kiválasztott csapatokra korlátozza.</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">Számlázási információ</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">Számla szövege</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">Táblázat oszlopai</target>
       </trans-unit>
     </body>
   </file>

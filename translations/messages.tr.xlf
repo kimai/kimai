@@ -61,7 +61,7 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
+        <source>Password</source>
         <target state="translated">Parola</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
@@ -431,8 +431,8 @@
         <target state="translated">Vergi</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target state="translated">İletişim</target>
+        <source>Contact</source>
+        <target state="needs-translation">İletişim</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

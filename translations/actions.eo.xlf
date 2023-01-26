@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Elŝuti</target>
+        <target state="translated">Elŝuti</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>

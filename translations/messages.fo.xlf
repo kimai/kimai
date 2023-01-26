@@ -384,8 +384,8 @@
         <target>Yvirlitsskíggi</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Loyniorð</target>
+        <source>Password</source>
+        <target state="translated">Loyniorð</target>
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
@@ -712,8 +712,8 @@
         <target>Leiklutur</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Samband</target>
+        <source>Contact</source>
+        <target state="translated">Samband</target>
       </trans-unit>
       <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>

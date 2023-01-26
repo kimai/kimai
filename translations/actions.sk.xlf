@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Stiahnuť</target>
+        <target state="translated">Stiahnuť</target>
       </trans-unit>
     </body>
   </file>

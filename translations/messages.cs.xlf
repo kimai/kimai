@@ -53,8 +53,8 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>Heslo</target>
+        <source>Password</source>
+        <target state="translated">Heslo</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
@@ -403,8 +403,8 @@
         <target>Daň</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target>Kontakt</target>
+        <source>Contact</source>
+        <target state="needs-translation">Kontakt</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
