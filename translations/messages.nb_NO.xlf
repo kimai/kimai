@@ -1164,10 +1164,6 @@
         <source>about.title</source>
         <target>Om Kimai</target>
       </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Vis uavhengig av «budsjett-type»</target>
-      </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Fakturatekst</target>

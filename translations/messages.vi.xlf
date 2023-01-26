@@ -1198,10 +1198,6 @@
         <source>globalActivities</source>
         <target state="translated">Cho phép các hoạt động toàn cầu</target>
       </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Hiển thị bất kể "loại ngân sách"</target>
-      </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Thông tin về Kimai</target>

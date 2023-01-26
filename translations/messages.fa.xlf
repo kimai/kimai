@@ -783,10 +783,6 @@
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">پیش‌نمایش %rows% ردیف‌های بیشتر رد شد…</target>
       </trans-unit>
-      <trans-unit id="F6Jmro7" resname="export.title">
-        <source>export.title</source>
-        <target state="translated">خروجی</target>
-      </trans-unit>
       <trans-unit id="vjmoQGo" resname="export.period">
         <source>export.period</source>
         <target state="translated">دوره</target>
@@ -826,10 +822,6 @@
       <trans-unit id="cjgNYUB" resname="entryState">
         <source>entryState</source>
         <target state="translated">سوابق</target>
-      </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
-        <target state="translated">همه</target>
       </trans-unit>
       <trans-unit id="spHpd_I" resname="entryState.stopped">
         <source>entryState.stopped</source>
@@ -1142,10 +1134,6 @@
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
         <target state="translated">فقط جهانی</target>
-      </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">نمایش بدون توجه به "نوع بودجه"</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>

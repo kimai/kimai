@@ -1205,10 +1205,6 @@
         <source>globalActivities</source>
         <target state="translated">Επέτρεψε καθολικές ενέργειες</target>
       </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Εμφάνιση ανεξαρτήτως από"τύπο-προυπολογισμού"</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

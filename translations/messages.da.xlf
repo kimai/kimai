@@ -513,10 +513,6 @@
         <source>user_role.title</source>
         <target>Bruger rolle</target>
       </trans-unit>
-      <trans-unit id="OWEEQca" resname="Tilladte karaktere: A-Z and _">
-        <source>Tilladte karaktere: A-Z and _</source>
-        <target>Tilladte karaktere: A-Z and _</target>
-      </trans-unit>
       <!--
               Admin: Plugins
             -->
@@ -1016,7 +1012,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target state="needs-translation">Allowed character: A-Z and _</target>
+        <target state="needs-translation">Tilladte karaktere: A-Z and _</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>

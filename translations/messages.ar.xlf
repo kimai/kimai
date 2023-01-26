@@ -1192,10 +1192,6 @@
         <source>globalActivities</source>
         <target state="translated">السماح بالأنشطة العالمية</target>
       </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">عرض بغض النظر عن "نوع الدخل"</target>
-      </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
         <target state="translated">أعمدة الجدول</target>

@@ -1202,10 +1202,6 @@
         <source>globalActivities</source>
         <target state="translated">Zezwalaj na globalne działania</target>
       </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Pokaż niezależnie od "typu budżetu"</target>
-      </trans-unit>
       <trans-unit id="1MfS6X5" resname="remove_filter">
         <source>remove_filter</source>
         <target state="translated">Wyczyść filtr wyszukiwania</target>

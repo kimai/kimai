@@ -325,12 +325,8 @@
         <source>hourlyRate</source>
         <target state="translated">每小時費率</target>
       </trans-unit>
-      <trans-unit id="Oyzbm9c" resname="hourly_rate">
-        <source>hourly_rate</source>
-        <target state="translated">每小時費率</target>
-      </trans-unit>
-      <trans-unit id="iZtaQs8" resname="theme.layout">
-        <source>theme.layout</source>
+      <trans-unit id="HcWuW2g" resname="layout">
+        <source>layout</source>
         <target state="translated">顯示：版面</target>
       </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
@@ -404,10 +400,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target state="translated">重置</target>
-      </trans-unit>
-      <trans-unit id="giznf_R" resname="more.info.link">
-        <source>more.info.link</source>
-        <target state="translated">更多資訊</target>
       </trans-unit>
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
@@ -725,10 +717,6 @@
         <source>profile.preferences</source>
         <target state="translated">偏好設定</target>
       </trans-unit>
-      <trans-unit id="GKOzjYa" resname="theme.collapsed_sidebar">
-        <source>theme.collapsed_sidebar</source>
-        <target state="translated">最小化左方選單</target>
-      </trans-unit>
       <trans-unit id="dChNncv" resname="color">
         <source>color</source>
         <target state="translated">色彩</target>
@@ -769,15 +757,15 @@
         <source>vat</source>
         <target state="translated">稅</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
+      <trans-unit id="tCNBGKG" resname="orderDate">
         <source>orderDate</source>
         <target state="translated">按照日期排序</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
+      <trans-unit id="3tegKgk" resname="orderNumber">
         <source>orderNumber</source>
         <target state="translated">按照號碼排序</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
+      <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target state="translated">狀態</target>
       </trans-unit>
