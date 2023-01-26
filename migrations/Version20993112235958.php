@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * All the checks for hasIndex() and hasColumn() are here to simplify testing and development,
