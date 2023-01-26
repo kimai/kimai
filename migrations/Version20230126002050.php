@@ -17,7 +17,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * @version 2.1.0
  */
-final class Version20993112235959 extends AbstractMigration
+final class Version20230126002050 extends AbstractMigration
 {
     public function getDescription(): string
     {
