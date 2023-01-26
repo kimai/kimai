@@ -283,7 +283,7 @@
         <target state="translated">Copia os dados ao adicionar via arrastar e largar</target>
       </trans-unit>
       <trans-unit id="Xz6UqfS" resname="label.copy_teams_on_create" approved="no">
-        <source>label.copy_teams_on_create</source>
+        <source>copy_teams_on_create</source>
         <target state="translated">Assumir equipas do utilizador conectado ao criar entradas</target>
       </trans-unit>
     </body>

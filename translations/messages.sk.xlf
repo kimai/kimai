@@ -9,10 +9,6 @@
         <source>time_tracking</source>
         <target>Sledovanie času</target>
       </trans-unit>
-      <trans-unit id="PH8JEj3" resname="browser.title">
-        <source>browser.title</source>
-        <target>Profect s.r.o. - Sledovanie času</target>
-      </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target>Áno</target>
@@ -40,10 +36,6 @@
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target state="translated">Tieto údaje budú tiež odstránené! Prípadne môžete zvoliť záznam, do ktorého sa prenesú všetky údaje:</target>
-      </trans-unit>
-      <trans-unit id="2hqdj09" resname="confirm.delete_message">
-        <source>confirm.delete_message</source>
-        <target>Vymazanie musíte potvrdiť, pretože sú prepojené objekty, ktoré budú tiež vymazané.</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1169,8 +1161,8 @@
         <source>stats.amountFinancialYear</source>
         <target state="translated">Obrat tento finančný rok</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target state="translated">Aktívny užívatelia tento finančny rok</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">

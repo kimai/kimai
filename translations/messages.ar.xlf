@@ -964,10 +964,6 @@
         <source>version</source>
         <target>اﻹصدار</target>
       </trans-unit>
-      <trans-unit id="HkxjXDU" resname="required_version">
-        <source>required_version</source>
-        <target>متوافق مع</target>
-      </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>اليوم، %day%</target>

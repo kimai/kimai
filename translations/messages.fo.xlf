@@ -999,8 +999,8 @@
         <source>stats.amountFinancialYear</source>
         <target state="needs-translation">Revenue this financial year</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target state="needs-translation">Active users this financial year</target>
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
@@ -1102,10 +1102,6 @@
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
         <target state="needs-translation">Default values for new entries</target>
-      </trans-unit>
-      <trans-unit id="HkxjXDU" resname="required_version">
-        <source>required_version</source>
-        <target state="needs-translation">Compatible with</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>

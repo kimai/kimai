@@ -312,10 +312,6 @@
         <source>profile.first_entry</source>
         <target state="translated">Arbetat sedan</target>
       </trans-unit>
-      <trans-unit id="Df7lt7o" resname="profile.tab_monthly">
-        <source>profile.tab_monthly</source>
-        <target state="translated">Årlig statistik</target>
-      </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
         <target>Profil</target>
@@ -360,10 +356,6 @@
       <trans-unit id="r49TNAg" resname="daily_stats">
         <source>daily_stats</source>
         <target state="translated">Visa daglig statistik i tidtabell</target>
-      </trans-unit>
-      <trans-unit id="7V65o34" resname="now">
-        <source>now</source>
-        <target state="translated">aktuell tid</target>
       </trans-unit>
       <!--
               User timesheet calendar

@@ -781,10 +781,6 @@
         <source>invoice_bank_account</source>
         <target>Konto bankowe</target>
       </trans-unit>
-      <trans-unit id="eYPvapE" resname="invoice_salutation">
-        <source>invoice_salutation</source>
-        <target>Dziękujemy za skorzystanie z naszych usług Zapraszamy ponownie !</target>
-      </trans-unit>
       <!--
               Export
             -->

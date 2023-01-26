@@ -373,10 +373,6 @@
         <source>teamlead</source>
         <target state="translated">組長</target>
       </trans-unit>
-      <trans-unit id="YF9s6rH" resname="create_more">
-        <source>create_more</source>
-        <target state="translated">建立更多項目</target>
-      </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target state="translated">輸入您的訊息…</target>
@@ -404,10 +400,6 @@
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target state="translated">儲存</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="translated">全部儲存</target>
       </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
@@ -465,12 +457,12 @@
         <source>help.fixedRate</source>
         <target state="translated">每次紀錄不管時間長短都會取得同樣的數值</target>
       </trans-unit>
-      <trans-unit id="Twttynb" resname="calendar.initial_view">
-        <source>calendar.initial_view</source>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+        <source>calendar_initial_view</source>
         <target state="translated">起始行事曆檢視</target>
       </trans-unit>
-      <trans-unit id="byxKRrH" resname="login.initial_view">
-        <source>login.initial_view</source>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view">
+        <source>login_initial_view</source>
         <target state="translated">登入後檢視</target>
       </trans-unit>
       <trans-unit id="gRIArHS" resname="lastLogin">
@@ -657,24 +649,24 @@
         <source>stats.amountTotal</source>
         <target state="translated">總營收</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target state="translated">本周活躍使用者</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target state="translated">本月活躍使用者</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target state="translated">本年度活躍使用者</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target state="translated">本會計年度活躍使用者</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target state="translated">本日活躍使用者</target>
       </trans-unit>
       <trans-unit id="t5eIWp8" resname="stats.userTotal">
@@ -701,10 +693,6 @@
         <source>action.close</source>
         <target state="translated">關閉</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target state="translated">全部使用者</target>
-      </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target state="translated">註冊於</target>
@@ -729,10 +717,6 @@
         <source>profile.password</source>
         <target state="translated">密碼</target>
       </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target state="translated">團隊</target>
-      </trans-unit>
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target state="translated">儀錶板</target>
@@ -740,10 +724,6 @@
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target state="translated">偏好設定</target>
-      </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target state="translated">歡迎!</target>
       </trans-unit>
       <trans-unit id="GKOzjYa" resname="theme.collapsed_sidebar">
         <source>theme.collapsed_sidebar</source>
@@ -777,10 +757,6 @@
         <source>version</source>
         <target state="translated">版本</target>
       </trans-unit>
-      <trans-unit id="HkxjXDU" resname="required_version">
-        <source>required_version</source>
-        <target state="translated">相容於</target>
-      </trans-unit>
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">系統管理員(Super Admin)</target>
@@ -794,15 +770,15 @@
         <target state="translated">稅</target>
       </trans-unit>
       <trans-unit id="as948k9" resname="label.orderDate">
-        <source>label.orderDate</source>
+        <source>orderDate</source>
         <target state="translated">按照日期排序</target>
       </trans-unit>
       <trans-unit id="BS00SS7" resname="label.orderNumber">
-        <source>label.orderNumber</source>
+        <source>orderNumber</source>
         <target state="translated">按照號碼排序</target>
       </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
-        <source>label.status</source>
+        <source>status</source>
         <target state="translated">狀態</target>
       </trans-unit>
     </body>

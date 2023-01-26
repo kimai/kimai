@@ -630,10 +630,6 @@
         <source>invoices</source>
         <target>Facturi</target>
       </trans-unit>
-      <trans-unit id="ZWbHl1I" resname="invoice.subtitle">
-        <source>invoice.subtitle</source>
-        <target>Crează facturi din înregistrările de pontaj.</target>
-      </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target>Filtrează datele de facturare</target>

@@ -1134,8 +1134,8 @@
         <source>internalRate</source>
         <target state="needs-translation">Internal rate</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target state="needs-translation">Active users this financial year</target>
       </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
