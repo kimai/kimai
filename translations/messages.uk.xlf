@@ -1202,14 +1202,6 @@
         <source>login.2fa_intro</source>
         <target state="translated">Вкажіть, будь ласка, код підтвердження для завершення процедури входу.</target>
       </trans-unit>
-      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
-        <source>calendar_initial_view</source>
-        <target state="translated">Початковий вигляд календаря</target>
-      </trans-unit>
-      <trans-unit id="H.IqJTQ" resname="login_initial_view">
-        <source>login_initial_view</source>
-        <target state="translated">Початковий вигляд після входу</target>
-      </trans-unit>
       <trans-unit id="SdLZTel" resname="favorite_routes">
         <source>favorite_routes</source>
         <target state="translated">Вибране</target>
@@ -1289,30 +1281,6 @@
       <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
         <source>stats.userAmountTotal</source>
         <target state="translated">Мій загальний дохід</target>
-      </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target state="translated">Активні користувачі сьогодні</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">Активні користувачі цього тижня</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">Активні користувачі цього місяця</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">Активні користувачі цього року</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Активні користувачі цього фінансового року</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">Активні користувачі за весь час</target>
       </trans-unit>
       <trans-unit id="t.jgy7A" resname="all_invoices">
         <source>all_invoices</source>

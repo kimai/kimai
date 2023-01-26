@@ -1179,10 +1179,6 @@
         <source>stats.userDurationYear</source>
         <target state="translated">ساعت کاری من امسال</target>
       </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">کاربران فعال امسال</target>
-      </trans-unit>
       <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
         <source>help.invoiceTemplate</source>
         <target state="translated">فاکتور با این قالب ایجاد می شود.</target>
@@ -1318,26 +1314,6 @@
       <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
         <source>stats.userAmountTotal</source>
         <target state="translated">کل درآمد من</target>
-      </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target state="translated">کاربران فعال امروز</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">کاربران فعال این هفته</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">کاربران فعال این ماه</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">کاربران فعال در این سال مالی</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">کاربران فعال تا کنون</target>
       </trans-unit>
       <trans-unit id="t.jgy7A" resname="all_invoices">
         <source>all_invoices</source>
