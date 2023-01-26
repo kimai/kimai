@@ -35,7 +35,7 @@
         "gedmo/doctrine-extensions": "^3.6",
         "jeroendesloovere/vcard": "^1.7",
         "jms/serializer-bundle": "^5.0",
-        "kevinpapst/tabler-bundle": "^0.9",
+        "kevinpapst/tabler-bundle": "^0.10",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^4.0",

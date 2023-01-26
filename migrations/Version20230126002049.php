@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * All the checks for hasIndex() and hasColumn() are here to simplify testing and development,
@@ -20,7 +20,7 @@ use Doctrine\Migrations\AbstractMigration;
  *
  * @version 2.0
  */
-final class Version20993112235958 extends AbstractMigration
+final class Version20230126002049 extends AbstractMigration
 {
     public function getDescription(): string
     {
