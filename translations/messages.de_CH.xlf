@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target>Eine ihrer letzten Tätigkeiten neustarten</target>
+        <target state="translated">Eine Ihrer letzten Tätigkeiten neu starten</target>
       </trans-unit>
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>

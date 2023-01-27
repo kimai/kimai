@@ -178,10 +178,6 @@
         <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
         <target state="translated">Електронний лист надісланий. У ньому міститься посилання для зміни пароля, за яким потрібно перейти. Примітка: Ви можете запросити новий пароль лише один раз протягом %tokenLifetime% годин. Якщо Ви не отримали листа, перевірте "Спам" або спробуйте ще раз.</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
-        <target state="translated">Табелі</target>
-      </trans-unit>
       <trans-unit id="JXfA9Ve" resname="projects">
         <source>projects</source>
         <target state="translated">Проекти</target>
@@ -329,10 +325,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target state="translated">Скинути</target>
-      </trans-unit>
-      <trans-unit id="PEgjRvN" resname="back">
-        <source>action.back</source>
-        <target state="translated">Назад</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
@@ -573,10 +565,6 @@
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
         <target state="translated">%percent%% використано (%left% залишилося в цьому місяці)</target>
-      </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
-        <source>button.preview_print</source>
-        <target state="translated">Попередній перегляд друку</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
@@ -861,10 +849,6 @@
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target state="translated">Змінити видимість стовпця</target>
-      </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target state="translated">При збереженні не відмічені стовпчики будуть приховані, а це налаштування буде збережено в cookie браузера. Якщо Ви видалите свої cookie, налаштування будуть скасовані.</target>
       </trans-unit>
       <trans-unit id="_0tuMNE" resname="fixedRate">
         <source>fixedRate</source>
@@ -1168,15 +1152,15 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
-        <target state="translated">Пароль API використовується для зв'язку між Kimai та Вашими програмами</target>
+        <target state="translated">Пароль API використовується для зв'язку між Kimai та Вашими застосунками</target>
       </trans-unit>
       <trans-unit id="Eq2E_Rd" resname="menu.apps">
         <source>Apps</source>
-        <target state="translated">Програми</target>
+        <target state="translated">Застосунки</target>
       </trans-unit>
       <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
         <source>profile.2fa_intro</source>
-        <target state="translated">Ви можете активувати новий пристрій, відсканувавши зображення в програмі.</target>
+        <target state="translated">Ви можете активувати новий пристрій, відсканувавши зображення в застосунку.</target>
       </trans-unit>
       <trans-unit id="3rJ5QDP" resname="help.teams">
         <source>help.teams</source>
