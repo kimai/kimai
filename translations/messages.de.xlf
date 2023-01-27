@@ -37,10 +37,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-            Diese Daten werden ebenfalls mit gelöscht!
-            Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:
-        </target>
+        <target>Diese Daten werden ebenfalls mit gelöscht! Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -161,12 +158,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>
-          Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes.
-          Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
-
-          Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
-        </target>
+        <target>Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -1205,7 +1197,7 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target>Eine ihrer letzten Tätigkeiten neustarten</target>
+        <target state="translated">Eine Ihrer letzten Tätigkeiten neu starten</target>
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
