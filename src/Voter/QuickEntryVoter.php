@@ -15,28 +15,20 @@ use App\Timesheet\TrackingModeService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * @extends Voter<string, mixed>
+ */
 final class QuickEntryVoter extends Voter
 {
     public function __construct(private RolePermissionManager $permissionManager, private TrackingModeService $trackingModeService)
     {
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         return 'quick-entry' === $attribute;
     }
 
-    /**
-     * @param string $attribute
-     * @param User $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();

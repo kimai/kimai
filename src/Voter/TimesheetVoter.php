@@ -18,6 +18,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on Timesheets.
+ *
+ * @extends Voter<string, Timesheet>
  */
 final class TimesheetVoter extends Voter
 {
@@ -62,11 +64,6 @@ final class TimesheetVoter extends Voter
         return $subjectType === Timesheet::class;
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Timesheet)) {
@@ -80,12 +77,6 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    /**
-     * @param string $attribute
-     * @param Timesheet $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();

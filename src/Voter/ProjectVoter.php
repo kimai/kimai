@@ -18,6 +18,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on Projects.
+ *
+ * @extends Voter<string, Project>
  */
 final class ProjectVoter extends Voter
 {
@@ -44,11 +46,6 @@ final class ProjectVoter extends Voter
         return $subjectType === Project::class;
     }
 
-    /**
-     * @param string $attribute
-     * @param Project $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Project)) {
@@ -62,12 +59,6 @@ final class ProjectVoter extends Voter
         return true;
     }
 
-    /**
-     * @param string $attribute
-     * @param Project $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();

@@ -16,6 +16,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check permissions on user profiles.
+ *
+ * @extends Voter<string, User>
  */
 final class UserVoter extends Voter
 {
@@ -42,11 +44,6 @@ final class UserVoter extends Voter
         return $subjectType === User::class;
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof User)) {
@@ -60,12 +57,6 @@ final class UserVoter extends Voter
         return true;
     }
 
-    /**
-     * @param string $attribute
-     * @param User $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
