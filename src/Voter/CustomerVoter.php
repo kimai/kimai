@@ -18,6 +18,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
  * A voter to check authorization on Customers.
+ *
+ * @extends Voter<string, Customer>
  */
 final class CustomerVoter extends Voter
 {
@@ -41,11 +43,6 @@ final class CustomerVoter extends Voter
     {
     }
 
-    /**
-     * @param string $attribute
-     * @param Customer $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Customer)) {
@@ -59,12 +56,6 @@ final class CustomerVoter extends Voter
         return true;
     }
 
-    /**
-     * @param string $attribute
-     * @param Customer $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();

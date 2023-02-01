@@ -1,12 +1,18 @@
 framework:
     router:
         utf8: true
+        strict_requirements: null
 
         # Configure how to generate URLs in non-HTTP contexts, such as CLI commands.
         # See https://symfony.com/doc/current/routing.html#generating-urls-in-commands
         #default_uri: http://localhost
 
-when@prod:
+when@test:
     framework:
         router:
-            strict_requirements: null
+            strict_requirements: true
+
+when@dev:
+    framework:
+        router:
+            strict_requirements: true

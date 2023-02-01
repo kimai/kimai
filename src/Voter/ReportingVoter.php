@@ -14,6 +14,9 @@ use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * @extends Voter<string, null>
+ */
 final class ReportingVoter extends Voter
 {
     private const ALLOWED_ATTRIBUTES = [
@@ -27,22 +30,11 @@ final class ReportingVoter extends Voter
     {
     }
 
-    /**
-     * @param string $attribute
-     * @param null $subject
-     * @return bool
-     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         return $subject === null && \in_array($attribute, self::ALLOWED_ATTRIBUTES);
     }
 
-    /**
-     * @param string $attribute
-     * @param null $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
