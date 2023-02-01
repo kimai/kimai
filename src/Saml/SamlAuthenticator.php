@@ -9,7 +9,7 @@
 
 namespace App\Saml;
 
-use App\Configuration\SamlConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use App\Saml\Security\SamlAuthenticationFailureHandler;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +40,7 @@ class SamlAuthenticator extends AbstractAuthenticator
         private SamlAuthenticationFailureHandler $failureHandler,
         private SamlAuthFactory $samlAuthFactory,
         private SamlProvider $samlProvider,
-        private SamlConfiguration $configuration
+        private SamlConfigurationInterface $configuration
     ) {
     }
 
