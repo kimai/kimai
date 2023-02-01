@@ -37,6 +37,11 @@ final class ActivityVoter extends Voter
     {
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Activity::class;
+    }
+
     /**
      * @param string $attribute
      * @param Activity $subject

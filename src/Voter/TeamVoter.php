@@ -30,6 +30,11 @@ final class TeamVoter extends Voter
     {
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Team::class;
+    }
+
     /**
      * @param string $attribute
      * @param Team $subject

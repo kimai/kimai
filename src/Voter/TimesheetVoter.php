@@ -57,6 +57,11 @@ final class TimesheetVoter extends Voter
     {
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Timesheet::class;
+    }
+
     /**
      * @param string $attribute
      * @param mixed $subject

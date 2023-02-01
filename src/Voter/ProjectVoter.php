@@ -39,6 +39,11 @@ final class ProjectVoter extends Voter
     {
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Project::class;
+    }
+
     /**
      * @param string $attribute
      * @param Project $subject

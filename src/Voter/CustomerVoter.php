@@ -41,6 +41,11 @@ final class CustomerVoter extends Voter
     {
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Customer::class;
+    }
+
     /**
      * @param string $attribute
      * @param Customer $subject
