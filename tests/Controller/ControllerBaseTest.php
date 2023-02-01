@@ -124,6 +124,9 @@ abstract class ControllerBaseTest extends WebTestCase
             /** @var UserRepository $userRepository */
             $userRepository = $this->getPrivateService(UserRepository::class);
             $user = $userRepository->findByUsername($username);
+            if ($user === null) {
+                throw new \Exception('Unknown user: ' . $username);
+            }
 
             $client->loginUser($user, 'secured_area');
         }

@@ -3048,11 +3048,6 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:getClientForAuthenticatedUser\\(\\) should return Symfony\\\\Component\\\\HttpKernel\\\\HttpKernelBrowser but returns Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
