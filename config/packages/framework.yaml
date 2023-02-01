@@ -19,16 +19,17 @@ framework:
         log: true
 
     mailer:
-        # prevent that emails are sent out in dev systems
-        dsn: 'null://null'
+        dsn: '%env(MAILER_URL)%'
 
-when@prod:
+when@dev:
     framework:
         mailer:
-            dsn: '%env(MAILER_URL)%'
+            dsn: 'null://null'
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+        mailer:
+            dsn: 'null://null'
