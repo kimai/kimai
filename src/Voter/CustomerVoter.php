@@ -43,11 +43,6 @@ final class CustomerVoter extends Voter
     {
     }
 
-    public function supportsType(string $subjectType): bool
-    {
-        return $subjectType === Customer::class;
-    }
-
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Customer)) {

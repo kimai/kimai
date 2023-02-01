@@ -39,11 +39,6 @@ final class ActivityVoter extends Voter
     {
     }
 
-    public function supportsType(string $subjectType): bool
-    {
-        return $subjectType === Activity::class;
-    }
-
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Activity)) {

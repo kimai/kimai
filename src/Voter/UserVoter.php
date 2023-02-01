@@ -39,11 +39,6 @@ final class UserVoter extends Voter
     {
     }
 
-    public function supportsType(string $subjectType): bool
-    {
-        return $subjectType === User::class;
-    }
-
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof User)) {

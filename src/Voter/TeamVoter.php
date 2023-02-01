@@ -33,11 +33,6 @@ final class TeamVoter extends Voter
     {
     }
 
-    public function supportsType(string $subjectType): bool
-    {
-        return $subjectType === Team::class;
-    }
-
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Team)) {
