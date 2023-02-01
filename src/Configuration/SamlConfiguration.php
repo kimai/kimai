@@ -9,9 +9,6 @@
 
 namespace App\Configuration;
 
-/**
- * @CloudRequired
- */
 final class SamlConfiguration implements SamlConfigurationInterface
 {
     public function __construct(private SystemConfiguration $configuration)
@@ -35,22 +32,17 @@ final class SamlConfiguration implements SamlConfigurationInterface
 
     public function getAttributeMapping(): array
     {
-        return $this->configuration->findArray('saml.mapping');
+        return $this->configuration->getSamlAttributeMapping();
     }
 
     public function getRolesAttribute(): ?string
     {
-        $attr = $this->configuration->find('saml.roles.attribute');
-        if (empty($attr)) {
-            return null;
-        }
-
-        return (string) $attr;
+        return $this->configuration->getSamlRolesAttribute();
     }
 
     public function getRolesMapping(): array
     {
-        return $this->configuration->findArray('saml.roles.mapping');
+        return $this->configuration->getSamlRolesMapping();
     }
 
     public function isRolesResetOnLogin(): bool
@@ -60,6 +52,6 @@ final class SamlConfiguration implements SamlConfigurationInterface
 
     public function getConnection(): array
     {
-        return $this->configuration->findArray('saml.connection');
+        return $this->configuration->getSamlConnection();
     }
 }
