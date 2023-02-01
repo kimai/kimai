@@ -110,38 +110,22 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
-        switch ($role) {
-            case User::ROLE_SUPER_ADMIN:
-                $client = self::createClient([], [
-                    'PHP_AUTH_USER' => UserFixtures::USERNAME_SUPER_ADMIN,
-                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
-                ]);
-                break;
+        $username = match ($role) {
+            User::ROLE_SUPER_ADMIN => UserFixtures::USERNAME_SUPER_ADMIN,
+            User::ROLE_ADMIN => UserFixtures::USERNAME_ADMIN,
+            User::ROLE_TEAMLEAD => UserFixtures::USERNAME_TEAMLEAD,
+            User::ROLE_USER => UserFixtures::USERNAME_USER,
+            default => null,
+        };
 
-            case User::ROLE_ADMIN:
-                $client = self::createClient([], [
-                    'PHP_AUTH_USER' => UserFixtures::USERNAME_ADMIN,
-                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
-                ]);
-                break;
+        $client = static::createClient();
 
-            case User::ROLE_TEAMLEAD:
-                $client = self::createClient([], [
-                    'PHP_AUTH_USER' => UserFixtures::USERNAME_TEAMLEAD,
-                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
-                ]);
-                break;
+        if ($username !== null) {
+            /** @var UserRepository $userRepository */
+            $userRepository = $this->getPrivateService(UserRepository::class);
+            $user = $userRepository->findByUsername($username);
 
-            case User::ROLE_USER:
-                $client = self::createClient([], [
-                    'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
-                    'PHP_AUTH_PW' => UserFixtures::DEFAULT_PASSWORD,
-                ]);
-                break;
-
-            default:
-                $client = null;
-                break;
+            $client->loginUser($user, 'secured_area');
         }
 
         return $client;
