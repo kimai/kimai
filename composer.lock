@@ -4236,16 +4236,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.15.3",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "61800f71a5526081d1b5633766aa88341f1ade76"
+                "reference": "57090cfccbfaa639e703c007486d605a6e80f56d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/61800f71a5526081d1b5633766aa88341f1ade76",
-                "reference": "61800f71a5526081d1b5633766aa88341f1ade76",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/57090cfccbfaa639e703c007486d605a6e80f56d",
+                "reference": "57090cfccbfaa639e703c007486d605a6e80f56d",
                 "shasum": ""
             },
             "require": {
@@ -4275,9 +4275,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.3"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.16.0"
             },
-            "time": "2022-12-20T20:56:55+00:00"
+            "time": "2023-01-29T14:41:23+00:00"
         },
         {
             "name": "psr/cache",
@@ -11485,22 +11485,22 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.2.20",
+            "version": "1.2.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "d89a521e7e31822409bf37f70691f7a12a6e7d76"
+                "reference": "cbf5b9ceadab8365ed46db42dcd23db1a4c26c93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/d89a521e7e31822409bf37f70691f7a12a6e7d76",
-                "reference": "d89a521e7e31822409bf37f70691f7a12a6e7d76",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/cbf5b9ceadab8365ed46db42dcd23db1a4c26c93",
+                "reference": "cbf5b9ceadab8365ed46db42dcd23db1a4c26c93",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.9.1"
+                "phpstan/phpstan": "^1.9.4"
             },
             "conflict": {
                 "symfony/framework-bundle": "<3.0"
@@ -11550,9 +11550,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.2.20"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.2.22"
             },
-            "time": "2023-01-15T12:28:31+00:00"
+            "time": "2023-02-01T13:26:41+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
