@@ -219,7 +219,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, array<'saml'|'kimai', string>>
      */
     public function getSamlRolesMapping(): array
     {
@@ -227,7 +227,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @return array<mixed>
+     * @return array<array<string, array<mixed>|bool>>
      */
     public function getSamlConnection(): array
     {
@@ -235,7 +235,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, array<'saml'|'kimai', string>>
      */
     public function getSamlAttributeMapping(): array
     {
