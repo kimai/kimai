@@ -97,7 +97,7 @@
       </trans-unit>
       <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
-        <target>Meus tempos</target>
+        <target state="translated">Meus horários</target>
       </trans-unit>
       <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
@@ -271,7 +271,7 @@
             -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
-        <target>Meus Tempos</target>
+        <target state="translated">Meus horários</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
@@ -476,23 +476,23 @@
             -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Horas de trabalho hoje</target>
+        <target state="translated">Horas trabalhadas hoje</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
-        <target>Horas de trabalho esta semana</target>
+        <target state="translated">Horas trabalhadas esta semana</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
-        <target>Horas de trabalho este mês</target>
+        <target state="translated">Horas trabalhadas este mês</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
-        <target>Horas de trabalho este ano</target>
+        <target state="translated">Horas trabalhadas este ano</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
-        <target>Total de horas de trabalho</target>
+        <target state="translated">Total de horas trabalhadas</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -1060,7 +1060,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
-        <target>Horário de trabalho neste ano fiscal</target>
+        <target state="translated">Horários de trabalho neste ano fiscal</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
@@ -1396,7 +1396,7 @@
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination">
         <source>pagination</source>
-        <target state="translated">Mostrar as entradas %start% a %end% do %total%.</target>
+        <target state="translated">Mostrar as entradas de %start% até %end% de %total%.</target>
       </trans-unit>
       <trans-unit id="mjKOAgQ" resname="skin.light">
         <source>skin.light</source>

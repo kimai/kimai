@@ -42,6 +42,10 @@
         <source>programmatic</source>
         <target state="translated">لمزيد من المعالجة</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">يمكنك تنزيل المزيد من النماذج هنا</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
