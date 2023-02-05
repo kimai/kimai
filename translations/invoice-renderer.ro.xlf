@@ -42,6 +42,10 @@
         <source>text</source>
         <target>Text</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Puteți descărca alte modele aici</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

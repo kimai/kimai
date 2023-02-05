@@ -290,6 +290,18 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Zezwalaj na tworzenie działań w formie śledzenia czasu</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Format numeru klienta</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Zezwalaj na duplikowanie numeru konta</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Przejmij zespoły od zalogowanego użytkownika podczas tworzenia nowych wpisów</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

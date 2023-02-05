@@ -286,7 +286,7 @@
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
-        <target>تفضيلات</target>
+        <target state="translated">التفضيلات</target>
       </trans-unit>
       <!--
               Admin: Timesheet
@@ -698,7 +698,7 @@
       </trans-unit>
       <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
-        <target>ملف التعريف الخاص بي</target>
+        <target state="translated">ملفي التعريفي</target>
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>

@@ -81,8 +81,8 @@
               Login / Security
             -->
       <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target state="needs-translation">Password</target>
+        <source>Password</source>
+        <target state="translated">Password</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>

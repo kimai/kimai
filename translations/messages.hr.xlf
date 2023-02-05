@@ -980,10 +980,6 @@
         <source>export</source>
         <target>Izvoz</target>
       </trans-unit>
-      <trans-unit id="KxuVIAw" resname="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Izvezi podatke vremenske tablice u razne formate</target>
-      </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
         <target>Filtriraj podatke za izvoz</target>

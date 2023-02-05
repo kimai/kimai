@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>تم تجميع المستخدم - إدخال واحد لكل مستخدم</target>
+        <target state="translated">مجموعة مستخدمين: إدخال واحد لكل مستخدم</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>

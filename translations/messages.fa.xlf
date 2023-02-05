@@ -7,7 +7,7 @@
             -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
-        <target>رهگیری زمان</target>
+        <target state="translated">ردیابی زمان</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>این داده به خوبی پاک خواهد شد! متناوبا، از سوی دیگر شما میتوانید یک ورودی را انتخاب نمایید که تمام داده ها به آن ترجمه شوند:</target>
+        <target state="translated">این داده ها نیز حذف خواهند شد! از طرف دیگر، می توانید یک ورودی را انتخاب کنید که تمام داده ها به آن منتقل شوند:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -75,11 +75,11 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>فایلی هنوز تنظیم نشده است.</target>
+        <target state="translated">هیچ قیمتی تنظیم نشده است</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target>هزینه ها</target>
+        <target state="translated">قیمت ها</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
@@ -110,11 +110,11 @@
       </trans-unit>
       <trans-unit id="aq59Sk8" resname="api_token_repeat">
         <source>api_token_repeat</source>
-        <target>ریست پسورد API</target>
+        <target state="translated">تکرار پسورد API</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
-        <target>مجوز را گم کرده. به صفحه ورود انتقال دهد؟</target>
+        <target state="translated">مجوز از دست رفته است. تغییر مسیر برای ورود به سیستم؟</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -349,7 +349,7 @@
       </trans-unit>
       <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
-        <target>برنامه های زمانی</target>
+        <target state="translated">همیشه</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
@@ -404,8 +404,8 @@
         <target>رنگ</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>موقعیت "%dir%" وجود ندارد و قابل ساختن نیست.</target>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">دایرکتوری "%dir%" وجود ندارد و نمی تواند ایجاد شود.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
@@ -484,8 +484,8 @@
         <target>حذف جستجوی علاقه مندی</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>ایمیلی برای %email% شامل لینک فعالسازی ارسال شد. جهت فعال کردن حساب کاربری خود باید بر روی آن کلیک کنید.</target>
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">ایمیلی شامل لینک فعالسازی به %email% ارسال شد. جهت فعال کردن حساب کاربری خود باید بر روی آن کلیک کنید.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
@@ -1365,11 +1365,11 @@
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
-        <target state="needs-translation">No results found for "%input%"</target>
+        <target state="translated">هیچ نتیجه ای برای "%input%" یافت نشد</target>
       </trans-unit>
       <trans-unit id="biHjm0h" resname="select.add_new">
         <source>select.add_new</source>
-        <target state="needs-translation">ایجاد جدید با نام "%input%"</target>
+        <target state="translated">ایجاد نام جدید با  "%input%"</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
