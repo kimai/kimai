@@ -29,18 +29,20 @@ class ConfigurationRepository extends EntityRepository
     }
 
     /**
-     * @return Configuration[]
+     * @return array<string, string>
      */
     public function getConfigurations(): array
     {
-        $query = $this->createQueryBuilder('s')->getQuery();
+        $query = $this->createQueryBuilder('s')->select('s.name')->addSelect('s.value')->getQuery();
+        /** @var array<int, array<'name'|'value', string>> $result */
+        $result = $query->getArrayResult();
 
         $all = [];
-        foreach ($query->getResult() as $config) {
-            $all[$config->getName()] = $config;
+        foreach ($result as $row) {
+            $all[$row['name']] = $row['value'];
         }
 
-        return array_values($all);
+        return $all;
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model): void

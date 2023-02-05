@@ -18,7 +18,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 final class ConfigurationService implements ConfigLoaderInterface
 {
     /**
-     * @var array<string, Configuration>
+     * @var array<string, string|null>
      */
     private static array $cacheAll = [];
     private static bool $initialized = false;
@@ -28,7 +28,7 @@ final class ConfigurationService implements ConfigLoaderInterface
     }
 
     /**
-     * @return Configuration[]
+     * @return array<string, string|null>
      */
     public function getConfigurations(): array
     {
@@ -49,13 +49,7 @@ final class ConfigurationService implements ConfigLoaderInterface
 
     public function getConfiguration(string $name): ?Configuration
     {
-        $all = $this->getConfigurations();
-
-        if (!\array_key_exists($name, $all)) {
-            return null;
-        }
-
-        return $all[$name];
+        return $this->configurationRepository->findOneBy(['name' => $name]);
     }
 
     public function clearCache(): void
