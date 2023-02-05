@@ -916,33 +916,13 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Offset \\(int\\|string\\) might not exist on array\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Parameter \\#1 \\$array of function array_filter expects array, array\\|null given\\.$#"
-            count: 2
-            path: src/Configuration/SystemConfiguration.php
-
-        -
             message: "#^Parameter \\#1 \\$key of method App\\\\Configuration\\\\SystemConfiguration\\:\\:set\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method App\\\\Configuration\\\\SystemConfiguration\\:\\:set\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
         -
             message: "#^Parameter \\#1 \\$string of function trim expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, array\\|null given\\.$#"
-            count: 3
             path: src/Configuration/SystemConfiguration.php
 
         -
@@ -1613,11 +1593,6 @@ parameters:
         -
             message: "#^Cannot call method setEnabled\\(\\) on App\\\\Form\\\\Model\\\\Configuration\\|null\\.$#"
             count: 3
-            path: src/Controller/SystemConfigurationController.php
-
-        -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Repository\\\\ConfigurationRepository\\:\\:saveSystemConfiguration\\(\\) expects App\\\\Form\\\\Model\\\\SystemConfiguration, mixed given\\.$#"
-            count: 1
             path: src/Controller/SystemConfigurationController.php
 
         -
@@ -6359,11 +6334,6 @@ parameters:
             message: "#^Property App\\\\Repository\\\\BookmarkRepository\\:\\:\\$userCache type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ConfigurationRepository\\:\\:saveSystemConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ConfigurationRepository.php
 
         -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"

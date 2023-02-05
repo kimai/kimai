@@ -10,11 +10,9 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Activity;
-use App\Entity\Configuration;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Repository\ConfigurationRepository;
 use App\Repository\TagRepository;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\TagFixtures;
@@ -442,12 +440,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
 
-        /** @var ConfigurationRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(Configuration::class);
-        $config = new Configuration();
-        $config->setName('timesheet.rules.allow_overbooking_budget');
-        $config->setValue(false);
-        $repository->saveConfiguration($config);
+        $this->setSystemConfiguration('timesheet.rules.allow_overbooking_budget', false);
 
         $this->assertHasValidationError(
             $client,
@@ -496,12 +489,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
 
-        /** @var ConfigurationRepository $repository */
-        $repository = $this->getEntityManager()->getRepository(Configuration::class);
-        $config = new Configuration();
-        $config->setName('timesheet.rules.allow_zero_duration');
-        $config->setValue(false);
-        $repository->saveConfiguration($config);
+        $this->setSystemConfiguration('timesheet.rules.allow_zero_duration', false);
 
         $this->assertHasValidationError(
             $client,
