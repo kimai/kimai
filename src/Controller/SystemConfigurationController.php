@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\ConfigurationService;
 use App\Configuration\SystemConfiguration;
 use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
@@ -30,7 +31,6 @@ use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
-use App\Repository\ConfigurationRepository;
 use App\Timesheet\LockdownService;
 use App\Utils\PageSetup;
 use App\Validator\Constraints\ColorChoices;
@@ -61,7 +61,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 #[IsGranted('system_configuration')]
 final class SystemConfigurationController extends AbstractController
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration, private LockdownService $lockdownService)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationService $repository, private SystemConfiguration $systemConfiguration, private LockdownService $lockdownService)
     {
     }
 
@@ -142,7 +142,9 @@ final class SystemConfigurationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->repository->saveSystemConfiguration($form->getData());
+                /** @var SystemConfigurationModel $saveModel */
+                $saveModel = $form->getData();
+                $this->repository->saveSystemConfiguration($saveModel);
                 $this->flashSuccess('action.update.success');
             } catch (\Exception $ex) {
                 $this->handleFormUpdateException($ex, $form);

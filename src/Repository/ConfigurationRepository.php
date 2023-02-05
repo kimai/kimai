@@ -9,7 +9,6 @@
 
 namespace App\Repository;
 
-use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
@@ -17,50 +16,16 @@ use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends EntityRepository<Configuration>
+ * @internal use App\Configuration\ConfigurationService instead
  * @final
  */
-class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
+class ConfigurationRepository extends EntityRepository
 {
-    private const CACHE_KEY = 'ConfigurationRepository_All';
-    /**
-     * @var array<string, Configuration>
-     */
-    private static array $cacheAll = [];
-    private static bool $initialized = false;
-
-    public function clearCache(): void
-    {
-        self::$cacheAll = [];
-        self::$initialized = false;
-
-        $cache = $this->getEntityManager()->getConfiguration()->getResultCache();
-        if ($cache !== null && $cache->hasItem(self::CACHE_KEY)) {
-            $cache->deleteItem(self::CACHE_KEY);
-        }
-    }
-
-    private function prefillCache(): void
-    {
-        if (self::$initialized === true) {
-            return;
-        }
-
-        $query = $this->createQueryBuilder('s')->getQuery();
-        $query->enableResultCache(86400, self::CACHE_KEY);
-
-        $configs = $query->getResult();
-        foreach ($configs as $config) {
-            self::$cacheAll[$config->getName()] = $config;
-        }
-        self::$initialized = true;
-    }
-
     public function saveConfiguration(Configuration $configuration): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($configuration);
         $entityManager->flush();
-        $this->clearCache();
     }
 
     /**
@@ -68,23 +33,17 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
      */
     public function getConfigurations(): array
     {
-        $this->prefillCache();
+        $query = $this->createQueryBuilder('s')->getQuery();
 
-        return array_values(self::$cacheAll);
-    }
-
-    public function getConfiguration(string $name): ?Configuration
-    {
-        $this->prefillCache();
-
-        if (!\array_key_exists($name, self::$cacheAll)) {
-            return null;
+        $all = [];
+        foreach ($query->getResult() as $config) {
+            $all[$config->getName()] = $config;
         }
 
-        return self::$cacheAll[$name];
+        return array_values($all);
     }
 
-    public function saveSystemConfiguration(SystemConfiguration $model)
+    public function saveSystemConfiguration(SystemConfiguration $model): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -120,7 +79,5 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             $em->rollback();
             throw $ex;
         }
-
-        $this->clearCache();
     }
 }

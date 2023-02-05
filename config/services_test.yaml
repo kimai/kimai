@@ -7,12 +7,7 @@ services:
         public: true
 
     App\Configuration\SystemConfiguration:
-        arguments: ['@App\Repository\ConfigurationRepository', "%kimai.config%"]
-
-    App\Repository\ConfigurationRepository:
-        class:     Doctrine\ORM\EntityRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
-        arguments: ['App\Entity\Configuration']
+        arguments: ['@App\Configuration\ConfigurationService', "%kimai.config%"]
 
     # required for the importer command test
     App\Repository\UserRepository:

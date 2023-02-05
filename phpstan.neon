@@ -1616,11 +1616,6 @@ parameters:
             path: src/Controller/SystemConfigurationController.php
 
         -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Repository\\\\ConfigurationRepository\\:\\:saveSystemConfiguration\\(\\) expects App\\\\Form\\\\Model\\\\SystemConfiguration, mixed given\\.$#"
-            count: 1
-            path: src/Controller/SystemConfigurationController.php
-
-        -
             message: "#^Parameter \\#1 \\$value of method App\\\\Form\\\\Model\\\\Configuration\\:\\:setValue\\(\\) expects bool\\|int\\|object\\|string\\|null, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Controller/SystemConfigurationController.php
@@ -6359,11 +6354,6 @@ parameters:
             message: "#^Property App\\\\Repository\\\\BookmarkRepository\\:\\:\\$userCache type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ConfigurationRepository\\:\\:saveSystemConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ConfigurationRepository.php
 
         -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"

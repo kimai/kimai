@@ -2868,11 +2868,6 @@ parameters:
             path: Controller/CalendarControllerTest.php
 
         -
-            message: "#^Cannot call method findOneBy\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
@@ -2884,11 +2879,6 @@ parameters:
 
         -
             message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Cannot call method saveConfiguration\\(\\) on object\\|null\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
 
