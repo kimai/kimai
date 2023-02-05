@@ -227,7 +227,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @return array<array<string, array<mixed>|bool>>
+     * @return array<string, array<mixed>|bool>
      */
     public function getSamlConnection(): array
     {
