@@ -278,6 +278,30 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Visning av kalenderradernas rubriker</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Kundnummer Format</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Tillåt dubblettkontonummer</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">Tillåten ersättare: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Kopierar data vid tillägg via dra och släpp</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Tillåt skapande av aktiviteter i tidsspårningsform</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Ta över team från den inloggade användaren när du skapar nya poster</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
