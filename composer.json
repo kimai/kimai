@@ -60,6 +60,7 @@
         "symfony/intl": "^6.0",
         "symfony/mailer": "^6.0",
         "symfony/monolog-bundle": "^3.4",
+        "symfony/rate-limiter": "^6.0",
         "symfony/runtime": "^6.0",
         "symfony/security-bundle": "^6.0",
         "symfony/security-csrf": "^6.0",
