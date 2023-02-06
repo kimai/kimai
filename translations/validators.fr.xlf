@@ -86,6 +86,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Désolé, le solde est épuisé.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Un problème s'est produit lors de l'enregistrement.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">La valeur indiquée ne correspond pas à un format jour-heure valide.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Le code fourni n'est pas le bon jeton TOTP.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Ce n'est pas un nom valide pour un rôle utilisateur.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Vous avez un enregistrement de temps actif qui ne peut être arrêté automatiquement.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

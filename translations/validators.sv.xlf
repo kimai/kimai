@@ -86,6 +86,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Tyvärr, budgeten är förbrukad.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Det uppstod ett problem när du skulle spara.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Du har en aktiv tidsregistrering som inte kan stoppas automatiskt.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Det angivna värdet är inte ett giltigt format för dagtid.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Den givna koden är inte rätt TOTP-token.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Detta är inte ett giltigt namn för en användarroll.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1380,7 +1380,7 @@
       </trans-unit>
       <trans-unit id="WbT2QLP" resname="extended_settings">
         <source>extended_settings</source>
-        <target state="translated">Paramètres avancer</target>
+        <target state="translated">Paramètres avancés</target>
       </trans-unit>
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
