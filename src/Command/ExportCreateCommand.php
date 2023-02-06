@@ -76,7 +76,7 @@ class ExportCreateCommand extends Command
             ->addOption('customer', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Customer IDs to filter', null)
             ->addOption('project', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Project IDs to filter', null)
             ->addOption('team', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Team IDs to filter', null)
-            ->addOption('user', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'User IDs to filter', null)
+            ->addOption('user', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'User IDs to filter ("username" needs to be in the same Team)', null)
             ->addOption('set-exported', null, InputOption::VALUE_NONE, 'Whether the included items should be marked as exported (default: false)')
             ->addOption('template', null, InputOption::VALUE_REQUIRED, 'Export template', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for export entries. By default only "not exported" items are fetched (possible values: exported, all)', null)
