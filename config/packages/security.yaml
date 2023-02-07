@@ -61,6 +61,10 @@ security:
                 path: logout
                 target: homepage
 
+            login_throttling:
+                max_attempts: 5
+                interval: '5 minutes'
+
     access_decision_manager:
         strategy: unanimous
         allow_if_all_abstain: false
