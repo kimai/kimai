@@ -435,6 +435,9 @@ class ConfigurationTest extends TestCase
                     'allow_duplicate_number' => false,
                 ],
             ],
+            'features' => [
+                'user_registration' => false,
+            ],
         ];
 
         $this->assertConfig($this->getMinConfig(), $fullDefaultConfig);
