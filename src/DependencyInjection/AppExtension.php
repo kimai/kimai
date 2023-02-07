@@ -73,12 +73,11 @@ final class AppExtension extends Extension
         if ($container->hasParameter('kimai.bundles.config')) {
             $bundleConfig = $container->getParameter('kimai.bundles.config');
             if (!\is_array($bundleConfig)) {
-                trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
+                throw new \Exception('Invalid bundle configuration found, skipping all bundle configuration');
             } else {
                 foreach ($bundleConfig as $key => $value) {
                     if (\array_key_exists($key, $config)) {
-                        trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
-                        continue;
+                        throw new \Exception(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
                     }
                     $config[$key] = $value;
                 }
