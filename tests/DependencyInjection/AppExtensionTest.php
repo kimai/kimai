@@ -254,7 +254,7 @@ class AppExtensionTest extends TestCase
 
     public function testWithBundleConfigurationFailsOnDuplicatedKey(): void
     {
-        $this->expectNotice();
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid bundle configuration "timesheet" found, skipping');
 
         $bundleConfig = [
@@ -268,7 +268,7 @@ class AppExtensionTest extends TestCase
 
     public function testWithBundleConfigurationFailsOnNonArray(): void
     {
-        $this->expectNotice();
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid bundle configuration found, skipping all bundle configuration');
 
         $container = $this->getContainer();
