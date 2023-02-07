@@ -55,10 +55,30 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
                 ->append($this->getProjectNode())
+                ->append($this->getFeaturesNode())
             ->end()
         ->end();
 
         return $treeBuilder;
+    }
+
+    private function getFeaturesNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('features');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+                ->children()
+                    // this feature was deactivated in order to deprecate/remove it in the future, very likely not necessary for anyone
+                    ->integerNode('user_registration')
+                ->defaultFalse()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     private function getQuickEntryNode(): ArrayNodeDefinition

@@ -69,19 +69,16 @@ final class AppExtension extends Extension
         }
 
         // this should happen always at the end, so bundles do not mess with the base configuration
-        /* @phpstan-ignore-next-line */
-        if ($container->hasParameter('kimai.bundles.config')) {
+        if ($container->hasParameter('kimai.bundles.config')) {  // @phpstan-ignore-line
             $bundleConfig = $container->getParameter('kimai.bundles.config');
             if (!\is_array($bundleConfig)) {
-                trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
-            } else {
-                foreach ($bundleConfig as $key => $value) {
-                    if (\array_key_exists($key, $config)) {
-                        trigger_error(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
-                        continue;
-                    }
-                    $config[$key] = $value;
+                throw new \Exception('Invalid bundle configuration found, skipping all bundle configuration');
+            }
+            foreach ($bundleConfig as $key => $value) {
+                if (\array_key_exists($key, $config)) {
+                    throw new \Exception(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
                 }
+                $config[$key] = $value;
             }
         }
 

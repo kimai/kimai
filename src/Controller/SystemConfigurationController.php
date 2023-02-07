@@ -278,13 +278,18 @@ final class SystemConfigurationController extends AbstractController
                     ->setType(IntegerType::class),
             ]);
 
+        $allowRegistration = $this->systemConfiguration->find('features.user_registration');
+        if ($allowRegistration === false) {
+            $authentication->getConfigurationByName('user.registration')?->setEnabled(false);
+        }
+
         if (!$this->systemConfiguration->isSamlActive()) {
-            $authentication->getConfigurationByName('user.login')->setEnabled(false);
+            $authentication->getConfigurationByName('user.login')?->setEnabled(false);
         }
 
         if (!$this->systemConfiguration->isPasswordResetActive()) {
-            $authentication->getConfigurationByName('user.password_reset_retry_ttl')->setEnabled(false);
-            $authentication->getConfigurationByName('user.password_reset_token_ttl')->setEnabled(false);
+            $authentication->getConfigurationByName('user.password_reset_retry_ttl')?->setEnabled(false);
+            $authentication->getConfigurationByName('user.password_reset_token_ttl')?->setEnabled(false);
         }
 
         return [

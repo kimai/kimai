@@ -1591,11 +1591,6 @@ parameters:
             path: src/Controller/Security/SelfRegistrationController.php
 
         -
-            message: "#^Cannot call method setEnabled\\(\\) on App\\\\Form\\\\Model\\\\Configuration\\|null\\.$#"
-            count: 3
-            path: src/Controller/SystemConfigurationController.php
-
-        -
             message: "#^Parameter \\#1 \\$value of method App\\\\Form\\\\Model\\\\Configuration\\:\\:setValue\\(\\) expects bool\\|int\\|object\\|string\\|null, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Controller/SystemConfigurationController.php
