@@ -67,9 +67,8 @@ For questions/support, start a [discussion](https://github.com/kimai/kimai/discu
 
 For those who want to contribute, but are unsure how to get started:
 - Spread the word.
-- Answer questions.
-- Something can be done better? An essential feature is missing? Create a feature request.
-- Improve the documentation.
+- Answer [questions/issues](https://github.com/kimai/kimai/issues).
+- Improve the documentation (fork, make edits, commit, merge).
 - Sponsor the project.
 
 ## Code of Conduct
