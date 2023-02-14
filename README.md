@@ -13,73 +13,91 @@
 <h1 align="center">Kimai - time-tracker</h1>
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
-It is built with modern technologies such as [Symfony](https://github.com/symfony/symfony), [Bootstrap](https://github.com/twbs/bootstrap), 
-[JSON API](https://github.com/FriendsOfSymfony/FOSRestBundle), [Doctrine](https://github.com/doctrine/),
-[Tabler](https://github.com/kevinpapst/TablerBundle/), ES6 and [many](composer.json) [more](package.json).
 
-## Introduction
-
-- [Home](https://www.kimai.org) - Kimai project homepage
-- [Blog](https://www.kimai.org/blog/) - Read the latest news
-- [Documentation](https://www.kimai.org/documentation/) - Learn how to use Kimai
-- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai is translated at Weblate
+Built with:
+- [Symfony](https://github.com/symfony/symfony)
+- [Bootstrap](https://github.com/twbs/bootstrap)
+- [Doctrine](https://github.com/doctrine/)
+- [Tabler](https://github.com/kevinpapst/TablerBundle/)
+- ES6 and [many](composer.json) [more](package.json)
 
 ### Requirements
 
-- PHP 8.1 minimum
-- MariaDB or MySQL
-- A webserver and subdomain (subdirectory does not work)
-- PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
+Please reference our [project homepage](https://www.kimai.org/) for installation requirements.
 
 ### About
 
-Kimai is a professional grade time-tracking application, build to track your project times.
-It ships with many advanced features, including but not limited to: 
+Kimai helps you track your time as well as several others things.
 
-JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user - multi-timezones - multi-language, 
-authentication via SAML/LDAP/Database, support for 2FA with TOTP, customizable role and team permissions, responsive and ready for your mobile device, 
-user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for plugins 
-and so many more.
+For a full list of features please reference documentation under our [project homepage](https://www.kimai.org/).
 
 ## Installation
 
-- [Recommended setup](https://www.kimai.org/documentation/installation.html#recommended-setup) - with Git and Composer
-- [Docker](https://www.kimai.org/documentation/docker.html) - containerized
-- [Development](https://www.kimai.org/documentation/installation.html#development-installation) - on your local machine 
-- [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) - hosted environments 
+There are several ways you can install Kimai.
+
+Please reference our [project homepage](https://www.kimai.org/) for installation instructions.
+
+## Code Snippet
+
+Here's an example of running Kimai server-side:
+- mixing search terms to utilize multiple meta-field queries:
+`location:homeoffice hello`
+- find all items whose `expired` checkbox is `off`:
+`expired: 0`
 
 ### Updating Kimai
 
-- [Update Kimai](https://www.kimai.org/documentation/updates.html) - get the latest version
-- [UPGRADING guide](UPGRADING.md) - version specific steps
+Please reference our [project homepage](https://www.kimai.org/) for documented instructions on updating Kimai to latest version. For version-specific steps, please see the [UPGRADING guide](UPGRADING.md).
 
 ### Plugins
 
-- [Plugin marketplace](https://www.kimai.org/store/) - find existing plugins here
-- [Developer documentation](https://www.kimai.org/documentation/developers.html) - how to create a plugin
+Please reference our [project homepage](https://www.kimai.org/) for access to our plugin marketplace and developer documentation.
 
 ## Roadmap and releases
 
-You can see a rough development roadmap in the [Milestones](https://github.com/kimai/kimai/milestones) sections.
-It is open for changes and input from the community, your [ideas and questions](https://github.com/kimai/kimai/issues) are welcome.
+You can see a rough development roadmap in the Milestones section of our [project homepage](https://www.kimai.org/).
 
-Release versions will be created on a regular basis, every couple of weeks latest.
-Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
+It is open for changes and input from the community, your ideas/questions are welcome (see Contributing below).
 
-For the time being and until 2.0 landed everywhere, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive bug fixes. 
+Release versions are created on a regular basis.
+
+All code changes will be made to the `main` branch.
+
+The [1.x branch](https://github.com/kimai/kimai/tree/1.x) will continue to receive bug fixes until complete 2.0 adoption.
+
+## FAQ
+
+Help! I really want to use Kimai but don't know how to get started with _self-hosting_.
+> Not to worry, self-hosting can be a bit daunting at first. While our [project homepage](https://www.kimai.org/) contains documentation regarding the self-hosted aspect of Kimai, below are a few helpful resources for beginners:
+- https://blog.prutser.net/2021/01/20/how-to-securely-self-host-a-website-or-web-app/
+- https://www.windowscentral.com/self-hosting-2021
+- https://fuzzytek.ml/tutorials/selfhostingguide/
+
+Please see our [project homepage](https://www.kimai.org/) for extended documentation/FAQ. 
 
 ## Contributing
 
-You want to contribute to this repository? This is so great!
-The best way to start is to [open a new issue](https://github.com/kimai/kimai/issues) for bugs or feature requests or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
+Thank you for your interest in contributing, it is greatly appreciated!
 
-In case you want to contribute, but you wouldn't know how, here are some suggestions:
+### Dev Practices
 
-- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit or any of your favorite social media platforms. Every bit helps!
-- Answer questions: You know the answer to another user's problem? Share your knowledge.
-- Something can be done better? An essential feature is missing? Create a feature request.
-- Report bugs makes Kimai better for everyone.
-- You don't have to be programmer, the documentation and translation could always use some attention.
-- Sponsor the project: free software costs money to create!
+We follow a few development/design practices:
+- [agile](https://en.m.wikipedia.org/wiki/Agile_software_development)
+- [extreme programming](https://en.m.wikipedia.org/wiki/Extreme_programming_practices)
+- [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development)
+- [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration)
+- [K.I.S.S. - Keep It Simple Stupid](https://en.wikipedia.org/wiki/KISS_principle)
 
-There is one simple rule in our "Code of conduct": Don't be an ass!
+[Open a new issue](https://github.com/kimai/kimai/issues) for bug/feature requests.
+
+For questions/support, start a [discussion](https://github.com/kimai/kimai/discussions).
+
+For those who want to contribute, but are unsure how to get started:
+- spread the word
+- answer [questions/issues](https://github.com/kimai/kimai/issues)
+- improve the documentation (fork, make edits, commit, merge)
+- sponsor the project
+
+## Code of Conduct
+
+Please see the [Contributor Covenant](https://www.contributor-covenant.org/).
