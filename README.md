@@ -29,17 +29,17 @@ Please reference our [project homepage](https://www.kimai.org/) for installation
 
 Kimai helps you track your time as well as several others things.
 
-For further questions, please reference our [project homepage]([url](https://www.kimai.org/)).
+For further questions, please reference our [project homepage](https://www.kimai.org/).
 
 ## Installation
 
 There are several ways you can install Kimai.
 
-Please reference our [project homepage]([url](https://www.kimai.org/)) for installation instructions.
+Please reference our [project homepage](https://www.kimai.org/) for installation instructions.
 
 ### Updating Kimai
 
-Please reference our [project homepage]([url](https://www.kimai.org/)) for documented instructions on updating Kimai to latest version. For version-specific steps, please see the [UPGRADING guide](UPGRADING.md).
+Please reference our [project homepage](https://www.kimai.org/) for documented instructions on updating Kimai to latest version. For version-specific steps, please see the [UPGRADING guide](UPGRADING.md).
 
 ### Plugins
 
