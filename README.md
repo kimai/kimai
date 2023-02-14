@@ -37,6 +37,14 @@ There are several ways you can install Kimai.
 
 Please reference our [project homepage](https://www.kimai.org/) for installation instructions.
 
+## Code Snippet
+
+Here's an example of running Kimai server-side:
+- mixing search terms to utilize multiple meta-field queries:
+`location:homeoffice hello`
+- find all items whose `expired` checkbox is `off`:
+`expired: 0`
+
 ### Updating Kimai
 
 Please reference our [project homepage](https://www.kimai.org/) for documented instructions on updating Kimai to latest version. For version-specific steps, please see the [UPGRADING guide](UPGRADING.md).
@@ -70,6 +78,15 @@ Please see our [project homepage](https://www.kimai.org/) for extended documenta
 ## Contributing
 
 Thank you for your interest in contributing, it is greatly appreciated!
+
+### Dev Practices
+
+We follow a few development/design practices:
+- [agile](https://en.m.wikipedia.org/wiki/Agile_software_development)
+- [extreme programming](https://en.m.wikipedia.org/wiki/Extreme_programming_practices)
+- [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development)
+- [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration)
+- [K.I.S.S. - Keep It Simple Stupid](https://en.wikipedia.org/wiki/KISS_principle)
 
 [Open a new issue](https://github.com/kimai/kimai/issues) for bug/feature requests.
 
