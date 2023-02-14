@@ -13,6 +13,7 @@
 <h1 align="center">Kimai - time-tracker</h1>
 
 Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
+
 Built with:
 - [Symfony](https://github.com/symfony/symfony)
 - [Bootstrap](https://github.com/twbs/bootstrap)
@@ -22,7 +23,7 @@ Built with:
 
 ### Requirements
 
-Please reference our [project homepage]([url](https://www.kimai.org/)) for installation requirements.
+Please reference our [project homepage](https://www.kimai.org/) for installation requirements.
 
 ### About
 
@@ -31,7 +32,9 @@ Kimai helps you track your time as well as several others things.
 For further questions, please reference our [project homepage]([url](https://www.kimai.org/)).
 
 ## Installation
+
 There are several ways you can install Kimai.
+
 Please reference our [project homepage]([url](https://www.kimai.org/)) for installation instructions.
 
 ### Updating Kimai
@@ -40,14 +43,16 @@ Please reference our [project homepage]([url](https://www.kimai.org/)) for docum
 
 ### Plugins
 
-Please reference our [project homepage]([url](https://www.kimai.org/)) for access to our plugin marketplace and developer documentation.
+Please reference our [project homepage](https://www.kimai.org/) for access to our plugin marketplace and developer documentation.
 
 ## Roadmap and releases
 
-You can see a rough development roadmap in the Milestones section of our [project homepage]([url](https://www.kimai.org/)).
+You can see a rough development roadmap in the Milestones section of our [project homepage](https://www.kimai.org/).
+
 It is open for changes and input from the community, your ideas/questions are welcome (see Contributing below).
 
 Release versions are created on a regular basis.
+
 All code changes will be made to the `main` branch.
 
 The [1.x branch](https://github.com/kimai/kimai/tree/1.x) will continue to receive bug fixes until complete 2.0 adoption.
@@ -55,11 +60,12 @@ The [1.x branch](https://github.com/kimai/kimai/tree/1.x) will continue to recei
 ## Contributing
 
 Thank you for your interest in contributing, it is greatly appreciated!
+
 [Open a new issue](https://github.com/kimai/kimai/issues) for bug/feature requests.
+
 For questions/support, start a [discussion](https://github.com/kimai/kimai/discussions).
 
 For those who want to contribute, but are unsure how to get started:
-
 - Spread the word.
 - Answer questions.
 - Something can be done better? An essential feature is missing? Create a feature request.
@@ -68,4 +74,4 @@ For those who want to contribute, but are unsure how to get started:
 
 ## Code of Conduct
 
-Please see the [Contributor Covenant]([url](https://www.contributor-covenant.org/)).
+Please see the [Contributor Covenant](https://www.contributor-covenant.org/).
