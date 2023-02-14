@@ -29,7 +29,7 @@ Please reference our [project homepage](https://www.kimai.org/) for installation
 
 Kimai helps you track your time as well as several others things.
 
-For a full list of features, please reference our [project homepage](https://www.kimai.org/).
+For a full list of features please reference documentation under our [project homepage](https://www.kimai.org/).
 
 ## Installation
 
@@ -56,6 +56,16 @@ Release versions are created on a regular basis.
 All code changes will be made to the `main` branch.
 
 The [1.x branch](https://github.com/kimai/kimai/tree/1.x) will continue to receive bug fixes until complete 2.0 adoption.
+
+## FAQ
+
+Help! I really want to use Kimai but don't know how to get started with _self-hosting_.
+> Not to worry, self-hosting can be a bit daunting at first. While our [project homepage](https://www.kimai.org/) contains documentation regarding the self-hosted aspect of Kimai, below are a few helpful resources for beginners:
+- https://blog.prutser.net/2021/01/20/how-to-securely-self-host-a-website-or-web-app/
+- https://www.windowscentral.com/self-hosting-2021
+- https://fuzzytek.ml/tutorials/selfhostingguide/
+
+Please see our [project homepage](https://www.kimai.org/) for extended documentation/FAQ. 
 
 ## Contributing
 
