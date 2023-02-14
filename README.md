@@ -29,7 +29,7 @@ Please reference our [project homepage](https://www.kimai.org/) for installation
 
 Kimai helps you track your time as well as several others things.
 
-For further questions, please reference our [project homepage](https://www.kimai.org/).
+For a full list of features, please reference our [project homepage](https://www.kimai.org/).
 
 ## Installation
 
