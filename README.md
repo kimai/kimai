@@ -93,10 +93,10 @@ We follow a few development/design practices:
 For questions/support, start a [discussion](https://github.com/kimai/kimai/discussions).
 
 For those who want to contribute, but are unsure how to get started:
-- Spread the word.
-- Answer [questions/issues](https://github.com/kimai/kimai/issues).
-- Improve the documentation (fork, make edits, commit, merge).
-- Sponsor the project.
+- spread the word
+- answer [questions/issues](https://github.com/kimai/kimai/issues)
+- improve the documentation (fork, make edits, commit, merge)
+- sponsor the project
 
 ## Code of Conduct
 
