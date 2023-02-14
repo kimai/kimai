@@ -12,51 +12,57 @@
 
 <h1 align="center">Kimai - time-tracker</h1>
 
-Kimai is a free, open source and online time-tracking software designed for small businesses and freelancers. 
-It is built with modern technologies such as [Symfony](https://github.com/symfony/symfony), [Bootstrap](https://github.com/twbs/bootstrap), 
-[JSON API](https://github.com/FriendsOfSymfony/FOSRestBundle), [Doctrine](https://github.com/doctrine/),
-[Tabler](https://github.com/kevinpapst/TablerBundle/), ES6 and [many](composer.json) [more](package.json).
+Kimai is a professional grade time-tracking application, free and open-source. 
+It handles use-cases of freelancers as well as companies with dozens or hundreds of users. 
+Kimai was build to track your project times and ships with many advanced features, including but not limited to:
 
-## Introduction
+JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user - multi-timezones - multi-language ([over 30 translations existing](https://hosted.weblate.org/projects/kimai/)!),
+authentication via SAML/LDAP/Database, two-factor authentication (2FA) with TOTP, customizable role and team permissions, responsive design,
+user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for [plugins](https://www.kimai.org/store/)
+and so much more.
 
-- [Home](https://www.kimai.org) - Kimai project homepage
-- [Blog](https://www.kimai.org/blog/) - Read the latest news
-- [Documentation](https://www.kimai.org/documentation/) - Learn how to use Kimai
-- [Translations](https://hosted.weblate.org/projects/kimai/#languages) - Kimai is translated at Weblate
+### Versions
+
+There are two versions of Kimai existing:
+
+- [Version 1](https://github.com/kimai/kimai/tree/1.x) — compatible with PHP 7.4, which is in maintenance mode since 2023 
+- [Version 2](https://github.com/kimai/kimai) — stable and "almost released" (waiting for some major plugins, which are not yet migrated) 
+
+### Links
+
+- [Home](https://www.kimai.org) — Kimai project homepage
+- [Blog](https://www.kimai.org/blog/) — Read the latest news
+- [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
 
 ### Requirements
 
 - PHP 8.1 minimum
 - MariaDB or MySQL
-- A webserver and subdomain (subdirectory does not work)
-- PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
-
-### About
-
-Kimai is a professional grade time-tracking application, build to track your project times.
-It ships with many advanced features, including but not limited to: 
-
-JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user - multi-timezones - multi-language, 
-authentication via SAML/LDAP/Database, support for 2FA with TOTP, customizable role and team permissions, responsive and ready for your mobile device, 
-user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for plugins 
-and so many more.
+- A webserver and subdomain (subdirectory is not supported)
+- PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
 
 ## Installation
 
-- [Recommended setup](https://www.kimai.org/documentation/installation.html#recommended-setup) - with Git and Composer
-- [Docker](https://www.kimai.org/documentation/docker.html) - containerized
-- [Development](https://www.kimai.org/documentation/installation.html#development-installation) - on your local machine 
-- [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) - hosted environments 
+- [Recommended setup](https://www.kimai.org/documentation/installation.html#recommended-setup) — with Git and Composer
+- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by [@tobybatch](https://github.com/tobybatch/kimai2)
+
+There are also documentations for:
+- [developer setups](https://www.kimai.org/documentation/developers.html) — on your local machine
+- [shared hostings](https://www.kimai.org/documentation/installation.html#shared-hosting) — the least favorable option
+- [Synology](https://www.kimai.org/documentation/synology.html) — you could try to host the Docker version instead 
+- [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) — hosted environments 
+
+And if you don't want to host Kimai, you can use [the Cloud version](https://www.kimai.cloud/) of it.
 
 ### Updating Kimai
 
-- [Update Kimai](https://www.kimai.org/documentation/updates.html) - get the latest version
-- [UPGRADING guide](UPGRADING.md) - version specific steps
+- [Update Kimai](https://www.kimai.org/documentation/updates.html) — get the latest version
+- [UPGRADING guide](UPGRADING.md) — version specific steps
 
 ### Plugins
 
-- [Plugin marketplace](https://www.kimai.org/store/) - find existing plugins here
-- [Developer documentation](https://www.kimai.org/documentation/developers.html) - how to create a plugin
+- [Plugin marketplace](https://www.kimai.org/store/) — find existing plugins here
+- [Developer documentation](https://www.kimai.org/documentation/developers.html) — how to create a plugin
 
 ## Roadmap and releases
 
@@ -66,7 +72,7 @@ It is open for changes and input from the community, your [ideas and questions](
 Release versions will be created on a regular basis, every couple of weeks latest.
 Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
 
-For the time being and until 2.0 landed everywhere, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive bug fixes. 
+For the time being and until 2.0 is widely adopted, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive bug fixes. 
 
 ## Contributing
 
@@ -75,7 +81,7 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
-- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit or any of your favorite social media platforms. Every bit helps!
+- Spread the word: More user means more people testing and contributing to Kimai, which in turn means better stability and more and better features. Please vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit or any of your favorite social media platforms. Every bit helps!
 - Answer questions: You know the answer to another user's problem? Share your knowledge.
 - Something can be done better? An essential feature is missing? Create a feature request.
 - Report bugs makes Kimai better for everyone.
@@ -83,3 +89,11 @@ In case you want to contribute, but you wouldn't know how, here are some suggest
 - Sponsor the project: free software costs money to create!
 
 There is one simple rule in our "Code of conduct": Don't be an ass!
+
+### Credits
+
+Kimai is based on modern technologies and frameworks such as [PHP](https://www.php.net/),
+[Symfony](https://github.com/symfony/symfony) and [Doctrine](https://github.com/doctrine/),
+[Bootstrap](https://github.com/twbs/bootstrap) and [Tabler](https://tabler.io/),
+and [countless](composer.json) [others](package.json).
+
