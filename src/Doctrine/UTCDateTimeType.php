@@ -21,12 +21,13 @@ final class UTCDateTimeType extends DateTimeType
     private static ?\DateTimeZone $utc = null;
 
     /**
-     * @param mixed $value
+     * @param T $value
      * @param AbstractPlatform $platform
-     * @return mixed|string
+     * @return (T is null ? null : string)
+     * @template T<\DateTime>
      * @throws ConversionException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value instanceof \DateTime) {
             $value = clone $value;
