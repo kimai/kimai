@@ -95,14 +95,12 @@ class TeamFixtures extends Fixture
             $team->setName($faker->company . ' ' . $i);
             $team->addTeamlead($allUsers[array_rand($allUsers)]);
 
-            if ($userCount > 0) {
-                $userKeys = array_rand($allUsers, $userCount);
-                if (!\is_array($userKeys)) {
-                    $userKeys = [$userKeys];
-                }
-                foreach ($userKeys as $userKey) {
-                    $team->addUser($allUsers[$userKey]);
-                }
+            $userKeys = array_rand($allUsers, $userCount);
+            if (!\is_array($userKeys)) {
+                $userKeys = [$userKeys];
+            }
+            foreach ($userKeys as $userKey) {
+                $team->addUser($allUsers[$userKey]);
             }
 
             if ($projectCount > 0) {

@@ -437,10 +437,19 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     {
         // only auto calculate if manually set duration is null - the result is important for eg. validations
         if ($calculate && $this->duration === null && $this->begin !== null && $this->end !== null) {
-            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+            return $this->getCalculatedDuration();
         }
 
         return $this->duration;
+    }
+
+    public function getCalculatedDuration(): ?int
+    {
+        if ($this->begin !== null && $this->end !== null) {
+            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+        }
+
+        return null;
     }
 
     /**
