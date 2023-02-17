@@ -184,7 +184,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): Project
+    public function setCustomer(?Customer $customer): Project
     {
         $this->customer = $customer;
 
