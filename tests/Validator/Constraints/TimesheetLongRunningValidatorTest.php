@@ -77,10 +77,13 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 
     public function testLongRunningTriggersOverMaximum()
     {
+        $begin = new \DateTime();
+        $end = clone $begin;
+        $end->modify('+31536060 seconds');
+
         $timesheet = new Timesheet();
-        $timesheet->setBegin(new \DateTime());
-        $timesheet->setEnd(new \DateTime());
-        $timesheet->setDuration(31536060);
+        $timesheet->setBegin($begin);
+        $timesheet->setEnd($end);
 
         $this->validator->validate($timesheet, new TimesheetLongRunning());
 
