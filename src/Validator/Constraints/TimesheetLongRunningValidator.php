@@ -57,7 +57,7 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
             return;
         }
 
-        $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
+        $duration = $timesheet->getCalculatedDuration();
         // float on purpose, because one second more than the configured minutes is already too long
         $minutes = $duration / 60;
 

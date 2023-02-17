@@ -116,7 +116,7 @@ final class RoundingService
                 $rounder->roundEnd($record, $rounding['end']);
 
                 if ($record->getBegin() !== null) {
-                    $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
+                    $duration = $record->getCalculatedDuration();
                     $record->setDuration($duration);
 
                     $rounder->roundDuration($record, $rounding['duration']);

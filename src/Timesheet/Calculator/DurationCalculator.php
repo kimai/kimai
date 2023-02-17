@@ -28,7 +28,7 @@ final class DurationCalculator implements CalculatorInterface
             return;
         }
 
-        $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
+        $duration = $record->getCalculatedDuration();
         $record->setDuration($duration);
 
         $this->roundings->applyRoundings($record);
