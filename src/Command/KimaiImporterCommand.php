@@ -1579,7 +1579,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if (empty($oldRecord['end']) || $oldRecord['end'] === 0) {
+            if (empty($oldRecord['end'])) {
                 $io->error('Cannot import running timesheet record, skipping: ' . $oldRecord['timeEntryID']);
                 $failed++;
                 continue;
