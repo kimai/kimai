@@ -7136,11 +7136,6 @@ parameters:
             path: src/Security/SessionHandler.php
 
         -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Timesheet/Calculator/DurationCalculator.php
-
-        -
             message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Timesheet/DateTimeFactory.php
@@ -7279,11 +7274,6 @@ parameters:
             message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
 
         -
             message: "#^Method App\\\\Timesheet\\\\RoundingService\\:\\:__construct\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
@@ -7964,11 +7954,6 @@ parameters:
             message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
             count: 2
             path: src/Validator/Constraints/TimesheetLockdownValidator.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
             message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"

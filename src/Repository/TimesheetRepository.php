@@ -51,10 +51,10 @@ class TimesheetRepository extends EntityRepository
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
      *
-     * @param Timesheet $id
+     * @param int $id
      * @return array
      */
-    public function getRawData(Timesheet $id): array
+    public function getRawData(int $id): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb

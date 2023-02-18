@@ -1043,11 +1043,6 @@ parameters:
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Project\\:\\:setCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
-            count: 3
-            path: API/ProjectControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Team\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
             count: 1
             path: API/ProjectControllerTest.php
@@ -5184,46 +5179,6 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:getEntity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testBillable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testCategory\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testClone\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testMetaFields\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testTags\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testValueCanBeNull\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/TimesheetTest.php
 

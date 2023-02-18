@@ -58,7 +58,11 @@
                     <a href="{{ path('saml_login') }}" id="social-login-button" tabindex="50" class="btn btn-white w-50">
                         {% set provider = saml_config.getProvider() %}
                         {% if provider is not null %}
-                            <i class="icon fab fa-{{ provider}} text-{{ provider }}"></i>
+                            {% if 'fa-' in provider %}
+                                <i class="icon {{ provider }} text-{{ provider|replace({'fas ': '', 'far ': '', 'fab ': ''}) }}"></i>
+                            {% else %}
+                                <i class="icon fab fa-{{ provider }} text-{{ provider }}"></i>
+                            {% endif %}
                         {% endif %}
                         {{ saml_config.getTitle()|trans }}
                     </a>

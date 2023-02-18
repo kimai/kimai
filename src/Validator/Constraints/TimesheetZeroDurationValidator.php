@@ -45,7 +45,7 @@ final class TimesheetZeroDurationValidator extends ConstraintValidator
 
         $duration = 0;
         if ($timesheet->getEnd() !== null && $timesheet->getBegin() !== null) {
-            $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
+            $duration = $timesheet->getCalculatedDuration();
         }
 
         if ($duration <= 0) {

@@ -127,14 +127,16 @@ final class TimesheetService
             $this->repository->save($timesheet);
             $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
-            // TODO really stop always or only if $timesheet->getEnd() === null
-            try {
-                $this->stopActiveEntries($timesheet);
-            } catch (ValidationFailedException $vex) {
-                // could happen for timesheets that were started in the future (end before begin)
-                // or if you try to create a new timesheet while an old one is running for too long
-                throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
+            if ($timesheet->isRunning()) {
+                try {
+                    $this->stopActiveEntries($timesheet);
+                } catch (ValidationFailedException $vex) {
+                    // could happen for timesheets that were started in the future (end before begin)
+                    // or if you try to create a new timesheet while an old one is running for too long
+                    throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
+                }
             }
+
             $this->repository->commit();
         } catch (\Exception $ex) {
             $this->repository->rollback();

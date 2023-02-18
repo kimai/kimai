@@ -39,9 +39,12 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
             return;
         }
 
+        /** @var int $duration */
+        $duration = $timesheet->getCalculatedDuration();
+
         // one year is currently the maximum that can be logged (which is already not logically)
         // the database column could hold more data, but let's limit it here
-        if ($timesheet->getDuration() > 31536000) {
+        if ($duration > 31536000) {
             $this->context->buildViolation($constraint->maximumMessage)
                 ->setTranslationDomain('validators')
                 ->atPath('duration')
@@ -57,7 +60,6 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
             return;
         }
 
-        $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
         // float on purpose, because one second more than the configured minutes is already too long
         $minutes = $duration / 60;
 

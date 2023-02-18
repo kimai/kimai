@@ -21,6 +21,9 @@ framework:
     mailer:
         dsn: '%env(MAILER_URL)%'
 
+    validation:
+        email_validation_mode: html5
+
 when@dev:
     framework:
         mailer:

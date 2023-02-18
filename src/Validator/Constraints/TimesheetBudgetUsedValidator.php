@@ -73,10 +73,24 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return;
         }
 
+        $id = $timesheet->getId();
+
         // when changing the date via the calendar and/or the API, the duration will not be reset by the
         // duration calculator (which runs after validation!) so we manually reset the duration before
-        $timesheet->setDuration(null);
-        $duration = $timesheet->getDuration();
+
+        // ------------------------------------------------------------------------
+        // Old solution (buggy) - duration MAY NOT BE RESET!
+        // this will cause the timesheet to be deleted in the Weekly-QuickEntry-Flow
+        // ------------------------------------------------------------------------
+        // $timesheet->setDuration(null);
+        // $duration = $timesheet->getDuration();
+
+        // another possible solution is cloning the timesheet
+        // $timesheet = clone $timesheet;
+        // $timesheet->setDuration(null);
+        // $duration = $timesheet->getDuration();
+
+        $duration = $timesheet->getCalculatedDuration();
 
         $timeRate = $this->rateService->calculate($timesheet);
         $rate = $timeRate->getRate();
@@ -89,8 +103,8 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $customerRate = $rate;
         $monthWasChanged = false;
 
-        if ($timesheet->getId() !== null) {
-            $rawData = $this->timesheetRepository->getRawData($timesheet);
+        if ($id !== null) {
+            $rawData = $this->timesheetRepository->getRawData($id);
 
             $activityId = (int) $rawData['activity'];
             $projectId = (int) $rawData['project'];
