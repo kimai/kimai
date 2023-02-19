@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
-        <target>Username</target>
+        <target state="translated">Utente</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
@@ -598,7 +598,7 @@
       </trans-unit>
       <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
-        <target>Teamleader</target>
+        <target state="translated">Capogruppo</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -1180,6 +1180,22 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Approposito di Kimai</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">Inserisci la tua password per l'accesso completo</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">Limita la visibilità ai team selezionati.</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">Reimposta filtro di ricerca</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">Applicazioni</target>
       </trans-unit>
     </body>
   </file>
