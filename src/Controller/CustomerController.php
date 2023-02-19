@@ -368,20 +368,39 @@ final class CustomerController extends AbstractController
         $vcard = new VCard();
 
         $contact = $customer->getContact() ?? $customer->getName();
+        if ($contact === null || \strlen($contact) === 0) {
+            $contact = 'Unknown';
+        }
+
         $contact = explode(' ', $contact);
         $lastname = array_pop($contact);
-        $firstname = \count($contact) > 0 ? $contact[0] : $lastname;
+        $firstname = \count($contact) > 0 ? $contact[0] : '';
+        $vcard->addName($lastname, $firstname);
+
         $note = $customer->getComment();
         if ($note !== null) {
             $note .= PHP_EOL;
         }
 
-        $vcard->addName($lastname, $firstname);
-        $vcard->addNote($note . $customer->getAddress());
-        $vcard->addAddress(null, null, null, null, null, null, Countries::getName($customer->getCountry()));
+        $address = $customer->getAddress();
+        if (!empty($note) || !empty($address)) {
+            $vcard->addNote($note . $address);
+        }
 
-        $vcard->addCompany($customer->getCompany() ?? $customer->getName());
-        $vcard->addEmail($customer->getEmail());
+        $country = $customer->getCountry();
+        if ($country !== null) {
+            $vcard->addAddress(null, null, null, null, null, null, Countries::getName($country));
+        }
+
+        $company = $customer->getCompany();
+        if ($company !== null) {
+            $vcard->addCompany($company);
+        }
+
+        $email = $customer->getEmail();
+        if ($email !== null) {
+            $vcard->addEmail($email);
+        }
 
         $hasPref = false;
 

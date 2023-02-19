@@ -1041,21 +1041,6 @@ parameters:
             path: src/Controller/CalendarController.php
 
         -
-            message: "#^Parameter \\#1 \\$address of method JeroenDesloovere\\\\VCard\\\\VCard\\:\\:addEmail\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$company of method JeroenDesloovere\\\\VCard\\\\VCard\\:\\:addCompany\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$country of static method Symfony\\\\Component\\\\Intl\\\\Countries\\:\\:getName\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
             message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
@@ -1072,11 +1057,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
 
