@@ -113,8 +113,23 @@ final class DataTable implements \Countable, \IteratorAggregate
         $this->columns = $columns;
     }
 
-    public function addColumn(string $name, array $column): void
+    /**
+     * Supported $column options:
+     * - class
+     * - title
+     * - translation_domain
+     * - orderBy (string|false)
+     * - order (desc, asc)
+     *
+     * @param string $name
+     * @param array $column
+     * @return void
+     */
+    public function addColumn(string $name, array $column = []): void
     {
+        if (!\array_key_exists('class', $column)) {
+            $column['class'] = '';
+        }
         $this->columns[$name] = $column;
     }
 

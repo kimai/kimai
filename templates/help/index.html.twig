@@ -1,0 +1,24 @@
+{% extends 'datatable.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ entry.name }}
+    {% elseif column == 'description' %}
+        {{ entry.description }}
+    {% elseif column == 'language' %}
+        {{ entry.language }}
+    {% elseif column == 'date' %}
+        {{ entry.date }}
+    {% elseif column == 'time' %}
+        {{ entry.time }}
+    {% elseif column == 'duration' %}
+        {{ entry.duration }}
+    {% elseif column == 'money' %}
+        {{ entry.money }}
+    {% elseif column == 'hour_24' %}
+        {{ widgets.label_boolean(entry.hour_24) }}
+    {% elseif column == 'rtl' %}
+        {{ widgets.label_boolean(entry.rtl) }}
+    {% endif %}
+{% endblock %}
