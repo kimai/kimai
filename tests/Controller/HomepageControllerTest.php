@@ -42,9 +42,7 @@ class HomepageControllerTest extends ControllerBaseTest
 
         $em->persist($pref);
         $user->addPreference($pref);
-
         $user->setLanguage('ar');
-
         $em->flush();
 
         $this->request($client, '/homepage');

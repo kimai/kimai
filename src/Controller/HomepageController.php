@@ -57,10 +57,10 @@ final class HomepageController extends AbstractController
             $menu = $event->findById($userRoute);
             if ($menu !== null && \count($menu->getRouteArgs()) === 0 && $menu->getRoute() !== null) {
                 $userRoute = $menu->getRoute();
-                $routes[] = [$userRoute, $userLanguage];
-                $routes[] = [$userRoute, $requestLanguage];
-                $routes[] = [$userRoute, User::DEFAULT_LANGUAGE];
             }
+            $routes[] = [$userRoute, $userLanguage];
+            $routes[] = [$userRoute, $requestLanguage];
+            $routes[] = [$userRoute, User::DEFAULT_LANGUAGE];
         }
 
         $routes[] = [self::DEFAULT_ROUTE, $userLanguage];
