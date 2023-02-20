@@ -83,7 +83,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         kimai.registerPlugin(new KimaiRecentActivities());
-        kimai.registerPlugin(new KimaiActiveRecords('header .messages-menu', 'header .messages-menu-empty'));
+        kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiMultiUpdateTable());
         kimai.registerPlugin(new KimaiThemeInitializer());

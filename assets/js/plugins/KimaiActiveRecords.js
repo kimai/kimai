@@ -13,25 +13,24 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiActiveRecords extends KimaiPlugin {
 
-    constructor(selector, selectorEmpty) {
+    constructor()
+    {
         super();
-        this._selector = selector;
-        this._selectorEmpty = selectorEmpty;
+        this._selector = '.ticktac-menu';
+        this._selectorEmpty = '.ticktac-menu-empty';
     }
 
-    getId() {
+    getId()
+    {
         return 'active-records';
     }
 
-    init() {
-        this._menu = document.querySelector(this._selector);
-
+    init()
+    {
         // the menu can be hidden if user has no permissions to see it
-        if (this._menu === null) {
+        if (document.querySelector(this._selector) === null) {
             return;
         }
-
-        this.attributes = this._menu.dataset;
 
         const handleUpdate = () => {
             this.reloadActiveRecords();
@@ -49,7 +48,9 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         // -----------------------------------------------------------------------
         // handle duration in the visible UI
         this._updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
-        this._updateDuration();
+
+        // deactivated direct duration update, becuase it is unclear
+        // this._updateDuration();
         const handle = () => {
             this._updateDuration();
         };
@@ -63,8 +64,10 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     //     clearInterval(this._updatesHandler);
     // }
 
-    _updateDuration() {
-        const activeRecords = this._menu.querySelectorAll('[data-since]:not([data-since=""])');
+    _updateDuration()
+    {
+        // needs to search in document, to find all running entries, both in "ticktac" and listing pages
+        const activeRecords = document.querySelectorAll('[data-since]:not([data-since=""])');
 
         if (activeRecords.length === 0) {
             if (this._updateBrowserTitle) {
@@ -94,57 +97,58 @@ export default class KimaiActiveRecords extends KimaiPlugin {
             return;
         }
 
-        if (!this._updateBrowserTitle) {
-            return;
+        if (this._updateBrowserTitle) {
+            // only show the first found record, even if we have more
+            document.title = durations.shift();
         }
-
-        let title = durations.shift();
-        for (const duration of durations.slice(0, 2)) {
-            title += ' | ' + duration;
-        }
-        document.title = title;
     }
 
-    _setEntries(entries) {
+    _setEntries(entries)
+    {
         const hasEntries = entries.length > 0;
 
-        this._menu.style.display = hasEntries ? 'inline-block' : 'none';
-        if (!hasEntries) {
-            // make sure that template entries in the menu are removed, otherwise they
-            // might still be shown in the browsers title
-            for (let record of this._menu.querySelectorAll('[data-since]')) {
-                record.dataset['since'] = '';
-            }
-        }
-
-        const menuEmpty = document.querySelector(this._selectorEmpty);
-        if (menuEmpty !== null) {
+        // these contain the "start" button
+        for (let menuEmpty of document.querySelectorAll(this._selectorEmpty)) {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
 
-        const stop = this._menu.querySelector('.ticktac-stop');
-
-        if (!hasEntries) {
-            if (stop) {
-                stop.accesskey = null;
+        // and they contain the "stop" button
+        for (let menu of document.querySelectorAll(this._selector)) {
+            menu.style.display = hasEntries ? 'inline-block' : 'none';
+            if (!hasEntries) {
+                // make sure that template entries in the menu are removed, otherwise they
+                // might still be shown in the browsers title
+                for (let record of menu.querySelectorAll('[data-since]')) {
+                    record.dataset['since'] = '';
+                }
             }
-            return;
+
+            const stop = menu.querySelector('.ticktac-stop');
+
+            if (!hasEntries) {
+                if (stop) {
+                    stop.accesskey = null;
+                }
+                continue;
+            }
+
+            if (stop) {
+                stop.accesskey = 's';
+            }
+            this._replaceInNode(menu, entries[0]);
         }
 
-        if (stop) {
-            stop.accesskey = 's';
-        }
-        this._replaceInNode(this._menu, entries[0]);
         this._updateDuration();
     }
 
-    _replaceInNode(node, timesheet) {
+    _replaceInNode(node, timesheet)
+    {
         const date = this.getDateUtils();
         const allReplacer = node.querySelectorAll('[data-replacer]');
         for (let link of allReplacer) {
             const replacerName = link.dataset['replacer'];
             if (replacerName === 'url') {
-                link.href = this.attributes['href'].replace('000', timesheet.id);
+                link.href = node.dataset['href'].replace('000', timesheet.id);
             } else if (replacerName === 'activity') {
                 link.innerText = timesheet.activity.name;
             } else if (replacerName === 'project') {
@@ -158,11 +162,15 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         }
     }
 
-    reloadActiveRecords() {
+    reloadActiveRecords()
+    {
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        API.get(this.attributes['api'], {}, (result) => {
+        // TODO using the first found "ticktac" menu is working, but can be done better
+        const apiUrl = document.querySelector(this._selector).dataset['api'];
+
+        API.get(apiUrl, {}, (result) => {
             this._setEntries(result);
         });
     }
