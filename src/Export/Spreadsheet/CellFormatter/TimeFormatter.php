@@ -9,6 +9,7 @@
 
 namespace App\Export\Spreadsheet\CellFormatter;
 
+use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -19,7 +20,7 @@ final class TimeFormatter implements CellFormatterInterface
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
-            $sheet->setCellValueByColumnAndRow($column, $row, '');
+            $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), '');
 
             return;
         }
@@ -28,7 +29,7 @@ final class TimeFormatter implements CellFormatterInterface
             throw new \InvalidArgumentException('Unsupported value given, only DateTime is supported');
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, Date::PHPToExcel($value));
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), Date::PHPToExcel($value));
+        $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 }
