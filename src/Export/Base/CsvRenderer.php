@@ -60,8 +60,12 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
         $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=%s', $duration ?? 0));
     }
 
-    protected function setRateStyle(Worksheet $sheet, int $column, int $row, ?string $currency): void
+    protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void
     {
-        parent::setRateStyle($sheet, $column, $row, $currency);
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate);
+        if ($rate === 0.00) {
+            return;
+        }
+        $this->setRateStyle($sheet, $column, $row, $currency);
     }
 }
