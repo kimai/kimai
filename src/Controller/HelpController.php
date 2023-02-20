@@ -55,6 +55,11 @@ final class HelpController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param LocaleService $service
+     * @return array<string, array<string, string|bool|null>>
+     */
     private function buildLocales(Request $request, LocaleService $service): array
     {
         $requestLocale = $request->getLocale();
