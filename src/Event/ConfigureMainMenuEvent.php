@@ -21,6 +21,7 @@ final class ConfigureMainMenuEvent extends Event
     private MenuItemModel $apps;
     private MenuItemModel $admin;
     private MenuItemModel $system;
+    private ?MenuItemModel $root = null;
 
     public function __construct()
     {
@@ -30,6 +31,19 @@ final class ConfigureMainMenuEvent extends Event
         $this->system = new MenuItemModel('system', 'menu.system', '', [], 'configuration');
     }
 
+    public function findById(string $identifier): ?MenuItemModel
+    {
+        if ($this->root === null) {
+            $this->root = new MenuItemModel('root', 'root');
+            $this->root->addChild($this->menu);
+            $this->root->addChild($this->apps);
+            $this->root->addChild($this->admin);
+            $this->root->addChild($this->system);
+        }
+
+        return $this->root->findChild($identifier);
+    }
+
     public function getMenu(): MenuItemModel
     {
         return $this->menu;
@@ -37,7 +51,7 @@ final class ConfigureMainMenuEvent extends Event
 
     public function getTimesheetMenu(): ?MenuItemModel
     {
-        return $this->menu->getChild('timesheet');
+        return $this->menu->getChild('times');
     }
 
     public function getInvoiceMenu(): ?MenuItemModel

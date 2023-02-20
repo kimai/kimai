@@ -1146,11 +1146,6 @@ parameters:
             path: src/Controller/ExportController.php
 
         -
-            message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/HomepageController.php
-
-        -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php

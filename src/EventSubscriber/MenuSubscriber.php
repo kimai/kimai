@@ -50,11 +50,11 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu->addChild(new MenuItemModel('favorites', 'favorite_routes', null, [], 'bookmarked'));
 
         // ------------------- timesheet menu -------------------
-        $times = new MenuItemModel('timesheet', 'time_tracking', null, [], 'timesheet');
+        $times = new MenuItemModel('times', 'time_tracking', null, [], 'timesheet');
 
         if ($auth->isGranted('view_own_timesheet')) {
-            $timesheets = new MenuItemModel('times', 'my_times', 'timesheet', [], 'timesheet');
-            $timesheets->setChildRoutes(['times', 'timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
+            $timesheets = new MenuItemModel('timesheet', 'my_times', 'timesheet', [], 'timesheet');
+            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $times->addChild($timesheets);
 
             if ($auth->isGranted('quick-entry')) {
@@ -93,14 +93,15 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($reporting);
         }
 
-        $invoice = new MenuItemModel('invoice', 'invoices', null, [], 'invoice');
+        // ------------------- invoice menu -------------------
+        $invoice = new MenuItemModel('invoices', 'invoices', null, [], 'invoice');
 
         if ($auth->isGranted('create_invoice')) {
             $invoice->addChild(new MenuItemModel('invoice', 'invoice_form.title', 'invoice', [], 'invoice'));
         }
 
         if ($auth->isGranted('view_invoice')) {
-            $tmpMenu = new MenuItemModel('invoice-listing', 'all_invoices', 'admin_invoice_list', [], 'list');
+            $tmpMenu = new MenuItemModel('invoice_listing', 'all_invoices', 'admin_invoice_list', [], 'list');
             $tmpMenu->setChildRoutes(['admin_invoice_edit']);
             $invoice->addChild($tmpMenu);
         }

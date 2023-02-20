@@ -118,7 +118,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(710)
                 ->setSection('behaviour')
                 ->setOptions(['required' => false])
-                ->addConstraint(new Length(['max' => 75]))
+                ->addConstraint(new Length(['max' => 150]))
                 ->setType(FavoriteMenuType::class),
 
             (new UserPreference('daily_stats', false))

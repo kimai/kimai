@@ -9,20 +9,17 @@
 
 namespace App\Form\Type;
 
-use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
-use App\Reporting\ReportingService;
 use App\Utils\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class MenuChoiceType extends AbstractType
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private ReportingService $reportingService, private TranslatorInterface $translator)
+    public function __construct(private EventDispatcherInterface $eventDispatcher)
     {
     }
 
@@ -30,25 +27,19 @@ final class MenuChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => true,
-            'include_reports' => true,
             'filter_menus' => [],
         ]);
 
         $resolver->setDefault('choices', function (Options $options): array {
-            /** @var User $user */
-            $user = $options['user'];
-
-            return $this->getChoices($user, $options['include_reports'], $options['filter_menus']);
+            return $this->getChoices($options['filter_menus']);
         });
     }
 
     /**
-     * @param User $user
-     * @param bool $withReports
      * @param array<string> $filter
      * @return array<string, string>
      */
-    private function getChoices(User $user, bool $withReports, array $filter): array
+    private function getChoices(array $filter): array
     {
         $event = new ConfigureMainMenuEvent();
         $this->eventDispatcher->dispatch($event);
@@ -57,13 +48,6 @@ final class MenuChoiceType extends AbstractType
         $choices += $this->getChoicesFromMenu($event->getAppsMenu(), $filter);
         $choices += $this->getChoicesFromMenu($event->getAdminMenu(), $filter);
         $choices += $this->getChoicesFromMenu($event->getSystemMenu(), $filter);
-
-        if ($withReports) {
-            foreach ($this->reportingService->getAvailableReports($user) as $report) {
-                $label = $this->translator->trans('menu.reporting') . ': ' . $this->translator->trans($report->getLabel(), [], 'reporting');
-                $choices[$label] = $report->getId();
-            }
-        }
 
         return $choices;
     }
@@ -82,13 +66,13 @@ final class MenuChoiceType extends AbstractType
                 continue;
             }
             if (!$child->hasChildren()) {
-                if (\count($child->getRouteArgs()) === 0) {
+                if (\count($child->getRouteArgs()) === 0 && $child->getRoute() !== null) {
                     $choices[$child->getLabel()] = $child->getIdentifier();
                 }
                 continue;
             }
             foreach ($child->getChildren() as $subChild) {
-                if (\count($subChild->getRouteArgs()) === 0) {
+                if (\count($subChild->getRouteArgs()) === 0 && $subChild->getRoute() !== null) {
                     $choices[$subChild->getLabel()] = $subChild->getIdentifier();
                 }
             }
