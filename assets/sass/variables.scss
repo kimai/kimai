@@ -5,12 +5,12 @@
  * file that was distributed with this source code.
  */
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 
-@import '~@tabler/core/src/scss/variables';
-@import '~@tabler/core/src/scss/mixins';
+@import "@tabler/core/src/scss/variables";
+@import "@tabler/core/src/scss/mixins";
 
 /* For highlighting rows, fieldsets and so on */
 $highlight-bg: #f5f5f5;
