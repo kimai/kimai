@@ -17,12 +17,12 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class FavoriteControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/favorite/timesheet/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
@@ -38,6 +38,7 @@ class FavoriteControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
         self::assertStringContainsString('<div class="nav-item dropdown d-flex me-sm-3 me-1 notifications-menu" data-reload="/en/favorite/timesheet/">', $content);
         self::assertStringContainsString('<div class="card-header">', $content);
         self::assertStringContainsString('Restart one of your last activities', $content);
