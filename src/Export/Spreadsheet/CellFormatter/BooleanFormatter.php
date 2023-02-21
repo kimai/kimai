@@ -9,6 +9,7 @@
 
 namespace App\Export\Spreadsheet\CellFormatter;
 
+use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 final class BooleanFormatter implements CellFormatterInterface
@@ -16,7 +17,7 @@ final class BooleanFormatter implements CellFormatterInterface
     public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
     {
         if (null === $value) {
-            $sheet->setCellValueByColumnAndRow($column, $row, '');
+            $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), '');
 
             return;
         }
@@ -25,6 +26,6 @@ final class BooleanFormatter implements CellFormatterInterface
             throw new \InvalidArgumentException('Unsupported value given, only boolean is supported');
         }
 
-        $sheet->setCellValueByColumnAndRow($column, $row, $value);
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $value);
     }
 }

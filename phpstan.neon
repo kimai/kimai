@@ -1041,21 +1041,6 @@ parameters:
             path: src/Controller/CalendarController.php
 
         -
-            message: "#^Parameter \\#1 \\$address of method JeroenDesloovere\\\\VCard\\\\VCard\\:\\:addEmail\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$company of method JeroenDesloovere\\\\VCard\\\\VCard\\:\\:addCompany\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$country of static method Symfony\\\\Component\\\\Intl\\\\Countries\\:\\:getName\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
             message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
@@ -1072,11 +1057,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
 
@@ -1164,11 +1144,6 @@ parameters:
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Controller/ExportController.php
-
-        -
-            message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/HomepageController.php
 
         -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
@@ -2901,151 +2876,6 @@ parameters:
             path: src/Export/Base/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:getColumns\\(\\) has parameter \\$columns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:getColumns\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDuration\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDuration\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDuration\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDurationTotal\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDurationTotal\\(\\) has parameter \\$endCoordinate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDurationTotal\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setDurationTotal\\(\\) has parameter \\$startCoordinate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedDate\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedDate\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedDateTime\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedDateTime\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedTime\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setFormattedTime\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRate\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRate\\(\\) has parameter \\$currency with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRate\\(\\) has parameter \\$rate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRate\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateStyle\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateStyle\\(\\) has parameter \\$currency with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateStyle\\(\\) has parameter \\$rate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateStyle\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateTotal\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateTotal\\(\\) has parameter \\$endCoordinate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateTotal\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:setRateTotal\\(\\) has parameter \\$startCoordinate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$columnIndex of method PhpOffice\\\\PhpSpreadsheet\\\\Worksheet\\\\Worksheet\\:\\:getCellByColumnAndRow\\(\\) expects int, float\\|int given\\.$#"
-            count: 6
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$columnIndex1 of method PhpOffice\\\\PhpSpreadsheet\\\\Worksheet\\\\Worksheet\\:\\:getStyleByColumnAndRow\\(\\) expects int, float\\|int given\\.$#"
-            count: 3
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
             message: "#^Parameter \\#1 \\$file of class Symfony\\\\Component\\\\HttpFoundation\\\\BinaryFileResponse constructor expects SplFileInfo\\|string, mixed given\\.$#"
             count: 1
             path: src/Export/Base/AbstractSpreadsheetRenderer.php
@@ -3079,41 +2909,6 @@ parameters:
             message: "#^Property App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:\\$columns type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setDuration\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setDuration\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setDuration\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setRateStyle\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setRateStyle\\(\\) has parameter \\$currency with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setRateStyle\\(\\) has parameter \\$rate with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\CsvRenderer\\:\\:setRateStyle\\(\\) has parameter \\$row with no type specified\\.$#"
-            count: 1
-            path: src/Export/Base/CsvRenderer.php
 
         -
             message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"

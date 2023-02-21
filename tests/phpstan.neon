@@ -3343,21 +3343,6 @@ parameters:
             path: Controller/ExportControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\FavoriteControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/FavoriteControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\FavoriteControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/FavoriteControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 2
-            path: Controller/FavoriteControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\HomepageControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/HomepageControllerTest.php
@@ -6958,21 +6943,6 @@ parameters:
             path: Form/Extension/IconExtensionTest.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: Form/Model/DateRangeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\DateRangeTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Model/DateRangeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\DateRangeTest\\:\\:testSetterAndGetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Model/DateRangeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\SystemConfigurationTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Form/Model/SystemConfigurationTest.php
@@ -7506,31 +7476,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceModelTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/InvoiceModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getInvalidTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:testGetInvoiceNumber\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:testInvalidGetInvoiceNumber\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\DateNumberGeneratorTest\\:\\:getSut\\(\\) has no return type specified\\.$#"

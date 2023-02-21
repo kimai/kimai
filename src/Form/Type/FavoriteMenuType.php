@@ -29,7 +29,6 @@ final class FavoriteMenuType extends AbstractType
     {
         $resolver->setDefaults([
             'multiple' => true,
-            'include_reports' => false,
             'filter_menus' => ['favorites', 'dashboard'],
         ]);
     }

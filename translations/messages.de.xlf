@@ -1409,6 +1409,22 @@
         <source>about.title</source>
         <target>Über Kimai</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target>Unterstützte Sprachen mit Formatierungsregeln</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target>Diese Einstellung ist neben der Übersetzung der Oberfläche ebenso zuständig für die Zeit-, Datums-, und Währungsformate</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target>24-Stunden</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target>Uhrzeit</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -19,9 +19,9 @@ use App\Form\Type\CalendarViewType;
 use App\Form\Type\FavoriteMenuType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
-use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -87,7 +87,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
-                ->setType(LanguageType::class),
+                ->setType(UserLanguageType::class),
 
             (new UserPreference(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY))
                 ->setOrder(300)
@@ -118,7 +118,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(710)
                 ->setSection('behaviour')
                 ->setOptions(['required' => false])
-                ->addConstraint(new Length(['max' => 75]))
+                ->addConstraint(new Length(['max' => 150]))
                 ->setType(FavoriteMenuType::class),
 
             (new UserPreference('daily_stats', false))

@@ -3,10 +3,10 @@
     "app": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/app.8b0c21dc.js"
+        "/build/app.50e94a4a.js"
       ],
       "css": [
-        "/build/app.73c27235.css"
+        "/build/app.2c6c5920.css"
       ]
     },
     "export-pdf": {
@@ -45,7 +45,7 @@
     "calendar": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/calendar.7dd54a5f.js"
+        "/build/calendar.3041e41e.js"
       ],
       "css": [
         "/build/calendar.bb473428.css"
@@ -63,8 +63,8 @@
   },
   "integrity": {
     "/build/runtime.f0079159.js": "sha384-H22sAW1aTvyIPqvHOvGXWSWTxf0y6mptp+MsVmyXCfjx/WJjBbhX9gbUZ+qIuihV",
-    "/build/app.8b0c21dc.js": "sha384-k0LUmYHZUK6bFVymGMzcHSq+utW09iR+YG6VMzqCiXfBGtVvb2Sdr0IB7w6hR+I6",
-    "/build/app.73c27235.css": "sha384-0vdzXrL3JuXTfiYJUdY17wIGFIbUTzQWfBQXbhcXcFRVmpmJYY1TZYSauxVUNwev",
+    "/build/app.50e94a4a.js": "sha384-HR3cG9DvdBAyo08dhybZE8eNOvFY+3Yvp2zxFC43hcwTK6dGoAOLTyNhTdoGi8CR",
+    "/build/app.2c6c5920.css": "sha384-qiubu7JONCsPTbVOb8bSJ4GYxioCwIUvlsI0usMmIUyoTxawn6jsjG7KK64iej5S",
     "/build/export-pdf.587575e7.js": "sha384-J50GStmmfVwUTN4dIRQ02eg9hyzGFPSzpTtpPody92j0V6zCqw+s5l8+ZhVTugeW",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
     "/build/invoice.c8ae95ad.js": "sha384-2eVY7MBiMQxo1vhfizU+fYfEZbz9bYUdzqxnpTQhxpYiLaxeSV4WnaObq2G7/Pks",
@@ -72,7 +72,7 @@
     "/build/invoice-pdf.d86b82ee.js": "sha384-A0HJqP+MvEqQr1uG8wViCeEWxBRKyS6l8D+Ao4pFYHUA12gCC1gRYhk9I+SJPvZq",
     "/build/invoice-pdf.c88953bb.css": "sha384-ZvSi1e+ZKGzvZJUtAPLjzOSTh13N9zRevq44GKdYdBja/DAplGE55saY2Ur+83yv",
     "/build/chart.f5becfac.js": "sha384-GSqETm8wULiVXyizvwRompfwu63r/C0Qd/AvrHDE4cqAKiIGCssb3QyBtGu1WN+W",
-    "/build/calendar.7dd54a5f.js": "sha384-oUWTIvkHr+k1UrlriT4+iA+irValKNLFoxva7ljQ/bsbczzaql3uWD0dlC4mF0ss",
+    "/build/calendar.3041e41e.js": "sha384-vdX0khIprtUhM4P8aiSsY5H3YSjHM1OMNdiYIhoKy/fm//5gwaEPkSbZDsTbe5dT",
     "/build/calendar.bb473428.css": "sha384-900W9o8666Qpw21rLP7hn5Ql8tWd40k0IcE3QpFm7E7V6bKva7xQgGlyzVuuh4GK",
     "/build/dashboard.6774a712.js": "sha384-lBwkNqUPv+IBbznagiFakY2BOIueq/Bg89wHO2XeM9YAZ51rPkrvdMd+XmFupHsM",
     "/build/dashboard.18f5a8b7.css": "sha384-PBD8ftb2yBoSjRe2sN5Xb4dEz045kOEUfcIufdSis+tWoWdAx5j4Yic+F/6CYbrP"

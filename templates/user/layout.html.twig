@@ -11,11 +11,11 @@
             {% block profile_intro %}
                 <div class="card mb-3">
                     <div class="card-body box-user-profile">
-                        <div class="row g-2 align-items-center">
+                        <div class="row row-sm-2 align-items-center">
                             <div class="col-auto" data-toggle="tooltip" title="{{ 'id'|trans }}: {{ user.id }}">
                                 {{ widgets.user_avatar(user, false, 'avatar-lg') }}
                             </div>
-                            <div class="col">
+                            <div class="col" style="min-width: 100px">
                                 <h4 class="card-title m-0">{{ widgets.username(user) }}</h4>
                                 {% if user.title is not empty %}
                                 <div class="text-muted">
@@ -23,7 +23,7 @@
                                 </div>
                                 {% endif %}
                             </div>
-                            <div class="col-auto" id="profile-buttons">
+                            <div class="col-auto text-end mt-2 mt-sm-1" id="profile-buttons">
                                 {% from '@theme/components/buttons.html.twig' import link_button %}
                                 {% if app.user == user %}
                                 {{ link_button('notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}

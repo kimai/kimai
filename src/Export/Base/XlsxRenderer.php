@@ -45,6 +45,16 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
             throw new \Exception('Could not open temporary file');
         }
 
+        $this->applyStyles($spreadsheet);
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save($filename);
+
+        return $filename;
+    }
+
+    protected function applyStyles(Spreadsheet $spreadsheet): void
+    {
         // Store expensive calculations for later
         $sheet = $spreadsheet->getActiveSheet();
         $highestRow = $sheet->getHighestRow();
@@ -75,11 +85,6 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
             ->getAlignment()
             ->setVertical(Alignment::VERTICAL_TOP)
             ->setHorizontal(Alignment::HORIZONTAL_LEFT);
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save($filename);
-
-        return $filename;
     }
 
     public function getId(): string

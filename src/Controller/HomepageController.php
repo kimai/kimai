@@ -11,6 +11,8 @@ namespace App\Controller;
 
 use App\Configuration\LocaleService;
 use App\Entity\User;
+use App\Event\ConfigureMainMenuEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,11 +28,9 @@ final class HomepageController extends AbstractController
     public const DEFAULT_ROUTE = 'timesheet';
 
     #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
-    public function indexAction(Request $request, LocaleService $service): Response
+    public function indexAction(Request $request, LocaleService $service, EventDispatcherInterface $eventDispatcher): Response
     {
-        /** @var User $user */
         $user = $this->getUser();
-        $userRoute = $user->getPreferenceValue('login_initial_view', self::DEFAULT_ROUTE, false);
         $userLanguage = $user->getLanguage();
         $requestLanguage = $request->getLocale();
 
@@ -48,13 +48,23 @@ final class HomepageController extends AbstractController
             $userLanguage = $service->getDefaultLocale();
         }
 
-        $routes = [
-            [$userRoute, $userLanguage],
-            [$userRoute, $requestLanguage],
-            [$userRoute, User::DEFAULT_LANGUAGE],
-            [self::DEFAULT_ROUTE, $userLanguage],
-            [self::DEFAULT_ROUTE, $requestLanguage],
-        ];
+        $routes = [];
+
+        $userRoute = $user->getPreferenceValue('login_initial_view');
+        if (\is_string($userRoute)) {
+            $event = new ConfigureMainMenuEvent();
+            $eventDispatcher->dispatch($event);
+            $menu = $event->findById($userRoute);
+            if ($menu !== null && \count($menu->getRouteArgs()) === 0 && $menu->getRoute() !== null) {
+                $userRoute = $menu->getRoute();
+            }
+            $routes[] = [$userRoute, $userLanguage];
+            $routes[] = [$userRoute, $requestLanguage];
+            $routes[] = [$userRoute, User::DEFAULT_LANGUAGE];
+        }
+
+        $routes[] = [self::DEFAULT_ROUTE, $userLanguage];
+        $routes[] = [self::DEFAULT_ROUTE, $requestLanguage];
 
         foreach ($routes as $routeSettings) {
             $route = $routeSettings[0];

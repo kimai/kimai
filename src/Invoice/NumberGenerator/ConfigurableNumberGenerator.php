@@ -53,6 +53,14 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 throw new \InvalidArgumentException('Missing invoice model, cannot calculate invoice number');
             }
 
+            if ($format === 'cname' && $this->model->getCustomer()?->getName() === null) {
+                throw new \InvalidArgumentException('Customer has no name, replacer {cname} failed evaluation');
+            }
+
+            if ($format === 'cnumber' && $this->model->getCustomer()?->getNumber() === null) {
+                throw new \InvalidArgumentException('Customer has no number, replacer {cnumber} failed evaluation');
+            }
+
             return match ($format) {
                 'Y' => $invoiceDate->format('Y'),
                 'y' => $invoiceDate->format('y'),

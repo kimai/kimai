@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="tests/bootstrap.php">
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="max_execution_time" value="-1"/>
@@ -12,12 +15,6 @@
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="0" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-        <!--
-            CREATE DATABASE IF NOT EXISTS `kimai2_test`;
-            CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
-            ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
-            GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
-        -->
         <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test"/>
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
         <env name="MAILER_URL" value="null://null"/>
@@ -25,10 +22,14 @@
         <!--
             REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
-            Simple:
             - change to "true"
             - composer tests
             - change back to "false"
+
+            CREATE DATABASE IF NOT EXISTS `kimai2_test`;
+            CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
+            ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
+            GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
         -->
         <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
     </php>

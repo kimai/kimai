@@ -31,7 +31,7 @@ class ConfigureMainMenuEventTest extends TestCase
         self::assertNull($sut->getInvoiceMenu());
         self::assertNull($sut->getReportingMenu());
 
-        $timesheet = new MenuItemModel('timesheet', 'timesheet');
+        $timesheet = new MenuItemModel('times', 'timesheet');
         $sut->getMenu()->addChild($timesheet);
         self::assertNotNull($sut->getTimesheetMenu());
         self::assertSame($timesheet, $sut->getTimesheetMenu());
@@ -41,9 +41,19 @@ class ConfigureMainMenuEventTest extends TestCase
         self::assertNotNull($sut->getInvoiceMenu());
         self::assertSame($invoice, $sut->getInvoiceMenu());
 
+        self::assertNull($sut->findById('reporting'));
+        self::assertNull($sut->findById('foo'));
+        self::assertNull($sut->findById('bar'));
+
         $reporting = new MenuItemModel('reporting', 'reporting');
         $sut->getMenu()->addChild($reporting);
+        $reporting->addChild(new MenuItemModel('foo', 'foo'));
+        $reporting->addChild(new MenuItemModel('bar', 'bar'));
         self::assertNotNull($sut->getReportingMenu());
         self::assertSame($reporting, $sut->getReportingMenu());
+
+        self::assertSame($reporting, $sut->findById('reporting'));
+        self::assertNotNull($sut->findById('foo'));
+        self::assertNotNull($sut->findById('bar'));
     }
 }

@@ -13,6 +13,7 @@ use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\Model\DateRange;
+use App\Utils\EquatableInterface;
 use App\Utils\SearchTerm;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
@@ -330,7 +331,13 @@ class BaseQuery
         $currentValue = $this->get($filter);
 
         if (\is_object($currentValue)) {
-            if ($currentValue !== $expectedValue) {
+            if ($currentValue instanceof EquatableInterface) {
+                return $currentValue->isEqualTo($expectedValue);
+            }
+
+            // this is a loose comparison by choice, as == compares object type and content
+            // instead of === which only compares if both sides are the same instance
+            if ($currentValue != $expectedValue) { // @phpstan-ignore-line
                 return false;
             }
         } else {

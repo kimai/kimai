@@ -9,6 +9,7 @@
 
 namespace App\Export\Base;
 
+use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -54,16 +55,17 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
         return 'csv';
     }
 
-    protected function setDuration(Worksheet $sheet, $column, $row, $duration): void
+    protected function setDuration(Worksheet $sheet, int $column, int $row, ?int $duration): void
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s', $duration));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=%s', $duration ?? 0));
     }
 
-    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency): void
+    protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void
     {
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate);
         if ($rate === 0.00) {
             return;
         }
-        parent::setRateStyle($sheet, $column, $row, $rate, $currency);
+        $this->setRateStyle($sheet, $column, $row, $currency);
     }
 }

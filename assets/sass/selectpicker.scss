@@ -1,4 +1,4 @@
-@import '~tom-select/dist/scss/tom-select.bootstrap5';
+@import "tom-select/dist/scss/tom-select.bootstrap5";
 
 /* bootstrap thead.sticky-top has z-index 1020 and tomselect dropdowns often hide behind that */
 .ts-dropdown {
