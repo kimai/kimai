@@ -7508,31 +7508,6 @@ parameters:
             path: Invoice/InvoiceModelTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getInvalidTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:testGetInvoiceNumber\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGeneratorTest\\:\\:testInvalidGetInvoiceNumber\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/NumberGenerator/ConfigurableNumberGeneratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\DateNumberGeneratorTest\\:\\:getSut\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/NumberGenerator/DateNumberGeneratorTest.php
