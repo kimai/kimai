@@ -217,11 +217,17 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 break;
 
             case 'cname':
-                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getName() : '';
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getName() : null;
+                if ($partialResult === null) {
+                    throw new \InvalidArgumentException('Customer has no name, replacer {cname} failed evaluation.');
+                }
                 break;
 
             case 'cnumber':
-                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getNumber() : '';
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getNumber() : null;
+                if ($partialResult === null) {
+                    throw new \InvalidArgumentException('Customer has no number, replacer {cnumber} failed evaluation.');
+                }
                 break;
 
             default:
