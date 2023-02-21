@@ -20,6 +20,9 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         this._selectorEmpty = '.ticktac-menu-empty';
     }
 
+    /**
+     * @returns {string}
+     */
     getId()
     {
         return 'active-records';
@@ -64,6 +67,11 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     //     clearInterval(this._updatesHandler);
     // }
 
+    /**
+     * Updates the duration of all running entries, both in the ticktac menus and in the listing pages.
+     *
+     * @private
+     */
     _updateDuration()
     {
         // needs to search in document, to find all running entries, both in "ticktac" and listing pages
@@ -103,6 +111,13 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         }
     }
 
+    /**
+     * Adapts the ticktac menus accordingg to the given entries (amount and duration).
+     * Does not influence listing pages, as those refresh themselves.
+     *
+     * @param {array} entries
+     * @private
+     */
     _setEntries(entries)
     {
         const hasEntries = entries.length > 0;
@@ -141,6 +156,11 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         this._updateDuration();
     }
 
+    /**
+     * @param {HTMLElement} node
+     * @param {object} timesheet
+     * @private
+     */
     _replaceInNode(node, timesheet)
     {
         const date = this.getDateUtils();
