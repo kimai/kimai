@@ -38,7 +38,8 @@ class FavoriteControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('<div class="nav-item dropdown d-none d-md-flex me-3 notifications-menu" data-reload="/en/favorite/timesheet/">', $content);
-        self::assertStringContainsString('<div class="card-header">Restart one of your last activities</div>', $content);
+        self::assertStringContainsString('<div class="nav-item dropdown d-flex me-sm-3 me-1 notifications-menu" data-reload="/en/favorite/timesheet/">', $content);
+        self::assertStringContainsString('<div class="card-header">', $content);
+        self::assertStringContainsString('Restart one of your last activities', $content);
     }
 }
