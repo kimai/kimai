@@ -9,9 +9,10 @@
 
 namespace App\Form\Model;
 
+use App\Utils\EquatableInterface;
 use DateTime;
 
-final class DateRange
+final class DateRange implements EquatableInterface
 {
     private ?DateTime $begin = null;
     private ?DateTime $end = null;
@@ -48,5 +49,30 @@ final class DateRange
         }
 
         return $this;
+    }
+
+    public function isEqualTo(object $compare): bool
+    {
+        if (!$compare instanceof DateRange) {
+            return false;
+        }
+
+        if (($this->getBegin() === null && $compare->getBegin() !== null) || ($this->getBegin() !== null && $compare->getBegin() === null)) {
+            return false;
+        }
+
+        if (($this->getEnd() === null && $compare->getEnd() !== null) || ($this->getEnd() !== null && $compare->getEnd() === null)) {
+            return false;
+        }
+
+        if ($this->getBegin() !== null && $compare->getBegin() !== null && $this->getBegin()->getTimestamp() !== $compare->getBegin()->getTimestamp()) {
+            return false;
+        }
+
+        if ($this->getEnd() !== null && $compare->getEnd() !== null && $this->getEnd()->getTimestamp() !== $compare->getEnd()->getTimestamp()) {
+            return false;
+        }
+
+        return true;
     }
 }

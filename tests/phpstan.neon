@@ -6958,21 +6958,6 @@ parameters:
             path: Form/Extension/IconExtensionTest.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: Form/Model/DateRangeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\DateRangeTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Model/DateRangeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\DateRangeTest\\:\\:testSetterAndGetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Model/DateRangeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Model\\\\SystemConfigurationTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Form/Model/SystemConfigurationTest.php
