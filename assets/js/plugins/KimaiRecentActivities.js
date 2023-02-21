@@ -13,6 +13,15 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiRecentActivities extends KimaiPlugin {
 
+    constructor()
+    {
+        super();
+        this._selector = '.notifications-menu';
+    }
+
+    /**
+     * @returns {string}
+     */
     getId()
     {
         return 'recent-activities';
@@ -20,15 +29,17 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
     init()
     {
-        this.menu = document.querySelector('header .notifications-menu');
+        const menus = document.querySelectorAll(this._selector);
+
         // the menu can be hidden if user has no permissions to see it
         // or no timesheet was recorded yet
-        if (this.menu === null || this.menu.dataset['reload'] === undefined) {
+        if (menus.length === 0 || menus[0].dataset['reload'] === undefined) {
             return;
         }
 
         const handle = () => {
-            this._reloadMenu(this.menu.dataset['reload']);
+            // TODO this works but using the first menu is not ideal, pass in the reload URL?
+            this._reloadMenu(menus[0].dataset['reload']);
         };
 
         document.addEventListener('kimai.recentActivities', handle);
@@ -44,9 +55,12 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         this._attachAddRemoveFavorite();
     }
 
+    /**
+     * @private
+     */
     _attachAddRemoveFavorite()
     {
-        [].slice.call(this.menu.querySelectorAll('a.list-group-item-actions')).map((element) => {
+        [].slice.call(document.querySelectorAll(this._selector + ' a.list-group-item-actions')).map((element) => {
             element.addEventListener('click', (event) => {
                 this._reloadMenu(event.currentTarget.href);
 
@@ -58,26 +72,33 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         });
     }
 
+    /**
+     * Reload all ercent activities and update the existing menus.
+     *
+     * @param {string} url
+     * @private
+     */
     _reloadMenu(url)
     {
         this.fetch(url, {method: 'GET'})
             .then(response => {
                 if (!response.ok) {
-                    //this.menu.remove();
                     return;
                 }
 
                 return response.text().then(html => {
                     const newFormHtml = document.createElement('div');
                     newFormHtml.innerHTML = html;
-                    this.menu.replaceWith(newFormHtml.firstElementChild);
 
-                    this.menu = document.querySelector('header .notifications-menu');
+                    for (let menu of document.querySelectorAll(this._selector)) {
+                        menu.replaceWith(newFormHtml.firstElementChild.cloneNode(true));
+                    }
+
                     this._attachAddRemoveFavorite();
                 });
             })
-            .catch(() =>  {
-                //this.menu.remove();
+            .catch((reason) =>  {
+                console.log('Failed to log recent activities', reason);
             });
     }
 }
