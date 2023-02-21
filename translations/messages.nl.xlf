@@ -1164,23 +1164,23 @@
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
-        <target state="needs-translation">Add user</target>
+        <target state="translated">Gebruiker toevoegen</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+        <target state="translated">Voeg een nieuwe gebruiker toe aan het team door hem uit de lijst te selecteren. Daarna kunt u beslissen of de gebruiker een teamleider moet worden.</target>
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
-        <target state="needs-translation">Default values for new entries</target>
+        <target state="needs-translation">Standaardwaarden voor nieuwe items</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly hours</target>
+        <target state="translated">Wekelijkse uren</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">Bijgewerkt op</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
@@ -1197,6 +1197,54 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Over Kimai</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="needs-translation">Beperkt de zichtbaarheid tot de geselecteerde teams.</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Deze tekst wordt gebruikt in factuurdocumenten en kan bijvoorbeeld worden gebruikt om verdere leveringsvoorwaarden te noteren.</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">Reset zoekfilter</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Account ontgrendelen</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">Voer uw wachtwoord in voor volledige toegang</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">Ontgrendelen</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="needs-translation">Factuurtekst</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Deze tekst vervangt de naam van het object, waardoor meer gedetailleerde labels voor de factuuritems mogelijk zijn.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="needs-translation">Als de instelling uit staat, wordt het object niet weergegeven in de dropdown menu's en lijst overzichten.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Ontwerp</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="needs-translation">Als de instelling uit staat, worden alle tijdboekingen in de toekomst gemarkeerd als "niet factureerbaar".</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="needs-translation">U kunt uw widgets herschikken met drag &amp; drop. Het toevoegen van widgets slaat niet opgeslagen wijzigingen op.</target>
       </trans-unit>
     </body>
   </file>

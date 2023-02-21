@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -8,11 +8,35 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Tariffa oraria (default)</target>
+        <target state="translated">Predefinito: una voce per record orario</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>Tariffa oraria - versione breve (solo 1 riga)</target>
+        <target state="translated">Ore: record sommati, una voce per il totale</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="translated">Prezzo: una voce per prezzo</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target state="translated">Utente: una voce per utente</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
+        <target state="translated">Attività: una voce per attività</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target state="translated">Progetto: una voce per progetto</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="translated">Data: una voce al giorno (usa data di inizio)</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="translated">Settimanale: una voce a settimana (usa data di inizio)</target>
       </trans-unit>
     </body>
   </file>

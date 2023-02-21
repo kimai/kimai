@@ -23,8 +23,8 @@
         <target>Aktivieren Sie Ihren Zugang</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Sie haben sich für die Kimai-Zeiterfassung mit der E-Mail-Adresse %email% registriert. Bitte klicken Sie den Link in den nächsten Stunden an, bevor er keine Gültigkeit mehr hat.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Sie haben sich für die Kimai-Zeiterfassung mit der E-Mail-Adresse %email% registriert. Um Ihren Account zu aktivieren, klicken Sie bitte den folgenden Link in den nächsten Stunden an, bevor er keine Gültigkeit mehr hat.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

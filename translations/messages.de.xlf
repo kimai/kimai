@@ -1367,7 +1367,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
-        <target>Das API Passwort dient zur Kommunikation zwischen Kimai und von Ihnen genutzten Apps.</target>
+        <target state="translated">Das API Passwort dient zur Kommunikation zwischen Kimai und von Ihnen genutzten Apps</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
