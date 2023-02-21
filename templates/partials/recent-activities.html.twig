@@ -6,13 +6,18 @@
         {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
             {% set class = "btn-dark" %}
         {% endif %}
-        <div class="nav-item dropdown d-none d-md-flex me-3 notifications-menu" data-reload="{{ path('favorites_timesheets') }}">
+        <div class="nav-item dropdown d-flex me-sm-3 me-1 notifications-menu" data-reload="{{ path('favorites_timesheets') }}">
             <a href="#" class="btn btn-icon {{ class}} px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="{{ 'recent.activities'|trans }}">
                 {{ icon('repeat') }}
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
                 <div class="card">
-                    <div class="card-header">{{ 'recent.activities'|trans }}</div>
+                    <div class="card-header">
+                        {{ 'recent.activities'|trans }}
+                        <div class="card-actions">
+                            <button type="button" class="btn-close{% if tabler_bundle.isDarkMode() %} btn-close-white{% endif %}" data-bs-dismiss="modal" aria-label="{{ 'action.close'|trans }}"></button>
+                        </div>
+                    </div>
                     <div class="list-group list-group-flush list-group-hoverable menu">
                         {% for favorite in favorites %}
                             {% set entry = favorite.getTimesheet() %}
