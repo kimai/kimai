@@ -166,6 +166,38 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $this->assertEquals('default', $sut->getId());
     }
 
+    public function getMissingFieldTestData()
+    {
+        return [
+            ['{Y}/{cnumber}_{ccy,3}', 'Customer has no number, replacer {cnumber} failed evaluation.'],
+            ['{Y}/{cname}_{ccy,3}', 'Customer has no name, replacer {cname} failed evaluation.'],
+        ];
+    }
+
+    /**
+     * @dataProvider getMissingFieldTestData
+     */
+    public function testCustomerHasMissingField(string $format, string $message)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage($message);
+
+        $user = $this->createMock(User::class);
+        $user->method('getId')->willReturn(13);
+        $user->method('getAccountNumber')->willReturn('0815');
+
+        $customer = new Customer();
+
+        $sut = $this->getSut($format);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model->setInvoiceDate(new \DateTime());
+        $model->setCustomer($customer);
+        $model->setUser($user);
+        $sut->setModel($model);
+
+        $sut->getInvoiceNumber();
+    }
+
     public function getInvalidTestData()
     {
         $invoiceDate = new \DateTime();
