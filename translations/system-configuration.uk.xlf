@@ -34,10 +34,6 @@
         <source>timesheet.mode_default</source>
         <target state="translated">[Типово] час початку та закінчення можна редагувати</target>
       </trans-unit>
-      <trans-unit id="kBA3JPy" resname="timesheet.mode_duration_only">
-        <source>timesheet.mode_duration_only</source>
-        <target state="translated">[Тривалість] замінює час закінчення на поле введення тривалості</target>
-      </trans-unit>
       <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
         <source>timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[Тривалість] конфігурований фіксований час запуску, можна змінити лише тривалість</target>
