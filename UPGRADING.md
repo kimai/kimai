@@ -23,7 +23,7 @@ Developer read the full documentation at [https://www.kimai.org/documentation/mi
   - dashboard default config
   - removed: theme.branding.translation
   - removed: kimai.plugin_dir
-- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
+- Time-tracking mode `duration_only` was removed, existing installations will be switched to `duration_fixed_begin`
 - Removed Twig filters. You might have to replace them in your custom export/invoice templates:
   - `date_full` => `date_time`
   - `duration_decimal` => `duration(true)`
