@@ -334,6 +334,10 @@
         <source>allowed_replacer</source>
         <target state="translated">Дозволений замінник: %replacer%</target>
       </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Дозволити дублювання номера рахунку</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

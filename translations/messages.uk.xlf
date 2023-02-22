@@ -1382,6 +1382,22 @@
         <source>help.globalActivity</source>
         <target state="translated">Якщо проєкт Вами не обраний, ця діяльність буде глобальною і може використовуватися різними проєктами. Якщо обираєте проєкт, діяльність може використовуватися лише з цим проєктом. Це налаштування можна змінити пізніше.</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Підтримувані мови з правилами форматування</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Час</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Окрім перекладу інтерфейсу, цей параметр також відповідає за формати часу, дати та валюти.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24-годинний</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
