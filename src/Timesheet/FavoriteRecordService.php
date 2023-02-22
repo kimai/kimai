@@ -32,26 +32,44 @@ final class FavoriteRecordService
      */
     public function favoriteEntries(User $user, int $limit = 5): array
     {
+        /** @var array<int> $favIds */
         $favIds = $this->getBookmark($user)->getContent();
         $recentIds = [];
         if (\count($favIds) < 5) {
             $recentIds = $this->repository->getRecentActivityIds($user, null, $limit);
         }
+        /** @var array<int> $ids */
         $ids = \array_slice(array_unique(array_merge($favIds, $recentIds)), 0, $limit);
 
+        /** @var array<int, bool|FavoriteTimesheet> $favorites */
         $favorites = [];
         foreach ($ids as $id) {
-            $favorites[$id] = \in_array($id, $favIds);
+            $favorites[$id] = \in_array($id, $favIds, true);
         }
 
+        $all = [];
         if (\count($ids) > 0) {
             $timesheets = $this->repository->findTimesheetsById($ids, false, false);
             foreach ($timesheets as $timesheet) {
-                $favorites[$timesheet->getId()] = new FavoriteTimesheet($timesheet, $favorites[$timesheet->getId()]);
+                $id = $timesheet->getId();
+                if ($id === null) {
+                    continue;
+                }
+                $favorites[$id] = new FavoriteTimesheet($timesheet, $favorites[$id]);
+            }
+
+            foreach ($favorites as $id => $favorite) {
+                if (!$favorite instanceof FavoriteTimesheet) {
+                    // auto cleanup in case someone deleted a bookmarked timesheet
+                    $this->removeFavoriteById($user, $id);
+                    continue;
+                }
+
+                $all[$id] = $favorite;
             }
         }
 
-        return array_values($favorites);
+        return array_values($all);
     }
 
     private function getBookmark(User $user): Bookmark
@@ -95,16 +113,25 @@ final class FavoriteRecordService
             throw new \InvalidArgumentException('Cannot favorite timesheet without user');
         }
 
-        $bookmark = $this->getBookmark($timesheet->getUser());
+        if ($timesheet->getId() === null) {
+            throw new \InvalidArgumentException('Cannot favorite unsaved timesheet');
+        }
+
+        $this->removeFavoriteById($timesheet->getUser(), $timesheet->getId());
+    }
+
+    public function removeFavoriteById(User $user, int $timesheetId): void
+    {
+        $bookmark = $this->getBookmark($user);
         $ids = $bookmark->getContent();
 
-        if (!\in_array($timesheet->getId(), $ids)) {
+        if (!\in_array($timesheetId, $ids)) {
             return;
         }
 
         $newIds = [];
         foreach ($ids as $id) {
-            if ($id !== $timesheet->getId()) {
+            if ($id !== $timesheetId) {
                 $newIds[] = $id;
             }
         }

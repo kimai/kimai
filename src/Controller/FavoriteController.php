@@ -20,27 +20,27 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class FavoriteController extends AbstractController
 {
     #[Route(path: '/timesheet/', name: 'favorites_timesheets', methods: ['GET'])]
-    #[IsGranted('view_own_timesheet')]
+    #[IsGranted('start_own_timesheet')]
     public function favoriteAction(): Response
     {
-        return $this->render('partials/recent-activities.html.twig');
+        return $this->render('favorite/index.html.twig');
     }
 
     #[Route(path: '/timesheet/add/{id}', name: 'favorites_timesheets_add', methods: ['GET'])]
-    #[IsGranted('view_own_timesheet')]
+    #[IsGranted('start_own_timesheet')]
     public function add(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
     {
         $favoriteRecordService->addFavorite($timesheet);
 
-        return $this->render('partials/recent-activities.html.twig');
+        return $this->render('favorite/index.html.twig');
     }
 
     #[Route(path: '/timesheet/remove/{id}', name: 'favorites_timesheets_remove', methods: ['GET'])]
-    #[IsGranted('view_own_timesheet')]
+    #[IsGranted('start_own_timesheet')]
     public function remove(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
     {
         $favoriteRecordService->removeFavorite($timesheet);
 
-        return $this->render('partials/recent-activities.html.twig');
+        return $this->render('favorite/index.html.twig');
     }
 }
