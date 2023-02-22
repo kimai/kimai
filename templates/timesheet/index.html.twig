@@ -59,8 +59,10 @@
 {% endblock %}
 
 {% block status %}
-    {% from "macros/status.html.twig" import status_duration %}
-    {{ status_duration(stats.duration|duration) }}
+    {% if stats.duration > 0 %}
+        {% from "macros/status.html.twig" import status_duration %}
+        {{ status_duration(stats.duration|duration) }}
+    {% endif %}
 {% endblock %}
 
 {% block datatable_row_attr %}
