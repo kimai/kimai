@@ -6,15 +6,6 @@
     }
 }
 
-@include media-breakpoint-down(sm) {
-    .notifications-menu .dropdown-menu-card {
-        width: 100vw;
-        right: 0;
-        position: fixed;
-        top: 56px;
-    }
-}
-
 @media (min-width: 360px) {
     .inline-search {
         max-width: 235px;

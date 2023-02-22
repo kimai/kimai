@@ -6966,11 +6966,6 @@ parameters:
             path: src/Timesheet/DateTimeFactory.php
 
         -
-            message: "#^Method App\\\\Timesheet\\\\FavoriteRecordService\\:\\:favoriteEntries\\(\\) should return array\\<App\\\\Model\\\\FavoriteTimesheet\\> but returns array\\<int, App\\\\Model\\\\FavoriteTimesheet\\|bool\\>\\.$#"
-            count: 1
-            path: src/Timesheet/FavoriteRecordService.php
-
-        -
             message: "#^Parameter \\#2 \\$isFavorite of class App\\\\Model\\\\FavoriteTimesheet constructor expects bool, App\\\\Model\\\\FavoriteTimesheet\\|bool given\\.$#"
             count: 1
             path: src/Timesheet/FavoriteRecordService.php

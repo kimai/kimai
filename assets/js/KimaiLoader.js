@@ -22,7 +22,6 @@ import KimaiAPI from "./plugins/KimaiAPI";
 import KimaiAlternativeLinks from "./plugins/KimaiAlternativeLinks";
 import KimaiAjaxModalForm from "./plugins/KimaiAjaxModalForm";
 import KimaiActiveRecords from "./plugins/KimaiActiveRecords";
-import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
 import KimaiAPILink from "./plugins/KimaiAPILink";
 import KimaiAlert from "./plugins/KimaiAlert";
@@ -41,6 +40,7 @@ import KimaiCopyDataForm from "./forms/KimaiCopyDataForm";
 import KimaiDateNowForm from "./forms/KimaiDateNowForm";
 import KimaiNotification from "./plugins/KimaiNotification";
 import KimaiHotkeys from "./plugins/KimaiHotkeys";
+import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
 
 export default class KimaiLoader {
 
@@ -82,7 +82,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
-        kimai.registerPlugin(new KimaiRecentActivities());
+        kimai.registerPlugin(new KimaiRemoteModal());
         kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiMultiUpdateTable());

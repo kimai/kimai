@@ -11,6 +11,14 @@
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+    {% embed '@theme/embeds/modal.html.twig' %}
+        {% block modal_id %}remote_modal{% endblock %}
+        {% block modal_title %}{% endblock %}
+        {% block modal_body %}{% endblock %}
+        {% block modal_footer %}
+            <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
+        {% endblock %}
+    {% endembed %}
     {% block page_search %}{% endblock %}
     <div id="toast-container" class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11"></div>
 {% endblock %}

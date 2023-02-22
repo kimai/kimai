@@ -1,0 +1,39 @@
+{% set favorites = favorite_timesheets(app.user) %}
+{% if favorites|length > 0 %}
+    {% from 'macros/widgets.html.twig' import label_customer, label_project, label_activity %}
+    {% set class = "btn-outline-white" %}
+    {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
+        {% set class = "btn-dark" %}
+    {% endif %}
+    <div class="list-group list-group-flush list-group-hoverable menu">
+        {% for favorite in favorites %}
+            {% set entry = favorite.getTimesheet() %}
+            <div class="list-group-item">
+                <div class="row align-items-center">
+                    <div class="col text-truncate" >
+                        <a class="api-link text-decoration-none text-body d-block" href="{{ path('restart_timesheet', {'id': entry.id}) }}"
+                           data-event="kimai.timesheetStart kimai.timesheetUpdate kimai.closeRemoteModal" data-method="PATCH" data-msg-error="timesheet.start.error"
+                           data-msg-success="timesheet.start.success">
+                            {{ label_activity(entry.activity) }}
+                            <div class="d-block text-truncate mt-n1">
+                                {{ label_project(entry.project) }}
+                                {{ label_customer(entry.project.customer) }}
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        {% if favorite.isFavorite() %}
+                        <a href="{{ path('favorites_timesheets_remove', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions show remote-modal-reload">
+                            <i class="text-yellow {{ 'bookmarked'|icon }}"></i>
+                        </a>
+                        {% else %}
+                        <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions remote-modal-reload">
+                            <i class="{{ 'bookmark'|icon }}"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
