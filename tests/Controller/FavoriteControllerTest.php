@@ -39,8 +39,7 @@ class FavoriteControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
-        self::assertStringContainsString('<div class="nav-item dropdown d-flex me-sm-3 me-1 notifications-menu" data-reload="/en/favorite/timesheet/">', $content);
-        self::assertStringContainsString('<div class="card-header">', $content);
-        self::assertStringContainsString('Restart one of your last activities', $content);
+        self::assertStringContainsString('<a class="api-link text-decoration-none text-body d-block" href="/api/timesheets/', $content);
+        self::assertStringContainsString('data-event="kimai.timesheetStart kimai.timesheetUpdate kimai.closeRemoteModal" data-method="PATCH" data-msg-error="timesheet', $content);
     }
 }
