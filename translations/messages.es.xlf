@@ -1446,6 +1446,22 @@
         <source>Activated</source>
         <target state="translated">Activado</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Idiomas admitidos con reglas de formato</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Tiempo</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 horas</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Además de traducir la interfaz, esta configuración también es responsable de los formatos de hora, fecha y moneda.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

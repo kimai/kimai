@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Типово: один запис на одну реєстрацію часу</target>
+        <target state="translated">Типово: на одну реєстрацію часу — один запис</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Користувач: один запис на одного користувача</target>
+        <target state="translated">Користувач: один запис на користувача</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Проєкт: один запис на один проєкт</target>
+        <target state="translated">Проєкт: один запис на проєкт</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
