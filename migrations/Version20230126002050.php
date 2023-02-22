@@ -28,7 +28,7 @@ final class Version20230126002050 extends AbstractMigration
     {
         // make sure to take the 24-hour setting over by switching to britain format
         $this->addSql("UPDATE kimai2_user_preferences SET `value` = 'en_GB' WHERE `value` = 'en'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `value` = 'en' WHERE `value` = 'en_GB' AND `name` = 'language' AND `user_id` = (SELECT user_id FROM kimai2_user_preferences WHERE `value` = '0' AND `name` = 'hours_24')");
+        $this->addSql("UPDATE kimai2_user_preferences p0 SET p0.`value` = 'en' WHERE p0.`value` = 'en_GB' AND p0.`name` = 'language' AND p0.`user_id` = (SELECT p1.user_id FROM kimai2_user_preferences p1 WHERE p1.`value` = '0' AND p1.`name` = 'hours_24')");
 
         $this->addSql("DELETE FROM kimai2_user_preferences WHERE `name` = 'theme.collapsed_sidebar'");
         $this->addSql("DELETE FROM kimai2_user_preferences WHERE `name` = 'collapsed_sidebar'");
