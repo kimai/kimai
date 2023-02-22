@@ -36,7 +36,9 @@
 
 {% block status %}
     {% from "macros/status.html.twig" import status_duration, status_money %}
-    {{ status_duration(totalDuration|duration) }}
+    {% if totalDuration > 0 %}
+        {{ status_duration(totalDuration|duration) }}
+    {% endif %}
     {% for totalCurrency, totalRate in totalRates %}
         {{ status_money(totalRate|money(totalCurrency)) }}
     {% endfor %}
