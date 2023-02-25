@@ -22,8 +22,7 @@ final class TagsType extends AbstractType
         private AuthorizationCheckerInterface $auth,
         private TagRepository $repository,
         private CacheInterface $cache
-    )
-    {
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
