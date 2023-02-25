@@ -30,6 +30,10 @@
         <source>team.activity_visibility_inherited</source>
         <target>Activitatea are access limitat, deoarece permisiunile echipei sunt setate pentru proiect și/sau pentru client.</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="translated">Membru</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

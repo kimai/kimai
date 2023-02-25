@@ -430,6 +430,26 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Ne pare rău, bugetul este epuizat.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">A existat o problemă de salvare.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Aveți o înregistrare de timp activă care nu poate fi oprită automat.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Valoarea dată nu este un format valabil pentru ora zilei.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Acesta nu este un nume valid pentru un rol de utilizator.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Codul dat nu este token-ul TOTP corect.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
