@@ -6516,11 +6516,6 @@ parameters:
             path: src/Repository/Result/TimesheetResult.php
 
         -
-            message: "#^Method App\\\\Repository\\\\RolePermissionRepository\\:\\:saveRolePermission\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/RolePermissionRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\RoleRepository\\:\\:deleteRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/RoleRepository.php

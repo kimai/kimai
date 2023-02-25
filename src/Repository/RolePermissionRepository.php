@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class RolePermissionRepository extends EntityRepository
 {
-    public function saveRolePermission(RolePermission $permission)
+    public function saveRolePermission(RolePermission $permission): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($permission);

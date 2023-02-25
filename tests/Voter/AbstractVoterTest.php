@@ -12,7 +12,9 @@ namespace App\Tests\Voter;
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
+use App\User\PermissionService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 abstract class AbstractVoterTest extends TestCase
@@ -101,8 +103,9 @@ abstract class AbstractVoterTest extends TestCase
                 $names[$name] = true;
             }
         }
+        /** @var RolePermissionRepository $repository */
+        $service = new PermissionService($repository, new ArrayAdapter());
 
-        /* @var RolePermissionRepository $repository */
-        return new RolePermissionManager($repository, $perms, $names);
+        return new RolePermissionManager($service, $perms, $names);
     }
 }
