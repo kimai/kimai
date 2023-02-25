@@ -21,7 +21,11 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
+        /** @var array<string, InvoiceDocument|null|bool> $payload */
         $payload = $event->getPayload();
+        if (!\is_array($payload)) {
+            return;
+        }
 
         /** @var InvoiceDocument|null $document */
         $document = $payload['document'];
