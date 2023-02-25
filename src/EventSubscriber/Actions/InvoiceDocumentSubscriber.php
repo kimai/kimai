@@ -43,12 +43,14 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
         /** @var string $token */
         $token = \array_key_exists('token', $payload) ? $payload['token'] : null;
 
-        if (!$inUse) {
-            $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $token]), false);
-        }
+        $event->addAction('download', ['url' => $this->path('admin_invoice_document_download', ['document' => $document->getId()])]);
 
         if ($document->isTwig()) {
             $event->addAction('Reload', ['url' => $this->path('admin_invoice_document_reload', ['document' => $document->getId()])]);
+        }
+
+        if (!$inUse) {
+            $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $token]), false);
         }
     }
 }
