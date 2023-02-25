@@ -45,7 +45,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
-    private ?string $name;
+    private ?string $name = null;
     #[ORM\Column(name: 'number', type: 'string', length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
