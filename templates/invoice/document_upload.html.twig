@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
+{% block status %}
+    {% from "macros/status.html.twig" import status_count %}
+    {{ status_count(documents|length) }}
+{% endblock %}
+
 {% block main %}
     {% if can_upload and form is not null %}
         {% embed '@theme/embeds/card.html.twig' %}
@@ -60,9 +65,7 @@
                                 {% endif %}
                             </td>
                             <td class="actions">
-                                {% if not config.used %}
-                                    {{ actions.invoice_document(document, 'index') }}
-                                {% endif %}
+                                {{ actions.invoice_document(document, config.used, 'index') }}
                             </td>
                         </tr>
                     {% endfor %}

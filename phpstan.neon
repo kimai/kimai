@@ -2761,16 +2761,6 @@ parameters:
             path: src/EventSubscriber/Actions/DashboardSubscriber.php
 
         -
-            message: "#^Cannot access offset 'document' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/InvoiceDocumentSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'token' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/InvoiceDocumentSubscriber.php
-
-        -
             message: "#^Cannot access offset 'invoice' on mixed\\.$#"
             count: 1
             path: src/EventSubscriber/Actions/InvoiceSubscriber.php
