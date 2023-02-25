@@ -447,6 +447,22 @@ final class InvoiceController extends AbstractController
         return $this->renderTemplateForm($template, $request);
     }
 
+    #[Route(path: '/document_download/{document}', name: 'admin_invoice_document_download', methods: ['GET'])]
+    #[IsGranted('upload_invoice_template')]
+    public function downloadDocument(string $document, Environment $twig): Response
+    {
+        $event = new InvoiceDocumentsEvent($this->service->getDocuments(true));
+        $this->dispatcher->dispatch($event);
+
+        foreach ($event->getInvoiceDocuments() as $doc) {
+            if ($document === $doc->getId()) {
+                return $this->file($doc->getFilename());
+            }
+        }
+
+        throw $this->createNotFoundException('Unknown document: ' . $document);
+    }
+
     #[Route(path: '/document_upload', name: 'admin_invoice_document_upload', methods: ['GET', 'POST'])]
     #[IsGranted('upload_invoice_template')]
     public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration): Response

@@ -30,6 +30,8 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
             return;
         }
 
+        $event->addAction('download', ['url' => $this->path('admin_invoice_document_download', ['document' => $document->getId()])]);
+
         if ($this->isGranted('manage_invoice_template')) {
             $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $payload['token']]), false);
         }
