@@ -25,13 +25,22 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
 
         /** @var InvoiceDocument|null $document */
         $document = $payload['document'];
+        $inUse = \array_key_exists('in_use', $payload) ? $payload['in_use'] : false;
 
         if ($document === null) {
             return;
         }
 
-        if ($this->isGranted('manage_invoice_template')) {
+        if (!$this->isGranted('manage_invoice_template')) {
+            return;
+        }
+
+        if (!$inUse) {
             $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $payload['token']]), false);
+        }
+
+        if ($document->isTwig()) {
+            $event->addAction('Reload', ['url' => $this->path('admin_invoice_document_reload', ['document' => $document->getId()])]);
         }
     }
 }
