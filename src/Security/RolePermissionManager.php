@@ -10,7 +10,6 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Repository\RolePermissionRepository;
 use App\User\PermissionService;
 
 final class RolePermissionManager
@@ -30,7 +29,7 @@ final class RolePermissionManager
     private bool $isInitialized = false;
 
     /**
-     * @param RolePermissionRepository $repository
+     * @param PermissionService $service
      * @param array<string, array<string, bool>> $permissions as defined in kimai.yaml
      * @param array<string, bool> $permissionNames as defined in kimai.yaml
      */

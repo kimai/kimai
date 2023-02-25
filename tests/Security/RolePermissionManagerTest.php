@@ -12,7 +12,9 @@ namespace App\Tests\Security;
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
+use App\User\PermissionService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 /**
  * @covers \App\Security\RolePermissionManager
@@ -23,9 +25,10 @@ class RolePermissionManagerTest extends TestCase
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([]);
-
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, [], []);
+        $service = new PermissionService($repository, new ArrayAdapter());
+
+        $sut = new RolePermissionManager($service, [], []);
         self::assertFalse($sut->isRegisteredPermission('foo'));
         self::assertEquals([], $sut->getPermissions());
         self::assertFalse($sut->hasPermission('TEST_ROLE', 'foo'));
@@ -39,9 +42,10 @@ class RolePermissionManagerTest extends TestCase
             ['permission' => 'bar', 'role' => 'USER_ROLE', 'allowed' => true],
             ['permission' => 'foo', 'role' => 'USER_ROLE', 'allowed' => false],
         ]);
-
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, [], []);
+        $service = new PermissionService($repository, new ArrayAdapter());
+
+        $sut = new RolePermissionManager($service, [], []);
 
         // only data injected through the config will be registered as "known"
         self::assertFalse($sut->isRegisteredPermission('foo'));
@@ -57,9 +61,10 @@ class RolePermissionManagerTest extends TestCase
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([]);
-
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, ['TEST_ROLE' => ['foo' => true], 'USER_ROLE' => ['bar' => true]], ['foo' => true, 'bar' => true]);
+        $service = new PermissionService($repository, new ArrayAdapter());
+
+        $sut = new RolePermissionManager($service, ['TEST_ROLE' => ['foo' => true], 'USER_ROLE' => ['bar' => true]], ['foo' => true, 'bar' => true]);
 
         self::assertTrue($sut->isRegisteredPermission('foo'));
         self::assertTrue($sut->isRegisteredPermission('bar'));
@@ -82,9 +87,10 @@ class RolePermissionManagerTest extends TestCase
             ['permission' => 'view_user', 'role' => 'ROLE_SUPER_ADMIN', 'allowed' => false],
             ['permission' => 'create_user', 'role' => 'ROLE_SUPER_ADMIN', 'allowed' => false],
         ]);
-
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, [
+        $service = new PermissionService($repository, new ArrayAdapter());
+
+        $sut = new RolePermissionManager($service, [
             'ROLE_SUPER_ADMIN' => ['role_permissions' => true, 'view_user' => true, 'create_user' => true],
             'TEST_ROLE' => ['foo2' => true, 'foo' => true],
             'USER_ROLE' => ['foo' => true, 'bar' => true]

@@ -22,7 +22,10 @@ use Symfony\Contracts\Cache\ItemInterface;
  */
 class PermissionService
 {
-    private static ?array $cacheAll = null;
+    /**
+     * @var null|array<int, array<string, string|bool>>
+     */
+    private ?array $cacheAll = null;
 
     public function __construct(
         private RolePermissionRepository $repository,
@@ -46,14 +49,14 @@ class PermissionService
      */
     public function getPermissions(): array
     {
-        if (self::$cacheAll === null) {
-            self::$cacheAll = $this->cache->get('permissions', function (ItemInterface $item) {
+        if ($this->cacheAll === null) {
+            $this->cacheAll = $this->cache->get('permissions', function (ItemInterface $item) {
                 $item->expiresAfter(86400); // one day
 
                 return $this->repository->getAllAsArray();
             });
         }
 
-        return self::$cacheAll;
+        return $this->cacheAll;
     }
 }
