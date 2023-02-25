@@ -11,8 +11,8 @@
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
 
-{% macro invoice_document(document, view) %}
+{% macro invoice_document(document, inUse, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_document', view, {'document': document, 'token': csrf_token('invoice.delete_document')}) %}
+    {% set event = actions(app.user, 'invoice_document', view, {'document': document, 'in_use': inUse, 'token': csrf_token('invoice.delete_document')}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}

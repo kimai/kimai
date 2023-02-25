@@ -37,6 +37,11 @@ final class InvoiceDocument
         return $path;
     }
 
+    public function isTwig(): bool
+    {
+        return $this->getFileExtension() === 'twig';
+    }
+
     public function getFileExtension(): string
     {
         return $this->file->getExtension();
