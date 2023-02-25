@@ -11,6 +11,7 @@ namespace App\Security;
 
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
+use App\User\PermissionService;
 
 final class RolePermissionManager
 {
@@ -33,7 +34,7 @@ final class RolePermissionManager
      * @param array<string, array<string, bool>> $permissions as defined in kimai.yaml
      * @param array<string, bool> $permissionNames as defined in kimai.yaml
      */
-    public function __construct(private RolePermissionRepository $repository, private array $permissions, private array $permissionNames)
+    public function __construct(private PermissionService $service, private array $permissions, private array $permissionNames)
     {
     }
 
@@ -43,7 +44,7 @@ final class RolePermissionManager
             return;
         }
 
-        foreach ($this->repository->getAllAsArray() as $item) {
+        foreach ($this->service->getPermissions() as $item) {
             $perm = (string) $item['permission'];
             $role = (string) $item['role'];
 

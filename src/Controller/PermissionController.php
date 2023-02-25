@@ -16,11 +16,11 @@ use App\Event\PermissionSectionsEvent;
 use App\Event\PermissionsEvent;
 use App\Form\RoleType;
 use App\Model\PermissionSection;
-use App\Repository\RolePermissionRepository;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Security\RolePermissionManager;
 use App\Security\RoleService;
+use App\User\PermissionService;
 use App\Utils\PageSetup;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -227,7 +227,7 @@ final class PermissionController extends AbstractController
 
     #[Route(path: '/roles/{id}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
     #[IsGranted('role_permissions')]
-    public function savePermission(Role $role, string $name, bool $value, string $csrfToken, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function savePermission(Role $role, string $name, bool $value, string $csrfToken, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
             throw new BadRequestHttpException('Invalid CSRF token');
@@ -242,7 +242,7 @@ final class PermissionController extends AbstractController
         }
 
         try {
-            $permission = $rolePermissionRepository->findRolePermission($role, $name);
+            $permission = $permissionService->findRolePermission($role, $name);
             if (null === $permission) {
                 $permission = new RolePermission();
                 $permission->setRole($role);
@@ -250,7 +250,7 @@ final class PermissionController extends AbstractController
             }
             $permission->setAllowed($value);
 
-            $rolePermissionRepository->saveRolePermission($permission);
+            $permissionService->saveRolePermission($permission);
 
             // refreshToken instead of getToken for more security but worse UX
             // fast clicking with slow response times would fail, as the token cannot be replaced fast enough
