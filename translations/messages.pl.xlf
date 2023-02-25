@@ -1394,6 +1394,74 @@
         <source>Deactivated</source>
         <target state="translated">Dezaktywowane</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Obsługiwane języki z zasadami formatowania</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Poza tłumaczeniem interfejsu, ustawienie to odpowiada także za format czasu, daty oraz waluty.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24-godzinny</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Czas</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Ten tekst jest wykorzystywany w dokumentach fakturowych i może być używany np. w celu odnotowania dalszych warunków dostawy.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Wzór</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Jeśli ustawienie jest wyłączone, przedmiot nie jest wyświetlany w oknach rozwijanych i przeglądzie list.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Jeśli ustawienie jest wyłączone, wszystkie wpisy dotyczące czasu pracy zarejestrowane w przyszłości zostaną oznaczone jako "nierozliczane".</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Możesz ułożyć swoje widżety na nowo używając przeciągnij &amp; upuść. Dodawanie widżetów zapisuje oczekujące zmiany.</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Odrzuciłeś powiadomienia. Zapoznaj się proszę z dokumentacją swojej przeglądarki aby dowiedzieć się, jak je włączyć.</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help">
+        <source>active.help</source>
+        <target state="translated">Zdezaktywowani użytkownicy nie mają możliwości logowania się i zostają ukryci w raportach i oknach wyboru.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Faktury dla tego klienta są generowane domyślnie za pomocą tego szablonu. W razie potrzeby można go zmienić podczas generowania faktury.</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target state="translated">W przypadku wyłączenia tego ustawienia, czas może być rejestrowany jedynie przy działaniach specyficznych dla projektu.</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">Nie wprowadzono jeszcze hasła do API. Ze względów bezpieczeństwa nie będziesz mógł korzystać z API, dopóki nie wprowadzisz hasła.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Ten tekst zastępuje nazwę przedmiotu, umożliwiając bardziej szczegółowe oznaczenie dla przedmiotów faktury.</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target state="translated">W przypadku braku wyboru projektu, aktywność ta staje się globalna i może zostać połączona z każdym projektem. Jeśli projekt zostanie wybrany, aktywność może być używana jedynie z tym projektem. Tego ustawienia nie można później zmienić.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

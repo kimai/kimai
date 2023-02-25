@@ -10,6 +10,14 @@
         <source>plugin.marketplace</source>
         <target state="translated">Plugin-uri noi de pe piață</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Cumpărați acum</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Mai multe extensii</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

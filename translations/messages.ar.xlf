@@ -1356,6 +1356,46 @@
         <source>Activated</source>
         <target state="translated">مُفعَّل</target>
       </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">الرجاء إدخال رمز التأكيد لإكمال عملية تسجيل الدخول.</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">الوقت</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">اللغات المدعومة بقواعد التنسيق</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">بالإضافة إلى ترجمة الواجهة ، فإن هذا الإعداد مسؤول أيضا عن صِيَغ الوقت والتاريخ والعملة.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 ساعة</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">رمز التأكيد</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">الإشعارات</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">شكرا لموافقتك على تلقي الإشعارات!</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">يتم إنشاء فواتير هذا الزبون بشكل افتراضي باستخدام هذا النموذج. يمكن تغييره أثناء إنشاء الفاتورة إذا لزم الأمر.</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">لم تقم بعد بإدخال كلمة مرور API. لأسباب أمنية ، لا يمكنك استخدام واجهة برمجة التطبيقات حتى تقوم بحفظ كلمة مرور.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -102,6 +102,14 @@
         <source>invoice.cancel</source>
         <target>Anulare factură</target>
       </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard">
+        <source>vcard</source>
+        <target state="translated">Carte de vizită</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add">
+        <source>Add widget</source>
+        <target state="translated">Adăugați widget</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

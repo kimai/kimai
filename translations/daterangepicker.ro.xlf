@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="daterangepicker.en.xlf">
     <body>
@@ -33,6 +33,14 @@
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
         <target>Anul acesta</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Perioada totală</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+        <source>This year — until today</source>
+        <target state="translated">Anul acesta - până astăzi</target>
       </trans-unit>
     </body>
   </file>

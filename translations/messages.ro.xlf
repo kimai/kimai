@@ -1138,6 +1138,10 @@
         <source>about.title</source>
         <target>Despre Kimai</target>
       </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">Resetați filtrul de căutare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
