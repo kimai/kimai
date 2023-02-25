@@ -28,8 +28,7 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
         }
 
         /** @var InvoiceDocument|null $document */
-        $document = $payload['document'];
-        $inUse = \array_key_exists('in_use', $payload) ? $payload['in_use'] : false;
+        $document = \array_key_exists('document', $payload) ? $payload['document'] : null;
 
         if ($document === null) {
             return;
@@ -39,8 +38,13 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
             return;
         }
 
+        /** @var bool $inUse */
+        $inUse = \array_key_exists('in_use', $payload) ? $payload['in_use'] : false;
+        /** @var string $token */
+        $token = \array_key_exists('token', $payload) ? $payload['token'] : null;
+
         if (!$inUse) {
-            $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $payload['token']]), false);
+            $event->addDelete($this->path('invoice_document_delete', ['id' => $document->getId(), 'token' => $token]), false);
         }
 
         if ($document->isTwig()) {
