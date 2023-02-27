@@ -39,13 +39,11 @@ final class RateService implements RateServiceInterface
         if (null !== $rate) {
             if ($rate->isFixed()) {
                 $fixedRate ??= $rate->getRate();
-                $fixedInternalRate = $rate->getRate();
                 if (null !== $rate->getInternalRate()) {
                     $fixedInternalRate = $rate->getInternalRate();
                 }
             } else {
                 $hourlyRate ??= $rate->getRate();
-                $internalRate = $rate->getRate();
                 if (null !== $rate->getInternalRate()) {
                     $internalRate = $rate->getInternalRate();
                 }
