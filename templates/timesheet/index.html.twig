@@ -14,6 +14,7 @@
     {% set day = null %}
     {% set dayDuration = 0 %}
     {% set dayRate = {} %}
+    {% set dayInternalRate = {} %}
     {% set dayHourlyRate = 0 %}
     {% set lastEntry = null %}
 
@@ -22,10 +23,11 @@
             {% set day = entry.begin|date_short %}
         {% endif %}
         {%- if showSummary and day is not same as(entry.begin|date_short) -%}
-            {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, sortedColumns, dataTable) }}
+            {{ _self.summary(day, dayDuration, dayHourlyRate, dayInternalRate, dayRate, sortedColumns, dataTable) }}
             {% set day = entry.begin|date_short %}
             {% set dayDuration = 0 %}
             {% set dayRate = {} %}
+            {% set dayInternalRate = {} %}
             {% set dayHourlyRate = 0 %}
         {%- endif -%}
         {%- set customerCurrency = entry.project.customer.currency -%}
@@ -41,7 +43,11 @@
             {% if dayRate[customerCurrency] is not defined %}
                 {% set dayRate = dayRate|merge({(customerCurrency): 0}) %}
             {% endif %}
+            {% if dayInternalRate[customerCurrency] is not defined %}
+                {% set dayInternalRate = dayInternalRate|merge({(customerCurrency): 0}) %}
+            {% endif %}
             {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
+            {% set dayInternalRate = dayInternalRate|merge({(customerCurrency): dayInternalRate[customerCurrency] + entry.internalRate}) %}
         {%- endif -%}
         {% if dayHourlyRate is not null %}
             {% if dayHourlyRate == 0 %}
@@ -54,7 +60,7 @@
         {% set lastEntry = entry %}
     {% endfor %}
     {% if showSummary %}
-        {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, sortedColumns, dataTable) }}
+        {{ _self.summary(day, dayDuration, dayHourlyRate, dayInternalRate, dayRate, sortedColumns, dataTable) }}
     {% endif %}
 {% endblock %}
 
@@ -107,10 +113,16 @@
     {% elseif column == 'hourlyRate' %}
         {{ entryHourlyRate }}
     {% elseif column == 'rate' %}
-        {% if not entry.end or not is_granted('view_rate', entry) %}
+        {% if not entry.end or not view_rate %}
             &dash;
         {% else %}
             {{ entry.rate|money(customerCurrency) }}
+        {% endif %}
+    {% elseif column == 'internalRate' %}
+        {% if not entry.end or not view_rate %}
+            &dash;
+        {% else %}
+            {{ entry.internalRate|money(customerCurrency) }}
         {% endif %}
     {% elseif column == 'customer' %}
         {{ widgets.label_customer(entry.project.customer) }}
@@ -143,7 +155,7 @@
     </td>
 {% endblock %}
 
-{% macro summary(day, duration, dayHourlyRate, dayRates, sortedColumns, dataTable) %}
+{% macro summary(day, duration, dayHourlyRate, dayInternalRates, dayRates, sortedColumns, dataTable) %}
     {% import "macros/datatables.html.twig" as tables %}
     <tr class="summary info">
     {% for column, data in sortedColumns %}
@@ -158,6 +170,13 @@
             {% endif %}
         {% elseif column == 'rate' %}
             {% for currency, rate in dayRates %}
+                {{ rate|money(currency) }}
+                {% if not loop.last %}
+                    <br>
+                {% endif %}
+            {% endfor %}
+        {% elseif column == 'internalRate' %}
+            {% for currency, rate in dayInternalRates %}
                 {{ rate|money(currency) }}
                 {% if not loop.last %}
                     <br>

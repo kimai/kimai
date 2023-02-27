@@ -88,6 +88,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($canSeeRate) {
             $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
+            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap']);
             $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
         }
 
@@ -113,6 +114,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $page->setActionName($this->getActionName());
 
         return $this->render('timesheet/index.html.twig', [
+            'view_rate' => $canSeeRate,
             'page_setup' => $page,
             'dataTable' => $table,
             'action_single' => $this->getActionNameSingle(),
