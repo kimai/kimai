@@ -46,8 +46,13 @@ final class ActivityHelper
         $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $activity->getComment() ?? '', $name);
 
-        $name = ltrim($name, self::SPACER);
-        $name = rtrim($name, self::SPACER);
+        while (str_starts_with($name, self::SPACER)) {
+            $name = substr($name, \strlen(self::SPACER));
+        }
+
+        while (str_ends_with($name, self::SPACER)) {
+            $name = substr($name, 0, -\strlen(self::SPACER));
+        }
 
         if ($name === '' || $name === self::SPACER) {
             $name = $activity->getName();

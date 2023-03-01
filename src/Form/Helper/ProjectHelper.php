@@ -56,7 +56,7 @@ final class ProjectHelper
         $name = $this->getChoicePattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
-        $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()->getName() ?? '', $name);
+        $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()?->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);
 
         if ($this->dateFormatter === null) {
@@ -75,7 +75,7 @@ final class ProjectHelper
         if ($this->showStart) {
             $start = '';
             if ($project->getStart() !== null) {
-                $start = $this->translator->trans('project_start') . ': ' . $this->dateFormatter->format($project->getStart()) . ' ';
+                $start = $this->translator->trans('project_start') . ': ' . $this->dateFormatter->format($project->getStart());
             }
             $name = str_replace(self::PATTERN_START, $start, $name);
         }
@@ -83,14 +83,18 @@ final class ProjectHelper
         if ($this->showEnd) {
             $end = '';
             if ($project->getEnd() !== null) {
-                $end = ' ' . $this->translator->trans('project_end') . ': ' . $this->dateFormatter->format($project->getEnd());
+                $end = $this->translator->trans('project_end') . ': ' . $this->dateFormatter->format($project->getEnd());
             }
             $name = str_replace(self::PATTERN_END, $end, $name);
         }
 
-        $name = ltrim($name, self::SPACER);
-        $name = rtrim($name, self::SPACER);
-        $name = str_replace('- ?-?', '', $name);
+        while (str_starts_with($name, self::SPACER)) {
+            $name = substr($name, \strlen(self::SPACER));
+        }
+
+        while (str_ends_with($name, self::SPACER)) {
+            $name = substr($name, 0, -\strlen(self::SPACER));
+        }
 
         if ($name === '' || $name === self::SPACER) {
             $name = $project->getName();
