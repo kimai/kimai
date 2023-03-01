@@ -110,6 +110,10 @@
         <source>Add widget</source>
         <target state="translated">Adăugați widget</target>
       </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove">
+        <source>Remove widget</source>
+        <target state="translated">Eliminați widget-ul</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

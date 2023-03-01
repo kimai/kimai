@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>Contact</source>
-        <target state="needs-translation">Kontakt</target>
+        <target state="translated">Kontakt</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>

@@ -1446,6 +1446,22 @@
         <source>stats.userDurationToday</source>
         <target state="translated">Mes heures de travail aujourd'hui</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Langues prises en charge avec règles de formatage</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Outre la traduction de l'interface, ce paramètre est également responsable des formats d'heure, de date et de devise.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 heures</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Heure</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

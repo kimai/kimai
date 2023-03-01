@@ -1142,6 +1142,10 @@
         <source>remove_filter</source>
         <target state="translated">Resetați filtrul de căutare</target>
       </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Deblocați contul</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
