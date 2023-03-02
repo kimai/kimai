@@ -5606,11 +5606,6 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$email has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php

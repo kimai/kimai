@@ -46,8 +46,11 @@ trait TwigRendererTrait
     {
         /** @var TranslationExtension $extension */
         $extension = $twig->getExtension(TranslationExtension::class);
-        /** @var LocaleAwareInterface $translator */
+
         $translator = $extension->getTranslator();
+        if (!$translator instanceof LocaleAwareInterface) {
+            throw new \Exception('Translator is expected to be of type LocaleAwareInterface');
+        }
         $previous = $translator->getLocale();
         $translator->setLocale($language);
 
