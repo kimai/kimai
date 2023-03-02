@@ -533,10 +533,16 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                 if (Array.isArray(newValue)) {
                     let urlParams = [];
                     for (let tmpValue of newValue) {
+                        if (tmpValue === null) {
+                            tmpValue = '';
+                        }
                         urlParams.push(originalFieldName + '=' + tmpValue);
                     }
                     newApiUrl = newApiUrl.replace(item, urlParams.join('&'));
                 } else {
+                    if (newValue === null) {
+                        newValue = '';
+                    }
                     newApiUrl = newApiUrl.replace(value, newValue);
                 }
             }
