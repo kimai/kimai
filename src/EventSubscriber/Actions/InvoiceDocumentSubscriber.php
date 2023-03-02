@@ -46,7 +46,7 @@ final class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
         $event->addAction('download', ['url' => $this->path('admin_invoice_document_download', ['document' => $document->getId()])]);
 
         if ($document->isTwig()) {
-            $event->addAction('Reload', ['url' => $this->path('admin_invoice_document_reload', ['document' => $document->getId()])]);
+            $event->addAction('reload', ['url' => $this->path('admin_invoice_document_reload', ['document' => $document->getId()])]);
         }
 
         if (!$inUse) {

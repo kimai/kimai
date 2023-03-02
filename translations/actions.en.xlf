@@ -6,6 +6,10 @@
         <source>stop</source>
         <target>Stop</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target>Reload</target>
+      </trans-unit>
       <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
         <target>Back</target>
