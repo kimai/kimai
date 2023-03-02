@@ -536,11 +536,21 @@ export default class KimaiCalendar {
             color = defaultColor;
         }
 
+        /** @type {KimaiDateUtils} DATES */
+        const DATES = this.kimai.getPlugin('date');
+
         let title = this.options['patterns']['title'];
         title = title.replace('{project}', apiItem.project.name);
         title = title.replace('{customer}', apiItem.project.customer.name);
         title = title.replace('{description}', apiItem.description ?? '');
         title = title.replace('{activity}', apiItem.activity.name ?? '');
+
+        if (apiItem.end === null) {
+            // duration = 0 and end = null => is a running entry
+            title = title.replace('{duration}', '');
+        } else {
+            title = title.replace('{duration}', DATES.formatDuration(apiItem.duration));
+        }
 
         if (title === '' || title === null) {
             title = apiItem.activity.name;
