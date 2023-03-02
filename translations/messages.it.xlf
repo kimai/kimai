@@ -326,7 +326,7 @@
       </trans-unit>
       <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
-        <target>Cancella</target>
+        <target state="translated">Elimina</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
@@ -1196,6 +1196,74 @@
       <trans-unit id="Eq2E_Rd" resname="menu.apps">
         <source>Apps</source>
         <target state="translated">Applicazioni</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Design</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Questo testo sostituisce il nome dell'oggetto, consentendo etichette più dettagliate per le voci della fattura.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Se l'impostazione è disattivata, l'oggetto non viene visualizzato nelle caselle a discesa e nelle visualizzazioni a elenco.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Se l'impostazione è disattivata, tutte le voci di tempo registrate in futuro saranno contrassegnate come «non fatturabili».</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">Crea un nuovo file con il nome «%input%»</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Questo testo viene utilizzato nei documenti di fattura e può essere usato, ad esempio, per annotare ulteriori condizioni di consegna.</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Lingue supportate con regole di formattazione</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Oltre a tradurre l'interfaccia, questa impostazione è responsabile anche dei formati di ora, data e valuta.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 ore</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Ora</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Sblocca l'account</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">Sblocca</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">Testo della fattura</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">Attivato</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">Nessun risultato trovato per «%input%»</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Hai rifiutato le notifiche. Fai riferimento alla documentazione del browser Web per scoprire come attivarle.</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Puoi riorganizzare i tuoi widget usando trascina &amp; rilascia. L'aggiunta di widget salva le modifiche in sospeso.</target>
       </trans-unit>
     </body>
   </file>

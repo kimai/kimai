@@ -1396,6 +1396,26 @@
         <source>api_password.missing_description</source>
         <target state="translated">لم تقم بعد بإدخال كلمة مرور API. لأسباب أمنية ، لا يمكنك استخدام واجهة برمجة التطبيقات حتى تقوم بحفظ كلمة مرور.</target>
       </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">إعادة تعيين عوامل تصفية البحث</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">إلغاء قفل الحساب</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">الاستيثاق بخطوتين (TOTP)</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">يرجى تأكيد الرمز الذي سينشط المصادقة بعاملين لهذا الحساب.</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">المستخدمون المحددون / المميزون هم قادة فِرَق.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

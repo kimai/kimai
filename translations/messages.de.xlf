@@ -1423,7 +1423,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target>Diese Einstellung ist neben der Übersetzung der Oberfläche ebenso zuständig für die Zeit-, Datums-, und Währungsformate</target>
+        <target state="translated">Diese Einstellung ist neben der Übersetzung der Oberfläche ebenso zuständig für die Zeit-, Datums-, und Währungsformate.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

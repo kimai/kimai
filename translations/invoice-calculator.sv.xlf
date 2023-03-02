@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Användargrupp - En post per användare</target>
+        <target state="translated">Användare: en post per användare</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,19 +24,19 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Projekt grupperad - en post per projekt</target>
+        <target state="translated">Projekt: en post per projekt</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Datum grupperad - en post per dag (använder start datum)</target>
+        <target state="translated">Datum: en post per dag (använder startdatum)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Pris: en rad per pris</target>
+        <target state="translated">Pris: en post per pris</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Veckovis: en rad per vecka (nyttjar startdatum)</target>
+        <target state="translated">Veckovis: en post per vecka (använder startdatum)</target>
       </trans-unit>
     </body>
   </file>

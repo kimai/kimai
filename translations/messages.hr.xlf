@@ -1446,6 +1446,22 @@
         <source>extended_settings</source>
         <target state="translated">Proširene postavke</target>
       </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Podržani jezici s pravilima formatiranja</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Osim prevođenja sučelja, ova je postavka također odgovorna za formate vremena, datuma i valute.</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 sati</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Vrijeme</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
