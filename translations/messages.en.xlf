@@ -1081,6 +1081,14 @@
         <source>invoice.service_date</source>
         <target>Service date</target>
       </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target>You can change the invoice date here</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target>Invoice date</target>
+      </trans-unit>
       <trans-unit id="zzjZXJx" resname="amount">
         <source>amount</source>
         <target>Quantity</target>

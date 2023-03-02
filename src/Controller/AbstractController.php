@@ -241,7 +241,14 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return substr($query->getName(), 0, 50);
     }
 
-    protected function handleSearch(FormInterface $form, Request $request): bool
+    /**
+     * @param FormInterface $form
+     * @param Request $request
+     * @param array<string> $filterParams parameter names, which should not be saved (neither session, nor database)
+     * @return bool
+     * @throws \Exception
+     */
+    protected function handleSearch(FormInterface $form, Request $request, array $filterParams = []): bool
     {
         $data = $form->getData();
         if (!($data instanceof BaseQuery)) {
@@ -339,7 +346,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         // these should NEVER be saved
-        $filter = ['setDefaultQuery', 'removeDefaultQuery', 'performSearch'];
+        $filter = array_merge(['setDefaultQuery', 'removeDefaultQuery', 'performSearch'], $filterParams);
         foreach ($filter as $name) {
             if (isset($params[$name])) {
                 unset($params[$name]);
