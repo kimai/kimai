@@ -42,11 +42,13 @@ class InvoiceTemplate
     #[ORM\Column(name: 'contact', type: 'text', nullable: true)]
     private ?string $contact = null;
     #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[Assert\NotNull]
     #[Assert\Range(min: 0, max: 999)]
-    private int $dueDays = 30;
+    private ?int $dueDays = 30;
     #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[Assert\NotNull]
     #[Assert\Range(min: 0.0, max: 99.99)]
-    private float $vat = 0.00;
+    private ?float $vat = 0.00;
     #[ORM\Column(name: 'calculator', type: 'string', length: 20, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 20)]
@@ -94,7 +96,7 @@ class InvoiceTemplate
         return $this->title;
     }
 
-    public function setTitle(string $title): InvoiceTemplate
+    public function setTitle(?string $title): InvoiceTemplate
     {
         $this->title = $title;
 
@@ -125,24 +127,24 @@ class InvoiceTemplate
         return $this;
     }
 
-    public function getDueDays(): int
+    public function getDueDays(): ?int
     {
         return $this->dueDays;
     }
 
-    public function setDueDays(int $dueDays): InvoiceTemplate
+    public function setDueDays(?int $dueDays): InvoiceTemplate
     {
         $this->dueDays = $dueDays;
 
         return $this;
     }
 
-    public function getVat(): float
+    public function getVat(): ?float
     {
         return $this->vat;
     }
 
-    public function setVat(float $vat): InvoiceTemplate
+    public function setVat(?float $vat): InvoiceTemplate
     {
         $this->vat = $vat;
 
@@ -154,7 +156,7 @@ class InvoiceTemplate
         return $this->company;
     }
 
-    public function setCompany(string $company): InvoiceTemplate
+    public function setCompany(?string $company): InvoiceTemplate
     {
         $this->company = $company;
 
