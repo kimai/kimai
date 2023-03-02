@@ -81,9 +81,12 @@ final class InvoiceController extends AbstractController
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query);
-        if ($this->handleSearch($form, $request)) {
+        if ($this->handleSearch($form, $request, ['invoiceDate'])) {
             return $this->redirectToRoute('invoice');
         }
+
+        // this can be deleted in the future, but for now invalid bookmarks exists, which contain an old invoice date
+        $query->setInvoiceDate($this->getDateTimeFactory()->createDateTime());
 
         $models = [];
         $total = 0;
