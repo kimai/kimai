@@ -416,9 +416,10 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                 const targetSelect = document.getElementById(apiSelect.dataset['relatedSelect']);
 
                 // if the related target select does not exist, we do not need to load the related data
-                if (targetSelect === null) {
+                if (targetSelect === null || targetSelect.dataset['reloading'] === '1') {
                     return;
                 }
+                targetSelect.dataset['reloading'] = '1';
 
                 if (targetSelect.tomselect !== undefined) {
                     targetSelect.tomselect.disable();
@@ -441,6 +442,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                 if (selectValue === undefined || selectValue === null || selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
                     if (apiSelect.dataset['emptyUrl'] === undefined) {
                         this._updateSelect(targetSelectId, {});
+                        targetSelect.dataset['reloading'] = '0';
                         return;
                     }
                     newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
@@ -454,6 +456,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                     if (targetSelect.tomselect !== undefined) {
                         targetSelect.tomselect.enable();
                     }
+                    targetSelect.dataset['reloading'] = '0';
                     targetSelect.disabled = false;
                 });
             }
