@@ -365,11 +365,15 @@ final class CustomerController extends AbstractController
     #[IsGranted('view', 'customer')]
     public function downloadVCard(Customer $customer): Response
     {
+        if ($customer->getName() === null || \strlen($customer->getName()) === 0) {
+            throw new \Exception('Customer name cannot be null');
+        }
+
         $vcard = new VCard();
 
-        $contact = $customer->getContact() ?? $customer->getName();
+        $contact = $customer->getContact();
         if ($contact === null || \strlen($contact) === 0) {
-            $contact = 'Unknown';
+            $contact = $customer->getName();
         }
 
         $contact = explode(' ', $contact);
