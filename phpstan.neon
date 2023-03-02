@@ -3176,11 +3176,6 @@ parameters:
             path: src/Form/API/TimesheetApiEditForm.php
 
         -
-            message: "#^Strict comparison using \\=\\=\\= between false and false will always evaluate to true\\.$#"
-            count: 1
-            path: src/Form/API/TimesheetApiEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\AbstractRateForm\\:\\:addFields\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/AbstractRateForm.php
@@ -3322,11 +3317,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of method Symfony\\\\Component\\\\Routing\\\\Generator\\\\UrlGeneratorInterface\\:\\:generate\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between non\\-falsy\\-string and '' will always evaluate to true\\.$#"
             count: 1
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
@@ -4961,11 +4951,6 @@ parameters:
             path: src/Form/Type/TeamType.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Form/Type/TimePickerType.php
-
-        -
             message: "#^Parameter \\#1 \\$format of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Form/Type/TimePickerType.php
@@ -5394,11 +5379,6 @@ parameters:
             message: "#^Method App\\\\Invoice\\\\Renderer\\\\AbstractTwigRenderer\\:\\:renderTwigTemplateWithLanguage\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractTwigRenderer.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between float and \\-1 will always evaluate to true\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AdvancedValueBinder.php
 
         -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
@@ -5952,16 +5932,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ProjectStatisticEvent constructor expects App\\\\Model\\\\ProjectStatistic, App\\\\Model\\\\ProjectStatistic\\|null given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between DateTime and false will always evaluate to true\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between null and list\\<array\\{id\\: int\\|numeric\\-string, duration\\: int\\|numeric\\-string, rate\\: float\\|int\\|numeric\\-string, internalRate\\: float\\|int\\|numeric\\-string, counter\\: int\\<0, max\\>\\|numeric\\-string, billable\\: bool, exported\\: bool\\}\\> will always evaluate to true\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
 

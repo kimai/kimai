@@ -65,8 +65,8 @@ final class ExportController extends AbstractController
                         ];
                     }
                     $byCustomer[$cid]['rate'] += $entry->getRate();
-                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
-                    $byCustomer[$cid]['duration'] += $entry->getDuration();
+                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate() ?? 0.0;
+                    $byCustomer[$cid]['duration'] += $entry->getDuration() ?? 0;
                 }
             } catch (TooManyItemsExportException $ex) {
                 $tooManyResults = true;

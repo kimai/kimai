@@ -95,11 +95,11 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $timeRate = $this->rateService->calculate($timesheet);
         $rate = $timeRate->getRate();
 
-        $activityDuration = $duration;
+        $activityDuration = $duration ?? 0;
         $activityRate = $rate;
-        $projectDuration = $duration;
+        $projectDuration = $duration ?? 0;
         $projectRate = $rate;
-        $customerDuration = $duration;
+        $customerDuration = $duration ?? 0;
         $customerRate = $rate;
         $monthWasChanged = false;
 
