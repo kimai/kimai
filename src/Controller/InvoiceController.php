@@ -119,6 +119,8 @@ final class InvoiceController extends AbstractController
                 ->add('template', InvoiceTemplateType::class)
                 ->add('invoiceDate', DatePickerType::class, [
                     'required' => true,
+                    'label' => 'invoice_date',
+                    'help' => 'invoice_date.help'
                 ])
                 ->createView();
         }
