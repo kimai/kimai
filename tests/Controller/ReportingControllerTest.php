@@ -25,7 +25,7 @@ class ReportingControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/reporting/');
-        $nodes = $client->getCrawler()->filter('section.content div.card');
+        $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
         $this->assertCount(11, $nodes);
     }
 
@@ -33,7 +33,7 @@ class ReportingControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');
-        $nodes = $client->getCrawler()->filter('section.content div.card');
+        $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
         $this->assertCount(3, $nodes);
     }
 }
