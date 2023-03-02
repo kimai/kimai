@@ -31,6 +31,9 @@ final class ProjectLoader implements LoaderInterface
 
         $ids = array_map(function ($project) {
             if ($project instanceof Project) {
+                // make sure that this is initialized properly, in case it was a proxy
+                $project->getName(); // @phpstan-ignore-line
+
                 return $project->getId();
             }
 
