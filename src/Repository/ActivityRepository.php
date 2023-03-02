@@ -36,26 +36,6 @@ class ActivityRepository extends EntityRepository
     use RepositorySearchTrait;
 
     /**
-     * @param mixed $id
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return Activity|null
-     */
-    public function find($id, $lockMode = null, $lockVersion = null): ?Activity
-    {
-        /** @var Activity|null $activity */
-        $activity = parent::find($id, $lockMode, $lockVersion);
-        if (null === $activity) {
-            return null;
-        }
-
-        $loader = new ActivityLoader($this->getEntityManager(), true);
-        $loader->loadResults([$activity]);
-
-        return $activity;
-    }
-
-    /**
      * @param Project $project
      * @return Activity[]
      */

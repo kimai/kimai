@@ -29,9 +29,6 @@ final class InvoiceLoader implements LoaderInterface
 
         $ids = array_map(function ($invoice) {
             if ($invoice instanceof Invoice) {
-                // make sure that this is initialized properly, in case it was a proxy
-                $invoice->getInvoiceNumber();
-
                 return $invoice->getId();
             }
 

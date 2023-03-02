@@ -32,9 +32,6 @@ final class TimesheetLoader implements LoaderInterface
 
         $ids = array_map(function ($timesheet) {
             if ($timesheet instanceof Timesheet) {
-                // make sure that this is initialized properly, in case it was a proxy
-                $timesheet->getType();
-
                 return $timesheet->getId();
             }
 

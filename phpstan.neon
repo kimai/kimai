@@ -6021,17 +6021,7 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/ActivityRepository.php
 
@@ -6116,17 +6106,7 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 
@@ -6361,17 +6341,7 @@ parameters:
             path: src/Repository/ProjectRepository.php
 
         -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/ProjectRepository.php
 
@@ -6691,17 +6661,7 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 

@@ -18,7 +18,7 @@ abstract class AbstractPluginExtension extends Extension
     {
         $bundleConfig = [$this->getAlias() => $configs];
 
-        if ($container->hasParameter('kimai.bundles.config')) { // @phpstan-ignore-line
+        if ($container->hasParameter('kimai.bundles.config')) {
             $config = $container->getParameter('kimai.bundles.config');
             if (!\is_array($config)) {
                 throw new \Exception('Invalid bundle configuration registered for ' . $this->getAlias());

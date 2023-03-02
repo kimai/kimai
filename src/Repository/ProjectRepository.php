@@ -39,26 +39,6 @@ class ProjectRepository extends EntityRepository
     use RepositorySearchTrait;
 
     /**
-     * @param mixed $id
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return Project|null
-     */
-    public function find($id, $lockMode = null, $lockVersion = null): ?Project
-    {
-        /** @var Project|null $project */
-        $project = parent::find($id, $lockMode, $lockVersion);
-        if (null === $project) {
-            return null;
-        }
-
-        $loader = new ProjectLoader($this->getEntityManager(), true);
-        $loader->loadResults([$project]);
-
-        return $project;
-    }
-
-    /**
      * @param int[] $projectIds
      * @return Project[]
      */

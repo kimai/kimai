@@ -36,26 +36,6 @@ class CustomerRepository extends EntityRepository
     use RepositorySearchTrait;
 
     /**
-     * @param mixed $id
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return Customer|null
-     */
-    public function find($id, $lockMode = null, $lockVersion = null): ?Customer
-    {
-        /** @var Customer|null $customer */
-        $customer = parent::find($id, $lockMode, $lockVersion);
-        if (null === $customer) {
-            return null;
-        }
-
-        $loader = new CustomerLoader($this->getEntityManager(), true);
-        $loader->loadResults([$customer]);
-
-        return $customer;
-    }
-
-    /**
      * @param int[] $customerIDs
      * @return Customer[]
      */

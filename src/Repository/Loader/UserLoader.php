@@ -30,9 +30,6 @@ final class UserLoader implements LoaderInterface
 
         $ids = array_map(function ($user) {
             if ($user instanceof User) {
-                // make sure that this is initialized properly, in case it was a proxy
-                $user->getDisplayName();
-
                 return $user->getId();
             }
 

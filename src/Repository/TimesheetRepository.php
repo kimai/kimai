@@ -78,26 +78,6 @@ class TimesheetRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param mixed $id
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return Timesheet|null
-     */
-    public function find($id, $lockMode = null, $lockVersion = null): ?Timesheet
-    {
-        /** @var Timesheet|null $timesheet */
-        $timesheet = parent::find($id, $lockMode, $lockVersion);
-        if (null === $timesheet) {
-            return null;
-        }
-
-        $loader = new TimesheetLoader($this->getEntityManager());
-        $loader->loadResults([$timesheet]);
-
-        return $timesheet;
-    }
-
     public function delete(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
