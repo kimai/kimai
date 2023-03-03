@@ -13,11 +13,16 @@ use App\Repository\TagRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 final class TagsType extends AbstractType
 {
-    public function __construct(private AuthorizationCheckerInterface $auth, private TagRepository $repository)
-    {
+    public function __construct(
+        private AuthorizationCheckerInterface $auth,
+        private TagRepository $repository,
+        private CacheInterface $cache
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -29,7 +34,13 @@ final class TagsType extends AbstractType
 
     public function getParent(): string
     {
-        if ($this->repository->count([]) > TagRepository::MAX_AMOUNT_SELECT) {
+        $tagsCount = $this->cache->get('tags_count', function (ItemInterface $item) {
+            $item->expiresAfter(86400); // store it for one day, it doesn't need to be accurate
+
+            return $this->repository->count([]);
+        });
+
+        if ($tagsCount > TagRepository::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;
         }
 
