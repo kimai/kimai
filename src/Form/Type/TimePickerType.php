@@ -52,8 +52,8 @@ final class TimePickerType extends AbstractType
                     // DateTimePickerType
                     if ($options['input'] === 'array' && \is_array($data)) {
                         $now = new \DateTime('now', new \DateTimeZone($options['model_timezone']));
-                        $hour = $data['hour'] === '' ? 0 : (int) $data['hour'];
-                        $minute = $data['minute'] === '' ? 0 : (int) $data['minute'];
+                        $hour = $data['hour'] === '' || !is_numeric($data['hour']) ? 0 : (int) $data['hour'];
+                        $minute = $data['minute'] === '' || !is_numeric($data['minute']) ? 0 : (int) $data['minute'];
                         $now->setTime($hour, $minute, 0);
                         $data = $now;
                     }
