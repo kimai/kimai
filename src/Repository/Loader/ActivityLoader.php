@@ -32,6 +32,9 @@ final class ActivityLoader implements LoaderInterface
 
         $ids = array_map(function ($activity) {
             if ($activity instanceof Activity) {
+                // make sure that this potential doctrine proxy is initialized and filled with all data
+                $activity->getName();
+
                 return $activity->getId();
             }
 

@@ -30,6 +30,9 @@ final class CustomerLoader implements LoaderInterface
 
         $ids = array_map(function ($customer) {
             if ($customer instanceof Customer) {
+                // make sure that this potential doctrine proxy is initialized and filled with all data
+                $customer->getName();
+
                 return $customer->getId();
             }
 

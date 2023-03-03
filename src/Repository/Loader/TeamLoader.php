@@ -29,6 +29,9 @@ final class TeamLoader implements LoaderInterface
 
         $ids = array_map(function ($team) {
             if ($team instanceof Team) {
+                // make sure that this potential doctrine proxy is initialized and filled with all data
+                $team->getName();
+
                 return $team->getId();
             }
 
