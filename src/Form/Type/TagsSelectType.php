@@ -10,7 +10,6 @@
 namespace App\Form\Type;
 
 use App\Entity\Tag;
-use App\Form\DataTransformer\TagsToCollectionTransformer;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
 use App\Utils\Color;
@@ -35,9 +34,12 @@ final class TagsSelectType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+            if (!$options['allow_create']) {
+                return;
+            }
             $tagIds = $event->getData();
-            if (!is_array($tagIds)) {
+            if (!\is_array($tagIds)) {
                 return;
             }
             $ids = array_filter($tagIds, function ($tagId) {
