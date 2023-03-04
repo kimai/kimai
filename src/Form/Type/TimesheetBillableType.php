@@ -22,6 +22,9 @@ final class TimesheetBillableType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'documentation' => [
+                'description' => 'Whether this item should be refundable (yes) or not (no) or if it should be calculated by inherited settings from customer, project and activity (auto).',
+            ],
             'label' => 'billable',
             'choices' => [
                 'automatic' => Timesheet::BILLABLE_AUTOMATIC,
