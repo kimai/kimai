@@ -35,16 +35,12 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
-use App\Utils\FileHelper;
 use App\Utils\PageSetup;
-use JeroenDesloovere\VCard\VCard;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Intl\Countries;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -359,82 +355,6 @@ final class CustomerController extends AbstractController
             'now' => $now,
             'boxes' => $boxes
         ]);
-    }
-
-    #[Route(path: '/{id}/vcard', name: 'customer_vcard', methods: ['GET'])]
-    #[IsGranted('view', 'customer')]
-    public function downloadVCard(Customer $customer): Response
-    {
-        if ($customer->getName() === null || \strlen($customer->getName()) === 0) {
-            throw new \Exception('Customer name cannot be null');
-        }
-
-        $vcard = new VCard();
-
-        $contact = $customer->getContact();
-        if ($contact === null || \strlen($contact) === 0) {
-            $contact = $customer->getName();
-        }
-
-        $contact = explode(' ', $contact);
-        $lastname = array_pop($contact);
-        $firstname = \count($contact) > 0 ? $contact[0] : '';
-        $vcard->addName($lastname, $firstname);
-
-        $note = $customer->getComment();
-        if ($note !== null) {
-            $note .= PHP_EOL;
-        }
-
-        $address = $customer->getAddress();
-        if (!empty($note) || !empty($address)) {
-            $vcard->addNote($note . $address);
-        }
-
-        $country = $customer->getCountry();
-        if ($country !== null) {
-            $vcard->addAddress(null, null, null, null, null, null, Countries::getName($country));
-        }
-
-        $company = $customer->getCompany();
-        if ($company !== null) {
-            $vcard->addCompany($company);
-        }
-
-        $email = $customer->getEmail();
-        if ($email !== null) {
-            $vcard->addEmail($email);
-        }
-
-        $hasPref = false;
-
-        if ($customer->getPhone() !== null) {
-            $hasPref = true;
-            $vcard->addPhoneNumber($customer->getPhone(), 'PREF;WORK');
-        }
-
-        if ($customer->getMobile() !== null) {
-            $type = $hasPref ? 'CELL' : 'PREF;CELL';
-            $vcard->addPhoneNumber($customer->getMobile(), $type);
-        }
-
-        if ($customer->getFax() !== null) {
-            $vcard->addPhoneNumber($customer->getFax(), 'FAX');
-        }
-
-        if ($customer->getHomepage() !== null) {
-            $vcard->addURL($customer->getHomepage(), 'WORK');
-        }
-
-        $response = new Response($vcard->getOutput());
-
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            FileHelper::convertToAsciiFilename($customer->getName()) . '.vcf'
-        );
-        $response->headers->set('Content-Disposition', $disposition);
-
-        return $response;
     }
 
     #[Route(path: '/{id}/rate/{rate}', name: 'admin_customer_rate_edit', methods: ['GET', 'POST'])]

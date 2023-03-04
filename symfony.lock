@@ -141,9 +141,6 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
     },
-    "jeroendesloovere/vcard": {
-        "version": "v1.7.3"
-    },
     "jms/metadata": {
         "version": "1.6.0"
     },

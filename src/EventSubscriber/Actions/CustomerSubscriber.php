@@ -47,10 +47,6 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_customer_permissions', ['id' => $customer->getId()]), 'class' => $class]);
         }
 
-        if ($canView && $event->isIndexView()) {
-            $event->addAction('vcard', ['title' => 'vcard', 'translation_domain' => 'actions', 'icon' => 'far fa-address-card', 'url' => $this->path('customer_vcard', ['id' => $customer->getId()])]);
-        }
-
         if ($isListingView) {
             if ($customer->isVisible() && $this->isGranted('create_project')) {
                 $event->addAction('create-project', [

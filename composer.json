@@ -33,7 +33,6 @@
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
-        "jeroendesloovere/vcard": "^1.7",
         "jms/serializer-bundle": "^5.0",
         "kevinpapst/tabler-bundle": "^0.11",
         "league/csv": "^9.4",
