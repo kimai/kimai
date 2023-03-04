@@ -22,6 +22,10 @@ class MenuItemModelTest extends TestCase
         $sut = new MenuItemModel('test', 'foo', 'bar');
 
         self::assertEquals('foo', $sut->getLabel());
+        self::assertEquals('messages', $sut->getTranslationDomain());
+
+        $sut->setTranslationDomain('foo');
+        self::assertEquals('foo', $sut->getTranslationDomain());
 
         self::assertFalse($sut->isChildRoute('blub'));
         self::assertFalse($sut->isChildRoute('bla'));
