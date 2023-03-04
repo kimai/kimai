@@ -165,7 +165,7 @@
 
 {% block page_title %}
     {%- if page_setup is defined -%}
-        {{ page_setup.title|trans }}
+        {{ page_setup.title|trans({}, page_setup.translationDomain) }}
     {%- else -%}
         {{ get_title() }}
     {%- endif -%}

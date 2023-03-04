@@ -26,6 +26,7 @@ class PageSetupTest extends TestCase
         self::assertNull($sut->getActionName());
         self::assertEquals([], $sut->getActionPayload());
         self::assertEquals('index', $sut->getActionView());
+        self::assertEquals('messages', $sut->getTranslationDomain());
         self::assertNull($sut->getHelp());
         self::assertNull($sut->getDataTable());
     }
@@ -39,7 +40,9 @@ class PageSetupTest extends TestCase
         $sut->setHelp('kjhgkjhgkjhg');
         $sut->setActionView('custom');
         $sut->setActionPayload(['foo' => 'bar']);
+        $sut->setTranslationDomain('footuluuu');
 
+        self::assertEquals('footuluuu', $sut->getTranslationDomain());
         self::assertEquals('foo-bar', $sut->getTitle());
         self::assertEquals('some-action', $sut->getActionName());
         self::assertEquals(['foo' => 'bar'], $sut->getActionPayload());
