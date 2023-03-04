@@ -17,7 +17,7 @@
                         <div class="col-auto">
                             <span class="avatar"><i class="icon {{ report.reportIcon|icon(false, report.reportIcon) }}" style="color: {{ null|colorize(report.reportIcon) }}"></i></span>
                         </div>
-                        <div class="col p-2">{{ report.label|trans({}, 'reporting') }}</div>
+                        <div class="col p-2">{{ report.label|trans({}, report.translationDomain) }}</div>
                     </div>
                 </div>
             </a>

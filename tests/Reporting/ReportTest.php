@@ -26,8 +26,10 @@ class ReportTest extends TestCase
         self::assertEquals('route', $report->getRoute());
         self::assertEquals('label', $report->getLabel());
         self::assertEquals('reporting', $report->getReportIcon());
+        self::assertEquals('reporting', $report->getTranslationDomain());
 
-        $report = new Report('id', 'route', 'label', 'foo');
+        $report = new Report('id', 'route', 'label', 'foo', 'bar');
         self::assertEquals('foo', $report->getReportIcon());
+        self::assertEquals('bar', $report->getTranslationDomain());
     }
 }
