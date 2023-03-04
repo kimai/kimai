@@ -17,8 +17,7 @@ final class Report implements ReportInterface
         private string $label,
         private string $reportIcon,
         private string $translationDomain = 'reporting'
-    )
-    {
+    ) {
     }
 
     public function getRoute(): string
