@@ -284,33 +284,33 @@
 {% endmacro %}
 
 {% macro form_type_value(type, value, entity) %}
-    {% if '\\ColorPickerType' in type or '\\ColorChoiceType' in type %}
+    {% if 'ColorPickerType' in type or 'ColorChoiceType' in type %}
         {% if value is not empty %}
             <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
                 <i class="dot {{ 'dot'|icon(true) }} fa-fw" style="color:{{ value }}"></i>
             </span>
         {% endif %}
-    {% elseif '\\DurationType' in type %}
+    {% elseif 'DurationType' in type %}
         {{ value|duration }}
-    {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
+    {% elseif 'YesNoType' in type or 'CheckBoxType' in type %}
         {{ _self.label_boolean(value) }}
-    {% elseif '\\DatePickerType' in type %}
+    {% elseif 'DatePickerType' in type %}
         {{ value|date_short }}
-    {% elseif '\\DateTimePickerType' in type %}
+    {% elseif 'DateTimePickerType' in type %}
         {{ value|date_time }}
-    {% elseif '\\CountryType' in type %}
+    {% elseif 'CountryType' in type %}
         {{ value|country_name }}
-    {% elseif '\\CurrencyType' in type %}
+    {% elseif 'CurrencyType' in type %}
         {{ value|currency_name }}
-    {% elseif '\\LanguageType' in type %}
+    {% elseif 'LanguageType' in type %}
         {{ value|locale_name }}
-    {% elseif '\\TagsType' in type %}
+    {% elseif 'TagsType' in type %}
         {% for tag in value|split(',') %}
             {% if tag is not empty %}
                 {{ _self.badge(tag, null|colorize(tag)) }}
             {% endif %}
         {% endfor %}
-    {% elseif '\\MoneyType' in type %}
+    {% elseif 'MoneyType' in type %}
         {% set classname = class_name(entity) %}
         {% if entity is null %}
             {{ value }}
@@ -325,11 +325,11 @@
         {% else %}
             {{ value }}
         {% endif %}
-    {% elseif '\\TextareaType' in type %}
+    {% elseif 'TextareaType' in type %}
         {{ value|nl2br }}
-    {% elseif '\\EmailType' in type %}
+    {% elseif 'EmailType' in type %}
         <a href="mailto:{{ value }}">{{ value }}</a>
-    {% elseif '\\UrlType' in type %}
+    {% elseif 'UrlType' in type %}
         <a href="{{ value }}" target="_blank">{{ value }}</a>
     {% else %}
         {{ value }}
