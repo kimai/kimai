@@ -181,7 +181,6 @@ class ActionsControllerTest extends APIControllerBaseTest
                 'details',
                 'edit',
                 'permissions',
-                'vcard',
                 'divider0',
                 'filter',
                 'divider1',
