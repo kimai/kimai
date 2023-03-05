@@ -2061,26 +2061,6 @@ parameters:
             path: src/Entity/Customer.php
 
         -
-            message: "#^Method App\\\\Entity\\\\CustomerComment\\:\\:setCreatedAt\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CustomerComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CustomerComment\\:\\:setCreatedBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CustomerComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CustomerComment\\:\\:setMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CustomerComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CustomerComment\\:\\:setPinned\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CustomerComment.php
-
-        -
             message: "#^Method App\\\\Entity\\\\EntityWithMetaFields\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/EntityWithMetaFields.php
@@ -2174,26 +2154,6 @@ parameters:
             message: "#^Property App\\\\Entity\\\\Project\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Project.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectComment\\:\\:setCreatedAt\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/ProjectComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectComment\\:\\:setCreatedBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/ProjectComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectComment\\:\\:setMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/ProjectComment.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectComment\\:\\:setPinned\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/ProjectComment.php
 
         -
             message: "#^Method App\\\\Entity\\\\Tag\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
