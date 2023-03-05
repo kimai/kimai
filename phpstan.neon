@@ -4831,16 +4831,6 @@ parameters:
             path: src/Form/Type/EntityMetaDefinitionType.php
 
         -
-            message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/InvoiceRendererType.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function ucfirst expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/InvoiceRendererType.php
-
-        -
             message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/Type/MetaFieldsCollectionType.php
