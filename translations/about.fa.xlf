@@ -18,10 +18,6 @@
         <source>donate</source>
         <target state="translated">هدیه دادن</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target state="translated">%kimai% تحت این عنوان منتشر شده است</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

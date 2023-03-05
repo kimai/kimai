@@ -18,10 +18,6 @@
         <source>donate</source>
         <target>Doniraj</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target>Posebno zahvaljujemo …</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

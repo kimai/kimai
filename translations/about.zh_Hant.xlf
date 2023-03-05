@@ -18,10 +18,6 @@
         <source>donate</source>
         <target state="translated">為了 Kimai 的未來捐款</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target state="translated">特別感謝…</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

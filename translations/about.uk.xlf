@@ -18,10 +18,6 @@
         <source>donate</source>
         <target state="translated">Пожертвувати</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target state="translated">Особлива подяка …</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

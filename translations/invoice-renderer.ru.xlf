@@ -26,10 +26,6 @@
         <source>Html</source>
         <target state="translated">HTML (для печати через браузер)</target>
       </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target state="translated">Microsoft Excel (XLS)</target>
-      </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Единая дата обслуживания</target>
@@ -37,10 +33,6 @@
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Счёт</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target state="translated">JSON</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
