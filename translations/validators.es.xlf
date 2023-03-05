@@ -55,7 +55,7 @@
         <target state="translated">El mismo nombre de usuario ya está siendo usado.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal e-mail address is already i use.</source>
+        <source>An equal e-mail address is already in use.</source>
         <target state="translated">El mismo correo ya está siendo usado.</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
