@@ -63,11 +63,10 @@ final class InvoiceRendererType extends AbstractType
 
         return match (strtolower($type)) {
             'json', 'txt', 'xml' => 'programmatic',
-            'pdf' => 'PDF',
             'docx', 'doc' => 'Word',
             'xls', 'xlsx' => 'Excel',
             'ods' => 'LibreOffice',
-            default => ucfirst($type),
+            default => strtoupper($type),
         };
     }
 

@@ -15,10 +15,6 @@
         <source>programmatic</source>
         <target state="translated">برای پردازش بیشتر</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target state="translated">HTML (برای چاپ از طریق مرورگر)</target>
-      </trans-unit>
       <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>

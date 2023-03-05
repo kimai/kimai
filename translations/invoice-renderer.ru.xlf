@@ -22,10 +22,6 @@
         <source>programmatic</source>
         <target state="translated">Для дальнейшей обработки</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target state="translated">HTML (для печати через браузер)</target>
-      </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
         <target state="translated">Microsoft Excel (XLS)</target>

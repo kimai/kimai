@@ -15,10 +15,6 @@
         <source>programmatic</source>
         <target>For videre behandling</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (for utskrift via nettleser)</target>
-      </trans-unit>
       <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
