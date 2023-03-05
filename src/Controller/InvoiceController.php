@@ -364,10 +364,10 @@ final class InvoiceController extends AbstractController
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
         }
 
-        $table->addColumn('invoice_number', ['class' => 'd-none d-md-table-cell w-min', 'title' => 'invoice.number', 'orderBy' => false]);
+        $table->addColumn('invoice_number', ['class' => 'd-none d-md-table-cell w-min', 'title' => 'invoice.number', 'orderBy' => 'invoice.number']);
         $table->addColumn('due_date', ['class' => 'd-none w-min', 'title' => 'invoice.due_days', 'orderBy' => false]);
         $table->addColumn('payment_date', ['class' => 'd-none w-min', 'title' => 'invoice.payment_date', 'orderBy' => false]);
-        $table->addColumn('status', ['class' => 'd-none d-sm-table-cell w-min', 'orderBy' => false]);
+        $table->addColumn('status', ['class' => 'd-none d-sm-table-cell w-min', 'orderBy' => 'status']);
         $table->addColumn('subtotal', ['class' => 'd-none text-end w-min', 'title' => 'invoice.subtotal', 'orderBy' => false]);
         $table->addColumn('tax', ['class' => 'd-none text-end w-min', 'title' => 'invoice.tax']);
         $table->addColumn('total_rate', ['class' => 'd-none d-md-table-cell text-end w-min']);

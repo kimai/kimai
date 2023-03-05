@@ -204,7 +204,7 @@ class InvoiceRepository extends EntityRepository
             case 'date':
                 $orderBy = 'i.createdAt';
                 break;
-            case 'number':
+            case 'invoice.number':
                 $orderBy = 'i.invoiceNumber';
                 break;
             case 'payed':
@@ -213,9 +213,11 @@ class InvoiceRepository extends EntityRepository
             case 'total_rate':
                 $orderBy = 'i.total';
                 break;
-            case 'tax':
             case 'status':
-                $orderBy = 'i.' . $orderBy;
+                $orderBy = 'i.status';
+                break;
+            case 'tax':
+                $orderBy = 'i.tax';
                 break;
         }
 
