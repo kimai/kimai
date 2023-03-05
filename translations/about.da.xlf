@@ -18,10 +18,6 @@
         <source>donate</source>
         <target>Støt</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target>Tak til …</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
