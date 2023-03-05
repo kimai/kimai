@@ -109,7 +109,7 @@ final class InvoiceController extends AbstractController
             $total += \count($model->getCalculator()->getEntries());
 
             $values = [
-                'invoiceDate' => $query->getInvoiceDate(),
+                'invoiceDate' => null,
                 'template' => $customerTpl
             ];
 
