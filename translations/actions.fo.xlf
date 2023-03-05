@@ -30,53 +30,13 @@
         <source>profile-stats</source>
         <target state="translated">Vangi</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target state="needs-translation">Preferences</target>
-      </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
-        <source>Filter timesheets</source>
-        <target state="needs-translation">Filter timesheets</target>
-      </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="needs-translation">Filter customers</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="needs-translation">Filter projects</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="needs-translation">Filter activities</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">Stovna avrit</target>
       </trans-unit>
-      <trans-unit id="TqFAWIF" resname="home">
-        <source>home</source>
-        <target state="needs-translation">Homepage</target>
-      </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
         <target state="translated">Stovna verkætlan</target>
-      </trans-unit>
-      <trans-unit id="UbouFOs" resname="create-activity">
-        <source>create-activity</source>
-        <target state="needs-translation">Create activity</target>
-      </trans-unit>
-      <trans-unit id="QR1nvcR" resname="create-timesheet">
-        <source>create-timesheet</source>
-        <target state="needs-translation">Create timesheet</target>
-      </trans-unit>
-      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
-        <source>create-timesheet-multiuser</source>
-        <target state="needs-translation">For multiple users</target>
-      </trans-unit>
-      <trans-unit id="T_PN1AT" resname="permissions">
-        <source>permissions</source>
-        <target state="needs-translation">Team permissions</target>
       </trans-unit>
       <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
@@ -93,14 +53,6 @@
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target state="translated">Goldið</target>
-      </trans-unit>
-      <trans-unit id="SEyZupT" resname="invoice.cancel">
-        <source>invoice.cancel</source>
-        <target state="needs-translation">Cancel invoice</target>
-      </trans-unit>
-      <trans-unit id="38M3a4J" resname="filter">
-        <source>filter</source>
-        <target state="needs-translation">Filter data</target>
       </trans-unit>
     </body>
   </file>

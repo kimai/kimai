@@ -86,10 +86,6 @@
         <source>invoice.pending</source>
         <target>Wachten op betaling</target>
       </trans-unit>
-      <trans-unit id="aP9j_4L" resname="download">
-        <source>download</source>
-        <target state="needs-translation">Download</target>
-      </trans-unit>
       <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
         <target>Toon</target>

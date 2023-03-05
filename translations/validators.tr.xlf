@@ -59,7 +59,7 @@
         <target>Takıma en az bir takım lideri atanmalıdır.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal e-mail address is already i use.</source>
+        <source>An equal e-mail address is already in use.</source>
         <target state="translated">Eşit bir e-posta adresi zaten kullanılıyor.</target>
       </trans-unit>
       <trans-unit id="ekO5eXI" resname="An equal username is already used.">

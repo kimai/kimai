@@ -235,7 +235,7 @@
       </trans-unit>
       <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>
-        <target state="translated">팀 </target>
+        <target state="translated">팀</target>
       </trans-unit>
       <!--
               Buttons & Actions

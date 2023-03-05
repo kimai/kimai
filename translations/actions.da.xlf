@@ -78,10 +78,6 @@
         <source>create-timesheet-multiuser</source>
         <target>Til flere brugere</target>
       </trans-unit>
-      <trans-unit id="aP9j_4L" resname="download">
-        <source>download</source>
-        <target state="needs-translation">Download</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

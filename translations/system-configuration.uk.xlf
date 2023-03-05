@@ -126,10 +126,6 @@
         <source>theme.branding.company</source>
         <target state="translated">Назва компанії</target>
       </trans-unit>
-      <trans-unit id="zeM0nir" resname="theme.branding.title">
-        <source>theme.branding.title</source>
-        <target state="translated">Назва браузера</target>
-      </trans-unit>
       <trans-unit id="AzOiQES" resname="company.financial_year">
         <source>company.financial_year</source>
         <target state="translated">Фінансовий рік</target>

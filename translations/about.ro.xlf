@@ -18,10 +18,6 @@
         <source>donate</source>
         <target>Donează</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target>Mulțuniri speciale pentru …</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

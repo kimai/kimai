@@ -442,10 +442,6 @@
         <source>vat_id</source>
         <target>ID TVA</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target state="needs-translation">Contact</target>
-      </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
         <target>Addresa</target>

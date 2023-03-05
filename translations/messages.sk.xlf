@@ -1057,66 +1057,6 @@
         <source>stats.percentUsedLeft_month</source>
         <target state="translated">%percent%% použitých (%left% ešte ostáva tento mesiac)</target>
       </trans-unit>
-      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
-        <source>export.warn_result_amount</source>
-        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
-      </trans-unit>
-      <trans-unit id="L27KvC9" resname="includeNoWork">
-        <source>includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
-      </trans-unit>
-      <trans-unit id="L0hRlcf" resname="includeNoBudget">
-        <source>includeNoBudget</source>
-        <target state="needs-translation">Show entries without budget</target>
-      </trans-unit>
-      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
-        <source>includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
-      </trans-unit>
-      <trans-unit id="2dm.ZWM" resname="not_exported">
-        <source>not_exported</source>
-        <target state="needs-translation">Not exported</target>
-      </trans-unit>
-      <trans-unit id="o0yOFHL" resname="not_invoiced">
-        <source>not_invoiced</source>
-        <target state="needs-translation">Not billed</target>
-      </trans-unit>
-      <trans-unit id="vpqPF8v" resname="last_record_before">
-        <source>last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
-      </trans-unit>
-      <trans-unit id="_YiKaOT" resname="last_record">
-        <source>last_record</source>
-        <target state="needs-translation">Last entry</target>
-      </trans-unit>
-      <trans-unit id="KH2hgil" resname="account_number">
-        <source>account_number</source>
-        <target state="needs-translation">Staff number</target>
-      </trans-unit>
-      <trans-unit id="4Ndj7Xo" resname="budgetType">
-        <source>budgetType</source>
-        <target state="needs-translation">Budget-Type</target>
-      </trans-unit>
-      <trans-unit id="tp.gIrE" resname="team.add_user.help">
-        <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
-      </trans-unit>
-      <trans-unit id="yNWIi5U" resname="default_value_new">
-        <source>default_value_new</source>
-        <target state="needs-translation">Default values for new entries</target>
-      </trans-unit>
-      <trans-unit id="f8oNzSP" resname="quick_entry.title">
-        <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly hours</target>
-      </trans-unit>
-      <trans-unit id="IPHM4iP" resname="updated_at">
-        <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
-      </trans-unit>
-      <trans-unit id="5ofAsOs" resname="internalRate">
-        <source>internalRate</source>
-        <target state="needs-translation">Internal rate</target>
-      </trans-unit>
       <trans-unit id="dherSTU" resname="export_decimal">
         <source>export_decimal</source>
         <target state="translated">Použiť decimálnu dobu počas exportu</target>
@@ -1160,34 +1100,6 @@
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target state="translated">Preskočený náhľad %rows% ďalších riadkov …</target>
-      </trans-unit>
-      <trans-unit id="EwPAaws" resname="type">
-        <source>type</source>
-        <target state="needs-translation">Type</target>
-      </trans-unit>
-      <trans-unit id="wYqyL6A" resname="budgetType_month">
-        <source>budgetType_month</source>
-        <target state="needs-translation">Monthly</target>
-      </trans-unit>
-      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
-        <source>includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
-      </trans-unit>
-      <trans-unit id="dnQEYoJ" resname="budgetType_full">
-        <source>budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
-      </trans-unit>
-      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
-        <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
-      </trans-unit>
-      <trans-unit id="Zif614Q" resname="add_user.label">
-        <source>add_user.label</source>
-        <target state="needs-translation">Add user</target>
-      </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
-        <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>

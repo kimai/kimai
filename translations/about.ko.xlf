@@ -18,10 +18,6 @@
         <source>donate</source>
         <target state="translated">Kimai의 미래를 위해 기부하기</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target state="translated">특별하게 감사…</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

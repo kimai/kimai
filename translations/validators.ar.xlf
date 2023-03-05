@@ -70,10 +70,6 @@
         <source>You already have an entry for this time.</source>
         <target state="translated">لديك بالفعل إدخال لهذا الوقت.</target>
       </trans-unit>
-      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
-        <source>The budget is completely used.</source>
-        <target state="needs-translation">The budget is used up. Of the available %budget%, %used% has been booked so far, %free% can still be used.</target>
-      </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target state="translated">الحد الأقصى {{ value }} ساعة مسموح بها.</target>
