@@ -894,6 +894,18 @@
         <source>status.new</source>
         <target>Nouveau</target>
       </trans-unit>
+      <trans-unit id="w.uSUzX" resname="status.planned">
+        <source>status.planned</source>
+        <target>Planifiée</target>
+      </trans-unit>
+      <trans-unit id="1DF_frD" resname="status.progress">
+        <source>status.progress</source>
+        <target>En progrès</target>
+      </trans-unit>
+      <trans-unit id="9JOxqNl" resname="status.closed">
+        <source>status.closed</source>
+        <target>Fermée</target>
+      </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target>État</target>
