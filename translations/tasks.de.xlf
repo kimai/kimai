@@ -53,10 +53,6 @@
         <source>tasks.my</source>
         <target>Meine Aufgaben</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete">
-        <source>task.delete</source>
-        <target>Aufgabe löschen? Aufgezeichnete Zeiten werden nicht gelöscht!</target>
-      </trans-unit>
       <trans-unit id="FhEb.Hn" resname="task.help.title">
         <source>task.help.title</source>
         <target>Eine kurze Beschreibung der Aufgabe</target>
