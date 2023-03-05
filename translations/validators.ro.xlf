@@ -2,41 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="87zjiHi" resname="One or more of the given values is invalid.">
-        <source>One or more of the given values is invalid.</source>
-        <target>Una sau mai multe dintre valorile furnizate sunt invalide.</target>
-      </trans-unit>
       <trans-unit id="JocOVM2" resname="The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.">
         <source>The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.</source>
         <target>Fișierul este prea mare ({{ size }} {{ suffix }}). Dimensiunea maximă permisă este {{ limit }} {{ suffix }}.</target>
-      </trans-unit>
-      <trans-unit id="yDc3m6E" resname="This value should be null.">
-        <source>This value should be null.</source>
-        <target>Această valoare ar trebui să fie nulă (null).</target>
       </trans-unit>
       <trans-unit id="d7sS5yw" resname="This value should be a valid number.">
         <source>This value should be a valid number.</source>
         <target>Această valoare nu reprezintă un număr valid.</target>
       </trans-unit>
-      <trans-unit id="zVtJJEa" resname="The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.">
-        <source>The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
-        <target>Lățimea imaginii este prea mare ({{ width }}px). Lățimea maximă permisă este de {{ max_width }}px.</target>
-      </trans-unit>
       <trans-unit id="mHfEaB3" resname="No temporary folder was configured in php.ini.">
         <source>No temporary folder was configured in php.ini.</source>
         <target>Nu este configurat nici un director temporar in php.ini.</target>
       </trans-unit>
-      <trans-unit id="XSVzcbV" resname="This is not a valid International Bank Account Number (IBAN).">
-        <source>This is not a valid International Bank Account Number (IBAN).</source>
-        <target>Acesta nu este un cod IBAN (International Bank Account Number) valid.</target>
-      </trans-unit>
       <trans-unit id="o8A8a0H" resname="This value should be greater than or equal to {{ compared_value }}.">
         <source>This value should be greater than or equal to {{ compared_value }}.</source>
         <target>Această valoare trebuie să fie mai mare sau egală cu {{ compared_value }}.</target>
-      </trans-unit>
-      <trans-unit id="rpajj.a" resname="The image is square ({{ width }}x{{ height }}px). Square images are not allowed.">
-        <source>The image is square ({{ width }}x{{ height }}px). Square images are not allowed.</source>
-        <target>Imaginea este un pătrat ({{ width }}x{{ height }}px). Imaginile pătrat nu sunt permise.</target>
       </trans-unit>
       <trans-unit id="8zqt0Ik" resname="This is not a valid UUID.">
         <source>This is not a valid UUID.</source>
