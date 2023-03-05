@@ -18,10 +18,6 @@
         <source>service-date</source>
         <target>Freelancer</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target>Exportação de dados</target>
-      </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target>Atenção: os arquivos já existentes serão substituídos. Os tipos dos arquivos permitidos são: %extensions%.</target>

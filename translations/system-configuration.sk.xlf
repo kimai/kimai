@@ -6,10 +6,6 @@
         <source>Time tracking</source>
         <target>Pracovný výkaz</target>
       </trans-unit>
-      <trans-unit id="UQR6zvk" resname="timesheet.markdown_content">
-        <source>timesheet.markdown_content</source>
-        <target>Povoliť Markdown v popisoch časového rozvrhu</target>
-      </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
         <target>Režim časovania</target>

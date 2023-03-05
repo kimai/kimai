@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eo" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
@@ -17,10 +17,6 @@
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Sendependa laboristo</target>
-      </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target>Eksporto de datumoj</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>

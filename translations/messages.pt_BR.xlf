@@ -1462,6 +1462,14 @@
         <source>user.language.help</source>
         <target state="translated">Além de traduzir a interface, esta configuração também é responsável pelos formatos de hora, data e moeda.</target>
       </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Você pode mudar a data da fatura aqui</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Data da fatura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -18,10 +18,6 @@
         <source>service-date</source>
         <target>Freelancer</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target>Xuất dữ liệu</target>
-      </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target>Chú ý: các tệp hiện có sẽ bị ghi đè. Các loại tệp được phép là: %extensions%.</target>

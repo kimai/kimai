@@ -14,17 +14,9 @@
         <source>help</source>
         <target>مستندات</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target>سپاس ویژه از…</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target state="translated">هدیه دادن</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target state="translated">… نویسندگان نرم‌افزار-کتابخانه‌های زیر، کیمایی بدون شما امکان‌پذیر نیست</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>

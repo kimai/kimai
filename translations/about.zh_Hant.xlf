@@ -18,17 +18,9 @@
         <source>donate</source>
         <target state="translated">為了 Kimai 的未來捐款</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target state="translated">%kimai% 發布於</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target state="translated">特別感謝…</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target state="translated">...下列軟體程式庫的作者, 沒有你們, Kimai 不可能達成</target>
       </trans-unit>
     </body>
   </file>

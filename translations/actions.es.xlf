@@ -114,6 +114,10 @@
         <source>vcard</source>
         <target state="translated">Tarjeta de visita</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Recarga</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

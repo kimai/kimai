@@ -26,33 +26,17 @@
         <source>Html</source>
         <target state="translated">HTML (для печати через браузер)</target>
       </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target state="translated">Microsoft Excel (XLSX)</target>
-      </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
         <target state="translated">Microsoft Excel (XLS)</target>
-      </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target state="translated">PDF</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Единая дата обслуживания</target>
       </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Open Office (ODS - Spreadsheet)</source>
-        <target state="translated">LibreOffice (ODS - электронные таблицы)</target>
-      </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Счёт</target>
-      </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target state="translated">XML</target>
       </trans-unit>
       <trans-unit id="7acXRsA" resname="javascript">
         <source>javascript</source>
