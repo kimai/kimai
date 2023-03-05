@@ -64,6 +64,11 @@ class TestDragAndDropSource implements DragAndDropSource
         return $this->title;
     }
 
+    public function getTranslationDomain(): string
+    {
+        return 'messages';
+    }
+
     public function getRoute(): string
     {
         return '';

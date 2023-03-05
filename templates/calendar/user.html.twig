@@ -17,7 +17,7 @@
             {% endif %}
             {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
                 {% embed '@theme/embeds/card.html.twig' %}
-                    {% block box_title %}{{ source.title|trans }}{% endblock %}
+                    {% block box_title %}{{ source.title|trans({}, source.translationDomain) }}{% endblock %}
                     {% block box_body_class %}drag-and-drop-source p-0{% endblock %}
                     {% block box_body %}
                         <div class="list-group list-group-flush external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
