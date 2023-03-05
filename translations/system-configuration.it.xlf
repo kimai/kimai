@@ -56,11 +56,11 @@
       </trans-unit>
       <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
         <source>calendar.visibleHours.begin</source>
-        <target>Inizio intervallo di tempo  visibile</target>
+        <target>Inizio intervallo di tempo visibile</target>
       </trans-unit>
       <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
         <source>calendar.visibleHours.end</source>
-        <target>Fine intervallo di tempo  visibile</target>
+        <target>Fine intervallo di tempo visibile</target>
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>

@@ -2,42 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="MviRJeB" resname="invoice_calculator">
-        <source>invoice_calculator</source>
-        <target state="needs-translation">Sum calculation</target>
-      </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target state="needs-translation">Default: one entry per time record</target>
-      </trans-unit>
-      <trans-unit id="_bAHi13" resname="short">
-        <source>short</source>
-        <target state="needs-translation">Hours: records summed up, one entry total</target>
-      </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target state="needs-translation">User: one entry per user</target>
-      </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
-        <source>activity</source>
-        <target state="needs-translation">Activity: one entry per activity</target>
-      </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target state="needs-translation">Project: one entry per project</target>
-      </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
-        <source>date</source>
-        <target state="needs-translation">Date: one entry per day (uses start date)</target>
-      </trans-unit>
-      <trans-unit id="iFDs7Zh" resname="weekly">
-        <source>weekly</source>
-        <target state="needs-translation">Weekly: one entry per week (uses start date)</target>
-      </trans-unit>
-      <trans-unit id="aDtTH0H" resname="price">
-        <source>price</source>
-        <target state="needs-translation">Price: one entry per price</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

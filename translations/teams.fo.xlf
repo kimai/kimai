@@ -2,34 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
-        <source>teams.project_access</source>
-        <target state="needs-translation">Grant access to projects</target>
-      </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
-        <source>teams.customer_access</source>
-        <target state="needs-translation">Grant access to customers</target>
-      </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
-        <source>team.visibility_global</source>
-        <target state="needs-translation">Visible to everyone, as no team was assigned yet.</target>
-      </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
-        <source>team.visibility_restricted</source>
-        <target state="needs-translation">Only visible to the following teams and all admins.</target>
-      </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
-        <source>team.project_visibility_inherited</source>
-        <target state="needs-translation">The project has limited access, because team permissions are set for the customer.</target>
-      </trans-unit>
-      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
-        <source>team.activity_visibility_inherited</source>
-        <target state="needs-translation">The activity has limited access, because team permissions are set for the project and/or customer.</target>
-      </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
-        <source>team.create_default</source>
-        <target state="needs-translation">Create a new team to limit access</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

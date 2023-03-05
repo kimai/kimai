@@ -23,8 +23,8 @@
         <target>An equal username is already used.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal e-mail address is already i use.</source>
-        <target state="translated">An equal e-mail address is already i use.</target>
+        <source>An equal e-mail address is already in use.</source>
+        <target state="translated">An equal e-mail address is already in use.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>

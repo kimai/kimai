@@ -430,10 +430,6 @@
         <source>vat</source>
         <target>BTW</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
-        <source>contact</source>
-        <target state="needs-translation">Contact</target>
-      </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
         <target>Adres</target>
@@ -1118,26 +1114,6 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">Weergave van vermeldingen in selectie lijst</target>
       </trans-unit>
-      <trans-unit id="KH2hgil" resname="account_number">
-        <source>account_number</source>
-        <target state="needs-translation">Staff number</target>
-      </trans-unit>
-      <trans-unit id="4Ndj7Xo" resname="budgetType">
-        <source>budgetType</source>
-        <target state="needs-translation">Budget-Type</target>
-      </trans-unit>
-      <trans-unit id="wYqyL6A" resname="budgetType_month">
-        <source>budgetType_month</source>
-        <target state="needs-translation">Monthly</target>
-      </trans-unit>
-      <trans-unit id="dnQEYoJ" resname="budgetType_full">
-        <source>budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
-      </trans-unit>
-      <trans-unit id="_YiKaOT" resname="last_record">
-        <source>last_record</source>
-        <target state="needs-translation">Last entry</target>
-      </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target state="translated">Map "%dir%" is beschermd tegen schrijven.</target>
@@ -1145,22 +1121,6 @@
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">De map “%dir%” bestaat niet en kon niet worden aangemaakt.</target>
-      </trans-unit>
-      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
-        <source>includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
-      </trans-unit>
-      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
-        <source>includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
-      </trans-unit>
-      <trans-unit id="vpqPF8v" resname="last_record_before">
-        <source>last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
-      </trans-unit>
-      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
-        <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
@@ -1181,10 +1141,6 @@
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="translated">Bijgewerkt op</target>
-      </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
-        <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>

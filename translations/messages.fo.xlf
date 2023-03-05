@@ -967,18 +967,6 @@
         <source>error.too_many_entries</source>
         <target>Umbønin kundi ikki fullfíggjast. Ov nógv úrslit vóru funnin.</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern">
-        <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
-        <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Working hours this financial year</target>
-      </trans-unit>
-      <trans-unit id="L27KvC9" resname="includeNoWork">
-        <source>includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
-      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="translated">Dagført tann</target>
@@ -991,145 +979,13 @@
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">Vika %week%</target>
       </trans-unit>
-      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
-        <source>stats.workingTimeYear</source>
-        <target state="needs-translation">Full year %year%</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="needs-translation">Revenue this financial year</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="needs-translation">Active users this financial year</target>
-      </trans-unit>
-      <trans-unit id="rAJrxSK" resname="invoice.due_days">
-        <source>invoice.due_days</source>
-        <target state="needs-translation">Payment target</target>
-      </trans-unit>
-      <trans-unit id="9p2KQag" resname="invoice.signature_user">
-        <source>invoice.signature_user</source>
-        <target state="needs-translation">Confirmation: Date / Consultant's name / Signature</target>
-      </trans-unit>
-      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
-        <source>invoice.signature_customer</source>
-        <target state="needs-translation">Confirmation: Date / Customer's name / Signature</target>
-      </trans-unit>
-      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
-        <source>invoice_tax_number</source>
-        <target state="needs-translation">VAT no.:</target>
-      </trans-unit>
-      <trans-unit id="gT9W2pZ" resname="status.canceled">
-        <source>status.canceled</source>
-        <target state="needs-translation">Canceled</target>
-      </trans-unit>
-      <trans-unit id="iwWaUoa" resname="export.filter">
-        <source>export.filter</source>
-        <target state="needs-translation">Filter data for export</target>
-      </trans-unit>
-      <trans-unit id="3CQ7A2m" resname="export.document_title">
-        <source>export.document_title</source>
-        <target state="needs-translation">Export of timesheets</target>
-      </trans-unit>
-      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
-        <source>export.warn_result_amount</source>
-        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
-      </trans-unit>
-      <trans-unit id="Qn2ouiL" resname="exported">
-        <source>exported</source>
-        <target state="needs-translation">Exported</target>
-      </trans-unit>
-      <trans-unit id="L0hRlcf" resname="includeNoBudget">
-        <source>includeNoBudget</source>
-        <target state="needs-translation">Show entries without budget</target>
-      </trans-unit>
-      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
-        <source>includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
-      </trans-unit>
-      <trans-unit id="2dm.ZWM" resname="not_exported">
-        <source>not_exported</source>
-        <target state="needs-translation">Not exported</target>
-      </trans-unit>
-      <trans-unit id="vpqPF8v" resname="last_record_before">
-        <source>last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
-      </trans-unit>
-      <trans-unit id="KH2hgil" resname="account_number">
-        <source>account_number</source>
-        <target state="needs-translation">Staff number</target>
-      </trans-unit>
-      <trans-unit id="4Ndj7Xo" resname="budgetType">
-        <source>budgetType</source>
-        <target state="needs-translation">Budget-Type</target>
-      </trans-unit>
-      <trans-unit id="dnQEYoJ" resname="budgetType_full">
-        <source>budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
-      </trans-unit>
-      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
-        <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
-      </trans-unit>
-      <trans-unit id="tp.gIrE" resname="team.add_user.help">
-        <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
-      </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
-        <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
-      </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target state="needs-translation">Working time</target>
-      </trans-unit>
-      <trans-unit id="ov4OQOh" resname="invoice.filter">
-        <source>invoice.filter</source>
-        <target state="needs-translation">Filter invoice data</target>
-      </trans-unit>
-      <trans-unit id="86KyrKO" resname="invoice.subtotal">
-        <source>invoice.subtotal</source>
-        <target state="needs-translation">Subtotal</target>
-      </trans-unit>
       <trans-unit id="BAkWQqr" resname="total_rate">
         <source>total_rate</source>
         <target state="needs-translation">Samlaður kostnaður</target>
       </trans-unit>
-      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
-        <source>invoice.total_working_time</source>
-        <target state="needs-translation">Total duration</target>
-      </trans-unit>
-      <trans-unit id="yNWIi5U" resname="default_value_new">
-        <source>default_value_new</source>
-        <target state="needs-translation">Default values for new entries</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="needs-translation">Financial year</target>
-      </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
-        <target state="needs-translation">Revenues</target>
-      </trans-unit>
-      <trans-unit id="TPzFWUs" resname="invoice.service_date">
-        <source>invoice.service_date</source>
-        <target state="needs-translation">Service date</target>
-      </trans-unit>
-      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
-        <source>includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
-      </trans-unit>
-      <trans-unit id="wYqyL6A" resname="budgetType_month">
-        <source>budgetType_month</source>
-        <target state="needs-translation">Monthly</target>
-      </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
         <target state="translated">Legg brúkara aftrat</target>
-      </trans-unit>
-      <trans-unit id="_YiKaOT" resname="last_record">
-        <source>last_record</source>
-        <target state="needs-translation">Last entry</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
@@ -1138,10 +994,6 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Tekstur á rokning</target>
-      </trans-unit>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target state="needs-translation">About Kimai</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>

@@ -2,44 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
-        <source>invoice_renderer</source>
-        <target state="needs-translation">Invoice document</target>
-      </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
-        <source>help.upload</source>
-        <target state="needs-translation">Attention: existing files will be overwritten. Allowed file types are: %extensions%.</target>
-      </trans-unit>
-      <!-- Optgroups -->
-      <trans-unit id="E5BwZHT" resname="programmatic">
-        <source>programmatic</source>
-        <target state="needs-translation">For further processing</target>
-      </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target state="needs-translation">HTML (for printing via Browser)</target>
-      </trans-unit>
-      <!-- Renderer -->
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target state="needs-translation">Invoice</target>
-      </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target state="needs-translation">Invoice</target>
-      </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text">
-        <source>text</source>
-        <target state="needs-translation">Text</target>
-      </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target state="needs-translation">Timesheet</target>
-      </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target state="needs-translation">Single service date</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

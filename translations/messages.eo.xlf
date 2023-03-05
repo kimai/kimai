@@ -1185,10 +1185,6 @@
         <source>team.add_user.help</source>
         <target>Aldonu novan uzanton al la teamo elektante de la listo. Poste vi povos decidi ĉu la uzanto estu teamgvidanto.</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern">
-        <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
-      </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Aŭtomate</target>

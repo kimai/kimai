@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="biHjm0h" resname="select.add_new">
         <source>select.add_new</source>
-        <target state="translated">ایجاد نام جدید با  "%input%"</target>
+        <target state="translated">ایجاد نام جدید با "%input%"</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>

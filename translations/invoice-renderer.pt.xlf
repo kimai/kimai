@@ -36,10 +36,6 @@
         <source>timesheet</source>
         <target state="translated">Quadro de horários</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target state="needs-translation">Freelancer</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
