@@ -42,7 +42,7 @@ trait CommentTableTypeTrait
         return $this->message;
     }
 
-    public function setMessage(string $message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
@@ -52,7 +52,7 @@ trait CommentTableTypeTrait
         return $this->createdBy;
     }
 
-    public function setCreatedBy(User $createdBy)
+    public function setCreatedBy(User $createdBy): void
     {
         $this->createdBy = $createdBy;
     }
@@ -62,7 +62,7 @@ trait CommentTableTypeTrait
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -72,7 +72,7 @@ trait CommentTableTypeTrait
         return $this->pinned;
     }
 
-    public function setPinned(bool $pinned)
+    public function setPinned(bool $pinned): void
     {
         $this->pinned = $pinned;
     }

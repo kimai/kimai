@@ -66,7 +66,7 @@ class SpreadsheetExporter
         $recordsHeaderRow = 1;
 
         foreach ($columns as $settings) {
-            $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans($settings->getLabel()));
+            $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans($settings->getLabel(), [], $settings->getTranslationDomain()));
         }
 
         $entryHeaderRow = $recordsHeaderRow + 1;
