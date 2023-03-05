@@ -30,10 +30,6 @@
         <source>team.activity_visibility_inherited</source>
         <target>La aktivaĵo havas limigitan aliron ĉar teamaj permesoj estas agorditaj por la projekto kaj/aŭ la kliento.</target>
       </trans-unit>
-      <trans-unit id="6g81kYY" approved="no" resname="team.member">
-        <source>team.member</source>
-        <target state="needs-translation">Member</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
