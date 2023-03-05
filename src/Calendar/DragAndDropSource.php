@@ -11,14 +11,10 @@ namespace App\Calendar;
 
 interface DragAndDropSource
 {
-    /**
-     * @return string
-     */
     public function getTitle(): string;
 
-    /**
-     * @return string
-     */
+    public function getTranslationDomain(): string;
+
     public function getRoute(): string;
 
     /**
@@ -31,9 +27,6 @@ interface DragAndDropSource
      */
     public function getRouteReplacer(): array;
 
-    /**
-     * @return string
-     */
     public function getMethod(): string;
 
     /**

@@ -536,11 +536,21 @@ export default class KimaiCalendar {
             color = defaultColor;
         }
 
+        /** @type {KimaiDateUtils} DATES */
+        const DATES = this.kimai.getPlugin('date');
+
         let title = this.options['patterns']['title'];
         title = title.replace('{project}', apiItem.project.name);
         title = title.replace('{customer}', apiItem.project.customer.name);
         title = title.replace('{description}', apiItem.description ?? '');
         title = title.replace('{activity}', apiItem.activity.name ?? '');
+
+        if (apiItem.end === null) {
+            // duration = 0 and end = null => is a running entry
+            title = title.replace('{duration}', '');
+        } else {
+            title = title.replace('{duration}', DATES.formatDuration(apiItem.duration));
+        }
 
         if (title === '' || title === null) {
             title = apiItem.activity.name;
@@ -573,6 +583,13 @@ export default class KimaiCalendar {
         /** @type {KimaiEscape} escaper */
         const escaper = this.kimai.getPlugin('escape');
 
+        let tags = '';
+        if (eventObj.tags !== null && eventObj.tags.length > 0) {
+            for (let tag of eventObj.tags) {
+                tags += '<span class="badge bg-green">' + escaper.escapeForHtml(tag) + '</span>';
+            }
+        }
+
         return `
             <div class="calendar-entry">
                 <ul>
@@ -581,8 +598,7 @@ export default class KimaiCalendar {
                     <li>` + this.options['translations']['activity'] + `: ` + escaper.escapeForHtml(eventObj.activity) + `</li>
                 </ul>` +
                 (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
-                (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
-                (eventObj.tags !== null && eventObj.tags.length > 0 ? '<span class="badge bg-green">' + eventObj.tags.join('</span> <span class="badge bg-green">') + '</span>' : '') + `
+                (eventObj.description ? '<p>' + escaper.escapeForHtml(eventObj.description) + '</p>' : '') + tags + `
             </div>`;
     }
 

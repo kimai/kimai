@@ -174,7 +174,6 @@ class LdapManager
 
         $this->hydrateUserWithAttributesMap($user, $ldapEntry, $attributeMap);
 
-        /** @var string|array|null $email */
         $email = $user->getEmail();
         if (null === $email) {
             $user->setEmail($user->getUserIdentifier());

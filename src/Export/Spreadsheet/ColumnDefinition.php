@@ -13,6 +13,8 @@ final class ColumnDefinition
 {
     private $accessor;
 
+    private string $translationDomain = 'messages';
+
     public function __construct(private string $label, private string $type, callable $accessor)
     {
         $this->accessor = $accessor;
@@ -31,5 +33,15 @@ final class ColumnDefinition
     public function getAccessor(): callable
     {
         return $this->accessor;
+    }
+
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
+    }
+
+    public function setTranslationDomain(string $translationDomain): void
+    {
+        $this->translationDomain = $translationDomain;
     }
 }

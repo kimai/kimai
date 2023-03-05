@@ -23,6 +23,11 @@ final class RecentActivitiesSource implements DragAndDropSource
         return 'recent.activities';
     }
 
+    public function getTranslationDomain(): string
+    {
+        return 'messages';
+    }
+
     public function getRoute(): string
     {
         return 'post_timesheet';

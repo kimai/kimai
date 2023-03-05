@@ -135,7 +135,7 @@ trait RendererTrait
             }
 
             $rate = $exportItem->getRate();
-            $internalRate = $exportItem->getInternalRate();
+            $internalRate = $exportItem->getInternalRate() ?? 0;
 
             // rate
             $summary[$id]['rate'] += $rate;

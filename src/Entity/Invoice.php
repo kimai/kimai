@@ -190,6 +190,16 @@ class Invoice implements EntityWithMetaFields
 
     public function setModel(InvoiceModel $model): Invoice
     {
+        $template = $model->getTemplate();
+
+        if ($template === null) {
+            throw new \InvalidArgumentException('Missing invoice template');
+        }
+
+        if ($template->getDueDays() === null || $template->getVat() === null) {
+            throw new \InvalidArgumentException('Missing due-days or vat setting');
+        }
+
         $this->customer = $model->getCustomer();
         $this->user = $model->getUser();
         $this->total = $model->getCalculator()->getTotal();
@@ -201,7 +211,6 @@ class Invoice implements EntityWithMetaFields
         $this->createdAt = $createdAt;
         $this->timezone = $createdAt->getTimezone()->getName();
 
-        $template = $model->getTemplate();
         $this->dueDays = $template->getDueDays();
         $this->vat = $template->getVat();
 

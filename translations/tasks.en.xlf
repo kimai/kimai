@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="tasks.en.xlf">
+    <body>
+      <!-- Reports -->
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
+        <source>report_tasks_assigned</source>
+        <target>My tasks</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams">
+        <source>report_tasks_teams</source>
+        <target>Team tasks</target>
+      </trans-unit>
+      <!-- Actions -->
+      <trans-unit id="XjAwhoV" resname="task.start">
+        <source>task.start</source>
+        <target>Start processing</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop">
+        <source>task.stop</source>
+        <target>Pause processing</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign">
+        <source>task.assign</source>
+        <target>Assign to me</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign">
+        <source>task.unassign</source>
+        <target>Release task</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen">
+        <source>task.reopen</source>
+        <target>Re-open task</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close">
+        <source>task.close</source>
+        <target>Complete task</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create">
+        <source>task.create</source>
+        <target>Create task</target>
+      </trans-unit>
+      <!-- Application -->
+      <trans-unit id="s6YOYaU" resname="Tasks">
+        <source>Tasks</source>
+        <target>Tasks</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending">
+        <source>tasks.pending</source>
+        <target>Pending tasks</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my">
+        <source>tasks.my</source>
+        <target>My tasks</target>
+      </trans-unit>
+      <trans-unit id="bnCqljW" resname="task.delete">
+        <source>task.delete</source>
+        <target>Delete task? Time records will not be deleted!</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title">
+        <source>task.help.title</source>
+        <target>A short description of the task</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end">
+        <source>task.help.end</source>
+        <target>Task must be completed until this date</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user">
+        <source>task.help.user</source>
+        <target>Assign this task to a user</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team">
+        <source>task.help.team</source>
+        <target>Assign this task to a team</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows">
+        <source>task.widget_rows</source>
+        <target>Amount of tasks per page in dashboard widget</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Time estimation</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation">
+        <source>task.help.estimation</source>
+        <target>Estimated time needed to complete the task in hh:mm</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description">
+        <source>task.help.description</source>
+        <target>This description will be copied into each timesheet record</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags">
+        <source>task.help.tags</source>
+        <target>These tags will be copied into each timesheet record</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation">
+        <source>task_no_estimation</source>
+        <target>Without estimation</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation">
+        <source>task_with_estimation</source>
+        <target>With estimation</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started">
+        <source>task_started</source>
+        <target>Work started</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started">
+        <source>task_not_started</source>
+        <target>Not started</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue">
+        <source>task_overdue</source>
+        <target>Overdue</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo">
+        <source>task_todo</source>
+        <target>Task description</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

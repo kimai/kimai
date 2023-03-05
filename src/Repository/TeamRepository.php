@@ -40,20 +40,6 @@ class TeamRepository extends EntityRepository
         return $result;
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null): ?Team
-    {
-        /** @var Team|null $team */
-        $team = parent::find($id, $lockMode, $lockVersion);
-        if (null === $team) {
-            return null;
-        }
-
-        $loader = new TeamLoader($this->getEntityManager());
-        $loader->loadResults([$team]);
-
-        return $team;
-    }
-
     /**
      * @param int[] $teamIds
      * @return Team[]

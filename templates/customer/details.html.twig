@@ -13,7 +13,6 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                {{ widgets.card_tool_button('vcard', {'title': 'vcard', 'translation_domain': 'actions', 'icon': 'far fa-address-card', 'url': path('customer_vcard', {'id': customer.id})}) }}
                 {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_customer_edit', {'id': customer.id})}) }}
             {% endif %}
         {% endblock %}

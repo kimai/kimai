@@ -11,8 +11,13 @@ namespace App\Reporting;
 
 final class Report implements ReportInterface
 {
-    public function __construct(private string $id, private string $route, private string $label, private string $reportIcon)
-    {
+    public function __construct(
+        private string $id,
+        private string $route,
+        private string $label,
+        private string $reportIcon,
+        private string $translationDomain = 'reporting'
+    ) {
     }
 
     public function getRoute(): string
@@ -33,5 +38,10 @@ final class Report implements ReportInterface
     public function getReportIcon(): string
     {
         return $this->reportIcon;
+    }
+
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
     }
 }

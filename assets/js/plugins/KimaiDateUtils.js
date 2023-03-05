@@ -227,8 +227,6 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
-     * TODO remove seconds
-     *
      * @param {int} hours
      * @param {int} minutes
      * @return {string}

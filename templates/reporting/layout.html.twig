@@ -5,10 +5,17 @@
 
 {% block breadcrumb %}
     {% from "macros/breadcrumb.html.twig" import breadcrumb %}
-    {{ breadcrumb({
-        ('menu.reporting'|trans): path('reporting'),
-        (report_title|trans({}, 'reporting')): '#'
-    }) }}
+    {% if page_setup is defined %}
+        {{ breadcrumb({
+            ('menu.reporting'|trans): path('reporting'),
+            (page_setup.title|trans({}, page_setup.translationDomain)): '#'
+        }) }}
+    {% else %}
+        {{ breadcrumb({
+            ('menu.reporting'|trans): path('reporting'),
+            (report_title|trans({}, 'reporting')): '#'
+        }) }}
+    {% endif %}
 {% endblock %}
 
 {% block main %}

@@ -91,7 +91,6 @@ final class TeamFixtures extends Fixture
             $team = new Team($faker->company() . ' ' . $i);
             $team->addTeamlead($allUsers[array_rand($allUsers)]);
 
-            /* @phpstan-ignore-next-line */
             if ($userCount > 0) {
                 $userKeys = array_rand($allUsers, $userCount);
                 if (!\is_array($userKeys)) {

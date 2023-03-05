@@ -42,16 +42,16 @@ class AnnotationExtractorTest extends TestCase
         }
 
         $expected = [
-            ['type-time', 'time', new \DateTime()],
-            ['Public-Property', 'string', 'public-property'],
-            ['type-date', 'date', new \DateTime()],
-            ['Private-Property', 'integer', 123],
-            ['accessor', 'string', 'accessor-method'],
-            ['Protected-Property', 'boolean', false],
-            ['Public-Method', 'string', 'public-method'],
-            ['Protected-Method', 'datetime', new \DateTime()],
-            ['duration', 'duration', 12345],
-            ['Private-Method', 'boolean', true],
+            ['type-time', 'time', new \DateTime(), 'foo'],
+            ['Public-Property', 'string', 'public-property', 'messages'],
+            ['type-date', 'date', new \DateTime(), 'messages'],
+            ['Private-Property', 'integer', 123, 'test'],
+            ['accessor', 'string', 'accessor-method', 'messages'],
+            ['Protected-Property', 'boolean', false, 'messages'],
+            ['Public-Method', 'string', 'public-method', 'messages'],
+            ['Protected-Method', 'datetime', new \DateTime(), 'messages'],
+            ['duration', 'duration', 12345, 'messages'],
+            ['Private-Method', 'boolean', true, 'bar'],
         ];
 
         $i = 0;
@@ -66,6 +66,7 @@ class AnnotationExtractorTest extends TestCase
             if (\in_array(get_debug_type($result), ['string', 'int', 'bool', 'float'])) {
                 self::assertEquals($item[2], $result);
             }
+            self::assertEquals($item[3], $column->getTranslationDomain(), 'Failed translation domain for: ' . $item[0]);
         }
     }
 

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="tasks.en.xlf">
+    <body>
+      <!-- Reports -->
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
+        <source>report_tasks_assigned</source>
+        <target>Meine Aufgaben</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams">
+        <source>report_tasks_teams</source>
+        <target>Team Aufgaben</target>
+      </trans-unit>
+      <!-- Actions -->
+      <trans-unit id="XjAwhoV" resname="task.start">
+        <source>task.start</source>
+        <target>Bearbeitung beginnen</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop">
+        <source>task.stop</source>
+        <target>Bearbeitung pausieren</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign">
+        <source>task.assign</source>
+        <target>Aufgabe mir zuweisen</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign">
+        <source>task.unassign</source>
+        <target>Aufgabe freigeben</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen">
+        <source>task.reopen</source>
+        <target>Aufgabe erneut öffnen</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close">
+        <source>task.close</source>
+        <target>Aufgabe abschließen</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create">
+        <source>task.create</source>
+        <target>Aufgabe erstellen</target>
+      </trans-unit>
+      <!-- Application -->
+      <trans-unit id="s6YOYaU" resname="Tasks">
+        <source>Tasks</source>
+        <target>Aufgaben</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending">
+        <source>tasks.pending</source>
+        <target>Geplante Aufgaben</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my">
+        <source>tasks.my</source>
+        <target>Meine Aufgaben</target>
+      </trans-unit>
+      <trans-unit id="bnCqljW" resname="task.delete">
+        <source>task.delete</source>
+        <target>Aufgabe löschen? Aufgezeichnete Zeiten werden nicht gelöscht!</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title">
+        <source>task.help.title</source>
+        <target>Eine kurze Beschreibung der Aufgabe</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end">
+        <source>task.help.end</source>
+        <target>Aufgabe muss bis zu diesem Datum abgeschlossen sein</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user">
+        <source>task.help.user</source>
+        <target>Diese Aufgabe einem Benutzer zuordnen</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team">
+        <source>task.help.team</source>
+        <target>Diese Aufgabe einem Team zuordnen</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows">
+        <source>task.widget_rows</source>
+        <target>Anzahl Aufgaben pro Seite im Dashboard</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Zeitschätzung</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation">
+        <source>task.help.estimation</source>
+        <target>Geschätzte Dauer zur Erledigung der Aufgabe in hh:mm</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description">
+        <source>task.help.description</source>
+        <target>Diese Beschreibung wird in jeden erfassten Zeiteintrag kopiert</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags">
+        <source>task.help.tags</source>
+        <target>Diese Schlagworte werden in jeden erfassten Zeiteintrag kopiert</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation">
+        <source>task_no_estimation</source>
+        <target>Ohne Zeitschätzung</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation">
+        <source>task_with_estimation</source>
+        <target>Mit Zeitschätzung</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started">
+        <source>task_started</source>
+        <target>Arbeit begonnen</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started">
+        <source>task_not_started</source>
+        <target>Nicht gestartet</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue">
+        <source>task_overdue</source>
+        <target>Überfällig</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo">
+        <source>task_todo</source>
+        <target>Aufgabenbeschreibung</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

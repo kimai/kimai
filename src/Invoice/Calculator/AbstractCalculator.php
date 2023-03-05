@@ -40,7 +40,7 @@ abstract class AbstractCalculator
 
     public function getVat(): float
     {
-        return $this->model->getTemplate()->getVat();
+        return $this->model->getTemplate()->getVat() ?? 0.00;
     }
 
     public function getTax(): float

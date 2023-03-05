@@ -31,6 +31,9 @@ final class ProjectLoader implements LoaderInterface
 
         $ids = array_map(function ($project) {
             if ($project instanceof Project) {
+                // make sure that this potential doctrine proxy is initialized and filled with all data
+                $project->getName();
+
                 return $project->getId();
             }
 

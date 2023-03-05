@@ -64,7 +64,7 @@ trait RepositorySearchTrait
             $c = 0;
             foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
                 $and = $qb->expr()->andX();
-                /** @var literal-string $alias */
+                /** @var non-falsy-string&literal-string $alias */
                 $alias = 'meta' . $a++;
                 $paramName = 'metaName' . $i++;
                 $paramValue = 'metaValue' . $c++;

@@ -30,6 +30,9 @@ final class UserLoader implements LoaderInterface
 
         $ids = array_map(function ($user) {
             if ($user instanceof User) {
+                // make sure that this potential doctrine proxy is initialized and filled with all data
+                $user->getDisplayName();
+
                 return $user->getId();
             }
 

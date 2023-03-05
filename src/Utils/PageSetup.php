@@ -14,6 +14,7 @@ final class PageSetup
     private ?string $help = null;
     private ?string $actionName = null;
     private string $actionView = 'index';
+    private string $translationDomain = 'messages';
     private array $actionPayload = [];
     private ?DataTable $dataTable = null;
 
@@ -89,5 +90,15 @@ final class PageSetup
     public function isTableAction(): bool
     {
         return \in_array($this->actionView, ['detail', 'custom', 'table']);
+    }
+
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
+    }
+
+    public function setTranslationDomain(string $translationDomain): void
+    {
+        $this->translationDomain = $translationDomain;
     }
 }

@@ -16,8 +16,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TagsType extends AbstractType
 {
-    public function __construct(private AuthorizationCheckerInterface $auth, private TagRepository $repository)
-    {
+    public function __construct(
+        private AuthorizationCheckerInterface $auth,
+        private TagRepository $repository
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

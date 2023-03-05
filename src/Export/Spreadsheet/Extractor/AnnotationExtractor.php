@@ -67,13 +67,19 @@ final class AnnotationExtractor implements ExtractorInterface
 
             $parsed = $this->expressionLanguage->parse($arguments['exp'], ['object']);
 
-            $columns[$arguments['name']] = new ColumnDefinition(
+            $name = $arguments['name'];
+
+            $columns[$name] = new ColumnDefinition(
                 $arguments['label'],
                 $arguments['type'] ?? 'string',
                 function ($obj) use ($parsed) {
                     return $parsed->getNodes()->evaluate([], ['object' => $obj]);
                 }
             );
+
+            if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
+                $columns[$name]->setTranslationDomain($arguments['translationDomain']);
+            }
         }
 
         foreach ($reflectionClass->getProperties() as $property) {
@@ -103,6 +109,10 @@ final class AnnotationExtractor implements ExtractorInterface
                         return $property->getValue($obj);
                     }
                 );
+
+                if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
+                    $columns[$name]->setTranslationDomain($arguments['translationDomain']);
+                }
             }
         }
 
@@ -137,6 +147,10 @@ final class AnnotationExtractor implements ExtractorInterface
                         return $method->invoke($obj);
                     }
                 );
+
+                if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
+                    $columns[$name]->setTranslationDomain($arguments['translationDomain']);
+                }
             }
         }
 
