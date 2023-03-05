@@ -946,6 +946,10 @@
         <source>error.directory_protected</source>
         <target>Mappe »%dir%« er skrive beskyttet.</target>
       </trans-unit>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target state="needs-translation">Tilladte karaktere: A-Z and _</target>
+      </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Om Kimai</target>

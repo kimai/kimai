@@ -253,6 +253,10 @@
       <!--
               General labels
             -->
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="translated">日期</target>
+      </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
         <target state="translated">開始</target>

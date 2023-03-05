@@ -979,6 +979,14 @@
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">Vika %week%</target>
       </trans-unit>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
+        <target state="needs-translation">Samlaður kostnaður</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target state="translated">Legg brúkara aftrat</target>
+      </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Sjálvvirkandi</target>
