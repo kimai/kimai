@@ -61,7 +61,7 @@ final class InvoiceRendererType extends AbstractType
 
         $type = array_pop($parts);
 
-        if (!is_string($type)) {
+        if (!\is_string($type)) {
             return 'programmatic';
         }
 
