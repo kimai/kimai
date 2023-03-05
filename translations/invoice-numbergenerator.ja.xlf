@@ -10,10 +10,6 @@
         <source>date</source>
         <target>日付</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target state="needs-translation">Configured format</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
