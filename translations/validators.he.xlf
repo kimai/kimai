@@ -2,25 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="JocOVM2" resname="The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.">
-        <source>The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.</source>
-        <target>הקובץ גדול מדי ({{ size }} {{ suffix }}). הגודל המרבי המותר הוא {{ limit }} {{ suffix }}.</target>
-      </trans-unit>
       <trans-unit id="d7sS5yw" resname="This value should be a valid number.">
         <source>This value should be a valid number.</source>
         <target>הערך צריך להיות מספר חוקי.</target>
       </trans-unit>
-      <trans-unit id="mHfEaB3" resname="No temporary folder was configured in php.ini.">
-        <source>No temporary folder was configured in php.ini.</source>
-        <target>לא הוגדרה תיקייה זמנית ב php.ini.</target>
-      </trans-unit>
       <trans-unit id="o8A8a0H" resname="This value should be greater than or equal to {{ compared_value }}.">
         <source>This value should be greater than or equal to {{ compared_value }}.</source>
         <target>הערך חייב להיות גדול או שווה ל {{ compared_value }}.</target>
-      </trans-unit>
-      <trans-unit id="8zqt0Ik" resname="This is not a valid UUID.">
-        <source>This is not a valid UUID.</source>
-        <target>הערך אינו ערך UUID חוקי.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
