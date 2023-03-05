@@ -880,15 +880,15 @@
         <source>status.paid</source>
         <target state="translated">Maksettu</target>
       </trans-unit>
-      <trans-unit id="w.uSUzX" resname="status.planned">
+      <trans-unit id="Zngu6M9" resname="status.planned">
         <source>status.planned</source>
         <target>Suunniteltu</target>
       </trans-unit>
-      <trans-unit id="1DF_frD" resname="status.progress">
+      <trans-unit id="m8V2yFG" resname="status.progress">
         <source>status.progress</source>
         <target>Kesken</target>
       </trans-unit>
-      <trans-unit id="9JOxqNl" resname="status.closed">
+      <trans-unit id="HF70hZq" resname="status.closed">
         <source>status.closed</source>
         <target>Suoritettu</target>
       </trans-unit>
