@@ -114,10 +114,6 @@
         <source>vcard</source>
         <target state="translated">کارت بازرگانی</target>
       </trans-unit>
-      <trans-unit id="QCf1FUG" resname="reload">
-        <source>reload</source>
-        <target state="needs-translation">Reload</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
