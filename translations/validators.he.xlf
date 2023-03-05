@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="d7sS5yw" resname="This value should be a valid number.">
-        <source>This value should be a valid number.</source>
-        <target>הערך צריך להיות מספר חוקי.</target>
-      </trans-unit>
       <trans-unit id="o8A8a0H" resname="This value should be greater than or equal to {{ compared_value }}.">
         <source>This value should be greater than or equal to {{ compared_value }}.</source>
         <target>הערך חייב להיות גדול או שווה ל {{ compared_value }}.</target>
