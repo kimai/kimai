@@ -102,6 +102,22 @@
         <source>invoice.cancel</source>
         <target>Cancelar fatura</target>
       </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add">
+        <source>Add widget</source>
+        <target state="translated">Adicionar ferramenta</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Recarregar</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard">
+        <source>vcard</source>
+        <target state="translated">Cartão de visitas</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove">
+        <source>Remove widget</source>
+        <target state="translated">Remove a ferramenta</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

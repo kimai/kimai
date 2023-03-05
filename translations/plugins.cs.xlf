@@ -1,10 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="plugins.en.xlf">
     <body>
       <trans-unit id="vFSLi54" resname="plugin.none_installed">
         <source>plugin.none_installed</source>
         <target>Zatím nemáte nainstalované žádné doplňky.</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="needs-translation">Buy now</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="needs-translation">More extensions</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="needs-translation">New plugins from the marketplace</target>
       </trans-unit>
     </body>
   </file>

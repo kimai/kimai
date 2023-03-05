@@ -98,6 +98,14 @@
         <source>Cannot stop running timesheet</source>
         <target state="translated">لديك سجل وقت نشط لا يمكن إيقافه تلقائيًا.</target>
       </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="needs-translation">This is not a valid name for a user role.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="needs-translation">The given code is not the correct TOTP token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

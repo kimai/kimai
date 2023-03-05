@@ -286,6 +286,22 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Отображение заголовков записей календаря</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="needs-translation">Customer number Format</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="needs-translation">Allow duplicate account number</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="needs-translation">Allowed replacer: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="needs-translation">Allow creation of activities in time-tracking form</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

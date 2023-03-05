@@ -22,6 +22,26 @@
         <source>help.upload</source>
         <target>Atentu: ekzistantaj dosieroj estos anstataŭigitaj. Permesitaj tipoj de dosieroj estas: %extensions%.</target>
       </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="needs-translation">For further processing</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="needs-translation">You can download further templates here</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target state="needs-translation">HTML (for printing via Browser)</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="needs-translation">Text</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="needs-translation">Invoice</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

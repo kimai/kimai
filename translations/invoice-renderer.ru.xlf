@@ -38,6 +38,10 @@
         <source>text</source>
         <target state="translated">Текст</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="needs-translation">You can download further templates here</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

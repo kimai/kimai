@@ -50,6 +50,10 @@
         <source>timesheet.locked.warning</source>
         <target>أنت تقوم بتحرير تسجيل تم تصديره</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target state="needs-translation">The action could not be performed: invalid security token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

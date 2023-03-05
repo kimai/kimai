@@ -1470,6 +1470,18 @@
         <source>invoice_date.help</source>
         <target state="translated">Você pode mudar a data da fatura aqui</target>
       </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned">
+        <source>status.planned</source>
+        <target state="translated">Planejado</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress">
+        <source>status.progress</source>
+        <target state="translated">Em andamento</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed">
+        <source>status.closed</source>
+        <target state="translated">Concluído</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

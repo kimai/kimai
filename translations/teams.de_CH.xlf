@@ -30,6 +30,10 @@
         <source>team.create_default</source>
         <target state="needs-translation">Erstelle ein neues Team um den Zugriff zu beschränken</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="needs-translation">Member</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -34,6 +34,10 @@
         <source>weekly</source>
         <target>Hetente: heti egy bejegyzés (a kezdési dátumot használja)</target>
       </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="needs-translation">Price: one entry per price</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

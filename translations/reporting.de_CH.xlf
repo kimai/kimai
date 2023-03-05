@@ -42,6 +42,10 @@
         <source>report_inactive_project</source>
         <target state="needs-translation">Inaktive Projekte</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="needs-translation">Projects by month, activity and user</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

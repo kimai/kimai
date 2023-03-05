@@ -38,6 +38,14 @@
         <source>report_project_daterange</source>
         <target>Monata raporto</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="needs-translation">Projects by month, activity and user</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="needs-translation">Yearly view for one user</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

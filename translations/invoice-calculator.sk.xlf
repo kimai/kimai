@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sk" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -21,6 +21,22 @@
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Aktivity - jedna položka na činnosť</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="needs-translation">Price: one entry per price</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target state="needs-translation">Project: one entry per project</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="needs-translation">Date: one entry per day (uses start date)</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="needs-translation">Weekly: one entry per week (uses start date)</target>
       </trans-unit>
     </body>
   </file>

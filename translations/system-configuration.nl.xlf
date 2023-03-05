@@ -262,6 +262,46 @@
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Minimale aantal rijen</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="needs-translation">Customer number Format</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="needs-translation">Allowed replacer: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="needs-translation">Allow duplicate account number</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="needs-translation">Maximum duration of a timesheet record in minutes before a "break warning" will be displayed (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="needs-translation">Maximum duration of a timesheet record in minutes before saving is rejected (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
+        <source>copy_teams_on_create</source>
+        <target state="needs-translation">Take over teams from the logged-in user when creating new entries</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount">
+        <source>calendar.dragdrop_amount</source>
+        <target state="needs-translation">Amount of entries for drag&amp;drop (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="needs-translation">Copies data when adding via drag and drop</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern">
+        <source>calendar.title_pattern</source>
+        <target state="needs-translation">Display of the titles of calendar entries</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="needs-translation">Allow creation of activities in time-tracking form</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

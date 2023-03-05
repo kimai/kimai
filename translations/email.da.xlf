@@ -30,6 +30,18 @@
         <source>reset.intro</source>
         <target>... så du har glemt dit kodeord? Intet problem: Kimai hjælper dig med at oprette et nyt:</target>
       </trans-unit>
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target state="needs-translation">If the button doesn't work, please copy &amp; paste the following URL to your browser: %url%</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target state="needs-translation">This is an auto generated e-mail. Please do not reply, the address will not be read.</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="needs-translation">You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
