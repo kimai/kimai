@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fi" datatype="plaintext" original="tasks.en.xlf">
+    <body>
+      <!-- Reports -->
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
+        <source>report_tasks_assigned</source>
+        <target>Tehtäväni</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams">
+        <source>report_tasks_teams</source>
+        <target>Tiimin tehtävät</target>
+      </trans-unit>
+      <!-- Actions -->
+      <trans-unit id="XjAwhoV" resname="task.start">
+        <source>task.start</source>
+        <target>Aloita tehtävä</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop">
+        <source>task.stop</source>
+        <target>Keskeytä tehtävä</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign">
+        <source>task.assign</source>
+        <target>Aseta minulle</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign">
+        <source>task.unassign</source>
+        <target>Julkaise tehtävä</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen">
+        <source>task.reopen</source>
+        <target>Avaa tehtävä uudelleen</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close">
+        <source>task.close</source>
+        <target>Merkitse tehtävä suoritetuksi</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create">
+        <source>task.create</source>
+        <target>Luo tehtävä</target>
+      </trans-unit>
+      <!-- Application -->
+      <trans-unit id="s6YOYaU" resname="Tasks">
+        <source>Tasks</source>
+        <target>Tehtävien</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending">
+        <source>tasks.pending</source>
+        <target>Odottavat tehtävä</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my">
+        <source>tasks.my</source>
+        <target>Tehtäväni</target>
+      </trans-unit>
+      <trans-unit id="bnCqljW" resname="task.delete">
+        <source>task.delete</source>
+        <target>Poista tehtävä? Työaikoja ei poisteta!</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title">
+        <source>task.help.title</source>
+        <target>Lyhyt kuvaus tehtävälle</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end">
+        <source>task.help.end</source>
+        <target>Tehtävä tulee olla suoritettuna</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user">
+        <source>task.help.user</source>
+        <target>Aseta tehtävä käyttäjälle</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team">
+        <source>task.help.team</source>
+        <target>Aseta tehtävä tiimille</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows">
+        <source>task.widget_rows</source>
+        <target>Tehtävien määrä per sivu ohjauspaneelin widgetissä</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Aika-arvio</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation">
+        <source>task.help.estimation</source>
+        <target>Arvioitu aika tehtävän suorittamiseen muodossa hh:mm</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description">
+        <source>task.help.description</source>
+        <target>Tämä kuvaus kopioidaan jokaiseen työaikakirjaukseen</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags">
+        <source>task.help.tags</source>
+        <target>Nämä tunnisteet kopioidaan jokaiseen työaikakirjaukseen</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation">
+        <source>task_no_estimation</source>
+        <target>Ilman aika-arviota</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation">
+        <source>task_with_estimation</source>
+        <target>Aika-arviolla</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started">
+        <source>task_started</source>
+        <target>Työ aloitettu</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started">
+        <source>task_not_started</source>
+        <target>Ei aloitettu</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue">
+        <source>task_overdue</source>
+        <target>Myöhässä</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
