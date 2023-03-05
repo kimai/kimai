@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="o8A8a0H" resname="This value should be greater than or equal to {{ compared_value }}.">
-        <source>This value should be greater than or equal to {{ compared_value }}.</source>
-        <target>Această valoare trebuie să fie mai mare sau egală cu {{ compared_value }}.</target>
-      </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>Această valoare nu este un rol valid.</target>
