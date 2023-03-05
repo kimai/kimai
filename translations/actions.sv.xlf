@@ -114,6 +114,10 @@
         <source>Remove widget</source>
         <target state="translated">Ta bort widgeten</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Ladda om</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -18,10 +18,6 @@
         <source>service-date</source>
         <target>مستقل</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target>تصدير البيانات</target>
-      </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>
         <target>HTML (للطباعة عبر المتصفح)</target>

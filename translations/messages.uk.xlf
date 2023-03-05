@@ -1398,6 +1398,14 @@
         <source>hour_24</source>
         <target state="translated">24-годинний</target>
       </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Дата виставлення рахунку</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Ви можете змінити дату рахунку тут</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

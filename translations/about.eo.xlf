@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eo" datatype="plaintext" original="about.en.xlf">
     <body>
@@ -18,17 +18,9 @@
         <source>donate</source>
         <target>Donacu</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% estas publikigita sub</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>Speciala danko al …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>… la aŭtoroj de la sekvaj programaraj bibliotekoj, Kimai ne estus ebla sen vi 👍</target>
       </trans-unit>
     </body>
   </file>

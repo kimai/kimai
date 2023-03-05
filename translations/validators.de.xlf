@@ -98,10 +98,6 @@
         <source>The given value is not a valid datetime format.</source>
         <target>Das angegebene Format für die Tageszeit ist nicht korrekt.</target>
       </trans-unit>
-      <trans-unit id="FtWbd_F" resname="Global activities are forbidden for the selected project.">
-        <source>Global activities are forbidden for the selected project.</source>
-        <target>Globale Aktivitäten sind in dem gewählten Projekt nicht erlaubt.</target>
-      </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>
         <target>Der übermittelte Code ist nicht der korrekte TOTP Token.</target>

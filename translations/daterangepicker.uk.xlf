@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target state="translated">Цей рік</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target state="translated">Власний період</target>
-      </trans-unit>
       <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
         <source>daterangepicker.allTime</source>
         <target state="translated">Загальний період</target>

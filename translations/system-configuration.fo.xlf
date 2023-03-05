@@ -190,10 +190,6 @@
         <source>timesheet.default_begin</source>
         <target state="needs-translation">Default start-time (not used in all timetracking modes)</target>
       </trans-unit>
-      <trans-unit id="bKumt5c" resname="simple_form">
-        <source>simple_form</source>
-        <target state="needs-translation">Simple search</target>
-      </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
         <target state="needs-translation">Invoice number format</target>

@@ -1474,6 +1474,14 @@
         <source>time</source>
         <target state="translated">Heure</target>
       </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Vous pouvez modifier la date de la facture ici</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Date de la facture</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

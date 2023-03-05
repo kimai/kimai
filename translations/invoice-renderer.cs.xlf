@@ -18,10 +18,6 @@
         <source>service-date</source>
         <target>Živnostník</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target>Export dat</target>
-      </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target state="translated">Pozor: existující soubory budou přepsány. Povolené typy jsou: %extensions%.</target>

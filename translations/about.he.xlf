@@ -18,17 +18,9 @@
         <source>donate</source>
         <target state="translated">תרומה</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% מופץ בכפוף</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>תודה מיוחדת מגיעה ל…</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>… המפתחים של רכיבי התכנה האלה, קימאי לא הייתה קיימת בלעדיכם 👍</target>
       </trans-unit>
     </body>
   </file>

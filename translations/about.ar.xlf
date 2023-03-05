@@ -6,10 +6,6 @@
         <source>help</source>
         <target>مساعدة</target>
       </trans-unit>
-      <trans-unit id="A0nWoXZ" resname="special_thanks">
-        <source>special_thanks</source>
-        <target>شكر خاص يذهب الى…</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>تبرع لمستقبل KIMAI</target>
@@ -21,10 +17,6 @@
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>الدعم</target>
-      </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>تم نشره حسب %kimai%</target>
       </trans-unit>
       <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>

@@ -246,10 +246,6 @@
         <source>timesheet.time_increment</source>
         <target state="translated">Lựa chọn phút cho Từ &amp; Đến</target>
       </trans-unit>
-      <trans-unit id="1isLKYz" resname="theme.colors_limited">
-        <source>theme.colors_limited</source>
-        <target state="translated">Giới hạn lựa chọn màu sắc</target>
-      </trans-unit>
       <trans-unit id="EFY6GmX" resname="theme.color_choices">
         <source>theme.color_choices</source>
         <target state="translated">Các màu sắc được cho phép</target>
@@ -273,10 +269,6 @@
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
         <target state="translated">Cho phép sử dụng URLs cho ảnh đại diện</target>
-      </trans-unit>
-      <trans-unit id="4bkIcyi" resname="theme.random_colors">
-        <source>theme.random_colors</source>
-        <target state="translated">Sử dụng màu ngẫu nhiên cho các đối tượng không có màu chỉ định</target>
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
         <source>timesheet.rules.allow_overlapping_records</source>

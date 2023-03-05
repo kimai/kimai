@@ -190,10 +190,6 @@
         <source>theme.avatar_url</source>
         <target state="translated">Permitir el uso de URLs para las imágenes de los avatares</target>
       </trans-unit>
-      <trans-unit id="4bkIcyi" resname="theme.random_colors">
-        <source>theme.random_colors</source>
-        <target state="translated">Usar colores aleatorios para objetos sin color asignado</target>
-      </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
         <target state="translated">Periodo de bloqueo</target>
@@ -281,10 +277,6 @@
       <trans-unit id="AzOiQES" resname="company.financial_year">
         <source>company.financial_year</source>
         <target state="translated">Año fiscal</target>
-      </trans-unit>
-      <trans-unit id="1isLKYz" resname="theme.colors_limited">
-        <source>theme.colors_limited</source>
-        <target state="translated">Limite de las opciones de color</target>
       </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>

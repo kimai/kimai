@@ -190,10 +190,6 @@
         <source>timesheet.default_begin</source>
         <target>Forvalgt starttid (ikke brukt i alle tidsregistreringsmodus)</target>
       </trans-unit>
-      <trans-unit id="bKumt5c" resname="simple_form">
-        <source>simple_form</source>
-        <target>Enkelt søk</target>
-      </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
         <target>Fakturanummer-format</target>

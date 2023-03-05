@@ -190,10 +190,6 @@
         <source>timesheet.default_begin</source>
         <target state="translated">زمان شروع پیش‌فرض (در همه حالت‌های ردیابی زمان استفاده نمی‌شود)</target>
       </trans-unit>
-      <trans-unit id="bKumt5c" resname="simple_form">
-        <source>simple_form</source>
-        <target state="translated">جستجوی ساده</target>
-      </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
         <target state="translated">فرمت شماره فاکتور</target>

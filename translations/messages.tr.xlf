@@ -1462,6 +1462,14 @@
         <source>user.language.help</source>
         <target state="translated">Bu ayar, arayüzü çevirmenin yanı sıra saat, tarih ve para birimi biçimlerinden de sorumludur.</target>
       </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Fatura tarihini buradan değiştirebilirsiniz</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Fatura tarihi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

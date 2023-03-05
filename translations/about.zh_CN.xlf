@@ -18,17 +18,9 @@
         <source>donate</source>
         <target state="translated">捐款</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% 能够发布是因为</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>特别鸣谢 …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>… 这些软件库里的作者们，如果没有你们，Kimai不可能建成 👍</target>
       </trans-unit>
     </body>
   </file>

@@ -57,10 +57,6 @@
         <source>task.delete</source>
         <target>Effacer la tâche? Les temps assignés ne seront pas supprimés!</target>
       </trans-unit>
-      <trans-unit id="ODW2.AZ" resname="quick_filters">
-        <source>quick_filters</source>
-        <target>Choix rapide</target>
-      </trans-unit>
       <trans-unit id="FhEb.Hn" resname="task.help.title">
         <source>task.help.title</source>
         <target>Une description courte de la tâche</target>

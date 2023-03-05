@@ -18,17 +18,9 @@
         <source>donate</source>
         <target>Doniraj</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% je izdan pod</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>Posebno zahvaljujemo …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>… autorima sljedećih softverskih biblioteka. Kimai ne bi bio moguć bez vas 👍</target>
       </trans-unit>
     </body>
   </file>

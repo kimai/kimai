@@ -18,17 +18,9 @@
         <source>donate</source>
         <target>Faites un don</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% est publié sous</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>Des remerciements particuliers vont à …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>…l'ensemble des auteurs des logiciels et bibliothèques suivants, Kimai n'existerait pas sans vous 👍</target>
       </trans-unit>
     </body>
   </file>

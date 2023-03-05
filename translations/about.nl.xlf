@@ -18,17 +18,9 @@
         <source>donate</source>
         <target>Doneer</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target>%kimai% wordt gepubliceerd onder</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>Bijzondere dank gaat naar …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target>… de auteurs van de volgende softwarebibliotheken, Kimai zou zonder jullie niet mogelijk zijn 👍</target>
       </trans-unit>
     </body>
   </file>

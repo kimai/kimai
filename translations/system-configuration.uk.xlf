@@ -14,17 +14,9 @@
         <source>theme.markdown_content</source>
         <target state="translated">Дозволити в описах та коментарях форматування markdown</target>
       </trans-unit>
-      <trans-unit id="ZeKgNWM" resname="theme.tags_create">
-        <source>theme.tags_create</source>
-        <target state="translated">Мітки: використовувати автозаповнення пошуку та дозволити створення міток</target>
-      </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
         <target state="translated">Дозволити використання URL-адрес для зображень аватарів</target>
-      </trans-unit>
-      <trans-unit id="4bkIcyi" resname="theme.random_colors">
-        <source>theme.random_colors</source>
-        <target state="translated">Використовувати випадкові кольори для об'єктів без призначеного кольору</target>
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
@@ -94,10 +86,6 @@
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Мінімальна кількість рядків</target>
       </trans-unit>
-      <trans-unit id="faqAwkj" resname="theme.autocomplete_chars">
-        <source>theme.autocomplete_chars</source>
-        <target state="translated">Мінімальна кількість букв до початку автозаповнення</target>
-      </trans-unit>
       <trans-unit id="t38HFZd" resname="calendar.week_numbers">
         <source>calendar.week_numbers</source>
         <target state="translated">Показати номери тижнів</target>
@@ -137,10 +125,6 @@
       <trans-unit id="en0.Ahu" resname="theme.branding.company">
         <source>theme.branding.company</source>
         <target state="translated">Назва компанії</target>
-      </trans-unit>
-      <trans-unit id="sFdIlBq" resname="theme.branding.mini">
-        <source>theme.branding.mini</source>
-        <target state="translated">Міні лого (згорнута бічна панель)</target>
       </trans-unit>
       <trans-unit id="zeM0nir" resname="theme.branding.title">
         <source>theme.branding.title</source>
@@ -222,10 +206,6 @@
         <source>timesheet.default_begin</source>
         <target state="translated">Типовий час початку (використовується не в усіх режимах обліку часу)</target>
       </trans-unit>
-      <trans-unit id="bKumt5c" resname="simple_form">
-        <source>simple_form</source>
-        <target state="translated">Простий пошук</target>
-      </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
         <target state="translated">Числовий формат рахунка-фактури</target>
@@ -242,17 +222,9 @@
         <source>timesheet.time_increment</source>
         <target state="translated">Вибір хвилини для "Від" і "До"</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">Використовувати налаштоване значення правила округлення</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="translated">Вимк.</target>
-      </trans-unit>
-      <trans-unit id="1isLKYz" resname="theme.colors_limited">
-        <source>theme.colors_limited</source>
-        <target state="translated">Обмеження вибору кольорів</target>
       </trans-unit>
       <trans-unit id="EFY6GmX" resname="theme.color_choices">
         <source>theme.color_choices</source>

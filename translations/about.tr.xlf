@@ -18,17 +18,9 @@
         <source>donate</source>
         <target state="translated">Bağış yapmak</target>
       </trans-unit>
-      <trans-unit id="DwbowBh" resname="published_under">
-        <source>published_under</source>
-        <target state="translated">%kimai% yayınlandı</target>
-      </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target state="translated">Özel teşekkürler …</target>
-      </trans-unit>
-      <trans-unit id="L7cff3Q" resname="library_authors">
-        <source>library_authors</source>
-        <target state="translated">… aşağıdaki yazılım kütüphanelerinin geliştiricileri, sizler olmasaydınız Kimai olmazdı 👍</target>
       </trans-unit>
     </body>
   </file>

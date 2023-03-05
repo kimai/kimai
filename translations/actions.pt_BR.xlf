@@ -114,6 +114,10 @@
         <source>Add widget</source>
         <target state="translated">Adicionar ferramenta</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Recarregar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -22,10 +22,6 @@
         <source>service-date</source>
         <target state="translated">Frilansare</target>
       </trans-unit>
-      <trans-unit id="1GruCMx" resname="export">
-        <source>export</source>
-        <target state="translated">Exportera data</target>
-      </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">För ytterligare bearbetning</target>

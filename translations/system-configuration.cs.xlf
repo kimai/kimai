@@ -238,10 +238,6 @@
         <source>theme.color_choices</source>
         <target state="translated">Povolené barvy</target>
       </trans-unit>
-      <trans-unit id="1isLKYz" resname="theme.colors_limited">
-        <source>theme.colors_limited</source>
-        <target state="translated">Limit výběru barev</target>
-      </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
         <target state="translated">Ověření</target>
