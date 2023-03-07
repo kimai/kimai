@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Pracovní výkaz</target>
+        <target state="translated">Timesheet</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
@@ -37,6 +37,10 @@
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target state="translated">Text</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Další šablony si můžete stáhnout zde</target>
       </trans-unit>
     </body>
   </file>

@@ -30,6 +30,10 @@
         <source>team.create_default</source>
         <target>Vytvořit nový tým k omezenému přístupu</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+        <source>team.member</source>
+        <target state="translated">Člen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

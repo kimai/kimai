@@ -114,6 +114,10 @@
         <source>Add widget</source>
         <target state="translated">Legg til miniprogram</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Gjeninnlast</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
