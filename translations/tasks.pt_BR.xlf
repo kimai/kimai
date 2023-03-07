@@ -73,10 +73,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Quantidade de tarefas por página na ferramenta do painel</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="translated">Excluir a tarefa? Os registros de tempo não serão apagados!</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Tempo necessário estimado para completar a tarefa em hh:mm</target>

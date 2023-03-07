@@ -50,10 +50,6 @@
         <source>task.assign</source>
         <target state="translated">Tildel til meg</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="needs-translation">Slett gjøremål? Tidssedelene vil ikke bli slettet.</target>
-      </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
         <target state="translated">Gjøremålet må utføres før denne datoen</target>

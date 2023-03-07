@@ -94,10 +94,6 @@
         <source>tasks.pending</source>
         <target state="translated">Nevyřízené úkoly</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="translated">Smazat úkol? Časové záznamy nebudou smazány!</target>
-      </trans-unit>
       <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
         <source>task.help.user</source>
         <target state="translated">Přiřaďte tuto úlohu uživateli</target>
