@@ -18,10 +18,6 @@
         <source>task.stop</source>
         <target state="translated">İşlemeyi duraklat</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="translated">Görev silinsin mi? Zaman kayıtları silinmeyecektir!</target>
-      </trans-unit>
       <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
         <source>Tasks</source>
         <target state="translated">Görevler</target>

@@ -78,10 +78,6 @@
         <source>task.help.title</source>
         <target state="translated">Una breve descripción de la tarea</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="translated">¿Eliminar tarea? ¡Los registros de tiempo no se borrarán!</target>
-      </trans-unit>
       <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
         <source>task.help.user</source>
         <target state="translated">Asignar esta tarea a un usuario</target>

@@ -22,10 +22,6 @@
         <source>help.upload</source>
         <target>Atenção: os arquivos já existentes serão substituídos. Os tipos dos arquivos permitidos são: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (para impressão via navegador)</target>
-      </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target>Para processamento posterior</target>

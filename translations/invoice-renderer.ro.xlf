@@ -26,10 +26,6 @@
         <source>programmatic</source>
         <target>Pentru prelucrare ulterioară</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (pentru imprimare prin browser)</target>
-      </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target>Factură</target>

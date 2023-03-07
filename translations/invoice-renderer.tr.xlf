@@ -30,10 +30,6 @@
         <source>help.upload</source>
         <target>Dikkat: mevcut dosyaların üzerine yazılacaktır. İzin verilen dosya türleri: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (Tarayıcı ile yazdırmak için)</target>
-      </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target>Metin</target>

@@ -26,10 +26,6 @@
         <source>programmatic</source>
         <target state="translated">För ytterligare bearbetning</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target state="translated">HTML (för utskrift från webbläsare)</target>
-      </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Faktura</target>

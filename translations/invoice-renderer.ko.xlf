@@ -22,10 +22,6 @@
         <source>help.upload</source>
         <target>주의: 기존 파일을 덮어씁니다. 허용되는 파일 형식은 %extensions%입니다.</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (브라우저를 통한 인쇄용)</target>
-      </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target>텍스트</target>

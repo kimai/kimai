@@ -18,10 +18,6 @@
         <source>service-date</source>
         <target>مستقل</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target>HTML (للطباعة عبر المتصفح)</target>
-      </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target>فاتورة</target>

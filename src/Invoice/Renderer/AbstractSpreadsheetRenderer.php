@@ -101,7 +101,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     if (\is_string($content) && str_starts_with($content, '=')) {
                         $contentLooksLikeFormula = true;
                     }
-                    $value = str_replace($searchKey, $content, $value);
+                    $value = str_replace($searchKey, $content ?? '', $value);
                 }
 
                 if ($contentLooksLikeFormula && $firstReplacerPos === 0) {

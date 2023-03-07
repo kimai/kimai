@@ -58,10 +58,6 @@
         <source>tasks.my</source>
         <target state="translated">مهامي</target>
       </trans-unit>
-      <trans-unit id="bnCqljW" resname="task.delete" xml:space="preserve" approved="no">
-        <source>task.delete</source>
-        <target state="translated">هل تريد حذف المهمة؟ لن يتم حذف سجلات الوقت!</target>
-      </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
         <target state="translated">يجب إنجاز المهمة إلى غاية هذا التاريخ</target>
