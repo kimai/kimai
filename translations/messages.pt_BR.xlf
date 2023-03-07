@@ -792,7 +792,7 @@
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
-        <target>Reportando</target>
+        <target state="translated">Relatórios</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>

@@ -508,7 +508,7 @@
       </trans-unit>
       <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
-        <target>תואר</target>
+        <target state="translated">תפקיד</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>

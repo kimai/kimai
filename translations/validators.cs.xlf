@@ -86,6 +86,26 @@
         <source>The budget is completely used.</source>
         <target state="translated">Rozpočet je vyčerpán. Z plánovaného %budget% bylo použito %used%, může být použito ještě %free%.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Při ukládání došlo k problému.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Máte aktivní časový záznam, který nelze automaticky zastavit.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Toto není platný název pro roli uživatele.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Zadaná hodnota není platný formát denního času.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Uvedený kód není správný token TOTP.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
