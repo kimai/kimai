@@ -29,11 +29,13 @@ final class LanguageType extends AbstractType
         $choices = [];
         foreach ($this->localeService->getAllLocales() as $key) {
             $name = ucfirst(Locales::getName($key, $key));
-            $choices[$name] = $key;
+            $choices[$key] = $name;
         }
 
+        natcasesort($choices);
+
         $resolver->setDefaults([
-            'choices' => $choices,
+            'choices' => array_flip($choices),
             'label' => 'language',
             'choice_translation_domain' => false,
         ]);
