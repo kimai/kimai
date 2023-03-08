@@ -61,6 +61,7 @@ class DailyWorkingTimeChartTest extends TestCase
         $sut = $this->createSut();
 
         $options = $sut->getOptions(['type' => 'xxx']);
+        self::assertIsString($options['id']);
         self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
         self::assertEquals('xxx', $options['type']);
     }
