@@ -12,31 +12,31 @@
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target state="needs-translation">Horas adicionadas - apenas uma entrada</target>
+        <target state="translated">Horas adicionadas - apenas uma entrada</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="needs-translation">Agrupado pelo usuário - uma entrada por usuário</target>
+        <target state="translated">Usuário: uma entrada por usuário</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="needs-translation">Atividade agrupada - uma entrada por atividade</target>
+        <target state="translated">Atividade agrupada - uma entrada por atividade</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="needs-translation">Projeto: uma entrada por projeto</target>
+        <target state="translated">Projeto: uma entrada por projeto</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">Data: uma entrada por dia (utiliza a data de início)</target>
+        <target state="translated">Data: uma entrada por dia (utiliza a data de início)</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="needs-translation">Semanal: uma entrada por semana (utiliza a data de início)</target>
+        <target state="translated">Semanal: uma entrada por semana (utiliza a data de início)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="needs-translation">Preço: uma entrada por preço</target>
+        <target state="translated">Preço: uma entrada por preço</target>
       </trans-unit>
     </body>
   </file>
