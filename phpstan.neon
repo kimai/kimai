@@ -7741,26 +7741,6 @@ parameters:
             path: src/Widget/Type/AbstractActiveUsers.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractActiveUsers\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractActiveUsers.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractActiveUsers\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractActiveUsers.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractAmountPeriod\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractAmountPeriod.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractAmountPeriod\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractAmountPeriod.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractAmountPeriod\\:\\:getRevenue\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Widget/Type/AbstractAmountPeriod.php
@@ -7772,16 +7752,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractCounterDuration\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractCounterDuration.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractCounterDuration\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractCounterDuration.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractCounterDuration\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/AbstractCounterDuration.php
 
@@ -7801,16 +7771,6 @@ parameters:
             path: src/Widget/Type/AbstractSimpleStatisticChart.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractUserRevenuePeriod\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractUserRevenuePeriod.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractUserRevenuePeriod\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractUserRevenuePeriod.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractUserRevenuePeriod\\:\\:getRevenue\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Widget/Type/AbstractUserRevenuePeriod.php
@@ -7819,16 +7779,6 @@ parameters:
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractUserRevenuePeriod\\:\\:getRevenue\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/AbstractUserRevenuePeriod.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractWidget\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractWidget.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractWidget\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractWidget.php
 
         -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractWidget\\:\\:getUser\\(\\) should return App\\\\Entity\\\\User but returns App\\\\Entity\\\\User\\|null\\.$#"
@@ -7856,27 +7806,7 @@ parameters:
             path: src/Widget/Type/ActiveTimesheets.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveTimesheets\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveTimesheets.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveTimesheets\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveTimesheets.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersMonth\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersMonth\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersMonth\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/ActiveUsersMonth.php
 
@@ -7886,27 +7816,7 @@ parameters:
             path: src/Widget/Type/ActiveUsersToday.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersToday\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersToday\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersToday.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersTotal\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersTotal\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersTotal\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/ActiveUsersTotal.php
 
@@ -7916,27 +7826,7 @@ parameters:
             path: src/Widget/Type/ActiveUsersWeek.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersWeek\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersWeek\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersWeek.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersYear\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersYear\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/ActiveUsersYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\ActiveUsersYear\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/ActiveUsersYear.php
 
@@ -7946,27 +7836,7 @@ parameters:
             path: src/Widget/Type/AmountMonth.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountMonth\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountMonth\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountMonth.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\AmountToday\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountToday\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountToday\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/AmountToday.php
 
@@ -7976,27 +7846,7 @@ parameters:
             path: src/Widget/Type/AmountTotal.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountTotal\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountTotal\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountTotal.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\AmountWeek\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountWeek\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountWeek\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/AmountWeek.php
 
@@ -8006,27 +7856,7 @@ parameters:
             path: src/Widget/Type/AmountYear.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountYear\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AmountYear\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AmountYear.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\DailyWorkingTimeChart\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DailyWorkingTimeChart.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DailyWorkingTimeChart\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DailyWorkingTimeChart.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DailyWorkingTimeChart\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/DailyWorkingTimeChart.php
 
@@ -8036,27 +7866,7 @@ parameters:
             path: src/Widget/Type/DurationMonth.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationMonth\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationMonth\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationMonth.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\DurationToday\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationToday\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationToday\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/DurationToday.php
 
@@ -8066,42 +7876,12 @@ parameters:
             path: src/Widget/Type/DurationTotal.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationTotal\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationTotal\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationTotal.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\DurationWeek\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/DurationWeek.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationWeek\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationWeek\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationWeek.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\DurationYear\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationYear\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/DurationYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\DurationYear\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/DurationYear.php
 
@@ -8126,16 +7906,6 @@ parameters:
             path: src/Widget/Type/PaginatedWorkingTimeChart.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\PaginatedWorkingTimeChart\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/PaginatedWorkingTimeChart.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\PaginatedWorkingTimeChart\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/PaginatedWorkingTimeChart.php
-
-        -
             message: "#^Strict comparison using \\!\\=\\= between App\\\\Entity\\\\User and null will always evaluate to true\\.$#"
             count: 1
             path: src/Widget/Type/PaginatedWorkingTimeChart.php
@@ -8146,27 +7916,7 @@ parameters:
             path: src/Widget/Type/TotalsActivity.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsActivity\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsActivity.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsActivity\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsActivity.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\TotalsCustomer\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsCustomer.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsCustomer\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsCustomer.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsCustomer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/TotalsCustomer.php
 
@@ -8176,27 +7926,7 @@ parameters:
             path: src/Widget/Type/TotalsProject.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsProject\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsProject.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsProject\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsProject.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\TotalsUser\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsUser.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsUser\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/TotalsUser.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\TotalsUser\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/TotalsUser.php
 
@@ -8206,27 +7936,7 @@ parameters:
             path: src/Widget/Type/UserAmountMonth.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountMonth\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountMonth\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountMonth.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountToday\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountToday\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountToday\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/UserAmountToday.php
 
@@ -8236,27 +7946,7 @@ parameters:
             path: src/Widget/Type/UserAmountTotal.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountTotal\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountTotal\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountTotal.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountWeek\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountWeek\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountWeek\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/UserAmountWeek.php
 
@@ -8266,27 +7956,7 @@ parameters:
             path: src/Widget/Type/UserAmountYear.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountYear\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserAmountYear\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserAmountYear.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationMonth\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationMonth\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationMonth.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationMonth\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/UserDurationMonth.php
 
@@ -8296,27 +7966,7 @@ parameters:
             path: src/Widget/Type/UserDurationToday.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationToday\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationToday.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationToday\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationToday.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationTotal\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationTotal\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationTotal.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationTotal\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/UserDurationTotal.php
 
@@ -8326,27 +7976,7 @@ parameters:
             path: src/Widget/Type/UserDurationWeek.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationWeek\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationWeek.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationWeek\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationWeek.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationYear\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationYear\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/UserDurationYear.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\Type\\\\UserDurationYear\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/UserDurationYear.php
 
@@ -8372,16 +8002,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Widget\\\\WidgetInterface\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/WidgetInterface.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\WidgetInterface\\:\\:getOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/WidgetInterface.php
-
-        -
-            message: "#^Method App\\\\Widget\\\\WidgetInterface\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/WidgetInterface.php
 

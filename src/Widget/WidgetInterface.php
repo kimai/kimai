@@ -12,6 +12,10 @@ namespace App\Widget;
 use App\Entity\User;
 use Symfony\Component\Form\Form;
 
+/**
+ * No BC promise!
+ * Use AbstractWidget to get a BC safe base class.
+ */
 interface WidgetInterface
 {
     public const COLOR_TODAY = 'green';
@@ -32,37 +36,31 @@ interface WidgetInterface
 
     /**
      * Returns a unique ID for this widget.
-     *
-     * @return string
      */
     public function getId(): string;
 
     /**
      * Returns the widget title (must be non-empty).
-     *
-     * @return string
      */
     public function getTitle(): string;
 
     /**
+     * Returns the translation domain used by this widget.
+     */
+    public function getTranslationDomain(): string;
+
+    /**
      * Returns the height for this widget.
-     *
-     * @return int
      */
     public function getHeight(): int;
 
     /**
      * Returns the width for this widget.
-     *
-     * @return int
      */
     public function getWidth(): int;
 
     /**
      * Injects the current user.
-     *
-     * @param User $user
-     * @return void
      */
     public function setUser(User $user): void;
 
@@ -87,8 +85,8 @@ interface WidgetInterface
      * You can validate the options or simply return:
      * return array_merge($this->options, $options);
      *
-     * @param array $options
-     * @return array
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null|null>
      */
     public function getOptions(array $options = []): array;
 
@@ -96,9 +94,6 @@ interface WidgetInterface
      * Sets one widget option, both for internal use and for frontend rendering.
      *
      * The given option should be persisted and permanently overwrite the internal option.
-     *
-     * @param string $name
-     * @param string|bool|int $value
      */
     public function setOption(string $name, string|bool|int $value): void;
 
@@ -112,29 +107,21 @@ interface WidgetInterface
 
     /**
      * Returns the template, which is used to render the widget.
-     *
-     * @return string
      */
     public function getTemplateName(): string;
 
     /**
      * Whether this widget can be configured with options.
-     *
-     * @return bool
      */
     public function hasForm(): bool;
 
     /**
      * A form to edit the widget options or null, if it can't be configured.
-     *
-     * @return Form|null
      */
     public function getForm(): ?Form;
 
     /**
      * Whether this is a widget that is supposed to be selectable by the end-user.
-     *
-     * @return bool
      */
     public function isInternal(): bool;
 }
