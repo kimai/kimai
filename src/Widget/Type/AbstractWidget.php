@@ -18,6 +18,11 @@ abstract class AbstractWidget implements WidgetInterface
     private array $options = [];
     private ?User $user = null;
 
+    public function getTranslationDomain(): string
+    {
+        return 'messages';
+    }
+
     public function hasForm(): bool
     {
         return false;

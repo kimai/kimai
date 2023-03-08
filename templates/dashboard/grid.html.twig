@@ -46,7 +46,7 @@
                     <div class="grid-stack-item-content">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ widget.title|trans }}</h3>
+                                <h3 class="card-title">{{ widget.title|trans({}, widget.translationDomain) }}</h3>
                                 <div class="card-actions">
                                     {% if widget.hasForm() %}
                                         {{ card_tool_button('configuration', {'title': 'settings', 'translation_domain': 'actions', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}

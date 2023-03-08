@@ -245,6 +245,8 @@ final class DashboardController extends AbstractController
 
         $choices = [];
 
+        // the list of widgets for the dropdown is created in the EventListener and not here
+        // this form is mainly used for saving
         foreach ($available as $widget) {
             if (empty($widget->getTitle())) {
                 continue;
@@ -293,7 +295,6 @@ final class DashboardController extends AbstractController
         return $this->render('dashboard/grid.html.twig', [
             'page_setup' => $page,
             'widgets' => $widgets,
-            'available' => $available,
             'form' => $form->createView(),
         ]);
     }
