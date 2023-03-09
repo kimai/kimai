@@ -43,7 +43,7 @@
     "eslint-webpack-plugin": "^3.0",
     "gridstack": "^7.1",
     "litepicker": "^2.0",
-    "luxon": "^3.0",
+    "luxon": "^3.3",
     "node-sass": "^8.0",
     "sass-loader": "^13.2",
     "tom-select": "^2.0",

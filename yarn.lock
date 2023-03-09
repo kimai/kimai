@@ -5159,7 +5159,7 @@ __metadata:
     eslint-webpack-plugin: ^3.0
     gridstack: ^7.1
     litepicker: ^2.0
-    luxon: ^3.0
+    luxon: ^3.3
     node-sass: ^8.0
     sass-loader: ^13.2
     tom-select: ^2.0
@@ -5311,10 +5311,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.0":
-  version: 3.1.0
-  resolution: "luxon@npm:3.1.0"
-  checksum: f8a850b759ba7a2e009d904c522ed7bc264bf4add57578f8948e52a0ed96b627b025b5aad8032295b570ae19fac41f0ffab91bdb128715fb0cc020798a7ba886
+"luxon@npm:^3.3":
+  version: 3.3.0
+  resolution: "luxon@npm:3.3.0"
+  checksum: 50cf17a0dc155c3dcacbeae8c0b7e80db425e0ba97b9cbdf12a7fc142d841ff1ab1560919f033af46240ed44e2f70c49f76e3422524c7fc8bb8d81ca47c66187
   languageName: node
   linkType: hard
 
