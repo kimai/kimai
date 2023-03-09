@@ -295,6 +295,11 @@ export default class KimaiDateUtils extends KimaiPlugin {
             return new Duration({seconds: 0});
         }
 
+        // actually, the parsing above should be improved, but that works as well
+        if (duration[0] === '-' && luxonDuration.valueOf() > 0) {
+            return luxonDuration.negate();
+        }
+
         return luxonDuration;
     }
 
