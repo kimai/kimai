@@ -6,6 +6,9 @@
         {{ title|default('confirm.delete'|trans) }}
     {% endblock %}
     {% block modal_body %}
+        {% if delete_item_name is defined %}
+            <p><strong>{{ delete_item_name }}</strong></p>
+        {% endif %}
         {% if used is same as (false) %}
             {{ 'delete.not_in_use'|trans }}
             <div class="d-none">
