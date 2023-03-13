@@ -378,29 +378,6 @@ class TimesheetRepository extends EntityRepository
             $teams = array_merge($teams, $user->getTeams());
         }
 
-        $hasCustomer = false;
-        $hasProject = false;
-
-        $joins = $qb->getDQLPart('join');
-        if (\is_array($joins)) {
-            /** @var Join $part */
-            foreach ($joins as $part) {
-                if ($part->getAlias() === 'p') {
-                    $hasProject = true;
-                } elseif ($part->getAlias() === 'c') {
-                    $hasCustomer = true;
-                }
-            }
-        }
-
-        if (!$hasProject) {
-            $qb->join('t.project', 'p');
-        }
-
-        if (!$hasCustomer) {
-            $qb->join('p.customer', 'c');
-        }
-
         if (empty($teams)) {
             $qb->andWhere('SIZE(c.teams) = 0');
             $qb->andWhere('SIZE(p.teams) = 0');
@@ -704,6 +681,9 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', $startFrom);
         }
 
+        $qb->join('t.project', 'p');
+        $qb->join('p.customer', 'c');
+
         $this->addPermissionCriteria($qb, $user);
 
         $results = $qb->getQuery()->getScalarResult();
@@ -734,6 +714,9 @@ class TimesheetRepository extends EntityRepository
             ->andWhere($qb->expr()->in('t.id', $ids))
             ->orderBy('t.end', 'DESC')
         ;
+
+        $qb->join('t.project', 'p');
+        $qb->join('p.customer', 'c');
 
         $this->addPermissionCriteria($qb, $user);
 
