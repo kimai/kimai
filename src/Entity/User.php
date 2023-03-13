@@ -140,7 +140,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
-    #[OA\Property(ref: '#/components/schemas/TeamMembership')]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamMembership'))]
     private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")

@@ -47,7 +47,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
-    #[OA\Property(ref: '#/components/schemas/Project')]
+    #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
     /**
      * Name of this activity
