@@ -6536,11 +6536,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:findTimesheetsById\\(\\) should return array\\<App\\\\Entity\\\\Timesheet\\> but returns iterable\\<App\\\\Entity\\\\Timesheet\\>\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
