@@ -81,7 +81,7 @@ class UserService
         $this->hashPassword($user);
         $this->hashApiToken($user);
 
-        $this->dispatcher->dispatch(new UserCreatePreEvent($user));
+        $this->dispatcher->dispatch(new UserCreatePreEvent($user)); // @CloudRequired
         $this->repository->saveUser($user);
         $this->dispatcher->dispatch(new UserCreatePostEvent($user));
 
