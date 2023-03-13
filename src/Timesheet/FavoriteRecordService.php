@@ -39,7 +39,7 @@ final class FavoriteRecordService
             $recentIds = $this->repository->getRecentActivityIds($user, null, $limit);
         }
         /** @var array<int> $ids */
-        $ids = \array_slice(array_unique(array_merge($favIds, $recentIds)), 0, $limit);
+        $ids = array_unique(array_merge($favIds, $recentIds));
 
         /** @var array<int, bool|FavoriteTimesheet> $favorites */
         $favorites = [];
@@ -49,7 +49,7 @@ final class FavoriteRecordService
 
         $all = [];
         if (\count($ids) > 0) {
-            $timesheets = $this->repository->findTimesheetsById($ids, false, false);
+            $timesheets = $this->repository->findTimesheetsById($user, $ids, false, false);
             foreach ($timesheets as $timesheet) {
                 $id = $timesheet->getId();
                 if ($id === null) {
@@ -69,7 +69,7 @@ final class FavoriteRecordService
             }
         }
 
-        return array_values($all);
+        return \array_slice(array_values($all), 0, $limit);
     }
 
     private function getBookmark(User $user): Bookmark

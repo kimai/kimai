@@ -9,6 +9,7 @@
 
 namespace App\API\Authentication;
 
+use Scheb\TwoFactorBundle\Security\Http\Authenticator\TwoFactorAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -22,6 +23,19 @@ final class SessionAuthenticator extends AbstractAuthenticator
 
     public function __construct(private TokenAuthenticator $authenticator)
     {
+    }
+
+    public function createToken(Passport $passport, string $firewallName): TokenInterface
+    {
+        $token = parent::createToken($passport, $firewallName);
+
+        // this should not be necessary, as /api/ is excluded from 2FA process, but just to make sure this
+        // authenticator never triggers 2FA, we add the attribute to the token
+
+        // https://symfony.com/bundles/SchebTwoFactorBundle/6.x/custom_conditions.html
+        $token->setAttribute(TwoFactorAuthenticator::FLAG_2FA_COMPLETE, true);
+
+        return $token;
     }
 
     public function supports(Request $request): ?bool
