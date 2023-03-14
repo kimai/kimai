@@ -74,9 +74,4 @@ final class UTCDateTimeType extends DateTimeType
 
         return $converted;
     }
-
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
-    }
 }

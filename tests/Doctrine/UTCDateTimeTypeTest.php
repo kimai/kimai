@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UTCDateTimeTypeTest extends TestCase
 {
-    public function testGetUtc()
+    public function testGetUtc(): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
@@ -37,7 +37,7 @@ class UTCDateTimeTypeTest extends TestCase
     /**
      * @dataProvider getPlatforms
      */
-    public function testConvertToDatabaseValue(AbstractPlatform $platform)
+    public function testConvertToDatabaseValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
@@ -65,7 +65,7 @@ class UTCDateTimeTypeTest extends TestCase
     /**
      * @dataProvider getPlatforms
      */
-    public function testConvertToPHPValue(AbstractPlatform $platform)
+    public function testConvertToPHPValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
         /** @var UTCDateTimeType $type */
@@ -85,7 +85,7 @@ class UTCDateTimeTypeTest extends TestCase
     /**
      * @dataProvider getPlatforms
      */
-    public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform)
+    public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform): void
     {
         $this->expectException(ConversionException::class);
 
@@ -97,17 +97,9 @@ class UTCDateTimeTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider getPlatforms
+     * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
      */
-    public function testRequiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
-        /** @var UTCDateTimeType $type */
-        $type = Type::getType(Types::DATETIME_MUTABLE);
-        self::assertTrue($type->requiresSQLCommentHint($platform));
-    }
-
-    public function getPlatforms()
+    public function getPlatforms(): array
     {
         return [
             [new MySQLPlatform()],

@@ -40,6 +40,7 @@ final class CustomerValidator extends ConstraintValidator
             $tmp = $this->customerRepository->findOneBy(['number' => $number]);
             if ($tmp !== null && $tmp->getId() !== $value->getId()) {
                 $this->context->buildViolation(Customer::getErrorName(Customer::CUSTOMER_NUMBER_EXISTING))
+                    ->setParameter('%number%', $number)
                     ->atPath('number')
                     ->setTranslationDomain('validators')
                     ->setCode(Customer::CUSTOMER_NUMBER_EXISTING)
