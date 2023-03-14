@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -47,12 +48,6 @@ final class UpdateCommand extends Command
 
         // make sure database is available, Kimai running and installed
         try {
-            if (!$this->connection->isConnected() && !$this->connection->connect()) {
-                throw new \Exception(
-                    sprintf('Database connection could not be established: %s', $this->connection->getDatabase())
-                );
-            }
-
             if (!$this->connection->createSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
                 $io->error('Tables missing. Did you run the installer already?');
 
@@ -64,8 +59,12 @@ final class UpdateCommand extends Command
 
                 return Command::FAILURE;
             }
+        } catch (ConnectionException $e) {
+            $io->error(['Database connection could not be established.', $e->getMessage()]);
+
+            return Command::FAILURE;
         } catch (\Exception $ex) {
-            $io->error('Failed to validate database: ' . $ex->getMessage());
+            $io->error(['Failed to validate database.', $ex->getMessage()]);
 
             return Command::FAILURE;
         }

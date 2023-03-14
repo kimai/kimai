@@ -27,14 +27,14 @@ final class Version20210802160837 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $timesheet = $schema->getTable('kimai2_timesheet');
-        $timesheet->changeColumn('date_tz', ['notnull' => true]);
+        $timesheet->modifyColumn('date_tz', ['notnull' => true]);
         $timesheet->addIndex(['date_tz', 'user'], 'IDX_4F60C6B1BDF467148D93D649');
     }
 
     public function down(Schema $schema): void
     {
         $timesheet = $schema->getTable('kimai2_timesheet');
-        $timesheet->changeColumn('date_tz', ['notnull' => false]);
+        $timesheet->modifyColumn('date_tz', ['notnull' => false]);
         $timesheet->dropIndex('IDX_4F60C6B1BDF467148D93D649');
     }
 }
