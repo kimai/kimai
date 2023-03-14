@@ -4728,36 +4728,6 @@ parameters:
             path: Doctrine/TimesheetSubscriberTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:getPlatforms\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:testConvertToDatabaseValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:testConvertToPHPValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:testConvertToPHPValueWithInvalidValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:testGetUtc\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Doctrine\\\\UTCDateTimeTypeTest\\:\\:testRequiresSQLCommentHint\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Doctrine/UTCDateTimeTypeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\AbstractCommentEntityTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/AbstractCommentEntityTest.php
