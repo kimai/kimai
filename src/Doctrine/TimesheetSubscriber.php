@@ -16,9 +16,9 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 
 /**
- * A listener to make sure all Timesheet entries will have a proper duration.
+ * A listener to make sure all Timesheet entries will be calculated properly (e.g. duration and rates).
  */
-final class TimesheetSubscriber implements EventSubscriber
+final class TimesheetSubscriber implements EventSubscriber, DataSubscriberInterface
 {
     /**
      * @var CalculatorInterface[]
