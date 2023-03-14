@@ -85,20 +85,20 @@ export default class KimaiAPILink extends KimaiPlugin {
             API.handleError(message, error);
         };
 
+        let data = {};
+        if (attributes['payload'] !== undefined) {
+            data = attributes['payload'];
+        }
+
         if (method === 'PATCH') {
-            let data = {};
-            if (attributes['payload'] !== undefined) {
-                data = attributes['payload'];
-            }
             API.patch(url, data, successHandle, errorHandle);
         } else if (method === 'POST') {
             let data = {};
-            if (attributes['payload'] !== undefined) {
-                data = attributes['payload'];
-            }
             API.post(url, data, successHandle, errorHandle);
         } else if (method === 'DELETE') {
             API.delete(url, successHandle, errorHandle);
+        } else if (method === 'GET') {
+            API.get(url, data, successHandle, errorHandle);
         }
     }
 
