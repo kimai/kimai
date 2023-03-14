@@ -96,7 +96,10 @@ class UTCDateTimeTypeTest extends TestCase
         $type->convertToPHPValue('201xx01-17 13:30:00', $platform);
     }
 
-    public function getPlatforms()
+    /**
+     * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
+     */
+    public function getPlatforms(): array
     {
         return [
             [new MySQLPlatform()],
