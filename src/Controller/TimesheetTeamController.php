@@ -88,6 +88,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
                 /** @var ArrayCollection<Team> $teams */
                 $teams = $createForm->get('teams')->getData();
 
+                /** @var array<User> $allUsers */
                 $allUsers = $users->toArray();
                 /** @var Team $team */
                 foreach ($teams as $team) {

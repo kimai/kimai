@@ -106,6 +106,7 @@ final class TimesheetController extends BaseApiController
                 if ('all' === $userId) {
                     $query->setUser(null);
                 } else {
+                    /** @var User|null $user */
                     $user = $userRepository->find($userId);
                     if ($user === null) {
                         throw $this->createNotFoundException('Unknown user: ' . $userId);
@@ -447,11 +448,15 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Stops an active timesheet record
+     * Stops an active timesheet record.
+     *
+     * This route is available via GET and PATCH, as users over and over again run into errors when stopping.
+     * Likely caused by a slow JS engine and a fast-click after page reload.
      */
     #[IsGranted('stop', 'timesheet')]
     #[OA\Response(response: 200, description: 'Stops an active timesheet record and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to stop', required: true)]
+    #[Rest\Get(path: '/{id}/stop', name: 'stop_timesheet_get', requirements: ['id' => '\d+'])]
     #[Rest\Patch(path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

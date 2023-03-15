@@ -112,7 +112,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     /**
-     * Adapts the ticktac menus accordingg to the given entries (amount and duration).
+     * Adapts the ticktac menus according to the given entries (amount and duration).
      * Does not influence listing pages, as those refresh themselves.
      *
      * @param {array} entries
@@ -168,7 +168,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         for (let link of allReplacer) {
             const replacerName = link.dataset['replacer'];
             if (replacerName === 'url') {
-                link.href = node.dataset['href'].replace('000', timesheet.id);
+                link.dataset['href'] = node.dataset['href'].replace('000', timesheet.id);
             } else if (replacerName === 'activity') {
                 link.innerText = timesheet.activity.name;
             } else if (replacerName === 'project') {
