@@ -141,23 +141,8 @@ parameters:
             path: src/API/TagController.php
 
         -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
             count: 3
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$description of method App\\\\Entity\\\\Timesheet\\:\\:setDescription\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 1
             path: src/API/TimesheetController.php
 
         -
@@ -1251,16 +1236,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/AbstractUserReportController.php
@@ -1746,11 +1721,6 @@ parameters:
             path: src/Controller/TimesheetTeamController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\UserController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Controller/UserController.php
@@ -1857,11 +1827,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#1 \\$description of method App\\\\Entity\\\\Timesheet\\:\\:setDescription\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/DataFixtures/TimesheetFixtures.php
 
@@ -4877,11 +4842,6 @@ parameters:
 
         -
             message: "#^Cannot clone mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/Type/QuickEntryWeekType.php
 

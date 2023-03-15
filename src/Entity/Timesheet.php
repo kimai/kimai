@@ -337,11 +337,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return null;
     }
 
-    /**
-     * @param User $user
-     * @return Timesheet
-     */
-    public function setUser(User $user): Timesheet
+    public function setUser(?User $user): Timesheet
     {
         $this->user = $user;
 
@@ -353,11 +349,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this->user;
     }
 
-    /**
-     * @param Activity $activity
-     * @return Timesheet
-     */
-    public function setActivity($activity): Timesheet
+    public function setActivity(?Activity $activity): Timesheet
     {
         $this->activity = $activity;
 
@@ -374,22 +366,14 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this->project;
     }
 
-    /**
-     * @param Project $project
-     * @return Timesheet
-     */
-    public function setProject(Project $project): Timesheet
+    public function setProject(?Project $project): Timesheet
     {
         $this->project = $project;
 
         return $this;
     }
 
-    /**
-     * @param string $description
-     * @return Timesheet
-     */
-    public function setDescription($description): Timesheet
+    public function setDescription(?string $description): Timesheet
     {
         $this->description = $description;
 

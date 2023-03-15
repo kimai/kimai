@@ -106,6 +106,7 @@ final class TimesheetController extends BaseApiController
                 if ('all' === $userId) {
                     $query->setUser(null);
                 } else {
+                    /** @var User|null $user */
                     $user = $userRepository->find($userId);
                     if ($user === null) {
                         throw $this->createNotFoundException('Unknown user: ' . $userId);

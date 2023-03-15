@@ -1688,18 +1688,8 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 32
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 1
             path: API/TimesheetControllerTest.php
 
         -
@@ -9005,16 +8995,6 @@ parameters:
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\TimesheetRepositoryTest\\:\\:testSaveWithTags\\(\\) has no return type specified\\.$#"
             count: 1
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
             path: Repository/TimesheetRepositoryTest.php
 
         -
