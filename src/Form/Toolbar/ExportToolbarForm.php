@@ -34,9 +34,9 @@ final class ExportToolbarForm extends AbstractType
             $this->addUsersChoice($builder);
             $this->addTeamsChoice($builder);
         }
+        $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
         $this->addBillableChoice($builder);
-        $this->addExportStateChoice($builder);
         $builder->add('renderer', HiddenType::class, []);
         if ($options['include_export']) {
             $builder->add('markAsExported', HiddenType::class, [
