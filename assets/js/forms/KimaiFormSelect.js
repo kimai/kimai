@@ -278,7 +278,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             const optionLength = allOptions.length;
             let selectOption = '';
 
-            if (optionLength === 1) {
+            if (optionLength === 1 && node.dataset['autoselect'] === undefined) {
                 selectOption = allOptions[0].value;
             } else if (optionLength === 2 && emptyOption !== null) {
                 selectOption = allOptions[1].value;
