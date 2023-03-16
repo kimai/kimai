@@ -3621,22 +3621,12 @@ parameters:
             path: src/Form/TimesheetPreCreateForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -3666,22 +3656,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -3711,22 +3686,12 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -3756,22 +3721,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -3801,22 +3751,12 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -3846,22 +3786,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -3891,22 +3816,12 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -3936,22 +3851,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -3981,22 +3881,12 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -4026,22 +3916,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -4071,22 +3946,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -4116,22 +3981,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -4161,22 +4011,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -4206,22 +4046,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -4251,22 +4076,12 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -4296,22 +4111,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -4341,22 +4141,12 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -4386,22 +4176,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -4431,22 +4206,12 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -4476,22 +4241,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -4521,22 +4271,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -4566,22 +4306,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -4611,22 +4336,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -4656,22 +4371,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$required with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 

@@ -45,14 +45,6 @@ use Symfony\Component\Form\FormEvents;
  */
 trait ToolbarFormTrait
 {
-    protected function addUserChoice(FormBuilderInterface $builder): void
-    {
-        $builder->add('user', UserType::class, [
-            'label' => 'user',
-            'required' => false,
-        ]);
-    }
-
     protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = []): void
     {
         $builder->add($field, UserType::class, array_merge([
@@ -67,14 +59,6 @@ trait ToolbarFormTrait
         ], $options));
     }
 
-    protected function addTeamChoice(FormBuilderInterface $builder): void
-    {
-        $builder->add('team', TeamType::class, [
-            'label' => 'team',
-            'required' => false,
-        ]);
-    }
-
     protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = []): void
     {
         $builder->add($field, TeamType::class, array_merge([
@@ -87,11 +71,6 @@ trait ToolbarFormTrait
             'multiple' => true,
             'required' => false,
         ], $options));
-    }
-
-    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
-    {
-        $this->addCustomerSelect($builder, $options, false, $multiProject);
     }
 
     protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
@@ -190,16 +169,6 @@ trait ToolbarFormTrait
         $builder->add('daterange', DateRangeType::class, $params);
     }
 
-    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false): void
-    {
-        $this->addDateRange($builder, [], $allowEmpty, $required);
-    }
-
-    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
-    {
-        $this->addProjectSelect($builder, $options, false, $multiCustomer, $multiActivity);
-    }
-
     protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
     {
         $this->addProjectSelect($builder, $options, true, $multiCustomer, $multiActivity);
@@ -269,11 +238,6 @@ trait ToolbarFormTrait
                 ], $options));
             }
         );
-    }
-
-    protected function addActivityChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
-    {
-        $this->addActivitySelect($builder, $options, false, $multiProject);
     }
 
     protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
