@@ -1581,21 +1581,6 @@ parameters:
             path: src/Controller/TagController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\TeamController\\:\\:duplicateTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TeamController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\TeamController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TeamController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\TeamController\\:\\:editMemberAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TeamController.php
-
-        -
             message: "#^Call to an undefined method object\\:\\:addTag\\(\\)\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php

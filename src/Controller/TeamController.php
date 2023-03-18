@@ -10,14 +10,15 @@
 namespace App\Controller;
 
 use App\Entity\Team;
-use App\Form\TeamCustomerForm;
 use App\Form\TeamEditForm;
-use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
+use App\Form\Type\CustomerType;
+use App\Form\Type\ProjectType;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,7 +91,7 @@ final class TeamController extends AbstractController
     #[Route(path: '/{id}/duplicate', name: 'team_duplicate', methods: ['GET', 'POST'])]
     #[IsGranted('create_team')]
     #[IsGranted('edit', 'team')]
-    public function duplicateTeam(Team $team, Request $request)
+    public function duplicateTeam(Team $team, Request $request): Response
     {
         $newTeam = clone $team;
 
@@ -105,14 +106,14 @@ final class TeamController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'admin_team_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'team')]
-    public function editAction(Team $team, Request $request)
+    public function editAction(Team $team, Request $request): Response
     {
         return $this->renderEditScreen($team, $request);
     }
 
     #[Route(path: '/{id}/edit_member', name: 'admin_team_member', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'team')]
-    public function editMemberAction(Team $team, Request $request)
+    public function editMemberAction(Team $team, Request $request): Response
     {
         $editForm = $this->createForm(TeamEditForm::class, $team, [
             'action' => $this->generateUrl('admin_team_member', ['id' => $team->getId()]),
@@ -176,37 +177,21 @@ final class TeamController extends AbstractController
         }
 
         if (null !== $team->getId()) {
-            $customerForm = $this->createForm(TeamCustomerForm::class, $team, [
-                'method' => 'POST',
-            ]);
-            $customerForm->handleRequest($request);
+            $customerForm = $this->createFormWithName('team_customer_form', FormType::class, $team)
+                ->add('customers', CustomerType::class, [
+                    'label' => false,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'query_builder_for_user' => false,
+                ]);
 
-            if ($customerForm->isSubmitted() && $customerForm->isValid()) {
-                try {
-                    $this->repository->saveTeam($team);
-                    $this->flashSuccess('action.update.success');
-
-                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
-                }
-            }
-
-            $projectForm = $this->createForm(TeamProjectForm::class, $team, [
-                'method' => 'POST',
-            ]);
-            $projectForm->handleRequest($request);
-
-            if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-                try {
-                    $this->repository->saveTeam($team);
-                    $this->flashSuccess('action.update.success');
-
-                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
-                }
-            }
+            $projectForm = $this->createFormWithName('team_project_form', FormType::class, $team)
+                ->add('projects', ProjectType::class, [
+                    'label' => false,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'query_builder_for_user' => false,
+                ]);
         }
 
         $page = new PageSetup('teams');

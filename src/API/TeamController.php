@@ -15,6 +15,9 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
+use App\Repository\ActivityRepository;
+use App\Repository\CustomerRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -230,15 +233,14 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/customers/{customerId}', name: 'post_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer): Response
+    public function postCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer, CustomerRepository $customerRepository): Response
     {
         if ($team->hasCustomer($customer)) {
             throw new BadRequestHttpException('Team has already access to customer');
         }
 
         $team->addCustomer($customer);
-
-        $this->repository->saveTeam($team);
+        $customerRepository->saveCustomer($customer);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -256,15 +258,14 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/customers/{customerId}', name: 'delete_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
-    public function deleteCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer): Response
+    public function deleteCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer, CustomerRepository $customerRepository): Response
     {
         if (!$team->hasCustomer($customer)) {
             throw new BadRequestHttpException('Customer is not assigned to the team');
         }
 
         $team->removeCustomer($customer);
-
-        $this->repository->saveTeam($team);
+        $customerRepository->saveCustomer($customer);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -282,15 +283,14 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/projects/{projectId}', name: 'post_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project): Response
+    public function postProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project, ProjectRepository $projectRepository): Response
     {
         if ($team->hasProject($project)) {
             throw new BadRequestHttpException('Team has already access to project');
         }
 
         $team->addProject($project);
-
-        $this->repository->saveTeam($team);
+        $projectRepository->saveProject($project);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -308,15 +308,14 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/projects/{projectId}', name: 'delete_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
-    public function deleteProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project): Response
+    public function deleteProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project, ProjectRepository $projectRepository): Response
     {
         if (!$team->hasProject($project)) {
             throw new BadRequestHttpException('Project is not assigned to the team');
         }
 
         $team->removeProject($project);
-
-        $this->repository->saveTeam($team);
+        $projectRepository->saveProject($project);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -334,15 +333,14 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/activities/{activityId}', name: 'post_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity): Response
+    public function postActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity, ActivityRepository $activityRepository): Response
     {
         if ($team->hasActivity($activity)) {
             throw new BadRequestHttpException('Team has already access to activity');
         }
 
         $team->addActivity($activity);
-
-        $this->repository->saveTeam($team);
+        $activityRepository->saveActivity($activity);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -360,15 +358,14 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/activities/{activityId}', name: 'delete_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
-    public function deleteActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity): Response
+    public function deleteActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity, ActivityRepository $activityRepository): Response
     {
         if (!$team->hasActivity($activity)) {
             throw new BadRequestHttpException('Activity is not assigned to the team');
         }
 
         $team->removeActivity($activity);
-
-        $this->repository->saveTeam($team);
+        $activityRepository->saveActivity($activity);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
