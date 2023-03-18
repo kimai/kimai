@@ -32,6 +32,14 @@
         <source>timesheet</source>
         <target state="translated">Quadro de horários</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Você pode baixar mais modelos aqui</target>
+      </trans-unit>
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
+        <source>Single service date</source>
+        <target state="translated">Data do serviço</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

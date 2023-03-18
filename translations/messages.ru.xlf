@@ -7,7 +7,7 @@
             -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
-        <target>Учет времени</target>
+        <target state="translated">Учёт времени</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -50,15 +50,15 @@
       </trans-unit>
       <trans-unit id="_x2He8M" resname="user_profile">
         <source>user_profile</source>
-        <target>Мой Профиль</target>
+        <target state="translated">Мой профиль</target>
       </trans-unit>
       <trans-unit id="T4nAM7X" resname="api_token">
         <source>api_token</source>
-        <target>API Пароль</target>
+        <target state="translated">Пароль API</target>
       </trans-unit>
       <trans-unit id="aq59Sk8" resname="api_token_repeat">
         <source>api_token_repeat</source>
-        <target>API Пароль повторить</target>
+        <target state="translated">Повторите пароль API</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -77,7 +77,7 @@
       </trans-unit>
       <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
-        <target>Учет времени</target>
+        <target state="translated">Учёт времени</target>
       </trans-unit>
       <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
@@ -123,7 +123,7 @@
       </trans-unit>
       <trans-unit id="yqea9Nt" resname="duration">
         <source>duration</source>
-        <target>Продолжительность</target>
+        <target state="translated">Длительность</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
@@ -147,7 +147,7 @@
       </trans-unit>
       <trans-unit id="pWFFJwz" resname="id">
         <source>id</source>
-        <target>ID</target>
+        <target state="translated">ИД</target>
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible">
         <source>visible</source>
@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
-        <target>Заработная плата</target>
+        <target state="translated">Ставка</target>
       </trans-unit>
       <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
@@ -231,7 +231,7 @@
             -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
-        <target>Учет времени</target>
+        <target state="translated">Учёт времени</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
@@ -710,15 +710,15 @@
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
-        <target>Зарегистрирован</target>
+        <target state="translated">Зарегистрирован(-а)</target>
       </trans-unit>
       <trans-unit id="ICpl9sx" resname="appendTags">
         <source>appendTags</source>
-        <target>Добавить тэги</target>
+        <target state="translated">Добавить метки</target>
       </trans-unit>
       <trans-unit id="tl01EdS" resname="replaceTags">
         <source>replaceTags</source>
-        <target>Заменить тэги</target>
+        <target state="translated">Заменить метки</target>
       </trans-unit>
       <trans-unit id="dChNncv" resname="color">
         <source>color</source>
@@ -734,15 +734,15 @@
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
-        <target>Теги</target>
+        <target state="translated">Метки</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
-        <target>Теги</target>
+        <target state="translated">Метки</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
-        <target>Комментариев еще нет.</target>
+        <target state="translated">Комментариев ещё нет.</target>
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
@@ -814,7 +814,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% записи(ей)?</target>
+        <target state="translated">%action% %count% записи(-ей)?</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
@@ -906,11 +906,11 @@
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
-        <target>Каждая временная запись получает одно и то же значение, независимо от ее продолжительности</target>
+        <target state="translated">Каждая временная запись получает одно и то же значение, независимо от её продолжительности</target>
       </trans-unit>
       <trans-unit id="_0tuMNE" resname="fixedRate">
         <source>fixedRate</source>
-        <target>фиксированная ставка</target>
+        <target state="translated">Фиксированная ставка</target>
       </trans-unit>
       <trans-unit id="iNOVZRh" resname="daterange">
         <source>daterange</source>
@@ -934,7 +934,7 @@
       </trans-unit>
       <trans-unit id="evFI7nW" resname="teamlead">
         <source>teamlead</source>
-        <target>руководство</target>
+        <target state="translated">Руководитель группы</target>
       </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
@@ -942,7 +942,7 @@
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
-        <target>внутренние затраты (если не указаны, используется обычная ставка)</target>
+        <target state="translated">Если это не указано, используется обычная ставка</target>
       </trans-unit>
       <trans-unit id="5ofAsOs" resname="internalRate">
         <source>internalRate</source>
@@ -954,15 +954,15 @@
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
-        <target>отображение: формат</target>
+        <target state="translated">Отображение: формат</target>
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
-        <target>бюджет времени</target>
+        <target state="translated">Бюджет времени</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
-        <target>Отчет</target>
+        <target state="translated">Отчёт</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
@@ -1033,8 +1033,8 @@
         <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% часов. Если Вы не получили письмо - проверьте СПАМ или попробуйте позже.</target>
+        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
+        <target state="translated">Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% ч. Если вы не получили письмо - проверьте папку СПАМА или попробуйте позже.</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
@@ -1134,7 +1134,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Каталог «%dir%» защищен от записи.</target>
+        <target state="translated">Каталог «%dir%» защищён от записи.</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
@@ -1182,7 +1182,7 @@
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
-        <target state="translated">Текст счета</target>
+        <target state="translated">Текст счёта</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
@@ -1222,7 +1222,75 @@
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText">
         <source>help.invoiceText</source>
-        <target state="translated">Этот текст используется в документах счета-фактуры и может быть использован, например, для указания дополнительных условий поставки.</target>
+        <target state="translated">Этот текст используется в документах счёта-фактуры и может быть использован, например, для указания дополнительных условий поставки.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Этот текст заменяет название объекта, позволяя создавать более подробные текста для элементов счёта-фактуры.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Если параметр отключён, объект не отображается в выпадающих окнах и списках.</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Дизайн</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Виджеты можно переставлять с помощью перетаскивания. Добавление виджетов сохраняет ожидающие изменения.</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">Столбцы таблицы</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Профиль</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">Рабочий стол</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">Двухфакторная (TOTP)</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">Пожалуйста, введите код подтверждения для завершения процесса входа в систему.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">Код подтверждения</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">Избранное</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">Уведомления</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">Спасибо за согласие на уведомления!</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Пожалуйста, подтвердите код, который активирует двухфакторную аутентификацию для этой учётной записи.</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">Вы можете активировать новое устройство, отсканировав изображение в приложении.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Если настройка выключена, все записи о времени, записанные в будущем, будут помечены как «не оплачиваемые».</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Вы отказались от уведомлений. Пожалуйста, обратитесь к документации вашего веб-браузера, чтобы узнать, как их включить.</target>
       </trans-unit>
     </body>
   </file>
