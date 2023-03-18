@@ -22,10 +22,6 @@
         <source>programmatic</source>
         <target state="translated">Для дальнейшей обработки</target>
       </trans-unit>
-      <trans-unit id="nA.KOyM" resname="Html">
-        <source>Html</source>
-        <target state="translated">HTML (для печати через браузер)</target>
-      </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Единая дата обслуживания</target>

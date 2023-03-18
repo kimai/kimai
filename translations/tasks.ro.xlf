@@ -2,6 +2,70 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="tasks.en.xlf">
     <body>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Task-urile mele</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Task-urile echipei</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Începeți procesarea</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Pauză de procesare</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Atribuiți-mi</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">Sarcina de eliberare</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+        <source>task.reopen</source>
+        <target state="translated">Redeschideți task-ul</target>
+      </trans-unit>
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+        <source>Tasks</source>
+        <target state="translated">Task-uri</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="translated">Completați sarcina</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+        <source>task.create</source>
+        <target state="translated">Creați task</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+        <source>tasks.pending</source>
+        <target state="translated">Sarcini în așteptare</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+        <source>tasks.my</source>
+        <target state="translated">Task-urile mele</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+        <source>task.help.title</source>
+        <target state="translated">O scurtă descriere a task-ului</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+        <source>task.help.end</source>
+        <target state="translated">Sarcina trebuie să fie finalizată până la această dată</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+        <source>task.help.user</source>
+        <target state="translated">Atribuiți această sarcină unui utilizator</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+        <source>task.help.team</source>
+        <target state="translated">Atribuiți această sarcină unei echipe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

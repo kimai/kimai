@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de-CH" datatype="plaintext" original="plugins.en.xlf">
     <body>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+        <source>plugin.none_installed</source>
+        <target state="translated">Es sind noch keine Plugins installiert.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Neue Plugins vom Marktplatz</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Jetzt kaufen</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Mehr Erweiterungen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

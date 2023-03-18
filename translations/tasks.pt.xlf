@@ -2,6 +2,114 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt" datatype="plaintext" original="tasks.en.xlf">
     <body>
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+        <source>Tasks</source>
+        <target state="translated">Tarefas</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+        <source>task.help.title</source>
+        <target state="translated">Uma descrição curta da tarefa</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Tempo necessário estimado para completar a tarefa em hh:mm</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Esta descrição será copiada para cada quadro de horários</target>
+      </trans-unit>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Minhas tarefas</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Tarefas da equipa</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Iniciar processamento</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Pausar processamento</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Atribuir a mim</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">Liberar a tarefa</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+        <source>task.reopen</source>
+        <target state="translated">Reabrir tarefa</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="translated">Concluir tarefa</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+        <source>task.create</source>
+        <target state="translated">Criar tarefa</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+        <source>tasks.pending</source>
+        <target state="translated">Tarefas pendentes</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+        <source>tasks.my</source>
+        <target state="translated">Minhas tarefas</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+        <source>task.help.end</source>
+        <target state="translated">A tarefa deve ser concluída até esta data</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+        <source>task.help.user</source>
+        <target state="translated">Atribuir esta tarefa a um utilizador</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+        <source>task.help.team</source>
+        <target state="translated">Atribuir esta tarefa a um time</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="translated">Quantidade de tarefas por página na ferramenta do painel</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Estimativa de tempo</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Estas etiquetas serão copiadas para cada registo de quadro de horários</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+        <source>task_no_estimation</source>
+        <target state="translated">Sem estimativa</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+        <source>task_with_estimation</source>
+        <target state="translated">Com estimativa</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+        <source>task_todo</source>
+        <target state="translated">Descrição da tarefa</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
+        <source>task_started</source>
+        <target state="translated">Trabalho iniciado</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
+        <source>task_not_started</source>
+        <target state="translated">Não iniciado</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
+        <source>task_overdue</source>
+        <target state="translated">Atrasado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
