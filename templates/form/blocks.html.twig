@@ -11,11 +11,13 @@
         <div {{ block('widget_container_attributes') }}>
             {% if form.vars.choices|length != form.children|length %}
                 {% for name, choices in form.vars.choices %}
-                    <div class="hr-text">{{ name }}</div>
+                    <fieldset class="form-fieldset">
+                        <legend>{{ name }}</legend>
                     {% for key, choice in choices %}
                         {{- form_widget(form[key]) -}}
                         {{- form_label(form[key]) -}}
                     {% endfor %}
+                    </fieldset>
                 {% endfor %}
             {% else %}
                 {%- for child in form %}
