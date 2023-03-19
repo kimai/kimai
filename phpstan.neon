@@ -1561,93 +1561,8 @@ parameters:
             path: src/Controller/TagController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\TagController\\:\\:createAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\TagController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\TagController\\:\\:multiDelete\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Parameter \\#1 \\$tags of method App\\\\Repository\\\\TagRepository\\:\\:multiDelete\\(\\) expects iterable\\<App\\\\Entity\\\\Tag\\>, iterable\\<object\\> given\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:addTag\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:getMetaField\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:getTags\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:removeTag\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setActivity\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setBillable\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setExported\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setFixedRate\\(\\)\\.$#"
-            count: 3
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setHourlyRate\\(\\)\\.$#"
-            count: 3
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setInternalRate\\(\\)\\.$#"
-            count: 3
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setMetaField\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setProject\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Call to an undefined method object\\:\\:setUser\\(\\)\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Cannot call method getEntities\\(\\) on mixed\\.$#"
-            count: 3
+            count: 2
             path: src/Controller/TimesheetAbstractController.php
 
         -
@@ -1661,27 +1576,12 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\TimesheetAbstractController\\:\\:multiUpdate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\TimesheetAbstractController\\:\\:prepareQuery\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
 
         -
             message: "#^Parameter \\#1 \\$id of method App\\\\Export\\\\ServiceExport\\:\\:getTimesheetExporterById\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheets of method App\\\\Timesheet\\\\TimesheetService\\:\\:updateMultipleTimesheets\\(\\) expects array, iterable\\<object\\> given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, iterable\\<object\\> given\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
 
@@ -7649,3 +7549,18 @@ parameters:
             message: "#^Property App\\\\Widget\\\\WidgetService\\:\\:\\$widgets type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/WidgetService.php
+
+        -
+            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:\\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            count: 1
+            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
+
+        -
+            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:getEntities\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            count: 1
+            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
+
+        -
+            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
+            count: 1
+            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
