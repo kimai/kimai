@@ -398,6 +398,10 @@ abstract class TimesheetAbstractController extends AbstractController
                 } catch (\Exception $ex) {
                     $this->flashUpdateException($ex);
                 }
+            } else {
+                $this->flashSuccess(sprintf('No changes for %s entries detected.', count($dto->getEntities())));
+
+                return $this->redirectToRoute($this->getTimesheetRoute());
             }
         }
 
