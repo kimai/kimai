@@ -31,6 +31,14 @@ class UserPreference
     public const LOCALE = 'language';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
+    public const WORK_HOURS_MONDAY = 'work_monday';
+    public const WORK_HOURS_TUESDAY = 'work_tuesday';
+    public const WORK_HOURS_WEDNESDAY = 'work_wednesday';
+    public const WORK_HOURS_THURSDAY = 'work_thursday';
+    public const WORK_HOURS_FRIDAY = 'work_friday';
+    public const WORK_HOURS_SATURDAY = 'work_saturday';
+    public const WORK_HOURS_SUNDAY = 'work_sunday';
+    public const HOLIDAYS_PER_YEAR = 'holidays';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

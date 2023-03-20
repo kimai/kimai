@@ -591,6 +591,26 @@
         <source>profile.roles</source>
         <target>Roles</target>
       </trans-unit>
+      <trans-unit id="AZkrjYL" resname="profile.contract">
+        <source>profile.contract</source>
+        <target>Employment contract</target>
+      </trans-unit>
+      <trans-unit id="g3kdwXA" resname="contract.should_times">
+        <source>contract.should_times</source>
+        <target>Target-hours</target>
+      </trans-unit>
+      <trans-unit id="dddg3kdwXA" resname="contract.should_times.help">
+        <source>contract.should_times.help</source>
+        <target>Die hier konfigurierten Werte werden verwendet, um das Stundenkonto zu berechnen.</target>
+      </trans-unit>
+      <trans-unit id="wGCNfhw" resname="contract.is_times">
+        <source>contract.is_times</source>
+        <target>Is-hours</target>
+      </trans-unit>
+      <trans-unit id="L9ADvRD" resname="contract.holiday_year">
+        <source>contract.holiday_year</source>
+        <target>Urlaubstage pro Jahr</target>
+      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Preferences</target>

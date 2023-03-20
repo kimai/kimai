@@ -33,6 +33,7 @@ final class UserVoter extends Voter
         'api-token',
         'hourly-rate',
         'view_team_member',
+        'contract',
     ];
 
     public function __construct(private RolePermissionManager $permissionManager)

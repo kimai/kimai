@@ -1132,4 +1132,84 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
+
+    public function getWorkHoursMonday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
+    }
+
+    public function getWorkHoursTuesday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
+    }
+
+    public function getWorkHoursWednesday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
+    }
+
+    public function getWorkHoursThursday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
+    }
+
+    public function getWorkHoursFriday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
+    }
+
+    public function getWorkHoursSaturday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
+    }
+
+    public function getWorkHoursSunday(): int
+    {
+        return $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
+    }
+
+    public function getHolidaysPerYear(): int
+    {
+        return $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+    }
+
+    public function setWorkHoursMonday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_MONDAY, $seconds);
+    }
+
+    public function setWorkHoursTuesday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, $seconds);
+    }
+
+    public function setWorkHoursWednesday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, $seconds);
+    }
+
+    public function setWorkHoursThursday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, $seconds);
+    }
+
+    public function setWorkHoursFriday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, $seconds);
+    }
+
+    public function setWorkHoursSaturday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, $seconds);
+    }
+
+    public function setWorkHoursSunday(int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds);
+    }
+
+    public function setHolidaysPerYear(int $holidays): void
+    {
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays);
+    }
 }
