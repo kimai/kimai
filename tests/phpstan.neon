@@ -7649,56 +7649,11 @@ parameters:
 
         -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
+            count: 4
             path: Invoice/ServiceInvoiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testAdd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testBeginAndEndDateFallback\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testCreateModelThrowsOnMissingTemplate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testCreateModelUsesTemplateLanguage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testCreateModelsSkipsModelsWithNegativeTotal\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testInvalidExceptionOnChangeState\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:testWithDocumentDirectory\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/ServiceInvoiceTest.php
 

@@ -17,6 +17,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceItemRepositoryInterface;
+use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
@@ -52,7 +53,7 @@ class ServiceInvoiceTest extends TestCase
         return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $formattings, (new InvoiceModelFactoryFactory($this))->create());
     }
 
-    public function testInvalidExceptionOnChangeState()
+    public function testInvalidExceptionOnChangeState(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown invoice status');
@@ -60,7 +61,7 @@ class ServiceInvoiceTest extends TestCase
         $sut->changeInvoiceStatus(new Invoice(), 'foo');
     }
 
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $sut = $this->getSut([]);
 
@@ -78,7 +79,7 @@ class ServiceInvoiceTest extends TestCase
         $this->assertNull($sut->getNumberGeneratorByName('default'));
     }
 
-    public function testWithDocumentDirectory()
+    public function testWithDocumentDirectory(): void
     {
         $sut = $this->getSut(['templates/invoice/renderer/']);
 
@@ -92,7 +93,7 @@ class ServiceInvoiceTest extends TestCase
         $this->assertInstanceOf(InvoiceDocument::class, $actual);
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
         $sut = $this->getSut([]);
 
@@ -110,7 +111,7 @@ class ServiceInvoiceTest extends TestCase
         $this->assertEquals(1, \count($sut->getRenderer()));
     }
 
-    public function testCreateModelThrowsOnMissingTemplate()
+    public function testCreateModelThrowsOnMissingTemplate(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Cannot create invoice model without template');
@@ -122,7 +123,7 @@ class ServiceInvoiceTest extends TestCase
         $sut->createModel($query);
     }
 
-    public function testCreateModelUsesTemplateLanguage()
+    public function testCreateModelUsesTemplateLanguage(): void
     {
         $template = new InvoiceTemplate();
         $template->setNumberGenerator('date');
@@ -141,7 +142,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('it', $model->getTemplate()->getLanguage());
     }
 
-    public function testBeginAndEndDateFallback()
+    public function testBeginAndEndDateFallback(): void
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
         $customer = new Customer('foo');
@@ -207,7 +208,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('2020-11-27T23:59:59+0100', $query->getEnd()->format(DATE_ISO8601));
     }
 
-    public function testCreateModelsSkipsModelsWithNegativeTotal()
+    public function testCreateModelsIncludesModelsWithNegativeTotal(): void
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
 
@@ -310,12 +311,18 @@ class ServiceInvoiceTest extends TestCase
         $sut->addInvoiceItemRepository($repo);
         $models = $sut->createModels($query);
 
-        self::assertCount(2, $models);
-        self::assertEquals(1.73, $models[0]->getCalculator()->getTotal());
-        self::assertEquals(0.0, $models[1]->getCalculator()->getTotal());
+        self::assertCount(4, $models);
+        self::assertInstanceOf(InvoiceModel::class, $models[0]);
+        self::assertEquals(-0.01, $models[0]->getCalculator()->getTotal());
+        self::assertInstanceOf(InvoiceModel::class, $models[1]);
+        self::assertEquals(-100, $models[1]->getCalculator()->getTotal());
+        self::assertInstanceOf(InvoiceModel::class, $models[2]);
+        self::assertEquals(1.73, $models[2]->getCalculator()->getTotal());
+        self::assertInstanceOf(InvoiceModel::class, $models[3]);
+        self::assertEquals(0.0, $models[3]->getCalculator()->getTotal());
     }
 
-    private function getNumberGeneratorSut()
+    private function getNumberGeneratorSut(): DateNumberGenerator
     {
         $repository = $this->createMock(InvoiceRepository::class);
         $repository
