@@ -4906,11 +4906,6 @@ parameters:
             path: src/Invoice/ServiceInvoice.php
 
         -
-            message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
             message: "#^Cannot call method hasInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
