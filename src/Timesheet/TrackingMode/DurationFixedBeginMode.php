@@ -51,8 +51,8 @@ final class DurationFixedBeginMode implements TrackingModeInterface
         $newBegin = clone $timesheet->getBegin();
 
         // this prevents the problem that "now" is being ignored in modify()
-        $beginTime = (new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone()))->format('H:i:s');
-        $newBegin->modify($beginTime);
+        $beginTime = (new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone()));
+        $newBegin->setTime((int) $beginTime->format('H'), (int) $beginTime->format('i'), 0, 0);
 
         $timesheet->setBegin($newBegin);
     }
