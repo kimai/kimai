@@ -6541,11 +6541,6 @@ parameters:
             path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 1
             path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
