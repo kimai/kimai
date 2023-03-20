@@ -48,10 +48,11 @@ final class DurationFixedBeginMode implements TrackingModeInterface
             $timesheet->setBegin(new DateTime('now', $this->getTimezone($timesheet)));
         }
 
-        $newBegin = clone $timesheet->getBegin();
+        /** @var DateTime $newBegin */
+        $newBegin = clone $timesheet->getBegin(); // @phpstan-ignore-line
 
         // this prevents the problem that "now" is being ignored in modify()
-        $beginTime = (new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone()));
+        $beginTime = new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone());
         $newBegin->setTime((int) $beginTime->format('H'), (int) $beginTime->format('i'), 0, 0);
 
         $timesheet->setBegin($newBegin);

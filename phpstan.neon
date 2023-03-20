@@ -6536,21 +6536,6 @@ parameters:
             path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
-
-        -
-            message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/DurationFixedBeginMode.php
-
-        -
             message: "#^Method App\\\\Twig\\\\Configuration\\:\\:__call\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Twig/Configuration.php
