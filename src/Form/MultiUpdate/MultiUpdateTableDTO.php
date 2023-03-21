@@ -14,9 +14,9 @@ use Doctrine\Common\Collections\Collection;
 class MultiUpdateTableDTO
 {
     /**
-     * @var iterable<object>|Collection<object>
+     * @var array<object>|Collection<object>
      */
-    private iterable|Collection $entities = [];
+    private array|Collection $entities = [];
     /**
      * @var string[]
      */
@@ -26,16 +26,16 @@ class MultiUpdateTableDTO
     /**
      * @return object[]
      */
-    public function getEntities(): iterable|Collection
+    public function getEntities(): array|Collection
     {
         return $this->entities;
     }
 
     /**
-     * @param iterable<object>|Collection<object> $entities
+     * @param array<object>|Collection<object> $entities
      * @return MultiUpdateTableDTO
      */
-    public function setEntities(iterable|Collection $entities): MultiUpdateTableDTO
+    public function setEntities(array|Collection $entities): MultiUpdateTableDTO
     {
         $this->entities = $entities;
 

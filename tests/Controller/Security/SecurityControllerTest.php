@@ -48,7 +48,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<form action="/en/login_check" method="post"', $content);
         $this->assertStringContainsString('<input type="text" id="username" name="_username"', $content);
         $this->assertStringContainsString('<input id="password" name="_password" type="password"', $content);
-        $this->assertStringContainsString('">Login</button>', $content);
+        $this->assertStringContainsString('">Log in</button>', $content);
         $this->assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
         $this->assertStringNotContainsString('<a href="/en/register/"', $content);
         $this->assertStringNotContainsString('Register a new account', $content);

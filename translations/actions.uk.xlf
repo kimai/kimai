@@ -114,6 +114,10 @@
         <source>Remove widget</source>
         <target state="translated">Видалити віджет</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Перезавантажити</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

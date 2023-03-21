@@ -1,3 +1,35 @@
+{# added for the team project form, to show divider for the customer name between all projects #}
+{% block choice_widget_expanded -%}
+    {%- if '-inline' in label_attr.class|default('') -%}
+        {%- for child in form %}
+            {{- form_widget(child, {
+                parent_label_class: label_attr.class|default(''),
+                translation_domain: choice_translation_domain,
+            }) -}}
+        {% endfor -%}
+    {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {% if form.vars.choices|length != form.children|length %}
+                {% for name, choices in form.vars.choices %}
+                    <fieldset class="form-fieldset">
+                        <legend>{{ name }}</legend>
+                    {% for key, choice in choices %}
+                        {{- form_widget(form[key]) -}}
+                        {{- form_label(form[key]) -}}
+                    {% endfor %}
+                    </fieldset>
+                {% endfor %}
+            {% else %}
+                {%- for child in form %}
+                    {{- form_widget(child, {
+                        parent_label_class: label_attr.class|default(''),
+                        translation_domain: choice_translation_domain,
+                    }) -}}
+                {% endfor -%}
+            {% endif %}
+        </div>
+    {%- endif -%}
+{%- endblock choice_widget_expanded %}
 
 {% block quick_entry_week_row %}
     <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>

@@ -12,6 +12,7 @@ namespace App\Tests\API;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,12 +31,15 @@ class TeamControllerTest extends APIControllerBaseTest
         return $this->importFixture($fixture);
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/teams');
     }
 
-    public function getRoleTestData()
+    /**
+     * @return array<int, array<int, string>>
+     */
+    public function getRoleTestData(): array
     {
         return [
             [User::ROLE_USER],
@@ -46,12 +50,12 @@ class TeamControllerTest extends APIControllerBaseTest
     /**
      * @dataProvider getRoleTestData
      */
-    public function testIsSecureForRole(string $role)
+    public function testIsSecureForRole(string $role): void
     {
         $this->assertUrlIsSecuredForRole($role, '/api/teams');
     }
 
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->importTeamFixtures();
@@ -64,7 +68,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
     }
 
-    public function testGetEntity()
+    public function testGetEntity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $teams = $this->importTeamFixtures();
@@ -77,18 +81,18 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TeamEntity', $result);
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Team object not found by the @ParamConverter annotation.');
     }
 
-    public function testDeleteActionWithUnknownTeam()
+    public function testDeleteActionWithUnknownTeam(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertNotFoundForDelete($client, '/api/teams/' . PHP_INT_MAX);
     }
 
-    public function testPostAction()
+    public function testPostAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -106,7 +110,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPostActionWithInvalidUser()
+    public function testPostActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $data = [
@@ -118,7 +122,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
 
-    public function testPostActionWithValidationErrors()
+    public function testPostActionWithValidationErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -134,7 +138,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
-    public function testPatchAction()
+    public function testPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -188,7 +192,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals('john_user', $result['members'][0]['user']['username']);
     }
 
-    public function testPatchActionWithValidationErrors()
+    public function testPatchActionWithValidationErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -214,7 +218,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $teams = $this->importTeamFixtures();
@@ -233,7 +237,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertEmpty($client->getResponse()->getContent());
     }
 
-    public function testPostMemberAction()
+    public function testPostMemberAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -256,7 +260,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertCount(2, $result['members']);
     }
 
-    public function testPostMemberActionErrors()
+    public function testPostMemberActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -284,7 +288,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/members/5', 'POST');
     }
 
-    public function testDeleteMemberAction()
+    public function testDeleteMemberAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -310,7 +314,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertCount(3, $result['members']);
     }
 
-    public function testDeleteMemberActionErrors()
+    public function testDeleteMemberActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -343,7 +347,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/members/1', 'DELETE');
     }
 
-    public function testPostCustomerAction()
+    public function testPostCustomerAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -367,7 +371,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(1, $result['customers'][0]['id']);
     }
 
-    public function testPostCustomerActionErrors()
+    public function testPostCustomerActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -397,7 +401,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/customers/1', 'POST');
     }
 
-    public function testDeleteCustomerAction()
+    public function testDeleteCustomerAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -427,9 +431,15 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['customers']);
+
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+        $team = $em->getRepository(Team::class)->find($result['id']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertCount(0, $team->getCustomers());
     }
 
-    public function testDeleteCustomerActionErrors()
+    public function testDeleteCustomerActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -455,7 +465,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/customers/1', 'DELETE');
     }
 
-    public function testPostProjectAction()
+    public function testPostProjectAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -478,7 +488,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(1, $result['projects'][0]['id']);
     }
 
-    public function testPostProjectActionErrors()
+    public function testPostProjectActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -510,7 +520,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
     }
 
-    public function testDeleteProjectAction()
+    public function testDeleteProjectAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -540,9 +550,15 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertCount(0, $result['projects']);
+
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+        $team = $em->getRepository(Team::class)->find($result['id']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertCount(0, $team->getProjects());
     }
 
-    public function testDeleteProjectActionErrors()
+    public function testDeleteProjectActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -568,7 +584,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/projects/1', 'DELETE');
     }
 
-    public function testPostActivityAction()
+    public function testPostActivityAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -591,7 +607,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertEquals(1, $result['activities'][0]['id']);
     }
 
-    public function testPostActivityActionErrors()
+    public function testPostActivityActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -621,7 +637,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
     }
 
-    public function testDeleteActivityAction()
+    public function testDeleteActivityAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -653,7 +669,7 @@ class TeamControllerTest extends APIControllerBaseTest
         self::assertCount(0, $result['activities']);
     }
 
-    public function testDeleteActivityActionErrors()
+    public function testDeleteActivityActionErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [

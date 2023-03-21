@@ -68,7 +68,7 @@ final class CalendarController extends AbstractController
         $defaultStart = null;
         if ($this->configuration->getTimesheetDefaultBeginTime() !== 'now') {
             $defaultStart = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
-            $defaultStart = $defaultStart->format('h:i:s');
+            $defaultStart = $defaultStart->format('H:i:s');
         }
 
         $config = $this->calendarService->getConfiguration();

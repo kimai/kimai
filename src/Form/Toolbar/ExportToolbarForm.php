@@ -28,15 +28,15 @@ final class ExportToolbarForm extends AbstractType
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
-        $this->addActivityMultiChoice($builder, [], true);
+        $this->addActivitySelect($builder, [], true, true, false);
         $this->addTagInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
             $this->addTeamsChoice($builder);
         }
+        $this->addExportStateChoice($builder);
         $this->addTimesheetStateChoice($builder);
         $this->addBillableChoice($builder);
-        $this->addExportStateChoice($builder);
         $builder->add('renderer', HiddenType::class, []);
         if ($options['include_export']) {
             $builder->add('markAsExported', HiddenType::class, [
