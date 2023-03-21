@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56bca57f2bb60cae0ec13012925f7b89",
+    "content-hash": "42733cc81b93bcae0a70454796d6c486",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2415,16 +2415,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "0.12",
+            "version": "0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "b2643be7f670f07764bac35af498f09ee93258dd"
+                "reference": "28287dc810186ef3188811af071cb67832e7c7f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/b2643be7f670f07764bac35af498f09ee93258dd",
-                "reference": "b2643be7f670f07764bac35af498f09ee93258dd",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/28287dc810186ef3188811af071cb67832e7c7f0",
+                "reference": "28287dc810186ef3188811af071cb67832e7c7f0",
                 "shasum": ""
             },
             "require": {
@@ -2473,7 +2473,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.12"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.13"
             },
             "funding": [
                 {
@@ -2485,7 +2485,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-04T23:55:06+00:00"
+            "time": "2023-03-21T09:35:32+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -2551,34 +2551,37 @@
         },
         {
             "name": "league/csv",
-            "version": "9.8.0",
+            "version": "9.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/csv.git",
-                "reference": "9d2e0265c5d90f5dd601bc65ff717e05cec19b47"
+                "reference": "b4418ede47fbd88facc34e40a16c8ce9153b961b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/9d2e0265c5d90f5dd601bc65ff717e05cec19b47",
-                "reference": "9d2e0265c5d90f5dd601bc65ff717e05cec19b47",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/b4418ede47fbd88facc34e40a16c8ce9153b961b",
+                "reference": "b4418ede47fbd88facc34e40a16c8ce9153b961b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.4 || ^8.0"
+                "php": "^8.1.2"
             },
             "require-dev": {
-                "ext-curl": "*",
+                "doctrine/collections": "^2.1.2",
                 "ext-dom": "*",
-                "friendsofphp/php-cs-fixer": "^v3.4.0",
-                "phpstan/phpstan": "^1.3.0",
-                "phpstan/phpstan-phpunit": "^1.0.0",
-                "phpstan/phpstan-strict-rules": "^1.1.0",
-                "phpunit/phpunit": "^9.5.11"
+                "ext-xdebug": "*",
+                "friendsofphp/php-cs-fixer": "^v3.14.3",
+                "phpbench/phpbench": "^1.2.8",
+                "phpstan/phpstan": "^1.10.4",
+                "phpstan/phpstan-deprecation-rules": "^1.1.2",
+                "phpstan/phpstan-phpunit": "^1.3.10",
+                "phpstan/phpstan-strict-rules": "^1.5.0",
+                "phpunit/phpunit": "^10.0.14"
             },
             "suggest": {
-                "ext-dom": "Required to use the XMLConverter and or the HTMLConverter classes",
+                "ext-dom": "Required to use the XMLConverter and the HTMLConverter classes",
                 "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
             },
             "type": "library",
@@ -2631,7 +2634,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-04T00:13:07+00:00"
+            "time": "2023-03-11T15:57:12+00:00"
         },
         {
             "name": "lorenzo/pinky",
@@ -10312,16 +10315,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.7.3",
+            "version": "4.7.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "0299edc47eb4813a2c598a0348eaf205704adc92"
+                "reference": "4a1d1272c2dd3afd8d96e92f02dc3565d5cc3c18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/0299edc47eb4813a2c598a0348eaf205704adc92",
-                "reference": "0299edc47eb4813a2c598a0348eaf205704adc92",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/4a1d1272c2dd3afd8d96e92f02dc3565d5cc3c18",
+                "reference": "4a1d1272c2dd3afd8d96e92f02dc3565d5cc3c18",
                 "shasum": ""
             },
             "require": {
@@ -10384,9 +10387,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.7.3"
+                "source": "https://github.com/zircote/swagger-php/tree/4.7.8"
             },
-            "time": "2023-03-08T02:27:27+00:00"
+            "time": "2023-03-19T21:25:02+00:00"
         }
     ],
     "packages-dev": [
@@ -10829,16 +10832,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.14.4",
+            "version": "v3.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "1b3d9dba63d93b8a202c31e824748218781eae6b"
+                "reference": "d48755372a113bddb99f749e34805d83f3acfe04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/1b3d9dba63d93b8a202c31e824748218781eae6b",
-                "reference": "1b3d9dba63d93b8a202c31e824748218781eae6b",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d48755372a113bddb99f749e34805d83f3acfe04",
+                "reference": "d48755372a113bddb99f749e34805d83f3acfe04",
                 "shasum": ""
             },
             "require": {
@@ -10905,9 +10908,15 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
+            "keywords": [
+                "Static code analysis",
+                "fixer",
+                "standards",
+                "static analysis"
+            ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.14.4"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.15.1"
             },
             "funding": [
                 {
@@ -10915,7 +10924,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-09T21:49:13+00:00"
+            "time": "2023-03-13T23:26:30+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -11155,16 +11164,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.5",
+            "version": "1.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1fb6f494d82455151ecf15c5c191923f5d84324e"
+                "reference": "b10ceb526d9607903c5b2673f1fc8775dbe48975"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1fb6f494d82455151ecf15c5c191923f5d84324e",
-                "reference": "1fb6f494d82455151ecf15c5c191923f5d84324e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b10ceb526d9607903c5b2673f1fc8775dbe48975",
+                "reference": "b10ceb526d9607903c5b2673f1fc8775dbe48975",
                 "shasum": ""
             },
             "require": {
@@ -11193,8 +11202,11 @@
                 "static analysis"
             ],
             "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.10.5"
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
             },
             "funding": [
                 {
@@ -11210,20 +11222,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-07T16:48:45+00:00"
+            "time": "2023-03-16T15:24:20+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.33",
+            "version": "1.3.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "fcb67c2a747300ff8e6ae278191f6ff79fc90370"
+                "reference": "62bd362b432fe29e175168689510ddd927b698f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/fcb67c2a747300ff8e6ae278191f6ff79fc90370",
-                "reference": "fcb67c2a747300ff8e6ae278191f6ff79fc90370",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/62bd362b432fe29e175168689510ddd927b698f8",
+                "reference": "62bd362b432fe29e175168689510ddd927b698f8",
                 "shasum": ""
             },
             "require": {
@@ -11278,9 +11290,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.33"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.37"
             },
-            "time": "2023-02-21T08:52:52+00:00"
+            "time": "2023-03-17T14:57:03+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
