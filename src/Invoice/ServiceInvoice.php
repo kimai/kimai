@@ -532,10 +532,6 @@ final class ServiceInvoice
             $model->addEntries($settings['entries']);
             $this->prepareModelQueryDates($model);
 
-            if ($model->getCalculator()->getTotal() < 0.0) {
-                continue;
-            }
-
             $models[] = $model;
         }
 

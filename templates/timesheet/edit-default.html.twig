@@ -17,8 +17,16 @@
             {% endif %}
             {% if form.end_time is defined or form.duration is defined %}
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-2" for="{{ form.vars.name }}_duration">{{ 'duration'|trans }} / {{ 'endtime'|trans }}</label>
-                    {% set size = form.duration is defined ? 5 : 10 %}
+                    <label class="col-form-label col-sm-2" for="{{ form.vars.name }}_duration">
+                        {% if form.duration is defined %}
+                            {{ 'duration'|trans }}
+                            {% if form.end_time is defined %} / {% endif %}
+                        {% endif %}
+                        {% if form.end_time is defined %}
+                            {{ 'endtime'|trans }}
+                        {% endif %}
+                    </label>
+                    {% set size = form.duration is defined and form.end_time is defined ? 5 : 10 %}
                     {% if form.duration is defined %}
                     <div class="col-sm-{{ size }}">
                         {{ form_widget(form.duration, {'label': false}) }}

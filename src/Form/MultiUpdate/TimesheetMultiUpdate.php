@@ -195,7 +195,7 @@ final class TimesheetMultiUpdate extends AbstractType
 
         // meta fields only if at least one exists
         if ($entry !== null && $entry->getMetaFields()->count() > 0) {
-            $builder->add('metaFields', MetaFieldsCollectionType::class);
+            $builder->add('metaFields', MetaFieldsCollectionType::class, ['fields_required' => false]);
 
             $choices = [];
             foreach ($entry->getMetaFields() as $field) {

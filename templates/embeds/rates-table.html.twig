@@ -18,13 +18,13 @@
                     <th>
                         {{ 'user'|trans }}
                     </th>
-                    <th>
+                    <th class="text-end">
                         {{ 'hourlyRate'|trans }}
                     </th>
-                    <th class="d-none d-sm-table-cell">
+                    <th class="d-none d-sm-table-cell text-end">
                         {{ 'internalRate'|trans }}
                     </th>
-                    <th>
+                    <th class="text-center">
                         {{ 'fixedRate'|trans }}
                     </th>
                     <th class="actions"></th>
@@ -40,13 +40,17 @@
                                 &ndash;
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="text-end">
                             {{ rate.rate|money(currency) }}
                         </td>
-                        <td class="d-none d-sm-table-cell">
-                            {{ rate.internalRate|money(currency) }}
+                        <td class="d-none d-sm-table-cell text-end">
+                            {% if rate.internalRate is not null %}
+                                {{ rate.internalRate|money(currency) }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
                         </td>
-                        <td>
+                        <td class="text-center">
                             {{ widgets.label_boolean(rate.fixed) }}
                         </td>
                         <td class="actions">

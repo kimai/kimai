@@ -36,10 +36,17 @@ final class QuickEntryController extends AbstractController
     public function quickEntry(Request $request, ?string $begin = null)
     {
         $factory = $this->getDateTimeFactory();
+
+        if ($begin !== null) {
+            try {
+                $begin = $factory->createDateTime($begin);
+            } catch (\Exception $ex) {
+                $begin = null;
+            }
+        }
+
         if ($begin === null) {
             $begin = $factory->createDateTime();
-        } else {
-            $begin = $factory->createDateTime($begin);
         }
 
         $startWeek = $factory->getStartOfWeek($begin);

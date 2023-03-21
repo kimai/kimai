@@ -9,7 +9,7 @@
     } %}
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
-            <fieldset>
+            <fieldset class="form-fieldset">
                 <div class="row">
                     <div class="col-md-4">
                         {{ form_row(form.customer) }}
@@ -22,27 +22,27 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset class="form-fieldset">
                 {{ form_row(form.replaceTags) }}
                 {{ form_row(form.tags) }}
             </fieldset>
             {% if form.user is defined %}
-                <fieldset>
+                <fieldset class="form-fieldset">
                     {{ form_row(form.user) }}
                 </fieldset>
             {% endif %}
             {% if form.exported is defined %}
-                <fieldset>
+                <fieldset class="form-fieldset">
                     {{ form_row(form.exported) }}
                 </fieldset>
             {% endif %}
             {% if form.billable is defined %}
-                <fieldset>
+                <fieldset class="form-fieldset">
                     {{ form_row(form.billable) }}
                 </fieldset>
             {% endif %}
             {% if form.recalculateRates is defined %}
-                <fieldset>
+                <fieldset class="form-fieldset">
                     {{ form_row(form.recalculateRates) }}
                     <div class="row">
                         <div class="col-md-6">
@@ -55,7 +55,7 @@
                 </fieldset>
             {% endif %}
             {% if form.metaFields is defined %}
-                <fieldset>
+                <fieldset class="form-fieldset">
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(form.updateMeta) }}
@@ -97,6 +97,9 @@
                 if (elAttr.indexOf('{{ form.metaFields.vars.full_name }}') !== -1) {
                     {# disable all custom fields, each one has to be activated before it can be used #}
                     el.setAttribute('disabled', 'disabled');
+                    if (el.tomselect !== undefined) {
+                        el.tomselect.disable();
+                    }
                 } else if (elAttr.indexOf('{{ form.updateMeta.vars.full_name }}') !== -1) {
                     el.checked = false;
                     el.onclick = function() {
@@ -117,8 +120,14 @@
                             }
                             if (metaCheckbox.checked) {
                                 current.removeAttribute('disabled');
+                                if (current.tomselect !== undefined) {
+                                    current.tomselect.enable();
+                                }
                             } else {
                                 current.setAttribute('disabled', 'disabled');
+                                if (current.tomselect !== undefined) {
+                                    current.tomselect.disable();
+                                }
                             }
                         }
                     };

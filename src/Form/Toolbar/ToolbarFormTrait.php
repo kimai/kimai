@@ -45,14 +45,6 @@ use Symfony\Component\Form\FormEvents;
  */
 trait ToolbarFormTrait
 {
-    protected function addUserChoice(FormBuilderInterface $builder): void
-    {
-        $builder->add('user', UserType::class, [
-            'label' => 'user',
-            'required' => false,
-        ]);
-    }
-
     protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = []): void
     {
         $builder->add($field, UserType::class, array_merge([
@@ -67,14 +59,6 @@ trait ToolbarFormTrait
         ], $options));
     }
 
-    protected function addTeamChoice(FormBuilderInterface $builder): void
-    {
-        $builder->add('team', TeamType::class, [
-            'label' => 'team',
-            'required' => false,
-        ]);
-    }
-
     protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = []): void
     {
         $builder->add($field, TeamType::class, array_merge([
@@ -87,11 +71,6 @@ trait ToolbarFormTrait
             'multiple' => true,
             'required' => false,
         ], $options));
-    }
-
-    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
-    {
-        $this->addCustomerSelect($builder, $options, false, $multiProject);
     }
 
     protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
@@ -190,16 +169,6 @@ trait ToolbarFormTrait
         $builder->add('daterange', DateRangeType::class, $params);
     }
 
-    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false): void
-    {
-        $this->addDateRange($builder, [], $allowEmpty, $required);
-    }
-
-    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
-    {
-        $this->addProjectSelect($builder, $options, false, $multiCustomer, $multiActivity);
-    }
-
     protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
     {
         $this->addProjectSelect($builder, $options, true, $multiCustomer, $multiActivity);
@@ -271,46 +240,45 @@ trait ToolbarFormTrait
         );
     }
 
-    protected function addActivityChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
-    {
-        $this->addActivitySelect($builder, $options, false, $multiProject);
-    }
-
     protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addActivitySelect($builder, $options, true, $multiProject);
     }
 
-    private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false): void
+    private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false, bool $autoFill = true): void
     {
-        $name = 'activity';
-        if ($multiActivity) {
-            $name = 'activities';
-        }
+        $name = $multiActivity ? 'activities' : 'activity';
 
-        // just a fake field for having this field at the right position in the frontend
-        $builder->add($name, ActivityType::class, [
+        $activityOptions = [
+            'required' => false,
             'documentation' => [
                 'type' => 'array',
                 'items' => ['type' => 'integer', 'description' => 'Activity ID'],
                 'description' => 'Array of activity IDs',
             ],
-            'choices' => [],
             'multiple' => $multiActivity,
-        ]);
+        ];
+
+        if (!$autoFill) {
+            $activityOptions['attr'] = [
+                'data-autoselect' => 'false'
+            ];
+        }
+
+        // just a fake field for having this field at the right position in the frontend
+        $builder->add($name, ActivityType::class, array_merge($activityOptions, [
+            'choices' => [],
+        ]));
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($name, $multiActivity, $multiProject) {
+            function (FormEvent $event) use ($name, $multiProject, $activityOptions) {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
-                $event->getForm()->add($name, ActivityType::class, [
-                    'multiple' => $multiActivity,
-                    'required' => false,
-                    'query_builder' => function (ActivityRepository $repo) use ($data, $multiActivity, $multiProject) {
+                $event->getForm()->add($name, ActivityType::class, array_merge($activityOptions, [
+                    'query_builder' => function (ActivityRepository $repo) use ($name, $data, $multiProject) {
                         $query = new ActivityFormTypeQuery();
 
-                        $name = $multiActivity ? 'activities' : 'activity';
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()
                             $activities = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
@@ -323,9 +291,9 @@ trait ToolbarFormTrait
                             }
                         }
 
-                        $name = $multiProject ? 'projects' : 'project';
-                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
-                            $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
+                        $projectName = $multiProject ? 'projects' : 'project';
+                        if (\array_key_exists($projectName, $data) && $data[$projectName] !== null && $data[$projectName] !== '') {
+                            $projects = \is_array($data[$projectName]) ? $data[$projectName] : [$data[$projectName]];
                             foreach ($projects as $project) {
                                 $project = \is_string($project) ? (int) $project : $project;
                                 if (!\is_int($project) && !($project instanceof Project)) {
@@ -337,7 +305,7 @@ trait ToolbarFormTrait
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]);
+                ]));
             }
         );
     }

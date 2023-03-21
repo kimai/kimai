@@ -77,7 +77,7 @@ final class TagController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'tags_edit', methods: ['GET', 'POST'])]
     #[IsGranted('manage_tag')]
-    public function editAction(Tag $tag, TagRepository $repository, Request $request)
+    public function editAction(Tag $tag, TagRepository $repository, Request $request): Response
     {
         $editForm = $this->createForm(TagEditForm::class, $tag, [
             'action' => $this->generateUrl('tags_edit', ['id' => $tag->getId()]),
@@ -109,7 +109,7 @@ final class TagController extends AbstractController
 
     #[Route(path: '/create', name: 'tags_create', methods: ['GET', 'POST'])]
     #[IsGranted('manage_tag')]
-    public function createAction(TagRepository $repository, Request $request)
+    public function createAction(TagRepository $repository, Request $request): Response
     {
         $tag = new Tag();
 
@@ -143,7 +143,7 @@ final class TagController extends AbstractController
 
     #[Route(path: '/multi-delete', name: 'tags_multi_delete', methods: ['POST'])]
     #[IsGranted('delete_tag')]
-    public function multiDelete(TagRepository $repository, Request $request)
+    public function multiDelete(TagRepository $repository, Request $request): Response
     {
         $form = $this->getMultiUpdateForm($repository);
         $form->handleRequest($request);

@@ -27,7 +27,7 @@ final class MetaFieldsCollectionType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($options) {
                 /** @var ArrayCollection<MetaTableTypeInterface> $collection */
                 $collection = $event->getData();
                 foreach ($collection as $collectionItem) {
@@ -40,6 +40,11 @@ final class MetaFieldsCollectionType extends AbstractType
                     // prevents unconfigured values from showing up in the form
                     if (null === $collectionItem->getType()) {
                         continue;
+                    }
+
+                    if ($options['fields_required'] !== null) {
+                        // TODO required select-fields can receive an empty value
+                        $collectionItem->setIsRequired((bool) $options['fields_required']);
                     }
 
                     $collection->set($collectionItem->getName(), $collectionItem);
@@ -57,8 +62,11 @@ final class MetaFieldsCollectionType extends AbstractType
             'entry_options' => ['label' => false],
             'allow_add' => false,
             'allow_delete' => false,
+            'fields_required' => null,
             'label' => false,
         ]);
+
+        $resolver->setAllowedTypes('fields_required', ['null', 'bool']);
     }
 
     public function getParent(): string

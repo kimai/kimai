@@ -25,21 +25,21 @@ final class InvoiceToolbarForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addTemplateChoice($builder);
-        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
-        $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
-        $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
         $this->addSearchTermInputField($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
+        $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
+        $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
+        $this->addActivitySelect($builder, [], true, true, false);
+        $this->addTagInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
             $this->addTeamsChoice($builder);
         }
-        $this->addActivityMultiChoice($builder, $options, true);
-        $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);
         $builder->add('invoiceDate', DatePickerType::class, [
             'required' => true,
         ]);
+        $this->addTemplateChoice($builder);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder): void
