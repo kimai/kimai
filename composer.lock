@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42733cc81b93bcae0a70454796d6c486",
+    "content-hash": "dfc85100677cacc71615a6442646ff39",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2415,16 +2415,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "0.13",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "28287dc810186ef3188811af071cb67832e7c7f0"
+                "reference": "f0a8cdae6b4a243ee9acce60e2ffbb5f0c107c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/28287dc810186ef3188811af071cb67832e7c7f0",
-                "reference": "28287dc810186ef3188811af071cb67832e7c7f0",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/f0a8cdae6b4a243ee9acce60e2ffbb5f0c107c03",
+                "reference": "f0a8cdae6b4a243ee9acce60e2ffbb5f0c107c03",
                 "shasum": ""
             },
             "require": {
@@ -2454,6 +2454,7 @@
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -2473,7 +2474,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.13"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
             },
             "funding": [
                 {
@@ -2485,7 +2486,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-21T09:35:32+00:00"
+            "time": "2023-03-23T14:18:33+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -13344,7 +13345,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kevinpapst/tabler-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
