@@ -7151,11 +7151,6 @@ parameters:
             path: src/Validator/Constraints/UserValidator.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Voter/TimesheetVoter.php
-
-        -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Voter/TimesheetVoter.php
