@@ -99,10 +99,10 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @var Collection<Team>
      */
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'activities')]
     #[ORM\JoinTable(name: 'kimai2_activities_teams')]
     #[ORM\JoinColumn(name: 'activity_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'activities')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
