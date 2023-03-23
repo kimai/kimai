@@ -421,12 +421,12 @@ final class ServiceInvoice
 
         $generator = $this->getNumberGeneratorByName($template->getNumberGenerator());
         if (null === $generator) {
-            throw new \Exception('Unknown number generator: ' . $template->getNumberGenerator());
+            throw new \Exception('Please adjust your invoice template, the number generator is invalid: ' . $template->getNumberGenerator());
         }
 
         $calculator = $this->getCalculatorByName($template->getCalculator());
         if (null === $calculator) {
-            throw new \Exception('Unknown invoice calculator: ' . $template->getCalculator());
+            throw new \Exception('Please adjust your invoice template, the invoice calculator is invalid: ' . $template->getCalculator());
         }
 
         $model->setCalculator($calculator);

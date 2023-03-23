@@ -11,9 +11,17 @@ namespace App\EventSubscriber\Actions;
 
 use App\Entity\User;
 use App\Event\PageActionsEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserSubscriber extends AbstractActionsSubscriber
 {
+    public function __construct(AuthorizationCheckerInterface $auth, UrlGeneratorInterface $urlGenerator, private EventDispatcherInterface $eventDispatcher)
+    {
+        parent::__construct($auth, $urlGenerator);
+    }
+
     public static function getActionName(): string
     {
         return 'user';
@@ -23,10 +31,7 @@ final class UserSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        /** @var User $user */
-        $user = $payload['user'];
-
-        if ($user->getId() === null) {
+        if (($user = $payload['user']) === null || !$user instanceof User || $user->getId() === null) {
             return;
         }
 
@@ -35,21 +40,20 @@ final class UserSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($this->isGranted('edit', $user)) {
-            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
+        $subEvent = new PageActionsEvent($user, ['user' => $user], 'user_forms', 'index');
+        $this->eventDispatcher->dispatch($subEvent, $subEvent->getEventName());
+
+        foreach ($subEvent->getActions() as $id => $action) {
+            $event->addActionToSubmenu('edit', $id, $action);
         }
 
-        if ($this->isGranted('preferences', $user)) {
-            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
-        }
-
-        if ($this->isGranted('report:other') || ($this->isGranted('report:user') && $event->getUser()->getId() === $user->getId())) {
+        if (($event->getUser()->getId() === $user->getId() && $this->isGranted('report:user')) || $this->isGranted('report:other')) {
             $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
             $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);
             $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_user_year', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_year']);
         }
 
-        if ($this->isGranted('view_other_timesheet') && $user->isEnabled()) {
+        if ($user->isEnabled() && $this->isGranted('view_other_timesheet')) {
             $event->addActionToSubmenu('filter', 'timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet.filter', 'translation_domain' => 'actions']);
         }
 
