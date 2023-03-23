@@ -11,9 +11,17 @@ namespace App\EventSubscriber\Actions;
 
 use App\Entity\User;
 use App\Event\PageActionsEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserSubscriber extends AbstractActionsSubscriber
 {
+    public function __construct(AuthorizationCheckerInterface $auth, UrlGeneratorInterface $urlGenerator, private EventDispatcherInterface $eventDispatcher)
+    {
+        parent::__construct($auth, $urlGenerator);
+    }
+
     public static function getActionName(): string
     {
         return 'user';
@@ -32,12 +40,11 @@ final class UserSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($this->isGranted('edit', $user)) {
-            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
-        }
+        $subEvent = new PageActionsEvent($user, ['user' => $user], 'user_forms', 'index');
+        $this->eventDispatcher->dispatch($subEvent, $subEvent->getEventName());
 
-        if ($this->isGranted('preferences', $user)) {
-            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
+        foreach ($subEvent->getActions() as $id => $action) {
+            $event->addActionToSubmenu('edit', $id, $action);
         }
 
         if (($event->getUser()->getId() === $user->getId() && $this->isGranted('report:user')) || $this->isGranted('report:other')) {
