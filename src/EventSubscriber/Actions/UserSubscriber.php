@@ -23,10 +23,7 @@ final class UserSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        /** @var User $user */
-        $user = $payload['user'];
-
-        if ($user->getId() === null) {
+        if (($user = $payload['user']) === null || !$user instanceof User || $user->getId() === null) {
             return;
         }
 
@@ -43,13 +40,13 @@ final class UserSubscriber extends AbstractActionsSubscriber
             $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
         }
 
-        if ($this->isGranted('report:other') || ($this->isGranted('report:user') && $event->getUser()->getId() === $user->getId())) {
+        if (($event->getUser()->getId() === $user->getId() && $this->isGranted('report:user')) || $this->isGranted('report:other')) {
             $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
             $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);
             $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_user_year', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_year']);
         }
 
-        if ($this->isGranted('view_other_timesheet') && $user->isEnabled()) {
+        if ($user->isEnabled() && $this->isGranted('view_other_timesheet')) {
             $event->addActionToSubmenu('filter', 'timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet.filter', 'translation_domain' => 'actions']);
         }
 
