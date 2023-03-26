@@ -114,6 +114,10 @@
         <source>Add widget</source>
         <target state="translated">Dodaj widget</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">Učitaj ponovo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

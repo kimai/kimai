@@ -344,8 +344,8 @@
         <target>Activity</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Project</target>
+        <source>Project</source>
+        <target state="translated">Project</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>

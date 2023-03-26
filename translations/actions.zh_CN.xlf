@@ -114,6 +114,10 @@
         <source>Remove widget</source>
         <target state="translated">删除小部件</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">重新加载</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
