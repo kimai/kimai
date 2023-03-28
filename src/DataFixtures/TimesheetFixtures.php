@@ -58,8 +58,6 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        $results = $this->findRandom($manager, Customer::class, 50);
-
         $allUser = $this->getAllUsers($manager);
 
         $faker = Factory::create();
