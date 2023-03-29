@@ -39,7 +39,7 @@ final class DailyStatistic implements DateStatisticInterface
             return;
         }
 
-        $tmp = clone $this->begin;
+        $tmp = \DateTime::createFromInterface($this->begin);
         $tmp->setTime(0, 0, 0);
         while ($tmp < $this->end) {
             $id = $tmp->format('Y-m-d');

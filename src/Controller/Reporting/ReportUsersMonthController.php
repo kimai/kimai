@@ -87,6 +87,7 @@ final class ReportUsersMonthController extends AbstractController
             $values->setDate($dateTimeFactory->getStartOfMonth());
         }
 
+        /** @var \DateTime $start */
         $start = $values->getDate();
         $start->modify('first day of 00:00:00');
 
