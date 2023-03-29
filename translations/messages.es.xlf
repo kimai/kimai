@@ -179,11 +179,11 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Usuario</target>
+        <target state="translated">Usuario</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
-        <target>Nombre de usuario</target>
+        <target state="translated">Usuario</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
@@ -604,7 +604,7 @@
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target state="translated">%percent%% usado</target>
+        <target state="translated">%percent%% utilizado</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
@@ -864,11 +864,11 @@
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Año %year% completo</target>
+        <target state="translated">Todo el año %year%</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">Semana en el calendario %week%</target>
+        <target state="translated">Semana del calendario %week%</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1103,12 +1103,12 @@
         <target>No se pudo procesar la solicitud; se encontraron demasiados resultados.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target state="translated">Un correo electronico ha sido enviado. Contiene un enlace en el que debe hacer clic para restablecer su contraseña. Nota: Solo puede solicitar una nueva contraseña una vez dentro de %tokenLifetime% horas. Si no recibe un correo electrónico, revise su carpeta de correo no deseado o intente nuevamente.</target>
+        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
+        <target state="translated">Se ha enviado un correo electrónico. Contiene un enlace en el que debes hacer clic para restablecer tu contraseña. Nota: Sólo puedes solicitar una nueva contraseña una vez en un plazo de %tokenLifetime% horas. Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Se ha enviado un mensaje a %email%. Contiene un enlace de activación que debe seguir para activar su cuenta.</target>
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">Se ha enviado un correo electrónico a %email%. Contiene un enlace en el que debe hacer clic para activar su cuenta.</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
