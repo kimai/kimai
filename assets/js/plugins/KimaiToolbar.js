@@ -163,7 +163,12 @@ export default class KimaiToolbar extends KimaiPlugin {
             event.preventDefault();
             event.stopPropagation();
             let urlParts = target.href.split('/');
-            pager.value = urlParts[urlParts.length-1];
+            let pageNumber = urlParts[urlParts.length - 1];
+            // page number usually is the default value and is therefor missing from the URL
+            if (!/\d/.test(pageNumber)) {
+                pageNumber = 1;
+            }
+            pager.value = pageNumber;
             pager.dispatchEvent(new Event('change'));
             document.dispatchEvent(new Event('pagination-change'));
             return false;

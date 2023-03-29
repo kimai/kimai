@@ -283,7 +283,7 @@ final class LocaleFormatter
     /**
      * @see https://unicode-org.github.io/icu/userguide/format_parse/datetime/
      */
-    private function formatIntl(\DateTime $dateTime, string $format): string
+    private function formatIntl(\DateTimeInterface $dateTime, string $format): string
     {
         $formatter = new IntlDateFormatter(
             $this->locale,
@@ -303,12 +303,12 @@ final class LocaleFormatter
         return (string) $formatted;
     }
 
-    public function monthName(\DateTime $dateTime, bool $withYear = false): string
+    public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string
     {
         return $this->formatIntl($dateTime, ($withYear ? 'LLLL yyyy' : 'LLLL'));
     }
 
-    public function dayName(\DateTime $dateTime, bool $short = false): string
+    public function dayName(\DateTimeInterface $dateTime, bool $short = false): string
     {
         return $this->formatIntl($dateTime, ($short ? 'EE' : 'EEEE'));
     }

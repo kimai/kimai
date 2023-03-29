@@ -55,12 +55,12 @@ final class TagFixtures extends Fixture
                 $tagName = $faker->text(rand(5, 10));
             }
 
-            if (\in_array($tagName, $existing)) {
+            if (\in_array(mb_strtolower($tagName), $existing, true)) {
                 continue;
             }
 
-            $existing[] = $tagName;
-            $tag->setName($tagName);
+            $existing[] = mb_strtolower($tagName);
+            $tag->setName(mb_substr($tagName, 0, 100));
 
             $manager->persist($tag);
 
