@@ -5421,21 +5421,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$date has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$decimal has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$sumType has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
-
-        -
             message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsRepository\\:\\:getGroupedByCustomerProjectActivityUser\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsRepository.php
