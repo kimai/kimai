@@ -60,7 +60,7 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
 
         foreach ($newNames as $name) {
             $tag = new Tag();
-            $tag->setName($name);
+            $tag->setName(mb_substr($name, 0, 100));
             $tags[] = $tag;
 
             // new tags persist automatically thanks to the cascade={"persist"}
