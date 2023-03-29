@@ -224,3 +224,8 @@ services:
         class:     App\Repository\BookmarkRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Bookmark']
+
+    App\Repository\WorkingTimeRepository:
+        class:     App\Repository\WorkingTimeRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\WorkingTime']

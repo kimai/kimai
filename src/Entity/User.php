@@ -1135,42 +1135,42 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getWorkHoursMonday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
     }
 
     public function getWorkHoursTuesday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
     }
 
     public function getWorkHoursWednesday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
     }
 
     public function getWorkHoursThursday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
     }
 
     public function getWorkHoursFriday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
     }
 
     public function getWorkHoursSaturday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
     }
 
     public function getWorkHoursSunday(): int
     {
-        return $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
     }
 
     public function getHolidaysPerYear(): int
     {
-        return $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
     }
 
     public function setWorkHoursMonday(int $seconds): void
@@ -1211,5 +1211,35 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setHolidaysPerYear(int $holidays): void
     {
         $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays);
+    }
+
+    public function hasContractSettings(): bool
+    {
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0;
+    }
+
+    public function hasWorkHourConfiguration(): bool
+    {
+        return $this->getWorkHoursMonday() !== 0 ||
+            $this->getWorkHoursTuesday() !== 0 ||
+            $this->getWorkHoursWednesday() !== 0 ||
+            $this->getWorkHoursThursday() !== 0 ||
+            $this->getWorkHoursFriday() !== 0 ||
+            $this->getWorkHoursSaturday() !== 0 ||
+            $this->getWorkHoursSunday() !== 0;
+    }
+
+    public function getWorkHoursForDay(\DateTimeInterface $dateTime): int
+    {
+        return match ($dateTime->format('N')) {
+            '1' => $this->getWorkHoursMonday(),
+            '2' => $this->getWorkHoursTuesday(),
+            '3' => $this->getWorkHoursWednesday(),
+            '4' => $this->getWorkHoursThursday(),
+            '5' => $this->getWorkHoursFriday(),
+            '6' => $this->getWorkHoursSaturday(),
+            '7' => $this->getWorkHoursSunday(),
+            default => throw new \Exception('Unknown day: ' . $dateTime->format('Y-m-d'))
+        };
     }
 }

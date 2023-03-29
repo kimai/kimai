@@ -1,0 +1,249 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+
+    {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
+    {% set hasWorkTimesSummary = false %}
+
+    {% if form is defined %}
+        <div class="card mb-3">
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
+                <div class="btn-list w-100">
+                    {{ form_widget(form.date) }}
+                    {% if form.user is defined %}
+                        {{ form_widget(form.user, {'label': false}) }}
+                    {% elseif app.user != user %}
+                        {{ widgets.username(user) }}
+                    {% endif %}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not withWorkHourConfiguration %}
+        {{ widgets.alert('info', 'work_times_should.none_configured'|trans) }}
+    {% endif %}
+
+    {% if summaries|length > 0 %}
+        {% embed '@theme/embeds/card.html.twig' %}
+            {% from "macros/widgets.html.twig" import work_times_result %}
+            {% block box_title %}{{ 'export.summary'|trans }}{% endblock %}
+            {% block box_type_class %}card-table table-responsive {% endblock %}
+            {% block box_body %}
+                <table class="table table-vcenter table-hover dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-end total">{{ 'sum.total'|trans }}</th>
+                        {% for month in year.months %}
+                            <th class="text-end">{{ month.month|month_name }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for summary in summaries %}
+                        {% set yearShould = 0 %}
+                        {% set yearIs = 0 %}
+                        {% for month in summary.months %}
+                            {% set monthShould = month.expectedTime %}
+                            {% set monthIs = month.actualTime %}
+                            {% if now > month.month or monthIs > 0 %}
+                                {% set yearShould = yearShould + monthShould %}
+                            {% endif %}
+                            {% set yearIs = yearIs + monthIs %}
+                        {% endfor %}
+                        {% if summary.type == constant('App\\WorkingTime\\Model\\SummaryType::WORKING_TIME') %}
+                            {% set hasWorkTimesSummary = true %}
+                        {% endif %}
+
+                        <tr>
+                            <td>{{ summary.title|trans }}</td>
+                            <td class="text-end total">
+                                {% if summary.type == constant('App\\WorkingTime\\Model\\SummaryType::DAYS') %}
+                                    {{ summary.value }}
+                                {% else %}
+                                    {% if yearShould > 0 %}
+                                        {{ work_times_result(yearShould, yearIs, decimal) }}
+                                    {% else %}
+                                        {{ yearIs|duration(decimal) }}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            {% for month in summary.months %}
+                                {% set monthShould = month.expectedTime %}
+                                {% set monthIs = month.actualTime %}
+                                <td class="text-end">
+                                    {% if month.type == constant('App\\WorkingTime\\Model\\SummaryType::DAYS') %}
+                                        {{ month.value }}
+                                    {% else %}
+                                        {% if now < month.month and monthShould > 0 %}
+                                            {{ monthShould|duration(decimal) }}
+                                        {% elseif now > month.month and monthShould != 0 %}
+                                            {{ work_times_result(monthShould, monthIs, decimal) }}
+                                        {% else %}
+                                            {{ monthIs }}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if withWorkHourConfiguration %}
+        {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
+
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': true}  %}
+            {% block box_title %}{{ 'work_times_should'|trans }}{% endblock %}
+            {% block box_body %}
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'agendaWeek'|trans }}</div>
+                        <div class="datagrid-content">{{ expectedWeekTimes|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Monday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursMonday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Tuesday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursTuesday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Wednesday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursWednesday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Thursday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursThursday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Friday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursFriday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Saturday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursSaturday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Sunday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursSunday|duration }}</div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if year is defined %}
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': (withWorkHourConfiguration or hasWorkTimesSummary)} %}
+            {% from "macros/widgets.html.twig" import work_times_result %}
+            {% block box_title %}{{ 'work_times'|trans }}{% endblock %}
+            {% block box_type_class %}card-table table-responsive {% endblock %}
+            {% block box_body %}
+                <table class="table table-vcenter table-hover dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'month'|trans }}</th>
+                        <th class="text-end total">{{ 'sum.total'|trans }}</th>
+                        <th class="text-end">{{ 'work_times_should'|trans }}</th>
+                        <th class="text-end">{{ 'work_times_is'|trans }}</th>
+                        {% for day in 1..31 %}
+                        <th class="text-end">{% if day < 10 %}0{% endif %}{{ day }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set yearShould = 0 %}
+                    {% set yearIs = 0 %}
+                    {% for month in year.months %}
+                        {% set monthShould = month.expectedTime %}
+                        {% set monthIs = month.actualTime %}
+                        {% set showStats = now > month.month or monthIs > 0 %}
+                        {% if showStats %}
+                        {% set yearShould = yearShould + monthShould %}
+                        {% endif %}
+                        {% set yearIs = yearIs + monthIs %}
+
+                        <tr>
+                            <td>
+                                {% if month.locked %}
+                                    {{ icon('locked') }}
+                                {% else %}
+                                    {{ icon('unlocked') }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap">
+                                {{ month.month|month_name }}
+                            </td>
+                            <td class="text-end total">
+                                {% if showStats %}
+                                    {{ work_times_result(monthShould, monthIs, decimal) }}
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                {{ monthShould|duration(decimal) }}
+                            </td>
+                            <td class="text-end">
+                                {{ monthIs|duration(decimal) }}
+                            </td>
+                            {% set dayCount = 0 %}
+                            {% for day in month.days %}
+                                <td class="text-end">
+                                    {% if now > day.day or day.workingTime.actualTime > 0 %}
+                                        {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
+                                    {% endif %}
+                                </td>
+                                {% set dayCount = dayCount + 1 %}
+                            {% endfor %}
+                            {% if dayCount < 31 %}
+                                {% for day in 1..(31-dayCount)%}
+                                    <td></td>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            <td class="text-nowrap"></td>
+                            <td class="text-nowrap"></td>
+                            <td class="text-end total">
+                                {{ work_times_result(yearShould, yearIs, decimal) }}
+                            </td>
+                            <td class="text-end">
+                                {{ yearShould|duration(decimal) }}
+                            </td>
+                            <td class="text-end">
+                                {{ yearIs|duration(decimal) }}
+                            </td>
+                            {% for day in 1..31 %}
+                                <td></td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const contractForm = document.getElementById('report-form');
+        if (contractForm !== null) {
+            contractForm.addEventListener('change', () => {
+                contractForm.submit();
+            });
+        }
+    </script>
+{% endblock %}

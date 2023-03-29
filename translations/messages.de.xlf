@@ -595,21 +595,45 @@
         <source>profile.contract</source>
         <target>Arbeitsvertrag</target>
       </trans-unit>
-      <trans-unit id="g3kdwXA" resname="contract.should_times">
-        <source>contract.should_times</source>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target>Auswertung</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>review</source>
+        <target>Überprüfung</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target>Arbeitszeiten</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
         <target>Soll-Stunden</target>
       </trans-unit>
-      <trans-unit id="dddg3kdwXA" resname="contract.should_times.help">
-        <source>contract.should_times.help</source>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
         <target>Die hier konfigurierten Werte werden verwendet, um das Stundenkonto zu berechnen.</target>
       </trans-unit>
-      <trans-unit id="wGCNfhw" resname="contract.is_times">
-        <source>contract.is_times</source>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target>Für diesen Benutzer wurden keine Soll-Stunden in den Arbeitsvertrags-Einstellungen konfiguriert.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
         <target>Ist-Stunden</target>
       </trans-unit>
-      <trans-unit id="L9ADvRD" resname="contract.holiday_year">
-        <source>contract.holiday_year</source>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target>Geleistete Stunden</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
+        <source>pto_year_holiday</source>
         <target>Urlaubstage pro Jahr</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target>Urlaub</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>

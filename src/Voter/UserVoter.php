@@ -61,6 +61,10 @@ final class UserVoter extends Voter
             return false;
         }
 
+        if ($attribute === 'contract') {
+            return $this->permissionManager->hasRolePermission($user, 'contract_other_profile');
+        }
+
         if ($attribute === 'view_team_member') {
             if ($subject->getId() !== $user->getId()) {
                 return false;

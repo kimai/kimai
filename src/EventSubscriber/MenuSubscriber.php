@@ -9,15 +9,16 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class MenuSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private AuthorizationCheckerInterface $security, private ContextHelper $helper)
+    public function __construct(private Security $security, private ContextHelper $helper)
     {
     }
 
@@ -45,6 +46,8 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         // main menu
         $menu = $event->getMenu();
+        /** @var User $user */
+        $user = $auth->getUser();
 
         $menu->addChild(new MenuItemModel('dashboard', 'dashboard.title', 'dashboard', [], 'dashboard'));
         $menu->addChild(new MenuItemModel('favorites', 'favorite_routes', null, [], 'bookmarked'));
@@ -85,6 +88,19 @@ final class MenuSubscriber implements EventSubscriberInterface
         if ($times->hasChildren()) {
             $times->setExpanded(true); // Kimai is all about time-tracking, so we expand this menu always
             $menu->addChild($times);
+        }
+
+        $contract = new MenuItemModel('contract', 'work_times', null, [], 'contract');
+        if ($user->hasContractSettings()) {
+            $contract->addChild(new MenuItemModel('contract_status', 'status', 'user_contract_status', [], 'work_times')); // TODO
+        }
+
+        if ($auth->isGranted('contract_other_profile')) {
+            $contract->addChild(new MenuItemModel('contract_review', 'review', 'user_contract_review', [], 'review')); // TODO
+        }
+
+        if ($contract->hasChildren()) {
+            $menu->addChild($contract);
         }
 
         if ($auth->isGranted('view_reporting')) {
