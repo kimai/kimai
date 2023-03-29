@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Constants;
+use App\Utils\Color;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -39,6 +40,13 @@ final class ColorChoiceType extends AbstractType implements DataTransformerInter
             ],
             'label' => 'color',
             'empty_data' => null,
+            'choice_attr' => function ($color, $name) {
+                if ($color === null) {
+                    $color = (new Color())->getRandom($name);
+                }
+
+                return ['data-color' => $color];
+            },
         ];
 
         $choices = [];
