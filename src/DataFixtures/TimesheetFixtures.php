@@ -10,7 +10,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Activity;
-use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
