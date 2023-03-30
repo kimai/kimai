@@ -9,6 +9,7 @@
 
 namespace App\Controller\Reporting;
 
+use App\Entity\User;
 use App\Model\DailyStatistic;
 use App\Reporting\MonthByUser\MonthByUser;
 use App\Reporting\MonthByUser\MonthByUserForm;
@@ -64,12 +65,14 @@ final class UserMonthController extends AbstractUserReportController
             $values->setDate($dateTimeFactory->getStartOfMonth());
         }
 
+        /** @var \DateTime $start */
         $start = $values->getDate();
         $start->modify('first day of 00:00:00');
 
         $end = clone $start;
         $end->modify('last day of 23:59:59');
 
+        /** @var User $selectedUser */
         $selectedUser = $values->getUser();
 
         $previousMonth = clone $start;

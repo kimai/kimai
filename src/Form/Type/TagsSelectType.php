@@ -80,7 +80,7 @@ final class TagsSelectType extends AbstractType
             $newNames = array_diff($newNames, $foundTagNames);
             foreach ($newNames as $name) {
                 $tag = new Tag();
-                $tag->setName($name);
+                $tag->setName(mb_substr($name, 0, 100));
                 $this->tagRepository->saveTag($tag);
                 $newData[] = $tag->getId();
             }

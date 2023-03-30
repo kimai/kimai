@@ -115,18 +115,24 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
             options.render = {...render, ...{
                 option: function(data, escape) {
-                    let color = data.value;
+                    let item = '<div class="list-group-item border-0 p-1 ps-2 text-nowrap">';
                     if (data.color !== undefined) {
-                        color = data.color;
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                    } else {
+                        item += '<span class="color-choice-item">&nbsp;</span>';
                     }
-                    return '<div class="list-group-item border-0 p-1 ps-2 text-nowrap"><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
+                    item += escape(data.text) + '</div>';
+                    return item;
                 },
                 item: function(data, escape) {
-                    let color = data.value;
+                    let item = '<div class="text-nowrap">';
                     if (data.color !== undefined) {
-                        color = data.color;
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                    } else {
+                        item += '<span class="color-choice-item">&nbsp;</span>';
                     }
-                    return '<div class="text-nowrap"><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
+                    item += escape(data.text) + '</div>';
+                    return item;
                 }
             }};
         } else {

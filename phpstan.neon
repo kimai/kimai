@@ -1311,37 +1311,7 @@ parameters:
             path: src/Controller/Reporting/ProjectViewController.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 4
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$start of type DateTime\\|null\\.$#"
-            count: 3
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ReportUsersMonthController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\DailyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getDailyStatistics\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
-            message: "#^Parameter \\#2 \\$end of class App\\\\Model\\\\DailyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
-            message: "#^Parameter \\#2 \\$end of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getDailyStatistics\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersMonthController.php
 
@@ -1386,47 +1356,7 @@ parameters:
             path: src/Controller/Reporting/ReportUsersYearController.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 4
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$start of type DateTime\\|null\\.$#"
-            count: 3
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\UserMonthController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\DailyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#2 \\$end of class App\\\\Model\\\\DailyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#2 \\$end of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#3 \\$user of class App\\\\Model\\\\DailyStatistic constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserMonthController.php
-
-        -
-            message: "#^Parameter \\#3 \\$user of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserMonthController.php
 

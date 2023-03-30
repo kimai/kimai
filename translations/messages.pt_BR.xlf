@@ -198,8 +198,8 @@
         <target>Atividade</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Projeto</target>
+        <source>Project</source>
+        <target state="translated">Projeto</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>

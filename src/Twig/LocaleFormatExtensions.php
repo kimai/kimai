@@ -116,7 +116,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->locale;
     }
 
-    public function isWeekend(DateTime|string|null $dateTime): bool
+    public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTime) {
             return false;
@@ -141,7 +141,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return ($day === 0 || $day === 6);
     }
 
-    public function dateShort(DateTime|string|null $date): string
+    public function dateShort(\DateTimeInterface|string|null $date): string
     {
         return (string) $this->getFormatter()->dateShort($date);
     }
@@ -158,17 +158,17 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return new DateTime($date, new \DateTimeZone($timezone));
     }
 
-    public function dateFormat(DateTime|string|null $date, string $format): string
+    public function dateFormat(\DateTimeInterface|string|null $date, string $format): string
     {
         return (string) $this->getFormatter()->dateFormat($date, $format);
     }
 
-    public function dateWeekday(DateTime $date): string
+    public function dateWeekday(\DateTimeInterface $date): string
     {
         return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
     }
 
-    public function time(DateTime|string|null $date): string
+    public function time(\DateTimeInterface|string|null $date): string
     {
         return (string) $this->getFormatter()->time($date);
     }
@@ -192,12 +192,12 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $months;
     }
 
-    public function monthName(\DateTime $dateTime, bool $withYear = false): string
+    public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string
     {
         return $this->getFormatter()->monthName($dateTime, $withYear);
     }
 
-    public function dayName(\DateTime $dateTime, bool $short = false): string
+    public function dayName(\DateTimeInterface $dateTime, bool $short = false): string
     {
         return $this->getFormatter()->dayName($dateTime, $short);
     }

@@ -65,6 +65,8 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
      */
     _createMember(option)
     {
+        /** @type {KimaiEscape} ESCAPER */
+        const ESCAPER = this.getPlugin('escape');
         const prototype = this._getPrototype();
         let counter = prototype.dataset['widgetCounter'] || prototype.childNodes.length;
         let newWidget = prototype.dataset['prototype'];
@@ -72,11 +74,11 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
         newWidget = newWidget.replace(/__name__/g, counter);
 
         newWidget = newWidget.replace(/#000000/g, KimaiColor.calculateContrastColor(option.dataset.color));
-        newWidget = newWidget.replace(/__DISPLAY__/g, option.dataset.display);
+        newWidget = newWidget.replace(/__DISPLAY__/g, ESCAPER.escapeForHtml(option.dataset.display));
         newWidget = newWidget.replace(/__COLOR__/g, option.dataset.color);
-        newWidget = newWidget.replace(/__INITIALS__/g, option.dataset.initials);
-        newWidget = newWidget.replace(/__TITLE__/g, option.dataset.title);
-        newWidget = newWidget.replace(/__USERNAME__/g, option.text);
+        newWidget = newWidget.replace(/__INITIALS__/g, ESCAPER.escapeForHtml(option.dataset.initials));
+        newWidget = newWidget.replace(/__TITLE__/g, ESCAPER.escapeForHtml(option.dataset.title));
+        newWidget = newWidget.replace(/__USERNAME__/g, ESCAPER.escapeForHtml(option.text));
 
         prototype.dataset['widgetCounter'] = (++counter).toString();
 
