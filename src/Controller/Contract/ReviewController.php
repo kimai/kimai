@@ -11,6 +11,7 @@ namespace App\Controller\Contract;
 
 use App\Controller\AbstractController;
 use App\Entity\User;
+use App\Event\WorkContractDetailControllerEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Form\ContractByUserForm;
 use App\Reporting\YearByUser\YearByUser;
@@ -19,11 +20,13 @@ use App\WorkingTime\WorkingTimeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * For ADMIN or TEAMLEAD
  */
+#[IsGranted('contract_other_profile')]
 final class ReviewController extends AbstractController
 {
     #[Route(path: '/contract/review', name: 'user_contract_review', methods: ['GET', 'POST'])]
@@ -64,17 +67,22 @@ final class ReviewController extends AbstractController
         $yearDate = $values->getDate();
         $year = $workingTimeService->getYear($profile, $yearDate);
 
-        $event = new WorkingTimeYearSummaryEvent($profile, $year);
-        $eventDispatcher->dispatch($event);
+        $summaryEvent = new WorkingTimeYearSummaryEvent($profile, $year);
+        $eventDispatcher->dispatch($summaryEvent);
 
         $page = new PageSetup('review');
         $page->setHelp('contract-review.html');
 
+        // additional boxes by plugins
+        $controllerEvent = new WorkContractDetailControllerEvent($year);
+        $eventDispatcher->dispatch($controllerEvent);
+
         return $this->render('contract/status.html.twig', [
             'page_setup' => $page,
             'decimal' => false,
-            'summaries' => $event->getSummaries(),
+            'summaries' => $summaryEvent->getSummaries(),
             'now' => $dateTimeFactory->createDateTime(),
+            'boxes' => $controllerEvent->getController(),
             'year' => $year,
             'user' => $profile,
             'form' => $form->createView(),

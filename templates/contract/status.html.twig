@@ -234,6 +234,10 @@
         {% endembed %}
     {% endif %}
 
+    {% for controller in boxes %}
+        {{ render(controller(controller, {'year': year})) }}
+    {% endfor %}
+
 {% endblock %}
 
 {% block javascripts %}

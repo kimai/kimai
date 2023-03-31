@@ -11,6 +11,7 @@ namespace App\Controller\Contract;
 
 use App\Controller\AbstractController;
 use App\Entity\User;
+use App\Event\WorkContractDetailControllerEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Form\ContractByUserForm;
 use App\Reporting\YearByUser\YearByUser;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * For USER
+ * Users can control their working time statistics
  */
 final class StatusController extends AbstractController
 {
@@ -59,17 +60,22 @@ final class StatusController extends AbstractController
         $yearDate = $values->getDate();
         $year = $workingTimeService->getYear($profile, $yearDate);
 
-        $event = new WorkingTimeYearSummaryEvent($profile, $year);
-        $eventDispatcher->dispatch($event);
+        $summaryEvent = new WorkingTimeYearSummaryEvent($profile, $year);
+        $eventDispatcher->dispatch($summaryEvent);
 
         $page = new PageSetup('status');
         $page->setHelp('contract-status.html');
 
+        // additional boxes by plugins
+        $controllerEvent = new WorkContractDetailControllerEvent($year);
+        $eventDispatcher->dispatch($controllerEvent);
+
         return $this->render('contract/status.html.twig', [
             'page_setup' => $page,
             'decimal' => false,
-            'summaries' => $event->getSummaries(),
+            'summaries' => $summaryEvent->getSummaries(),
             'now' => $dateTimeFactory->createDateTime(),
+            'boxes' => $controllerEvent->getController(),
             'year' => $year,
             'user' => $profile,
             'form' => $form->createView(),
