@@ -24,17 +24,6 @@ final class WorkingTimeService
     {
     }
 
-    public function calculateForDay(User $user, \DateTimeInterface $dateTime): WorkingTime
-    {
-        $result = new WorkingTime($user, $dateTime);
-        $result->setExpectedTime($user->getWorkHoursForDay($dateTime));
-
-        // FIXME look up statistics
-        // FIXME todo calc
-
-        return $result;
-    }
-
     public function getYear(User $user, \DateTimeInterface $yearDate): Year
     {
         $yearTimes = $this->workingTimeRepository->findForYear($user, $yearDate);
@@ -43,7 +32,7 @@ final class WorkingTimeService
             $existing[$workingTime->getDate()->format('Y-m-d')] = $workingTime;
         }
 
-        $year = new Year(\DateTimeImmutable::createFromInterface($yearDate));
+        $year = new Year(\DateTimeImmutable::createFromInterface($yearDate), $user);
 
         $stats = null;
 
@@ -73,6 +62,7 @@ final class WorkingTimeService
         return $year;
     }
 
+/*
     public function approveYear(Year $year, \DateTimeInterface $approvalDate, User $approver): void
     {
         $update = false;
@@ -107,7 +97,7 @@ final class WorkingTimeService
             $this->workingTimeRepository->persistScheduledWorkingTimes();
         }
     }
-
+*/
     /**
      * @param \DateTimeInterface $year
      * @param User $user

@@ -7,29 +7,27 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Contract;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Entity\User;
 use App\Event\WorkContractDetailControllerEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Form\ContractByUserForm;
 use App\Reporting\YearByUser\YearByUser;
 use App\Utils\PageSetup;
+use App\WorkingTime\Model\BoxConfiguration;
 use App\WorkingTime\WorkingTimeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * For ADMIN or TEAMLEAD
+ * Users can control their working time statistics
  */
-#[IsGranted('contract_other_profile')]
-final class ReviewController extends AbstractController
+final class ContractController extends AbstractController
 {
-    #[Route(path: '/contract/review', name: 'user_contract_review', methods: ['GET', 'POST'])]
+    #[Route(path: '/contract', name: 'user_contract', methods: ['GET', 'POST'])]
     public function __invoke(Request $request, WorkingTimeService $workingTimeService, EventDispatcherInterface $eventDispatcher): Response
     {
         $currentUser = $this->getUser();
@@ -67,19 +65,24 @@ final class ReviewController extends AbstractController
         $yearDate = $values->getDate();
         $year = $workingTimeService->getYear($profile, $yearDate);
 
-        $summaryEvent = new WorkingTimeYearSummaryEvent($profile, $year);
+        $summaryEvent = new WorkingTimeYearSummaryEvent($year);
         $eventDispatcher->dispatch($summaryEvent);
 
-        $page = new PageSetup('review');
-        $page->setHelp('contract-review.html');
+        $page = new PageSetup('status');
+        $page->setHelp('contract.html');
 
         // additional boxes by plugins
         $controllerEvent = new WorkContractDetailControllerEvent($year);
         $eventDispatcher->dispatch($controllerEvent);
 
+        $boxConfiguration = new BoxConfiguration();
+        $boxConfiguration->setDecimal(false);
+        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration());
+
         return $this->render('contract/status.html.twig', [
+            'box_configuration' => $boxConfiguration,
             'page_setup' => $page,
-            'decimal' => false,
+            'decimal' => $boxConfiguration->isDecimal(),
             'summaries' => $summaryEvent->getSummaries(),
             'now' => $dateTimeFactory->createDateTime(),
             'boxes' => $controllerEvent->getController(),

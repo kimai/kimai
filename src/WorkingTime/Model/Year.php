@@ -9,6 +9,7 @@
 
 namespace App\WorkingTime\Model;
 
+use App\Entity\User;
 use App\Model\Year as BaseYear;
 
 /**
@@ -16,6 +17,16 @@ use App\Model\Year as BaseYear;
  */
 final class Year extends BaseYear
 {
+    public function __construct(\DateTimeInterface $month, private User $user)
+    {
+        parent::__construct($month);
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
     protected function createMonth(\DateTimeInterface $month): Month
     {
         return new Month($month);

@@ -12,7 +12,7 @@ namespace App\WorkingTime\Model;
 use App\Model\Month as BaseMonth;
 
 /**
- * @method getDays()() array<Day>
+ * @method getDays() array<Day>
  */
 final class Month extends BaseMonth
 {

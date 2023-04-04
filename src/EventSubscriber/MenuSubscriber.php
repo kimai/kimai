@@ -90,13 +90,9 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($times);
         }
 
-        $contract = new MenuItemModel('contract', 'work_times', null, [], 'contract');
-        if ($user->hasContractSettings()) {
-            $contract->addChild(new MenuItemModel('contract_status', 'status', 'user_contract_status', [], 'work_times')); // TODO
-        }
-
-        if ($auth->isGranted('contract_other_profile')) {
-            $contract->addChild(new MenuItemModel('contract_review', 'review', 'user_contract_review', [], 'review')); // TODO
+        $contract = new MenuItemModel('contract', 'work_contract', null, [], 'contract');
+        if ($user->hasContractSettings() || $auth->isGranted('contract_other_profile')) {
+            $contract->addChild(new MenuItemModel('contract_status', 'work_times', 'user_contract', [], 'work_times'));
         }
 
         if ($contract->hasChildren()) {

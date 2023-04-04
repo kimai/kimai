@@ -267,6 +267,18 @@
         <target>Directory "%dir%" is write protected.</target>
       </trans-unit>
       <!-- General labels -->
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target>Deleted</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target>Created by</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target>Created at</target>
+      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Date</target>
@@ -591,8 +603,8 @@
         <source>profile.roles</source>
         <target>Roles</target>
       </trans-unit>
-      <trans-unit id="AZkrjYL" resname="profile.contract">
-        <source>profile.contract</source>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
         <target>Employment contract</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
@@ -626,6 +638,14 @@
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
         <target>Hours worked</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target>Manual bookings</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target>Manual bookings can neither be subsequently changed nor deleted!</target>
       </trans-unit>
       <trans-unit id="M.zFjwe" resname="pto_year_holiday">
         <source>pto_year_holiday</source>

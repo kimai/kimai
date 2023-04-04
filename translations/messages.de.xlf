@@ -267,6 +267,18 @@
         <target>Das Verzeichnis „%dir%“ ist schreibgeschützt.</target>
       </trans-unit>
       <!-- General labels -->
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target>Gelöscht</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target>Erstellt von</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target>Erstellt am</target>
+      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -591,8 +603,8 @@
         <source>profile.roles</source>
         <target>Rollen</target>
       </trans-unit>
-      <trans-unit id="AZkrjYL" resname="profile.contract">
-        <source>profile.contract</source>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
         <target>Arbeitsvertrag</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
@@ -626,6 +638,14 @@
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
         <target>Geleistete Stunden</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target>Manuelle Buchungen</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target>Manuelle Buchungen können weder nachträglich geändert noch gelöscht werden!</target>
       </trans-unit>
       <trans-unit id="M.zFjwe" resname="pto_year_holiday">
         <source>pto_year_holiday</source>

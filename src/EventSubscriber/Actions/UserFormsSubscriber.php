@@ -31,7 +31,7 @@ final class UserFormsSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('edit', $user)) {
-            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
+            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'profile-stats', 'translation_domain' => 'actions']);
         }
         if ($this->isGranted('password', $user)) {
             $event->addAction('password', ['url' => $this->path('user_profile_password', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.password']);
@@ -49,7 +49,7 @@ final class UserFormsSubscriber extends AbstractActionsSubscriber
             $event->addAction('roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.roles']);
         }
         if ($this->isGranted('contract', $user)) {
-            $event->addAction('contract', ['url' => $this->path('user_profile_contract', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.contract']);
+            $event->addAction('contract', ['url' => $this->path('user_profile_contract', ['username' => $user->getUserIdentifier()]), 'title' => 'work_contract']);
         }
     }
 }

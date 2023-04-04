@@ -4,7 +4,6 @@
 {% block main %}
 
     {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
-    {% set hasWorkTimesSummary = false %}
 
     {% if form is defined %}
         <div class="card mb-3">
@@ -44,6 +43,8 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% set totalIs = 0 %}
+                    {% set totalShould = 0 %}
                     {% for summary in summaries %}
                         {% set yearShould = 0 %}
                         {% set yearIs = 0 %}
@@ -52,46 +53,45 @@
                             {% set monthIs = month.actualTime %}
                             {% if now > month.month or monthIs > 0 %}
                                 {% set yearShould = yearShould + monthShould %}
+                                {% set totalShould = totalShould + monthShould %}
                             {% endif %}
                             {% set yearIs = yearIs + monthIs %}
+                            {% set totalIs = totalIs + monthIs %}
                         {% endfor %}
-                        {% if summary.type == constant('App\\WorkingTime\\Model\\SummaryType::WORKING_TIME') %}
-                            {% set hasWorkTimesSummary = true %}
-                        {% endif %}
-
                         <tr>
                             <td>{{ summary.title|trans }}</td>
                             <td class="text-end total">
-                                {% if summary.type == constant('App\\WorkingTime\\Model\\SummaryType::DAYS') %}
-                                    {{ summary.value }}
+                                {% if yearShould > 0 %}
+                                    {{ work_times_result(yearShould, yearIs, decimal) }}
                                 {% else %}
-                                    {% if yearShould > 0 %}
-                                        {{ work_times_result(yearShould, yearIs, decimal) }}
-                                    {% else %}
-                                        {{ yearIs|duration(decimal) }}
-                                    {% endif %}
+                                    {{ yearIs|duration(decimal) }}
                                 {% endif %}
                             </td>
                             {% for month in summary.months %}
                                 {% set monthShould = month.expectedTime %}
                                 {% set monthIs = month.actualTime %}
                                 <td class="text-end">
-                                    {% if month.type == constant('App\\WorkingTime\\Model\\SummaryType::DAYS') %}
-                                        {{ month.value }}
+                                    {% if now < month.month and monthShould > 0 %}
+                                        {{ monthShould|duration(decimal) }}
                                     {% else %}
-                                        {% if now < month.month and monthShould > 0 %}
-                                            {{ monthShould|duration(decimal) }}
-                                        {% elseif now > month.month and monthShould != 0 %}
-                                            {{ work_times_result(monthShould, monthIs, decimal) }}
-                                        {% else %}
-                                            {{ monthIs }}
-                                        {% endif %}
+                                        {{ work_times_result(monthShould, monthIs, decimal) }}
                                     {% endif %}
                                 </td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
                     </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            <td></td>
+                            <td class="text-end total">
+                                {{ work_times_result(totalShould, totalIs, decimal) }}
+                            </td>
+                            {% for month in year.months %}
+                            <td></td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
                 </table>
             {% endblock %}
         {% endembed %}
@@ -100,7 +100,7 @@
     {% if withWorkHourConfiguration %}
         {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
 
-        {% embed '@theme/embeds/card.html.twig' with {'collapsed': true}  %}
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed}  %}
             {% block box_title %}{{ 'work_times_should'|trans }}{% endblock %}
             {% block box_body %}
                 <div class="datagrid">
@@ -142,7 +142,7 @@
     {% endif %}
 
     {% if year is defined %}
-        {% embed '@theme/embeds/card.html.twig' with {'collapsed': (withWorkHourConfiguration or hasWorkTimesSummary)} %}
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed} %}
             {% from "macros/widgets.html.twig" import work_times_result %}
             {% block box_title %}{{ 'work_times'|trans }}{% endblock %}
             {% block box_type_class %}card-table table-responsive {% endblock %}
@@ -235,7 +235,7 @@
     {% endif %}
 
     {% for controller in boxes %}
-        {{ render(controller(controller, {'year': year})) }}
+        {{ render(controller(controller, {'year': year, 'boxConfiguration': box_configuration})) }}
     {% endfor %}
 
 {% endblock %}
@@ -243,11 +243,15 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        const contractForm = document.getElementById('report-form');
-        if (contractForm !== null) {
-            contractForm.addEventListener('change', () => {
-                contractForm.submit();
-            });
-        }
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.workingTimesManualCreate', true);
+
+            const contractForm = document.getElementById('report-form');
+            if (contractForm !== null) {
+                contractForm.addEventListener('change', () => {
+                    contractForm.submit();
+                });
+            }
+        });
     </script>
 {% endblock %}

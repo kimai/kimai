@@ -9,7 +9,6 @@
 
 namespace App\Event;
 
-use App\Entity\User;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearSummary;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -21,13 +20,8 @@ final class WorkingTimeYearSummaryEvent extends Event
      */
     private array $summaries = [];
 
-    public function __construct(private User $user, private Year $year)
+    public function __construct(private Year $year)
     {
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
     }
 
     public function getYear(): Year

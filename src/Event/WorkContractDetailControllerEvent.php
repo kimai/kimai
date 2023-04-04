@@ -15,10 +15,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Triggered for work-contract status pages, to add additional content boxes.
  *
- * @see https://symfony.com/doc/5.4/templates.html#embedding-controllers
+ * @see https://symfony.com/doc/current/templates.html#embedding-controllers
  */
 final class WorkContractDetailControllerEvent extends Event
 {
+    /**
+     * @var array<string>
+     */
     private array $controller = [];
 
     public function __construct(private Year $year)
@@ -35,6 +38,9 @@ final class WorkContractDetailControllerEvent extends Event
         $this->controller[] = $controller;
     }
 
+    /**
+     * @return string[]
+     */
     public function getController(): array
     {
         return $this->controller;
