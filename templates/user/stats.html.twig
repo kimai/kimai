@@ -85,8 +85,7 @@
             {%- endblock %}
             {% block box_tools %}
                 {%- if canSeeReport -%}
-                    {% from '@theme/components/buttons.html.twig' import action_cardtoolbutton %}
-                    {{ action_cardtoolbutton('reporting', {'url': path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'})}) }}
+                    {{ macros.card_tool_button('reporting', {'url': path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'})}) }}
                 {% endif %}
             {% endblock %}
             {% block box_body %}
