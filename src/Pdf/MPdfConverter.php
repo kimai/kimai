@@ -28,7 +28,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation',
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts',
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts): bool {
@@ -61,15 +61,7 @@ final class MPdfConverter implements HtmlToPdfConverter
             ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
         );
 
-        $mpdf = new Mpdf($sanitized);
-        $mpdf->creator = Constants::SOFTWARE;
-
-        if (\array_key_exists('fonts', $options)) {
-            $mpdf->AddFontDirectory($this->fileHelper->getDataDirectory('fonts'));
-            foreach ($options['fonts'] as $fontName => $fontConfig) {
-                $mpdf->AddFont($fontName, $fontConfig);
-            }
-        }
+        $mpdf = $this->initMpdf($sanitized);
 
         // some OS'es do not follow the PHP default settings
         if ((int) \ini_get('pcre.backtrack_limit') < 1000000) {
@@ -98,5 +90,48 @@ final class MPdfConverter implements HtmlToPdfConverter
         }
 
         return $mpdf->Output('', Destination::STRING_RETURN);
+    }
+
+    /**
+     * @param array<string, array<mixed>> $options
+     * @return Mpdf
+     */
+    private function initMpdf(array $options): Mpdf
+    {
+        $options['fontDir'] = $this->getFontDirectories();
+        $options['fontdata'] = $this->mergeFontData($options);
+
+        $mpdf = new Mpdf($options);
+        $mpdf->creator = Constants::SOFTWARE;
+
+        return $mpdf;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getFontDirectories(): array
+    {
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirectories = $defaultConfig['fontDir'];
+        $fontDirectories[] = rtrim($this->fileHelper->getDataDirectory('fonts'), DIRECTORY_SEPARATOR);
+
+        return $fontDirectories;
+    }
+
+    /**
+     * @param array<string, array<mixed>> $options
+     * @return array<string, array<mixed>>
+     */
+    private function mergeFontData(array $options): array
+    {
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        if (\array_key_exists('fonts', $options)) {
+            $fontData = array_merge($fontData, $options['fonts']);
+        }
+
+        return $fontData;
     }
 }
