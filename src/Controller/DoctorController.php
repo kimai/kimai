@@ -307,8 +307,8 @@ final class DoctorController extends AbstractController
         }
 
         $phpInfo = $phpinfo['phpinfo'];
-        unset($phpInfo[0]);
-        unset($phpInfo[1]);
+        array_pop($phpInfo);
+        array_shift($phpInfo);
 
         return $phpInfo;
     }

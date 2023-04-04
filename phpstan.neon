@@ -2271,16 +2271,6 @@ parameters:
             path: src/Event/AbstractTimesheetMultipleEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\ActivityDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ActivityDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\ActivityDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/ActivityDetailControllerEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:__construct\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
@@ -2299,16 +2289,6 @@ parameters:
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:setConfiguration\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\CustomerDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/CustomerDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\CustomerDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/CustomerDetailControllerEvent.php
 
         -
             message: "#^Cannot access offset 'actions' on mixed\\.$#"
@@ -2394,16 +2374,6 @@ parameters:
             message: "#^Property App\\\\Event\\\\PermissionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\ProjectDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ProjectDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\ProjectDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/ProjectDetailControllerEvent.php
 
         -
             message: "#^Method App\\\\Event\\\\RevenueStatisticEvent\\:\\:getRevenue\\(\\) return type has no value type specified in iterable type array\\.$#"
