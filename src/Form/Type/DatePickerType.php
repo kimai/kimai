@@ -57,6 +57,7 @@ class DatePickerType extends AbstractType
         $formFormat = $converter->convert($format);
 
         $resolver->setDefaults([
+            'label' => 'date',
             'widget' => 'single_text',
             'html5' => false,
             'format' => $formFormat,
