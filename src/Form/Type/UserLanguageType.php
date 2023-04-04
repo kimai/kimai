@@ -27,10 +27,11 @@ final class UserLanguageType extends AbstractType
     {
         $route = $this->router->generate('help_locales');
         $message = $this->translator->trans('user.language.help');
+        $moreLink = $this->translator->trans('help_locales');
 
         $resolver->setDefaults([
             'help_html' => true,
-            'help' => sprintf('<a href="%s" target="help_locales">%s</a>', $route, $message)
+            'help' => sprintf('%2$s <a href="%1$s" target="help_locales">%3$s</a>', $route, $message, $moreLink)
         ]);
     }
 
