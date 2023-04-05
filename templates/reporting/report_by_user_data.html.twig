@@ -12,7 +12,7 @@
 {% else %}
     {% set dataTypeTitle = 'stats.durationTotal' %}
 {% endif %}
-{% set columns = 2 %}
+{% set columns = 0 %}
 {% set totalCurrency = false %}
 <table class="table table-hover dataTable">
     <thead>
@@ -30,82 +30,90 @@
         </tr>
     </thead>
     <tbody>
-    {% set oldCustomer = null %}
-    {% for project in rows|sort((a,b) => a.project.customer.id <=> b.project.customer.id) %}
-        {% set currency = project.project.customer.currency %}
-        {% if oldCustomer is null or oldCustomer != project.project.customer.id %}
-            {% set oldCustomer = project.project.customer.id %}
-            {% if totalCurrency is same as (false) %}
-                {% set totalCurrency = currency %}
-            {% elseif project.project.customer.currency != totalCurrency %}
-                {% set totalCurrency = null %}
-            {% endif %}
-            <tr class="summary">
-                <td colspan="{{ columns }}">{{ widgets.label_customer(project.project.customer) }}</td>
-            </tr>
+    {% for customerId, data in rows %}
+        {% set currency = data.customer.currency %}
+        {% if totalCurrency is same as (false) %}
+            {% set totalCurrency = currency %}
+        {% elseif data.customer != totalCurrency %}
+            {% set totalCurrency = null %}
         {% endif %}
-        {% set absoluteDuration = absoluteDuration + project.duration %}
-        {% set absoluteInternalRate = absoluteInternalRate + project.internalRate %}
-        {% set absoluteRate = absoluteRate + project.rate %}
-        <tr class="project">
-            <td class="text-nowrap">
-                <strong>{{ widgets.label_project(project.project) }}</strong>
-            </td>
-            <td class="text-nowrap text-center total">
+        <tr class="summary">
+            <td>{{ widgets.label_customer(data.customer) }}</td>
+            <td class="text-center total">
                 {% if dataType == 'rate' %}
-                    {{ project.rate|money(currency) }}
+                    {{ data.rate|money(currency) }}
                 {% elseif dataType == 'internalRate' %}
-                    {{ project.internalRate|money(currency) }}
+                    {{ data.internalRate|money(currency) }}
                 {% else %}
-                    {{ project.duration|duration(decimal) }}
+                    {{ data.duration|duration(decimal) }}
                 {% endif %}
             </td>
-            {% for column in project.data.data %}
-                {% set dateKey = column.date|report_date %}
-                <td class="text-nowrap text-center day-total {% block column_classes_project %}{% endblock %}">
-                    {% if column.duration > 0 or column.rate > 0 or column.internalRate > 0 %}
-                        {% if dataType == 'rate' %}
-                            {% set totalsRate = totalsRate|merge({(dateKey): (totalsRate[dateKey] + column.rate)}) %}
-                            <strong>{{ column.rate|money(currency) }}</strong>
-                        {% elseif dataType == 'internalRate' %}
-                            {% set totalsInternalRate = totalsInternalRate|merge({(dateKey): (totalsInternalRate[dateKey] + column.internalRate)}) %}
-                            <strong>{{ column.internalRate|money(currency) }}</strong>
-                        {% else %}
-                            {% set totalsDuration = totalsDuration|merge({(dateKey): (totalsDuration[dateKey] + column.duration)}) %}
-                            <strong>{{ column.duration|duration(decimal) }}</strong>
-                        {% endif %}
-                    {% endif %}
-                </td>
-            {% endfor %}
+            <td colspan="{{ columns }}"></td>
         </tr>
-        {% for activity in project.activities %}
-            <tr class="activity">
+        {% for project in data.projects %}
+            {% set absoluteDuration = absoluteDuration + project.duration %}
+            {% set absoluteInternalRate = absoluteInternalRate + project.internalRate %}
+            {% set absoluteRate = absoluteRate + project.rate %}
+            <tr class="project">
                 <td class="text-nowrap">
-                    {{ widgets.label_activity(activity.activity) }}
+                    <strong>{{ widgets.label_project(project.project) }}</strong>
                 </td>
-                <td class="text-nowrap text-center">
+                <td class="text-nowrap text-center total">
                     {% if dataType == 'rate' %}
-                        {{ activity.rate|money(currency) }}
+                        {{ project.rate|money(currency) }}
                     {% elseif dataType == 'internalRate' %}
-                        {{ activity.internalRate|money(currency) }}
+                        {{ project.internalRate|money(currency) }}
                     {% else %}
-                        {{ activity.duration|duration(decimal) }}
+                        {{ project.duration|duration(decimal) }}
                     {% endif %}
                 </td>
-                {% for column in activity.data.data %}
-                    <td class="text-nowrap text-center day-total {% block column_classes_activity %}{% endblock %}">
+                {% for column in project.data.data %}
+                    {% set dateKey = column.date|report_date %}
+                    <td class="text-nowrap text-center day-total {% block column_classes_project %}{% endblock %}">
                         {% if column.duration > 0 or column.rate > 0 or column.internalRate > 0 %}
                             {% if dataType == 'rate' %}
-                                {{ column.rate|money(currency) }}
+                                {% set totalsRate = totalsRate|merge({(dateKey): (totalsRate[dateKey] + column.rate)}) %}
+                                <strong>{{ column.rate|money(currency) }}</strong>
                             {% elseif dataType == 'internalRate' %}
-                                {{ column.internalRate|money(currency) }}
+                                {% set totalsInternalRate = totalsInternalRate|merge({(dateKey): (totalsInternalRate[dateKey] + column.internalRate)}) %}
+                                <strong>{{ column.internalRate|money(currency) }}</strong>
                             {% else %}
-                                {{ column.duration|duration(decimal) }}
+                                {% set totalsDuration = totalsDuration|merge({(dateKey): (totalsDuration[dateKey] + column.duration)}) %}
+                                <strong>{{ column.duration|duration(decimal) }}</strong>
                             {% endif %}
                         {% endif %}
                     </td>
                 {% endfor %}
             </tr>
+            {% for activity in project.activities %}
+                <tr class="activity">
+                    <td class="text-nowrap">
+                        {{ widgets.label_activity(activity.activity) }}
+                    </td>
+                    <td class="text-nowrap text-center">
+                        {% if dataType == 'rate' %}
+                            {{ activity.rate|money(currency) }}
+                        {% elseif dataType == 'internalRate' %}
+                            {{ activity.internalRate|money(currency) }}
+                        {% else %}
+                            {{ activity.duration|duration(decimal) }}
+                        {% endif %}
+                    </td>
+                    {% for column in activity.data.data %}
+                        <td class="text-nowrap text-center day-total {% block column_classes_activity %}{% endblock %}">
+                            {% if column.duration > 0 or column.rate > 0 or column.internalRate > 0 %}
+                                {% if dataType == 'rate' %}
+                                    {{ column.rate|money(currency) }}
+                                {% elseif dataType == 'internalRate' %}
+                                    {{ column.internalRate|money(currency) }}
+                                {% else %}
+                                    {{ column.duration|duration(decimal) }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
         {% endfor %}
     {% endfor %}
     </tbody>

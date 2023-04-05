@@ -16,6 +16,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TagsType extends AbstractType
 {
+    private ?int $count = null;
+
     public function __construct(
         private AuthorizationCheckerInterface $auth,
         private TagRepository $repository
@@ -31,7 +33,11 @@ final class TagsType extends AbstractType
 
     public function getParent(): string
     {
-        if ($this->repository->count([]) > TagRepository::MAX_AMOUNT_SELECT) {
+        if ($this->count === null) {
+            $this->count = $this->repository->count([]);
+        }
+
+        if ($this->count > TagRepository::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;
         }
 

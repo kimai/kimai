@@ -113,6 +113,24 @@ abstract class AbstractUserReportController extends AbstractController
             $data[$project->getId()]['project'] = $project;
         }
 
-        return $data;
+        $customers = [];
+        foreach ($data as $id => $row) {
+            $customerId = (string) $row['project']->getCustomer()->getId();
+            if (!\array_key_exists($customerId, $customers)) {
+                $customers[$customerId] = [
+                    'customer' => $row['project']->getCustomer(),
+                    'projects' => [],
+                    'duration' => 0,
+                    'rate' => 0.0,
+                    'internalRate' => 0.0,
+                ];
+            }
+            $customers[$customerId]['projects'][$id] = $row;
+            $customers[$customerId]['duration'] += $row['duration'];
+            $customers[$customerId]['rate'] += $row['rate'];
+            $customers[$customerId]['internalRate'] += $row['internalRate'];
+        }
+
+        return $customers;
     }
 }

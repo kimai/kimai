@@ -25,7 +25,7 @@ final class ExportToolbarForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
-        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']], false, true);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $this->addActivitySelect($builder, [], true, true, false);

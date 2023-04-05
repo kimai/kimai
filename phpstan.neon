@@ -2271,16 +2271,6 @@ parameters:
             path: src/Event/AbstractTimesheetMultipleEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\ActivityDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ActivityDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\ActivityDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/ActivityDetailControllerEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:__construct\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
@@ -2299,16 +2289,6 @@ parameters:
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:setConfiguration\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\CustomerDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/CustomerDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\CustomerDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/CustomerDetailControllerEvent.php
 
         -
             message: "#^Cannot access offset 'actions' on mixed\\.$#"
@@ -2394,16 +2374,6 @@ parameters:
             message: "#^Property App\\\\Event\\\\PermissionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\ProjectDetailControllerEvent\\:\\:getController\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ProjectDetailControllerEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\ProjectDetailControllerEvent\\:\\:\\$controller has no type specified\\.$#"
-            count: 1
-            path: src/Event/ProjectDetailControllerEvent.php
 
         -
             message: "#^Method App\\\\Event\\\\RevenueStatisticEvent\\:\\:getRevenue\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3456,17 +3426,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -3521,17 +3481,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -3586,17 +3536,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -3651,17 +3591,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -3716,17 +3646,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -3781,17 +3701,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -3846,17 +3756,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -3911,17 +3811,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -3976,17 +3866,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -4041,17 +3921,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -4106,17 +3976,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -4171,17 +4031,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$required with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
