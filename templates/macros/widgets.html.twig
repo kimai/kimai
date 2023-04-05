@@ -122,6 +122,14 @@
     {%- if tooltip is not same as null %} data-toggle="tooltip" data-placement="top" title="{{ tooltip }}"{% endif -%}>{{ initials }}</span>
 {% endmacro %}
 
+{% macro avatar_deleted(tooltip) %}
+    {% set initials = tooltip ?? '??' %}
+    {% set tooltip = 'deleted'|trans %}
+    {% set color = null|colorize(initials) %}
+    <span class="avatar {{ class ?? '' }}" style="background-color: {{ color }}; color: {{ color|font_contrast }}"
+    {%- if tooltip is not same as null %} data-toggle="tooltip" data-placement="top" title="{{ tooltip }}"{% endif -%}>{{ initials }}</span>
+{% endmacro %}
+
 {#
     options = {'inherit': true}
 #}
@@ -261,6 +269,10 @@
     {% import '@theme/components/buttons.html.twig' as macro %}
     {% set values = values|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.action_cardtoolbutton(icon, values) }}
+{% endmacro %}
+
+{% macro card_tool_create(create_url) %}
+    {{ _self.card_tool_button('create', {'url': create_url, 'class': 'modal-ajax-form open-edit', 'title': 'create'|trans}) }}
 {% endmacro %}
 
 {% macro action_button(icon, values, type) %}

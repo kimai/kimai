@@ -16,13 +16,19 @@ namespace App\Event;
  */
 final class ProjectDetailControllerEvent extends AbstractProjectEvent
 {
-    private $controller = [];
+    /**
+     * @var array<string>
+     */
+    private array $controller = [];
 
     public function addController(string $controller): void
     {
         $this->controller[] = $controller;
     }
 
+    /**
+     * @return string[]
+     */
     public function getController(): array
     {
         return $this->controller;

@@ -36,6 +36,7 @@ final class HelpController extends AbstractController
         $table->addColumn('date', ['class' => 'alwaysVisible w-min', 'orderBy' => false]);
         $table->addColumn('time', ['class' => 'alwaysVisible w-min text-center', 'orderBy' => false]);
         $table->addColumn('duration', ['class' => 'd-none w-min text-end', 'orderBy' => false]);
+        $table->addColumn('decimal', ['class' => 'd-none w-min text-end', 'orderBy' => false, 'title' => 'Decimal']);
         $table->addColumn('money', ['class' => 'w-min text-end', 'orderBy' => false, 'title' => 'rate']);
         $table->addColumn('hour_24', ['class' => 'alwaysVisible w-min text-center', 'orderBy' => false]);
         $table->addColumn('rtl', ['class' => 'd-none w-min text-center', 'orderBy' => false, 'title' => 'RTL']);
@@ -75,6 +76,7 @@ final class HelpController extends AbstractController
                 'date' => $formatter->dateShort($now),
                 'time' => $formatter->time($now),
                 'duration' => $formatter->duration(46120),
+                'decimal' => $formatter->durationDecimal(46120),
                 'money' => $formatter->money(2794.83, 'EUR'),
                 'hour_24' => $service->is24Hour($locale),
                 'rtl' => $service->isRightToLeft($locale),
