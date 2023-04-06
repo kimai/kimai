@@ -284,8 +284,8 @@
         <target>Duration</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>User</target>
+        <source>User</source>
+        <target state="needs-translation">User</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
