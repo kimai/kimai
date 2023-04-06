@@ -30,7 +30,7 @@
         {% embed '@theme/embeds/card.html.twig' %}
             {% from "macros/widgets.html.twig" import work_times_result %}
             {% block box_title %}{{ 'export.summary'|trans }}{% endblock %}
-            {% block box_type_class %}card-table table-responsive {% endblock %}
+            {% block box_body_classes %}card-table table-responsive{% endblock %}
             {% block box_body %}
                 <table class="table table-vcenter table-hover dataTable">
                     <thead>
@@ -145,7 +145,7 @@
         {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed} %}
             {% from "macros/widgets.html.twig" import work_times_result %}
             {% block box_title %}{{ 'work_times'|trans }}{% endblock %}
-            {% block box_type_class %}card-table table-responsive {% endblock %}
+            {% block box_body_classes %}card-table table-responsive{% endblock %}
             {% block box_body %}
                 <table class="table table-vcenter table-hover dataTable">
                     <thead>

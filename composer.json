@@ -34,7 +34,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
         "jms/serializer-bundle": "^5.0",
-        "kevinpapst/tabler-bundle": "^0.14",
+        "kevinpapst/tabler-bundle": "^0.15",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^4.0",

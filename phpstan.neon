@@ -4791,11 +4791,6 @@ parameters:
             path: src/Kernel.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\FormLoginLdapFactory\\:\\:createAuthenticator\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/FormLoginLdapFactory.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapAuthenticator\\:\\:supports\\(\\) should return bool but returns bool\\|null\\.$#"
             count: 1
             path: src/Ldap/LdapAuthenticator.php
