@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Proyecto: una inscripción por proyecto</target>
+        <target state="translated">Proyecto: una entrada por proyecto</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
