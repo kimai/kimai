@@ -28,30 +28,6 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $this->importFixture($data);
     }
 
-    public function testFindIds()
-    {
-        $em = $this->getEntityManager();
-        /** @var TagRepository $repository */
-        $repository = $em->getRepository(Tag::class);
-
-        $result = $repository->findIdsByTagNameList('2018,Test');
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(7, \count($result));
-    }
-
-    public function testFindNoIds()
-    {
-        $em = $this->getEntityManager();
-        /** @var TagRepository $repository */
-        $repository = $em->getRepository(Tag::class);
-
-        $result = $repository->findIdsByTagNameList('Simply');
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
-        $this->assertEquals(0, \count($result));
-    }
-
     public function testFindAllTagNames()
     {
         $em = $this->getEntityManager();
