@@ -476,6 +476,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('start', 'timesheet')]
     #[OA\Response(response: 200, description: 'Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to restart', required: true)]
+    #[Rest\Get(path: '/{id}/restart', name: 'restart_timesheet_get', requirements: ['id' => '\d+'])]
     #[Rest\Patch(path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
