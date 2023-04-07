@@ -77,12 +77,19 @@ final class TagsSelectType extends AbstractType
             }
 
             /** @var array<string> $newNamesCreate */
-            $newNamesCreate = array_udiff($newNames, $foundTagNames, function (string $userTag, string $existingTag) {
+            $newNamesCreate = array_udiff($newNames, $foundTagNames, function (mixed $userTag, mixed $existingTag) {
+                if (!\is_string($userTag) || !\is_string($existingTag)) {
+                    return -1;
+                }
+
+                $userTag = mb_strtolower($userTag);
+                $existingTag = mb_strtolower($existingTag);
+
                 if (mb_strtolower($userTag) === mb_strtolower($existingTag)) {
                     return 0;
                 }
 
-                return 1;
+                return strcmp($userTag, $existingTag);
             });
 
             foreach ($newNamesCreate as $name) {
