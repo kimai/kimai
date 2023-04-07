@@ -5736,11 +5736,6 @@ parameters:
             path: src/Repository/TagRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findIdsByTagNameList\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findTagsByName\\(\\) has parameter \\$tagNames with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/TagRepository.php
