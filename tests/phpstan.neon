@@ -8693,16 +8693,6 @@ parameters:
             path: Repository/TagRepositoryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\TagRepositoryTest\\:\\:testFindIds\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/TagRepositoryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\TagRepositoryTest\\:\\:testFindNoIds\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/TagRepositoryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\TagRepositoryTest\\:\\:testFindNoTagNames\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/TagRepositoryTest.php
