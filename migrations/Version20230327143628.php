@@ -24,7 +24,7 @@ final class Version20230327143628 extends AbstractMigration
         $workingTimes->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $workingTimes->addColumn('user_id', 'integer', ['notnull' => true]);
         $workingTimes->addColumn('approved_by', 'integer', ['notnull' => false, 'default' => null]);
-        $workingTimes->addColumn('date', 'datetime', ['notnull' => true]);
+        $workingTimes->addColumn('date', 'date', ['notnull' => true]);
         $workingTimes->addColumn('expected', 'integer', ['notnull' => true]);
         $workingTimes->addColumn('actual', 'integer', ['notnull' => true]);
         $workingTimes->addColumn('approved_at', 'datetime', ['notnull' => false, 'default' => null]);

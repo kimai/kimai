@@ -29,7 +29,7 @@ class WorkingTime
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    #[ORM\Column(name: 'date', type: 'datetime', nullable: false)]
+    #[ORM\Column(name: 'date', type: 'date', nullable: false)]
     #[Assert\NotNull]
     private \DateTimeInterface $date;
     #[ORM\Column(name: 'expected', type: 'integer', nullable: false)]
