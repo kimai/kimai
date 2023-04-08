@@ -56,7 +56,7 @@ final class Extensions extends AbstractExtension
         ];
     }
 
-    public function formatReportDate(\DateTime $dateTime): string
+    public function formatReportDate(\DateTimeInterface $dateTime): string
     {
         return $dateTime->format('Y-m-d');
     }
