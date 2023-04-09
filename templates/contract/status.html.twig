@@ -142,12 +142,15 @@
     {% endif %}
 
     {% if year is defined %}
-        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed} %}
-            {% from "macros/widgets.html.twig" import work_times_result %}
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed, 'id': 'working_time_detail_box'} %}
+            {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button %}
             {% block box_title %}{{ 'work_times'|trans }}{% endblock %}
             {% block box_body_classes %}card-table table-responsive{% endblock %}
+            {% block box_tools %}
+                {# {{ card_tool_button('visibility', {'onclick': "toggleDays(); return false;", 'id': 'toggleDaysIcon'}) }} #}
+            {% endblock %}
             {% block box_body %}
-                <table class="table table-vcenter table-hover dataTable">
+                <table id="working_times_details" class="table table-vcenter table-hover dataTable">
                     <thead>
                     <tr>
                         <th></th>
@@ -156,8 +159,9 @@
                         <th class="text-end">{{ 'work_times_should'|trans }}</th>
                         <th class="text-end">{{ 'work_times_is'|trans }}</th>
                         {% for day in 1..31 %}
-                        <th class="text-end">{% if day < 10 %}0{% endif %}{{ day }}</th>
+                        <th class="text-end contractDay">{% if day < 10 %}0{% endif %}{{ day }}</th>
                         {% endfor %}
+                        <th class="actions"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -171,32 +175,31 @@
                         {% set yearShould = yearShould + monthShould %}
                         {% endif %}
                         {% set yearIs = yearIs + monthIs %}
-
                         <tr>
-                            <td>
+                            <td class="w-min">
                                 {% if month.locked %}
-                                    {{ icon('locked') }}
+                                    <i class="{{ 'locked'|icon }}"></i>
                                 {% else %}
-                                    {{ icon('unlocked') }}
+                                    <i class="{{ 'unlocked'|icon }}"></i>
                                 {% endif %}
                             </td>
-                            <td class="text-nowrap">
+                            <td class="text-nowrap w-min">
                                 {{ month.month|month_name }}
                             </td>
-                            <td class="text-end total">
+                            <td class="text-end total w-min">
                                 {% if showStats %}
                                     {{ work_times_result(monthShould, monthIs, decimal) }}
                                 {% endif %}
                             </td>
-                            <td class="text-end">
+                            <td class="text-end w-min">
                                 {{ monthShould|duration(decimal) }}
                             </td>
-                            <td class="text-end">
+                            <td class="text-end  w-min">
                                 {{ monthIs|duration(decimal) }}
                             </td>
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
-                                <td class="text-end">
+                                <td class="text-end contractDay">
                                     {% if now > day.day or day.workingTime.actualTime > 0 %}
                                         {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
                                     {% endif %}
@@ -205,9 +208,13 @@
                             {% endfor %}
                             {% if dayCount < 31 %}
                                 {% for day in 1..(31-dayCount)%}
-                                    <td></td>
+                                    <td class="contractDay"></td>
                                 {% endfor %}
                             {% endif %}
+                            <td class="actions">
+                                {% set event = actions(app.user, 'contract_month', 'index', {'year': year, 'month': month}) %}
+                                {{ table_actions(event.actions) }}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -225,8 +232,9 @@
                                 {{ yearIs|duration(decimal) }}
                             </td>
                             {% for day in 1..31 %}
-                                <td></td>
+                                <td class="contractDay"></td>
                             {% endfor %}
+                            <td class="text-nowrap"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -243,6 +251,18 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function toggleDays()
+        {
+            document.querySelectorAll('table#working_times_details .contractDay').forEach(
+                element => {
+                    element.classList.toggle('d-none');
+                }
+            );
+            const icon = document.querySelector('#toggleDaysIcon i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        }
+
         document.addEventListener('kimai.initialized', function() {
             KimaiReloadPageWidget.create('kimai.workingTimesManualCreate', true);
 
