@@ -611,6 +611,14 @@
         <source>evaluation</source>
         <target>Evaluation</target>
       </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target>Complete month</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target>After completing the month, the user will no longer be able to create or edit times for that period.</target>
+      </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
         <target>Review</target>

@@ -611,6 +611,14 @@
         <source>evaluation</source>
         <target>Auswertung</target>
       </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target>Monat abschliessen</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target>Nach Abschluss des Monats, wird der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder editieren können.</target>
+      </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
         <target>Überprüfung</target>
