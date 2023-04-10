@@ -103,6 +103,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+
+        $query = ['users' => [2]];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(10, \count($result));
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
     public function testGetCollectionForAllUser()
