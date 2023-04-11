@@ -23,6 +23,11 @@ final class WorkingTimeService
     {
     }
 
+    public function getLatestApproval(User $user): ?WorkingTime
+    {
+        return $this->workingTimeRepository->getLatestApproval($user);
+    }
+
     public function getYear(User $user, \DateTimeInterface $yearDate): Year
     {
         $yearTimes = $this->workingTimeRepository->findForYear($user, $yearDate);

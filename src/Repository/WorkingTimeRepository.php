@@ -61,7 +61,7 @@ class WorkingTimeRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getLatestApproved(User $user): ?WorkingTime
+    public function getLatestApproval(User $user): ?WorkingTime
     {
         $qb = $this->createQueryBuilder('w');
         $qb->select('MAX(DATE(w.date))')
