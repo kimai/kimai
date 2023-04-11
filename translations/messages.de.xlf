@@ -617,7 +617,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target>Nach Abschluss des Monats, wird der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder editieren können.</target>
+        <target>Sobald der Monat abgeschlossen ist, kann der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder bearbeiten.</target>
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
@@ -633,11 +633,11 @@
       </trans-unit>
       <trans-unit id="PE2iiaW" resname="work_times_should.help">
         <source>work_times_should.help</source>
-        <target>Die hier konfigurierten Werte werden verwendet, um das Stundenkonto zu berechnen.</target>
+        <target>Die hier konfigurierten Werte werden zur Berechnung des Stundenkontos verwendet.</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
-        <target>Für diesen Benutzer wurden keine Soll-Stunden in den Arbeitsvertrags-Einstellungen konfiguriert.</target>
+        <target>Für diesen Benutzer wurden in den Arbeitsvertragseinstellungen keine Sollstunden konfiguriert.</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
