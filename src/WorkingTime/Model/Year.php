@@ -13,7 +13,8 @@ use App\Entity\User;
 use App\Model\Year as BaseYear;
 
 /**
- * @method getMonths() array<Month>
+ * @method array<Month> getMonths()
+ * @method Month getMonth(\DateTimeInterface $month)
  */
 final class Year extends BaseYear
 {
@@ -36,7 +37,6 @@ final class Year extends BaseYear
     {
         $time = 0;
 
-        /** @var Month $month */
         foreach ($this->getMonths() as $month) {
             $time += $month->getExpectedTime();
         }
@@ -48,7 +48,6 @@ final class Year extends BaseYear
     {
         $time = 0;
 
-        /** @var Month $month */
         foreach ($this->getMonths() as $month) {
             $time += $month->getActualTime();
         }

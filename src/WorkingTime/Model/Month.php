@@ -12,20 +12,32 @@ namespace App\WorkingTime\Model;
 use App\Model\Month as BaseMonth;
 
 /**
- * @method getDays() array<Day>
+ * @method array<Day> getDays()
  */
 final class Month extends BaseMonth
 {
-    private bool $locked = false;
+    private ?bool $locked = null;
+    private ?int $expectedTime = null;
+    private ?int $actualTime = null;
 
+    /**
+     * A month is only locked IF every day is approved.
+     * If there is even one day left open, the entire month is not locked.
+     *
+     * @return bool
+     */
     public function isLocked(): bool
     {
-        return $this->locked;
-    }
+        if ($this->locked === null) {
+            $this->locked = true;
+            foreach ($this->getDays() as $day) {
+                if ($day->getWorkingTime() !== null && !$day->getWorkingTime()->isApproved()) {
+                    $this->locked = false;
+                }
+            }
+        }
 
-    public function setLocked(bool $locked): void
-    {
-        $this->locked = $locked;
+        return $this->locked;
     }
 
     protected function createDay(\DateTimeInterface $day): Day
@@ -35,29 +47,31 @@ final class Month extends BaseMonth
 
     public function getExpectedTime(): int
     {
-        $time = 0;
+        if ($this->expectedTime === null) {
+            $this->expectedTime = 0;
 
-        /** @var Day $day */
-        foreach ($this->getDays() as $day) {
-            if ($day->getWorkingTime() !== null) {
-                $time += $day->getWorkingTime()->getExpectedTime();
+            foreach ($this->getDays() as $day) {
+                if ($day->getWorkingTime() !== null) {
+                    $this->expectedTime += $day->getWorkingTime()->getExpectedTime();
+                }
             }
         }
 
-        return $time;
+        return $this->expectedTime;
     }
 
     public function getActualTime(): int
     {
-        $time = 0;
+        if ($this->actualTime === null) {
+            $this->actualTime = 0;
 
-        /** @var Day $day */
-        foreach ($this->getDays() as $day) {
-            if ($day->getWorkingTime() !== null) {
-                $time += $day->getWorkingTime()->getActualTime();
+            foreach ($this->getDays() as $day) {
+                if ($day->getWorkingTime() !== null) {
+                    $this->actualTime += $day->getWorkingTime()->getActualTime();
+                }
             }
         }
 
-        return $time;
+        return $this->actualTime;
     }
 }

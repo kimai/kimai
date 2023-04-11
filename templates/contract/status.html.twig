@@ -143,8 +143,29 @@
 
     {% if year is defined %}
         {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed, 'id': 'working_time_detail_box'} %}
+            {% set yearShould = 0 %}
+            {% set yearIs = 0 %}
+            {% set approved = 0 %}
+            {% for month in year.months %}
+                {% set monthShould = month.expectedTime %}
+                {% set monthIs = month.actualTime %}
+                {% set showStats = now > month.month or monthIs > 0 %}
+                {% if showStats %}
+                    {% set yearShould = yearShould + monthShould %}
+                {% endif %}
+                {% set yearIs = yearIs + monthIs %}
+                {% if month.locked %}
+                    {% set approved = approved + 1 %}
+                {% endif %}
+            {% endfor %}
             {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button %}
-            {% block box_title %}{{ 'work_times'|trans }}{% endblock %}
+            {% from "macros/status.html.twig" import status_count, status_duration %}
+            {% block box_title %}
+                {{ 'work_times'|trans }}
+                {% if withWorkHourConfiguration %}
+                    {{ status_count(approved ~ '/' ~ year.months|length) }}
+                {% endif %}
+            {% endblock %}
             {% block box_body_classes %}card-table table-responsive{% endblock %}
             {% block box_tools %}
                 {# {{ card_tool_button('visibility', {'onclick': "toggleDays(); return false;", 'id': 'toggleDaysIcon'}) }} #}
@@ -153,7 +174,9 @@
                 <table id="working_times_details" class="table table-vcenter table-hover dataTable">
                     <thead>
                     <tr>
+                        {% if withWorkHourConfiguration %}
                         <th></th>
+                        {% endif %}
                         <th>{{ 'month'|trans }}</th>
                         <th class="text-end total">{{ 'sum.total'|trans }}</th>
                         <th class="text-end">{{ 'work_times_should'|trans }}</th>
@@ -165,24 +188,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% set yearShould = 0 %}
-                    {% set yearIs = 0 %}
                     {% for month in year.months %}
                         {% set monthShould = month.expectedTime %}
                         {% set monthIs = month.actualTime %}
                         {% set showStats = now > month.month or monthIs > 0 %}
-                        {% if showStats %}
-                        {% set yearShould = yearShould + monthShould %}
-                        {% endif %}
-                        {% set yearIs = yearIs + monthIs %}
                         <tr>
+                            {% if withWorkHourConfiguration %}
                             <td class="w-min">
                                 {% if month.locked %}
                                     <i class="{{ 'locked'|icon }}"></i>
                                 {% else %}
-                                    <i class="{{ 'unlocked'|icon }}"></i>
+                                    <i class="bg-yellow-lt {{ 'unlocked'|icon }}"></i>
                                 {% endif %}
                             </td>
+                            {% endif %}
                             <td class="text-nowrap w-min">
                                 {{ month.month|month_name }}
                             </td>
@@ -264,7 +283,7 @@
         }
 
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.workingTimesManualCreate', true);
+            KimaiReloadPageWidget.create('kimai.workingTimesUpdate', true);
 
             const contractForm = document.getElementById('report-form');
             if (contractForm !== null) {
