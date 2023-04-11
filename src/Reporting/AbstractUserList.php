@@ -10,21 +10,20 @@
 namespace App\Reporting;
 
 use App\Entity\Team;
-use DateTime;
 
 abstract class AbstractUserList
 {
-    private ?DateTime $date;
+    private ?\DateTimeInterface $date;
     private bool $decimal = false;
     private string $sumType = 'duration';
     private ?Team $team = null;
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date): void
+    public function setDate(\DateTimeInterface $date): void
     {
         $this->date = $date;
     }
