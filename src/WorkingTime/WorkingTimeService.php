@@ -14,7 +14,6 @@ use App\Entity\WorkingTime;
 use App\Repository\TimesheetRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
-use App\WorkingTime\Model\Day;
 use App\WorkingTime\Model\Month;
 use App\WorkingTime\Model\Year;
 
@@ -62,42 +61,35 @@ final class WorkingTimeService
         return $year;
     }
 
-/*
-    public function approveYear(Year $year, \DateTimeInterface $approvalDate, User $approver): void
+    public function approveMonth(Month $month, \DateTimeInterface $approvalDate, User $approver): void
     {
         $update = false;
 
-        foreach ($year->getMonths() as $month) {
-            foreach ($month->getDays() as $day) {
-                if (!$day instanceof Day || !$month instanceof Month) {
-                    continue;
-                }
-
-                $workingTime = $day->getWorkingTime();
-                if ($workingTime === null) {
-                    continue;
-                }
-
-                if ($workingTime->getId() === null) {
-                    continue;
-                }
-
-                if ($month->isLocked() || $workingTime->isApproved()) {
-                    continue;
-                }
-
-                $workingTime->setApprovedBy($approver);
-                $workingTime->setApprovedAt($approvalDate);
-                $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
-                $update = true;
+        foreach ($month->getDays() as $day) {
+            $workingTime = $day->getWorkingTime();
+            if ($workingTime === null) {
+                continue;
             }
+
+            if ($workingTime->getId() !== null) {
+                continue;
+            }
+
+            if ($month->isLocked() || $workingTime->isApproved()) {
+                continue;
+            }
+
+            $workingTime->setApprovedBy($approver);
+            $workingTime->setApprovedAt($approvalDate);
+            $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
+            $update = true;
         }
 
         if ($update) {
             $this->workingTimeRepository->persistScheduledWorkingTimes();
         }
     }
-*/
+
     /**
      * @param \DateTimeInterface $year
      * @param User $user
