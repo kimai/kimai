@@ -35,7 +35,8 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.name' => $customer->getName() ?? '',
             'customer.contact' => $customer->getContact() ?? '',
             'customer.company' => $customer->getCompany() ?? '',
-            'customer.vat' => $customer->getVatId() ?? '',
+            'customer.vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
+            'customer.vat_id' => $customer->getVatId() ?? '',
             'customer.number' => $customer->getNumber() ?? '',
             'customer.country' => $customer->getCountry(),
             'customer.homepage' => $customer->getHomepage() ?? '',
