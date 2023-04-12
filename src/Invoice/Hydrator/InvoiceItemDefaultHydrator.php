@@ -34,7 +34,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 
         if ($item->isFixedRate()) {
             $appliedRate = $item->getFixedRate();
-            $amount = $item->getAmount();
+            $amount = $formatter->getFormattedAmount($item->getAmount());
         }
 
         $activity = $item->getActivity();
