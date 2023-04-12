@@ -63,6 +63,9 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'query.end_month' => '',            // since 1.9
             'query.end_month_number' => '',     // since 1.9
             'query.end_year' => '',             // since 1.9
+
+            // since 2.0.15
+            'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
 
         $query = $model->getQuery();
@@ -95,20 +98,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
                     // since 1.9
                     'query.end_year' => $end->format('Y'),
                     // since 1.9
-                ]);
-            }
-
-            // since 2.0.15
-            $user = $query->getUser();
-            if ($user !== null) {
-                $prefix = 'recipient.user.';
-
-                $values = array_merge($values, [
-                    $prefix . 'name' => $user->getUserIdentifier(),
-                    $prefix . 'email' => $user->getEmail(),
-                    $prefix . 'title' => $user->getTitle() ?? '',
-                    $prefix . 'alias' => $user->getAlias() ?? '',
-                    $prefix . 'display' => $user->getDisplayName() ?? '',
                 ]);
             }
 

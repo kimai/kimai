@@ -155,6 +155,7 @@ class DebugRendererTest extends TestCase
             'user.email',
             'user.name',
             'user.title',
+            'user.see_others',
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',

@@ -77,6 +77,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'query.end_month',
             'query.end_month_number',
             'query.end_year',
+            'user.see_others',
         ];
 
         $givenKeys = array_keys($model);
