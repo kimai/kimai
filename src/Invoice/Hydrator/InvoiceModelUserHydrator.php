@@ -9,7 +9,6 @@
 
 namespace App\Invoice\Hydrator;
 
-use App\Entity\UserPreference;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
@@ -28,9 +27,9 @@ final class InvoiceModelUserHydrator implements InvoiceModelHydrator
             'user.email' => $user->getEmail(),
             'user.title' => $user->getTitle() ?? '',
             'user.alias' => $user->getAlias() ?? '',
+            'user.display' => $user->getDisplayName() ?? '',
         ];
 
-        /** @var UserPreference $metaField */
         foreach ($user->getPreferences() as $metaField) {
             $values = array_merge($values, [
                 'user.meta.' . $metaField->getName() => $metaField->getValue(),
