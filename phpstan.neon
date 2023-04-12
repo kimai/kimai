@@ -1336,17 +1336,17 @@ parameters:
             path: src/Controller/Reporting/ReportUsersYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStats\\(\\) expects DateTime, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$begin of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStats\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
@@ -1376,12 +1376,12 @@ parameters:
             path: src/Controller/Reporting/UserWeekController.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTimeInterface\\|null\\.$#"
+            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: src/Controller/Reporting/UserYearController.php
 
         -
-            message: "#^Cannot clone non\\-object variable \\$start of type DateTimeInterface\\|null\\.$#"
+            message: "#^Cannot clone non\\-object variable \\$start of type DateTime\\|null\\.$#"
             count: 2
             path: src/Controller/Reporting/UserYearController.php
 
@@ -1396,17 +1396,17 @@ parameters:
             path: src/Controller/Reporting/UserYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects DateTime, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$begin of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTimeInterface\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
 
@@ -4759,11 +4759,6 @@ parameters:
             message: "#^Method App\\\\Kernel\\:\\:getBundleClasses\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Kernel.php
-
-        -
-            message: "#^Method App\\\\Ldap\\\\FormLoginLdapFactory\\:\\:createAuthenticator\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/FormLoginLdapFactory.php
 
         -
             message: "#^Method App\\\\Ldap\\\\LdapAuthenticator\\:\\:supports\\(\\) should return bool but returns bool\\|null\\.$#"
