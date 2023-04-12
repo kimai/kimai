@@ -65,4 +65,9 @@ class DebugFormatter implements InvoiceFormatter
     {
         // does nothing
     }
+
+    public function getFormattedAmount(float $amount): string
+    {
+        return (string) $amount;
+    }
 }
