@@ -82,9 +82,6 @@ final class TagsSelectType extends AbstractType
                     return -1;
                 }
 
-                $userTag = mb_strtolower($userTag);
-                $existingTag = mb_strtolower($existingTag);
-
                 if (mb_strtolower($userTag) === mb_strtolower($existingTag)) {
                     return 0;
                 }
