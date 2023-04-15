@@ -672,6 +672,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
             $this->id = null;
         }
 
+        // field will not be set, if it contains a value
+        $this->modifiedAt = null;
         $this->exported = false;
 
         $currentMeta = $this->meta;

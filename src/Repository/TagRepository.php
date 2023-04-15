@@ -67,28 +67,6 @@ class TagRepository extends EntityRepository
     }
 
     /**
-     * Find ids of the given tagNames separated by comma
-     * @param string $tagNames
-     * @return array
-     */
-    public function findIdsByTagNameList(string $tagNames): array
-    {
-        $qb = $this
-            ->createQueryBuilder('t')
-            ->select('t.id');
-        $list = array_filter(array_unique(array_map('trim', explode(',', $tagNames))));
-        $cnt = 0;
-        foreach ($list as $listElem) {
-            $qb
-                ->orWhere('t.name like :elem' . $cnt)
-                ->setParameter('elem' . $cnt, '%' . $listElem . '%');
-            $cnt++;
-        }
-
-        return array_column($qb->getQuery()->getScalarResult(), 'id');
-    }
-
-    /**
      * Find all tag names in an alphabetical order
      *
      * @param string $filter

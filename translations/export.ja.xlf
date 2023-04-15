@@ -2,6 +2,14 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="export.en.xlf">
     <body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
+        <source>Default</source>
+        <target state="translated">デフォルト</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">タイムシート</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

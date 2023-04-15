@@ -24,7 +24,7 @@
         "/build/invoice.c8ae95ad.js"
       ],
       "css": [
-        "/build/invoice.3c80ee80.css"
+        "/build/invoice.d0ae14e1.css"
       ]
     },
     "invoice-pdf": {
@@ -33,7 +33,7 @@
         "/build/invoice-pdf.d86b82ee.js"
       ],
       "css": [
-        "/build/invoice-pdf.c88953bb.css"
+        "/build/invoice-pdf.2b749265.css"
       ]
     },
     "chart": {
@@ -68,9 +68,9 @@
     "/build/export-pdf.587575e7.js": "sha384-J50GStmmfVwUTN4dIRQ02eg9hyzGFPSzpTtpPody92j0V6zCqw+s5l8+ZhVTugeW",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
     "/build/invoice.c8ae95ad.js": "sha384-2eVY7MBiMQxo1vhfizU+fYfEZbz9bYUdzqxnpTQhxpYiLaxeSV4WnaObq2G7/Pks",
-    "/build/invoice.3c80ee80.css": "sha384-xjFM2m/EeN7z42ygpt77ll5zAcHTeOjbZFAw2Qcu3IJutgebiAbrXjnH5aJfF5Z6",
+    "/build/invoice.d0ae14e1.css": "sha384-DZ9f2EsTAIOVoFBZe4jMaW3R6yNVGCtcn3Dq3hxZnWRDdFzhyt1O1iQqRZUyQFTM",
     "/build/invoice-pdf.d86b82ee.js": "sha384-A0HJqP+MvEqQr1uG8wViCeEWxBRKyS6l8D+Ao4pFYHUA12gCC1gRYhk9I+SJPvZq",
-    "/build/invoice-pdf.c88953bb.css": "sha384-ZvSi1e+ZKGzvZJUtAPLjzOSTh13N9zRevq44GKdYdBja/DAplGE55saY2Ur+83yv",
+    "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
     "/build/chart.f5becfac.js": "sha384-GSqETm8wULiVXyizvwRompfwu63r/C0Qd/AvrHDE4cqAKiIGCssb3QyBtGu1WN+W",
     "/build/calendar.8577d9cd.js": "sha384-1qlF+4tr7/zve+wvZef7sVcbUxhK0/yEm5Hbuct8K/ZV4JtENdNY7YRLqOcZ/8Y3",
     "/build/calendar.bb473428.css": "sha384-900W9o8666Qpw21rLP7hn5Ql8tWd40k0IcE3QpFm7E7V6bKva7xQgGlyzVuuh4GK",

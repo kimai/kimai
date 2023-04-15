@@ -22,9 +22,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $subtotal = $model->getCalculator()->getSubtotal();
         $formatter = $model->getFormatter();
 
-        $begin = $model->getQuery()->getBegin();
-        $end = $model->getQuery()->getEnd();
-
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
@@ -33,6 +30,7 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.language' => $model->getTemplate()->getLanguage(), // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $model->getCalculator()->getVat(),
+            'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00,
             'invoice.tax' => $formatter->getFormattedMoney($tax, $currency),
             'invoice.tax_nc' => $formatter->getFormattedMoney($tax, $currency, false),
             'invoice.tax_plain' => $tax,
@@ -65,25 +63,66 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'query.end_month' => '',            // since 1.9
             'query.end_month_number' => '',     // since 1.9
             'query.end_year' => '',             // since 1.9
+
+            // since 2.0.15
+            'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
 
-        if ($begin !== null) {
-            $values = array_merge($values, [
-                'query.day' => $begin->format('d'),                             // @deprecated - but impossible to delete
-                'query.month' => $formatter->getFormattedMonthName($begin),     // @deprecated - but impossible to delete
-                'query.month_number' => $begin->format('m'),                    // @deprecated - but impossible to delete
-                'query.year' => $begin->format('Y'),                            // @deprecated - but impossible to delete
-                'query.begin' => $formatter->getFormattedDateTime($begin),
-                'query.begin_day' => $begin->format('d'),
-                'query.begin_month' => $formatter->getFormattedMonthName($begin),
-                'query.begin_month_number' => $begin->format('m'),
-                'query.begin_year' => $begin->format('Y'),
-                'query.end' => $formatter->getFormattedDateTime($end),          // since 1.9
-                'query.end_day' => $end->format('d'),                           // since 1.9
-                'query.end_month' => $formatter->getFormattedMonthName($end),   // since 1.9
-                'query.end_month_number' => $end->format('m'),                  // since 1.9
-                'query.end_year' => $end->format('Y'),                          // since 1.9
-            ]);
+        $query = $model->getQuery();
+        if ($query !== null) {
+            $begin = $query->getBegin();
+            $end = $query->getEnd();
+
+            if ($begin !== null) {
+                $values = array_merge($values, [
+                    'query.day' => $begin->format('d'),
+                    // @deprecated - but impossible to delete
+                    'query.month' => $formatter->getFormattedMonthName($begin),
+                    // @deprecated - but impossible to delete
+                    'query.month_number' => $begin->format('m'),
+                    // @deprecated - but impossible to delete
+                    'query.year' => $begin->format('Y'),
+                    // @deprecated - but impossible to delete
+                    'query.begin' => $formatter->getFormattedDateTime($begin),
+                    'query.begin_day' => $begin->format('d'),
+                    'query.begin_month' => $formatter->getFormattedMonthName($begin),
+                    'query.begin_month_number' => $begin->format('m'),
+                    'query.begin_year' => $begin->format('Y'),
+                    'query.end' => $formatter->getFormattedDateTime($end),
+                    // since 1.9
+                    'query.end_day' => $end->format('d'),
+                    // since 1.9
+                    'query.end_month' => $formatter->getFormattedMonthName($end),
+                    // since 1.9
+                    'query.end_month_number' => $end->format('m'),
+                    // since 1.9
+                    'query.end_year' => $end->format('Y'),
+                    // since 1.9
+                ]);
+            }
+
+            // since 2.0.15
+            $activity = $query->getActivity();
+            if ($activity !== null) {
+                $prefix = 'query.activity.';
+
+                $values = array_merge($values, [
+                    $prefix . 'name' => $activity->getName() ?? '',
+                    $prefix . 'comment' => $activity->getComment() ?? '',
+                ]);
+            }
+
+            // since 2.0.15
+            $project = $query->getProject();
+            if ($project !== null) {
+                $prefix = 'query.project.';
+
+                $values = array_merge($values, [
+                    $prefix . 'name' => $project->getName() ?? '',
+                    $prefix . 'comment' => $project->getComment() ?? '',
+                    $prefix . 'order_number' => $project->getOrderNumber(),
+                ]);
+            }
         }
 
         $entries = $model->getEntries();

@@ -24,6 +24,8 @@ interface InvoiceFormatter
 
     public function getFormattedTime(DateTime $date): string;
 
+    public function getFormattedAmount(float $amount): string;
+
     public function getFormattedMoney(float $amount, ?string $currency, bool $withCurrency = true): string;
 
     public function getFormattedMonthName(DateTime $date): string;

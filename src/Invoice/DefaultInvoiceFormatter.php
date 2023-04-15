@@ -77,4 +77,9 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
         $this->locale = $locale;
         $this->formatter = null;
     }
+
+    public function getFormattedAmount(float $amount): string
+    {
+        return $this->getFormatter()->amount($amount);
+    }
 }

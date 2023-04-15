@@ -2,6 +2,34 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="wizard.en.xlf">
     <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+        <source>wizard.intro.title</source>
+        <target state="translated">ようこそ、Kimai へ</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator">
+        <source>wizard.separator</source>
+        <target state="translated">あなたの設定</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title">
+        <source>wizard.profile.title</source>
+        <target state="translated">ユーザー情報</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title">
+        <source>wizard.done.title</source>
+        <target state="translated">おめでとうございます</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+        <source>wizard.intro.description</source>
+        <target state="translated">このウィザードは、Kimai をあなたのニーズに合わせてカスタマイズするのに便利です。</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description">
+        <source>wizard.profile.description</source>
+        <target state="translated">Kimai での作業をより快適にするための基本的な設定をいくつかご紹介します。</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description">
+        <source>wizard.done.description</source>
+        <target state="translated">これで最も重要な設定は完了です。このほかにも、ユーザープロファイルで後からカスタマイズできるものがたくさんあります。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

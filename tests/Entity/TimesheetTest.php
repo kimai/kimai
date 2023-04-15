@@ -179,8 +179,19 @@ class TimesheetTest extends TestCase
     public function testClone(): void
     {
         $sut = new Timesheet();
+        self::assertNull($sut->getModifiedAt());
         $sut->setExported(true);
         $sut->setDescription('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
+
+        $modifiedDate = new \DateTime();
+
+        $reflection = new \ReflectionClass($sut);
+        $property = $reflection->getProperty('modifiedAt');
+        $property->setAccessible(true);
+        $property->setValue($sut, $modifiedDate);
+        $property->setAccessible(false);
+
+        self::assertEquals($modifiedDate, $sut->getModifiedAt());
 
         $meta = new TimesheetMeta();
         $meta->setName('blabla');
@@ -197,6 +208,9 @@ class TimesheetTest extends TestCase
         $sut->addTag($tag);
 
         $clone = clone $sut;
+
+        self::assertNotNull($sut->getModifiedAt());
+        self::assertNull($clone->getModifiedAt());
 
         foreach ($sut->getMetaFields() as $metaField) {
             $cloneMeta = $clone->getMetaField($metaField->getName());

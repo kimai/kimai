@@ -134,6 +134,10 @@ final class DateRangeType extends AbstractType
                     return $range;
                 }
 
+                if ($dates === null) {
+                    throw new TransformationFailedException('Date range missing');
+                }
+
                 if (preg_match($pattern, $dates) !== 1) {
                     throw new TransformationFailedException('Invalid date range given');
                 }

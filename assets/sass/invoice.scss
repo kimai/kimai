@@ -80,7 +80,6 @@ body {
             font-size: 20px;
 
             > small {
-                color: #666;
                 display: block;
                 margin-top: 5px;
             }
@@ -104,6 +103,13 @@ body {
         }
 
         table.invoice-sum th, table.invoice-sum td {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+        .text-right {
             text-align: right;
         }
 

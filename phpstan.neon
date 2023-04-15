@@ -4242,11 +4242,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getAlias\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
@@ -4259,16 +4254,6 @@ parameters:
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getUserIdentifier\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
@@ -4337,11 +4322,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getBegin\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -4353,11 +4333,6 @@ parameters:
 
         -
             message: "#^Cannot call method getDueDays\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 

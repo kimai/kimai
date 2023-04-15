@@ -84,6 +84,7 @@ class DebugRendererTest extends TestCase
             'invoice.currency',
             'invoice.currency_symbol',
             'invoice.vat',
+            'invoice.tax_hide',
             'invoice.tax',
             'invoice.language',
             'invoice.tax_nc',
@@ -127,6 +128,7 @@ class DebugRendererTest extends TestCase
             'customer.contact',
             'customer.company',
             'customer.vat',
+            'customer.vat_id',
             'customer.country',
             'customer.number',
             'customer.homepage',
@@ -150,13 +152,22 @@ class DebugRendererTest extends TestCase
             'activity.time_budget_open',
             'activity.time_budget_open_plain',
             'user.alias',
+            'user.display',
             'user.email',
             'user.name',
             'user.title',
+            'user.see_others',
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
         ];
+
+        if ($activityCounter === 1) {
+            $keys = array_merge($keys, [
+                'query.activity.comment',
+                'query.activity.name',
+            ]);
+        }
 
         if ($activityCounter > 1) {
             $keys = array_merge($keys, [
@@ -168,6 +179,14 @@ class DebugRendererTest extends TestCase
                 'activity.1.name',
                 'activity.1.comment',
                 'activity.1.meta.foo-activity',
+            ]);
+        }
+
+        if ($projectCounter === 1) {
+            $keys = array_merge($keys, [
+                'query.project.name',
+                'query.project.comment',
+                'query.project.order_number',
             ]);
         }
 
@@ -254,6 +273,7 @@ class DebugRendererTest extends TestCase
             'entry.weekyear',
             'entry.user_id',
             'entry.user_name',
+            'entry.user_display',
             'entry.user_alias',
             'entry.user_title',
             'entry.activity',

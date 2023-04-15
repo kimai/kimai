@@ -66,6 +66,38 @@
         <source>task.help.team</source>
         <target state="translated">Atribuiți această sarcină unei echipe</target>
       </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
+        <source>task_started</source>
+        <target state="translated">Lucrări începute</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="translated">Cantitatea de sarcini pe pagină în widgetul tabloului de bord</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Estimarea timpului</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Această descriere va fi copiată în fiecare înregistrare a foii de pontaj</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+        <source>task_with_estimation</source>
+        <target state="translated">Cu estimare</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Timpul estimat necesar pentru a finaliza sarcina în hh:mm</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Aceste etichete vor fi copiate în fiecare înregistrare a foii de pontaj</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+        <source>task_no_estimation</source>
+        <target state="translated">Fără estimare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

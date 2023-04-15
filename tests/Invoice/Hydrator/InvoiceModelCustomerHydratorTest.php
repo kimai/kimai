@@ -44,6 +44,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.contact',
             'customer.company',
             'customer.vat',
+            'customer.vat_id',
             'customer.country',
             'customer.number',
             'customer.homepage',
