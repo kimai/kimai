@@ -278,7 +278,7 @@ final class ServiceInvoice
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
-            throw new \Exception('Unknown invoice document: ' . $model->getTemplate()->getRenderer());
+            throw new \Exception('Please adjust your invoice template, the renderer is invalid: ' . $model->getTemplate()->getRenderer());
         }
 
         foreach ($this->getRenderer() as $renderer) {
@@ -426,7 +426,7 @@ final class ServiceInvoice
 
         $calculator = $this->getCalculatorByName($template->getCalculator());
         if (null === $calculator) {
-            throw new \Exception('Please adjust your invoice template, the invoice calculator is invalid: ' . $template->getCalculator());
+            throw new \Exception('Please adjust your invoice template, the sum calculator is invalid: ' . $template->getCalculator());
         }
 
         $model->setCalculator($calculator);

@@ -41,6 +41,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.vat',
             'invoice.language',
             'invoice.tax',
+            'invoice.tax_hide',
             'invoice.tax_nc',
             'invoice.tax_plain',
             'invoice.total_time',
@@ -76,6 +77,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'query.end_month',
             'query.end_month_number',
             'query.end_year',
+            'user.see_others',
         ];
 
         $givenKeys = array_keys($model);

@@ -33,6 +33,7 @@ class InvoiceModelUserHydratorTest extends TestCase
     protected function assertModelStructure(array $model)
     {
         $keys = [
+            'user.display',
             'user.alias',
             'user.email',
             'user.name',

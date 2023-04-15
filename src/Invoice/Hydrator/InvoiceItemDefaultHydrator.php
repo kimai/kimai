@@ -34,7 +34,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 
         if ($item->isFixedRate()) {
             $appliedRate = $item->getFixedRate();
-            $amount = $item->getAmount();
+            $amount = $formatter->getFormattedAmount($item->getAmount());
         }
 
         $activity = $item->getActivity();
@@ -83,11 +83,17 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.date' => $formatter->getFormattedDateTime($begin),
             'entry.week' => \intval($begin->format('W')),
             'entry.weekyear' => $begin->format('o'),
-            'entry.user_id' => $user->getId(),
-            'entry.user_name' => $user->getUserIdentifier(),
-            'entry.user_title' => $user->getTitle() ?? '',
-            'entry.user_alias' => $user->getAlias() ?? '',
         ];
+
+        if (null !== $user) {
+            $values = array_merge($values, [
+                'entry.user_id' => $user->getId(),
+                'entry.user_name' => $user->getUserIdentifier(),
+                'entry.user_title' => $user->getTitle() ?? '',
+                'entry.user_alias' => $user->getAlias() ?? '',
+                'entry.user_display' => $user->getDisplayName() ?? '',
+            ]);
+        }
 
         if (null !== $activity) {
             $values = array_merge($values, [

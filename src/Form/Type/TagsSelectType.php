@@ -76,9 +76,20 @@ final class TagsSelectType extends AbstractType
                 $foundTagNames[] = $tag->getName();
             }
 
-            /** @var array<string> $newNames */
-            $newNames = array_diff($newNames, $foundTagNames);
-            foreach ($newNames as $name) {
+            /** @var array<string> $newNamesCreate */
+            $newNamesCreate = array_udiff($newNames, $foundTagNames, function (mixed $userTag, mixed $existingTag) {
+                if (!\is_string($userTag) || !\is_string($existingTag)) {
+                    return -1;
+                }
+
+                if (mb_strtolower($userTag) === mb_strtolower($existingTag)) {
+                    return 0;
+                }
+
+                return strcmp($userTag, $existingTag);
+            });
+
+            foreach ($newNamesCreate as $name) {
                 $tag = new Tag();
                 $tag->setName(mb_substr($name, 0, 100));
                 $this->tagRepository->saveTag($tag);

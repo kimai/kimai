@@ -129,7 +129,7 @@
                             <td class="text-nowrap text-end">{{ stats.internalRate|money(currency) }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
-                        {% if not entity.isMonthlyBudget() and timeBudgetVisible and stats.duration > 0 %}
+                        {% if not entity.isMonthlyBudget() and timeBudgetVisible and stats.duration > 0 and stats.duration|chart_duration > 0.00 %}
                             {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
                             <tr>
                                 <td>{{ 'hourlyRate'|trans }} ({{ 'billable'|trans }} / {{ durationTrans|trans }})</td>

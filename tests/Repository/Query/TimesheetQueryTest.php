@@ -61,20 +61,27 @@ class TimesheetQueryTest extends BaseQueryTest
     protected function assertUser(TimesheetQuery $sut): void
     {
         self::assertNull($sut->getUser());
+        self::assertFalse($sut->hasUsers());
 
         $expected = new User();
         $expected->setUserIdentifier('foo-bar');
         $sut->setUser($expected);
         self::assertEquals($expected, $sut->getUser());
+        self::assertTrue($sut->hasUsers());
+
+        $sut->setUser(null);
+        self::assertFalse($sut->hasUsers());
     }
 
     protected function assertUsers(TimesheetQuery $sut): void
     {
         self::assertEmpty($sut->getUsers());
+        self::assertFalse($sut->hasUsers());
 
         $user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);
         $sut->addUser($user);
+        self::assertTrue($sut->hasUsers());
 
         $user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);

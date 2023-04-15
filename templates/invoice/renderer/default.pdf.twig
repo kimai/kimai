@@ -1,13 +1,8 @@
 <!DOCTYPE html>
-{%- set fallback = app.request is not null ? app.request.locale : 'en' -%}
-{%- set language = model.template.language|default(fallback) -%}
-{%- set isDecimal = true -%}
-{%- set currency = model.currency -%}
-{%- set project = model.query.project -%}
-<html lang="{{ language }}">
+<html lang="{{ invoice['invoice.language'] }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{{ model.invoiceNumber }}-{{ model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}{% endblock %}</title>
     <style>
         {{ encore_entry_css_source('invoice-pdf')|raw }}
     </style>
@@ -18,10 +13,10 @@
     <table class="header">
         <tr>
             <td class="title">
-                {{ model.template.title }}
+                {{ invoice['template.title'] }}
             </td>
             <td class="date text-right">
-                {{ 'date'|trans }}: {{ model.invoiceDate|date_short }}
+                {{ 'date'|trans }}: {{ invoice['invoice.date'] }}
             </td>
         </tr>
     </table>
@@ -32,10 +27,10 @@
         <tr>
             <td>
                 <strong>{{ 'contact'|trans }}</strong>:
-                {{ model.template.contact|nl2str(' – ') }}
+                {{ invoice['template.contact']|nl2str(' – ') }}
                 <br>
                 <strong>{{ 'invoice_bank_account'|trans }}</strong>:
-                {{ model.template.paymentDetails|nl2str(' – ') }}
+                {{ invoice['template.payment_details']|nl2str(' – ') }}
             </td>
             <td align="right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
@@ -50,24 +45,24 @@ mpdf-->
             <td style="width:60%">
                 {{ 'invoice.to'|trans }}
                 <br>
-                <strong>{{ model.customer.company|default(model.customer.name) }}</strong>
+                <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong>
                 <br>
-                {{ model.customer.address|nl2br }}
-                {% if model.customer.vatId is not empty %}
+                {{ invoice['customer.address']|nl2br }}
+                {% if invoice['customer.vat_id'] is not empty %}
                     <br>
-                    {{ 'vat_id'|trans }}: {{ model.customer.vatId }}
+                    {{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
                 {% endif %}
             </td>
             <td>
                 {{ 'invoice.from'|trans }}
                 <br>
-                <strong>{{ model.template.company }}</strong>
+                <strong>{{ invoice['template.company'] }}</strong>
                 <br>
-                {{ model.template.address|trim|nl2br }}
-                {% if model.template.vatId is not empty %}
+                {{ invoice['template.address']|trim|nl2br }}
+                {% if invoice['template.vat_id'] is not empty %}
                     <br>
                     {{ 'vat_id'|trans }}:
-                    {{ model.template.vatId }}
+                    {{ invoice['template.vat_id'] }}
                 {% endif %}
             </td>
         </tr>
@@ -75,27 +70,27 @@ mpdf-->
 
     <p>
         {{ 'invoice.number'|trans }}:
-        {{ model.invoiceNumber }}
+        {{ invoice['invoice.number'] }}
 
         <br>
         {{ 'invoice.due_days'|trans }}:
-        {{ model.dueDate|date_short }}
+        {{ invoice['invoice.due_date'] }}
 
-        {% if model.customer.number is not empty %}
+        {% if invoice['customer.number'] is not empty %}
             <br>
             {{ 'number'|trans }}:
-            {{ model.customer.number }}
+            {{ invoice['customer.number'] }}
         {% endif %}
 
-        {% if project is not null and project.orderNumber is not empty %}
+        {% if invoice['query.project.order_number'] is defined and invoice['query.project.order_number'] is not empty %}
             <br>
             {{ 'orderNumber'|trans }}:
-            {{ project.orderNumber }}
+            {{ invoice['query.project.order_number'] }}
         {% endif %}
     </p>
 
-    {% if model.customer.invoiceText is not empty%}
-        <p>{{ model.customer.invoiceText|md2html }}</p>
+    {% if invoice['customer.invoice_text'] is not empty%}
+        <p>{{ invoice['customer.invoice_text']|md2html }}</p>
     {% endif %}
 
     <table class="items">
@@ -109,43 +104,39 @@ mpdf-->
             </tr>
         </thead>
         <tbody>
-        {% for id, entry in model.calculator.entries %}
+        {% for invoiceLineItem in entries %}
             <!-- CONTENT_PART -->
-            {% set duration = entry.duration|duration(isDecimal) %}
-            {% if entry.fixedRate %}
-                {% set rate = entry.fixedRate %}
-                {% set duration = entry.amount|amount %}
-            {% else %}
-                {% set rate = entry.hourlyRate %}
-            {% endif %}
             <tr>
-                <td nowrap class="first text-nowrap">{{ entry.begin|date_short }}</td>
-                <td contenteditable="true">
-                    {% if entry.description is not empty %}
-                        {{ entry.description|nl2br }}
+                <td nowrap class="first text-nowrap">{{ invoiceLineItem['entry.begin'] }}</td>
+                <td>
+                    {% if invoiceLineItem['entry.description'] is not empty %}
+                        {{ invoiceLineItem['entry.description']|nl2br }}
                     {% else %}
-                        {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
+                        {% if invoiceLineItem['entry.activity'] is defined %}
+                            {{ invoiceLineItem['entry.activity'] }} /
+                        {% endif %}
+                        {{ invoiceLineItem['entry.project'] }}
                     {% endif %}
                 </td>
-                <td nowrap class="text-nowrap text-right">{{ rate|money(currency) }}</td>
-                <td nowrap class="text-nowrap text-right">{{ duration }}</td>
-                <td nowrap class="last text-nowrap text-right">{{ entry.rate|money(currency) }}</td>
+                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.rate'] }}</td>
+                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.amount'] }}</td>
+                <td nowrap class="last text-nowrap text-right">{{ invoiceLineItem['entry.total'] }}</td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
-            {% if model.calculator.tax > 0 or not model.isHideZeroTax() %}
+            {% if not invoice['invoice.tax_hide'] %}
             <tr>
                 <td colspan="4" class="text-right">
                     {{ 'invoice.subtotal'|trans }}
                 </td>
-                <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
+                <td class="last text-right">{{ invoice['invoice.subtotal'] }}</td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right">
-                    {{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)
+                    {{ 'invoice.tax'|trans }} ({{ invoice['invoice.vat'] }}%)
                 </td>
-                <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
+                <td class="last text-right">{{ invoice['invoice.tax'] }}</td>
             </tr>
             {% endif %}
             <tr>
@@ -153,16 +144,16 @@ mpdf-->
                     <strong>{{ 'invoice.total'|trans }}</strong>
                 </td>
                 <td class="last text-right">
-                    <strong>{{ model.calculator.total|money(currency) }}</strong>
+                    <strong>{{ invoice['invoice.total'] }}</strong>
                 </td>
             </tr>
         </tfoot>
     </table>
 
-    {% if model.template.paymentTerms is not empty %}
-    <div class="paymentTerms">
-        {{ model.template.paymentTerms|md2html }}
-    </div>
+    {% if invoice['template.payment_terms'] is not empty %}
+        <div class="paymentTerms">
+            {{ invoice['template.payment_terms']|md2html }}
+        </div>
     {% endif %}
 </body>
 </html>

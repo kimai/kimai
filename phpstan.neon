@@ -4331,11 +4331,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getAlias\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
@@ -4346,23 +4341,8 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getUserIdentifier\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
@@ -4431,11 +4411,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getBegin\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -4447,11 +4422,6 @@ parameters:
 
         -
             message: "#^Cannot call method getDueDays\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
@@ -4789,11 +4759,6 @@ parameters:
             message: "#^Method App\\\\Kernel\\:\\:getBundleClasses\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Kernel.php
-
-        -
-            message: "#^Method App\\\\Ldap\\\\FormLoginLdapFactory\\:\\:createAuthenticator\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/FormLoginLdapFactory.php
 
         -
             message: "#^Method App\\\\Ldap\\\\LdapAuthenticator\\:\\:supports\\(\\) should return bool but returns bool\\|null\\.$#"
@@ -5732,11 +5697,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findAllTagNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findIdsByTagNameList\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/TagRepository.php
 

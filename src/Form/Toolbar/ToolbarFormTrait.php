@@ -155,10 +155,10 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addDateRange(FormBuilderInterface $builder, array $options, bool $allowEmpty = true, bool $required = false): void
+    protected function addDateRange(FormBuilderInterface $builder, array $options, bool $allowEmpty = true): void
     {
         $params = [
-            'required' => $required,
+            'required' => !$allowEmpty,
             'allow_empty' => $allowEmpty,
         ];
 

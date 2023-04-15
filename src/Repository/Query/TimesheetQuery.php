@@ -94,6 +94,14 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
+     * Check if there is one or more users in the query
+     */
+    public function hasUsers(): bool
+    {
+        return $this->timesheetUser !== null || \count($this->users) > 0;
+    }
+
+    /**
      * Limit the data exclusively to the user.
      */
     public function getUser(): ?User
