@@ -37,12 +37,14 @@ final class UserContractType extends AbstractType
             ->add('workHoursFriday', DurationType::class, array_merge(['label' => 'Friday'], $dayOptions))
             ->add('workHoursSaturday', DurationType::class, array_merge(['label' => 'Saturday'], $dayOptions))
             ->add('workHoursSunday', DurationType::class, array_merge(['label' => 'Sunday'], $dayOptions))
+            /*
             ->add('holidaysPerYear', IntegerType::class, [
                 'label' => false,
                 'constraints' => [
                     new Range(['min' => 0, 'max' => 365])
                 ],
             ])
+            */
         ;
     }
 
