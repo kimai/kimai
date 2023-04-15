@@ -31,8 +31,11 @@
 
     <p>{{ 'work_times_should.help'|trans  }}</p>
 
+    {% if form.holidaysPerYear is defined %}
     <h3>{{ 'pto_year_holiday'|trans }}</h3>
 
     {{ form_rest(form) }}
+    {% endif %}
+
 
 {% endblock %}
