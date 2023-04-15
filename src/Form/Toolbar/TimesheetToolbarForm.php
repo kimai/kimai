@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the timesheet.
+ * @extends AbstractType<TimesheetQuery>
  */
 final class TimesheetToolbarForm extends AbstractType
 {

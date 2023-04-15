@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Range;
 
+/**
+ * @extends AbstractType<User>
+ */
 final class UserContractType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

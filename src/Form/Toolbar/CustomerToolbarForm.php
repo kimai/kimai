@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the customer.
+ * @extends AbstractType<CustomerQuery>
  */
 final class CustomerToolbarForm extends AbstractType
 {

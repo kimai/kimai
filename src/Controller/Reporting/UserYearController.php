@@ -16,6 +16,7 @@ use App\Model\MonthlyStatistic;
 use App\Reporting\YearByUser\YearByUser;
 use App\Reporting\YearByUser\YearByUserForm;
 use DateTime;
+use DateTimeInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,6 +76,7 @@ final class UserYearController extends AbstractUserReportController
             $values->setDate(clone $defaultDate);
         }
 
+        /** @var \DateTimeInterface $start */
         $start = $values->getDate();
         // there is a potential edge case bug for financial years:
         // the last month will be skipped, if the financial year started on a different day than the first
@@ -82,10 +84,10 @@ final class UserYearController extends AbstractUserReportController
 
         $selectedUser = $values->getUser();
 
-        $previous = clone $start;
+        $previous = DateTime::createFromInterface($start);
         $previous->modify('-1 year');
 
-        $next = clone $start;
+        $next = DateTime::createFromInterface($start);
         $next->modify('+1 year');
 
         $data = $this->prepareReport($start, $end, $selectedUser);
@@ -105,12 +107,12 @@ final class UserYearController extends AbstractUserReportController
         ];
     }
 
-    protected function getStatisticDataRaw(DateTime $begin, DateTime $end, User $user): array
+    protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
         return $this->statisticService->getMonthlyStatisticsGrouped($begin, $end, [$user]);
     }
 
-    protected function createStatisticModel(DateTime $begin, DateTime $end, User $user): DateStatisticInterface
+    protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface
     {
         return new MonthlyStatistic($begin, $end, $user);
     }

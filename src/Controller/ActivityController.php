@@ -414,6 +414,10 @@ final class ActivityController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
+    /**
+     * @param ActivityQuery $query
+     * @return FormInterface<ActivityQuery>
+     */
     private function getToolbarForm(ActivityQuery $query): FormInterface
     {
         return $this->createSearchForm(ActivityToolbarForm::class, $query, [
@@ -423,6 +427,10 @@ final class ActivityController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Activity $activity
+     * @return FormInterface<ActivityEditForm>
+     */
     private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();

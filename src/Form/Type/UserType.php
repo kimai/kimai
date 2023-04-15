@@ -21,6 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a user.
+ * @extends AbstractType<User>
  */
 final class UserType extends AbstractType
 {
