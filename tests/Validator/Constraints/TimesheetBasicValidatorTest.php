@@ -143,39 +143,6 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testDisabledValuesDuringStart()
-    {
-        $begin = new \DateTime('-10 hour');
-        $customer = new Customer('foo');
-        $customer->setVisible(false);
-        $activity = new Activity();
-        $activity->setVisible(false);
-        $project = new Project();
-        $project->setVisible(false);
-        $project->setCustomer($customer);
-        $activity->setProject($project);
-
-        $timesheet = new Timesheet();
-        $timesheet
-            ->setBegin($begin)
-            ->setActivity($activity)
-            ->setProject($project)
-        ;
-
-        $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
-
-        $this->buildViolation('Cannot start a disabled activity.')
-            ->atPath('property.path.activity')
-            ->setCode(TimesheetBasic::DISABLED_ACTIVITY_ERROR)
-            ->buildNextViolation('Cannot start a disabled project.')
-            ->atPath('property.path.project')
-            ->setCode(TimesheetBasic::DISABLED_PROJECT_ERROR)
-            ->buildNextViolation('Cannot start a disabled customer.')
-            ->atPath('property.path.customer')
-            ->setCode(TimesheetBasic::DISABLED_CUSTOMER_ERROR)
-            ->assertRaised();
-    }
-
     public function getProjectStartEndTestData()
     {
         yield [new \DateTime(), new \DateTime(), [

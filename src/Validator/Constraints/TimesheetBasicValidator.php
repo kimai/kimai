@@ -102,33 +102,6 @@ final class TimesheetBasicValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        $timesheetEnd = $timesheet->getEnd();
-        $newOrStarted = null === $timesheetEnd || $timesheet->getId() === null;
-
-        if ($newOrStarted && $hasActivity && !$activity->isVisible()) {
-            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_ACTIVITY_ERROR))
-                ->atPath('activity')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetBasic::DISABLED_ACTIVITY_ERROR)
-                ->addViolation();
-        }
-
-        if ($newOrStarted && !$project->isVisible()) {
-            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_PROJECT_ERROR))
-                ->atPath('project')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetBasic::DISABLED_PROJECT_ERROR)
-                ->addViolation();
-        }
-
-        if ($newOrStarted && !$project->getCustomer()->isVisible()) {
-            $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::DISABLED_CUSTOMER_ERROR))
-                ->atPath('customer')
-                ->setTranslationDomain('validators')
-                ->setCode(TimesheetBasic::DISABLED_CUSTOMER_ERROR)
-                ->addViolation();
-        }
-
         if ($hasActivity && !$project->isGlobalActivities() && $activity->isGlobal()) {
             $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_DISALLOWS_GLOBAL_ACTIVITY))
                 ->atPath('activity')
