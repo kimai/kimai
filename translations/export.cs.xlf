@@ -3,8 +3,8 @@
   <file source-language="en" target-language="cs" datatype="plaintext" original="export.en.xlf">
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
-        <source>default.pdf.twig</source>
-        <target>Standardní</target>
+        <source>Default</source>
+        <target state="translated">Výchozí</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
