@@ -89,7 +89,7 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
                 'force_time' => 'end',
             ]))
-            ->add('customer', CustomerType::class, [
+            ->add('customer', CustomerType::class, array_merge([
                 'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
                 'query_builder_for_user' => true,
