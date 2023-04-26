@@ -406,7 +406,7 @@ final class ProfileController extends AbstractController
         return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
     }
 
-    #[Route(path: '/{username}/totp.png', name: 'user_profile_2fa_image', methods: ['GET'])]
+    #[Route(path: '/{username}/totp-qr-code', name: 'user_profile_2fa_image', methods: ['GET'])]
     #[IsGranted('2fa', 'profile')]
     public function displayTotpQrCode(User $profile, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
