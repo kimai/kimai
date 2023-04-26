@@ -6,6 +6,9 @@
 rector.php
 phpstan.sh
 
+# custom apache rules e.g. to deactivate ioncube loader
+public/.user.ini
+
 # for symfony local webserver
 php.ini
 .php-version
