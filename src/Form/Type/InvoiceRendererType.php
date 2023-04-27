@@ -47,7 +47,6 @@ final class InvoiceRendererType extends AbstractType
                 };
             },
             'translation_domain' => 'invoice-renderer',
-            'search' => false,
         ]);
     }
 
