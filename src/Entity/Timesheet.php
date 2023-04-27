@@ -45,6 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\VirtualProperty('UserAsId', exp: 'object.getUser().getId()', options: [new Serializer\SerializedName('user'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
 #[Serializer\VirtualProperty('TagsAsArray', exp: 'object.getTagsAsArray()', options: [new Serializer\SerializedName('tags'), new Serializer\Type(name: 'array<string>'), new Serializer\Groups(['Default'])])]
 #[Constraints\Timesheet]
+#[Constraints\TimesheetDeactivated]
 class Timesheet implements EntityWithMetaFields, ExportableItem
 {
     /**
