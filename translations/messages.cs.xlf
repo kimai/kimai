@@ -706,7 +706,7 @@
       </trans-unit>
       <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
-        <target state="translated">Plný seznam</target>
+        <target state="translated">Podrobný seznam</target>
       </trans-unit>
       <trans-unit id="N778uJ6" resname="export.summary">
         <source>export.summary</source>
