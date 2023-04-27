@@ -66,13 +66,13 @@ class TimesheetDeactivatedValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($timesheet, new TimesheetDeactivated(['message' => 'myMessage']));
 
-        $this->buildViolation('Cannot start a disabled activity.')
+        $this->buildViolation(TimesheetDeactivated::getErrorName(TimesheetDeactivated::DISABLED_ACTIVITY_ERROR))
             ->atPath('property.path.activity')
             ->setCode(TimesheetDeactivated::DISABLED_ACTIVITY_ERROR)
-            ->buildNextViolation('Cannot start a disabled project.')
+            ->buildNextViolation(TimesheetDeactivated::getErrorName(TimesheetDeactivated::DISABLED_PROJECT_ERROR))
             ->atPath('property.path.project')
             ->setCode(TimesheetDeactivated::DISABLED_PROJECT_ERROR)
-            ->buildNextViolation('Cannot start a disabled customer.')
+            ->buildNextViolation(TimesheetDeactivated::getErrorName(TimesheetDeactivated::DISABLED_CUSTOMER_ERROR))
             ->atPath('property.path.customer')
             ->setCode(TimesheetDeactivated::DISABLED_CUSTOMER_ERROR)
             ->assertRaised();
