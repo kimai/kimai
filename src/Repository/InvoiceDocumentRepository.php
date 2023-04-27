@@ -45,7 +45,7 @@ final class InvoiceDocumentRepository
      */
     public function removeDirectory(string $directory): void
     {
-        if (($key = array_search($directory, $this->documentDirs)) !== false) {
+        if (($key = array_search($directory, $this->documentDirs, true)) !== false) {
             unset($this->documentDirs[$key]);
         }
     }

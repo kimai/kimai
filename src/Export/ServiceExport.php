@@ -11,26 +11,54 @@ namespace App\Export;
 
 use App\Entity\ExportableItem;
 use App\Event\ExportItemsQueryEvent;
+use App\Export\Renderer\HtmlRendererFactory;
+use App\Export\Renderer\PdfRendererFactory;
 use App\Repository\Query\ExportQuery;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class ServiceExport
 {
     /**
+     * @var array<string>
+     */
+    private array $documentDirs = [];
+    /**
      * @var ExportRendererInterface[]
      */
-    private $renderer = [];
+    private array $renderer = [];
     /**
      * @var TimesheetExportInterface[]
      */
-    private $timesheetExporter = [];
+    private array $timesheetExporter = [];
     /**
      * @var ExportRepositoryInterface[]
      */
-    private $repositories = [];
+    private array $repositories = [];
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        private EventDispatcherInterface $eventDispatcher,
+        private HtmlRendererFactory $htmlRendererFactory,
+        private PdfRendererFactory $pdfRendererFactory
+    )
     {
+    }
+
+    /**
+     * @CloudRequired
+     */
+    public function addDirectory(string $directory): void
+    {
+        $this->documentDirs[] = $directory;
+    }
+
+    /**
+     * @CloudRequired
+     */
+    public function removeDirectory(string $directory): void
+    {
+        if (($key = array_search($directory, $this->documentDirs, true)) !== false) {
+            unset($this->documentDirs[$key]);
+        }
     }
 
     public function addRenderer(ExportRendererInterface $renderer): void
@@ -43,12 +71,38 @@ final class ServiceExport
      */
     public function getRenderer(): array
     {
-        return $this->renderer;
+        $renderer = [];
+
+        foreach ($this->documentDirs as $exportPath) {
+            if (!is_dir($exportPath)) {
+                continue;
+            }
+
+            foreach (glob($exportPath . '/*.html.twig') as $htmlTpl) {
+                $tplName = basename($htmlTpl);
+                if (stripos($tplName, '-bundle') !== false) {
+                    continue;
+                }
+
+                $renderer[] = $this->htmlRendererFactory->create($tplName, $tplName);
+            }
+
+            foreach (glob($exportPath . '/*.pdf.twig') as $pdfHtml) {
+                $tplName = basename($pdfHtml);
+                if (stripos($tplName, '-bundle') !== false) {
+                    continue;
+                }
+
+                $renderer[] = $this->pdfRendererFactory->create($tplName, $tplName);
+            }
+        }
+
+        return array_merge($this->renderer, $renderer);
     }
 
     public function getRendererById(string $id): ?ExportRendererInterface
     {
-        foreach ($this->renderer as $renderer) {
+        foreach ($this->getRenderer() as $renderer) {
             if ($renderer->getId() === $id) {
                 return $renderer;
             }
