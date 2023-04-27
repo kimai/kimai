@@ -29,7 +29,9 @@ class ExportServiceCompilerPassTest extends TestCase
     private function getContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
-        $container->setParameter('kimai.export.documents', []); // TODO we could test that as well
+        $container->setParameter('kimai.export.documents', [
+            'templates/export/renderer/',
+        ]);
 
         $definition = new Definition(ServiceExport::class);
         $container->setDefinition(ServiceExport::class, $definition);
@@ -61,7 +63,8 @@ class ExportServiceCompilerPassTest extends TestCase
         $definition = $container->findDefinition(ServiceExport::class);
         $methods = $definition->getMethodCalls();
 
-        self::assertCount(5, $methods);
+        self::assertCount(6, $methods);
+        self::assertTrue($definition->hasMethodCall('addDirectory'));
         self::assertTrue($definition->hasMethodCall('addRenderer'));
         self::assertTrue($definition->hasMethodCall('addTimesheetExporter'));
         self::assertTrue($definition->hasMethodCall('addExportRepository'));

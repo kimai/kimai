@@ -481,7 +481,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
 
-        $imgUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $imgUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
         $this->assertStringContainsString('<img src="' . $imgUrl . '" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />', $content);
 
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
@@ -525,14 +525,14 @@ class ProfileControllerTest extends ControllerBaseTest
 
     public function testIsTwoFactorImageSecure(): void
     {
-        $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
     }
 
     public function testTwoFactorImageFailsOnMissingSecret(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
         $this->assertRouteNotFound($client);
     }
 
@@ -546,7 +546,7 @@ class ProfileControllerTest extends ControllerBaseTest
         // this is required, so the totp secret is stored in the user entity
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
 
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
         self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals('image/png', $client->getResponse()->headers->get('Content-Type'));
     }

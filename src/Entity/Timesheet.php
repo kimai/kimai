@@ -184,7 +184,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     /**
      * Internal property used to determine whether the billable field should be calculated automatically.
      */
-    private string $billableMode = self::BILLABLE_DEFAULT;
+    #[Assert\NotNull]
+    private ?string $billableMode = self::BILLABLE_DEFAULT;
     #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
     private ?string $category = self::WORK;
@@ -552,12 +553,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this;
     }
 
-    public function getBillableMode(): string
+    public function getBillableMode(): ?string
     {
         return $this->billableMode;
     }
 
-    public function setBillableMode(string $billableMode): void
+    public function setBillableMode(?string $billableMode): void
     {
         $this->billableMode = $billableMode;
     }

@@ -31,6 +31,7 @@ class ProjectEditForm extends AbstractType
         $customer = null;
         $isNew = false;
         $options['currency'] = null;
+        $customerOptions = [];
 
         if (isset($options['data'])) {
             /** @var Project $entry */
@@ -40,6 +41,11 @@ class ProjectEditForm extends AbstractType
             if (null !== $entry->getCustomer()) {
                 $customer = $entry->getCustomer();
                 $options['currency'] = $customer->getCurrency();
+
+                if (!$customer->isVisible()) {
+                    // force visibility, see https://github.com/kimai/kimai/issues/3985
+                    $customerOptions['pre_select_customer'] = true;
+                }
             }
         }
 
@@ -83,11 +89,11 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
                 'force_time' => 'end',
             ]))
-            ->add('customer', CustomerType::class, [
+            ->add('customer', CustomerType::class, array_merge([
                 'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
                 'query_builder_for_user' => true,
-            ])
+            ], $customerOptions))
             ->add('globalActivities', YesNoType::class, [
                 'label' => 'globalActivities',
                 'help' => 'help.globalActivities'
