@@ -674,7 +674,7 @@
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
-        <target>الإبلاغ</target>
+        <target state="translated">التقارير</target>
       </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>

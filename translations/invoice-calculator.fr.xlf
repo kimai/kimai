@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Groupe d'utilisateurs - une entrée par utilisateur</target>
+        <target state="translated">Utilisateur : une entrée par utilisateur</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Projet : une entrée par projet</target>
+        <target state="translated">Projet : une entrée par projet</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
