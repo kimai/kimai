@@ -19,7 +19,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final class ServiceExport
 {
     /**
-     * @var array<string>
+     * @var array<int, string>
      */
     private array $documentDirs = [];
     /**
@@ -78,22 +78,28 @@ final class ServiceExport
                 continue;
             }
 
-            foreach (glob($exportPath . '/*.html.twig') as $htmlTpl) {
-                $tplName = basename($htmlTpl);
-                if (stripos($tplName, '-bundle') !== false) {
-                    continue;
-                }
+            $htmlTemplates = glob($exportPath . '/*.html.twig');
+            if (\is_array($htmlTemplates)) {
+                foreach ($htmlTemplates as $htmlTpl) {
+                    $tplName = basename($htmlTpl);
+                    if (stripos($tplName, '-bundle') !== false) {
+                        continue;
+                    }
 
-                $renderer[] = $this->htmlRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->htmlRendererFactory->create($tplName, $tplName);
+                }
             }
 
-            foreach (glob($exportPath . '/*.pdf.twig') as $pdfHtml) {
-                $tplName = basename($pdfHtml);
-                if (stripos($tplName, '-bundle') !== false) {
-                    continue;
-                }
+            $pdfTemplates = glob($exportPath . '/*.pdf.twig');
+            if (\is_array($pdfTemplates)) {
+                foreach ($pdfTemplates as $pdfTpl) {
+                    $tplName = basename($pdfTpl);
+                    if (stripos($tplName, '-bundle') !== false) {
+                        continue;
+                    }
 
-                $renderer[] = $this->pdfRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->pdfRendererFactory->create($tplName, $tplName);
+                }
             }
         }
 

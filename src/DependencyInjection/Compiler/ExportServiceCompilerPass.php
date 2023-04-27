@@ -39,13 +39,16 @@ final class ExportServiceCompilerPass implements CompilerPassInterface
             $definition->addMethodCall('addExportRepository', [new Reference($id)]);
         }
 
-        $path = \dirname(__DIR__, 3) . DIRECTORY_SEPARATOR;
-        foreach ($container->getParameter('kimai.export.documents') as $exportPath) {
-            if (!is_dir($path . $exportPath)) {
-                continue;
-            }
+        $exportDocuments = $container->getParameter('kimai.export.documents');
+        if (\is_array($exportDocuments)) {
+            $path = \dirname(__DIR__, 3) . DIRECTORY_SEPARATOR;
+            foreach ($exportDocuments as $exportPath) {
+                if (!is_dir($path . $exportPath)) {
+                    continue;
+                }
 
-            $definition->addMethodCall('addDirectory', [realpath($path . $exportPath)]);
+                $definition->addMethodCall('addDirectory', [realpath($path . $exportPath)]);
+            }
         }
     }
 }
