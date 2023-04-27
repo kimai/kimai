@@ -99,6 +99,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setActivity($activity);
         $entity->setProject($project);
         $entity->setBegin(new \DateTime());
+        $entity->setEnd(new \DateTime());
 
         $this->assertHasViolationForField($entity, 'customer');
     }
@@ -166,6 +167,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setActivity($activity);
         $entity->setProject($project);
         $entity->setBegin(new \DateTime());
+        $entity->setEnd(new \DateTime());
 
         $this->assertHasViolationForField($entity, 'project');
     }
@@ -203,6 +205,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setActivity($activity);
         $entity->setProject($project);
         $entity->setBegin(new \DateTime());
+        $entity->setEnd(new \DateTime());
 
         $this->assertHasViolationForField($entity, 'activity');
     }

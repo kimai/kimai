@@ -6751,11 +6751,6 @@ parameters:
             path: src/Validator/Constraints/TeamValidator.php
 
         -
-            message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
