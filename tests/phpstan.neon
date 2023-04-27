@@ -10523,11 +10523,6 @@ parameters:
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:testDisabledValuesDuringStart\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBasicValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:testEmptyTimesheet\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
