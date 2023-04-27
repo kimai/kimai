@@ -57,6 +57,13 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
             $extendedOptions['data-disable-search'] = 1;
         }
 
+        // there is a very weird logic in vendor/symfony/twig-bridge/Resources/views/Form/form_div_layout.html.twig
+        // in block "block choice_widget_collapsed" that resets "{% set required = false %}", so we fake it into the select
+        if (true === $options['required'] && (!\array_key_exists('size', $options['attr']) || $options['attr']['size'] <= 1)) {
+            $extendedOptions['required'] = 'required';
+            $extendedOptions['placeholder'] = '';
+        }
+
         $view->vars['attr'] = array_merge($view->vars['attr'], $extendedOptions);
     }
 

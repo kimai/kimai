@@ -52,6 +52,15 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         let plugins = ['change_listener'];
 
         const isMultiple = node.multiple !== undefined && node.multiple === true;
+        const isRequired = node.required !== undefined && node.required === true;
+
+        if (isRequired) {
+            plugins.push('no_backspace_delete');
+        }
+
+        if (isMultiple) {
+            plugins.push('remove_button');
+        }
 
         /*
         const isOrdering = false;
@@ -61,13 +70,9 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         }
         */
 
-        if (isMultiple) {
-            plugins.push('remove_button');
-        }
-
         let options = {
             lockOptgroupOrder: true,
-            allowEmptyOption: true,
+            allowEmptyOption: !isRequired,
             plugins: plugins,
             // if there are more than X entries, the other ones are hidden and can only be found
             // by typing some characters to trigger the internal option search

@@ -82,6 +82,34 @@
         <source>task.help.team</source>
         <target state="translated">Przypisz to zadanie do zespołu</target>
       </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Szacowany czas potrzebny do wykonania zadania w formacie hh:mm</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="translated">Ilość zadań na stronie w widżecie pulpitu nawigacyjnego</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Znaczniki te zostaną skopiowane do każdego wpisu w ewidencji pomiarów</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+        <source>task_no_estimation</source>
+        <target state="translated">Bez szacowania</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+        <source>task_with_estimation</source>
+        <target state="translated">Z szacunkiem</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
+        <source>task_overdue</source>
+        <target state="translated">Zaległe</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Opis ten zostanie skopiowany do każdego wpisu w ewidencji pomiarów</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

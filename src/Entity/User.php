@@ -158,6 +158,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?bool $isAllowedToSeeAllData = null;
     #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Regex(pattern: '/\//', match: false, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 60, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

@@ -63,11 +63,17 @@ final class CustomerType extends AbstractType
             'ignore_customer' => null,
             // @var Customer|Customer[]|null
             'customers' => null,
+            'pre_select_customer' => false,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (CustomerRepository $repo) use ($options) {
                 $query = new CustomerFormTypeQuery($options['customers']);
+
+                if (true === $options['pre_select_customer']) {
+                    $query->setAllowCustomerPreselect(true);
+                }
+
                 if (true === $options['query_builder_for_user']) {
                     $query->setUser($options['user']);
                 }

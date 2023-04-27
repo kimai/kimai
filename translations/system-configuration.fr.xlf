@@ -286,6 +286,18 @@
         <source>copy_teams_on_create</source>
         <target state="translated">Reprendre les équipes de l'utilisateur connecté lors de la création de nouvelles entrées</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Format du numéro de client</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Autoriser la duplication du numéro de compte</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="needs-translation">Autoriser la création d’activités sous forme de suivi du temps</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
