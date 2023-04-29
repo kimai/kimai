@@ -66,6 +66,14 @@ final class WorkingTimeService
         return $year;
     }
 
+    public function getMonth(User $user, \DateTimeInterface $monthDate): Month
+    {
+        // TODO improve me, do not calculate the entire year for that
+        $year = $this->getYear($user, $monthDate);
+
+        return $year->getMonth($monthDate);
+    }
+
     public function approveMonth(Month $month, \DateTimeInterface $approvalDate, User $approver): void
     {
         $update = false;
