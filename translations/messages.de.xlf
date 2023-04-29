@@ -619,6 +619,14 @@
         <source>complete_month.help</source>
         <target>Sobald der Monat abgeschlossen ist, kann der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder bearbeiten.</target>
       </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target>Monats-Abschluss PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target>Dieses Dokument dient als Nachweis der geleisteten Arbeitszeiten.</target>
+      </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
         <target>Überprüfung</target>

@@ -619,6 +619,14 @@
         <source>complete_month.help</source>
         <target>After completing the month, the user will no longer be able to create or edit times for that period.</target>
       </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target>Completed month PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target>This document serves as proof of the hours worked.</target>
+      </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
         <target>Review</target>
