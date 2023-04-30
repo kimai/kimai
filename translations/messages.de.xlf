@@ -663,6 +663,10 @@
         <source>manual_bookings.work_contract_intro</source>
         <target>Manuelle Buchungen können weder nachträglich geändert noch gelöscht werden!</target>
       </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target>Die Dauer kann sowohl positiv (Erhöhung der Ist-Zeit) als auch negativ (Reduzierung der Ist-Zeit) sein.</target>
+      </trans-unit>
       <trans-unit id="M.zFjwe" resname="pto_year_holiday">
         <source>pto_year_holiday</source>
         <target>Urlaubstage pro Jahr</target>
