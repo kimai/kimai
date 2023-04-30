@@ -85,7 +85,7 @@ final class UserVoter extends Voter
         if ($attribute === '2fa') {
             // two factor only works for internal users and
             // can only be activated by the logged-in user for himself
-            return $subject->isInternalUser() && $subject->getId() === $user->getId();
+            return $subject->getId() === $user->getId();
         }
 
         $permission = $attribute;
