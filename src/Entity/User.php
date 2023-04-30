@@ -1109,14 +1109,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->totpSecret !== null;
     }
 
-    /**
-     * @internal used in twig template to show the code
-     */
-    public function getTotpSecret(): ?string
-    {
-        return $this->totpSecret;
-    }
-
     public function isTotpAuthenticationEnabled(): bool
     {
         return $this->totpEnabled;

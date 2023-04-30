@@ -6,8 +6,6 @@
         <div class="row mb-3">
             <p>
                 {{ 'profile.2fa_intro'|trans }}
-                <br>
-                {{ 'profile.2fa_secret'|trans({'%code%': user.totpSecret}) }}
             </p>
             <p>
                 <img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
