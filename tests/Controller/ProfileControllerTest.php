@@ -481,8 +481,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
 
-        $imgUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        $this->assertStringContainsString('<img src="' . $imgUrl . '" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />', $content);
+        $this->assertStringContainsString('<img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
 
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
@@ -521,33 +520,5 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testIsTwoFactorDeactivateSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa_deactivate', 'POST');
-    }
-
-    public function testIsTwoFactorImageSecure(): void
-    {
-        $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-    }
-
-    public function testTwoFactorImageFailsOnMissingSecret(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        $this->assertRouteNotFound($client);
-    }
-
-    public function testTwoFactorImage(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
-        self::assertFalse($user->hasTotpSecret());
-
-        // this is required, so the totp secret is stored in the user entity
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
-
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        self::assertTrue($client->getResponse()->isSuccessful());
-        self::assertEquals('image/png', $client->getResponse()->headers->get('Content-Type'));
     }
 }

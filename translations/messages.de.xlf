@@ -574,6 +574,10 @@
         <source>profile.2fa_confirmation</source>
         <target>Bitte bestätigen Sie den Code, wodurch die Zwei-Faktor-Authentifizierung für dieses Konto aktiviert wird.</target>
       </trans-unit>
+      <trans-unit id="7e_ZUGs" resname="profile.2fa_secret">
+        <source>profile.2fa_secret</source>
+        <target>Sollten Sie den Code nicht scannen können, können Sie diesen auch kopieren: %code%</target>
+      </trans-unit>
       <trans-unit id="IRzPWmL" resname="login.2fa_intro">
         <source>login.2fa_intro</source>
         <target>Bitte geben Sie den Bestätigungscode ein, um die Anmeldung abzuschließen.</target>

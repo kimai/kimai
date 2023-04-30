@@ -367,11 +367,25 @@ final class ProfileController extends AbstractController
             return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
         }
 
+        $qrCodeContent = $totpAuthenticator->getQRContent($profile);
+
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($qrCodeContent)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+            ->size(200)
+            ->margin(0)
+            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->build();
+
         return $this->render('user/2fa.html.twig', [
             'tab' => '2fa',
             'user' => $profile,
             'form' => $form->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
+            'qr_code' => $result,
         ]);
     }
 
@@ -404,29 +418,5 @@ final class ProfileController extends AbstractController
         }
 
         return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
-    }
-
-    #[Route(path: '/{username}/totp-qr-code', name: 'user_profile_2fa_image', methods: ['GET'])]
-    #[IsGranted('2fa', 'profile')]
-    public function displayTotpQrCode(User $profile, TotpAuthenticatorInterface $totpAuthenticator): Response
-    {
-        if (!$profile->hasTotpSecret()) {
-            throw $this->createNotFoundException('User has no TOTP secret.');
-        }
-
-        $qrCodeContent = $totpAuthenticator->getQRContent($profile);
-
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($qrCodeContent)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(0)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->build();
-
-        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
     }
 }
