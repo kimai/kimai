@@ -391,13 +391,10 @@ final class ProfileController extends AbstractController
 
     private function getTwoFactorDeactivationForm(User $user): FormInterface
     {
-        return $this->createFormBuilder(
-            [],
-            [
-                'action' => $this->generateUrl('user_profile_2fa_deactivate', ['username' => $user->getUserIdentifier()]),
-                'method' => 'POST'
-            ]
-        )->getForm();
+        return $this->createFormBuilder([], [
+            'action' => $this->generateUrl('user_profile_2fa_deactivate', ['username' => $user->getUserIdentifier()]),
+            'method' => 'POST'
+        ])->getForm();
     }
 
     #[Route(path: '/{username}/2fa_deactivate', name: 'user_profile_2fa_deactivate', methods: ['POST'])]
