@@ -8,7 +8,7 @@
                 {{ 'profile.2fa_intro'|trans }}
             </p>
             <p>
-                <img src="{{ path('user_profile_2fa_image', {'username': user.username}) }}" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />
+                <img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
             </p>
             {% if user.totpAuthenticationEnabled %}
                 <div class="row mb-3">
