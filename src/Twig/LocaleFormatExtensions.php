@@ -118,7 +118,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
     public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
     {
-        if (!$dateTime instanceof \DateTime) {
+        if (!$dateTime instanceof \DateTimeInterface) {
             return false;
         }
 
