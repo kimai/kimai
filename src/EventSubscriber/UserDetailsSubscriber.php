@@ -43,21 +43,22 @@ class UserDetailsSubscriber implements EventSubscriberInterface
         $event->setUser($user);
 
         if ($this->auth->isGranted('view', $user)) {
-            $event->addLink(
-                new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
-            );
+            $event->addLink(new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUserIdentifier()]));
         }
-
         if ($this->auth->isGranted('edit', $user)) {
-            $event->addLink(
-                new MenuItemModel('user_profile_edit', 'action.edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
-            );
+            $event->addLink(new MenuItemModel('user_profile_edit', 'action.edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()]));
         }
-
+        if ($this->auth->isGranted('password', $user)) {
+            $event->addLink(new MenuItemModel('password', 'profile.password', 'user_profile_password', ['username' => $user->getUserIdentifier()]));
+        }
+        if ($this->auth->isGranted('2fa', $user)) {
+            $event->addLink(new MenuItemModel('2fa', 'profile.2fa', 'user_profile_2fa', ['username' => $user->getUserIdentifier()]));
+        }
+        if ($this->auth->isGranted('api-token', $user)) {
+            $event->addLink(new MenuItemModel('api-token', 'profile.api-token', 'user_profile_api_token', ['username' => $user->getUserIdentifier()]));
+        }
         if ($this->auth->isGranted('preferences', $user)) {
-            $event->addLink(
-                new MenuItemModel('user_profile_preferences', 'profile.preferences', 'user_profile_preferences', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
-            );
+            $event->addLink(new MenuItemModel('user_profile_preferences', 'profile.preferences', 'user_profile_preferences', ['username' => $user->getUserIdentifier()]));
         }
     }
 }
