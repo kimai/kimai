@@ -547,7 +547,7 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target>API Zugang</target>
       </trans-unit>
       <trans-unit id="A6TLLQa" resname="profile.password">
         <source>profile.password</source>

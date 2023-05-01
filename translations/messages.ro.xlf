@@ -1176,7 +1176,7 @@
       </trans-unit>
       <trans-unit id="FeFBn_3" resname="profile.2fa">
         <source>profile.2fa</source>
-        <target state="translated">Doi factori (TOTP)</target>
+        <target state="translated">Doi factori (2FA)</target>
       </trans-unit>
       <trans-unit id="IRzPWmL" resname="login.2fa_intro">
         <source>login.2fa_intro</source>

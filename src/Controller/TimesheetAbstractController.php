@@ -202,6 +202,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function duplicate(Timesheet $timesheet, Request $request): Response
     {
         $copyTimesheet = clone $timesheet;
+        $copyTimesheet->resetRates();
 
         $event = new TimesheetMetaDefinitionEvent($copyTimesheet);
         $this->dispatcher->dispatch($event);

@@ -25,11 +25,6 @@ final class TwoFactorCondition implements TwoFactorConditionInterface
         /** @var User $user */
         $user = $context->getUser();
 
-        // only internal users support 2FA currently
-        if (!$user->isInternalUser()) {
-            return false;
-        }
-
         // never require 2FA on API calls
         if (str_starts_with($context->getRequest()->getRequestUri(), '/api/')) {
             return false;

@@ -34,6 +34,14 @@
         <source>daterangepicker.thisYear</source>
         <target>Anno attuale</target>
       </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Periodo totale</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+        <source>This year — until today</source>
+        <target state="translated">Anno attuale - fino ad oggi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -615,6 +615,15 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $all;
     }
 
+    public function resetRates(): void
+    {
+        $this->setRate(0.00);
+        $this->setInternalRate(null);
+        $this->setHourlyRate(null);
+        $this->setFixedRate(null);
+        $this->setBillableMode(Timesheet::BILLABLE_AUTOMATIC);
+    }
+
     public function getMetaField(string $name): ?MetaTableTypeInterface
     {
         foreach ($this->meta as $field) {
