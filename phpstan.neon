@@ -2741,11 +2741,6 @@ parameters:
             path: src/Export/ExportFilename.php
 
         -
-            message: "#^Method App\\\\Export\\\\ExportFilename\\:\\:getFilename\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Export/ExportFilename.php
-
-        -
             message: "#^Parameter \\#1 \\$customer of method App\\\\Export\\\\ExportFilename\\:\\:getCustomerName\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
             count: 1
             path: src/Export/ExportFilename.php
