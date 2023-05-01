@@ -347,7 +347,13 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             --end;
         }
 
-        return (start > 0 || end < title.length) ? title.substring(start, end) : title;
+        let result = (start > 0 || end < title.length) ? title.substring(start, end) : title;
+
+        if (result === '' && entity['name'] !== undefined) {
+            return entity['name'];
+        }
+
+        return result;
     }
 
     /**

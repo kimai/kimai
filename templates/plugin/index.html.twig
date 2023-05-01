@@ -72,7 +72,7 @@
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                            {% if extension.buy is defined and extension.buy is not empty %}
+                            {% if extension.buy is defined and extension.buy is not empty and (extension.minimum_version is not defined or (extension.minimum_version is not empty and constant('App\\Constants::VERSION') >= extension.minimum_version)) %}
                                 <a class="btn btn-icon btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
                             {% endif %}
                         </td>

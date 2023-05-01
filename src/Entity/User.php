@@ -997,7 +997,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->password = $data['password'];
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getDisplayName();
     }

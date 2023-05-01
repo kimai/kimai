@@ -72,7 +72,7 @@ final class SearchTerm
         return $this->originalTerm;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->originalTerm;
     }
