@@ -47,6 +47,7 @@ class UserPreference
     #[Serializer\Groups(['Default'])]
     private string $name;
     #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 250)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $value;
