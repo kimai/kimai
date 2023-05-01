@@ -1274,7 +1274,7 @@
       </trans-unit>
       <trans-unit id="FeFBn_3" resname="profile.2fa">
         <source>profile.2fa</source>
-        <target state="translated">To-faktor (TOTP)</target>
+        <target state="translated">To-faktor (2FA)</target>
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable">
         <source>help.billable</source>
