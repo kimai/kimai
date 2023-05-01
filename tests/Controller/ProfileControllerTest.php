@@ -474,17 +474,36 @@ class ProfileControllerTest extends ControllerBaseTest
         self::assertFalse($user->hasTotpSecret());
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
         self::assertTrue($user->hasTotpSecret());
 
-        $content = $client->getResponse()->getContent();
-        self::assertNotFalse($content);
-
-        $imgUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        $this->assertStringContainsString('<img src="' . $imgUrl . '" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />', $content);
-
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+
+        $this->assertStringContainsString('<img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
+        $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+    }
+
+    public function testTwoFactorAsAdmin(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+    }
+
+    public function testTwoFactorAsSuperAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+
+        $this->assertStringContainsString('<img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
         $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
     }
 
@@ -521,33 +540,5 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testIsTwoFactorDeactivateSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa_deactivate', 'POST');
-    }
-
-    public function testIsTwoFactorImageSecure(): void
-    {
-        $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-    }
-
-    public function testTwoFactorImageFailsOnMissingSecret(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        $this->assertRouteNotFound($client);
-    }
-
-    public function testTwoFactorImage(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
-        self::assertFalse($user->hasTotpSecret());
-
-        // this is required, so the totp secret is stored in the user entity
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
-
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp-qr-code');
-        self::assertTrue($client->getResponse()->isSuccessful());
-        self::assertEquals('image/png', $client->getResponse()->headers->get('Content-Type'));
     }
 }
