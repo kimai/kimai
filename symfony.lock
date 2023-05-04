@@ -225,9 +225,6 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
-    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
