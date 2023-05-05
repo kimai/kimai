@@ -133,12 +133,15 @@ trait RendererTestTrait
         $activity2->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta2]));
         $activity2->method('getVisibleMetaFields')->willReturn([$aMeta2]);
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
+        $pref1 = new UserPreference('foo', 'bar');
+        $pref2 = new UserPreference('mad', 123.45);
+        $userMethods = ['getId', 'getPreferenceValue', 'getVisiblePreferences', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
         $user1->method('getUserIdentifier')->willReturn('foo-bar');
+        $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
         $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
