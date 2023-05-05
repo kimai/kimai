@@ -78,7 +78,7 @@
                 {% endfor %}
             {% endfor %}
             {% set last = chartData|last %}
-            {% if last is not null and last.value > 0 %}
+            {% if last is not empty and last.value > 0 %}
                 {% set chartValueZero = {
                     'label': (showMoneyBudget ? 0|money(currency) : 0|duration),
                     'value': (showMoneyBudget ? 0|chart_money : 0|chart_duration),
