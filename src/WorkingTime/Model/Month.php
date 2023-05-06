@@ -9,6 +9,7 @@
 
 namespace App\WorkingTime\Model;
 
+use App\Entity\User;
 use App\Model\Month as BaseMonth;
 
 /**
@@ -38,6 +39,28 @@ final class Month extends BaseMonth
         }
 
         return $this->locked;
+    }
+
+    public function getLockDate(): ?\DateTimeInterface
+    {
+        foreach ($this->getDays() as $day) {
+            if ($day->getWorkingTime() !== null && $day->getWorkingTime()->isApproved()) {
+                return $day->getWorkingTime()->getApprovedAt();
+            }
+        }
+
+        return null;
+    }
+
+    public function getLockedBy(): ?User
+    {
+        foreach ($this->getDays() as $day) {
+            if ($day->getWorkingTime() !== null && $day->getWorkingTime()->isApproved()) {
+                return $day->getWorkingTime()->getApprovedBy();
+            }
+        }
+
+        return null;
     }
 
     protected function createDay(\DateTimeInterface $day): Day

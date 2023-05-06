@@ -655,6 +655,10 @@
         <source>work_times_result</source>
         <target>Geleistete Stunden</target>
       </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target>Bestätigt von %user% am %date%</target>
+      </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target>Manuelle Buchungen</target>

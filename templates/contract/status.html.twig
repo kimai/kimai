@@ -168,7 +168,7 @@
                     {% set approved = approved + 1 %}
                 {% endif %}
             {% endfor %}
-            {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button %}
+            {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button, username %}
             {% from "macros/status.html.twig" import status_count, status_duration %}
             {% block box_title %}
                 {{ 'work_times'|trans }}
@@ -206,7 +206,7 @@
                             {% if withWorkHourConfiguration %}
                             <td class="w-min">
                                 {% if month.locked %}
-                                    <i class="{{ 'locked'|icon }}"></i>
+                                    <i class="{{ 'locked'|icon }}" data-toggle="tooltip" title="{% if month.lockedBy is not null %}{{ month.lockedBy.displayName }}{% else %}{{ 'deleted'|trans }}{% endif %}: {{ month.lockDate|date_short }}"></i>
                                 {% else %}
                                     <i class="bg-yellow-lt {{ 'unlocked'|icon }}"></i>
                                 {% endif %}
