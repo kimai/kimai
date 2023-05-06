@@ -258,8 +258,10 @@
                     </tbody>
                     <tfoot>
                         <tr class="summary">
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
+                            {% if withWorkHourConfiguration %}
+                            <td></td>
+                            {% endif %}
+                            <td></td>
                             <td class="text-end total">
                                 {{ work_times_result(yearShould, yearIs, decimal) }}
                             </td>
@@ -272,7 +274,7 @@
                             {% for day in 1..31 %}
                                 <td class="contractDay"></td>
                             {% endfor %}
-                            <td class="text-nowrap"></td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
