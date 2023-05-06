@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to set roles for a User.
+ * @extends AbstractType<User>
  */
 final class UserRolesType extends AbstractType
 {

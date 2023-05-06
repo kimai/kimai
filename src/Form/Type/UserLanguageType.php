@@ -16,6 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Custom form field type to select the user language.
+ * @extends AbstractType<string>
  */
 final class UserLanguageType extends AbstractType
 {

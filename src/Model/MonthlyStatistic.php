@@ -19,12 +19,12 @@ final class MonthlyStatistic implements DateStatisticInterface
     /**
      * @var array<string|int, array<int<1, 12>, StatisticDate>>
      */
-    private $years = [];
-    private $begin;
-    private $end;
-    private $user;
+    private array $years = [];
+    private DateTimeInterface $begin;
+    private DateTimeInterface $end;
+    private User $user;
 
-    public function __construct(DateTime $begin, DateTime $end, User $user)
+    public function __construct(DateTimeInterface $begin, DateTimeInterface $end, User $user)
     {
         $this->begin = clone $begin;
         $this->end = clone $end;
@@ -43,7 +43,7 @@ final class MonthlyStatistic implements DateStatisticInterface
         }
 
         $years = [];
-        $begin = clone $this->begin;
+        $begin = DateTime::createFromInterface($this->begin);
         $begin->setTime(0, 0, 0);
 
         $tmp = clone $begin;

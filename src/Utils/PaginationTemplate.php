@@ -13,6 +13,9 @@ use Pagerfanta\View\Template\TwitterBootstrap5Template;
 
 final class PaginationTemplate extends TwitterBootstrap5Template
 {
+    /**
+     * @return array<string, string>
+     */
     protected function getDefaultOptions(): array
     {
         return array_merge(

@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstract
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -47,19 +48,41 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return $this->container->get('translator');
     }
 
-    protected function createSearchForm(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    /**
+     * @template TFormType of FormTypeInterface<TData>
+     * @template TData of mixed
+     * @param class-string<TFormType> $type
+     * @param TData $data
+     * @param array<mixed> $options
+     * @return FormInterface<TData>
+     */
+    protected function createSearchForm(string $type, mixed $data, array $options = []): FormInterface
     {
         return $this->createFormForGetRequest($type, $data, $options);
     }
 
-    protected function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    /**
+     * @template TFormType of FormTypeInterface<TData>
+     * @template TData of mixed
+     * @param class-string<TFormType> $type
+     * @param TData $data
+     * @param array<mixed> $options
+     * @return FormInterface<TData>
+     */
+    protected function createFormForGetRequest(string $type, mixed $data, array $options = []): FormInterface
     {
-        return $this->container
-            ->get('form.factory')
-            ->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options));
+        return $this->container->get('form.factory')->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options)); // @phpstan-ignore-line
     }
 
-    protected function createFormWithName(string $name, string $type, mixed $data = null, array $options = []): FormInterface
+    /**
+     * @template TFormType of FormTypeInterface<TData>
+     * @template TData of mixed
+     * @param class-string<TFormType> $type
+     * @param TData|null $data
+     * @param array<mixed> $options
+     * @return FormInterface<TData|null>
+     */
+    protected function createFormWithName(string $name, string $type = FormType::class, mixed $data = null, array $options = []): FormInterface
     {
         return $this->container->get('form.factory')->createNamed($name, $type, $data, $options);
     }
@@ -166,6 +189,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     /**
      * Handles exception flash messages for failed update/create actions.
+     * @param \Exception $exception
+     * @param FormInterface $form
+     * @return void
      */
     protected function handleFormUpdateException(\Exception $exception, FormInterface $form): void
     {

@@ -105,7 +105,9 @@ final class ReportUsersYearController extends AbstractController
             $values->setDate(clone $defaultDate);
         }
 
+        /** @var \DateTime $start */
         $start = $values->getDate();
+
         // there is a potential edge case bug for financial years:
         // the last month will be skipped, if the financial year started on a different day than the first
         $end = $dateTimeFactory->createEndOfFinancialYear($start);

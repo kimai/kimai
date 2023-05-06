@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to assign a User to teams.
+ * @extends AbstractType<User>
  */
 final class UserTeamsType extends AbstractType
 {

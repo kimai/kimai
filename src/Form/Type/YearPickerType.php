@@ -17,8 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a year via picker and select previous and next year.
- *
  * Always falls back to the current year if none or an invalid date is given.
+ * @extends AbstractType<\DateTimeInterface|null>
  */
 final class YearPickerType extends AbstractType
 {
@@ -28,19 +28,22 @@ final class YearPickerType extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
-            'start_date' => new \DateTime(),
+            'start_date' => new \DateTimeImmutable(),
             'show_range' => false,
         ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        /** @var \DateTime|null $date */
+        /** @var \DateTimeInterface|null $date */
         $date = $form->getData();
 
-        if (null === $date) {
+        if ($date === null) {
+            /** @var \DateTimeImmutable $date */
             $date = $options['start_date'];
         }
+
+        $date = \DateTime::createFromInterface($date);
 
         $view->vars['year'] = $date;
         $view->vars['show_range'] = $options['show_range'];

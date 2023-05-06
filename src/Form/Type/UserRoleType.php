@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a user role.
+ * @extends AbstractType<User>
  */
 final class UserRoleType extends AbstractType
 {

@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to set the users API token.
+ * @extends AbstractType<User>
  */
 final class UserApiTokenType extends AbstractType
 {

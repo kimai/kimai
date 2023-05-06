@@ -14,6 +14,7 @@ use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
 use App\Repository\TimesheetRepository;
 use DateTime;
+use DateTimeInterface;
 
 final class TimesheetStatisticService
 {
@@ -22,12 +23,12 @@ final class TimesheetStatisticService
     }
 
     /**
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
      * @param User[] $users
      * @return DailyStatistic[]
      */
-    public function getDailyStatistics(DateTime $begin, DateTime $end, array $users): array
+    public function getDailyStatistics(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
     {
         /** @var DailyStatistic[] $stats */
         $stats = [];
@@ -86,12 +87,12 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
      * @param User[] $users
      * @return array
      */
-    public function getDailyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
+    public function getDailyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
     {
         $stats = [];
         $usersById = [];
@@ -163,12 +164,12 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
      * @param User[] $users
      * @return array
      */
-    public function getMonthlyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
+    public function getMonthlyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
     {
         $stats = [];
         $usersById = [];

@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a visibility.
+ * @extends AbstractType<int>
  */
 final class VisibilityType extends AbstractType
 {

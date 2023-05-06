@@ -157,6 +157,11 @@ final class ExportController extends AbstractController
         return $this->export->getExportItems($query);
     }
 
+    /**
+     * @param ExportQuery $query
+     * @param string $method
+     * @return FormInterface<ExportQuery>
+     */
     private function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
         return $this->createSearchForm(ExportToolbarForm::class, $query, [

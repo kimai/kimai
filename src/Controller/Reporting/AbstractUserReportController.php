@@ -17,7 +17,7 @@ use App\Model\Statistic\StatisticDate;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Timesheet\TimesheetStatisticService;
-use DateTime;
+use DateTimeInterface;
 
 abstract class AbstractUserReportController extends AbstractController
 {
@@ -35,17 +35,17 @@ abstract class AbstractUserReportController extends AbstractController
         return true;
     }
 
-    protected function getStatisticDataRaw(DateTime $begin, DateTime $end, User $user): array
+    protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
         return $this->statisticService->getDailyStatisticsGrouped($begin, $end, [$user]);
     }
 
-    protected function createStatisticModel(DateTime $begin, DateTime $end, User $user): DateStatisticInterface
+    protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface
     {
         return new DailyStatistic($begin, $end, $user);
     }
 
-    protected function prepareReport(DateTime $begin, DateTime $end, User $user): array
+    protected function prepareReport(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
         $data = $this->getStatisticDataRaw($begin, $end, $user);
 

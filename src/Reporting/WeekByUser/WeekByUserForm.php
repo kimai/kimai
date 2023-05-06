@@ -16,6 +16,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @extends AbstractType<WeekByUser>
+ */
 final class WeekByUserForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

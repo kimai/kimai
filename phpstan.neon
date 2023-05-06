@@ -7,6 +7,12 @@ includes:
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
+    featureToggles:
+        skipCheckGenericClasses:
+            - Symfony\Component\Form\AbstractType
+            - Symfony\Component\Form\FormInterface
+            - Symfony\Component\Form\FormTypeExtensionInterface
+            - Symfony\Component\Form\FormTypeInterface
     level: 9
     strictRules:
         allRules: false
@@ -54,16 +60,6 @@ parameters:
             message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Method App\\\\API\\\\BaseApiController\\:\\:createSearchForm\\(\\) has parameter \\$data with no type specified\\.$#"
-            count: 1
-            path: src/API/BaseApiController.php
-
-        -
-            message: "#^Method App\\\\API\\\\BaseApiController\\:\\:createSearchForm\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/BaseApiController.php
 
         -
             message: "#^Parameter \\#1 \\$user of static method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createByUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
@@ -911,31 +907,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createFormForGetRequest\\(\\) has parameter \\$data with no type specified\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createFormForGetRequest\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createFormWithName\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createSearchForm\\(\\) has parameter \\$data with no type specified\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createSearchForm\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
@@ -1336,21 +1307,6 @@ parameters:
             path: src/Controller/Reporting/ReportUsersYearController.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStats\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
             message: "#^Parameter \\#3 \\$users of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStats\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
@@ -1376,37 +1332,12 @@ parameters:
             path: src/Controller/Reporting/UserWeekController.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Controller/Reporting/UserYearController.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$start of type DateTime\\|null\\.$#"
-            count: 2
-            path: src/Controller/Reporting/UserYearController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\UserYearController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
 
         -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\UserYearController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of class App\\\\Model\\\\MonthlyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/UserYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
 
@@ -1672,16 +1603,6 @@ parameters:
 
         -
             message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:extractSinglePermissionsFromSet\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DependencyInjection/AppExtension.php
-
-        -
-            message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:getFilteredPermissions\\(\\) has parameter \\$permissions with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DependencyInjection/AppExtension.php
-
-        -
-            message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:getFilteredPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/DependencyInjection/AppExtension.php
 
@@ -4241,26 +4162,6 @@ parameters:
             path: src/Form/Type/UserPreferencesCollectionType.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on mixed\\.$#"
-            count: 2
-            path: src/Form/Type/WeekPickerType.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$date of type mixed\\.$#"
-            count: 2
-            path: src/Form/Type/WeekPickerType.php
-
-        -
-            message: "#^Cannot call method modify\\(\\) on mixed\\.$#"
-            count: 2
-            path: src/Form/Type/YearPickerType.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$date of type mixed\\.$#"
-            count: 2
-            path: src/Form/Type/YearPickerType.php
-
-        -
             message: "#^Cannot access offset mixed on mixed\\.$#"
             count: 1
             path: src/Form/UserEditType.php
@@ -5154,21 +5055,6 @@ parameters:
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ProjectStatisticEvent constructor expects App\\\\Model\\\\ProjectStatistic, App\\\\Model\\\\ProjectStatistic\\|null given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$date has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$decimal has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$sumType has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/AbstractUserList.php
 
         -
             message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsRepository\\:\\:getGroupedByCustomerProjectActivityUser\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -6589,11 +6475,6 @@ parameters:
             message: "#^Class App\\\\Utils\\\\Pagination extends generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
             count: 1
             path: src/Utils/Pagination.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\PaginationTemplate\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/PaginationTemplate.php
 
         -
             message: "#^Parameter \\#1 \\$class of method App\\\\Utils\\\\PaginationTemplate\\:\\:linkLi\\(\\) expects string, mixed given\\.$#"
