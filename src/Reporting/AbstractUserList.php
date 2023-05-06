@@ -13,7 +13,7 @@ use App\Entity\Team;
 
 abstract class AbstractUserList
 {
-    private ?\DateTimeInterface $date;
+    private ?\DateTimeInterface $date = null;
     private bool $decimal = false;
     private string $sumType = 'duration';
     private ?Team $team = null;
