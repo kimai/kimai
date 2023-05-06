@@ -105,28 +105,21 @@ kimai:
             TEAMS: ['view_team','create_team','edit_team','delete_team']
             LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
             REPORTING: ['view_reporting','view_other_reporting','project_reporting','customer_reporting']
-            # some single default definitions for roles
-            SINGLE_USER: ['view_team_member','time_team_project','create_tag','view_reporting']
-            SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
-            SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
-            SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']
-            # link above sets to one complete set for each user role
-            ROLE_USER: ['@TIMESHEET','@PROFILE','@SINGLE_USER']
-            ROLE_TEAMLEAD: ['@ACTIVITIES_TEAMLEAD','@PROJECTS_TEAMLEAD','@CUSTOMERS_TEAMLEAD','@TIMESHEET_OTHER','@INVOICE','@TIMESHEET','@PROFILE','@EXPORT','@BILLABLE','@TAGS','@REPORTING','@SINGLE_TEAMLEAD']
-            ROLE_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@BILLABLE','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_ADMIN']
-            ROLE_SUPER_ADMIN: ['@ACTIVITIES','@PROJECTS','@CUSTOMERS','@INVOICE','@INVOICE_ADMIN','@TIMESHEET','@TIMESHEET_OTHER','@PROFILE','@PROFILE_OTHER','@USER','@TEAMS','@RATE','@RATE_OTHER','@EXPORT','@BILLABLE','@TAGS','@LOCKDOWN','@REPORTING','@SINGLE_SUPER_ADMIN']
-        # mapping "sets" or permissions to user roles ("role name" = [array of "set names"])
+            # permissions which are deactivated, as these features are hidden for now
+            # brave users can try to activate them and be surprised what happens
+            REGISTER_BETA: []
+        # mapping a "role name" to an array of "set names"
         maps:
-            ROLE_USER: ['ROLE_USER']
-            ROLE_TEAMLEAD: ['ROLE_TEAMLEAD']
-            ROLE_ADMIN: ['ROLE_ADMIN']
-            ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
-        # add or remove single permissions
+            ROLE_USER: ['TIMESHEET','PROFILE']
+            ROLE_TEAMLEAD: ['ACTIVITIES_TEAMLEAD','PROJECTS_TEAMLEAD','CUSTOMERS_TEAMLEAD','TIMESHEET_OTHER','INVOICE','TIMESHEET','PROFILE','EXPORT','BILLABLE','TAGS','REPORTING']
+            ROLE_ADMIN: ['ACTIVITIES','PROJECTS','CUSTOMERS','INVOICE','INVOICE_ADMIN','TIMESHEET','TIMESHEET_OTHER','PROFILE','TEAMS','RATE','RATE_OTHER','EXPORT','BILLABLE','TAGS','LOCKDOWN','REPORTING']
+            ROLE_SUPER_ADMIN: ['ACTIVITIES','PROJECTS','CUSTOMERS','INVOICE','INVOICE_ADMIN','TIMESHEET','TIMESHEET_OTHER','PROFILE','PROFILE_OTHER','USER','TEAMS','RATE','RATE_OTHER','EXPORT','BILLABLE','TAGS','LOCKDOWN','REPORTING']
+        # mapping a "role name" to an array of "permission names"
         roles:
-            ROLE_USER: []
-            ROLE_TEAMLEAD: []
-            ROLE_ADMIN: []
-            ROLE_SUPER_ADMIN: []
+            ROLE_USER: ['view_team_member','time_team_project','create_tag','view_reporting']
+            ROLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
+            ROLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
+            ROLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']
 # --------------------------------------------------------------------------------
 
 
