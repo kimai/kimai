@@ -276,8 +276,6 @@ class DebugRendererTest extends TestCase
             'entry.user_display',
             'entry.user_alias',
             'entry.user_title',
-            'entry.user_preference.foo',
-            'entry.user_preference.mad',
             'entry.activity',
             'entry.activity_id',
             'entry.activity.meta.foo-activity',
