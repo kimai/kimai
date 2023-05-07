@@ -77,6 +77,11 @@ class BaseQuery
         return $this;
     }
 
+    public function hasTeams(): bool
+    {
+        return \count($this->teams) > 0;
+    }
+
     /**
      * @return Team[]
      */
