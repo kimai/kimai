@@ -370,7 +370,7 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">API de acceso</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
