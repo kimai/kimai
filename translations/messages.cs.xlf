@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>Tato data budou smazána! Nebo můžete data prenést do jiného záznamu:</target>
+        <target state="translated">Tato data budou smazána! Případně můžete data přenést do jiného záznamu:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -342,7 +342,7 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">Přístup k API</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>

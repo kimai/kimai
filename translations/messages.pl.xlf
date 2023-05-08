@@ -394,7 +394,7 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">Dostęp do API</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
@@ -1440,7 +1440,7 @@
       </trans-unit>
       <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
-        <target state="translated">Zdezaktywowani użytkownicy nie mają możliwości logowania się i zostają ukryci w raportach i oknach wyboru.</target>
+        <target state="translated">Zdezaktywowani użytkownicy nie mają możliwości logowania się i zostają ukryci w raportach i oknach wyboru</target>
       </trans-unit>
       <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
         <source>help.invoiceTemplate_customer</source>
