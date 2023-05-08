@@ -635,6 +635,10 @@
         <source>work_times</source>
         <target>Working times</target>
       </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>work_times_account</source>
+        <target>Working time account</target>
+      </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>work_times_should</source>
         <target>Target-hours</target>
