@@ -93,6 +93,10 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.user_alias' => $user->getAlias() ?? '',
                 'entry.user_display' => $user->getDisplayName() ?? '',
             ]);
+
+            foreach ($user->getVisiblePreferences() as $pref) {
+                $values['entry.user_preference.' . $pref->getName()] = $pref->getValue();
+            }
         }
 
         if (null !== $activity) {

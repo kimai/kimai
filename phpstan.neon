@@ -1607,16 +1607,6 @@ parameters:
             path: src/DependencyInjection/AppExtension.php
 
         -
-            message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:getFilteredPermissions\\(\\) has parameter \\$permissions with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DependencyInjection/AppExtension.php
-
-        -
-            message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:getFilteredPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DependencyInjection/AppExtension.php
-
-        -
             message: "#^Method App\\\\DependencyInjection\\\\Configuration\\:\\:getProjectNode\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/DependencyInjection/Configuration.php

@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target>هل تريد حقًا حذفها؟</target>
+        <target state="needs-translation">هل تريد حقًا حذفها؟</target>
       </trans-unit>
       <!--
               Login / Security
