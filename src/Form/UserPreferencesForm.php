@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to edit the user preferences.
+ * @extends AbstractType<User>
  */
 final class UserPreferencesForm extends AbstractType
 {

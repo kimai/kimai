@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to edit user preferences.
+ * @extends AbstractType<User>
  */
 final class UserPreferencesCollectionType extends AbstractType
 {

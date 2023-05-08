@@ -515,9 +515,11 @@ class TimesheetRepository extends EntityRepository
             // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
             $user[] = $currentUser;
 
-            foreach ($currentUser->getTeams() as $team) {
-                if ($currentUser->isTeamleadOf($team)) {
-                    $query->addTeam($team);
+            if (!$query->hasTeams()) {
+                foreach ($currentUser->getTeams() as $team) {
+                    if ($currentUser->isTeamleadOf($team)) {
+                        $query->addTeam($team);
+                    }
                 }
             }
         }

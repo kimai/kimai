@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select weekdays.
+ * @extends AbstractType<string>
  */
 final class WeekDaysType extends AbstractType
 {

@@ -14,6 +14,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @extends AbstractType<TeamQuery>
+ */
 final class TeamToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;

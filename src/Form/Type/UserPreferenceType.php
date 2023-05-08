@@ -13,15 +13,19 @@ use App\Entity\UserPreference;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Custom form field type to edit a user preference.
+ * @extends AbstractType<UserPreference>
  */
 final class UserPreferenceType extends AbstractType
 {
@@ -44,6 +48,10 @@ final class UserPreferenceType extends AbstractType
                 if (\array_key_exists('required', $options)) {
                     $required = (bool) $options['required'];
                     unset($options['required']);
+                }
+
+                if (\in_array($preference->getType(), [TextType::class, TextareaType::class])) {
+                    $constraints[] = new Length(['max' => 255]);
                 }
 
                 if (\in_array($preference->getType(), [CheckboxType::class, YesNoType::class])) {

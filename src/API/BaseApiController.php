@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @method null|User getUser()
@@ -27,7 +28,15 @@ abstract class BaseApiController extends AbstractController
     public const DATE_FORMAT = DateTimeType::HTML5_FORMAT;
     public const DATE_FORMAT_PHP = 'Y-m-d\TH:i:s';
 
-    protected function createSearchForm(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    /**
+     * @template TFormType of FormTypeInterface<TData>
+     * @template TData of mixed
+     * @param class-string<TFormType> $type
+     * @param TData|null $data
+     * @param array<mixed> $options
+     * @return FormInterface<TData|null>
+     */
+    protected function createSearchForm(string $type = FormType::class, mixed $data = null, array $options = []): FormInterface
     {
         return $this->container
             ->get('form.factory')

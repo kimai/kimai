@@ -18,6 +18,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @extends AbstractType<Team>
+ */
 final class TeamType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void

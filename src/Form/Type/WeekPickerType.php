@@ -17,8 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Custom form field type to select a week via picker and select previous and next week.
- *
  * Always falls back to the current week if none or an invalid date is given.
+ * @extends AbstractType<\DateTimeInterface|null>
  */
 final class WeekPickerType extends AbstractType
 {
@@ -28,18 +28,21 @@ final class WeekPickerType extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
-            'start_date' => new \DateTime(),
+            'start_date' => new \DateTimeImmutable(),
         ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        /** @var \DateTime|null $date */
+        /** @var \DateTimeInterface|null $date */
         $date = $form->getData();
 
         if (null === $date) {
+            /** @var \DateTimeImmutable $date */
             $date = $options['start_date'];
         }
+
+        $date = \DateTime::createFromInterface($date);
 
         $view->vars['week'] = $date;
         $view->vars['previousWeek'] = (clone $date)->modify('-1 week');

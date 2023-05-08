@@ -77,6 +77,14 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
+            {% set last = chartData|last %}
+            {% if last is not empty and last.value > 0 %}
+                {% set chartValueZero = {
+                    'label': (showMoneyBudget ? 0|money(currency) : 0|duration),
+                    'value': (showMoneyBudget ? 0|chart_money : 0|chart_duration),
+                } %}
+                {% set chartData = chartData|merge([chartValueZero]) %}
+            {% endif %}
             {{ bar_chart(chartPrefix, chartLabels, [chartData], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix, 'type': 'line'}) }}
         {% endif %}
     {% endif %}

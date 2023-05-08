@@ -23,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used to edit the profile of a User.
+ * @extends AbstractType<User>
  */
 class UserEditType extends AbstractType
 {

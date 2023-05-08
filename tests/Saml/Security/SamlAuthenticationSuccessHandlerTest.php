@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Saml\SamlToken;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\HttpUtils;
 
@@ -27,6 +28,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => true]);
         $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'default_target_path', '/'));
         $response = $handler->onAuthenticationSuccess($this->getRequest('/login', 'http://localhost/relayed'), $this->getSamlToken());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->isRedirect($defaultTargetPath));
     }
 
@@ -34,6 +36,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
     {
         $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()), ['always_use_default_target_path' => false]);
         $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', 'http://localhost/relayed'), $this->getSamlToken());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->isRedirect('http://localhost/relayed'));
     }
 
@@ -43,6 +46,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);
         $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'default_target_path', '/'));
         $response = $handler->onAuthenticationSuccess($this->getRequest(), $this->getSamlToken());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->isRedirect($defaultTargetPath));
     }
 
@@ -52,6 +56,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);
         $loginPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'login_path', '/login'));
         $response = $handler->onAuthenticationSuccess($this->getRequest($loginPath), $this->getSamlToken());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue(!$response->isRedirect($loginPath));
     }
 

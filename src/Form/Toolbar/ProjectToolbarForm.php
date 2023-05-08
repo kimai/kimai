@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the projects.
+ * @extends AbstractType<ProjectQuery>
  */
 final class ProjectToolbarForm extends AbstractType
 {

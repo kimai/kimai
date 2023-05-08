@@ -152,9 +152,6 @@ final class AppExtension extends Extension
         // permissions as well, which are off by default for all roles
         foreach ($config['sets'] as $set => $permNames) {
             foreach ($permNames as $name) {
-                if (str_starts_with($name, '@') || str_starts_with($name, '!')) {
-                    continue;
-                }
                 $names[$name] = true;
             }
         }
@@ -169,9 +166,7 @@ final class AppExtension extends Extension
                     $exception->setPath('kimai.permissions.maps.' . $role);
                     throw $exception;
                 }
-                $roles[$role] = array_merge($roles[$role] ?? [], $this->getFilteredPermissions(
-                    $this->extractSinglePermissionsFromSet($config, $set)
-                ));
+                $roles[$role] = array_merge($roles[$role] ?? [], $this->extractSinglePermissionsFromSet($config, $set));
             }
         }
 
@@ -182,7 +177,7 @@ final class AppExtension extends Extension
                     $roles[$name][$name2] = true;
                 }
             }
-            $config['roles'][$name] = $this->getFilteredPermissions($roles[$name]);
+            $config['roles'][$name] = $roles[$name];
         }
 
         // make sure to apply all other permissions that might have been registered through plugins
@@ -205,21 +200,6 @@ final class AppExtension extends Extension
         $container->setParameter('kimai.permission_roles', array_map('strtoupper', array_values(array_unique($roles))));
     }
 
-    private function getFilteredPermissions(array $permissions): array
-    {
-        $deleteFromArray = array_filter($permissions, function ($permission): bool {
-            return $permission[0] === '!';
-        }, ARRAY_FILTER_USE_KEY);
-
-        return array_filter($permissions, function ($permission) use ($deleteFromArray): bool {
-            if ($permission[0] === '!') {
-                return false;
-            }
-
-            return !\array_key_exists('!' . $permission, $deleteFromArray);
-        }, ARRAY_FILTER_USE_KEY);
-    }
-
     private function extractSinglePermissionsFromSet(array $permissions, string $name): array
     {
         if (!isset($permissions['sets'][$name])) {
@@ -229,14 +209,7 @@ final class AppExtension extends Extension
         $result = [];
 
         foreach ($permissions['sets'][$name] as $permissionName) {
-            if ($permissionName[0] === '@') {
-                $result = array_merge(
-                    $result,
-                    $this->extractSinglePermissionsFromSet($permissions, substr($permissionName, 1))
-                );
-            } else {
-                $result[$permissionName] = true;
-            }
+            $result[$permissionName] = true;
         }
 
         return $result;

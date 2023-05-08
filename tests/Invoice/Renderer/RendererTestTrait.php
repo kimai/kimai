@@ -133,17 +133,21 @@ trait RendererTestTrait
         $activity2->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta2]));
         $activity2->method('getVisibleMetaFields')->willReturn([$aMeta2]);
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
+        $pref1 = new UserPreference('foo', 'bar');
+        $pref2 = new UserPreference('mad', 123.45);
+        $userMethods = ['getId', 'getPreferenceValue', 'getVisiblePreferences', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
         $user1->method('getUserIdentifier')->willReturn('foo-bar');
+        $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
-        $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
+        $user2 = $this->createMock(User::class);
         $user2->method('getId')->willReturn(2);
         $user2->method('getUsername')->willReturn('hello-world');
         $user2->method('getUserIdentifier')->willReturn('hello-world');
+        $user2->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
         $timesheet = new Timesheet();
         $timesheet
@@ -204,6 +208,8 @@ trait RendererTestTrait
 
         $userKevin = new User();
         $userKevin->setUserIdentifier('kevin');
+        $userKevin->addPreference($pref1);
+        $userKevin->addPreference($pref2);
 
         $timesheet5 = new Timesheet();
         $timesheet5
@@ -292,11 +298,14 @@ trait RendererTestTrait
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
 
+        $pref1 = new UserPreference('foo', 'bar');
+        $pref2 = new UserPreference('mad', 123.45);
         $user1 = $this->createMock(User::class);
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
         $user1->method('getUserIdentifier')->willReturn('foo-bar');
+        $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
         $timesheet = new Timesheet();
         $timesheet

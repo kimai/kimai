@@ -19,6 +19,8 @@ use Twig\TwigTest;
 
 final class Extensions extends AbstractExtension
 {
+    public const REPORT_DATE = 'Y-m-d';
+
     /**
      * {@inheritdoc}
      */
@@ -56,9 +58,9 @@ final class Extensions extends AbstractExtension
         ];
     }
 
-    public function formatReportDate(\DateTime $dateTime): string
+    public function formatReportDate(\DateTimeInterface $dateTime): string
     {
-        return $dateTime->format('Y-m-d');
+        return $dateTime->format(self::REPORT_DATE);
     }
 
     public function getIsoDayByName(string $weekDay): int

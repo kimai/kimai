@@ -13,20 +13,17 @@ use App\Entity\Team;
 
 abstract class AbstractUserList
 {
-    private $date;
-    private $decimal = false;
-    private $sumType = 'duration';
-    /**
-     * @var Team|null
-     */
-    private $team = null;
+    private ?\DateTimeInterface $date = null;
+    private bool $decimal = false;
+    private string $sumType = 'duration';
+    private ?Team $team = null;
 
-    public function getDate(): ?\DateTime
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTime $date): void
+    public function setDate(\DateTimeInterface $date): void
     {
         $this->date = $date;
     }

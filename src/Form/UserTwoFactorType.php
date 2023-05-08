@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @extends AbstractType<TotpActivation>
+ */
 final class UserTwoFactorType extends AbstractType
 {
     public function __construct(private TotpAuthenticatorInterface $totpAuthenticator)
