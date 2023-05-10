@@ -209,6 +209,10 @@ final class ServiceInvoice
             $filename .= '.' . $parts[1];
         }
 
+        if (mb_strlen($filename) >= 150) {
+            throw new \Exception(sprintf('Invoice filename "%s" is too long, max. 150 characters allowed', $filename));
+        }
+
         if (is_file($invoiceDirectory . $filename)) {
             throw new \Exception(sprintf('Invoice "%s" already exists', $filename));
         }
