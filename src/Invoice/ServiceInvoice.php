@@ -197,16 +197,18 @@ final class ServiceInvoice
                 if (stripos($part, 'filename=') === false) {
                     continue;
                 }
-                $filename = explode('filename=', $part);
-                if (\count($filename) > 1) {
-                    $filename = $filename[1];
+                $tmp = explode('filename=', $part);
+                if (\count($tmp) > 1) {
+                    $filename = $tmp[1];
                 }
             }
         } else {
             $disposition = $event->getResponse()->headers->get('Content-Type');
             $parts = explode(';', $disposition);
             $parts = explode('/', $parts[0]);
-            $filename .= '.' . $parts[1];
+            if (\count($parts) > 1) {
+                $filename .= '.' . $parts[1];
+            }
         }
 
         if (mb_strlen($filename) >= 150) {
