@@ -2267,11 +2267,6 @@ parameters:
             path: src/Event/PageActionsEvent.php
 
         -
-            message: "#^Property App\\\\Event\\\\PageActionsEvent\\:\\:\\$divider has no type specified\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
             message: "#^Property App\\\\Event\\\\PermissionSectionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionSectionsEvent.php
