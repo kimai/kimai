@@ -12,6 +12,7 @@ namespace App\Tests\Event;
 use App\Entity\User;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\WorkingTime\Model\Year;
+use App\WorkingTime\Model\YearPerUserSummary;
 use App\WorkingTime\Model\YearSummary;
 use PHPUnit\Framework\TestCase;
 
@@ -25,16 +26,16 @@ class WorkingTimeYearSummaryEventTest extends TestCase
         $user = new User();
         $date = new \DateTime('2023-02-10');
         $year = new Year($date, $user);
-        $sut = new WorkingTimeYearSummaryEvent($year);
+        $yearPerUser = new YearPerUserSummary($year);
+        $sut = new WorkingTimeYearSummaryEvent($yearPerUser, new \DateTimeImmutable());
 
         self::assertSame($year, $sut->getYear());
-        self::assertEquals([], $sut->getSummaries());
 
         $month = new \DateTime('2023-04-10');
         $holiday = new YearSummary($month, 'holiday');
         $sut->addSummary($holiday);
         $sickness = new YearSummary($month, 'sickness');
         $sut->addSummary($sickness);
-        self::assertEquals([$holiday, $sickness], $sut->getSummaries());
+        self::assertEquals([$holiday, $sickness], $yearPerUser->getSummaries());
     }
 }

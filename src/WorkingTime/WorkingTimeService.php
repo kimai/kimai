@@ -11,16 +11,32 @@ namespace App\WorkingTime;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
 use App\WorkingTime\Model\Month;
 use App\WorkingTime\Model\Year;
+use App\WorkingTime\Model\YearPerUserSummary;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @internal this API and the entire namespace is instable: you should expect changes!
+ */
 final class WorkingTimeService
 {
-    public function __construct(private TimesheetRepository $timesheetRepository, private WorkingTimeRepository $workingTimeRepository)
+    public function __construct(private TimesheetRepository $timesheetRepository, private WorkingTimeRepository $workingTimeRepository, private EventDispatcherInterface $eventDispatcher)
     {
+    }
+
+    public function getYearSummary(Year $year, \DateTimeInterface $until): YearPerUserSummary
+    {
+        $yearPerUserSummary = new YearPerUserSummary($year);
+
+        $summaryEvent = new WorkingTimeYearSummaryEvent($yearPerUserSummary, $until);
+        $this->eventDispatcher->dispatch($summaryEvent);
+
+        return $yearPerUserSummary;
     }
 
     public function getLatestApproval(User $user): ?WorkingTime

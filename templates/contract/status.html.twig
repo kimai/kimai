@@ -28,8 +28,12 @@
 
     {% if summaries|length > 0 %}
         {% embed '@theme/embeds/card.html.twig' with {'fullsize': true} %}
+            {% from "macros/status.html.twig" import status_duration %}
             {% from "macros/widgets.html.twig" import work_times_result %}
-            {% block box_title %}{{ 'export.summary'|trans }}{% endblock %}
+            {% block box_title %}
+                {{ 'export.summary'|trans }}
+                {{ status_duration(work_times_result(summaries.expectedTime, summaries.actualTime, decimal)) }}
+            {% endblock %}
             {% block box_body_classes %}card-table table-responsive{% endblock %}
             {% block box_body %}
                 <table class="table table-vcenter table-hover dataTable">
@@ -43,30 +47,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% set totalIs = 0 %}
-                    {% set totalShould = 0 %}
                     {% set monthTotalShould = {'_01': 0, '_02': 0, '_03': 0, '_04': 0, '_05': 0, '_06': 0, '_07': 0, '_08': 0, '_09': 0, '_10': 0, '_11': 0, '_12': 0} %}
                     {% set monthTotalIs = {'_01': 0, '_02': 0, '_03': 0, '_04': 0, '_05': 0, '_06': 0, '_07': 0, '_08': 0, '_09': 0, '_10': 0, '_11': 0, '_12': 0} %}
                     {% for summary in summaries %}
-                        {% set yearShould = 0 %}
-                        {% set yearIs = 0 %}
-                        {% for month in summary.months %}
-                            {% set monthShould = month.expectedTime %}
-                            {% set monthIs = month.actualTime %}
-                            {% if now > month.month or monthIs > 0 %}
-                                {% set yearShould = yearShould + monthShould %}
-                                {% set totalShould = totalShould + monthShould %}
-                            {% endif %}
-                            {% set yearIs = yearIs + monthIs %}
-                            {% set totalIs = totalIs + monthIs %}
-                        {% endfor %}
                         <tr>
                             <td>{{ summary.title|trans }}</td>
                             <td class="text-end total">
-                                {% if yearShould > 0 %}
-                                    {{ work_times_result(yearShould, yearIs, decimal) }}
+                                {% if summary.expectedTime > 0 %}
+                                    {{ work_times_result(summary.expectedTime, summary.actualTime, decimal) }}
                                 {% else %}
-                                    {{ yearIs|duration(decimal) }}
+                                    {{ summary.actualTime|duration(decimal) }}
                                 {% endif %}
                             </td>
                             {% for month in summary.months %}
@@ -92,7 +82,7 @@
                         <tr class="summary">
                             <td></td>
                             <td class="text-end total">
-                                {{ work_times_result(totalShould, totalIs, decimal) }}
+                                {{ work_times_result(summaries.expectedTime, summaries.actualTime, decimal) }}
                             </td>
                             {% for month in year.months %}
                                 {% set dateKey = '_' ~ month.month.format('m') %}
@@ -111,7 +101,11 @@
         {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
 
         {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed}  %}
-            {% block box_title %}{{ 'work_times_should'|trans }}{% endblock %}
+            {% from "macros/status.html.twig" import status_duration %}
+            {% block box_title %}
+                {{ 'work_times_should'|trans }}
+                {{ status_duration(expectedWeekTimes|duration) }}
+            {% endblock %}
             {% block box_body %}
                 <div class="datagrid">
                     <div class="datagrid-item">
@@ -157,7 +151,7 @@
             {% set yearIs = 0 %}
             {% set approved = 0 %}
             {% for month in year.months %}
-                {% set monthShould = month.expectedTime %}
+                {% set monthShould = month.expectedTime(now) %}
                 {% set monthIs = month.actualTime %}
                 {% set showStats = now > month.month or monthIs > 0 %}
                 {% if showStats %}
@@ -169,7 +163,7 @@
                 {% endif %}
             {% endfor %}
             {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button, username %}
-            {% from "macros/status.html.twig" import status_count, status_duration %}
+            {% from "macros/status.html.twig" import status_count %}
             {% block box_title %}
                 {{ 'work_times'|trans }}
                 {% if withWorkHourConfiguration %}
@@ -199,7 +193,7 @@
                     </thead>
                     <tbody>
                     {% for month in year.months %}
-                        {% set monthShould = month.expectedTime %}
+                        {% set monthShould = month.expectedTime(now) %}
                         {% set monthIs = month.actualTime %}
                         {% set showStats = now > month.month or monthIs > 0 %}
                         <tr>

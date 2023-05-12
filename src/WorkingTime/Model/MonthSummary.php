@@ -13,19 +13,8 @@ use App\Model\Month as BaseMonth;
 
 final class MonthSummary extends BaseMonth
 {
-    private int $value = 0;
     private int $expectedTime = 0;
     private int $actualTime = 0;
-
-    public function getValue(): int
-    {
-        return $this->value;
-    }
-
-    public function setValue(int $value): void
-    {
-        $this->value = $value;
-    }
 
     public function getExpectedTime(): int
     {

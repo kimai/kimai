@@ -10,35 +10,28 @@
 namespace App\Event;
 
 use App\WorkingTime\Model\Year;
+use App\WorkingTime\Model\YearPerUserSummary;
 use App\WorkingTime\Model\YearSummary;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class WorkingTimeYearSummaryEvent extends Event
 {
-    /**
-     * @var array<YearSummary>
-     */
-    private array $summaries = [];
-
-    public function __construct(private Year $year)
+    public function __construct(private YearPerUserSummary $yearPerUserSummary, private \DateTimeInterface $until)
     {
     }
 
     public function getYear(): Year
     {
-        return $this->year;
+        return $this->yearPerUserSummary->getYear();
+    }
+
+    public function getUntil(): \DateTimeInterface
+    {
+        return $this->until;
     }
 
     public function addSummary(YearSummary $yearSummary): void
     {
-        $this->summaries[] = $yearSummary;
-    }
-
-    /**
-     * @return YearSummary[]
-     */
-    public function getSummaries(): array
-    {
-        return $this->summaries;
+        $this->yearPerUserSummary->addSummary($yearSummary);
     }
 }

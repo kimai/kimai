@@ -33,12 +33,12 @@ final class Year extends BaseYear
         return new Month($month);
     }
 
-    public function getExpectedTime(): int
+    public function getExpectedTime(\DateTimeInterface $until): int
     {
         $time = 0;
 
         foreach ($this->getMonths() as $month) {
-            $time += $month->getExpectedTime();
+            $time += $month->getExpectedTime($until);
         }
 
         return $time;

@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\WorkContractDetailControllerEvent;
-use App\Event\WorkingTimeYearSummaryEvent;
 use App\Form\ContractByUserForm;
 use App\Reporting\YearByUser\YearByUser;
 use App\Utils\PageSetup;
@@ -65,9 +64,6 @@ final class ContractController extends AbstractController
         $yearDate = $values->getDate();
         $year = $workingTimeService->getYear($profile, $yearDate);
 
-        $summaryEvent = new WorkingTimeYearSummaryEvent($year);
-        $eventDispatcher->dispatch($summaryEvent);
-
         $page = new PageSetup('status');
         $page->setHelp('contract.html');
 
@@ -75,16 +71,19 @@ final class ContractController extends AbstractController
         $controllerEvent = new WorkContractDetailControllerEvent($year);
         $eventDispatcher->dispatch($controllerEvent);
 
+        $now = $dateTimeFactory->createDateTime();
+        $summary = $workingTimeService->getYearSummary($year, $now);
+
         $boxConfiguration = new BoxConfiguration();
         $boxConfiguration->setDecimal(false);
-        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration());
+        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration() && $summary->count() > 0);
 
         return $this->render('contract/status.html.twig', [
             'box_configuration' => $boxConfiguration,
             'page_setup' => $page,
             'decimal' => $boxConfiguration->isDecimal(),
-            'summaries' => $summaryEvent->getSummaries(),
-            'now' => $dateTimeFactory->createDateTime(),
+            'summaries' => $summary,
+            'now' => $now,
             'boxes' => $controllerEvent->getController(),
             'year' => $year,
             'user' => $profile,

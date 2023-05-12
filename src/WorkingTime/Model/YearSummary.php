@@ -11,10 +11,12 @@ namespace App\WorkingTime\Model;
 
 use App\Model\Year as BaseYear;
 
+/**
+ * @method array<MonthSummary> getMonths()
+ * @method MonthSummary getMonth(\DateTimeInterface $month)
+ */
 final class YearSummary extends BaseYear
 {
-    private int $value = 0;
-
     public function __construct(\DateTimeInterface $month, private string $title)
     {
         parent::__construct($month);
@@ -30,13 +32,23 @@ final class YearSummary extends BaseYear
         return $this->title;
     }
 
-    public function getValue(): int
+    public function getExpectedTime(): int
     {
-        return $this->value;
+        $all = 0;
+        foreach ($this->getMonths() as $month) {
+            $all += $month->getExpectedTime();
+        }
+
+        return $all;
     }
 
-    public function setValue(int $value): void
+    public function getActualTime(): int
     {
-        $this->value = $value;
+        $all = 0;
+        foreach ($this->getMonths() as $month) {
+            $all += $month->getActualTime();
+        }
+
+        return $all;
     }
 }
