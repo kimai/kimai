@@ -541,4 +541,56 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa_deactivate', 'POST');
     }
+
+    public function testContractActionIsSecured(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
+        $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testContractAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $this->assertEquals(0, $user->getWorkHoursMonday());
+        $this->assertEquals(0, $user->getWorkHoursTuesday());
+        $this->assertEquals(0, $user->getWorkHoursWednesday());
+        $this->assertEquals(0, $user->getWorkHoursThursday());
+        $this->assertEquals(0, $user->getWorkHoursFriday());
+        $this->assertEquals(0, $user->getWorkHoursSaturday());
+        $this->assertEquals(0, $user->getWorkHoursSunday());
+
+        $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
+
+        $client->submit($form, [
+            'user_contract[workHoursMonday]' => '1:00',
+            'user_contract[workHoursTuesday]' => '2:00',
+            'user_contract[workHoursWednesday]' => '3:00',
+            'user_contract[workHoursThursday]' => '4:30',
+            'user_contract[workHoursFriday]' => '5:12',
+            'user_contract[workHoursSaturday]' => '6:59',
+            'user_contract[workHoursSunday]' => '0:01',
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/contract'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasFlashSuccess($client);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $this->assertEquals(3600, $user->getWorkHoursMonday());
+        $this->assertEquals(7200, $user->getWorkHoursTuesday());
+        $this->assertEquals(10800, $user->getWorkHoursWednesday());
+        $this->assertEquals(16200, $user->getWorkHoursThursday());
+        $this->assertEquals(18720, $user->getWorkHoursFriday());
+        $this->assertEquals(25140, $user->getWorkHoursSaturday());
+        $this->assertEquals(60, $user->getWorkHoursSunday());
+    }
 }
