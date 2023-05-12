@@ -118,6 +118,6 @@ class LdapDriver
         if (null === $this->logger) {
             return;
         }
-        $this->logger->error($message, $context);
+        $this->logger->debug($message, $context);
     }
 }

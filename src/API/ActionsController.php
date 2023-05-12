@@ -46,6 +46,7 @@ final class ActionsController extends BaseApiController
      */
     private function convertEvent(PageActionsEvent $event, string $locale): array
     {
+        $event->setLocale($locale);
         $this->dispatcher->dispatch($event, $event->getEventName());
 
         $translator = $this->translator;

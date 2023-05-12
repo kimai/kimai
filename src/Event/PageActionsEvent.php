@@ -18,9 +18,10 @@ use App\Entity\User;
  */
 class PageActionsEvent extends ThemeEvent
 {
-    private $action;
-    private $view;
-    private $divider = 0;
+    private string $action;
+    private string $view;
+    private int $divider = 0;
+    private ?string $locale = null;
 
     public function __construct(User $user, array $payload, string $action, string $view)
     {
@@ -194,5 +195,15 @@ class PageActionsEvent extends ThemeEvent
         }
 
         return \count($this->payload['actions']);
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 }
