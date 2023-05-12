@@ -14,6 +14,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Form\Model\TotpActivation;
 use App\Form\UserApiTokenType;
+use App\Form\UserContractType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
@@ -173,6 +174,32 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/form.html.twig', [
             'tab' => 'roles',
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: '/{username}/contract', name: 'user_profile_contract', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('contract', 'profile')]
+    public function contractAction(User $profile, Request $request, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(UserContractType::class, $profile, [
+            'action' => $this->generateUrl('user_profile_contract', ['username' => $profile->getUserIdentifier()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->saveUser($profile);
+            $this->flashSuccess('action.update.success');
+
+            return $this->redirectToRoute('user_profile_contract', ['username' => $profile->getUserIdentifier()]);
+        }
+
+        return $this->render('user/contract.html.twig', [
+            'tab' => 'contract',
             'user' => $profile,
             'form' => $form->createView(),
         ]);

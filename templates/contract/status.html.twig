@@ -1,0 +1,311 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+
+    {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
+
+    {% if form is defined %}
+        <div class="card mb-3">
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
+                <div class="btn-list w-100">
+                    {{ form_widget(form.date) }}
+                    {% if form.user is defined %}
+                        {{ form_widget(form.user, {'label': false}) }}
+                    {% elseif app.user != user %}
+                        {{ widgets.username(user) }}
+                    {% endif %}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not withWorkHourConfiguration %}
+        {{ widgets.alert('info', 'work_times_should.none_configured'|trans) }}
+    {% endif %}
+
+    {% if summaries|length > 0 %}
+        {% embed '@theme/embeds/card.html.twig' with {'fullsize': true} %}
+            {% from "macros/status.html.twig" import status_duration %}
+            {% from "macros/widgets.html.twig" import work_times_result %}
+            {% block box_title %}
+                {{ 'export.summary'|trans }}
+                {{ status_duration(work_times_result(summaries.expectedTime, summaries.actualTime, decimal)) }}
+            {% endblock %}
+            {% block box_body_classes %}card-table table-responsive{% endblock %}
+            {% block box_body %}
+                <table class="table table-vcenter table-hover dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-end total">{{ 'sum.total'|trans }}</th>
+                        {% for month in year.months %}
+                            <th class="text-end">{{ month.month|month_name }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set monthTotalShould = {'_01': 0, '_02': 0, '_03': 0, '_04': 0, '_05': 0, '_06': 0, '_07': 0, '_08': 0, '_09': 0, '_10': 0, '_11': 0, '_12': 0} %}
+                    {% set monthTotalIs = {'_01': 0, '_02': 0, '_03': 0, '_04': 0, '_05': 0, '_06': 0, '_07': 0, '_08': 0, '_09': 0, '_10': 0, '_11': 0, '_12': 0} %}
+                    {% for summary in summaries %}
+                        <tr>
+                            <td>{{ summary.title|trans }}</td>
+                            <td class="text-end total">
+                                {% if summary.expectedTime > 0 %}
+                                    {{ work_times_result(summary.expectedTime, summary.actualTime, decimal) }}
+                                {% else %}
+                                    {{ summary.actualTime|duration(decimal) }}
+                                {% endif %}
+                            </td>
+                            {% for month in summary.months %}
+                                {% set monthShould = month.expectedTime %}
+                                {% set monthIs = month.actualTime %}
+                                {% set dateKey = '_' ~ month.month.format('m') %}
+                                {% set monthTotalShouldTmp = monthTotalShould[dateKey] + monthShould %}
+                                {% set monthTotalIsTmp = monthTotalIs[dateKey] + monthIs %}
+                                {% set monthTotalShould = monthTotalShould|merge({(dateKey): monthTotalShouldTmp}) %}
+                                {% set monthTotalIs = monthTotalIs|merge({(dateKey): monthTotalIsTmp}) %}
+                                <td class="text-end">
+                                    {% if now < month.month and monthShould > 0 %}
+                                        {{ monthShould|duration(decimal) }}
+                                    {% else %}
+                                        {{ work_times_result(monthShould, monthIs, decimal) }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            <td></td>
+                            <td class="text-end total">
+                                {{ work_times_result(summaries.expectedTime, summaries.actualTime, decimal) }}
+                            </td>
+                            {% for month in year.months %}
+                                {% set dateKey = '_' ~ month.month.format('m') %}
+                                <td class="text-end">
+                                    {{ work_times_result(monthTotalShould[dateKey], monthTotalIs[dateKey], decimal) }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if withWorkHourConfiguration %}
+        {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
+
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed}  %}
+            {% from "macros/status.html.twig" import status_duration %}
+            {% block box_title %}
+                {{ 'work_times_should'|trans }}
+                {{ status_duration(expectedWeekTimes|duration) }}
+            {% endblock %}
+            {% block box_body %}
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'agendaWeek'|trans }}</div>
+                        <div class="datagrid-content">{{ expectedWeekTimes|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Monday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursMonday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Tuesday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursTuesday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Wednesday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursWednesday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Thursday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursThursday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Friday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursFriday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Saturday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursSaturday|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'Sunday'|trans({}, 'system-configuration') }}</div>
+                        <div class="datagrid-content">{{ user.workHoursSunday|duration }}</div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if year is defined %}
+        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed, 'id': 'working_time_detail_box', 'fullsize': true} %}
+            {% set yearShould = 0 %}
+            {% set yearIs = 0 %}
+            {% set approved = 0 %}
+            {% for month in year.months %}
+                {% set monthShould = month.expectedTime(now) %}
+                {% set monthIs = month.actualTime %}
+                {% set showStats = now > month.month or monthIs > 0 %}
+                {% if showStats %}
+                    {% set yearShould = yearShould + monthShould %}
+                {% endif %}
+                {% set yearIs = yearIs + monthIs %}
+                {% if month.locked %}
+                    {% set approved = approved + 1 %}
+                {% endif %}
+            {% endfor %}
+            {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button, username %}
+            {% from "macros/status.html.twig" import status_count %}
+            {% block box_title %}
+                {{ 'work_times'|trans }}
+                {% if withWorkHourConfiguration %}
+                    {{ status_count(approved ~ '/' ~ year.months|length) }}
+                {% endif %}
+            {% endblock %}
+            {% block box_body_classes %}card-table table-responsive{% endblock %}
+            {% block box_tools %}
+                {# {{ card_tool_button('visibility', {'onclick': "toggleDays(); return false;", 'id': 'toggleDaysIcon'}) }} #}
+            {% endblock %}
+            {% block box_body %}
+                <table id="working_times_details" class="table table-vcenter table-hover dataTable">
+                    <thead>
+                    <tr>
+                        {% if withWorkHourConfiguration %}
+                        <th></th>
+                        {% endif %}
+                        <th>{{ 'month'|trans }}</th>
+                        <th class="text-end total">{{ 'sum.total'|trans }}</th>
+                        <th class="text-end">{{ 'work_times_should'|trans }}</th>
+                        <th class="text-end">{{ 'work_times_is'|trans }}</th>
+                        {% for day in 1..31 %}
+                        <th class="text-end contractDay">{% if day < 10 %}0{% endif %}{{ day }}</th>
+                        {% endfor %}
+                        <th class="actions"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for month in year.months %}
+                        {% set monthShould = month.expectedTime(now) %}
+                        {% set monthIs = month.actualTime %}
+                        {% set showStats = now > month.month or monthIs > 0 %}
+                        <tr>
+                            {% if withWorkHourConfiguration %}
+                            <td class="w-min">
+                                {% if month.locked %}
+                                    <i class="{{ 'locked'|icon }}" data-toggle="tooltip" title="{% if month.lockedBy is not null %}{{ month.lockedBy.displayName }}{% else %}{{ 'deleted'|trans }}{% endif %}: {{ month.lockDate|date_short }}"></i>
+                                {% else %}
+                                    <i class="bg-yellow-lt {{ 'unlocked'|icon }}"></i>
+                                {% endif %}
+                            </td>
+                            {% endif %}
+                            <td class="text-nowrap w-min">
+                                {{ month.month|month_name }}
+                            </td>
+                            <td class="text-end total w-min">
+                                {% if showStats %}
+                                    {{ work_times_result(monthShould, monthIs, decimal) }}
+                                {% endif %}
+                            </td>
+                            <td class="text-end w-min">
+                                {{ monthShould|duration(decimal) }}
+                            </td>
+                            <td class="text-end  w-min">
+                                {{ monthIs|duration(decimal) }}
+                            </td>
+                            {% set dayCount = 0 %}
+                            {% for day in month.days %}
+                                {% set class = 'text-end contractDay' %}
+                                {% if day.day is weekend %}
+                                    {% set class = class ~ ' weekend' %}
+                                {% endif %}
+                                {% if day.workingTime.expectedTime > 0 and day.workingTime.actualTime == 0 and now > day.day %}
+                                    {% set class = class ~ ' bg-orange-lt' %}
+                                {% elseif day.workingTime.expectedTime == 0 and day.workingTime.actualTime > 0 and now > day.day %}
+                                    {% set class = class ~ ' bg-yellow-lt' %}
+                                {% endif %}
+                                <td class="{{ class }}">
+                                    {% if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0) and (now > day.day or day.workingTime.actualTime > 0) %}
+                                        {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
+                                    {% endif %}
+                                </td>
+                                {% set dayCount = dayCount + 1 %}
+                            {% endfor %}
+                            {% if dayCount < 31 %}
+                                {% for day in 1..(31-dayCount)%}
+                                    <td class="contractDay"></td>
+                                {% endfor %}
+                            {% endif %}
+                            <td class="actions">
+                                {% set event = actions(app.user, 'contract_month', 'index', {'year': year, 'month': month}) %}
+                                {{ table_actions(event.actions) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            {% if withWorkHourConfiguration %}
+                            <td></td>
+                            {% endif %}
+                            <td></td>
+                            <td class="text-end total">
+                                {{ work_times_result(yearShould, yearIs, decimal) }}
+                            </td>
+                            <td class="text-end">
+                                {{ yearShould|duration(decimal) }}
+                            </td>
+                            <td class="text-end">
+                                {{ yearIs|duration(decimal) }}
+                            </td>
+                            {% for day in 1..31 %}
+                                <td class="contractDay"></td>
+                            {% endfor %}
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% for controller in boxes %}
+        {{ render(controller(controller, {'year': year, 'boxConfiguration': box_configuration})) }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function toggleDays()
+        {
+            document.querySelectorAll('table#working_times_details .contractDay').forEach(
+                element => {
+                    element.classList.toggle('d-none');
+                }
+            );
+            const icon = document.querySelector('#toggleDaysIcon i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        }
+
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.workingTimesUpdate', true);
+
+            const contractForm = document.getElementById('report-form');
+            if (contractForm !== null) {
+                contractForm.addEventListener('change', () => {
+                    contractForm.submit();
+                });
+            }
+        });
+    </script>
+{% endblock %}

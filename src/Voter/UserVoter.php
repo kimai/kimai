@@ -33,6 +33,7 @@ final class UserVoter extends Voter
         'api-token',
         'hourly-rate',
         'view_team_member',
+        'contract',
     ];
 
     public function __construct(private RolePermissionManager $permissionManager)
@@ -58,6 +59,10 @@ final class UserVoter extends Voter
 
         if (!($user instanceof User)) {
             return false;
+        }
+
+        if ($attribute === 'contract') {
+            return $this->permissionManager->hasRolePermission($user, 'contract_other_profile');
         }
 
         if ($attribute === 'view_team_member') {

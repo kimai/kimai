@@ -515,3 +515,16 @@
         });
     </script>
 {% endmacro %}
+
+{% macro work_times_result(should, actual, decimal) %}
+    {% set result = actual - should %}
+    {% if result == 0 %}
+        <span class="work_time_exact">{{ result|duration(decimal) }}</span>
+    {% elseif should == 0 and actual > 0 %}
+        <span class="work_time_positive text-green">+{{ actual|duration(decimal) }}</span>
+    {% elseif result < 0 %}
+        <span class="work_time_negative text-red">{{ result|duration(decimal) }}</span>
+    {% else %}
+        <span class="work_time_positive text-green">+{{ result|duration(decimal) }}</span>
+    {% endif %}
+{% endmacro %}
