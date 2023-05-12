@@ -67,9 +67,52 @@ class UserTest extends TestCase
 
         $user->setAccountNumber('A-058375');
         self::assertEquals('A-058375', $user->getAccountNumber());
+
+        self::assertEquals(0, $user->getWorkHoursMonday());
+        self::assertEquals(0, $user->getWorkHoursTuesday());
+        self::assertEquals(0, $user->getWorkHoursWednesday());
+        self::assertEquals(0, $user->getWorkHoursThursday());
+        self::assertEquals(0, $user->getWorkHoursFriday());
+        self::assertEquals(0, $user->getWorkHoursSaturday());
+        self::assertEquals(0, $user->getWorkHoursSunday());
+        self::assertEquals(0, $user->getHolidaysPerYear());
+        self::assertFalse($user->hasWorkHourConfiguration());
     }
 
-    public function testColor()
+    public function testWorkContract(): void
+    {
+        $user = new User();
+
+        $user->setWorkHoursMonday(7200);
+        self::assertTrue($user->hasWorkHourConfiguration());
+        $user->setWorkHoursTuesday(7300);
+        $user->setWorkHoursWednesday(7400);
+        $user->setWorkHoursThursday(7500);
+        $user->setWorkHoursFriday(7600);
+        $user->setWorkHoursSaturday(7700);
+        $user->setWorkHoursSunday(7800);
+        $user->setHolidaysPerYear(10);
+        self::assertTrue($user->hasWorkHourConfiguration());
+
+        self::assertEquals(7200, $user->getWorkHoursMonday());
+        self::assertEquals(7300, $user->getWorkHoursTuesday());
+        self::assertEquals(7400, $user->getWorkHoursWednesday());
+        self::assertEquals(7500, $user->getWorkHoursThursday());
+        self::assertEquals(7600, $user->getWorkHoursFriday());
+        self::assertEquals(7700, $user->getWorkHoursSaturday());
+        self::assertEquals(7800, $user->getWorkHoursSunday());
+        self::assertEquals(10, $user->getHolidaysPerYear());
+
+        self::assertEquals(7200, $user->getWorkHoursForDay(new \DateTime('2023-05-08 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7300, $user->getWorkHoursForDay(new \DateTime('2023-05-09 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7400, $user->getWorkHoursForDay(new \DateTime('2023-05-10 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7500, $user->getWorkHoursForDay(new \DateTime('2023-05-11 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7600, $user->getWorkHoursForDay(new \DateTime('2023-05-12 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7700, $user->getWorkHoursForDay(new \DateTime('2023-05-13 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7800, $user->getWorkHoursForDay(new \DateTime('2023-05-14 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+    }
+
+    public function testColor(): void
     {
         $sut = new User();
         self::assertNull($sut->getColor());

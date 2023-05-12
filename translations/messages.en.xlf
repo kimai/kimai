@@ -267,6 +267,18 @@
         <target>Directory "%dir%" is write protected.</target>
       </trans-unit>
       <!-- General labels -->
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target>Deleted</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target>Created by</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target>Created at</target>
+      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Date</target>
@@ -590,6 +602,86 @@
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>Roles</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target>Employment contract</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target>Evaluation</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target>Complete month</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target>After completing the month, the user will no longer be able to create or edit times for that period.</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target>Completed month PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target>This document serves as proof of the hours worked.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>review</source>
+        <target>Review</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target>Working times</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>work_times_account</source>
+        <target>Working time account</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target>Target-hours</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target>The values configured here are used to calculate the hourly account.</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target>No target hours have been configured for this user in the employment contract settings.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target>Is-hours</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target>Hours worked</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target>Confirmed by %user% at %date%</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target>Manual bookings</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target>Manual bookings can neither be subsequently changed nor deleted!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target>The duration can be both positive (increase of the is-time) and negative (reduction of the is-time).</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
+        <source>pto_year_holiday</source>
+        <target>Urlaubstage pro Jahr</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target>Holiday</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>

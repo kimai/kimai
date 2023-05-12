@@ -267,6 +267,18 @@
         <target>Das Verzeichnis „%dir%“ ist schreibgeschützt.</target>
       </trans-unit>
       <!-- General labels -->
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target>Gelöscht</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target>Erstellt von</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target>Erstellt am</target>
+      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -590,6 +602,86 @@
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>Rollen</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target>Arbeitsvertrag</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target>Auswertung</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target>Monat abschliessen</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target>Sobald der Monat abgeschlossen ist, kann der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder bearbeiten.</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target>Monats-Abschluss PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target>Dieses Dokument dient als Nachweis der geleisteten Arbeitszeiten.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>review</source>
+        <target>Überprüfung</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target>Arbeitszeiten</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>work_times_account</source>
+        <target>Arbeitszeitkonto</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target>Soll-Stunden</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target>Die hier konfigurierten Werte werden zur Berechnung des Stundenkontos verwendet.</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target>Für diesen Benutzer wurden in den Arbeitsvertragseinstellungen keine Sollstunden konfiguriert.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target>Ist-Stunden</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target>Geleistete Stunden</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target>Bestätigt von %user% am %date%</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target>Manuelle Buchungen</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target>Manuelle Buchungen können weder nachträglich geändert noch gelöscht werden!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target>Die Dauer kann sowohl positiv (Erhöhung der Ist-Zeit) als auch negativ (Reduzierung der Ist-Zeit) sein.</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
+        <source>pto_year_holiday</source>
+        <target>Urlaubstage pro Jahr</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target>Urlaub</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
