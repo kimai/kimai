@@ -18,8 +18,6 @@ use App\Model\Month as BaseMonth;
 final class Month extends BaseMonth
 {
     private ?bool $locked = null;
-    private ?int $expectedTime = null;
-    private ?int $actualTime = null;
 
     /**
      * A month is only locked IF every day is approved.
@@ -70,34 +68,30 @@ final class Month extends BaseMonth
 
     public function getExpectedTime(\DateTimeInterface $until): int
     {
-        if ($this->expectedTime === null) {
-            $this->expectedTime = 0;
+        $time = 0;
 
-            foreach ($this->getDays() as $day) {
-                if ($until < $day->getDay()) {
-                    break;
-                }
-                if ($day->getWorkingTime() !== null) {
-                    $this->expectedTime += $day->getWorkingTime()->getExpectedTime();
-                }
+        foreach ($this->getDays() as $day) {
+            if ($until < $day->getDay()) {
+                break;
+            }
+            if ($day->getWorkingTime() !== null) {
+                $time += $day->getWorkingTime()->getExpectedTime();
             }
         }
 
-        return $this->expectedTime;
+        return $time;
     }
 
     public function getActualTime(): int
     {
-        if ($this->actualTime === null) {
-            $this->actualTime = 0;
+        $time = 0;
 
-            foreach ($this->getDays() as $day) {
-                if ($day->getWorkingTime() !== null) {
-                    $this->actualTime += $day->getWorkingTime()->getActualTime();
-                }
+        foreach ($this->getDays() as $day) {
+            if ($day->getWorkingTime() !== null) {
+                $time += $day->getWorkingTime()->getActualTime();
             }
         }
 
-        return $this->actualTime;
+        return $time;
     }
 }
