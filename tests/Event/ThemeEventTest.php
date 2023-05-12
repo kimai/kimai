@@ -43,10 +43,6 @@ class ThemeEventTest extends TestCase
 
         $payload = [null, '', 'test', new \stdClass()];
 
-        $sut = new ThemeEvent($user);
-        $sut->setPayload($payload);
-        $this->assertEquals($payload, $sut->getPayload());
-
         $sut = new ThemeEvent($user, $payload);
         $this->assertEquals($payload, $sut->getPayload());
 
@@ -56,5 +52,20 @@ class ThemeEventTest extends TestCase
 
         $sut->addContent('<script>');
         $this->assertEquals('foo<script>', $sut->getContent());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedStuff()
+    {
+        $user = new User();
+        $user->setAlias('foo');
+
+        $payload = [null, '', 'test', new \stdClass()];
+
+        $sut = new ThemeEvent($user);
+        $sut->setPayload($payload);
+        $this->assertEquals($payload, $sut->getPayload());
     }
 }
