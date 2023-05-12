@@ -26,10 +26,12 @@ class WorkingTimeYearSummaryEventTest extends TestCase
         $user = new User();
         $date = new \DateTime('2023-02-10');
         $year = new Year($date, $user);
+        $until = new \DateTimeImmutable();
         $yearPerUser = new YearPerUserSummary($year);
-        $sut = new WorkingTimeYearSummaryEvent($yearPerUser, new \DateTimeImmutable());
+        $sut = new WorkingTimeYearSummaryEvent($yearPerUser, $until);
 
         self::assertSame($year, $sut->getYear());
+        self::assertSame($until, $sut->getUntil());
 
         $month = new \DateTime('2023-04-10');
         $holiday = new YearSummary($month, 'holiday');

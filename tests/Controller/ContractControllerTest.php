@@ -26,6 +26,7 @@ class ContractControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/contract');
         $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
         self::assertStringContainsString('No target hours have been configured', $content);
         $node = $client->getCrawler()->filter('select#user');
         self::assertEquals(0, $node->count());
@@ -36,6 +37,7 @@ class ContractControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/contract');
         $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
         self::assertStringContainsString('No target hours have been configured', $content);
         $node = $client->getCrawler()->filter('select#user');
         self::assertEquals(1, $node->count());
