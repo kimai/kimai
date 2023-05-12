@@ -2267,11 +2267,6 @@ parameters:
             path: src/Event/PageActionsEvent.php
 
         -
-            message: "#^Property App\\\\Event\\\\PageActionsEvent\\:\\:\\$divider has no type specified\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
             message: "#^Property App\\\\Event\\\\PermissionSectionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionSectionsEvent.php
@@ -4532,11 +4527,6 @@ parameters:
             path: src/Invoice/Renderer/PdfRenderer.php
 
         -
-            message: "#^Binary operation \"\\.\" between string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
-            count: 2
-            path: src/Invoice/ServiceInvoice.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
@@ -4582,11 +4572,6 @@ parameters:
             path: src/Invoice/ServiceInvoice.php
 
         -
-            message: "#^Method App\\\\Invoice\\\\ServiceInvoice\\:\\:saveGeneratedInvoice\\(\\) should return string but returns array\\<int, string\\>\\|string\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, int\\|null given\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
@@ -4602,11 +4587,6 @@ parameters:
             path: src/Invoice/ServiceInvoice.php
 
         -
-            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, array\\<int, string\\>\\|string given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
             message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
             count: 2
             path: src/Invoice/ServiceInvoice.php
@@ -4618,11 +4598,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\ExportableItem\\> given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\<int, string\\>\\|string given\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
 

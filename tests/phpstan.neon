@@ -5188,21 +5188,6 @@ parameters:
             path: Event/SystemConfigurationEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ThemeEventTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ThemeEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ThemeEventTest\\:\\:testEmpty\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ThemeEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ThemeEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ThemeEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\ThemeJavascriptTranslationsEventTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ThemeJavascriptTranslationsEventTest.php

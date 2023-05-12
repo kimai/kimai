@@ -52,8 +52,13 @@ class ThemeEvent extends Event
         return $this->payload;
     }
 
+    /**
+     * @deprecated since 2.0.19, will be removed with 2.1
+     */
     public function setPayload(mixed $payload): void
     {
+        @trigger_error('ThemeEvent::setPayload() is deprecated, use AbstractActionsSubscriber instead.', E_USER_DEPRECATED);
+
         $this->payload = $payload;
     }
 }

@@ -33,6 +33,7 @@ class PageActionsEventTest extends TestCase
         $this->assertSame($user, $sut->getUser());
         $this->assertEquals([], $sut->getActions());
         $this->assertEquals(['actions' => [], 'view' => 'bar'], $sut->getPayload());
+        $this->assertNull($sut->getLocale());
 
         $sut = new PageActionsEvent($user, ['hello' => 'world'], 'foo', 'bar');
         $this->assertSame($user, $sut->getUser());
@@ -66,6 +67,12 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
         $sut->replaceAction('foo', ['url' => 'xyz']);
         $this->assertEquals(['foo' => ['url' => 'xyz']], $sut->getActions());
+
+        $sut->setLocale('de');
+        $this->assertEquals('de', $sut->getLocale());
+
+        $sut->setLocale(null);
+        $this->assertNull($sut->getLocale());
     }
 
     public function testSubmenu()

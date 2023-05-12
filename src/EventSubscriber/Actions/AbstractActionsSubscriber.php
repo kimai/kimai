@@ -19,6 +19,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
+    private ?string $locale = null;
+
     public function __construct(private AuthorizationCheckerInterface $auth, private UrlGeneratorInterface $urlGenerator)
     {
     }
@@ -30,14 +32,25 @@ abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 
     protected function path(string $route, array $parameters = []): string
     {
+        if ($this->locale !== null) {
+            $parameters['_locale'] = $this->locale;
+        }
+
         return $this->urlGenerator->generate($route, $parameters);
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'actions.' . static::getActionName() => ['onActions', 1000],
+            'actions.' . static::getActionName() => ['handleEvent', 1000],
         ];
+    }
+
+    final public function handleEvent(PageActionsEvent $event): void
+    {
+        $this->locale = $event->getLocale();
+
+        $this->onActions($event);
     }
 
     public static function getActionName(): string

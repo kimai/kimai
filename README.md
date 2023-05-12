@@ -25,8 +25,10 @@ and so much more.
 
 There are two versions of Kimai existing:
 
-- [Version 1](https://github.com/kimai/kimai/tree/1.x) — compatible with PHP 7.4, which is in maintenance mode since 2023 
-- [Version 2](https://github.com/kimai/kimai) — stable and "almost released" (waiting for some major plugins, which are not yet migrated) 
+- [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1 only)
+- [Version 1](https://github.com/kimai/kimai/tree/1.x) — the "old" version, in maintenance mode since Jan. 2023 (PHP 7.4, PHP 8.1) 
+
+If you start fresh, do **not** use Version 1, it won't receive any more updates.
 
 ### Links
 
@@ -72,7 +74,7 @@ It is open for changes and input from the community, your [ideas and questions](
 Release versions will be created on a regular basis, every couple of weeks latest.
 Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
 
-For the time being and until 2.0 is widely adopted, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive bug fixes. 
+Until 2.0 is widely adopted, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive (critical) bug and security fixes. 
 
 ## Contributing
 
