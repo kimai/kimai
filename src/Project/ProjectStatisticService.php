@@ -554,16 +554,6 @@ class ProjectStatisticService
                     $tmp->setMonth(new Month($i));
                 }
                 $years[$year['year']] = $tmp;
-            } else {
-                $tmp = $years[$year['year']];
-            }
-            $tmp->setTotalRate($tmp->getTotalRate() + $year['rate']);
-            $tmp->setTotalInternalRate($tmp->getTotalInternalRate() + $year['internalRate']);
-            $tmp->setTotalDuration($tmp->getTotalDuration() + $year['duration']);
-
-            if ($year['billable']) {
-                $tmp->setBillableDuration($tmp->getBillableDuration() + $year['duration']);
-                $tmp->setBillableRate($tmp->getBillableRate() + $year['rate']);
             }
         }
 

@@ -9,14 +9,12 @@
 
 namespace App\Model\Statistic;
 
-final class Year extends Timesheet
+final class Year
 {
     /**
      * @var Month[]
      */
     private array $months = [];
-    private int $billableDuration = 0;
-    private float $billableRate = 0.00;
 
     public function __construct(private string $year)
     {
@@ -51,23 +49,58 @@ final class Year extends Timesheet
         return array_values($this->months);
     }
 
-    public function getBillableDuration(): int
+    public function getDuration(): int
     {
-        return $this->billableDuration;
+        $duration = 0;
+
+        foreach ($this->months as $month) {
+            $duration += $month->getDuration();
+        }
+
+        return $duration;
     }
 
-    public function setBillableDuration(int $billableDuration): void
+    public function getBillableDuration(): int
     {
-        $this->billableDuration = $billableDuration;
+        $duration = 0;
+
+        foreach ($this->months as $month) {
+            $duration += $month->getBillableDuration();
+        }
+
+        return $duration;
+    }
+
+    public function getRate(): float
+    {
+        $rate = 0.0;
+
+        foreach ($this->months as $month) {
+            $rate += $month->getRate();
+        }
+
+        return $rate;
     }
 
     public function getBillableRate(): float
     {
-        return $this->billableRate;
+        $rate = 0.0;
+
+        foreach ($this->months as $month) {
+            $rate += $month->getBillableRate();
+        }
+
+        return $rate;
     }
 
-    public function setBillableRate(float $billableRate): void
+    public function getInternalRate(): float
     {
-        $this->billableRate = $billableRate;
+        $rate = 0.0;
+
+        foreach ($this->months as $month) {
+            $rate += $month->getInternalRate();
+        }
+
+        return $rate;
     }
 }

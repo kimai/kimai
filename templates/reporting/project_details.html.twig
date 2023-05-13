@@ -221,13 +221,21 @@
                     <tr>
                         <th></th>
                         <th class="text-nowrap text-end">{{ 'duration'|trans }}</th>
+                        {% if view_revenue %}
+                        <th class="text-nowrap text-end">{{ 'billable'|trans }}</th>
                         <th class="text-nowrap text-end">{{ 'stats.amountTotal'|trans }}</th>
+                        {% endif %}
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
+                {% set totalRate = 0.0 %}
+                {% set billable = 0 %}
                 {% for stat in activities|sort((a, b) => b.duration <=> a.duration) %}
-                    {% set dataset = dataset|merge([{'value': stat.duration, 'name': stat.name, 'color': stat.activity.color|colorize(stat.activity.name), 'duration': stat.duration|duration, 'rate': stat.rate|money(currency)}]) %}
+                    {% set rate = stat.rate %}
+                    {% set totalRate = totalRate + rate %}
+                    {% set billable = billable + stat.rateBillable %}
+                    {% set dataset = dataset|merge([{'value': stat.duration, 'name': stat.name, 'color': stat.activity.color|colorize(stat.activity.name), 'duration': stat.duration|duration, 'rate': rate|money(currency)}]) %}
                     {% set percentage = 0 %}
                     {% if totalDuration > 0 and stat.duration > 0 %}
                         {% set percentage = (100 / (totalDuration / stat.duration)) %}
@@ -236,12 +244,24 @@
                         <td>{{ widgets.label_activity(stat.activity, {'inherit': false, 'random': true}) }}</td>
                         <td class="text-nowrap text-end">{{ stat.duration|duration }}</td>
                         {% if view_revenue %}
+                        <td class="text-nowrap text-end">{{ stat.rateBillable|money(currency) }}</td>
                         <td class="text-nowrap text-end">{{ stat.rate|money(currency) }}</td>
                         {% endif %}
                         <td class="text-nowrap text-end">{{ percentage|number_format(1) }} %</td>
                     </tr>
                 {% endfor %}
                 </tbody>
+                <tfoot>
+                <tr class="summary">
+                    <td></td>
+                    <td class="text-nowrap text-end">{{ totalDuration|duration }}</td>
+                    {% if view_revenue %}
+                    <td class="text-nowrap text-end">{{ billable|money(currency) }}</td>
+                    <td class="text-nowrap text-end">{{ totalRate|money(currency) }}</td>
+                    {% endif %}
+                    <td></td>
+                </tr>
+                </tfoot>
             </table>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
@@ -450,12 +470,16 @@
                             <tr>
                                 <th></th>
                                 <th class="text-nowrap text-end">{{ 'duration'|trans }}</th>
+                                {% if view_revenue %}
+                                <th class="text-nowrap text-end">{{ 'billable'|trans }}</th>
                                 <th class="text-nowrap text-end">{{ 'stats.amountTotal'|trans }}</th>
+                                {% endif %}
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% set rateTotal = 0 %}
+                            {% set rateTotalBillable = 0 %}
                             {% set totalDuration = 0 %}
                             {% set datasets = [] %}
                             {% set labels = [] %}
@@ -463,6 +487,7 @@
                                 {% set user = userStat.user %}
                                 {% set color = user.color|colorize(user.displayName) %}
                                 {% set rateTotal = rateTotal + userStat.rate %}
+                                {% set rateTotalBillable = rateTotalBillable + userStat.rateBillable %}
                                 {% set totalDuration = totalDuration + userStat.duration %}
                                 {% set datasets = datasets|merge([{'name': user.displayName, 'duration': userStat.duration|duration, 'value': userStat.duration, 'color': color, 'rate': userStat.rate|money(currency)}]) %}
                                 {% set percentage = 0 %}
@@ -478,6 +503,9 @@
                                     </td>
                                     {% if view_revenue %}
                                     <td class="text-nowrap text-end">
+                                        {{ userStat.rateBillable|money(currency) }}
+                                    </td>
+                                    <td class="text-nowrap text-end">
                                         {{ userStat.rate|money(currency) }}
                                     </td>
                                     {% endif %}
@@ -492,6 +520,7 @@
                                     <td></td>
                                     <td class="text-nowrap text-end total">{{ totalDuration|duration }}</td>
                                     {% if view_revenue %}
+                                    <td class="text-nowrap text-end total">{{ rateTotalBillable|money(currency) }}</td>
                                     <td class="text-nowrap text-end total">{{ rateTotal|money(currency) }}</td>
                                     {% endif %}
                                     <td></td>
