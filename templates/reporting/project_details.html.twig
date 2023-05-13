@@ -145,6 +145,7 @@
     <div class="row">
         <div class="col-xs-12 table-responsive">
             <table class="table table-hover dataTable">
+                <thead>
                 <tr>
                     <th>{{ 'username'|trans }}</th>
                     <th></th>
@@ -152,6 +153,8 @@
                         <th class="text-center">{{ monthName }}</th>
                     {% endfor %}
                 </tr>
+                </thead>
+                <tbody>
                 {% set yearTotal = 0 %}
                 {% for userYearStat in userYearStats|sort((a, b) => b.duration <=> a.duration) %}
                     {% set user = userYearStat.user %}
@@ -175,11 +178,13 @@
                         {% endfor %}
                     </tr>
                 {% endfor %}
-                <tr>
-                    <th></th>
-                    <th class="text-nowrap text-center total">
+                </tbody>
+                <tfoot>
+                <tr class="summary">
+                    <td></td>
+                    <td class="text-nowrap text-center total">
                         {{ yearTotal|duration }}
-                    </th>
+                    </td>
                     {% for monthNumber in 1..12 %}
                         {% set total = 0 %}
                         {% for userYearStat in userYearStats %}
@@ -188,11 +193,12 @@
                                 {% set total = total + month.duration %}
                             {% endif %}
                         {% endfor %}
-                        <th class="text-nowrap text-center total">
+                        <td class="text-nowrap text-center total">
                         {{ total|duration }}
-                        </th>
+                        </td>
                     {% endfor %}
                 </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -211,6 +217,15 @@
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
             <table class="table table-hover dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-nowrap text-end">{{ 'duration'|trans }}</th>
+                        <th class="text-nowrap text-end">{{ 'stats.amountTotal'|trans }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for stat in activities|sort((a, b) => b.duration <=> a.duration) %}
                     {% set dataset = dataset|merge([{'value': stat.duration, 'name': stat.name, 'color': stat.activity.color|colorize(stat.activity.name), 'duration': stat.duration|duration, 'rate': stat.rate|money(currency)}]) %}
                     {% set percentage = 0 %}
@@ -226,6 +241,7 @@
                         <td class="text-nowrap text-end">{{ percentage|number_format(1) }} %</td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
@@ -430,6 +446,15 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
                         <table class="table table-hover dataTable">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-nowrap text-end">{{ 'duration'|trans }}</th>
+                                <th class="text-nowrap text-end">{{ 'stats.amountTotal'|trans }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             {% set rateTotal = 0 %}
                             {% set totalDuration = 0 %}
                             {% set datasets = [] %}
@@ -461,14 +486,17 @@
                                     </td>
                                 </tr>
                             {% endfor %}
-                                <tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="summary">
                                     <td></td>
-                                    <th class="text-nowrap text-end total">{{ totalDuration|duration }}</th>
+                                    <td class="text-nowrap text-end total">{{ totalDuration|duration }}</td>
                                     {% if view_revenue %}
-                                    <th class="text-nowrap text-end total">{{ rateTotal|money(currency) }}</th>
+                                    <td class="text-nowrap text-end total">{{ rateTotal|money(currency) }}</td>
                                     {% endif %}
                                     <td></td>
                                 </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
