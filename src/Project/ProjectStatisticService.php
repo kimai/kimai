@@ -410,6 +410,7 @@ class ProjectStatisticService
 
         /** @var array<string, ActivityStatistic> $activities */
         $activities = [];
+        /** @var array{"duration": int, "rate": float, "internalRate": float, "count": int, "billable": bool, "activity": int} $tmp */
         foreach ($qb1->getQuery()->getArrayResult() as $tmp) {
             $activityId = $tmp['activity'];
             if (!\array_key_exists($activityId, $activities)) {
@@ -437,8 +438,9 @@ class ProjectStatisticService
 
         /** @var array<string, Activity> $activityIdToActivity */
         $activityIdToActivity = [];
-        /** @var Activity $item */
-        foreach ($qbActivity->getQuery()->getResult() as $item) {
+        /** @var array<int, Activity> $activityResults */
+        $activityResults = $qbActivity->getQuery()->getResult();
+        foreach ($activityResults as $item) {
             $activityIdToActivity[$item->getId()] = $item;
         }
 
@@ -467,7 +469,9 @@ class ProjectStatisticService
             $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
             /** @var array<int, UserStatistic> $users */
             $users = [];
-            foreach ($qb2->getQuery()->getResult() as $user) {
+            /** @var array<int, User> $userResult */
+            $userResult = $qb2->getQuery()->getResult();
+            foreach ($userResult as $user) {
                 $users[$user->getId()] = new UserStatistic($user);
             }
 
@@ -577,7 +581,9 @@ class ProjectStatisticService
                 ->addGroupBy('t.activity')
             ;
 
-            foreach ($qb2->getQuery()->getArrayResult() as $tmp) {
+            /** @var array<int, array{"duration": int, "rate": float, "internalRate": float, "count": int, "billable": bool, "activity": int, "year": int}> $statsTmp */
+            $statsTmp = $qb2->getQuery()->getArrayResult();
+            foreach ($statsTmp as $tmp) {
                 $activityId = $tmp['activity'];
                 if (!\array_key_exists($yearName, $yearActivities)) {
                     $yearActivities[$yearName] = [];
