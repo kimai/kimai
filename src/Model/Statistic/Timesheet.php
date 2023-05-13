@@ -17,8 +17,7 @@ class Timesheet
 
     /**
      * For unified access, used in frontend.
-     *
-     * @return int
+     * @see getDuration()
      */
     public function getValue(): int
     {
@@ -27,8 +26,7 @@ class Timesheet
 
     /**
      * For unified access, used in frontend.
-     *
-     * @return int
+     * @see getTotalDuration()
      */
     public function getDuration(): int
     {
@@ -47,8 +45,7 @@ class Timesheet
 
     /**
      * For unified access, used in frontend.
-     *
-     * @return float
+     * @see getTotalRate()
      */
     public function getRate(): float
     {
@@ -67,8 +64,7 @@ class Timesheet
 
     /**
      * For unified access, used in frontend.
-     *
-     * @return float
+     * @see getTotalInternalRate()
      */
     public function getInternalRate(): float
     {
