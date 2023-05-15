@@ -1,48 +1,7 @@
-@include dark-mode {
-    .form-check-input {
-        border-color: $input-border-color;
-    }
-
-    /* selectpicker.scss / Tom Select */
-    .ts-wrapper.form-select .ts-control,
-    .ts-wrapper.form-select.single.input-active .ts-control {
-        color: $dark-mode-text;
-    }
-    .ts-dropdown {
-        background-color: $dark-mode-lighten;
-        color: $dark-mode-text;
-    }
-    .ts-control {
-        > input {
-            min-width: unset;
-            color: $dark-mode-text;
-        }
-
-        .item {
-            background-color: $dark;
-            color: $dark-mode-text;
-        }
-    }
-    .optgroup-header {
-        background-color: $dropdown-dark-bg;
-        color: $dark-mode-text;
-    }
-
+@include color-mode(dark, true) {
     table.dataTable {
-        th.weekend, td.weekend {
-            background-color: $dark-mode-weekend;
-            color: $dark-mode-text;
-        }
-        /* must be defined after weekend, to overwrite it */
-        th.today, td.today {
-            background-color: $dark-mode-today;
-            color: $dark-mode-text;
-        }
-
-        tr {
-            &.summary td {
-                background-color: $dark-mode-darken;
-            }
+        th.today {
+            color: var(--tblr-muted);
         }
     }
 
@@ -50,7 +9,7 @@
         background: rgba(0, 0, 0, 0.5);
 
         > .fas {
-            color: $dark-mode-text;
+            color: var(--tblr-white);
         }
     }
 }

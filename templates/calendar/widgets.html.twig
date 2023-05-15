@@ -2,6 +2,6 @@
     {% import "macros/widgets.html.twig" as widgets %}
         {{ title }}
     {% if project is not null %}
-        <small class="d-block text-muted text-truncate mt-n1">{{ project }}{% if customer is not null %}, {{ customer }}{% endif %}</small>
+        <small class="d-block text-body-secondary text-truncate mt-n1">{{ project }}{% if customer is not null %}, {{ customer }}{% endif %}</small>
     {% endif %}
 {% endmacro %}

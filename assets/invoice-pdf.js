@@ -1,2 +1,2 @@
 
-require('./sass/invoice-pdf.scss');
+require('./sass/_invoice-pdf.scss');

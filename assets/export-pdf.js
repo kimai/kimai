@@ -1,2 +1,2 @@
 
-require('./sass/export-pdf.scss');
+require('./sass/_export-pdf.scss');

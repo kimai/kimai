@@ -4,7 +4,7 @@
 {% import "invoice/actions.html.twig" as actions %}
 
 {% block datatable_row %}
-    <tr class="modal-ajax-form open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
+    <tr class="modal-ajax-form open-edit{% if entry.canceled %} text-body-secondary{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
         <td class="{{ tables.class(dataTable, 'avatar') }}">{{ widgets.user_avatar(entry.user) }}</td>
         <td class="{{ tables.class(dataTable, 'date') }}">{{ entry.createdAt|date_short }}</td>
         <td class="{{ tables.class(dataTable, 'user') }}">{{ widgets.label_user(entry.user) }}</td>

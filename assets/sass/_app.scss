@@ -1,0 +1,37 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import "bootstrap/scss/functions";
+
+@import "@tabler/core/src/scss/variables";
+@import "@tabler/core/src/scss/variables-dark";
+@import "@tabler/core/src/scss/mixins";
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+@import "layout";
+@import "error-page";
+@import "print";
+@import "content";
+@import "loading-spinner";
+@import "tables";
+@import "calendar";
+@import "ticktac";
+@import "selectpicker";
+@import "forms";
+@import "modal";
+@import "progressbar";
+@import "avatar";
+@import "theme-dark";
+@import "pages";
+@import "tabler-fixes";
+@import "help";
+@import "rtl";

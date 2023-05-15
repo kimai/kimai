@@ -262,7 +262,7 @@
             {{ form_end(multi_update_form) }}
         {% endif %}
         {% if route is not empty and entries is not null %}
-            <p class="d-none d-sm-block m-0 text-muted multi_update_form_hide">
+            <p class="d-none d-sm-block m-0 text-body-secondary multi_update_form_hide">
                 {{ 'pagination'|trans({'%start%': entries.getCurrentPageOffsetStart(), '%end%': entries.getCurrentPageOffsetEnd(), '%total%': entries.getNbResults()}) }}
             </p>
             {% set options = { 'css_container_class': 'pagination m-0 ms-auto d-print-none' } %}

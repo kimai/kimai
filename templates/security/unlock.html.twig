@@ -7,7 +7,7 @@
 {% block login_box_msg %}{{ 'security.unlock.title'|trans }}{% endblock %}
 
 {% block login_form %}
-        <p class="text-muted text-center mb-4">
+        <p class="text-body-secondary text-center mb-4">
             {% block unlock_title %}{{ 'security.unlock.intro'|trans }}{% endblock %}
         </p>
         <div class="mb-4 text-center">
@@ -15,7 +15,7 @@
             {{ user_avatar(app.user, false, 'avatar-xl mb-3') }}
             <h3>{{ username(app.user) }}</h3>
             {% if app.user.title is not empty %}
-                <p class="text-muted">{{ app.user.title }}</p>
+                <p class="text-body-secondary">{{ app.user.title }}</p>
             {% endif %}
         </div>
         {% block unlock_form %}

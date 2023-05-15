@@ -38,3 +38,8 @@ h1.navbar-brand a {
     /* bootstrap thead.sticky-top has z-index 1020 and the reporting form dropdowns hide behind that */
     z-index: 1021;
 }
+
+/* reduce the default font size for the brand header */
+.navbar {
+    --tblr-navbar-brand-font-size: 1rem;
+}

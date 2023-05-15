@@ -106,7 +106,7 @@
                 {%- elseif '.ERROR' in logLine -%}
                     {%- set logLineClass = 'text-warning text-bold' -%}
                 {%- elseif '.DEBUG' in logLine -%}
-                    {%- set logLineClass = 'text-muted' -%}
+                    {%- set logLineClass = 'text-body-secondary' -%}
                 {%- endif -%}
                 <span class="{{ logLineClass }}">{{- logLine -}}</span>
             {%- endfor %}</pre>

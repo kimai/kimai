@@ -17,7 +17,7 @@
                 {% for section in sorted|sort((a, b) => a.name <=> b.name) %}
                     <a class="list-group-item d-flex" href="#conf_{{ section.id }}">
                         {{ section.name }}
-                        <small class="text-muted ms-auto">{{ section.counter }}</small>
+                        <small class="text-body-secondary ms-auto">{{ section.counter }}</small>
                     </a>
                 {% endfor %}
             </div>
