@@ -42,7 +42,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->helper->setAssetVersion(Constants::VERSION_ID);
+        $this->helper->setAssetVersion((string) Constants::VERSION_ID);
 
         if ($this->localeService->isRightToLeft(\Locale::getDefault())) {
             $this->helper->setIsRightToLeft(true);
