@@ -28,7 +28,7 @@
                                             {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
                                                 {{ block(entry.blockName, source.blockInclude) }}
                                             {% else %}
-                                                <span class="d-block text-muted text-truncate mt-n1">{{ entry.title }}</span>
+                                                <span class="d-block text-body-secondary text-truncate mt-n1">{{ entry.title }}</span>
                                             {% endif %}
                                         </div>
                                     </div>
