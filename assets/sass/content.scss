@@ -5,6 +5,11 @@
  * file that was distributed with this source code.
  */
 
+/* used in security screens and other full-size pages */
+.page-center {
+    justify-content: center;
+}
+
 /* make sure that elements can be hidden without taking space (eg. hidden modals like the search or column visibility)  */
 .hidden-no-space {
     margin: 0;
@@ -31,11 +36,6 @@ td {
     &.badges {
         line-height: 22px;
     }
-}
-
-.label-gray {
-    background-color: $gray-lte;
-    color: #666;
 }
 
 .open-edit {

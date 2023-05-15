@@ -194,7 +194,7 @@ export default class KimaiAlert extends KimaiPlugin {
                 <div class="toast-body">
                     ` + icon + ' ' + message + `
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="` + translation.get('close') + `"></button>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="` + translation.get('close') + `"></button>
             </div>
         </div>`;
 

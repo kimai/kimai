@@ -1,5 +1,5 @@
 
-require('./sass/app.scss');
+require('./sass/_app.scss');
 
 // ------ Kimai itself ------
 require('./js/KimaiWebLoader.js');

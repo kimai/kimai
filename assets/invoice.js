@@ -1,2 +1,2 @@
 
-require('./sass/invoice.scss');
+require('./sass/_invoice.scss');
