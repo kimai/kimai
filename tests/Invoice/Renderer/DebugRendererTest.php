@@ -260,6 +260,7 @@ class DebugRendererTest extends TestCase
             'entry.total_plain',
             'entry.currency',
             'entry.duration',
+            'entry.duration_format',
             'entry.duration_decimal',
             'entry.duration_minutes',
             'entry.begin',
