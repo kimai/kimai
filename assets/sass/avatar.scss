@@ -3,18 +3,18 @@ $avatar-base-size: 30;
 
 .initials {
     font-weight: bold;
-    font-size: ceil($avatar-base-size / 2 - 2)+px;
+    font-size: ceil(calc($avatar-base-size / 2 - 2))+px;
 }
 
 $avatarSizes: "xs" .75, "sm" 1.25, "md" 1.5, "lg" 2;
 
 @each $avatarSizeName, $avatarBaseSize in $avatarSizes {
     .avatar-#{$avatarSizeName} {
-        width: ceil($avatar-base-size * $avatarBaseSize)+px;
-        height: ceil($avatar-base-size * $avatarBaseSize)+px;
+        width: ceil(calc($avatar-base-size * $avatarBaseSize))+px;
+        height: ceil(calc($avatar-base-size * $avatarBaseSize))+px;
 
         .initials {
-            font-size: ceil($avatar-base-size * $avatarBaseSize / 2 - 2)+px;
+            font-size: ceil(calc($avatar-base-size * $avatarBaseSize / 2 - 2))+px;
         }
     }
 }
@@ -23,10 +23,10 @@ $avatarSizes: "xs" .75, "sm" 1.25, "md" 1.5, "lg" 2;
     border-radius: 50%;
     border: 3px solid #fff;
     .avatar {
-        width: ceil($avatar-base-size * 2.75)+px;
-        height: ceil($avatar-base-size * 2.75)+px;
+        width: ceil(calc($avatar-base-size * 2.75))+px;
+        height: ceil(calc($avatar-base-size * 2.75))+px;
         .initials {
-            font-size: ceil($avatar-base-size * 2.75 / 2 - 2)+px;
+            font-size: ceil(calc($avatar-base-size * 2.75 / 2 - 2))+px;
         }
     }
 }
@@ -38,4 +38,9 @@ table.dataTable.table > tbody > tr > td {
             margin: 1px;
         }
     }
+}
+
+/* decreases the margin between avatars, see https://github.com/tabler/tabler/issues/1567 */
+.avatar-list-stacked .avatar {
+    margin-right: calc(var(--tblr-avatar-size)*-.1)!important;
 }

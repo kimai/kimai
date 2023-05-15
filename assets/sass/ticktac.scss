@@ -37,8 +37,6 @@
 @include media-breakpoint-down(lg) {
     aside.navbar .btn-outline-white,
     header.navbar .btn-outline-white {
-        background-color: var(--tblr-body-color);
         border-color: hsla(0,0%,100%,.2);
-        color: hsla(0,0%,100%,.7);
     }
 }

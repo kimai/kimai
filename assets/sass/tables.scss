@@ -4,7 +4,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-@import "variables";
 
 table.dataTable {
     clear: both;
@@ -93,7 +92,7 @@ table.dataTable {
         &.summary td {
             font-weight: bold;
             border: 0;
-            background-color: var(--tblr-table-striped-bg);
+            background-color: var(--tblr-bg-surface-secondary);
         }
         th.multiCheckbox {
             width: 15px;
@@ -118,30 +117,17 @@ table.dataTable {
             padding: .3em .6em .3em;
             line-height: 24px;
         }
-        span.label-activity,
-        span.label-project,
-        span.label-customer {
-            a {
-                color: unset;
-                padding-bottom: 2px;
-                border-bottom: 1px dotted $gray-lte;
-                &:hover {
-                    border-bottom: 1px dotted darken($gray-lte, 20);
-                }
-            }
-        }
         span.label-invisible {
-            opacity: 0.8;
+            opacity: 0.6;
         }
     }
     th.weekend,
     td.weekend {
-        background-color: #f9f9f9;
+        background-color: var(--tblr-bg-surface-secondary);
     }
     /* order is important, "today” should overwrite "weekend" therefor later in the file */
-    th.today,
-    td.today {
-        background-color: $highlight-today;
+    th.today {
+        background-color: var(--tblr-highlight-bg);
     }
     th.total,
     td.total {

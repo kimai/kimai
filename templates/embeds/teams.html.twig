@@ -20,7 +20,7 @@
     {% block box_attributes %}id="team_listing_box"{% endblock %}
     {% block box_title %}
         {{ 'permissions'|trans({}, 'actions') }}
-        {% if teams|length > 0 %}<small class="text-muted d-none d-sm-inline ms-1">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
+        {% if teams|length > 0 %}<small class="text-body-secondary d-none d-sm-inline ms-1">{{ 'team.visibility_restricted'|trans({}, 'teams') }}</small>{% endif %}
     {% endblock %}
     {% block box_body_class %}{% if teams|length > 0 %}p-0{% endif %}{% endblock %}
     {% block box_body %}

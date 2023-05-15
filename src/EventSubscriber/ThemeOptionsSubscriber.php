@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\LocaleService;
+use App\Constants;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
@@ -41,6 +42,8 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $this->helper->setAssetVersion((string) Constants::VERSION_ID);
+
         if ($this->localeService->isRightToLeft(\Locale::getDefault())) {
             $this->helper->setIsRightToLeft(true);
         }
@@ -66,8 +69,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
         $this->helper->setIsCondensedUserMenu(false);
         $this->helper->setIsCondensedNavbar(false);
         $this->helper->setIsNavbarOverlapping(false);
-        if (!$this->helper->isDarkMode()) {
-            $this->helper->setIsNavbarDark(true);
-        }
+        $this->helper->setIsNavbarDark(true);
+        $this->helper->setIsHeaderDark($this->helper->isDarkMode());
     }
 }
