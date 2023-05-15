@@ -432,16 +432,19 @@ class ProjectStatisticService
             }
         }
 
-        // prepare activities for later use
-        $qbActivity = $this->activityRepository->createQueryBuilder('a');
-        $qbActivity->select('a')->where($qbActivity->expr()->in('a.id', array_keys($activities)));
-
         /** @var array<string, Activity> $activityIdToActivity */
         $activityIdToActivity = [];
-        /** @var array<int, Activity> $activityResults */
-        $activityResults = $qbActivity->getQuery()->getResult();
-        foreach ($activityResults as $item) {
-            $activityIdToActivity[$item->getId()] = $item;
+
+        if (\count($activities) > 0) {
+            // prepare activities for later use
+            $qbActivity = $this->activityRepository->createQueryBuilder('a');
+            $qbActivity->select('a')->where($qbActivity->expr()->in('a.id', array_keys($activities)));
+
+            /** @var array<int, Activity> $activityResults */
+            $activityResults = $qbActivity->getQuery()->getResult();
+            foreach ($activityResults as $item) {
+                $activityIdToActivity[$item->getId()] = $item;
+            }
         }
 
         foreach ($activities as $activityId => $activity) {
