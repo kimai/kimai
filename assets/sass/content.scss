@@ -79,15 +79,6 @@ table.dataTable thead > tr > th.hw-min {
     max-height: 340px;
 }
 
-.card {
-    .card-tools {
-        /* a button that is directly connected with a pagination element inside the box tools (eg. project list on customer detail page) */
-        .btn-pager {
-            float: left;
-            margin-right: 5px;
-        }
-    }
-}
 #customer_details_box,
 #project_details_box,
 #activity_details_box {

@@ -4837,11 +4837,6 @@ parameters:
             path: src/Plugin/PluginMetadata.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Cannot access offset 'amount' on mixed\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
@@ -4882,16 +4877,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 2
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Cannot call method getMonth\\(\\) on App\\\\Model\\\\Statistic\\\\Year\\|null\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
@@ -4912,23 +4897,13 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Model\\\\ActivityStatistic\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 2
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$billableDuration of method App\\\\Model\\\\Statistic\\\\Month\\:\\:setBillableDuration\\(\\) expects int, float\\|int given\\.$#"
             count: 2
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$billableDuration of method App\\\\Model\\\\Statistic\\\\Year\\:\\:setBillableDuration\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$counter of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setCounter\\(\\) expects int, float\\|int given\\.$#"
-            count: 3
+            count: 1
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -4948,7 +4923,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$duration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDuration\\(\\) expects int, float\\|int given\\.$#"
-            count: 3
+            count: 1
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -4972,11 +4947,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, int\\|null given\\.$#"
-            count: 2
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$project of class App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsModel constructor expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
@@ -4993,7 +4963,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$recordDuration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDurationBillable\\(\\) expects int, float\\|int given\\.$#"
-            count: 3
+            count: 1
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -5013,12 +4983,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$totalDuration of method App\\\\Model\\\\Statistic\\\\Timesheet\\:\\:setTotalDuration\\(\\) expects int, float\\|int given\\.$#"
-            count: 3
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of class App\\\\Model\\\\UserStatistic constructor expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 1
+            count: 2
             path: src/Project/ProjectStatisticService.php
 
         -

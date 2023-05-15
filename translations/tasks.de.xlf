@@ -5,7 +5,7 @@
       <!-- Reports -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
         <source>report_tasks_assigned</source>
-        <target>Meine Aufgaben</target>
+        <target>Aufgaben pro Benutzer</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams">
         <source>report_tasks_teams</source>

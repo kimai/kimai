@@ -7918,16 +7918,6 @@ parameters:
             path: Model/Statistic/TimesheetTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Model\\\\Statistic\\\\YearTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/Statistic/YearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Model\\\\Statistic\\\\YearTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/Statistic/YearTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Model\\\\TimesheetCountedStatisticTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Model/TimesheetCountedStatisticTest.php

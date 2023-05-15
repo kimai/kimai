@@ -28,6 +28,7 @@ use App\Reporting\ProjectDetails\ProjectDetailsQuery;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
+use App\Repository\ActivityRepository;
 use App\Repository\Loader\ProjectLoader;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
@@ -35,7 +36,6 @@ use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -43,7 +43,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ProjectStatisticService
 {
-    public function __construct(private ProjectRepository $repository, private TimesheetRepository $timesheetRepository, private EventDispatcherInterface $dispatcher, private UserRepository $userRepository)
+    public function __construct(
+        private ProjectRepository $projectRepository,
+        private ActivityRepository $activityRepository,
+        private TimesheetRepository $timesheetRepository,
+        private EventDispatcherInterface $dispatcher,
+        private UserRepository $userRepository
+    )
     {
     }
 
@@ -74,7 +80,7 @@ class ProjectStatisticService
         $lastChange = clone $query->getLastChange();
         $now = new DateTime('now', $lastChange->getTimezone());
 
-        $qb2 = $this->repository->createQueryBuilder('t1');
+        $qb2 = $this->projectRepository->createQueryBuilder('t1');
         $qb2
             ->select('1')
             ->from(Timesheet::class, 't')
@@ -82,7 +88,7 @@ class ProjectStatisticService
             ->andWhere($qb2->expr()->gte('t.begin', ':begin'))
         ;
 
-        $qb = $this->repository->createQueryBuilder('p');
+        $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
             ->select('p, c')
             ->leftJoin('p.customer', 'c')
@@ -99,13 +105,13 @@ class ProjectStatisticService
             ->setParameter('begin', $lastChange, Types::DATETIME_MUTABLE)
         ;
 
-        $this->repository->addPermissionCriteria($qb, $user);
+        $this->projectRepository->addPermissionCriteria($qb, $user);
 
         /** @var Project[] $projects */
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -121,7 +127,7 @@ class ProjectStatisticService
         $begin = $dateRange->getBegin();
         $end = $dateRange->getEnd();
 
-        $qb = $this->repository->createQueryBuilder('p');
+        $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
             ->select('p')
             ->leftJoin('p.customer', 'c')
@@ -144,7 +150,7 @@ class ProjectStatisticService
         ;
 
         if (!$query->isIncludeNoWork()) {
-            $qb2 = $this->repository->createQueryBuilder('t1');
+            $qb2 = $this->projectRepository->createQueryBuilder('t1');
             $qb2
                 ->select('1')
                 ->from(Timesheet::class, 't')
@@ -183,13 +189,13 @@ class ProjectStatisticService
                 ->setParameter('customer', $query->getCustomer());
         }
 
-        $this->repository->addPermissionCriteria($qb, $user);
+        $this->projectRepository->addPermissionCriteria($qb, $user);
 
         /** @var Project[] $projects */
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -398,18 +404,17 @@ class ProjectStatisticService
         // fetch stats grouped by ACTIVITY for all time
         $qb1 = clone $qb;
         $qb1
-            ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
-            ->addSelect('a as activity')
-            ->addGroupBy('a')
+            ->addSelect('IDENTITY(t.activity) as activity')
+            ->addGroupBy('t.activity')
         ;
 
-        /** @var array<ActivityStatistic> $activities */
+        /** @var array<string, ActivityStatistic> $activities */
         $activities = [];
-        foreach ($qb1->getQuery()->getResult() as $tmp) {
-            $activityId = $tmp['activity']->getId();
+        /** @var array{"duration": int, "rate": float, "internalRate": float, "count": int, "billable": bool, "activity": int} $tmp */
+        foreach ($qb1->getQuery()->getArrayResult() as $tmp) {
+            $activityId = $tmp['activity'];
             if (!\array_key_exists($activityId, $activities)) {
                 $activity = new ActivityStatistic();
-                $activity->setActivity($tmp['activity']);
                 $activities[$activityId] = $activity;
             } else {
                 $activity = $activities[$activityId];
@@ -423,10 +428,27 @@ class ProjectStatisticService
             if ($tmp['billable']) {
                 $activity->setDurationBillable($activity->getDurationBillable() + $tmp['duration']);
                 $activity->setRateBillable($activity->getRateBillable() + $tmp['rate']);
+                $activity->setInternalRateBillable($activity->getInternalRateBillable() + $tmp['internalRate']);
             }
         }
 
-        foreach ($activities as $activity) {
+        /** @var array<string, Activity> $activityIdToActivity */
+        $activityIdToActivity = [];
+
+        if (\count($activities) > 0) {
+            // prepare activities for later use
+            $qbActivity = $this->activityRepository->createQueryBuilder('a');
+            $qbActivity->select('a')->where($qbActivity->expr()->in('a.id', array_keys($activities)));
+
+            /** @var array<int, Activity> $activityResults */
+            $activityResults = $qbActivity->getQuery()->getResult();
+            foreach ($activityResults as $item) {
+                $activityIdToActivity[$item->getId()] = $item;
+            }
+        }
+
+        foreach ($activities as $activityId => $activity) {
+            $activity->setActivity($activityIdToActivity[$activityId]);
             $model->addActivity($activity);
         }
         // ---------------------------------------------------
@@ -450,7 +472,9 @@ class ProjectStatisticService
             $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
             /** @var array<int, UserStatistic> $users */
             $users = [];
-            foreach ($qb2->getQuery()->getResult() as $user) {
+            /** @var array<int, User> $userResult */
+            $userResult = $qb2->getQuery()->getResult();
+            foreach ($userResult as $user) {
                 $users[$user->getId()] = new UserStatistic($user);
             }
 
@@ -533,41 +557,33 @@ class ProjectStatisticService
                     $tmp->setMonth(new Month($i));
                 }
                 $years[$year['year']] = $tmp;
-            } else {
-                $tmp = $years[$year['year']];
-            }
-            $tmp->setTotalRate($tmp->getTotalRate() + $year['rate']);
-            $tmp->setTotalInternalRate($tmp->getTotalInternalRate() + $year['internalRate']);
-            $tmp->setTotalDuration($tmp->getTotalDuration() + $year['duration']);
-
-            if ($year['billable']) {
-                $tmp->setBillableDuration($tmp->getBillableDuration() + $year['duration']);
-                $tmp->setBillableRate($tmp->getBillableRate() + $year['rate']);
             }
         }
 
+        /** @var array<string, array<string, ActivityStatistic>> $yearActivities */
         $yearActivities = [];
         foreach ($years as $yearName => $yearStat) {
             // fetch yearly stats grouped by ACTIVITY and YEAR
             $qb2 = clone $qb;
             $qb2
-                ->leftJoin(Activity::class, 'a', Join::WITH, 'a.id = t.activity')
-                ->addSelect('a as activity')
+                ->addSelect('IDENTITY(t.activity) as activity')
                 ->addSelect('YEAR(t.date) as year')
                 ->andWhere('YEAR(t.date) = :year')
                 ->setParameter('year', $yearName)
                 ->addGroupBy('year')
-                ->addGroupBy('a')
+                ->addGroupBy('t.activity')
             ;
 
-            foreach ($qb2->getQuery()->getResult() as $tmp) {
-                $activityId = $tmp['activity']->getId();
+            /** @var array<int, array{"duration": int, "rate": float, "internalRate": float, "count": int, "billable": bool, "activity": int, "year": int}> $statsTmp */
+            $statsTmp = $qb2->getQuery()->getArrayResult();
+            foreach ($statsTmp as $tmp) {
+                $activityId = $tmp['activity'];
                 if (!\array_key_exists($yearName, $yearActivities)) {
                     $yearActivities[$yearName] = [];
                 }
                 if (!\array_key_exists($activityId, $yearActivities[$yearName])) {
                     $activity = new ActivityStatistic();
-                    $activity->setActivity($tmp['activity']);
+                    $activity->setActivity($activityIdToActivity[$activityId]);
                     $yearActivities[$yearName][$activityId] = $activity;
                 } else {
                     $activity = $yearActivities[$yearName][$activityId];
@@ -580,14 +596,14 @@ class ProjectStatisticService
                 if ($tmp['billable']) {
                     $activity->setDurationBillable($activity->getDurationBillable() + $tmp['duration']);
                     $activity->setRateBillable($activity->getRateBillable() + $tmp['rate']);
+                    $activity->setInternalRateBillable($activity->getInternalRateBillable() + $tmp['internalRate']);
                 }
-                $model->addYearActivity($tmp['year'], $activity);
             }
         }
 
         foreach ($yearActivities as $year => $yearlyActivities) {
-            foreach ($yearlyActivities as $activity) {
-                $model->addYearActivity($year, $activity);
+            foreach ($yearlyActivities as $activityId => $activityStatistic) {
+                $model->addYearActivity($year, $activityStatistic);
             }
         }
 
@@ -631,7 +647,7 @@ class ProjectStatisticService
         $user = $query->getUser();
         $today = clone $query->getToday();
 
-        $qb = $this->repository->createQueryBuilder('p');
+        $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
             ->select('p')
             ->leftJoin('p.customer', 'c')
@@ -675,13 +691,13 @@ class ProjectStatisticService
             );
         }
 
-        $this->repository->addPermissionCriteria($qb, $user);
+        $this->projectRepository->addPermissionCriteria($qb, $user);
 
         /** @var Project[] $projects */
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;

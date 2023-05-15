@@ -95,7 +95,9 @@ final class ProjectDetailsModel
                     $users[$id] = $userStat;
                 }
                 $userStat->setDuration($userStat->getDuration() + $userYear->getDuration());
+                $userStat->setDurationBillable($userStat->getDurationBillable() + $userYear->getBillableDuration());
                 $userStat->setRate($userStat->getRate() + $userYear->getRate());
+                $userStat->setRateBillable($userStat->getRateBillable() + $userYear->getBillableRate());
             }
         }
 
