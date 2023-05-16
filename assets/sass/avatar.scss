@@ -42,5 +42,5 @@ table.dataTable.table > tbody > tr > td {
 
 /* decreases the margin between avatars, see https://github.com/tabler/tabler/issues/1567 */
 .avatar-list-stacked .avatar {
-    margin-right: calc(var(--tblr-avatar-size)*-.1)!important;
+    margin-right: calc(var(--tblr-avatar-size)*-.2)!important;
 }
