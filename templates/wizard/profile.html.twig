@@ -1,7 +1,7 @@
 {% extends 'wizard/layout.html.twig' %}
 
 {% block wizard_content %}
-    <div class="card-body text-center py-4 p-sm-5">
+    <div class="card-body text-center py-4 p-sm-6">
         <h1 class="mt-2">{{ 'wizard.profile.title'|trans({}, 'wizard') }}</h1>
         <p class="text-body-secondary">{{ 'wizard.profile.description'|trans({}, 'wizard') }}</p>
     </div>
@@ -19,10 +19,11 @@
             const skinChooser = document.getElementById('form_skin');
             if (skinChooser !== null) {
                 skinChooser.addEventListener('change', () => {
-                    document.body.classList.remove('theme-light');
-                    document.body.classList.remove('theme-default');
-                    document.body.classList.remove('theme-dark');
-                    document.body.classList.add('theme-' + skinChooser.value);
+                    document.querySelectorAll('[data-bs-theme]').forEach(
+                        element => {
+                            element.dataset['bsTheme'] = (skinChooser.value === 'default' ? 'light' : 'dark');
+                        }
+                    );
                 });
             }
 

@@ -147,16 +147,47 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             return null;
         }
 
-        const date = this.getDateUtils().fromFormat(
-            this._beginDate.value + ' ' + this._beginTime.value,
-            this._beginDate.dataset['format'] + ' ' + this._beginTime.dataset['format'],
-        );
+        let date = this._parseBegin(this._beginTime.dataset['format']);
 
         if (date.invalid) {
-            return null;
+            date = this._parseBegin(this._fixTimeFormat(this._beginTime.dataset['format']));
+
+            if (date.invalid) {
+                return null;
+            }
         }
 
         return date;
+    }
+
+    _parseBegin(timeFormat)
+    {
+        return this.getDateUtils().fromFormat(
+            this._beginDate.value + ' ' + this._beginTime.value,
+            this._beginDate.dataset['format'] + ' ' + timeFormat,
+        );
+    }
+
+    _parseEnd(endDate, timeFormat)
+    {
+        let date = this.getDateUtils().fromFormat(
+            endDate.toFormat('yyyy-LL-dd') + ' ' + this._endTime.value,
+            'yyyy-LL-dd ' + timeFormat,
+        );
+
+        if (date.invalid) {
+            date = this.getDateUtils().fromFormat(
+                endDate.toFormat('yyyy-LL-dd') + ' ' + this._endTime.value,
+                'yyyy-LL-dd ' + this._fixTimeFormat(timeFormat),
+            );
+        }
+
+        return date;
+    }
+
+    _fixTimeFormat(format)
+    {
+        return format.replace('HH', 'H').replace('hh', 'h');
     }
 
     /**
@@ -169,17 +200,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             return null;
         }
 
-        let date = this.getDateUtils().fromFormat(
-            DateTime.now().toFormat('yyyy-LL-dd') + ' ' + this._endTime.value,
-            'yyyy-LL-dd ' + this._endTime.dataset['format'],
-        );
+        let date = this._parseEnd(DateTime.now(), this._endTime.dataset['format']);
 
         const begin = this._getBegin();
         if (begin !== null) {
-            date = this.getDateUtils().fromFormat(
-                begin.toFormat('yyyy-LL-dd') + ' ' + this._endTime.value,
-                'yyyy-LL-dd ' + this._endTime.dataset['format'],
-            );
+            date = this._parseEnd(begin, this._endTime.dataset['format']);
 
             if (date < begin) {
                 date = date.plus({days: 1});
