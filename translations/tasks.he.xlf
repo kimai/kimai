@@ -5,7 +5,7 @@
       <!-- Reports -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
-        <target state="translated">המשימות שלי</target>
+        <target state="translated">משימות לפי משתמש</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
