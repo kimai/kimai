@@ -1067,11 +1067,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\DoctorController\\:\\:getNextUpdateVersion\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DoctorController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\DoctorController\\:\\:getPhpInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/DoctorController.php
@@ -6523,11 +6518,6 @@ parameters:
 
         -
             message: "#^Cannot access property \\$zipball_url on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ReleaseVersion\\:\\:getLatestReleaseFromGithub\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/ReleaseVersion.php
 

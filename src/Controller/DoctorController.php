@@ -90,7 +90,7 @@ final class DoctorController extends AbstractController
 
         $latestRelease = $this->getNextUpdateVersion();
         if (\is_array($latestRelease) && \array_key_exists('version', $latestRelease)) {
-            if (version_compare(Constants::VERSION, $latestRelease['version']) >= 0) {
+            if (version_compare(Constants::VERSION, (string) $latestRelease['version']) >= 0) {
                 $latestRelease = null;
             }
         }
@@ -117,6 +117,7 @@ final class DoctorController extends AbstractController
      */
     private function getComposerPackages(): array
     {
+        /** @var array<string, string> $versions */
         $versions = [];
 
         if (class_exists(InstalledVersions::class)) {
@@ -321,6 +322,9 @@ final class DoctorController extends AbstractController
         return $phpInfo;
     }
 
+    /**
+     * @return array{'version': string, 'date': \DateTimeInterface, 'url': string, 'download': string, 'content': string}|null
+     */
     private function getNextUpdateVersion(): ?array
     {
         return $this->cache->get('kimai.update_release', function (ItemInterface $item) {
