@@ -89,7 +89,7 @@ final class DoctorController extends AbstractController
         $page->setHelp('doctor.html');
 
         $latestRelease = $this->getNextUpdateVersion();
-        if (is_array($latestRelease) && array_key_exists('version', $latestRelease)) {
+        if (\is_array($latestRelease) && \array_key_exists('version', $latestRelease)) {
             if (version_compare(Constants::VERSION, $latestRelease['version']) >= 0) {
                 $latestRelease = null;
             }
