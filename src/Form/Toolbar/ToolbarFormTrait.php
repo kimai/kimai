@@ -322,6 +322,7 @@ trait ToolbarFormTrait
                 'description' => 'The order for returned items',
             ],
             'label' => 'order',
+            'search' => false,
             'choices' => [
                 'asc' => BaseQuery::ORDER_ASC,
                 'desc' => BaseQuery::ORDER_DESC
@@ -337,6 +338,7 @@ trait ToolbarFormTrait
             $all[$label] = $name;
         }
         $builder->add('orderBy', ChoiceType::class, [
+            'search' => false,
             'label' => 'orderBy',
             'choices' => $all,
         ]);

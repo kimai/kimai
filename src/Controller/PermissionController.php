@@ -69,6 +69,7 @@ final class PermissionController extends AbstractController
         }
 
         // be careful, the order of the search keys is important!
+        // @CloudRequired (names should not change)
         $permissionOrder = [
             new PermissionSection('Export', '_export'),
             new PermissionSection('Invoice', '_invoice'),
