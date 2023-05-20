@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Constants;
 use App\Utils\FileHelper;
 use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
@@ -87,6 +88,13 @@ final class DoctorController extends AbstractController
         $page = new PageSetup('Doctor');
         $page->setHelp('doctor.html');
 
+        $latestRelease = $this->getNextUpdateVersion();
+        if (is_array($latestRelease) && array_key_exists('version', $latestRelease)) {
+            if (version_compare(Constants::VERSION, $latestRelease['version']) >= 0) {
+                $latestRelease = null;
+            }
+        }
+
         return $this->render('doctor/index.html.twig', [
             'page_setup' => $page,
             'modules' => get_loaded_extensions(),
@@ -100,7 +108,7 @@ final class DoctorController extends AbstractController
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
             'composer' => $this->getComposerPackages(),
-            'release' => $this->getNextUpdateVersion()
+            'release' => $latestRelease
         ]);
     }
 
