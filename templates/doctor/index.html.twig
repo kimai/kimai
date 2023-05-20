@@ -9,7 +9,7 @@
 {% block main %}
 
     {% if release is not null and release is iterable %}
-        {% embed '@theme/embeds/card.html.twig' with release %}
+        {% embed '@theme/embeds/card.html.twig' with {'release': release, boxtype: 'warning'} %}
             {% block box_title %}Kimai {{ release.version }} available (released on {{ release.date|date_short }}){% endblock %}
             {% block box_body %}
                 {{ release.content|md2html }}

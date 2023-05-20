@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Constants;
 use App\Utils\FileHelper;
 use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
@@ -87,6 +88,13 @@ final class DoctorController extends AbstractController
         $page = new PageSetup('Doctor');
         $page->setHelp('doctor.html');
 
+        $latestRelease = $this->getNextUpdateVersion();
+        if (\is_array($latestRelease) && \array_key_exists('version', $latestRelease)) {
+            if (version_compare(Constants::VERSION, (string) $latestRelease['version']) >= 0) {
+                $latestRelease = null;
+            }
+        }
+
         return $this->render('doctor/index.html.twig', [
             'page_setup' => $page,
             'modules' => get_loaded_extensions(),
@@ -100,7 +108,7 @@ final class DoctorController extends AbstractController
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
             'composer' => $this->getComposerPackages(),
-            'release' => $this->getNextUpdateVersion()
+            'release' => $latestRelease
         ]);
     }
 
@@ -109,6 +117,7 @@ final class DoctorController extends AbstractController
      */
     private function getComposerPackages(): array
     {
+        /** @var array<string, string> $versions */
         $versions = [];
 
         if (class_exists(InstalledVersions::class)) {
@@ -313,6 +322,9 @@ final class DoctorController extends AbstractController
         return $phpInfo;
     }
 
+    /**
+     * @return array{'version': string, 'date': \DateTimeInterface, 'url': string, 'download': string, 'content': string}|null
+     */
     private function getNextUpdateVersion(): ?array
     {
         return $this->cache->get('kimai.update_release', function (ItemInterface $item) {

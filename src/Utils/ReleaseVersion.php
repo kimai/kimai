@@ -22,6 +22,8 @@ final class ReleaseVersion
      * Get all releases from GitHub.
      *
      * @throws \Exception
+     * @return array|null
+     * @return array<string, array{'version': string, 'date': \DateTimeInterface, 'url': string, 'download': string, 'content': string}>
      * @return array
      */
     private function getReleasesFromGithub(): array
@@ -93,7 +95,7 @@ final class ReleaseVersion
      * - content (string, release notes)
      *
      * @param bool $compatible
-     * @return array|null
+     * @return array{'version': string, 'date': \DateTimeInterface, 'url': string, 'download': string, 'content': string}|null
      * @throws \Exception
      */
     public function getLatestReleaseFromGithub(bool $compatible): ?array
