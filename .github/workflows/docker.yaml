@@ -13,4 +13,4 @@ jobs:
         with:
           token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           repository: tobybatch/kimai2
-          event_type: kimai_release
+          event-type: kimai_release
