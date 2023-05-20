@@ -8,3 +8,11 @@ fieldset.form-fieldset legend {
     font-size: 1rem;
     font-weight: bold;
 }
+
+/* Fixing the margin between the divider and items in context menu or dropdowns with optgroups  */
+.ts-dropdown .optgroup:before {
+    --tblr-spacer: .5rem;
+}
+.dropdown-divider {
+    --tblr-dropdown-divider-margin-y: .5rem;
+}
