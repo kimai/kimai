@@ -18,6 +18,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         super();
         this._selector = '.ticktac-menu';
         this._selectorEmpty = '.ticktac-menu-empty';
+        this._favIconUrl = null;
     }
 
     /**
@@ -52,8 +53,6 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         // handle duration in the visible UI
         this._updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
 
-        // deactivated direct duration update, becuase it is unclear
-        // this._updateDuration();
         const handle = () => {
             this._updateDuration();
         };
@@ -76,6 +75,10 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     {
         // needs to search in document, to find all running entries, both in "ticktac" and listing pages
         const activeRecords = document.querySelectorAll('[data-since]:not([data-since=""])');
+
+        if (this._updateBrowserTitle) {
+            this._changeFavicon(activeRecords.length > 0);
+        }
 
         if (activeRecords.length === 0) {
             if (this._updateBrowserTitle) {
@@ -195,4 +198,36 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         });
     }
 
+    /**
+     * @param {boolean} running
+     * @private
+     */
+    _changeFavicon(running)
+    {
+        const canvas = document.createElement('canvas');
+        const orig = document.getElementById('favicon');
+        if (this._favIconUrl === null) {
+            this._favIconUrl = orig.href;
+        }
+        const link = orig.cloneNode(true);
+
+        if (canvas.getContext && link) {
+            const ratio = window.devicePixelRatio;
+            const img = document.createElement('img');
+            canvas.height = canvas.width = 16 * ratio;
+            img.onload = function () {
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+                if (running) {
+                    const width = 5.5 * ratio;
+                    ctx.fillStyle = 'rgb(182,57,57)';
+                    ctx.fillRect((canvas.width / 2) - (width / 2), (canvas.height / 2) - (width / 2), width, width);
+                }
+                link.href = canvas.toDataURL('image/png');
+                orig.remove();
+                document.head.appendChild(link);
+            };
+            img.src = this._favIconUrl;
+        }
+    }
 }
