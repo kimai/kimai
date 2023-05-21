@@ -4,14 +4,13 @@
     z-index: 1021;
 }
 
-/* can be removed if no error is reported. it is unknown why this was added */
-/*
+/* Tabler defines a min-width of 7rem, what makes many input fields become a two-line field
+  e.g. a 7 rem input does not fit behind a word like "Germany" in a 3 column form inside a modal */
 .ts-control {
     > input {
         min-width: unset;
     }
 }
-*/
 
 .ts-dropdown {
     .optgroup {
