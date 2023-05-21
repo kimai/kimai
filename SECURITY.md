@@ -13,7 +13,8 @@ As announced in the [README](README.md) I only support the latest available rele
 ## Reporting a Vulnerability
 
 Please read the [Bughunter](https://www.kimai.org/documentation/bughunter.html) documentation before posting. 
-You can report any security related vulnerability in the [advisory section at GitHub](https://github.com/kimai/kimai/security/advisories) or via email to kpapst@gmx.net.
+You can report any security related vulnerability in the [advisory section at GitHub](https://github.com/kimai/kimai/security/advisories) 
+or via email to [support@kimai.org](mailto:support@kimai.org).
 
 I will work as fast as I can to fix the problem and publish a bugfix release / security update. 
 Depending on the size of the required fixes, this might take a couple of hours or a couple of days.
@@ -22,3 +23,5 @@ You can expect that your message will be answered ASAP.
 
 You will be mentioned in the release notes if your issue is valid. 
 I am grateful for any (discrete) disclosure of vulnerabilities!
+
+Please note: if you are asking for money, I will not reply. I receive these scam messages every day...
