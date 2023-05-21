@@ -127,6 +127,13 @@
             <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </div>
         {{- block('form_widget_simple') -}}
+        {% if not required %}
+        <span class="input-group-text">
+            <a href="#" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+                {{ icon('cancel') }}
+            </a>
+        </span>
+        {% endif %}
     </div>
 {%- endblock date_widget %}
 
