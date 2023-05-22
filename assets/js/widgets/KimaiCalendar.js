@@ -220,15 +220,23 @@ export default class KimaiCalendar {
                 }
 
                 const element = mouseEnterInfo.el;
-                let popover = Popover.getInstance(element);
+                const popoverTitle = DATES.getFormattedDate(event.start) + ' | ' + DATES.formatTime(event.start) + ' - ' + (event.end ? DATES.formatTime(event.end) : '');
+                const popoverContent = this.renderEventPopoverContent(event);
 
-                if (popover === null) {
+                let popover = Popover.getInstance(element);
+                if (popover !== null) {
+                    // see https://github.com/kimai/kimai/issues/4043
+                    popover.setContent({
+                        '.popover-header': popoverTitle,
+                        '.popover-body': popoverContent
+                    });
+                } else {
                     // https://getbootstrap.com/docs/5.0/components/popovers/#options
                     popover = new Popover(element, {
-                        title: DATES.getFormattedDate(event.start) + ' | ' + DATES.formatTime(event.start) + ' - ' + (event.end ? DATES.formatTime(event.end) : ''),
+                        title: popoverTitle,
                         placement: 'top',
                         html: true,
-                        content: this.renderEventPopoverContent(event),
+                        content: popoverContent,
                         trigger: 'focus',
                     });
                 }
