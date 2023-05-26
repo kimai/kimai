@@ -211,6 +211,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),
             'timezone' => $user->getTimezone(),
+            'user' => ['id' => $user->getId(), 'name' => $user->getDisplayName(), 'admin' => $user->isAdmin(), 'superAdmin' => $user->isSuperAdmin()],
         ];
     }
 

@@ -41,6 +41,7 @@ import KimaiDateNowForm from "./forms/KimaiDateNowForm";
 import KimaiNotification from "./plugins/KimaiNotification";
 import KimaiHotkeys from "./plugins/KimaiHotkeys";
 import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
+import KimaiUser from "./plugins/KimaiUser";
 
 export default class KimaiLoader {
 
@@ -55,6 +56,7 @@ export default class KimaiLoader {
         );
 
         // GLOBAL HELPER PLUGINS
+        kimai.registerPlugin(new KimaiUser());
         kimai.registerPlugin(new KimaiEscape());
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());

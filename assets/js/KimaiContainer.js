@@ -88,4 +88,11 @@ export default class KimaiContainer {
         return this._configuration;
     }
 
+    /**
+     * @returns {KimaiUser}
+     */
+    getUser() {
+        return this.getPlugin('user');
+    }
+
 }
