@@ -161,6 +161,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiUser: information about the current user
+ */
+
+/*!
  * [KIMAI] Notification: notifications for Kimai
  */
 

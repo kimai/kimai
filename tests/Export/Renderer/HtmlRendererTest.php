@@ -44,12 +44,17 @@ class HtmlRendererTest extends AbstractRendererTest
 
     public function testRender()
     {
-        $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
 
+        $user = $this->createMock(User::class);
+        $user->method('getId')->willReturn(1);
+        $user->method('getName')->willReturn('Testing');
+        $user->method('isAdmin')->willReturn(false);
+        $user->method('isSuperAdmin')->willReturn(false);
+        $user->method('getTimezone')->willReturn('America/Edmonton');
         $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn(new User());
+        $token->expects($this->any())->method('getUser')->willReturn($user);
 
         $tokenStorage = new TokenStorage();
         $tokenStorage->setToken($token);

@@ -66,12 +66,12 @@ final class Month extends BaseMonth
         return new Day($day);
     }
 
-    public function getExpectedTime(\DateTimeInterface $until): int
+    public function getExpectedTime(?\DateTimeInterface $until = null): int
     {
         $time = 0;
 
         foreach ($this->getDays() as $day) {
-            if ($until < $day->getDay()) {
+            if ($until !== null && $until < $day->getDay()) {
                 break;
             }
             if ($day->getWorkingTime() !== null) {
