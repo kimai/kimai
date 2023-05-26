@@ -349,7 +349,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['description']) && !isset($columns['description']['render'])) {
-            $maxWidth = \array_key_exists('maxWidth', $columns['description']) ? \intval($columns['description']['maxWidth']) : null;
+            $maxWidth = \array_key_exists('maxWidth', $columns['description']) && is_numeric($columns['description']['maxWidth']) ? (int) $columns['description']['maxWidth'] : null;
             $wrapText = \array_key_exists('wrapText', $columns['description']) ? (bool) $columns['description']['wrapText'] : false;
             $sanitizeText = \array_key_exists('sanitizeDDE', $columns['description']) ? (bool) $columns['description']['sanitizeDDE'] : true;
 
