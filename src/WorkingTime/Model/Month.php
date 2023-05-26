@@ -66,8 +66,7 @@ final class Month extends BaseMonth
         return new Day($day);
     }
 
-    public function getExpectedTime(\DateTimeInterface $until): int
-    //public function getExpectedTime(?\DateTimeInterface $until = null): int
+    public function getExpectedTime(?\DateTimeInterface $until = null): int
     {
         $time = 0;
 
