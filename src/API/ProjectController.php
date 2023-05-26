@@ -115,8 +115,8 @@ final class ProjectController extends BaseApiController
         }
 
         $ignoreDates = false;
-        if (null !== $paramFetcher->get('ignoreDates')) {
-            $ignoreDates = \intval($paramFetcher->get('ignoreDates')) === 1;
+        if (null !== ($ign = $paramFetcher->get('ignoreDates'))) {
+            $ignoreDates = $ign === 1 || $ign === '1';
         }
 
         if (!$ignoreDates) {
