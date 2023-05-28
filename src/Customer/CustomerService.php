@@ -18,6 +18,7 @@ use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
+use App\Repository\Query\CustomerQuery;
 use App\Utils\NumberGenerator;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
@@ -105,6 +106,14 @@ final class CustomerService
     public function findCustomerByNumber(string $number): ?Customer
     {
         return $this->repository->findOneBy(['number' => $number]);
+    }
+
+    /**
+     * @return iterable<Customer>
+     */
+    public function findCustomer(CustomerQuery $query): iterable
+    {
+        return $this->repository->getCustomersForQuery($query);
     }
 
     public function calculateNextCustomerNumber(): string
