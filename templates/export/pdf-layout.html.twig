@@ -1,6 +1,7 @@
 {% set showUserColumn = showUserColumn ?? true %}
 {% set showInternalRate = showInternalRate ?? false %}
 {% set showRateColumn = showRateColumn ?? is_granted('view_rate_other_timesheet') %}
+{% set showHourlyRateColumn = showHourlyRateColumn ?? false %}
 {% set showRateBudget = showRateBudget ?? false %}
 {% set showTimeBudget = showTimeBudget ?? false %}
 {% set showCustomerSummary = showCustomerSummary ?? true %}
@@ -22,11 +23,11 @@
 {% if showRateBudget %}
     {% set summaryColumns = summaryColumns|merge(['budget']) %}
 {% endif %}
-{% if showSummaryHourlyRate %}
-    {% set summaryColumns = summaryColumns|merge(['hourlyRate']) %}
-{% endif %}
 {% set summaryColumns = summaryColumns|merge(['duration']) %}
 {% if showRateColumn %}
+    {% if showSummaryHourlyRate %}
+        {% set summaryColumns = summaryColumns|merge(['hourlyRate']) %}
+    {% endif %}
     {% if showInternalRate %}
         {% set summaryColumns = summaryColumns|merge(['internalRate']) %}
     {% endif %}
@@ -230,6 +231,9 @@ mpdf-->
             <th>{{ 'description'|trans }}</th>
             <th class="center">{{ 'duration'|trans }}</th>
             {% if showRateColumn %}
+                {% if showHourlyRateColumn %}
+                    <th class="center">{{ 'hourlyRate'|trans }}</th>
+                {% endif %}
                 {% if showInternalRate %}
                     <th class="center">{{ 'internalRate'|trans }}</th>
                 {% endif %}
@@ -241,10 +245,11 @@ mpdf-->
         {% for entry in entries %}
             <!-- CONTENT_PART -->
             {% set duration = duration + entry.duration %}
+            {% set entryCurrency = entry.project.customer.currency %}
             {% if currency is same as(false) %}
-                {% set currency = entry.project.customer.currency %}
+                {% set currency = entryCurrency %}
             {% endif %}
-            {% if currency is not same as(entry.project.customer.currency) %}
+            {% if currency is not same as(entryCurrency) %}
                 {% set currency = null %}
             {% endif %}
             <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
@@ -266,14 +271,29 @@ mpdf-->
                         {% endif %}
                     {% endblock %}
                 </td>
-                <td class="duration">{{ entry.duration|duration(decimal) }}</td>
+                <td class="duration">
+                    {% if entry.duration == 0 %}
+                        -
+                    {% else %}
+                        {{ entry.duration|duration(decimal) }}
+                    {% endif %}
+                </td>
                 {% if showRateColumn %}
                     {# no check for is_granted('view_rate', entry) because it is only available for timesheets,
                        but maybe missing for other potential export repositories #}
                     {% set rate = rate + entry.rate %}
                     {% set rateInternal = rateInternal + entry.internalRate %}
-                    {% set entryRate = entry.rate|money(entry.project.customer.currency) %}
-                    {% set entryRateInternal = entry.internalRate|money(entry.project.customer.currency) %}
+                    {% set entryRate = entry.rate|money(entryCurrency) %}
+                    {% set entryRateInternal = entry.internalRate|money(entryCurrency) %}
+                    {% if showHourlyRateColumn %}
+                        <td class="cost">
+                            {% if entry.fixedRate %}
+                                -
+                            {% else %}
+                                {{ entry.hourlyRate|money(entryCurrency) }}
+                            {% endif %}
+                        </td>
+                    {% endif %}
                     {% if showInternalRate %}
                         <td class="cost">{{ entryRateInternal }}</td>
                     {% endif %}
@@ -289,6 +309,9 @@ mpdf-->
             {% endif %}
             <td class="totals duration">{{ duration|duration(decimal) }}</td>
             {% if showRateColumn %}
+                {% if showHourlyRateColumn %}
+                    <td class="totals cost"></td>
+                {% endif %}
                 {% if showInternalRate %}
                     <td class="totals cost">{% if currency is not null %}{{ rateInternal|money(currency) }}{% endif %}</td>
                 {% endif %}
