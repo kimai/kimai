@@ -116,6 +116,11 @@ final class CustomerService
         return $this->repository->getCustomersForQuery($query);
     }
 
+    public function countCustomer(bool $visible = true): int
+    {
+        return $this->repository->countCustomer($visible);
+    }
+
     public function calculateNextCustomerNumber(): string
     {
         $format = $this->configuration->find('customer.number_format');
