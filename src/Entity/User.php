@@ -211,7 +211,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * If not empty two-factor authentication is enabled.
      */
     #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
-    private ?string $totpSecret;
+    private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
     #[ORM\Column(name: 'system_account', type: 'boolean', nullable: false, options: ['default' => false])]
@@ -1107,6 +1107,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function hasTotpSecret(): bool
     {
         return $this->totpSecret !== null;
+    }
+
+    public function getTotpSecret(): ?string
+    {
+        return $this->totpSecret;
     }
 
     public function isTotpAuthenticationEnabled(): bool

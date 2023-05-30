@@ -8,7 +8,8 @@
                 {{ 'profile.2fa_intro'|trans }}
             </p>
             <p>
-                <img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
+                <img onclick="document.getElementById('totp_secret').classList.toggle('d-none');" data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
+                <span id="totp_secret" style="display: block" class="d-none">{{ secret }}</span>
             </p>
             {% if user.totpAuthenticationEnabled %}
                 <div class="row mb-3">
