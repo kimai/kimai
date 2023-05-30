@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e99c671bcf2fcd2909aa81c5f4c24828",
+    "content-hash": "ca424167cfbec52d9ebb155133c1e49c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2416,16 +2416,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "0.19",
+            "version": "0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "8225d1f7f14f13c3fc7b1b570719da074c0235c3"
+                "reference": "ed21fc9b1ef0183781799f1f21cca11ceb29eb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/8225d1f7f14f13c3fc7b1b570719da074c0235c3",
-                "reference": "8225d1f7f14f13c3fc7b1b570719da074c0235c3",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/ed21fc9b1ef0183781799f1f21cca11ceb29eb47",
+                "reference": "ed21fc9b1ef0183781799f1f21cca11ceb29eb47",
                 "shasum": ""
             },
             "require": {
@@ -2474,7 +2474,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.19"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.20"
             },
             "funding": [
                 {
@@ -2486,7 +2486,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-25T17:54:25+00:00"
+            "time": "2023-05-30T16:33:49+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
