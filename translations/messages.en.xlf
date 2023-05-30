@@ -1537,6 +1537,14 @@
         <source>time</source>
         <target>Time</target>
       </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target>Send to %name%</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target>Receive from %name%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

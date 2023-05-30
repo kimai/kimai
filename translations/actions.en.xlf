@@ -118,6 +118,10 @@
         <source>Remove widget</source>
         <target>Remove widget</target>
       </trans-unit>
+      <trans-unit id="YCc5UfffoO" resname="syncronisation">
+        <source>syncronisation</source>
+        <target>Syncronisation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
