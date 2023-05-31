@@ -1392,11 +1392,6 @@ parameters:
             path: src/Controller/Security/SelfRegistrationController.php
 
         -
-            message: "#^Parameter \\#1 \\$value of method App\\\\Form\\\\Model\\\\Configuration\\:\\:setValue\\(\\) expects bool\\|int\\|object\\|string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Controller/SystemConfigurationController.php
-
-        -
             message: "#^Cannot call method getData\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
             count: 1
             path: src/Controller/TagController.php
@@ -3005,36 +3000,6 @@ parameters:
             message: "#^Method App\\\\Form\\\\InvoiceDocumentUploadForm\\:\\:validateDocument\\(\\) has parameter \\$value with no type specified\\.$#"
             count: 1
             path: src/Form/InvoiceDocumentUploadForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:getValue\\(\\) should return bool\\|int\\|object\\|string\\|null but returns array\\|bool\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$value \\(array\\|bool\\|int\\|string\\|null\\) does not accept bool\\|int\\|object\\|string\\|null\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$value type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
 
         -
             message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
