@@ -117,7 +117,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
 
         $safeFilename = transliterator_transliterate(self::FILENAME_RULE, $nameWithoutExtension);
 
-        if ($safeFilename !== $nameWithoutExtension) {
+        if (strtolower($safeFilename) !== strtolower($nameWithoutExtension)) {
             $context->buildViolation('This invoice document cannot be used, filename may only contain the following ascii character: %character%')
                 ->setParameters(['%character%' => 'A-Z a-z 0-9 _ -'])
                 ->setTranslationDomain('validators')
