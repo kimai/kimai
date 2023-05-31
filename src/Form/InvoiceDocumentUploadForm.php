@@ -65,6 +65,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
                     new File([
                         'mimeTypes' => $mimetypes,
                         'mimeTypesMessage' => 'This file type is not allowed',
+                        'maxSize' => '1024k',
                     ]),
                     new Callback([$this, 'validateDocument'])
                 ],
