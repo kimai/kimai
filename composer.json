@@ -24,7 +24,7 @@
         "ext-xml": "*",
         "ext-xsl": "*",
         "ext-zip": "*",
-        "composer/package-versions-deprecated": "^1.8",
+        "composer-runtime-api": "^2.0",
         "composer/semver": "^3.3",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.0",
@@ -104,7 +104,6 @@
     ],
     "config": {
         "allow-plugins": {
-            "composer/package-versions-deprecated": true,
             "symfony/flex": true,
             "symfony/runtime": true
         },
