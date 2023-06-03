@@ -9,6 +9,9 @@
 
 namespace App\Utils;
 
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+
 final class PageSetup
 {
     private ?string $help = null;
@@ -17,9 +20,25 @@ final class PageSetup
     private string $translationDomain = 'messages';
     private array $actionPayload = [];
     private ?DataTable $dataTable = null;
+    private ?FormInterface $paginationForm = null;
 
     public function __construct(private string $title)
     {
+    }
+
+    public function setPaginationForm(FormInterface $paginationForm): void
+    {
+        $this->paginationForm = $paginationForm;
+    }
+
+    public function hasPaginationForm(): bool
+    {
+        return $this->paginationForm !== null;
+    }
+
+    public function getPaginationForm(): ?FormView
+    {
+        return $this->paginationForm?->createView();
     }
 
     public function hasDataTable(): bool
