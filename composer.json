@@ -25,6 +25,7 @@
         "ext-xsl": "*",
         "ext-zip": "*",
         "composer-runtime-api": "^2.0",
+        "azuyalabs/yasumi": "^2.6",
         "composer/semver": "^3.3",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.0",
