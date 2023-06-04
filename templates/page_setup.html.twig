@@ -8,12 +8,19 @@
             {% set form = page_setup.getPaginationForm() %}
             {{ form_start(form, {'attr': {'onchange': 'this.submit()'}}) }}
             <div class="btn-list w-100 flex-nowrap">
-                {{ form_widget(form.date) }}
+                {% if form.date is defined %}
+                    {{ form_widget(form.date) }}
+                {% endif %}
                 {% if form.user is defined %}
                     {{ form_widget(form.user) }}
-                {% elseif app.user != user %}
+                {% elseif user is defined and app.user != user %}
                     {{ widgets.username(user) }}
                 {% endif %}
+                {% for field in form %}
+                    {% if not field.rendered %}
+                        {{ form_widget(field) }}
+                    {% endif %}
+                {% endfor %}
             </div>
             {{ form_end(form) }}
         </div>
