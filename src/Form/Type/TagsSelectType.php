@@ -59,6 +59,7 @@ final class TagsSelectType extends AbstractType
             }
 
             $newData = [];
+            /** @var array<string> $newNames */
             $newNames = [];
             foreach ($tagIds as $tag) {
                 if (!\in_array($tag, $foundIds, true)) {
@@ -68,8 +69,10 @@ final class TagsSelectType extends AbstractType
                 }
             }
 
-            // in case someone is using tags like "1234" this can interfere with the ID
-            $tags = $this->tagRepository->findTagsByName($newNames);
+            // 1. in case someone is using tags like "1234" this can interfere with the ID
+            // 2. if we would load only visible tags, we would try to create new ones below
+            //    and that would trigger the unique constraint
+            $tags = $this->tagRepository->findTagsByName($newNames, null);
             $foundTagNames = [];
             foreach ($tags as $tag) {
                 $newData[] = (string) $tag->getId();

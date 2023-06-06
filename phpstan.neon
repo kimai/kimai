@@ -5497,26 +5497,6 @@ parameters:
             path: src/Repository/TagRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:deleteTag\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findAllTagNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findTagsByName\\(\\) has parameter \\$tagNames with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:saveTag\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
             message: "#^Cannot cast mixed to int\\.$#"
             count: 1
             path: src/Repository/TeamRepository.php
