@@ -147,16 +147,19 @@ final class TagController extends AbstractController
     public function multiDelete(TagRepository $repository, Request $request): Response
     {
         $form = $this->getMultiUpdateForm($repository);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                /** @var MultiUpdateTableDTO $dto */
-                $dto = $form->getData();
-                $repository->multiDelete($dto->getEntities());
-                $this->flashSuccess('action.delete.success');
-            } catch (\Exception $ex) {
-                $this->flashDeleteException($ex);
+        if ($form !== null) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    /** @var MultiUpdateTableDTO $dto */
+                    $dto = $form->getData();
+                    $repository->multiDelete($dto->getEntities());
+                    $this->flashSuccess('action.delete.success');
+                } catch (\Exception $ex) {
+                    $this->flashDeleteException($ex);
+                }
             }
         }
 
@@ -180,20 +183,23 @@ final class TagController extends AbstractController
     private function multiUpdateVisible(TagRepository $repository, Request $request, bool $visible): Response
     {
         $form = $this->getMultiUpdateForm($repository);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                /** @var MultiUpdateTableDTO $dto */
-                $dto = $form->getData();
-                /** @var Tag $tag */
-                foreach ($dto->getEntities() as $tag) {
-                    $tag->setVisible($visible);
+        if ($form !== null) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    /** @var MultiUpdateTableDTO $dto */
+                    $dto = $form->getData();
+                    /** @var Tag $tag */
+                    foreach ($dto->getEntities() as $tag) {
+                        $tag->setVisible($visible);
+                    }
+                    $repository->multiUpdate($dto->getEntities());
+                    $this->flashSuccess('action.delete.success');
+                } catch (\Exception $ex) {
+                    $this->flashDeleteException($ex);
                 }
-                $repository->multiUpdate($dto->getEntities());
-                $this->flashSuccess('action.delete.success');
-            } catch (\Exception $ex) {
-                $this->flashDeleteException($ex);
             }
         }
 

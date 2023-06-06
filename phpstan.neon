@@ -1397,26 +1397,6 @@ parameters:
             path: src/Controller/SystemConfigurationController.php
 
         -
-            message: "#^Cannot call method getData\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method handleRequest\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method isSubmitted\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method isValid\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
             message: "#^Cannot call method getEntities\\(\\) on mixed\\.$#"
             count: 2
             path: src/Controller/TimesheetAbstractController.php
