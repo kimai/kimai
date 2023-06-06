@@ -1118,56 +1118,6 @@ parameters:
             path: API/StatusControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testDeleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testDeleteActionWithUnknownTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testEmptyCollection\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testGetCollection\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testPartOfEntries\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testPostAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testPostActionAsRegularUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\TagControllerTest\\:\\:testPostActionWithValidationErrors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/TagControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 6
-            path: API/TagControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
             count: 1
             path: API/TagControllerTest.php

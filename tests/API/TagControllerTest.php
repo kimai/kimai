@@ -43,7 +43,10 @@ class TagControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
         $this->assertAccessIsGranted($client, '/api/tags');
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -57,7 +60,10 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures();
         $query = ['name' => 'nothing'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertEmpty($result);
@@ -75,7 +81,10 @@ class TagControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -106,7 +115,10 @@ class TagControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/tags', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('TagEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -119,7 +131,10 @@ class TagControllerTest extends APIControllerBaseTest
         $this->importTagFixtures();
         $query = ['name' => 'in'];
         $this->assertAccessIsGranted($client, '/api/tags', 'GET', $query);
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -142,7 +157,10 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEmpty($client->getResponse()->getContent());
 
         $this->assertAccessIsGranted($client, '/api/tags');
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
 
         $this->assertEquals(9, \count($result));
     }
