@@ -33,12 +33,12 @@ class TagControllerTest extends APIControllerBaseTest
         return $this->importFixture($fixture);
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/tags');
     }
 
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
@@ -51,7 +51,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals('Test', $result[9]);
     }
 
-    public function testEmptyCollection()
+    public function testEmptyCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
@@ -64,7 +64,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals(0, \count($result));
     }
 
-    public function testPostAction()
+    public function testPostAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->importTagFixtures();
@@ -82,7 +82,7 @@ class TagControllerTest extends APIControllerBaseTest
         self::assertEquals('#00ff00', $result['color']);
     }
 
-    public function testPostActionWithValidationErrors()
+    public function testPostActionWithValidationErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->importTagFixtures();
@@ -96,7 +96,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['name', 'color']);
     }
 
-    public function testPostActionAsRegularUser()
+    public function testPostActionAsRegularUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
@@ -113,7 +113,7 @@ class TagControllerTest extends APIControllerBaseTest
         self::assertEquals('foo', $result['name']);
     }
 
-    public function testPartOfEntries()
+    public function testPartOfEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importTagFixtures();
@@ -130,7 +130,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals('Marketing', $result[2]);
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $tags = $this->importTagFixtures();
@@ -147,7 +147,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals(9, \count($result));
     }
 
-    public function testDeleteActionWithUnknownTimesheet()
+    public function testDeleteActionWithUnknownTimesheet(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertNotFoundForDelete($client, '/api/tags/' . PHP_INT_MAX);
