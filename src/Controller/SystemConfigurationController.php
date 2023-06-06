@@ -422,6 +422,7 @@ final class SystemConfigurationController extends AbstractController
                         ]),
                     (new Configuration('timesheet.rounding.default.days'))
                         ->setType(WeekDaysType::class)
+                        ->setRequired(false)
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('invoice'))
