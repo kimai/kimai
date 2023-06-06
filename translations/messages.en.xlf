@@ -1537,6 +1537,38 @@
         <source>time</source>
         <target>Time</target>
       </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target>Send to %name%</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target>Receive from %name%</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target>Public holiday</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target>Public holidays</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target>Holiday group</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target>Absence</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target>Time off</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target>Default</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

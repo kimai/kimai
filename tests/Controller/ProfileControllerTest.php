@@ -483,7 +483,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $this->assertNotFalse($content);
 
-        $this->assertStringContainsString('<img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
+        $this->assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
         $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
     }
 
@@ -503,7 +503,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertNotFalse($content);
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
 
-        $this->assertStringContainsString('<img alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
+        $this->assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
         $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
     }
 

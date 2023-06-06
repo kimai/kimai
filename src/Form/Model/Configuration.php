@@ -17,8 +17,9 @@ final class Configuration
 {
     private ?string $label = null;
     private string $translationDomain = 'messages';
-    private string|int|null|bool|array $value = null;
+    private string|int|null|bool|float $value = null;
     private ?string $type = null;
+    /** @var array<string, mixed> */
     private array $options = [];
     private bool $enabled = true;
     private bool $required = true;
@@ -36,12 +37,12 @@ final class Configuration
         return $this->name;
     }
 
-    public function getValue(): string|int|null|bool|object
+    public function getValue(): string|int|null|bool|float
     {
         return $this->value;
     }
 
-    public function setValue(string|int|null|bool|object $value): Configuration
+    public function setValue(string|int|null|bool|float $value): Configuration
     {
         if ($this->type === CheckboxType::class || $this->type === YesNoType::class) {
             $value = (bool) $value;
@@ -131,11 +132,17 @@ final class Configuration
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function setOptions(array $options): Configuration
     {
         $this->options = $options;

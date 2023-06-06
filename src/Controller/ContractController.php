@@ -64,8 +64,10 @@ final class ContractController extends AbstractController
         $yearDate = $values->getDate();
         $year = $workingTimeService->getYear($profile, $yearDate);
 
-        $page = new PageSetup('status');
+        $page = new PageSetup('work_times');
         $page->setHelp('contract.html');
+        $page->setActionName('contract');
+        $page->setPaginationForm($form);
 
         // additional boxes by plugins
         $controllerEvent = new WorkContractDetailControllerEvent($year);

@@ -1,29 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'page_setup.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block main %}
 
     {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
 
-    {% if form is defined %}
-        <div class="card mb-3">
-            <div class="card-body">
-                {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
-                <div class="btn-list w-100">
-                    {{ form_widget(form.date) }}
-                    {% if form.user is defined %}
-                        {{ form_widget(form.user, {'label': false}) }}
-                    {% elseif app.user != user %}
-                        {{ widgets.username(user) }}
-                    {% endif %}
-                </div>
-                {{ form_end(form) }}
-            </div>
-        </div>
-    {% endif %}
-
     {% if not withWorkHourConfiguration %}
-        {{ widgets.alert('info', 'work_times_should.none_configured'|trans) }}
+        {% set warningMsg %}
+            {{ 'work_times_should.none_configured'|trans }}
+            {% if is_granted('contract', user) %}
+                <a href="{{ path('user_profile_contract', {'username': user.getUserIdentifier()}) }}" class="alert-link">{{ 'action.edit'|trans }}</a>
+            {% endif %}
+        {% endset %}
+        {% from '@theme/components/alert.html.twig' import alert %}
+        {{ alert({type: 'info', description: warningMsg|raw}) }}
     {% endif %}
 
     {% if summaries|length > 0 %}
@@ -299,13 +289,6 @@
 
         document.addEventListener('kimai.initialized', function() {
             KimaiReloadPageWidget.create('kimai.workingTimesUpdate', true);
-
-            const contractForm = document.getElementById('report-form');
-            if (contractForm !== null) {
-                contractForm.addEventListener('change', () => {
-                    contractForm.submit();
-                });
-            }
         });
     </script>
 {% endblock %}

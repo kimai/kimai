@@ -48,6 +48,14 @@ final class DateTimeFactory
         return $date;
     }
 
+    public function getStartOfLastMonth(): DateTimeInterface
+    {
+        $newDate = $this->createDateTime('first day of -1 month');
+        $newDate->setTime(0, 0, 0);
+
+        return $newDate;
+    }
+
     private function getDate(DateTimeInterface|string|null $date = null): DateTime
     {
         if ($date === null) {
@@ -103,6 +111,14 @@ final class DateTimeFactory
         $date->setTime(23, 59, 59);
 
         return $date;
+    }
+
+    public function getEndOfLastMonth(): DateTimeInterface
+    {
+        $newDate = $this->createDateTime('last day of -1 month');
+        $newDate->setTime(23, 59, 59);
+
+        return $newDate;
     }
 
     private function createWeekDateTime($year, $week, $day, $hour, $minute, $second)

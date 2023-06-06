@@ -61,18 +61,24 @@ final class DateRangeType extends AbstractType
         $user = $options['user'];
         $factory = DateTimeFactory::createByUser($user);
 
-        $view->vars['ranges'] = [
-            'today' => [$factory->createDateTime('00:00:00'), $factory->createDateTime('23:59:59')],
-            'yesterday' => [$factory->createDateTime('-1 day 00:00:00'), $factory->createDateTime('-1 day 23:59:59')],
-            'thisWeek' => [$factory->getStartOfWeek(), $factory->getEndOfWeek()],
-            'lastWeek' => [$factory->getStartOfWeek('-1 week'), $factory->getEndOfWeek('-1 week')],
-            'thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
-            'lastMonth' => [$factory->getStartOfMonth('-1 month'), $factory->getEndOfMonth('-1 month')],
-            'thisYear' => [$factory->createStartOfYear(), $factory->createEndOfYear()],
-            'thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
-            'lastYear' => [$factory->createStartOfYear('-1 year'), $factory->createEndOfYear('-1 year')],
-            'allTime' => [null, null],
+        $ranges = [
+            'daterangepicker.allTime' => [null, null],
+            'daterangepicker.today' => [$factory->createDateTime('00:00:00'), $factory->createDateTime('23:59:59')],
+            'daterangepicker.yesterday' => [$factory->createDateTime('-1 day 00:00:00'), $factory->createDateTime('-1 day 23:59:59')],
+            'daterangepicker.thisWeek' => [$factory->getStartOfWeek(), $factory->getEndOfWeek()],
+            'daterangepicker.lastWeek' => [$factory->getStartOfWeek('-1 week'), $factory->getEndOfWeek('-1 week')],
+            'daterangepicker.thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
+            'daterangepicker.lastMonth' => [$factory->getStartOfLastMonth(), $factory->getEndOfLastMonth()],
+            'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
         ];
+
+        $thisYear = (int) $factory->createStartOfYear()->format('Y');
+        for ($i = 0; $i < 3; $i++) {
+            $year = $thisYear - $i;
+            $ranges[$year] = [$year . '-01-01', $year . '-12-31'];
+        }
+
+        $view->vars['ranges'] = $ranges;
         $view->vars['rangeFormat'] = $options['format'];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], [
