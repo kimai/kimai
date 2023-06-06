@@ -2,6 +2,10 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% if dataTable is not defined and page_setup is defined and page_setup.hasDataTable() %}
+    {% set dataTable = page_setup.getDataTable() %}
+{% endif %}
+
 {% block main_before %}
     {{ tables.configuration(dataTable) }}
 {% endblock %}

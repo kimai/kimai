@@ -148,7 +148,7 @@ final class DataTable implements \Countable, \IteratorAggregate
 
     public function hasConfiguration(): bool
     {
-        return $this->configuration;
+        return $this->configuration && \count($this->columns) > 0;
     }
 
     public function getPaginationRoute(): ?string

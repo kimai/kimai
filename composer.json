@@ -24,7 +24,8 @@
         "ext-xml": "*",
         "ext-xsl": "*",
         "ext-zip": "*",
-        "composer/package-versions-deprecated": "^1.8",
+        "composer-runtime-api": "^2.0",
+        "azuyalabs/yasumi": "^2.6",
         "composer/semver": "^3.3",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.0",
@@ -34,7 +35,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
         "jms/serializer-bundle": "^5.0",
-        "kevinpapst/tabler-bundle": "^0.19",
+        "kevinpapst/tabler-bundle": "^0.20",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^4.0",
@@ -104,7 +105,6 @@
     ],
     "config": {
         "allow-plugins": {
-            "composer/package-versions-deprecated": true,
             "symfony/flex": true,
             "symfony/runtime": true
         },

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block table_actions %}
+    {# compare templates/macros/datatables.html.twig macro actions(dataTable) #}
+    {% if page_setup is defined and page_setup.hasPaginationForm() %}
+        <div class="btn-list">
+            {% set form = page_setup.getPaginationForm() %}
+            {{ form_start(form, {'attr': {'onchange': 'this.submit()'}}) }}
+            <div class="btn-list w-100 flex-nowrap">
+                {% if form.date is defined %}
+                    {{ form_widget(form.date) }}
+                {% endif %}
+                {% if form.user is defined %}
+                    {{ form_widget(form.user) }}
+                {% elseif user is defined and app.user != user %}
+                    {{ widgets.username(user) }}
+                {% endif %}
+                {% for field in form %}
+                    {% if not field.rendered %}
+                        {{ form_widget(field) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    {% endif %}
+{% endblock %}

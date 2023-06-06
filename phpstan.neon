@@ -2987,36 +2987,6 @@ parameters:
             path: src/Form/InvoiceDocumentUploadForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:getValue\\(\\) should return bool\\|int\\|object\\|string\\|null but returns array\\|bool\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\Configuration\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$value \\(array\\|bool\\|int\\|string\\|null\\) does not accept bool\\|int\\|object\\|string\\|null\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\Configuration\\:\\:\\$value type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Model/Configuration.php
-
-        -
             message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/Model/MultiUserTimesheet.php

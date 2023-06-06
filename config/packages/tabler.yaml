@@ -78,6 +78,7 @@ tabler:
         filter: fas fa-filter
         help: far fa-question-circle
         home: fas fa-home
+        import: fas fa-file-import
         invoice: fas fa-file-contract
         invoice-template: fas fa-file-signature
         left: fas fa-chevron-left

@@ -65,6 +65,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
                     new File([
                         'mimeTypes' => $mimetypes,
                         'mimeTypesMessage' => 'This file type is not allowed',
+                        'maxSize' => '1024k',
                     ]),
                     new Callback([$this, 'validateDocument'])
                 ],
@@ -117,7 +118,7 @@ final class InvoiceDocumentUploadForm extends AbstractType
 
         $safeFilename = transliterator_transliterate(self::FILENAME_RULE, $nameWithoutExtension);
 
-        if ($safeFilename !== $nameWithoutExtension) {
+        if ($safeFilename === false || strtolower($safeFilename) !== strtolower($nameWithoutExtension)) {
             $context->buildViolation('This invoice document cannot be used, filename may only contain the following ascii character: %character%')
                 ->setParameters(['%character%' => 'A-Z a-z 0-9 _ -'])
                 ->setTranslationDomain('validators')

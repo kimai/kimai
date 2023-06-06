@@ -174,7 +174,7 @@
         <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
-                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ ('daterangepicker.' ~ title)|trans({}, 'daterangepicker') }}</a>
+                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
             {% endfor %}
         </div>
         {% endif %}
@@ -261,7 +261,6 @@
 {%- endblock secret_widget %}
 
 {% block yearpicker_widget -%}
-    {%- set functionName = 'year_' ~ form.vars.id %}
     <div class="btn-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event-bubbles="change">
@@ -286,7 +285,6 @@
 {%- endblock yearpicker_widget %}
 
 {% block monthpicker_widget -%}
-    {%- set functionName = 'month_' ~ form.vars.id %}
     <div class="btn-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event-bubbles="change">
@@ -305,7 +303,6 @@
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
-    {%- set functionName = 'week_' ~ form.vars.id %}
     <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event-bubbles="change">

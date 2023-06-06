@@ -120,27 +120,25 @@ final class DoctorController extends AbstractController
         /** @var array<string, string> $versions */
         $versions = [];
 
-        if (class_exists(InstalledVersions::class)) {
-            $rootPackage = InstalledVersions::getRootPackage()['name'];
-            foreach (InstalledVersions::getInstalledPackages() as $package) {
-                $versions[$package] = InstalledVersions::getPrettyVersion($package);
+        $rootPackage = InstalledVersions::getRootPackage()['name'];
+        foreach (InstalledVersions::getInstalledPackages() as $package) {
+            $versions[$package] = InstalledVersions::getPrettyVersion($package);
+        }
+
+        // remove kimai from the package list
+        $versions = array_filter($versions, function ($version, $name) use ($rootPackage): bool {
+            if ($name === $rootPackage) {
+                return false;
             }
 
-            // remove kimai from the package list
-            $versions = array_filter($versions, function ($version, $name) use ($rootPackage): bool {
-                if ($name === $rootPackage) {
-                    return false;
-                }
+            if ($version === null || $version === '*') {
+                return false;
+            }
 
-                if ($version === null || $version === '*') {
-                    return false;
-                }
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
 
-                return true;
-            }, ARRAY_FILTER_USE_BOTH);
-
-            ksort($versions);
-        }
+        ksort($versions);
 
         return $versions;
     }

@@ -413,6 +413,7 @@ final class ProfileController extends AbstractController
             'form' => $form->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
             'qr_code' => $result,
+            'secret' => $profile->getTotpSecret(),
         ]);
     }
 

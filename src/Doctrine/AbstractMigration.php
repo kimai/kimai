@@ -64,4 +64,20 @@ abstract class AbstractMigration extends BaseAbstractMigration
     {
         $this->addSql('#prevent empty warning - no SQL to execute');
     }
+
+    /**
+     * I don't know how often I accidentally dropped database tables,
+     * because a generated "left-over" migration was executed.
+     *
+     * @param mixed[] $params
+     * @param mixed[] $types
+     */
+    protected function addSql(string $sql, array $params = [], array $types = []): void
+    {
+        if (str_starts_with($sql, 'DROP TABLE ')) {
+            throw new \InvalidArgumentException('Cannot use addSql() with DROP TABLE');
+        }
+
+        parent::addSql($sql, $params, $types);
+    }
 }
