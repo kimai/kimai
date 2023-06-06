@@ -343,6 +343,10 @@
         <source>help.visible</source>
         <target>If the setting is off, the object is not displayed in dropdown-boxes and list-views.</target>
       </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target>Invisible</target>
+      </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
         <target>Budget</target>
