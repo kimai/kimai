@@ -1174,6 +1174,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
     }
 
+    public function getPublicHolidayGroup(): null|string|int
+    {
+        return $this->getPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP);
+    }
+
     public function getHolidaysPerYear(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
@@ -1212,6 +1217,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkHoursSunday(int $seconds): void
     {
         $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds);
+    }
+
+    public function setPublicHolidayGroup(null|string|int $group = null): void
+    {
+        $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
     public function setHolidaysPerYear(int $holidays): void
