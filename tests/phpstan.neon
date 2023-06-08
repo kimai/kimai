@@ -6583,11 +6583,6 @@ parameters:
             path: Form/Type/TypeTestModel.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has parameter \\$name with no type specified\\.$#"
             count: 1
             path: Form/Type/TypeTestModel.php

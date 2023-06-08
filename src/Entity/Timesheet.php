@@ -454,7 +454,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     public function getTagsAsArray(): array
     {
         return array_map(
-            function (Tag $element) {
+            function ($element) {
+                /* @var Tag $element */
                 return $element->getName();
             },
             $this->getTags()->toArray()
