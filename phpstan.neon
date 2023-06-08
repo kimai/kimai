@@ -1917,21 +1917,6 @@ parameters:
             path: src/Entity/Timesheet.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getTagsAsArray\\(\\) should return array\\<string\\> but returns array\\<string\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:localizeDates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:removeTag\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Timesheet\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Timesheet.php
