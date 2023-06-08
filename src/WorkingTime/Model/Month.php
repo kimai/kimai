@@ -14,6 +14,7 @@ use App\Model\Month as BaseMonth;
 
 /**
  * @method array<Day> getDays()
+ * @method Day getDay()
  */
 final class Month extends BaseMonth
 {
@@ -30,8 +31,9 @@ final class Month extends BaseMonth
         if ($this->locked === null) {
             $this->locked = true;
             foreach ($this->getDays() as $day) {
-                if ($day->getWorkingTime() !== null && !$day->getWorkingTime()->isApproved()) {
+                if (!$day->isLocked()) {
                     $this->locked = false;
+                    break;
                 }
             }
         }
