@@ -14,11 +14,10 @@ use App\Model\Month as BaseMonth;
 
 /**
  * @method array<Day> getDays()
+ * @method Day getDay(\DateTimeInterface $date)
  */
 final class Month extends BaseMonth
 {
-    private ?bool $locked = null;
-
     /**
      * A month is only locked IF every day is approved.
      * If there is even one day left open, the entire month is not locked.
@@ -27,16 +26,13 @@ final class Month extends BaseMonth
      */
     public function isLocked(): bool
     {
-        if ($this->locked === null) {
-            $this->locked = true;
-            foreach ($this->getDays() as $day) {
-                if ($day->getWorkingTime() !== null && !$day->getWorkingTime()->isApproved()) {
-                    $this->locked = false;
-                }
+        foreach ($this->getDays() as $day) {
+            if (!$day->isLocked()) {
+                return false;
             }
         }
 
-        return $this->locked;
+        return true;
     }
 
     public function getLockDate(): ?\DateTimeInterface

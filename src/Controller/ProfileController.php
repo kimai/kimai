@@ -271,9 +271,9 @@ final class ProfileController extends AbstractController
         // prepare ordered preferences
         $sections = [];
 
-        /** @var \ArrayIterator $iterator */
+        /** @var \ArrayIterator<int, UserPreference> $iterator */
         $iterator = $profile->getPreferences()->getIterator();
-        $iterator->uasort(function (UserPreference $a, UserPreference $b) {
+        $iterator->uasort(function ($a, $b) {
             return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
         });
 

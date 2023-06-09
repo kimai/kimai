@@ -11,6 +11,7 @@ namespace App\WorkingTime;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
 use App\Repository\WorkingTimeRepository;
@@ -79,12 +80,15 @@ final class WorkingTimeService
             }
         }
 
+        $event = new WorkingTimeYearEvent($year);
+        $this->eventDispatcher->dispatch($event);
+
         return $year;
     }
 
     public function getMonth(User $user, \DateTimeInterface $monthDate): Month
     {
-        // TODO improve me, do not calculate the entire year for that
+        // uses the year, because that triggers the required events to collect all different working times
         $year = $this->getYear($user, $monthDate);
 
         return $year->getMonth($monthDate);

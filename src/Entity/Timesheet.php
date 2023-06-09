@@ -239,7 +239,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * Make sure begin and end date have the correct timezone.
      * This will be called once for each item after being loaded from the database.
      */
-    protected function localizeDates()
+    protected function localizeDates(): void
     {
         if ($this->localized) {
             return;
@@ -432,7 +432,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     /**
      * @param Tag $tag
      */
-    public function removeTag(Tag $tag)
+    public function removeTag(Tag $tag): void
     {
         if (!$this->tags->contains($tag)) {
             return;
@@ -453,11 +453,14 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      */
     public function getTagsAsArray(): array
     {
+        /** @var array<Tag> $tags */
+        $tags = $this->getTags()->toArray();
+
         return array_map(
-            function (Tag $element) {
-                return $element->getName();
+            function ($element) {
+                return (string) $element->getName();
             },
-            $this->getTags()->toArray()
+            $tags
         );
     }
 

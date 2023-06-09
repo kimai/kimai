@@ -44,6 +44,11 @@ class Month
         $this->days['_' . $day->getDay()->format('d')] = $day;
     }
 
+    public function getDay(DateTimeInterface $date): Day
+    {
+        return $this->days['_' . $date->format('d')];
+    }
+
     /**
      * @return Day[]
      */
