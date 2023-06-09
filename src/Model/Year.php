@@ -50,6 +50,11 @@ class Year
         return $this->months['_' . $month->format('m')];
     }
 
+    public function getDay(\DateTimeInterface $date): Day
+    {
+        return $this->getMonth($date)->getDay($date);
+    }
+
     /**
      * @return Month[]
      */

@@ -12,11 +12,9 @@ namespace App\Form;
 use App\Entity\User;
 use App\Form\Type\DurationType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @extends AbstractType<User>
@@ -40,14 +38,6 @@ final class UserContractType extends AbstractType
             ->add('workHoursFriday', DurationType::class, array_merge(['label' => 'Friday'], $dayOptions))
             ->add('workHoursSaturday', DurationType::class, array_merge(['label' => 'Saturday'], $dayOptions))
             ->add('workHoursSunday', DurationType::class, array_merge(['label' => 'Sunday'], $dayOptions))
-            /*
-            ->add('holidaysPerYear', IntegerType::class, [
-                'label' => false,
-                'constraints' => [
-                    new Range(['min' => 0, 'max' => 365])
-                ],
-            ])
-            */
         ;
     }
 

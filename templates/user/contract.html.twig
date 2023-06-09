@@ -2,40 +2,35 @@
 
 {% block form_content %}
 
-    <h3>{{ 'work_times_should'|trans }}</h3>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{ 'Monday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Tuesday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Wednesday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Thursday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Friday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Saturday'|trans({}, 'system-configuration') }}</th>
-                <th>{{ 'Sunday'|trans({}, 'system-configuration') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ form_widget(form.workHoursMonday) }}</td>
-                <td>{{ form_widget(form.workHoursTuesday) }}</td>
-                <td>{{ form_widget(form.workHoursWednesday) }}</td>
-                <td>{{ form_widget(form.workHoursThursday) }}</td>
-                <td>{{ form_widget(form.workHoursFriday) }}</td>
-                <td>{{ form_widget(form.workHoursSaturday) }}</td>
-                <td>{{ form_widget(form.workHoursSunday) }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p>{{ 'work_times_should.help'|trans  }}</p>
-
-    {% if form.holidaysPerYear is defined %}
-    <h3>{{ 'pto_year_holiday'|trans }}</h3>
+    <div class="mb-3">
+        <label class="form-label">{{ 'work_times_should'|trans }}</label>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>{{ 'Monday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Tuesday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Wednesday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Thursday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Friday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Saturday'|trans({}, 'system-configuration') }}</th>
+                    <th>{{ 'Sunday'|trans({}, 'system-configuration') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ form_widget(form.workHoursMonday) }}</td>
+                    <td>{{ form_widget(form.workHoursTuesday) }}</td>
+                    <td>{{ form_widget(form.workHoursWednesday) }}</td>
+                    <td>{{ form_widget(form.workHoursThursday) }}</td>
+                    <td>{{ form_widget(form.workHoursFriday) }}</td>
+                    <td>{{ form_widget(form.workHoursSaturday) }}</td>
+                    <td>{{ form_widget(form.workHoursSunday) }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-text mb-0 help-text">{{ 'work_times_should.help'|trans  }}</div>
+    </div>
 
     {{ form_rest(form) }}
-    {% endif %}
-
 
 {% endblock %}

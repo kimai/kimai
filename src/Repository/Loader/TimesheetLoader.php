@@ -44,6 +44,7 @@ final class TimesheetLoader implements LoaderInterface
         $em = $this->entityManager;
 
         $qb = $em->createQueryBuilder();
+        /** @var array<Timesheet> $timesheets */
         $timesheets = $qb->select('PARTIAL t.{id}', 'project')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.project', 'project')
@@ -51,7 +52,7 @@ final class TimesheetLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
-        $projectIds = array_map(function (Timesheet $timesheet) {
+        $projectIds = array_map(function ($timesheet) {
             return $timesheet->getProject()->getId();
         }, $timesheets);
 
@@ -66,6 +67,7 @@ final class TimesheetLoader implements LoaderInterface
         }
 
         $qb = $em->createQueryBuilder();
+        /** @var array<Project> $projects */
         $projects = $qb->select('PARTIAL p.{id}', 'customer')
             ->from(Project::class, 'p')
             ->leftJoin('p.customer', 'customer')
@@ -74,7 +76,7 @@ final class TimesheetLoader implements LoaderInterface
             ->execute();
 
         if ($this->fullyHydrated) {
-            $customerIds = array_map(function (Project $project) {
+            $customerIds = array_map(function ($project) {
                 return $project->getCustomer()->getId();
             }, $projects);
 

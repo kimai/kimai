@@ -82,6 +82,7 @@ class UserTest extends TestCase
         self::assertEquals(0, $user->getWorkHoursSunday());
         self::assertEquals(0, $user->getHolidaysPerYear());
         self::assertFalse($user->hasWorkHourConfiguration());
+        self::assertNull($user->getPublicHolidayGroup());
     }
 
     public function testWorkContract(): void
@@ -115,6 +116,12 @@ class UserTest extends TestCase
         self::assertEquals(7600, $user->getWorkHoursForDay(new \DateTime('2023-05-12 12:00:00', new \DateTimeZone('Europe/Berlin'))));
         self::assertEquals(7700, $user->getWorkHoursForDay(new \DateTime('2023-05-13 12:00:00', new \DateTimeZone('Europe/Berlin'))));
         self::assertEquals(7800, $user->getWorkHoursForDay(new \DateTime('2023-05-14 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+
+        $user->setPublicHolidayGroup('10');
+        self::assertEquals('10', $user->getPublicHolidayGroup());
+
+        $user->setPublicHolidayGroup('DE-NRW');
+        self::assertEquals('DE-NRW', $user->getPublicHolidayGroup());
     }
 
     public function testColor(): void
