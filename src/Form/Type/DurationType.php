@@ -32,6 +32,7 @@ final class DurationType extends AbstractType
             'preset_minutes' => null,
             'toggle' => false,
             'max_hours' => 24,
+            'icon' => 'clock',
         ]);
     }
 

@@ -35,13 +35,10 @@ final class IconExtension extends AbstractTypeExtension
         $view->vars['icon'] = $options['icon'] ?? null;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['icon']);
-        $resolver->setAllowedTypes('icon', 'string');
+        $resolver->setAllowedTypes('icon', ['string', 'null']);
         $resolver->setDefault('icon', '');
     }
 }

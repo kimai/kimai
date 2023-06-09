@@ -79,6 +79,12 @@ export default class KimaiDatePicker extends KimaiFormPlugin {
                             delete picker._wasPreselected;
                         }
                     });
+
+                    // only if mobile.friendly plugin is activated
+                    if (picker.backdrop !== undefined) {
+                        // the node needs to be moved, so the flat form layout works properly (e.g. for date types)
+                        document.body.appendChild(picker.backdrop);
+                    }
                 },
             }};
 
