@@ -74,11 +74,10 @@
                 {{ form_row(form.metaFields) }}
             {% endif %}
             {% if form.fixedRate is defined or form.hourlyRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}
-                {% embed '@theme/embeds/card.html.twig' with {collapsed: true, id: 'timesheet_extended_settings'} %}
+                {% embed '@theme/embeds/collapsible.html.twig' with {id: 'timesheet_extended_settings'} %}
                     {% import "macros/widgets.html.twig" as widgets %}
-                    {% block box_title %}{{ 'extended_settings'|trans }}{% endblock %}
-                    {% block box_body_class %}{% endblock %}
-                    {% block box_body %}
+                    {% block title %}{{ 'extended_settings'|trans }}{% endblock %}
+                    {% block body %}
                         {% if form.fixedRate is defined %}
                             {{ form_row(form.fixedRate, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.fixedRate.vars.name}}) }}
                         {% endif %}

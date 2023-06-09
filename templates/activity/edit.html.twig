@@ -59,11 +59,10 @@
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
-            {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+            {% embed '@theme/embeds/collapsible.html.twig' with {id: 'activity_invoice_settings'} %}
                 {% import "macros/widgets.html.twig" as widgets %}
-                {% block box_title %}{{ 'invoices'|trans }}{% endblock %}
-                {% block box_body_class %}{% endblock %}
-                {% block box_body %}
+                {% block title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block body %}
                     {% if form.invoiceText is defined %}
                         {{ form_row(form.invoiceText) }}
                     {% endif %}
