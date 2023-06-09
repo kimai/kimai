@@ -62,6 +62,7 @@ final class TagController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('amount', ['class' => 'text-center w-min']);
+        $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('tags');
@@ -146,16 +147,59 @@ final class TagController extends AbstractController
     public function multiDelete(TagRepository $repository, Request $request): Response
     {
         $form = $this->getMultiUpdateForm($repository);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                /** @var MultiUpdateTableDTO $dto */
-                $dto = $form->getData();
-                $repository->multiDelete($dto->getEntities());
-                $this->flashSuccess('action.delete.success');
-            } catch (\Exception $ex) {
-                $this->flashDeleteException($ex);
+        if ($form !== null) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    /** @var MultiUpdateTableDTO $dto */
+                    $dto = $form->getData();
+                    $repository->multiDelete($dto->getEntities());
+                    $this->flashSuccess('action.delete.success');
+                } catch (\Exception $ex) {
+                    $this->flashDeleteException($ex);
+                }
+            }
+        }
+
+        return $this->redirectToRoute('tags');
+    }
+
+    #[Route(path: '/multi-invisible', name: 'tags_multi_invisible', methods: ['POST'])]
+    #[IsGranted('manage_tag')]
+    public function multiInvisible(TagRepository $repository, Request $request): Response
+    {
+        return $this->multiUpdateVisible($repository, $request, false);
+    }
+
+    #[Route(path: '/multi-visible', name: 'tags_multi_visible', methods: ['POST'])]
+    #[IsGranted('manage_tag')]
+    public function multiVisible(TagRepository $repository, Request $request): Response
+    {
+        return $this->multiUpdateVisible($repository, $request, true);
+    }
+
+    private function multiUpdateVisible(TagRepository $repository, Request $request, bool $visible): Response
+    {
+        $form = $this->getMultiUpdateForm($repository);
+
+        if ($form !== null) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    /** @var MultiUpdateTableDTO $dto */
+                    $dto = $form->getData();
+                    /** @var Tag $tag */
+                    foreach ($dto->getEntities() as $tag) {
+                        $tag->setVisible($visible);
+                    }
+                    $repository->multiUpdate($dto->getEntities());
+                    $this->flashSuccess('action.delete.success');
+                } catch (\Exception $ex) {
+                    $this->flashDeleteException($ex);
+                }
             }
         }
 
@@ -165,6 +209,12 @@ final class TagController extends AbstractController
     private function getMultiUpdateForm(TagRepository $repository): ?FormInterface
     {
         $dto = new MultiUpdateTableDTO();
+
+        if ($this->isGranted('manage_tag')) {
+            $dto->addAction('visible', $this->generateUrl('tags_multi_visible'));
+            $dto->addAction('invisible', $this->generateUrl('tags_multi_invisible'));
+        }
+
         if ($this->isGranted('delete_tag')) {
             $dto->addDelete($this->generateUrl('tags_multi_delete'));
         }

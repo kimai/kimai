@@ -407,6 +407,14 @@
 
 {#
     To be used like this:
+    <tr class="{{ class_tag_row(tag) }}">
+#}
+{% macro class_tag_row(tag) %}
+    {%- if not tag.visible %}bg-orange-lt{% endif -%}
+{% endmacro %}
+
+{#
+    To be used like this:
     <tr {{ customer_row_attr(customer, now) }}>
 #}
 {% macro customer_row_attr(customer, now) %}

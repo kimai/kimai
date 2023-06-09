@@ -1382,26 +1382,6 @@ parameters:
             path: src/Controller/Security/SelfRegistrationController.php
 
         -
-            message: "#^Cannot call method getData\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method handleRequest\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method isSubmitted\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
-            message: "#^Cannot call method isValid\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Controller/TagController.php
-
-        -
             message: "#^Cannot call method getEntities\\(\\) on mixed\\.$#"
             count: 2
             path: src/Controller/TimesheetAbstractController.php
@@ -5413,26 +5393,6 @@ parameters:
 
         -
             message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:deleteTag\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findAllTagNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:findTagsByName\\(\\) has parameter \\$tagNames with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:saveTag\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/TagRepository.php
 

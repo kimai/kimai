@@ -43,6 +43,11 @@ class Tag
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $name = null;
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private bool $visible = true;
 
     use ColorTrait;
 
@@ -72,6 +77,16 @@ class Tag
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): void
+    {
+        $this->visible = $visible;
     }
 
     public function addTimesheet(Timesheet $timesheet): void
