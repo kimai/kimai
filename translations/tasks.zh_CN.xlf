@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
-        <target state="translated">我的任务</target>
+        <target state="translated">每个用户的任务</target>
       </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
         <source>task.stop</source>

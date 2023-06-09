@@ -118,6 +118,14 @@
         <source>reload</source>
         <target state="translated">רענון</target>
       </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation">
+        <source>syncronisation</source>
+        <target state="translated">סנכרון</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import">
+        <source>import</source>
+        <target state="translated">ייבוא</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
