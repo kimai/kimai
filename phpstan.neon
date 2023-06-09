@@ -1382,11 +1382,6 @@ parameters:
             path: src/Controller/Security/SelfRegistrationController.php
 
         -
-            message: "#^Parameter \\#1 \\$value of method App\\\\Form\\\\Model\\\\Configuration\\:\\:setValue\\(\\) expects bool\\|int\\|object\\|string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Controller/SystemConfigurationController.php
-
-        -
             message: "#^Cannot call method getEntities\\(\\) on mixed\\.$#"
             count: 2
             path: src/Controller/TimesheetAbstractController.php
