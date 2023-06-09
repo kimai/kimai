@@ -4,25 +4,21 @@
 
 {% set manageAllowed = is_granted('manage_tag') %}
 
-{% block datatable_row %}
-    {% set type = '' %}
-    {% if entry.amount == 0 %}
-        {% set type = 'bg-yellow' %}
-    {% endif %}
+{% block datatable_row_attr %}{% if manageAllowed %} class="modal-ajax-form open-edit {{ widgets.class_tag_row(entry) }}" data-href="{{ path('tags_edit', {'id': entry.id}) }}" {% endif %}{% endblock %}
 
-    <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': entry.id}) }}"{% endif %}>
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'amount' %}
+        {{ widgets.badge_counter(entry.amount, null, (entry.amount == 0 ? 'bg-yellow' : '')) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {% set event = actions(app.user, 'tag', 'index', {'tag': entry}) %}
+        {{ widgets.table_actions(event.actions) }}
+    {% elseif column == 'id' %}
         {% if dataTable.hasBatchForm() %}
-            <td class="text-nowrap">
-                {{ tables.datatable_multiupdate_row(entry.id) }}
-            </td>
+            {{ tables.datatable_multiupdate_row(entry.id) }}
         {% endif %}
-        <td class="{{ tables.class(dataTable, 'name') }}">
-            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'amount') }}">{{ widgets.badge_counter(entry.amount, null, type) }}</td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">
-            {% set event = actions(app.user, 'tag', 'index', {'tag': entry}) %}
-            {{ widgets.table_actions(event.actions) }}
-        </td>
-    </tr>
+    {% endif %}
 {% endblock %}

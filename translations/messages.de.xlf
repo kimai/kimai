@@ -343,6 +343,10 @@
         <source>help.visible</source>
         <target>Falls die Einstellung aus ist, wird das Objekt nicht in Auswahlboxen und Listen angezeigt.</target>
       </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target>Unsichtbar</target>
+      </trans-unit>
       <trans-unit id="CvlqjtY" approved="yes" resname="budget">
         <source>budget</source>
         <target>Budget</target>

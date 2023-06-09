@@ -313,6 +313,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'name' => 'string',
                     'color' => '@string',
+                    'visible' => 'bool',
                 ];
 
                 // embedded meta data
