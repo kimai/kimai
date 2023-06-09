@@ -30,7 +30,7 @@ class MonthTest extends TestCase
             $month = new Month($date);
             self::assertEquals(sprintf('2020-%s-25', $monthKey), $month->getMonth()->format('Y-m-d'));
             self::assertCount($days, $month->getDays());
-            self::assertTrue($month->isLocked());
+            self::assertFalse($month->isLocked());
             self::assertEquals(0, $month->getActualTime());
             self::assertEquals(0, $month->getExpectedTime(new \DateTimeImmutable('2035-01-02')));
             self::assertNull($month->getLockDate());
@@ -51,6 +51,26 @@ class MonthTest extends TestCase
                 self::assertEquals($expected, $day->getWorkingTime()->getExpectedTime());
                 self::assertEquals($duration, $day->getWorkingTime()->getActualTime());
             }
+            self::assertFalse($month->isLocked());
+
+            foreach ($month->getDays() as $day) {
+                $workingTime = $day->getWorkingTime();
+                self::assertNotNull($workingTime);
+                $workingTime->setApprovedAt(new \DateTimeImmutable());
+            }
+            self::assertTrue($month->isLocked());
+
+            $day = $month->getDays()[5];
+            $wt = $day->getWorkingTime();
+            self::assertNotNull($wt);
+            $day->setWorkingTime(null);
+            self::assertFalse($month->isLocked());
+
+            $day->setWorkingTime($wt);
+            self::assertTrue($month->isLocked());
+
+            $wt->setApprovedAt(null);
+            self::assertFalse($month->isLocked());
         }
     }
 }
