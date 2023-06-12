@@ -52,7 +52,7 @@ final class ReloadCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Reloading configurations ...');
+        $io->text('Validating config file syntax ...');
 
         // many users execute the bin/console command from arbitrary locations
         $path = getcwd();
