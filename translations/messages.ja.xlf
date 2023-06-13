@@ -830,6 +830,58 @@
         <source>about.title</source>
         <target>Kimai について</target>
       </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">解除する</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">アプリケーション</target>
+      </trans-unit>
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
+        <source>menu.reporting</source>
+        <target state="translated">レポートする</target>
+      </trans-unit>
+      <trans-unit id=".372.o7" resname="login_required">
+        <source>login_required</source>
+        <target state="translated">権限がありません。ログインページへ移動しますか？</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">検索フィルターをリセットする</target>
+      </trans-unit>
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="translated">選択リストのエントリーを表示</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no">
+        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
+        <target state="translated">メールアドレスが送られました。パスワードをリセットするにはメール中のリンクをクリックしてください。注意：%tokenLifetime%時間の間に新しいパスワードを設定し直すことができます。もしメールが届かない場合は迷惑フォルダーをチェックしてください。</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">正しくアクセスするにはパスワードを入力してください</target>
+      </trans-unit>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
+        <target state="translated">チーム</target>
+      </trans-unit>
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target state="translated">投稿されたコメントはありません。</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">%email%へメールが送られました。アカウントを承認するにはメール中のリンクをクリックしてください。</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">"%dir%"ディレクトリは存在しないため、作ることが出来ませんでした。</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target state="translated">"%dir%"ディレクトリは書き込み制限がかけられています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

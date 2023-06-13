@@ -1510,6 +1510,38 @@
         <source>manual_bookings.duration_help</source>
         <target state="translated">המשך יכול להיות חיובי (הגדלת הזמן בפועל) ושלישי (חיסור מהזמן בפועל).</target>
       </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target state="translated">לשיחה אל %name%</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target state="translated">קבלה מאת %name%</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target state="translated">חג ציבורי</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">חגים ציבוריים</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target state="translated">קבוצת חגים</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">העדרות</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target state="translated">חופש</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">ברירת מחדל</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

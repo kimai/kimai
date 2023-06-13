@@ -1482,6 +1482,90 @@
         <source>stats.userAmountWeek</source>
         <target state="translated">Můj týdenní výdělek</target>
       </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">Smazáno</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Zaměstnanecká smlouva</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Hodnocení</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target state="translated">Celý měsíc</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">Dokončený měsíc PDF</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">Doba trvání může být jak pozitivní (zvýšení je-čas), tak negativní (snížení je-čas).</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
+        <source>pto_year_holiday</source>
+        <target state="translated">dny dovolené za rok</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">Dovolená</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Pracovní doba</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">Vytvořil</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">Vytvořeno v</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">Po dokončení měsíce již uživatel nebude moci vytvářet ani upravovat časy pro toto období.</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Odpracované hodiny</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target state="translated">Zde nakonfigurované hodnoty se používají k výpočtu hodinového účtu.</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">Pro tohoto uživatele nebyly v nastavení pracovní smlouvy nakonfigurovány žádné cílové hodiny.</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Tento dokument slouží jako doklad o odpracovaných hodinách.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target state="translated">Je-hodin</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">Cílové hodiny</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">Potvrdil %user% dne %date%</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Manuální rezervace nelze dodatečně měnit ani mazat!</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Manuální rezervace</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
