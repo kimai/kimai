@@ -2142,31 +2142,6 @@ parameters:
             path: src/Event/CalendarConfigurationEvent.php
 
         -
-            message: "#^Cannot access offset 'actions' on mixed\\.$#"
-            count: 11
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Cannot access offset 'children' on mixed\\.$#"
-            count: 2
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Cannot access offset non\\-falsy\\-string on mixed\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Cannot access offset string on mixed\\.$#"
-            count: 7
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:__construct\\(\\) has parameter \\$payload with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:addAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PageActionsEvent.php
@@ -2182,23 +2157,8 @@ parameters:
             path: src/Event/PageActionsEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:getActions\\(\\) should return array but returns mixed\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:replaceAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
             count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
-            count: 2
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
-            count: 9
             path: src/Event/PageActionsEvent.php
 
         -
@@ -2262,16 +2222,6 @@ parameters:
             path: src/EventSubscriber/Actions/AbstractActionsSubscriber.php
 
         -
-            message: "#^Cannot access offset 'timesheet' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/AbstractTimesheetSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'activity' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/ActivitySubscriber.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/EventSubscriber/Actions/ActivitySubscriber.php
@@ -2287,79 +2237,9 @@ parameters:
             path: src/EventSubscriber/Actions/ActivitySubscriber.php
 
         -
-            message: "#^Cannot access offset 'customer' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/CustomerSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'available' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/DashboardSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'widgets' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/DashboardSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'invoice' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/InvoiceSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'token' on mixed\\.$#"
-            count: 4
-            path: src/EventSubscriber/Actions/InvoiceSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'template' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/InvoiceTemplateSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'token' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/InvoiceTemplateSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'plugin' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/PluginSubscriber.php
-
-        -
             message: "#^Cannot call method getHomepage\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
             count: 1
             path: src/EventSubscriber/Actions/PluginSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/ProjectSubscriber.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/ProjectSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'tag' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/TagSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'team' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/TeamSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/UserFormsSubscriber.php
-
-        -
-            message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/UserSubscriber.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"

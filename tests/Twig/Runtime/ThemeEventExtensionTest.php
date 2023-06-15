@@ -17,6 +17,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -57,11 +58,14 @@ class ThemeEventExtensionTest extends TestCase
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturn('foo');
 
+        $security = $this->getMockBuilder(Security::class)->disableOriginalConstructor()->getMock();
+        $security->method('getUser')->willReturn(null);
+
         $configs = [];
         $loader = new TestConfigLoader($configs);
         $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
 
-        return new ThemeExtension($dispatcher, $translator, $configuration);
+        return new ThemeExtension($dispatcher, $translator, $configuration, $security);
     }
 
     protected function getEnvironment(): Environment

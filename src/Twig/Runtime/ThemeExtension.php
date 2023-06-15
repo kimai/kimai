@@ -17,7 +17,7 @@ use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Utils\Color;
 use App\Utils\FormFormatConverter;
-use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -25,22 +25,20 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Security $security)
     {
     }
 
     /**
      * @param Environment $environment
      * @param string $eventName
-     * @param mixed|null $payload
+     * @param array<string, mixed> $payload
      * @return ThemeEvent
      */
-    public function trigger(Environment $environment, string $eventName, $payload = null): ThemeEvent
+    public function trigger(Environment $environment, string $eventName, array $payload = []): ThemeEvent
     {
-        /** @var AppVariable $app */
-        $app = $environment->getGlobals()['app'];
         /** @var User $user */
-        $user = $app->getUser();
+        $user = $this->security->getUser();
 
         $themeEvent = new ThemeEvent($user, $payload);
 

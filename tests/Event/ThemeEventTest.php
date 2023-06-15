@@ -22,7 +22,7 @@ class ThemeEventTest extends TestCase
     {
         $sut = new ThemeEvent();
         $this->assertNull($sut->getUser());
-        $this->assertNull($sut->getPayload());
+        $this->assertIsArray($sut->getPayload());
         $this->assertEquals('', $sut->getContent());
     }
 
@@ -41,7 +41,7 @@ class ThemeEventTest extends TestCase
         $user = new User();
         $user->setAlias('foo');
 
-        $payload = [null, '', 'test', new \stdClass()];
+        $payload = ['foo' => null, '' => '', 'test' => 'test', 'class' => new \stdClass()];
 
         $sut = new ThemeEvent($user, $payload);
         $this->assertEquals($payload, $sut->getPayload());
@@ -62,10 +62,9 @@ class ThemeEventTest extends TestCase
         $user = new User();
         $user->setAlias('foo');
 
-        $payload = [null, '', 'test', new \stdClass()];
+        $payload = ['foo' => null, '' => '', 'test' => 'test', 'class' => new \stdClass()];
 
-        $sut = new ThemeEvent($user);
-        $sut->setPayload($payload);
+        $sut = new ThemeEvent($user, $payload);
         $this->assertEquals($payload, $sut->getPayload());
     }
 }
