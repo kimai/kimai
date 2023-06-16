@@ -1607,7 +1607,7 @@
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
-        <target>Ihr Stundenkonto weist aktuell einen Stand von %hours% Stunden auf.</target>
+        <target>Ihr Stundenkonto weist einen Stand von %hours% Stunden auf.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>

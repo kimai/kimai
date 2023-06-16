@@ -1603,11 +1603,11 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro">
         <source>holiday.intro</source>
-        <target>You have taken %used% of your available %days% leave so far.</target>
+        <target>You have taken %used% of your available %days% vacation days so far.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
-        <target>Your hourly account currently has a balance of %hours% hours.</target>
+        <target>Your working time account has a balance of %hours% hours.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
