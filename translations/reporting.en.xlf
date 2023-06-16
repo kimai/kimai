@@ -30,7 +30,7 @@
         <source>report_project_view</source>
         <target>Project overview</target>
       </trans-unit>
-      <trans-unit id="R.9yU111kf" resname="report_customer_view">
+      <trans-unit id="Yz_lySk" resname="report_customer_view">
         <source>report_customer_view</source>
         <target>Customer overview</target>
       </trans-unit>
