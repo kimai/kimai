@@ -1,0 +1,35 @@
+{% import "macros/datatables.html.twig" as tables %}
+{% from "macros/widgets.html.twig" import nothing_found %}
+
+{% if not dataTable.hasResults() %}
+    {{ nothing_found(dataTable.getReloadEvents()) }}
+{% else %}
+    {% block datatable_header %}
+        {{ tables.header(dataTable) }}
+    {% endblock %}
+
+    {% block datatable_before %}{% endblock %}
+
+    {% set sortedColumns = dataTable.sortedColumnNames %}
+    {% block datatable_outer %}
+        {% for entry in dataTable %}
+            {% block datatable_row %}
+                <tr{% block datatable_row_attr %}{% endblock %}>
+                    {% for column, data in sortedColumns %}
+                        {% block datatable_column %}
+                            <td class="{{ tables.class(dataTable, column) }}"{% block datatable_column_attr %}{% endblock %}>
+                                {% block datatable_column_value %}{{ column }}{% endblock %}
+                            </td>
+                        {% endblock %}
+                    {% endfor %}
+                </tr>
+            {% endblock %}
+        {% endfor %}
+    {% endblock %}
+
+    {% block datatable_after %}{% endblock %}
+
+    {% block datatable_footer %}
+        {{ tables.footer(dataTable) }}
+    {% endblock %}
+{% endif %}
