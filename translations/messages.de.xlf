@@ -1613,6 +1613,14 @@
         <source>absence_other.intro</source>
         <target>Familiäre Ereignisse (Hochzeit, Geburt, Todesfall), Umzug, Verhinderungen wie Wetterchaos etc.</target>
       </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target>Ganzer Tag</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target>Halber Tag</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
