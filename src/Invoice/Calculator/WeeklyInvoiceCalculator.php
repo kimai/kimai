@@ -17,9 +17,15 @@ use App\Invoice\CalculatorInterface;
  */
 final class WeeklyInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
+    public function getIdentifiers(ExportableItem $invoiceItem): array
     {
-        return $invoiceItem->getBegin()->format('W');
+        if (null === $invoiceItem->getBegin()) {
+            throw new \Exception('Cannot handle invoice items without start date');
+        }
+
+        return [
+            $invoiceItem->getBegin()->format('W')
+        ];
     }
 
     public function getId(): string

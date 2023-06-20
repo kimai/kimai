@@ -15,6 +15,7 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
+use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -25,12 +26,12 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  */
 class DefaultCalculatorTest extends AbstractCalculatorTest
 {
-    public function testEmptyModel()
+    protected function getCalculator(): CalculatorInterface
     {
-        $this->assertEmptyModel(new DefaultCalculator());
+        return new DefaultCalculator();
     }
 
-    public function testWithMultipleEntries()
+    public function testWithMultipleEntries(): void
     {
         $date = new \DateTime();
         $customer = new Customer('foo');
@@ -69,7 +70,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
         $model->addEntries($entries);
         $model->setQuery(new InvoiceQuery());
 
-        $sut = new DefaultCalculator();
+        $sut = $this->getCalculator();
         $sut->setModel($model);
 
         $this->assertEquals('default', $sut->getId());

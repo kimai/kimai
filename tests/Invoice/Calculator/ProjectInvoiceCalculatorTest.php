@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ProjectInvoiceCalculator;
+use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -29,12 +30,12 @@ use DateTime;
  */
 class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
 {
-    public function testEmptyModel()
+    protected function getCalculator(): CalculatorInterface
     {
-        $this->assertEmptyModel(new ProjectInvoiceCalculator());
+        return new ProjectInvoiceCalculator();
     }
 
-    public function testWithMultipleEntries()
+    public function testWithMultipleEntries(): void
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
@@ -113,7 +114,7 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $model->addEntries($entries);
         $model->setQuery($query);
 
-        $sut = new ProjectInvoiceCalculator();
+        $sut = $this->getCalculator();
         $sut->setModel($model);
 
         $this->assertEquals('project', $sut->getId());
@@ -122,7 +123,6 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(2521.12, $sut->getSubtotal());
         $this->assertEquals(6600, $sut->getTimeWorked());
-        $this->assertEquals(3, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
@@ -132,8 +132,8 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
     }
 
-    public function testDescriptionByProject()
+    public function testDescriptionByProject(): void
     {
-        $this->assertDescription(new ProjectInvoiceCalculator(), true, false);
+        $this->assertDescription($this->getCalculator(), true, false);
     }
 }

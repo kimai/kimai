@@ -15,7 +15,7 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Invoice\Calculator\PriceInvoiceCalculator;
+use App\Invoice\Calculator\DateUserInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
@@ -23,16 +23,16 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use DateTime;
 
 /**
- * @covers \App\Invoice\Calculator\PriceInvoiceCalculator
+ * @covers \App\Invoice\Calculator\DateUserInvoiceCalculator
  * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
+class DateUserInvoiceCalculatorTest extends AbstractCalculatorTest
 {
     protected function getCalculator(): CalculatorInterface
     {
-        return new PriceInvoiceCalculator();
+        return new DateUserInvoiceCalculator();
     }
 
     public function testWithMultipleEntries(): void
@@ -41,8 +41,11 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
-        $user = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
-        $user->method('getId')->willReturn(1);
+        $user1 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user1->method('getId')->willReturn(1);
+
+        $user2 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
+        $user2->method('getId')->willReturn(2);
 
         $project1 = $this->getMockBuilder(Project::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $project1->method('getId')->willReturn(1);
@@ -58,9 +61,8 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(3600)
-            ->setHourlyRate(293.27)
             ->setRate(293.27)
-            ->setUser($user)
+            ->setUser($user1)
             ->setActivity((new Activity())->setName('sdsd'))
             ->setProject($project1);
 
@@ -69,9 +71,8 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(400)
-            ->setHourlyRate(293.27)
             ->setRate(84.75)
-            ->setUser($user)
+            ->setUser($user1)
             ->setActivity((new Activity())->setName('bar'))
             ->setProject($project2);
 
@@ -80,20 +81,18 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setBegin(new DateTime('2018-11-28'))
             ->setEnd(new DateTime())
             ->setDuration(1800)
-            ->setFixedRate(111.11)
             ->setRate(111.11)
-            ->setUser($user)
+            ->setUser($user1)
             ->setActivity((new Activity())->setName('foo'))
             ->setProject($project1);
 
         $timesheet4 = new Timesheet();
         $timesheet4
             ->setBegin(new DateTime())
-            ->setEnd(new DateTime('2018-11-28'))
+            ->setEnd(new DateTime())
             ->setDuration(400)
-            ->setHourlyRate(0)
             ->setRate(1947.99)
-            ->setUser($user)
+            ->setUser($user1)
             ->setActivity((new Activity())->setName('blub'))
             ->setProject($project2);
 
@@ -103,7 +102,7 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(84)
-            ->setUser(new User())
+            ->setUser($user2)
             ->setActivity(new Activity())
             ->setProject($project3);
 
@@ -121,7 +120,7 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('price', $sut->getId());
+        $this->assertEquals('date_user', $sut->getId());
         $this->assertEquals(3000.13, $sut->getTotal());
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $model->getCurrency());
@@ -134,6 +133,7 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(111.11, $entries[1]->getRate());
         $this->assertEquals(1947.99, $entries[2]->getRate());
         $this->assertEquals(84, $entries[3]->getRate());
+        self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate() + $entries[3]->getRate());
     }
 
     public function testDescriptionByTimesheet(): void

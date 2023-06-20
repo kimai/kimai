@@ -18,7 +18,29 @@ use App\Invoice\InvoiceItem;
  */
 abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
-    abstract protected function calculateSumIdentifier(ExportableItem $invoiceItem): string;
+    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
+    {
+        $ids = $this->getIdentifiers($invoiceItem);
+
+        $identifier = '';
+        foreach ($ids as $id) {
+            if ($id === null) {
+                $id = '__NULL__';
+            }
+            $identifier .= $id;
+        }
+
+        return $identifier;
+    }
+
+    /**
+     * @param ExportableItem $invoiceItem
+     * @return array<int|string|null>
+     */
+    public function getIdentifiers(ExportableItem $invoiceItem): array
+    {
+        return [];
+    }
 
     protected function calculateIdentifier(ExportableItem $entry): string
     {

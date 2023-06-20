@@ -32,9 +32,9 @@ final class ShortInvoiceCalculator extends AbstractMergedCalculator implements C
         $keys = [];
 
         foreach ($entries as $entry) {
-            $key = 'hourly_' . (string) $entry->getHourlyRate();
+            $key = 'hourly_' . $entry->getHourlyRate();
             if (null !== $entry->getFixedRate()) {
-                $key = 'fixed_' . (string) $entry->getFixedRate();
+                $key = 'fixed_' . $entry->getFixedRate();
             }
             if (!\in_array($key, $keys)) {
                 $keys[] = $key;

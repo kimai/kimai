@@ -4092,31 +4092,6 @@ parameters:
             path: src/Invoice/Calculator/AbstractMergedCalculator.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Calculator/ProjectInvoiceCalculator.php
-
-        -
-            message: "#^Cannot call method getInvoiceText\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Calculator/ProjectInvoiceCalculator.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/ProjectInvoiceCalculator.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Calculator/UserInvoiceCalculator.php
-
-        -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/WeeklyInvoiceCalculator.php
-
-        -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
