@@ -14,9 +14,9 @@ use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 
 /**
- * A calculator that sums up the invoice item records by project.
+ * A calculator that sums up the invoice item records by project and user.
  */
-final class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class ProjectUserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     public function getIdentifiers(ExportableItem $invoiceItem): array
     {
@@ -28,8 +28,17 @@ final class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implem
             throw new \Exception('Cannot handle un-persisted projects');
         }
 
+        if ($invoiceItem->getUser() === null) {
+            throw new \Exception('Cannot handle invoice items without user');
+        }
+
+        if ($invoiceItem->getUser()->getId() === null) {
+            throw new \Exception('Cannot handle un-persisted users');
+        }
+
         return [
-            $invoiceItem->getProject()->getId()
+            $invoiceItem->getProject()->getId(),
+            $invoiceItem->getUser()->getId()
         ];
     }
 
@@ -48,6 +57,6 @@ final class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implem
 
     public function getId(): string
     {
-        return 'project';
+        return 'project_user';
     }
 }

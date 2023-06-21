@@ -1,42 +1,58 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de-CH" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target state="translated">Summenberechnung</target>
+        <target>Gruppierung der Rechnungszeilen</target>
       </trans-unit>
-      <trans-unit id="aDtTH0H" resname="price">
-        <source>price</source>
-        <target state="translated">Preis: ein Eintrag pro Preis</target>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target>Anhand welcher Felder sollen Rechnungsposten gruppiert werden?</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Standard: ein Eintrag pro Zeiterfassung</target>
+        <target>Standard (eine Zeile pro Eintrag)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target state="translated">Stunden: Aufzeichnungen summiert, ein Eintrag insgesamt</target>
+        <target>Alle (ein Eintrag insgesamt)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Benutzer: ein Eintrag pro Benutzer</target>
+        <target>Benutzer</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Aktivität: ein Eintrag pro Aktivität</target>
+        <target>Aktivität</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target>Aktivität und Benutzer</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Projekt: ein Eintrag pro Projekt</target>
+        <target>Projekt</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target>Projekt und Benutzer</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Datum: ein Eintrag pro Tag (verwendet Startdatum)</target>
+        <target>Datum</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target>Datum und Benutzer</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Wöchentlich: ein Eintrag pro Woche (verwendet Startdatum)</target>
+        <target>Kalenderwoche</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>Preis</target>
       </trans-unit>
     </body>
   </file>

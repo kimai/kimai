@@ -14,14 +14,19 @@ use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 
 /**
- * A calculator that sums up the invoice item records by activity.
+ * A calculator that sums up the invoice item records by activity and user.
  */
-final class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class ActivityUserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     public function getIdentifiers(ExportableItem $invoiceItem): array
     {
+        if ($invoiceItem->getUser()?->getId() === null) {
+            throw new \Exception('Cannot handle un-persisted users');
+        }
+
         return [
-            $invoiceItem->getActivity()?->getId()
+            $invoiceItem->getActivity()?->getId(),
+            $invoiceItem->getUser()->getId()
         ];
     }
 
@@ -40,6 +45,6 @@ final class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator imple
 
     public function getId(): string
     {
-        return 'activity';
+        return 'activity_user';
     }
 }

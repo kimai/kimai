@@ -17,13 +17,13 @@ use App\Invoice\CalculatorInterface;
  */
 final class PriceInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
+    public function getIdentifiers(ExportableItem $invoiceItem): array
     {
         if (null !== $invoiceItem->getFixedRate()) {
-            return 'fixed_' . $invoiceItem->getFixedRate();
+            return ['fixed_' . $invoiceItem->getFixedRate()];
         }
 
-        return 'hourly_' . $invoiceItem->getHourlyRate();
+        return ['hourly_' . $invoiceItem->getHourlyRate()];
     }
 
     public function getId(): string

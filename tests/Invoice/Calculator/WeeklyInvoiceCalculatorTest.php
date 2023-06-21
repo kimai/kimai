@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\WeeklyInvoiceCalculator;
+use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -29,12 +30,12 @@ use DateTime;
  */
 class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 {
-    public function testEmptyModel()
+    protected function getCalculator(): CalculatorInterface
     {
-        $this->assertEmptyModel(new WeeklyInvoiceCalculator());
+        return new WeeklyInvoiceCalculator();
     }
 
-    public function testWithMultipleEntries()
+    public function testWithMultipleEntries(): void
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
@@ -116,7 +117,7 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
         $model->addEntries($entries);
         $model->setQuery($query);
 
-        $sut = new WeeklyInvoiceCalculator();
+        $sut = $this->getCalculator();
         $sut->setModel($model);
 
         $this->assertEquals('weekly', $sut->getId());
@@ -133,8 +134,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate());
     }
 
-    public function testDescriptionByTimesheet()
+    public function testDescriptionByTimesheet(): void
     {
-        $this->assertDescription(new WeeklyInvoiceCalculator(), false, false);
+        $this->assertDescription($this->getCalculator(), false, false);
     }
 }
