@@ -11,7 +11,7 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             {{ form_row(form.name) }}
-            <fieldset class="form-fieldset">
+            <fieldset class="form-fieldset pb-0">
                 <div class="row">
                     <div class="col-12">
                         {{ form_row(form.title) }}
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="form-fieldset">
+            <fieldset class="form-fieldset pb-0">
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.dueDays) }}
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="form-fieldset">
+            <fieldset class="form-fieldset pb-0">
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.renderer, {'help_html': true, 'help': '<a href="https://github.com/kimai/invoice-templates" target="_blank">' ~ ('download_invoice_renderer'|trans({}, 'invoice-renderer')) ~ '</a>'}) }}
