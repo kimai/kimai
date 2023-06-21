@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>Sum calculation</target>
+        <target>Grouping of invoice lines</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target>Select by which fields the invoice items should be grouped</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Default: one entry per time record</target>
+        <target>Default (one row per entry)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>Hours: records summed up, one entry total</target>
+        <target>All (one entry total)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>User: one entry per user</target>
+        <target>User</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>Activity: one entry per activity</target>
+        <target>Activity</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target>Activity and user</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Project: one entry per project</target>
+        <target>Project</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target>Project and user</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Date: one entry per day (uses start date)</target>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target>Date and user</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target>Weekly: one entry per week (uses start date)</target>
+        <target>Calendar week</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target>Price: one entry per price</target>
+        <target>Price</target>
       </trans-unit>
     </body>
   </file>

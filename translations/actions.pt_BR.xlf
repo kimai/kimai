@@ -118,6 +118,14 @@
         <source>reload</source>
         <target state="translated">Recarregar</target>
       </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation">
+        <source>syncronisation</source>
+        <target state="translated">Sincronização</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import">
+        <source>import</source>
+        <target state="translated">Importar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

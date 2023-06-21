@@ -632,16 +632,16 @@
         <target>This document serves as proof of the hours worked.</target>
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
-        <source>review</source>
-        <target>Review</target>
+        <source>Review</source>
+        <target state="needs-translation">Review</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
         <target>Working times</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
-        <source>work_times_account</source>
-        <target>Working time account</target>
+        <source>Working time account</source>
+        <target state="needs-translation">Working time account</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>work_times_should</source>

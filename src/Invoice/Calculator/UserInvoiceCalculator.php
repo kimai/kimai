@@ -17,13 +17,15 @@ use App\Invoice\CalculatorInterface;
  */
 final class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
+    public function getIdentifiers(ExportableItem $invoiceItem): array
     {
-        if (null === $invoiceItem->getUser()->getId()) {
+        if (null === $invoiceItem->getUser()?->getId()) {
             throw new \Exception('Cannot handle un-persisted user');
         }
 
-        return (string) $invoiceItem->getUser()->getId();
+        return [
+            $invoiceItem->getUser()->getId()
+        ];
     }
 
     public function getId(): string

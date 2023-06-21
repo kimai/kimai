@@ -11,55 +11,65 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             {{ form_row(form.name) }}
-            {{ form_row(form.title) }}
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.company) }}
+            <fieldset class="form-fieldset pb-0">
+                <div class="row">
+                    <div class="col-12">
+                        {{ form_row(form.title) }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.vatId) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.company) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.vatId) }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.address) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.address) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.contact) }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.contact) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.paymentTerms) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.paymentDetails) }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.paymentTerms) }}
+            </fieldset>
+            <fieldset class="form-fieldset pb-0">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.dueDays) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.vat) }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.paymentDetails) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.language) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.numberGenerator) }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.dueDays) }}
+            </fieldset>
+            <fieldset class="form-fieldset pb-0">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.renderer, {'help_html': true, 'help': '<a href="https://github.com/kimai/invoice-templates" target="_blank">' ~ ('download_invoice_renderer'|trans({}, 'invoice-renderer')) ~ '</a>'}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.calculator) }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_row(form.vat) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.renderer, {'help_html': true, 'help': '<a href="https://github.com/kimai/invoice-templates" target="_blank">' ~ ('download_invoice_renderer'|trans({}, 'invoice-renderer')) ~ '</a>'}) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.language) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.calculator) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.numberGenerator) }}
-                </div>
-            </div>
+            </fieldset>
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}    

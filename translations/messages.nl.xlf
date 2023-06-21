@@ -683,7 +683,7 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Subtotaal (MvH)</target>
+        <target state="translated">Subtotaal</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -719,7 +719,7 @@
       </trans-unit>
       <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
-        <target>Bevestiging: Datum / Naam cliënt / Handtekening</target>
+        <target state="translated">Bevestiging: Datum / Naam klant / Handtekening</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
@@ -781,7 +781,7 @@
             -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
-        <target>Uw lopende tijden</target>
+        <target state="translated">Uw actieve tijdsmetingen</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
@@ -789,14 +789,14 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Nieuwe teller starten</target>
+        <target state="translated">Nieuwe tijdregistratie maken</target>
       </trans-unit>
       <!--
               TOOLBARS
             -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
-        <target>Aantal per pagina</target>
+        <target state="translated">Paginagrootte</target>
       </trans-unit>
       <trans-unit id="cjgNYUB" resname="entryState">
         <source>entryState</source>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="Qn2ouiL" resname="exported">
         <source>exported</source>
-        <target>Gefactureerd</target>
+        <target state="translated">Geëxporteerd</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
@@ -828,15 +828,15 @@
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
-        <target>De weergegeven tijden markeren als niet gefactureerd?</target>
+        <target state="translated">Alle weergegeven tijden markeren als niet gefactureerd?</target>
       </trans-unit>
       <trans-unit id="qtjPKUT" resname="export.mark_all">
         <source>export.mark_all</source>
-        <target>De weergegeven tijden markeren als gefactureerd?</target>
+        <target state="translated">Alle weergegeven tijden markeren als gefactureerd?</target>
       </trans-unit>
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
-        <target>Enkel algemene</target>
+        <target state="translated">Alleen globaal</target>
       </trans-unit>
       <trans-unit id="G.GEdlk" resname="user_role.title">
         <source>user_role.title</source>
@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target>Uw zoekoipdracht leidt tot %count% resultaten. Als de export faalt, dan moet je de zoekopdracht verder verfijnen.</target>
+        <target state="translated">Uw zoekopdracht geeft %count% resultaten. Als de export faalt, dan moet u de zoekopdracht verder verfijnen.</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
@@ -1128,11 +1128,11 @@
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target state="translated">Voeg een nieuwe gebruiker toe aan het team door hem uit de lijst te selecteren. Daarna kunt u beslissen of de gebruiker een teamleider moet worden.</target>
+        <target state="translated">Voeg een nieuwe gebruiker toe aan het team door deze uit de lijst te selecteren. Daarna kunt u beslissen of de gebruiker een teamleider moet worden.</target>
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
-        <target state="needs-translation">Standaardwaarden voor nieuwe items</target>
+        <target state="translated">Standaardwaarden voor nieuwe vermeldingen</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
@@ -1156,7 +1156,7 @@
       </trans-unit>
       <trans-unit id="3rJ5QDP" resname="help.teams">
         <source>help.teams</source>
-        <target state="needs-translation">Beperkt de zichtbaarheid tot de geselecteerde teams.</target>
+        <target state="translated">Beperkt de zichtbaarheid tot de geselecteerde teams.</target>
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText">
         <source>help.invoiceText</source>
@@ -1180,7 +1180,7 @@
       </trans-unit>
       <trans-unit id="IDDfzoR" resname="invoiceLabel">
         <source>invoiceLabel</source>
-        <target state="needs-translation">Factuurtekst</target>
+        <target state="translated">Factuurtekst</target>
       </trans-unit>
       <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
         <source>help.invoiceLabel</source>
@@ -1196,11 +1196,11 @@
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable">
         <source>help.billable</source>
-        <target state="needs-translation">Als de instelling uit staat, worden alle tijdboekingen in de toekomst gemarkeerd als "niet factureerbaar".</target>
+        <target state="translated">Als de instelling uit staat, worden alle tijdboekingen in de toekomst gemarkeerd als "niet factureerbaar".</target>
       </trans-unit>
       <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
         <source>dashboard.edit_mode</source>
-        <target state="needs-translation">U kunt uw widgets herschikken met drag &amp; drop. Het toevoegen van widgets slaat niet opgeslagen wijzigingen op.</target>
+        <target state="translated">U kunt uw widgets herschikken met drag &amp; drop. Het toevoegen van widgets slaat niet opgeslagen wijzigingen op.</target>
       </trans-unit>
       <trans-unit id="aGk9Aqt" resname="desktop">
         <source>desktop</source>
@@ -1333,6 +1333,226 @@
       <trans-unit id="0ZWvn12" resname="notifications.welcome">
         <source>notifications.welcome</source>
         <target state="translated">Bedankt dat u instemt met meldingen!</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target state="translated">API kan niet gebruikt worden</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">Maak een nieuwe met de naam "%input%"</target>
+      </trans-unit>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
+        <target state="translated">Toon resultaten met "maandelijks" budget</target>
+      </trans-unit>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
+        <target state="translated">Maandelijks</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="translated">De maximale hoeveelheid van %max% factuurdocumenten is bereikt. U kunt meer toevoegen nadat u er een hebt verwijderd.</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned">
+        <source>status.planned</source>
+        <target state="translated">Gepland</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress">
+        <source>status.progress</source>
+        <target state="translated">In uitvoering</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed">
+        <source>status.closed</source>
+        <target state="translated">Voltooid</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target state="translated">Als de instelling uit staat, kunnen tijden alleen worden vastgelegd met projectspecifieke activiteiten.</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target state="translated">Als u geen project selecteert, dan wordt deze activiteit globaal, en kan het gebruikt worden met elk project. Als u een project kiest, dan kan deze activiteit alleen met dat project gebruikt worden. Deze instelling kan later niet veranderd worden.</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget">
+        <source>includeWithBudget</source>
+        <target state="translated">Toon resultaten metbudget</target>
+      </trans-unit>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
+        <target state="translated">Toon resultaten met "levenscyclus" budget</target>
+      </trans-unit>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
+        <target state="translated">Geen tijdboekingen sinds</target>
+      </trans-unit>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
+        <target state="translated">Laatste vermelding</target>
+      </trans-unit>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
+        <target state="translated">Personeelsnummer</target>
+      </trans-unit>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
+        <target state="translated">Budget-Type</target>
+      </trans-unit>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
+        <target state="translated">Levenscyclus</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target state="translated">Momenteel bestaan er %records% tijdvermeldingen, die samen een totale duur van %duration% hebben.</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">De geselecteerde / gemarkeerde gebruikers zijn teamleiders.</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">Vermeldingen tonen van %start% tot %end% van %total%.</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light">
+        <source>skin.light</source>
+        <target state="translated">Helder</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark">
+        <source>skin.dark</source>
+        <target state="translated">Donker</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro">
+        <source>api_password.intro</source>
+        <target state="translated">Het API-wachtwoord wordt gebruikt voor communicatie tussen Kimai en uw applicaties</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">U heeft nog geen API-wachtwoord ingevoerd. Vanwege veiligheidsredenen kunt u de API niet gebruiken tot u een wachtwoord heeft opgeslagen.</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">Geen resultaten gevonden voor "%input%"</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">Kies alstublieft</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">Uitgebreide instellingen</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity">
+        <source>no_activity</source>
+        <target state="translated">Zonder activiteit</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target state="translated">Gedeactiveerd</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">Geactiveerd</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Ondersteunde talen met opmaakregels</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 uur</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Tijd</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">Globale activiteiten toestaan</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Naast het vertalen van de interface is deze instelling ook verantwoordelijk voor de tijd-, datum- en valutanotaties.</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">U kunt de factuurdatum hier wijzigen</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Factuurdatum</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">Verwijderd</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">Gemaakt op</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Arbeidsovereenkomst</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">Streefuren</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">Bevestigd door %user% op %date%</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target state="translated">Is-uren</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Gewerkte uren</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Handmatige boekingen</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Handmatige boeken kunnen niet achtereenvolgens worden gewijzigd of verwijderd!</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target state="translated">De hier geconfigureerde waarden worden gebruikt om de rekening per uur te berekenen.</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">Voor deze gebruiker zijn geen streefuren geconfigureerd in de instellingen van de arbeidsovereenkomst.</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">Gemaakt door</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">Na het voltooien van de maand kan de gebruiker geen tijden meer maken of bewerken voor die periode.</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Werktijden</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Evaluatie</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target state="translated">Volledige maand</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">Voltooide maand PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Dit document dient als bewijs van de gewerkte uren.</target>
       </trans-unit>
     </body>
   </file>

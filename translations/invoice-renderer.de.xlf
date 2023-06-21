@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>Rechnungsdokument</target>
+        <target>Rechnungsvorlage</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
@@ -14,12 +14,10 @@
         <source>download_invoice_renderer</source>
         <target state="translated">Sie können weitere Vorlagen hier herunterladen</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target>Zur Weiterverarbeitung</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Rechnung</target>
