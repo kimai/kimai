@@ -42,8 +42,7 @@ final class TagSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('manage_tag')) {
-            $class = ($event->isView('edit') ? '' : 'modal-ajax-form');
-            $event->addAction('edit', ['url' => $this->path('tags_edit', ['id' => $id]), 'class' => $class]);
+            $event->addEdit($this->path('tags_edit', ['id' => $id]));
         }
 
         if ($this->isGranted('view_other_timesheet')) {
