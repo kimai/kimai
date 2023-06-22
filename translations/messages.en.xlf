@@ -1611,7 +1611,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target>Family events (wedding, birth, death), moving house, weather chaos etc.</target>
+        <target>Family events, moving house, weather chaos etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
