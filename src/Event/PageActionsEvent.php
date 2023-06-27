@@ -153,7 +153,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addEdit(string $url, bool $modal = true): void
     {
-        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : '')]);
+        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'translation_domain' => 'actions', 'title' => 'edit']);
     }
 
     /**
