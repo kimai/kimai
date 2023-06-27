@@ -54,7 +54,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * Controller used to manage projects.
  */
 #[Route(path: '/admin/project')]
-#[IsGranted(new Expression("is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project')"))]
 final class ProjectController extends AbstractController
 {
     public function __construct(private ProjectRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ProjectService $projectService)
@@ -63,6 +62,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_project', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_project_paginated', methods: ['GET'])]
+    #[IsGranted(new Expression("is_granted('listing', 'project')"))]
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ProjectQuery();
@@ -435,7 +435,11 @@ final class ProjectController extends AbstractController
                 $this->projectService->updateProject($project);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                if ($this->isGranted('view', $project)) {
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                } else {
+                    return new Response();
+                }
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -512,6 +516,7 @@ final class ProjectController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'project_export', methods: ['GET'])]
+    #[IsGranted(new Expression("is_granted('listing', 'project')"))]
     public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new ProjectQuery();

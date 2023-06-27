@@ -30,6 +30,7 @@ final class EntityMultiRoleVoter extends Voter
         'budget_time',
         'budget_any',
         'details',
+        'listing',
     ];
     private const ALLOWED_SUBJECTS = [
         'customer',
@@ -99,6 +100,13 @@ final class EntityMultiRoleVoter extends Voter
             $permissions[] = 'time_teamlead';
             $permissions[] = 'time_team';
         }
+
+        if ($attribute === 'listing') {
+            $permissions[] = 'view';
+            $permissions[] = 'view_team';
+            $permissions[] = 'view_teamlead';
+        }
+
         foreach ($permissions as $permission) {
             if ($this->permissionManager->hasRolePermission($user, $permission . '_' . $suffix)) {
                 return true;
