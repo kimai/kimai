@@ -789,7 +789,9 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue('Login with SAML')
                 ->end()
                 ->scalarNode('provider')
-                    ->defaultNull()
+                    // the "default" was only added, to prevent support requests by people who did not
+                    // adjust their config between 1.x and 2.0
+                    ->defaultValue('default')
                 ->end()
                 ->arrayNode('roles')
                     ->addDefaultsIfNotSet()
