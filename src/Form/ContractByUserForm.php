@@ -16,7 +16,7 @@ use Symfony\Component\Form\AbstractType;
  */
 final class ContractByUserForm extends AbstractType
 {
-    public function getParent()
+    public function getParent(): ?string
     {
         return YearByUserForm::class;
     }
