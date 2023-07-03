@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>Calcolo somma</target>
+        <target state="translated">Raggruppamento righe fattura</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Predefinito: una voce per record orario</target>
+        <target state="translated">Predefinito (una riga per voce)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target state="translated">Ore: record sommati, una voce per il totale</target>
+        <target state="translated">Tutto (una voce in totale)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Prezzo: una voce per prezzo</target>
+        <target state="translated">Prezzo</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Utente: una voce per utente</target>
+        <target state="translated">Utente</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Attività: una voce per attività</target>
+        <target state="translated">Attività</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Progetto: una voce per progetto</target>
+        <target state="translated">Progetto</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Data: una voce al giorno (usa data di inizio)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Settimanale: una voce a settimana (usa data di inizio)</target>
+        <target state="translated">Calendario settimanale</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Seleziona in base a quali campi devono essere raggruppate le voci della fattura</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Attività e utente</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Progetto e utente</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Data e utente</target>
       </trans-unit>
     </body>
   </file>

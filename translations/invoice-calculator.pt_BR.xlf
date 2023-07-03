@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>Cálculo da soma</target>
+        <target state="translated">Agrupamento das linhas de fatura</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Padrão: um registro de entrada por tempo</target>
+        <target state="translated">Padrão (uma linha por entrada)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>Horas adicionadas - apenas uma entrada</target>
+        <target state="translated">Todos (total de uma entrada)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Usuário: uma entrada por usuário</target>
+        <target state="translated">Usuário</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>Atividade agrupada - uma entrada por atividade</target>
+        <target state="translated">Atividade</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Projeto: uma entrada por projeto</target>
+        <target state="translated">Projeto</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target>Semanal: uma entrada por semana (utiliza a data de início)</target>
+        <target state="translated">Semana do calendário</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target>Preço: uma entrada por preço</target>
+        <target state="translated">Preço</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Data: uma entrada por dia (utiliza a data de início)</target>
+        <target state="translated">Data</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Selecione por quais campos os itens da fatura devem ser agrupados</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Atividade e usuário</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Projeto e usuário</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Data e usuário</target>
       </trans-unit>
     </body>
   </file>

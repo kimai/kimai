@@ -1482,6 +1482,46 @@
         <source>invoice_date</source>
         <target state="translated">Data faktury</target>
       </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">Usunięto</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Dokument ten służy jako dowód przepracowanych godzin.</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target state="translated">Cały miesiąc</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">Stworzone przez</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">Utworzono o</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Umowa o pracę</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Ocena</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Czas pracy</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">Godziny docelowe</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">Niewidoczne</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

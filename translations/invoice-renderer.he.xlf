@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>מסמך חשבונית</target>
+        <target state="translated">תבנית חשבונית</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>

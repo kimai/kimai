@@ -14,6 +14,10 @@
         <source>default-internal.pdf.twig</source>
         <target>Vrátane interných nákladov</target>
       </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">Pracovný výkaz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

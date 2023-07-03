@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target state="translated">Документ рахунку</target>
+        <target state="translated">Шаблон рахунку</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>

@@ -619,7 +619,7 @@
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
         <source>invoice.due_days</source>
-        <target>Platební metoda</target>
+        <target state="translated">Datum splatnosti</target>
       </trans-unit>
       <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>

@@ -1542,6 +1542,10 @@
         <source>default</source>
         <target state="translated">ברירת מחדל</target>
       </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">בלתי נראה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

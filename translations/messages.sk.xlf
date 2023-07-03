@@ -137,7 +137,7 @@
       </trans-unit>
       <trans-unit id="fftM9nd" resname="users">
         <source>users</source>
-        <target>Používateľ</target>
+        <target state="translated">Používatelia</target>
       </trans-unit>
       <trans-unit id="_t.2z4V" resname="teams">
         <source>teams</source>
@@ -149,7 +149,7 @@
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
-        <target>Nastavenia</target>
+        <target state="translated">Nastavenie</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -175,7 +175,7 @@
             -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Dátum</target>
+        <target state="translated">Dátum</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -227,11 +227,11 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>Činnosti</target>
+        <target state="translated">Činnosti</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Projekt</target>
+        <source>Project</source>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
@@ -274,7 +274,7 @@
             -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
-        <target>Činnosti</target>
+        <target state="translated">Akcie</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
@@ -390,7 +390,7 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">Prístup k API</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
@@ -467,7 +467,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>Contact</source>
-        <target state="needs-translation">Kontakt</target>
+        <target state="translated">Kontakt</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -1031,7 +1031,7 @@
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target state="translated">Vaša požiadavka nemohla byť spracovaná. Bolo nájdených príliš veľa výsledkov</target>
+        <target state="translated">Vaša požiadavka nemohla byť spracovaná. Bolo nájdených príliš veľa výsledkov.</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
@@ -1071,7 +1071,7 @@
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target state="needs-translation">%month% %year%</target>
+        <target state="translated">%month% %year%</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1108,6 +1108,502 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>O Kimai</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget">
+        <source>includeWithBudget</source>
+        <target state="translated">Zobraziť položky s rozpočtom</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light">
+        <source>skin.light</source>
+        <target state="translated">Svetlá</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Moje pracovné hodiny tento rok</target>
+      </trans-unit>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
+        <target state="translated">Zobraziť vstupy bez rezervácie</target>
+      </trans-unit>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
+        <target state="translated">Zobraziť položky bez rozpočtu</target>
+      </trans-unit>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
+        <target state="translated">Životný cyklus</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target state="translated">V súčasnosti existuje %records% časových záznamov, ktorých súčet predstavuje celkovú dobu %duration%.</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at">
+        <source>Updated at</source>
+        <target state="translated">Aktualizované v</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
+        <target state="translated">Typ</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark">
+        <source>skin.dark</source>
+        <target state="translated">Tmavý</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target state="translated">Je-hodín</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
+        <source>Holidays per year</source>
+        <target state="translated">Dovolenka za rok</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed">
+        <source>plugin.installed</source>
+        <target state="translated">Nainštalované doplnky</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Moje dnešné pracovné hodiny</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Moje pracovné hodiny tento mesiac</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Moje pracovné hodiny celkovo</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Môj celkový príjem</target>
+      </trans-unit>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
+        <target state="translated">Posledný záznam</target>
+      </trans-unit>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
+        <target state="translated">Typ rozpočtu</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target state="translated">Týždenná pracovná doba</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">Zobraziť položky %start% až %end% z %total%.</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target state="translated">API sa nedá použiť</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">Nezadali ste API heslo. Kvôli bezpečnostným dôvodom nemôžete používať API kým nenastavíte heslo.</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target state="translated">Poslať %name%</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target state="translated">Prijať od %name%</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target state="translated">Voľno</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Predvolený</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">Potvrdil %user% dňa %date%</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Odmietli ste používanie notifikácií. Prosím, skontrolujte dokumentáciu vášho webového prehliadača ako notifikácie povoliť.</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Moje pracovné hodiny tento týždeň</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Môj príjem tento rok</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Faktúry pre tohoto zákazníka sú predvolene generované s touto šablónou. Pokiaľ potrebné, toto nastavenie môže byť zmenené počas generovania faktúr.</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target state="translated">Vaše vyhľadávanie vedie k %count% výsledkom. Pokiaľ sa export nepodarí, musíte zúžiť vaše vyhľadávanie.</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Odpracované hodiny</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">Pro tohoto uživateľa neboli v nastaveniach pracovnej zmluvy nakonfigurované žiadne cielové hodiny.</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Manuálne rezervácie</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Manuálne rezervácie sa nedajú neskôr meniť alebo odstrániť!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">Doba trvania môže byť buď pozitívna (zvýšenie času), alebo negatívna (zníženie času).</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target state="translated">Pokiaľ si nevyberiete projekt, táto aktivita sa stane globálna a dá sa ju kombinovať s akýmkoľvek projektom. Pokiaľ projekt vyberiete, je možné túto aktivitu použiť iba s týmto projektom. Toto nastavenie nie je možné zmeniť neskôr.</target>
+      </trans-unit>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
+        <target state="translated">Číslo zamestnanca</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target state="translated">Výberom zo zoznamu pridajte do tímu nového používateľa. Potom môžete rozhodnúť, či se má používateľ stať vedúcim tímu.</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro">
+        <source>api_password.intro</source>
+        <target state="translated">API heslo sa používa pre komunikáciu medzi Kimai a vašimi aplikáciami</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Okrem prekladov tohoto rozhrania, toto nastavenie ovplyvňuje tiež formát čas, dátumu a meny.</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open">
+        <source>mark_as_open</source>
+        <target state="translated">Označiť ako otvorené</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target state="translated">Pokiaľ je toto nastavenie vypnuté, časy je možné zaznamenávať iba u činností špecifických pre projekt.</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">Aktivované</target>
+      </trans-unit>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
+        <target state="translated">Neexportované</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target state="translated">Pridať použivateľa</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target state="translated">Východzie hodnoty pre nové záznamy</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="translated">Dosiahnutie maximálneho množstva %max% dokladov faktúr. Po odobraní jedného dokladu môžete pridať ďalšie.</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">Obľúbené</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">Oznámenia</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">Ďakujeme, že súhlasíte s upozorneniami!</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account">
+        <source>system_account</source>
+        <target state="translated">Systémový-účet</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help">
+        <source>system_account.help</source>
+        <target state="translated">Bude skrytý z prehľadov (reports) a zo zoznamov (dropdowns)</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help">
+        <source>active.help</source>
+        <target state="translated">Deaktivovaní používatelia sa nemôžu naďalej prihlasovať a sú skrytí z prehľadov (reports) a výberových polí</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Môj príjem dnes</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Môj príjem tento týždeň</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Môj príjem tento mesiac</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target state="translated">Vytvoriť faktúru</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices">
+        <source>all_invoices</source>
+        <target state="translated">História faktúr</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">Táto faktúra je generovaná s touto šablónou.</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">Cieľové hodiny</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target state="translated">Nakonfigurované hodnoty se používajú k výpočtu hodinového účtu.</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">Dovolenka</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Dátum faktúry</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Dátum faktúry môžete zmeniť tu</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed">
+        <source>status.closed</source>
+        <target state="translated">Dokončený</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress">
+        <source>status.progress</source>
+        <target state="translated">Prebieha</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned">
+        <source>status.planned</source>
+        <target state="translated">Naplánovaná</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">Povoliť globálne aktivity</target>
+      </trans-unit>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
+        <target state="translated">Zobraziť položky s "mesačným“ rozpočtom</target>
+      </trans-unit>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
+        <target state="translated">Zobraziť položky s rozpočtom "životného cyklu“</target>
+      </trans-unit>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
+        <target state="translated">Neúčtované</target>
+      </trans-unit>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
+        <target state="translated">Bez rezervácie času</target>
+      </trans-unit>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
+        <target state="translated">Mesačný</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">Vybraní / zvýraznení používateľia sú vedúcimi tímu.</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">Žiadne výsledky neboli nájdene pre "%input%"</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">Vytvoriť nový s názvom "%input%"</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">Rozšírená nastavenia</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">Vyberte prosím</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity">
+        <source>no_activity</source>
+        <target state="translated">Bez aktivity</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target state="translated">Deaktivované</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">Podporované jazyky s formátovaním</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24-hodinový</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Čas</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target state="translated">Štátny sviatok</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">Štátne sviatky</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target state="translated">Prázdninová skupina</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">Absencia</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">Obmedzí viditeľnosť na zvolené tímy.</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">Text na faktúre</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Dizajn</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">Prosím zadajte svoje heslo pre úplný prístup</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">Aplikácie</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">Vytvorené v</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">Fakturačné údaje</target>
+      </trans-unit>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
+        <target state="translated">Interná sadzba</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">Plocha</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">Dvojstupňové overenie(2FA)</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">Potvrdzovací kód</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">Ukončený mesiac PDF</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">Vymazať filter vyhľadávania</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">Odomknúť účet</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">Odstránené</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Tento text je použitý vo fakturačných dokladoch a je možné ho použiť napríklad: k uvedení ďalších dodacích podmienok.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Tento text nahradzuje nazov objektu, čo umožňuje podrobnejšie popisky pre položky faktúry.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">Pokiaľ je toto nastavenie vypnuté, objekt sa nezobrazuje v rozbalovacích zoznamoch (dropdown-boxes) ani v zoznamoch.</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">Neviditeľný</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Widgety môžete preskladať pomocou funkcie drag &amp; drop (potiahni &amp; pusti). Pridaním widgetov sa uložia čakajúce zmeny.</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>complete_month</source>
+        <target state="translated">Ukončený mesiac</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">Stĺpce tabuľky</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">Nové zariadenie môžete aktivovať naskenovaním obrázku do vašej dvojstupňovej aplikácie.</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Prosím potvrďte kód z vašej dvojstupňovej aplikácie, ktorý aktivuje dvojstupňové overenie pre tento účet.</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">Po dokončení mesiaca, uživateľ nebude môcť ďalej vytvárať alebo editovať časy pre toto obdobie.</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Tento dokument slúži ako doklad o odpracovaných hodinách.</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">Vytvoril</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">Odomknúť</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">Pokiaľ je toto nastavenie vypnuté, všetky časové záznamy zaznamenané v budúcnosti budú označené ako "nezúčtovateľné".</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">Pre dokončenie prihlásenia, zadajte prosím potvrdzovací kód z vašej dvojstupňovej aplikácie.</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Zamestnanecká zmluva</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Hodnotenie</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Pracovná doba</target>
       </trans-unit>
     </body>
   </file>

@@ -16,27 +16,39 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">사용자: 사용자당 하나의 항목</target>
+        <target state="translated">사용자</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">활동: 활동당 하나의 항목</target>
+        <target state="translated">활동</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">프로젝트: 프로젝트당 하나의 항목</target>
+        <target state="translated">프로젝트</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">날짜: 하루에 하나의 항목 (시작 날짜 사용)</target>
+        <target state="translated">날짜</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target>가격: 가격당 하나의 항목</target>
+        <target state="translated">가격</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target>주간: 주당 하나의 항목 (시작일 사용)</target>
+        <target state="translated">달력 주</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">활동 및 사용자</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">프로젝트 및 사용자</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">날짜 및 사용자</target>
       </trans-unit>
     </body>
   </file>

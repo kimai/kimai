@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>发票文件</target>
+        <target state="translated">发票模板</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>

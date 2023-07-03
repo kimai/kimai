@@ -1571,8 +1571,8 @@
         <target state="translated">A duração pode ser tanto positiva (aumento do is-hora) quanto negativa (diminuição do is-hora).</target>
       </trans-unit>
       <trans-unit id="M.zFjwe" resname="pto_year_holiday">
-        <source>pto_year_holiday</source>
-        <target state="translated">Urlaubstage pro Jahr</target>
+        <source>Holidays per year</source>
+        <target state="translated">Feriados por ano</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group">
         <source>public_holiday.group</source>
