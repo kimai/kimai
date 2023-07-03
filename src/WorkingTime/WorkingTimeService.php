@@ -11,6 +11,7 @@ namespace App\WorkingTime;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use App\Event\WorkingTimeApproveMonthEvent;
 use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
@@ -94,10 +95,8 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
-    public function approveMonth(Month $month, \DateTimeInterface $approvalDate, User $approver): void
+    public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approver): void
     {
-        $update = false;
-
         foreach ($month->getDays() as $day) {
             $workingTime = $day->getWorkingTime();
             if ($workingTime === null) {
@@ -115,12 +114,11 @@ final class WorkingTimeService
             $workingTime->setApprovedBy($approver);
             $workingTime->setApprovedAt($approvalDate);
             $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
-            $update = true;
         }
 
-        if ($update) {
-            $this->workingTimeRepository->persistScheduledWorkingTimes();
-        }
+        $this->workingTimeRepository->persistScheduledWorkingTimes();
+
+        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approver));
     }
 
     /**
