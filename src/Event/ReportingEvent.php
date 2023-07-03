@@ -16,9 +16,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class ReportingEvent extends Event
 {
     /**
-     * @var ReportInterface[]
+     * @var array<string, ReportInterface>
      */
-    private $reports = [];
+    private array $reports = [];
 
     public function __construct(private User $user)
     {
@@ -37,7 +37,7 @@ final class ReportingEvent extends Event
     }
 
     /**
-     * @return ReportInterface[]
+     * @return array<ReportInterface>
      */
     public function getReports(): array
     {
