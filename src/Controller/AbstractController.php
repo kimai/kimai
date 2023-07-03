@@ -122,17 +122,12 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      * Adds an "error" flash message to the stack.
      *
      * @param string $translationKey
-     * @param array<string, string>|string $reason passing an array is deprecated
+     * @param string $reason
      * @return void
      * @throws \Exception
      */
-    protected function flashError(string $translationKey, array|string $reason = ''): void
+    protected function flashError(string $translationKey, string $reason = ''): void
     {
-        if (\is_array($reason)) {
-            @trigger_error('Calling "flashError" with an array $reason is deprecated and will be removed soon. Refactor and pass a string instead.', E_USER_DEPRECATED);
-            $reason = \array_key_exists('%reason%', $reason) ? $reason['%reason%'] : '';
-        }
-
         $this->addFlashTranslated('error', $translationKey, ['%reason%' => $reason]);
     }
 
