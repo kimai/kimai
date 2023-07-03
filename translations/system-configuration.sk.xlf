@@ -8,15 +8,15 @@
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
-        <target>Režim časovania</target>
+        <target state="translated">Režim sledovania času</target>
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>
-        <target>Predvolené: akceptovať dátum začiatku a konca</target>
+        <target state="translated">Predvolené: čas začiatku a čas konca je možné upraviť</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
-        <target>Povoliť časové záznamy v budúcnosti</target>
+        <target state="translated">Povoliť zadávanie času ktorý je v budúcnosti</target>
       </trans-unit>
       <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
         <source>timesheet.active_entries.hard_limit</source>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
-        <target>Ceil:začiatok, koniec a trvanie bude zaokrúhlené</target>
+        <target state="translated">Strop: začiatok, koniec a trvanie bude zaokrúhlené nahor</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -68,15 +68,15 @@
       </trans-unit>
       <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
         <source>timesheet.rounding.default.duration</source>
-        <target>Zaokrúhlenie trvania v minútach (0 = deaktivovaný)</target>
+        <target state="translated">Zaokrúhlenie trvania v minútach (0 = deaktivované)</target>
       </trans-unit>
       <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
         <source>timesheet.rounding.default.end</source>
-        <target>Zaokrúhlenie času ukončenia v minútach (0 = deaktivovaný)</target>
+        <target state="translated">Zaokrúhlenie času ukončenia v minútach (0 = deaktivované)</target>
       </trans-unit>
       <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
         <source>timesheet.rounding.default.begin</source>
-        <target>Zaokrúhlenie začiatku času v minútach (0 = deaktivovaný)</target>
+        <target state="translated">Zaokrúhlenie začiatku času v minútach (0 = deaktivované)</target>
       </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
@@ -84,11 +84,11 @@
       </trans-unit>
       <trans-unit id="en0.Ahu" resname="theme.branding.company">
         <source>theme.branding.company</source>
-        <target>Spoločnosť</target>
+        <target state="translated">Názov spoločnosti</target>
       </trans-unit>
       <trans-unit id="o9mON14" resname="theme.branding.logo">
         <source>theme.branding.logo</source>
-        <target>Logo (web link na obrázok nahrádza spoločnosť pri prihlasovacej obrazovke)</target>
+        <target state="translated">Logo URL (nahrádza názov spoločnosti v prihlasovacej obrazovke)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
         <source>calendar.businessHours.begin</source>
-        <target>Začiatjk bežnej pracovnej doby (bude zvýraznený)</target>
+        <target state="translated">Začiatok bežnej pracovnej doby (bude zvýraznený)</target>
       </trans-unit>
       <trans-unit id="qaoBvYU" resname="calendar.weekends">
         <source>calendar.weekends</source>
@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="t38HFZd" resname="calendar.week_numbers">
         <source>calendar.week_numbers</source>
-        <target>Zobrazit čísla týždňa</target>
+        <target state="translated">Zobraziť čísla týždňov</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>
@@ -144,7 +144,7 @@
       </trans-unit>
       <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
         <source>timesheet.mode_duration_fixed_begin</source>
-        <target>[Dľžka trvania] nastaviteľný fixný čas spustenia, možnosť upraviť iba časovú dĺžku</target>
+        <target state="translated">[Dľžka trvania] nastaviteľný pevný čas spustenia, možnosť upraviť iba dobu trvania</target>
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
-        <target>Zem: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
+        <target state="translated">Dno: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
@@ -168,11 +168,139 @@
       </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
-        <target>Formát čísla faktúry</target>
+        <target state="translated">Formát čísla faktúr</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
         <target>Predvolený čas spustenia (nepoužíva sa vo všetkých režimoch sledovania času)</target>
+      </trans-unit>
+      <trans-unit id="AzOiQES" resname="company.financial_year">
+        <source>company.financial_year</source>
+        <target state="translated">Účtovný rok</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target state="translated">Formát čísla zákazníka</target>
+      </trans-unit>
+      <trans-unit id="C26_mL7" resname="user_auth_registration">
+        <source>user_auth_registration</source>
+        <target state="translated">Registrácia uživateľa</target>
+      </trans-unit>
+      <trans-unit id="0noFWbL" resname="saml_activate">
+        <source>saml_activate</source>
+        <target state="translated">SAML prihlásenie</target>
+      </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
+        <source>theme.avatar_url</source>
+        <target state="translated">Povolit použitie URL adries pre obrázky avatarov</target>
+      </trans-unit>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
+        <source>timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Povoliť záznamy bez doby trvania</target>
+      </trans-unit>
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
+        <source>timesheet.rules.allow_overbooking_budget</source>
+        <target state="translated">Povoliť úpravy uložených rozpočtov</target>
+      </trans-unit>
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
+        <source>timesheet.rules.lockdown_period_timezone</source>
+        <target state="translated">Časové pásmo (pokiaľ je prázdne, použije sa časové pásmo ktoré má nastavené daný uživateľ)</target>
+      </trans-unit>
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities">
+        <source>quick_entry.recent_activities</source>
+        <target state="translated">Počet záznamov prevzatých z predchádzajúcich týždňov</target>
+      </trans-unit>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
+        <source>quick_entry.recent_activity_weeks</source>
+        <target state="translated">Preberanie záznamov z posledných X týždňov (prázdne alebo 0 pre neombedzené)</target>
+      </trans-unit>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows">
+        <source>quick_entry.minimum_rows</source>
+        <target state="translated">Minimálny počet riadkov</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Povoliť duplicitné číslo účtu</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target state="translated">Povolená náhrada: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
+        <source>timesheet.duration_increment</source>
+        <target state="translated">Výber minút pre trvanie</target>
+      </trans-unit>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
+        <source>timesheet.time_increment</source>
+        <target state="translated">Výber minút pre Od &amp; Do</target>
+      </trans-unit>
+      <trans-unit id="BGHQ8YO" resname="user_auth_login">
+        <source>user_auth_login</source>
+        <target state="translated">Prihlásenie</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="translated">Maximálna doba trvania pracovného výkazu v minútach pred zobrazením "upozornenie na prestávku" (0 = deaktivované)</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="translated">Maximálna doba trvania pracovného výkazu v minútach pred odmietnutím uloženia (0 = deaktivované)</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Kopírovať dáta pomocou pretiahnutia (drag&amp;drop)</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern">
+        <source>calendar.title_pattern</source>
+        <target state="translated">Zobrazenie názvov položiek v kalendári</target>
+      </trans-unit>
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl">
+        <source>user_auth_password_reset_token_ttl</source>
+        <target state="translated">Zabudnuté heslo - počet sekúnd koľko link na vyresetovanie hesla funguje</target>
+      </trans-unit>
+      <trans-unit id="ihORk9W" resname="ldap_activate">
+        <source>ldap_activate</source>
+        <target state="translated">LDAP prihlásenie</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target state="translated">Doba uzamknutia</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target state="translated">Vypnuté</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Autentifikácia</target>
+      </trans-unit>
+      <trans-unit id="EFY6GmX" resname="theme.color_choices">
+        <source>theme.color_choices</source>
+        <target state="translated">Povolené farby</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Umožniť vytváranie činností vo forme sledovanie-času</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Prevzať tímy od prihláseného používateľa, pri vytváraní nových záznamov</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Zoznam farebných kódov HTML oddelený čiarkami. Farby a ich názvy môžu byť nastavené s: menom_farby, oddelovačom "|" a HEX hodnotou, napríklad: Biela|#ffffff,Čierna|#000000.</target>
+      </trans-unit>
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset">
+        <source>user_auth_password_reset</source>
+        <target state="translated">Zabudnuté heslo</target>
+      </trans-unit>
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl">
+        <source>user_auth_password_reset_retry_ttl</source>
+        <target state="translated">Zabudnuté heslo - počet sekúnd než si môže uživateľ vyžiadať ďalší e-mail na obnovenie hesla</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount">
+        <source>calendar.dragdrop_amount</source>
+        <target state="translated">Množstvo záznamov pre drag&amp;drop (ťahaj&amp;pusti) (0 = deaktivované)</target>
       </trans-unit>
     </body>
   </file>

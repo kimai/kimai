@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>总和计算</target>
+        <target state="translated">发票项目的分组</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">默认：每则时间记录一个条目</target>
+        <target state="translated">默认情况下（每个条目有一行）</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>时间：记录总和，只有一个条目</target>
+        <target state="translated">全部（共一个条目）</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>用户：每个用户一个条目</target>
+        <target state="translated">用户</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>活动：每次活动一个条目</target>
+        <target state="translated">活动</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>项目：每个项目一个条目</target>
+        <target state="translated">项目</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">日期：每天一个条目（使用开始日期）</target>
+        <target state="translated">日期</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">价格：每个价格一个条目</target>
+        <target state="translated">价格</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">每周：每周一个条目（使用开始日期）</target>
+        <target state="translated">日历周</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">活动和用户</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">项目和用户</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">日期和用户</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">选择发票项目应按哪些字段进行分组</target>
       </trans-unit>
     </body>
   </file>

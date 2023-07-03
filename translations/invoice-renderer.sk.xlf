@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>Fakturačný doklad</target>
+        <target state="translated">Šablóna faktúry</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
-        <target>Faktúra (default)</target>
+        <target state="translated">Faktúra</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
@@ -17,6 +17,26 @@
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Nezávislý pracovník</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Faktúra</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Ďalšie šablóny si môžete stiahnuť tu</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">Na ďalšie spracovanie</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">Text</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="translated">Upozornenie: existujúce súbory budú prepísané. Povolené typy súborov sú: %extensions%.</target>
       </trans-unit>
     </body>
   </file>

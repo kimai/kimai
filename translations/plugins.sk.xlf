@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>Ešte nemáte nainštalovaný plugin.</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Zakúpiť teraz</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Viacej rozšírení</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Nové rozšírenia z obchodu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

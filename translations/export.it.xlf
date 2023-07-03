@@ -3,8 +3,8 @@
   <file source-language="en" target-language="it" datatype="plaintext" original="export.en.xlf">
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
-        <source>default.pdf.twig</source>
-        <target>Standard</target>
+        <source>Default</source>
+        <target state="translated">Predefinito</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>
@@ -13,6 +13,10 @@
       <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
         <target>Con i costi interni</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">Foglio di presenza</target>
       </trans-unit>
     </body>
   </file>

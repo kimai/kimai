@@ -147,7 +147,7 @@
             -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">일자</target>
+        <target state="translated">날짜</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -199,7 +199,7 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">업무</target>
+        <target state="translated">활동</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
@@ -1217,6 +1217,10 @@
       <trans-unit id="Eq2E_Rd" resname="menu.apps">
         <source>Apps</source>
         <target state="translated">애플리케이션</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">삭제됨</target>
       </trans-unit>
     </body>
   </file>

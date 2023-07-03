@@ -16,27 +16,39 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Пользователь: одна запись на пользователя</target>
+        <target state="translated">Пользователь</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Активность: одна запись на активность</target>
+        <target state="translated">Активность</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Дата: одна запись в день (используется дата начала)</target>
+        <target state="translated">Дата</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Еженедельно: одна запись в неделю (используется дата начала)</target>
+        <target state="translated">Календарная неделя</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Цена: одна запись на цену</target>
+        <target state="translated">Цена</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Проект: одна запись на проект</target>
+        <target state="translated">Проект</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Активность и пользователь</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Проект и пользователь</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Дата и пользователь</target>
       </trans-unit>
     </body>
   </file>

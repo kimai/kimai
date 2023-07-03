@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>סכום מחושב</target>
+        <target state="translated">קיבוץ שורות חשבונית</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>ברירת מחדל: רשומה אחת לכל רשומת זמן עבודה</target>
+        <target state="translated">ברירת מחדל (שורה אחת לכל רשומה)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>שעות: רשומות מסוכמות, סך הכל רשומה אחת</target>
+        <target state="translated">הכול (רשומה אחת לסיכום)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>משתמש: רשומה אחת למשתמש</target>
+        <target state="translated">משתמש</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>פעילות: רשומה אחת לפעילות</target>
+        <target state="translated">פעילות</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">מיזם: רשומה אחת למיזם</target>
+        <target state="translated">מיזם</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>תאריך: רשומה אחת ליום (תאריך ההתחלה)</target>
+        <target state="translated">תאריך</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target>מחיר: רשומה לפי מחיר</target>
+        <target state="translated">מחיר</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target>שבועי: רשומה בשבוע (תאריך ההתחלה)</target>
+        <target state="translated">שבועי קלנדרי</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">מיזם ומשתמש</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">נא לבחור לפי אילו שדות יש לקבץ את פריטי החשבונית</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">פעילות ומשתמש</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">תאריך ומשתמש</target>
       </trans-unit>
     </body>
   </file>

@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Timesheet</target>
+        <target state="translated">Foglio di presenza</target>
       </trans-unit>
     </body>
   </file>

@@ -50,6 +50,10 @@
         <source>action.upload.error</source>
         <target>Súbor nebolo možné nahrať alebo uložiť: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target state="translated">Akciu nebolo možné vykonať: neplatný bezpečnostný token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

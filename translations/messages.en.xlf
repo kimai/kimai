@@ -679,9 +679,9 @@
         <source>manual_bookings.duration_help</source>
         <target>The duration can be both positive (increase of the is-time) and negative (reduction of the is-time).</target>
       </trans-unit>
-      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
-        <source>pto_year_holiday</source>
-        <target>Urlaubstage pro Jahr</target>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="yes">
+        <source>Holidays per year</source>
+        <target state="final">Holidays per year</target>
       </trans-unit>
       <trans-unit id="gcFtM3o" resname="holiday">
         <source>holiday</source>
