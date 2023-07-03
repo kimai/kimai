@@ -20,7 +20,7 @@ class DebugRenderer extends AbstractRenderer implements RendererInterface
     /**
      * @return string[]
      */
-    protected function getFileExtensions()
+    protected function getFileExtensions(): array
     {
         return [];
     }
@@ -28,7 +28,7 @@ class DebugRenderer extends AbstractRenderer implements RendererInterface
     /**
      * @return string
      */
-    protected function getContentType()
+    protected function getContentType(): string
     {
         return 'array';
     }
