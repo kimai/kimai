@@ -23,17 +23,10 @@ abstract class AbstractRenderer
     /**
      * @return string[]
      */
-    abstract protected function getFileExtensions();
+    abstract protected function getFileExtensions(): array;
 
-    /**
-     * @return string
-     */
-    abstract protected function getContentType();
+    abstract protected function getContentType(): string;
 
-    /**
-     * @param InvoiceDocument $document
-     * @return bool
-     */
     public function supports(InvoiceDocument $document): bool
     {
         foreach ($this->getFileExtensions() as $extension) {
@@ -50,12 +43,7 @@ abstract class AbstractRenderer
         return (string) new InvoiceFilename($model);
     }
 
-    /**
-     * @param mixed $file
-     * @param string $filename
-     * @return BinaryFileResponse
-     */
-    protected function getFileResponse($file, $filename)
+    protected function getFileResponse(mixed $file, string $filename): BinaryFileResponse
     {
         $response = new BinaryFileResponse($file);
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
