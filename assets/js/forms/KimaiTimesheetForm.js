@@ -318,7 +318,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             this._applyDateToField(newBegin.plus({seconds: seconds}), null, this._endTime);
         } else if (begin === null && end !== null) {
             this._applyDateToField(end.minus({seconds: seconds}), this._beginDate, this._beginTime);
-        } else if (begin !== null && seconds > 0) {
+        } else if (begin !== null && seconds >= 0) {
             this._applyDateToField(begin.plus({seconds: seconds}), null, this._endTime);
         }
     }

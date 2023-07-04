@@ -25,12 +25,8 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
 {
     /**
      * Saves the Spreadhseet and returns the filename.
-     *
-     * @param Spreadsheet $spreadsheet
-     * @return string
-     * @throws \Exception
      */
-    abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet);
+    abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
 
     /**
      * Render the given InvoiceDocument with the data from the InvoiceModel.

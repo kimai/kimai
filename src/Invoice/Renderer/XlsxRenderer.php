@@ -25,7 +25,7 @@ final class XlsxRenderer extends AbstractSpreadsheetRenderer implements Renderer
         return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
 
-    protected function saveSpreadsheet(Spreadsheet $spreadsheet)
+    protected function saveSpreadsheet(Spreadsheet $spreadsheet): string
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-invoice-xlsx');
         if (false === $filename) {

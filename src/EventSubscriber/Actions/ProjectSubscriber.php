@@ -38,8 +38,7 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('edit', $project)) {
-            $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-            $event->addAction('edit', ['title' => 'edit', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_edit', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addEdit($this->path('admin_project_edit', ['id' => $project->getId()]), !$event->isView('edit'));
         }
 
         if ($this->isGranted('permissions', $project)) {

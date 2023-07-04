@@ -11,8 +11,18 @@ namespace App\Model;
 
 class PermissionSection implements PermissionSectionInterface
 {
-    public function __construct(private string $title, private string $filter)
+    /** @var array<string> */
+    private array $filter;
+
+    /**
+     * @param string|array<string> $filter
+     */
+    public function __construct(private string $title, string|array $filter)
     {
+        if (!\is_array($filter)) {
+            $filter = [$filter];
+        }
+        $this->filter = $filter;
     }
 
     public function getTitle(): string
@@ -22,6 +32,12 @@ class PermissionSection implements PermissionSectionInterface
 
     public function filter(string $permission): bool
     {
-        return str_contains($permission, $this->filter);
+        foreach ($this->filter as $filter) {
+            if (str_contains($permission, $filter)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

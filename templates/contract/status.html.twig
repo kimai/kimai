@@ -13,7 +13,7 @@
             {% endif %}
         {% endset %}
         {% from '@theme/components/alert.html.twig' import alert %}
-        {{ alert({type: 'info', description: warningMsg|raw}) }}
+        {{ alert({type: 'info', description: warningMsg|raw, important: true}) }}
     {% endif %}
 
     {% if summaries|length > 0 %}

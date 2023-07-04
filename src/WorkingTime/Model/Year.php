@@ -18,9 +18,9 @@ use App\Model\Year as BaseYear;
  */
 final class Year extends BaseYear
 {
-    public function __construct(\DateTimeInterface $month, private User $user)
+    public function __construct(\DateTimeInterface $year, private User $user)
     {
-        parent::__construct($month);
+        parent::__construct($year);
     }
 
     public function getUser(): User

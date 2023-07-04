@@ -97,6 +97,13 @@ class ProjectStatisticService
             ->andWhere($qb->expr()->not($qb->expr()->exists($qb2)))
             ->andWhere(
                 $qb->expr()->orX(
+                    $qb->expr()->isNull('p.start'),
+                    $qb->expr()->lte('p.start', ':project_start')
+                )
+            )
+            ->setParameter('project_start', $now, Types::DATETIME_MUTABLE)
+            ->andWhere(
+                $qb->expr()->orX(
                     $qb->expr()->isNull('p.end'),
                     $qb->expr()->gte('p.end', ':project_end')
                 )

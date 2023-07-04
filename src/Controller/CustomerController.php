@@ -47,10 +47,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Controller used to manage customer in the admin part of the site.
+ * Controller used to manage customers.
  */
 #[Route(path: '/admin/customer')]
-#[IsGranted(new Expression("is_granted('view_customer') or is_granted('view_teamlead_customer') or is_granted('view_team_customer')"))]
 final class CustomerController extends AbstractController
 {
     public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
@@ -59,6 +58,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_customer', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_customer_paginated', methods: ['GET'])]
+    #[IsGranted(new Expression("is_granted('listing', 'customer')"))]
     public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
@@ -452,6 +452,7 @@ final class CustomerController extends AbstractController
     }
 
     #[Route(path: '/export', name: 'customer_export', methods: ['GET'])]
+    #[IsGranted(new Expression("is_granted('listing', 'customer')"))]
     public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new CustomerQuery();
@@ -492,7 +493,11 @@ final class CustomerController extends AbstractController
                     return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
                 }
 
-                return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+                if ($this->isGranted('view', $customer)) {
+                    return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+                } else {
+                    return new Response();
+                }
             } catch (\Exception $ex) {
                 $this->handleFormUpdateException($ex, $editForm);
             }

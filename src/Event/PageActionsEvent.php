@@ -13,17 +13,17 @@ use App\Entity\User;
 
 /**
  * This event is triggered for every action:
- * - once per side load for table actions
- * - once for every row item
+ * - once per side load for page actions
+ * - once for every entity item (table row)
+ *
+ * @property array{'actions': array, 'view': string} $payload
  */
 class PageActionsEvent extends ThemeEvent
 {
-    private string $action;
-    private string $view;
     private int $divider = 0;
     private ?string $locale = null;
 
-    public function __construct(User $user, array $payload, string $action, string $view)
+    public function __construct(User $user, array $payload, private string $action, private string $view)
     {
         // only for BC reasons, do not access it directly!
         if (!\array_key_exists('actions', $payload)) {
@@ -34,8 +34,6 @@ class PageActionsEvent extends ThemeEvent
             $payload['view'] = $view;
         }
         parent::__construct($user, $payload);
-        $this->action = $action;
-        $this->view = $view;
     }
 
     public function getActionName(): string
@@ -101,7 +99,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function hasSubmenu(string $submenu): bool
     {
-        if (!\array_key_exists($submenu, $this->payload['actions'])) {
+        if (!$this->hasAction($submenu)) {
             return false;
         }
 
@@ -110,7 +108,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addActionToSubmenu(string $submenu, string $key, array $action): void
     {
-        if (\array_key_exists($submenu, $this->payload['actions'])) {
+        if ($this->hasAction($submenu)) {
             if (!\array_key_exists('children', $this->payload['actions'][$submenu])) {
                 $this->payload['actions'][$submenu]['children'] = [];
             }
@@ -125,14 +123,14 @@ class PageActionsEvent extends ThemeEvent
 
     public function addAction(string $key, array $action): void
     {
-        if (!\array_key_exists($key, $this->payload['actions'])) {
+        if (!$this->hasAction($key)) {
             $this->payload['actions'][$key] = $action;
         }
     }
 
     public function removeAction(string $key): void
     {
-        if (\array_key_exists($key, $this->payload['actions'])) {
+        if ($this->hasAction($key)) {
             unset($this->payload['actions'][$key]);
         }
     }
@@ -151,6 +149,11 @@ class PageActionsEvent extends ThemeEvent
     public function addCreate(string $url, bool $modal = true): void
     {
         $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create', 'accesskey' => 'a']);
+    }
+
+    public function addEdit(string $url, bool $modal = true): void
+    {
+        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'translation_domain' => 'actions', 'title' => 'edit']);
     }
 
     /**

@@ -9,7 +9,7 @@
     } %}
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
-            <fieldset class="form-fieldset">
+            <fieldset class="form-fieldset pb-0">
                 <div class="row">
                     <div class="col-md-4">
                         {{ form_row(form.customer) }}
@@ -22,27 +22,27 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="form-fieldset">
+            <fieldset class="form-fieldset pb-0">
                 {{ form_row(form.replaceTags) }}
                 {{ form_row(form.tags) }}
             </fieldset>
             {% if form.user is defined %}
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset pb-0">
                     {{ form_row(form.user) }}
                 </fieldset>
             {% endif %}
             {% if form.exported is defined %}
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset pb-0">
                     {{ form_row(form.exported) }}
                 </fieldset>
             {% endif %}
             {% if form.billable is defined %}
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset pb-0">
                     {{ form_row(form.billable) }}
                 </fieldset>
             {% endif %}
             {% if form.recalculateRates is defined %}
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset pb-0">
                     {{ form_row(form.recalculateRates) }}
                     <div class="row">
                         <div class="col-md-6">
@@ -55,7 +55,7 @@
                 </fieldset>
             {% endif %}
             {% if form.metaFields is defined %}
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset pb-0">
                     <div class="row">
                         <div class="col-md-6">
                             {{ form_row(form.updateMeta) }}

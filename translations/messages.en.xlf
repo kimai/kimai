@@ -1261,6 +1261,14 @@
         <source>status.closed</source>
         <target>Completed</target>
       </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target>Approved</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target>Requested</target>
+      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">Skipped preview of %rows% more rows …</target>
@@ -1572,6 +1580,46 @@
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target>Default</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target>Sickness</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target>Other</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target>Submit</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target>Report</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target>Illness, doctor's visit, care of close relatives, etc.</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target>You have taken %used% of your available %days% vacation days so far.</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target>Your working time account has a balance of %hours% hours.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target>Family events, moving house, weather chaos etc.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target>Full day</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target>Half day</target>
       </trans-unit>
     </body>
   </file>

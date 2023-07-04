@@ -19,6 +19,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class WorkingTimeRepository extends EntityRepository
 {
+    private bool $pendingUpdate = false;
+
     public function deleteWorkingTime(WorkingTime $workingTime): void
     {
         $entityManager = $this->getEntityManager();
@@ -35,12 +37,15 @@ class WorkingTimeRepository extends EntityRepository
 
     public function scheduleWorkingTimeUpdate(WorkingTime $workingTime): void
     {
+        $this->pendingUpdate = true;
         $this->getEntityManager()->persist($workingTime);
     }
 
     public function persistScheduledWorkingTimes(): void
     {
-        $this->getEntityManager()->flush();
+        if ($this->pendingUpdate) {
+            $this->getEntityManager()->flush();
+        }
     }
 
     /**

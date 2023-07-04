@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
+{% from "macros/widgets.html.twig" import username %}
 
 {% block table_actions %}
     {# compare templates/macros/datatables.html.twig macro actions(dataTable) #}
@@ -14,7 +14,7 @@
                 {% if form.user is defined %}
                     {{ form_widget(form.user) }}
                 {% elseif user is defined and app.user != user %}
-                    {{ widgets.username(user) }}
+                    {{ username(user) }}
                 {% endif %}
                 {% for field in form %}
                     {% if not field.rendered %}

@@ -32,7 +32,7 @@ final class TeamSubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('edit', $team)) {
             if (!$event->isView('edit')) {
-                $event->addAction('edit', ['url' => $this->path('admin_team_edit', ['id' => $team->getId()]), 'title' => 'action.edit']);
+                $event->addEdit($this->path('admin_team_edit', ['id' => $team->getId()]));
             }
 
             if ($this->isGranted('create_team')) {

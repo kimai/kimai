@@ -23,11 +23,12 @@ class ThemeEvent extends Event
     public const CONTENT_AFTER = 'app.theme.content_after';
 
     private string $content = '';
-    protected mixed $payload;
 
-    public function __construct(private ?User $user = null, mixed $payload = null)
+    /**
+     * @param array<string, mixed|array<mixed>> $payload
+     */
+    public function __construct(private ?User $user = null, protected array $payload = [])
     {
-        $this->payload = $payload;
     }
 
     public function getUser(): ?User
@@ -47,18 +48,11 @@ class ThemeEvent extends Event
         return $this;
     }
 
-    public function getPayload(): mixed
+    /**
+     * @return array<string, mixed|array<mixed>>
+     */
+    public function getPayload(): array
     {
         return $this->payload;
-    }
-
-    /**
-     * @deprecated since 2.0.19, will be removed with 2.1
-     */
-    public function setPayload(mixed $payload): void
-    {
-        @trigger_error('ThemeEvent::setPayload() is deprecated, use AbstractActionsSubscriber instead.', E_USER_DEPRECATED);
-
-        $this->payload = $payload;
     }
 }
