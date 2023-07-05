@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
+use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ final class HomepageController extends AbstractController
     public const DEFAULT_ROUTE = 'timesheet';
 
     #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
-    public function indexAction(Request $request, LocaleService $service, EventDispatcherInterface $eventDispatcher): Response
+    public function homepage(Request $request, LocaleService $service, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         $userLanguage = $user->getLanguage();
@@ -72,8 +73,13 @@ final class HomepageController extends AbstractController
             try {
                 return $this->redirectToRoute($route, ['_locale' => $language]);
             } catch (\Exception $ex) {
-                $this->logException($ex);
-                // something is wrong with the url parameters ...
+                if ($route === $userRoute) {
+                    // fix invalid routes from old plugins / versions
+                    $user->setPreferenceValue('login_initial_view', 'dashboard');
+                    $userRepository->saveUser($user);
+                } else {
+                    $this->logException($ex);
+                }
             }
         }
 
