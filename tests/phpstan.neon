@@ -4983,11 +4983,6 @@ parameters:
             path: Event/CalendarGoogleSourceEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ConfigureMainMenuEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ConfigureMainMenuEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\CustomerMetaDefinitionEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/CustomerMetaDefinitionEventTest.php
