@@ -606,7 +606,7 @@ export default class KimaiCalendar {
                     <li>` + this.options['translations']['activity'] + `: ` + escaper.escapeForHtml(eventObj.activity) + `</li>
                 </ul>` +
                 (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
-                (eventObj.description ? '<p>' + escaper.escapeForHtml(eventObj.description) + '</p>' : '') + tags + `
+                (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
             </div>`;
     }
 
