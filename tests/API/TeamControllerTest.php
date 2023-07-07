@@ -206,7 +206,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $data = [
-            'name' => '1',
+            'name' => '',
             'members' => [
                 ['user' => 9999, 'teamlead' => 1],
             ],
