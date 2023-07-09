@@ -60,9 +60,12 @@ final class ProfileController extends AbstractController
     {
         $dateFactory = $this->getDateTimeFactory();
         $userStats = $repository->getUserStatistics($profile);
-        $firstEntry = $statisticService->findFirstRecordDate($profile);
+        $workStartingDay = $profile->getWorkStartingDay();
+        if ($workStartingDay === null) {
+            $workStartingDay = $statisticService->findFirstRecordDate($profile);
+        }
 
-        $begin = $firstEntry ?? $dateFactory->getStartOfMonth();
+        $begin = $workStartingDay ?? $dateFactory->getStartOfMonth();
         $end = $dateFactory->getEndOfMonth();
 
         // statistic service does not fill up the complete year by default!
@@ -73,7 +76,7 @@ final class ProfileController extends AbstractController
             'tab' => 'charts',
             'user' => $profile,
             'stats' => $userStats,
-            'firstTimesheet' => $firstEntry,
+            'workingSince' => $workStartingDay,
             'workMonths' => $statisticService->getMonthlyStats($begin, $end, [$profile])[0]
         ];
 

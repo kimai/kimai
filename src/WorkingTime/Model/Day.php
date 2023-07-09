@@ -15,8 +15,8 @@ use App\Model\Day as BaseDay;
 final class Day extends BaseDay
 {
     private ?WorkingTime $workingTime = null;
-    /** @var array<string, int> */
-    private array $descriptions = [];
+    /** @var array<DayAddon> */
+    private array $addons = [];
 
     public function isLocked(): bool
     {
@@ -38,18 +38,27 @@ final class Day extends BaseDay
     }
 
     /**
-     * @return array<string, int>
+     * @return array<DayAddon>
      */
-    public function getDescriptions(): array
+    public function getAddons(): array
     {
-        return $this->descriptions;
+        return $this->addons;
+    }
+
+    public function hasAddons(): bool
+    {
+        return \count($this->addons) > 0;
     }
 
     /**
      * Descriptions show up in the approval PDF and maybe in other places as well.
      */
-    public function addDescription(string $description, int $duration): void
+    public function addAddon(DayAddon $addon): void
     {
-        $this->descriptions[$description] = $duration;
+        $this->addons[] = $addon;
+
+        if (!$this->isLocked() && $this->workingTime !== null) {
+            $this->workingTime->setActualTime($this->workingTime->getActualTime() + $addon->getDuration());
+        }
     }
 }

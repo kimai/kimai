@@ -78,6 +78,7 @@ tabler:
         filter: fas fa-filter
         help: far fa-question-circle
         home: fas fa-home
+        info: fas fa-info-circle
         import: fas fa-file-import
         invoice: fas fa-file-contract
         invoice-template: fas fa-file-signature
@@ -99,6 +100,7 @@ tabler:
         password: fas fa-key
         pause: fas fa-pause
         pause-small: far fa-pause-circle
+        pending: fas fa-hourglass-half
         pin: fas fa-thumbtack
         pdf: fas fa-file-pdf
         permissions: fas fa-user-lock
@@ -112,6 +114,7 @@ tabler:
         reporting: far fa-chart-bar
         report: far fa-chart-bar
         review: fas fa-user-check
+        rejected: fas fa-ban
         right: fas fa-chevron-right
         right2: fas fa-angle-double-right
         roles: fas fa-user-shield

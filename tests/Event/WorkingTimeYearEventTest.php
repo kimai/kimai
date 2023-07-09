@@ -24,8 +24,9 @@ class WorkingTimeYearEventTest extends TestCase
         $user = new User();
         $date = new \DateTime('2023-02-10');
         $year = new Year($date, $user);
-        $sut = new WorkingTimeYearEvent($year);
+        $sut = new WorkingTimeYearEvent($year, clone $date);
 
         self::assertSame($year, $sut->getYear());
+        self::assertEquals('2023-02-10', $sut->getUntil()->format('Y-m-d'));
     }
 }

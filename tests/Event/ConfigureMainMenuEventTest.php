@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigureMainMenuEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $sut = new ConfigureMainMenuEvent();
 

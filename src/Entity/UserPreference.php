@@ -38,6 +38,7 @@ class UserPreference
     public const WORK_HOURS_FRIDAY = 'work_friday';
     public const WORK_HOURS_SATURDAY = 'work_saturday';
     public const WORK_HOURS_SUNDAY = 'work_sunday';
+    public const WORK_STARTING_DAY = 'work_start_day';
     public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     public const HOLIDAYS_PER_YEAR = 'holidays';
 
