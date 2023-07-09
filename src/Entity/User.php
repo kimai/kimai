@@ -1177,15 +1177,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getWorkStartingDay(): ?\DateTimeInterface
     {
         $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
+
         if ($date === null) {
             return null;
         }
 
         try {
-            return \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', new \DateTimeZone($this->getTimezone()));
+            $date = \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', new \DateTimeZone($this->getTimezone()));
         } catch (Exception $e) {
-            return null;
         }
+
+        return ($date instanceof \DateTimeInterface) ? $date : null;
     }
 
     public function setWorkStartingDay(?\DateTimeInterface $date): void
