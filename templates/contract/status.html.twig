@@ -212,7 +212,7 @@
                             </td>
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
-                                {% set class = 'text-end contractDay' %}
+                                {% set class = 'text-end contractDay text-nowrap' %}
                                 {% if day.day is weekend %}
                                     {% set class = class ~ ' weekend' %}
                                 {% endif %}
@@ -223,6 +223,16 @@
                                 {% endif %}
                                 <td class="{{ class }}">
                                     {% if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0) and (now > day.day or day.workingTime.actualTime > 0) %}
+                                        {% if day.hasAddons() %}
+                                            {% set statusTitle = '' %}
+                                            {% for addon in day.getAddons() %}
+                                                {% set statusTitle = statusTitle ~ (addon.title|trans) ~ ' (' ~ addon.duration|duration(decimal) ~ ')' %}
+                                                {% if not loop.last %}
+                                                    {% set statusTitle = statusTitle ~ '<br>' %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <span class="status-dot status-azure" data-toggle="tooltip" data-placement="top" title="{{ statusTitle }}"></span>
+                                        {% endif %}
                                         {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
                                     {% endif %}
                                 </td>

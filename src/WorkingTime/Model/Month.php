@@ -18,6 +18,16 @@ use App\Model\Month as BaseMonth;
  */
 final class Month extends BaseMonth
 {
+    public function __construct(\DateTimeInterface $month, private User $user)
+    {
+        parent::__construct($month);
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
     /**
      * A month is only locked IF every day is approved.
      * If there is even one day left open, the entire month is not locked.

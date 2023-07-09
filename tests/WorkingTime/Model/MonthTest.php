@@ -22,12 +22,15 @@ class MonthTest extends TestCase
 {
     public function testDefaults(): void
     {
+        $user = new User();
+        $user->setUsername('foo-bar');
+
         $months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         foreach($months as $key => $days) {
             $index = ++$key;
             $monthKey = ($index < 10) ? '0' . $index : $index;
             $date = new \DateTimeImmutable(sprintf('2020-%s-25 13:00:00', $monthKey));
-            $month = new Month($date);
+            $month = new Month($date, $user);
             self::assertEquals(sprintf('2020-%s-25', $monthKey), $month->getMonth()->format('Y-m-d'));
             self::assertCount($days, $month->getDays());
             self::assertFalse($month->isLocked());

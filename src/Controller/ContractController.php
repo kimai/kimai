@@ -33,6 +33,7 @@ final class ContractController extends AbstractController
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
         $canChangeUser = $this->isGranted('contract_other_profile');
         $defaultDate = $dateTimeFactory->createStartOfYear();
+        $now = $dateTimeFactory->createDateTime();
 
         $values = new YearByUser();
         $values->setUser($currentUser);
@@ -62,7 +63,7 @@ final class ContractController extends AbstractController
 
         /** @var \DateTime $yearDate */
         $yearDate = $values->getDate();
-        $year = $workingTimeService->getYear($profile, $yearDate);
+        $year = $workingTimeService->getYear($profile, $yearDate, $now);
 
         $page = new PageSetup('work_times');
         $page->setHelp('contract.html');
@@ -73,7 +74,6 @@ final class ContractController extends AbstractController
         $controllerEvent = new WorkContractDetailControllerEvent($year);
         $eventDispatcher->dispatch($controllerEvent);
 
-        $now = $dateTimeFactory->createDateTime();
         $summary = $workingTimeService->getYearSummary($year, $now);
 
         $boxConfiguration = new BoxConfiguration();

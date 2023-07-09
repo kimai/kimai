@@ -30,7 +30,7 @@ final class Year extends BaseYear
 
     protected function createMonth(\DateTimeInterface $month): Month
     {
-        return new Month($month);
+        return new Month($month, $this->user);
     }
 
     public function getExpectedTime(\DateTimeInterface $until): int
