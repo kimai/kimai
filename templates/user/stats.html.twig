@@ -22,7 +22,7 @@
         }) %}
     {% endif %}
     {% set datagrid = datagrid|merge({
-        'profile.first_entry' : (firstTimesheet is not null ? firstTimesheet|date_short : '–'),
+        'profile.first_entry' : (workingSince is not null ? workingSince|date_short : '–'),
         'profile.registration_date' : user.registeredAt|date_short,
     }) %}
     {% set seeOwnRate = false %}

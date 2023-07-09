@@ -1174,6 +1174,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
     }
 
+    public function getWorkStartingDay(): ?\DateTimeInterface
+    {
+        $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
+        if ($date === null) {
+            return null;
+        }
+
+        try {
+            return \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', new \DateTimeZone($this->getTimezone()));
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
+    }
+
     public function getPublicHolidayGroup(): null|string
     {
         $group = $this->getPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP);
