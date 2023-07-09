@@ -46,7 +46,7 @@ final class WorkingTimeService
         return $this->workingTimeRepository->getLatestApproval($user);
     }
 
-    public function getYear(User $user, \DateTimeInterface $yearDate): Year
+    public function getYear(User $user, \DateTimeInterface $yearDate, \DateTimeInterface $until): Year
     {
         $yearTimes = $this->workingTimeRepository->findForYear($user, $yearDate);
         $existing = [];
@@ -57,6 +57,7 @@ final class WorkingTimeService
         $year = new Year(\DateTimeImmutable::createFromInterface($yearDate), $user);
 
         $stats = null;
+        $firstDay = $user->getWorkStartingDay();
 
         foreach ($year->getMonths() as $month) {
             foreach ($month->getDays() as $day) {
@@ -70,8 +71,12 @@ final class WorkingTimeService
                     $stats = $this->getYearStatistics($yearDate, $user);
                 }
 
-                $result = new WorkingTime($user, $day->getDay());
-                $result->setExpectedTime($user->getWorkHoursForDay($day->getDay()));
+                $dayDate = $day->getDay();
+                $result = new WorkingTime($user, $dayDate);
+
+                if ($firstDay === null || $firstDay <= $dayDate) {
+                    $result->setExpectedTime($user->getWorkHoursForDay($dayDate));
+                }
 
                 if (\array_key_exists($key, $stats)) {
                     $result->setActualTime($stats[$key]);
@@ -81,16 +86,16 @@ final class WorkingTimeService
             }
         }
 
-        $event = new WorkingTimeYearEvent($year);
+        $event = new WorkingTimeYearEvent($year, $until);
         $this->eventDispatcher->dispatch($event);
 
         return $year;
     }
 
-    public function getMonth(User $user, \DateTimeInterface $monthDate): Month
+    public function getMonth(User $user, \DateTimeInterface $monthDate, \DateTimeInterface $until): Month
     {
         // uses the year, because that triggers the required events to collect all different working times
-        $year = $this->getYear($user, $monthDate);
+        $year = $this->getYear($user, $monthDate, $until);
 
         return $year->getMonth($monthDate);
     }
