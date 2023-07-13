@@ -410,12 +410,12 @@ final class ServiceInvoice
 
         $formatter = new DefaultInvoiceFormatter($this->formatter, $template->getLanguage());
 
-        $model = $this->invoiceModelFactory->createModel($formatter);
-        $model
-            ->setCustomer($customer)
-            ->setTemplate($template)
-            ->setQuery($query)
-        ;
+        $model = $this->invoiceModelFactory->createModel(
+            $formatter,
+            $customer,
+            $template,
+            $query
+        );
 
         if ($query->getInvoiceDate() !== null) {
             $model->setInvoiceDate($query->getInvoiceDate());

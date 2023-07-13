@@ -135,11 +135,8 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->addActivity($activity1);
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries($entries);
-        $model->setQuery($query);
 
         $sut = $this->getCalculator();
         $sut->setModel($model);

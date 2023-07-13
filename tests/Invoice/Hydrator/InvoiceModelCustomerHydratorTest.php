@@ -21,7 +21,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $model = $this->getInvoiceModel();
 
@@ -30,12 +30,36 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
 
-        $model->setCustomer(null);
         $result = $sut->hydrate($model);
-        self::assertEmpty($result);
+
+        $this->assertModelStructure($result);
+
+        self::assertEquals([
+            'customer.id' => null,
+            'customer.address' => "Foo\nStreet\n1111 City",
+            'customer.name' => 'customer,with/special#name',
+            'customer.contact' => '',
+            'customer.company' => '',
+            'customer.vat' => '',
+            'customer.vat_id' => '',
+            'customer.number' => '',
+            'customer.country' => null,
+            'customer.homepage' => '',
+            'customer.comment' => '',
+            'customer.email' => '',
+            'customer.fax' => '',
+            'customer.phone' => '',
+            'customer.mobile' => '',
+            'customer.invoice_text' => '',
+            'customer.budget_open' => '€0.00',
+            'customer.budget_open_plain' => 0.0,
+            'customer.time_budget_open' => '0.00',
+            'customer.time_budget_open_plain' => 0,
+            'customer.meta.foo-customer' => 'bar-customer',
+        ], $result);
     }
 
-    protected function assertModelStructure(array $model)
+    protected function assertModelStructure(array $model): void
     {
         $keys = [
             'customer.id',

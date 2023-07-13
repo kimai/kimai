@@ -9,8 +9,11 @@
 
 namespace App\Tests\Event;
 
+use App\Entity\Customer;
+use App\Entity\InvoiceTemplate;
 use App\Event\InvoicePreRenderEvent;
 use App\Model\InvoiceDocument;
+use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Invoice\Renderer\DebugRenderer;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -23,7 +26,7 @@ class InvoicePreRenderEventTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
         $document = new InvoiceDocument(new \SplFileInfo(__FILE__));
         $renderer = new DebugRenderer();
 

@@ -208,7 +208,7 @@ class Invoice implements EntityWithMetaFields
         $this->currency = $model->getCurrency();
 
         $createdAt = $model->getInvoiceDate();
-        $this->createdAt = $createdAt;
+        $this->createdAt = \DateTime::createFromInterface($createdAt);
         $this->timezone = $createdAt->getTimezone()->getName();
 
         $this->dueDays = $template->getDueDays();

@@ -32,17 +32,17 @@ final class DefaultInvoiceFormatter implements InvoiceFormatter
         return $this->formatter;
     }
 
-    public function getFormattedDateTime(\DateTime $date): string
+    public function getFormattedDateTime(\DateTimeInterface $date): string
     {
         return (string) $this->getFormatter()->dateShort($date);
     }
 
-    public function getFormattedTime(\DateTime $date): string
+    public function getFormattedTime(\DateTimeInterface $date): string
     {
         return (string) $this->getFormatter()->time($date);
     }
 
-    public function getFormattedMonthName(\DateTime $date): string
+    public function getFormattedMonthName(\DateTimeInterface $date): string
     {
         return $this->getFormatter()->monthName($date);
     }

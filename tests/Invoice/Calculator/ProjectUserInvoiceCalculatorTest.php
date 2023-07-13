@@ -111,11 +111,8 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setProjects([$project1]);
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries($entries);
-        $model->setQuery($query);
 
         $sut = $this->getCalculator();
         $sut->setModel($model);

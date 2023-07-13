@@ -29,11 +29,14 @@ class InvoiceFilenameTest extends TestCase
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
+        $query = new InvoiceQuery();
+        $project = new Project();
+        $project->setName('Demo ProjecT1');
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $query->addProject($project);
+
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->setNumberGenerator($this->getNumberGeneratorSut());
-        $model->setTemplate($template);
-        $model->setCustomer($customer);
 
         $datePrefix = date('ymd');
 
@@ -55,13 +58,6 @@ class InvoiceFilenameTest extends TestCase
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
         self::assertEquals($datePrefix . '-ss_n_-', $sut->getFilename());
-
-        $project = new Project();
-        $project->setName('Demo ProjecT1');
-
-        $query = new InvoiceQuery();
-        $query->addProject($project);
-        $model->setQuery($query);
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);

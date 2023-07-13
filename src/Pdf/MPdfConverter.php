@@ -128,6 +128,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
 
+        // FIXME lowercase all font names
         if (\array_key_exists('fonts', $options)) {
             $fontData = array_merge($fontData, $options['fonts']);
         }

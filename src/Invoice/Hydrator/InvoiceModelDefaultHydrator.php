@@ -71,8 +71,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $query = $model->getQuery();
         if ($query !== null) {
             $begin = $query->getBegin();
-            $end = $query->getEnd();
-
             if ($begin !== null) {
                 $values = array_merge($values, [
                     'query.day' => $begin->format('d'),
@@ -88,6 +86,12 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
                     'query.begin_month' => $formatter->getFormattedMonthName($begin),
                     'query.begin_month_number' => $begin->format('m'),
                     'query.begin_year' => $begin->format('Y'),
+                ]);
+            }
+
+            $end = $query->getEnd();
+            if ($end !== null) {
+                $values = array_merge($values, [
                     'query.end' => $formatter->getFormattedDateTime($end),
                     // since 1.9
                     'query.end_day' => $end->format('d'),
@@ -97,7 +101,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
                     'query.end_month_number' => $end->format('m'),
                     // since 1.9
                     'query.end_year' => $end->format('Y'),
-                    // since 1.9
                 ]);
             }
 

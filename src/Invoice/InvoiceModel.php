@@ -39,7 +39,7 @@ final class InvoiceModel
     private ?InvoiceTemplate $template = null;
     private ?CalculatorInterface $calculator = null;
     private ?NumberGeneratorInterface $generator = null;
-    private \DateTime $invoiceDate;
+    private \DateTimeInterface $invoiceDate;
     private ?User $user = null;
     private InvoiceFormatter $formatter;
     /**
@@ -58,7 +58,7 @@ final class InvoiceModel
      */
     public function __construct(InvoiceFormatter $formatter, CustomerStatisticService $customerStatistic, ProjectStatisticService $projectStatistic, ActivityStatisticService $activityStatistic)
     {
-        $this->invoiceDate = new \DateTime();
+        $this->invoiceDate = new \DateTimeImmutable();
         $this->formatter = $formatter;
         $this->addModelHydrator(new InvoiceModelDefaultHydrator());
         $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
@@ -73,11 +73,9 @@ final class InvoiceModel
         return $this->query;
     }
 
-    public function setQuery(InvoiceQuery $query): InvoiceModel
+    public function setQuery(InvoiceQuery $query): void
     {
         $this->query = $query;
-
-        return $this;
     }
 
     /**
@@ -124,11 +122,9 @@ final class InvoiceModel
         return $this->template;
     }
 
-    public function setTemplate(InvoiceTemplate $template): InvoiceModel
+    public function setTemplate(InvoiceTemplate $template): void
     {
         $this->template = $template;
-
-        return $this;
     }
 
     public function getCustomer(): ?Customer
@@ -136,32 +132,34 @@ final class InvoiceModel
         return $this->customer;
     }
 
-    public function setCustomer(?Customer $customer): InvoiceModel
+    public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
-
-        return $this;
     }
 
-    public function getDueDate(): ?\DateTime
+    /**
+     * Requires the template and invoice date to be set
+     */
+    public function getDueDate(): \DateTimeInterface
     {
-        if (null === $this->getTemplate()) {
-            return null;
+        $date = \DateTimeImmutable::createFromInterface($this->getInvoiceDate());
+
+        $dueDays = 14;
+        if ($this->getTemplate() !== null) {
+            $dueDays = $this->getTemplate()->getDueDays();
         }
 
-        return new \DateTime('+' . $this->getTemplate()->getDueDays() . ' days');
+        return $date->add(new \DateInterval('P' . $dueDays . 'D'));
     }
 
-    public function getInvoiceDate(): \DateTime
+    public function getInvoiceDate(): \DateTimeInterface
     {
         return $this->invoiceDate;
     }
 
-    public function setInvoiceDate(\DateTime $date): InvoiceModel
+    public function setInvoiceDate(\DateTimeInterface $date): void
     {
         $this->invoiceDate = $date;
-
-        return $this;
     }
 
     public function getInvoiceNumber(): string

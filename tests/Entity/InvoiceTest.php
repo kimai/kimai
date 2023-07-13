@@ -190,11 +190,8 @@ class InvoiceTest extends TestCase
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries($entries);
-        $model->setQuery($query);
         $model->setUser($user);
         $model->setInvoiceDate($created);
 

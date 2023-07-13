@@ -56,12 +56,7 @@ abstract class AbstractCalculatorTest extends TestCase
         $template = new InvoiceTemplate();
         $query = new InvoiceQuery();
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
-        $model->setQuery($query);
-
-        return $model;
+        return (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
     }
 
     protected function assertDescription(CalculatorInterface $sut, $addProject = false, $addActivity = false): void
@@ -100,11 +95,8 @@ abstract class AbstractCalculatorTest extends TestCase
             ->setActivity($activity)
             ->setProject($project);
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries([$timesheet]);
-        $model->setQuery($query);
 
         $sut->setModel($model);
         $this->assertEquals(1, \count($sut->getEntries()));
