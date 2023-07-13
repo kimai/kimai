@@ -42,22 +42,22 @@ class InvoiceFilenameTest extends TestCase
 
         $sut = new InvoiceFilename($model);
 
-        self::assertEquals($datePrefix . '-foo', $sut->getFilename());
-        self::assertEquals($datePrefix . '-foo', (string) $sut);
+        self::assertEquals($datePrefix . '-foo-Demo_ProjecT1', $sut->getFilename());
+        self::assertEquals($datePrefix . '-foo-Demo_ProjecT1', (string) $sut);
 
         $customer->setCompany('barß / laölala #   ldksjf 123 MyAwesome GmbH');
         $sut = new InvoiceFilename($model);
 
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', $sut->getFilename());
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', (string) $sut);
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH-Demo_ProjecT1', $sut->getFilename());
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH-Demo_ProjecT1', (string) $sut);
 
         $customer->setCompany('까깨꺄꺠꺼께껴꼐꼬꽈sssss');
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss', $sut->getFilename());
+        self::assertEquals($datePrefix . '-kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss-Demo_ProjecT1', $sut->getFilename());
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-ss_n_-', $sut->getFilename());
+        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);

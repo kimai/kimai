@@ -35,7 +35,7 @@ class InvoiceModelTest extends TestCase
         self::assertNull($sut->getCalculator());
         self::assertEmpty($sut->getEntries());
         self::assertIsArray($sut->getEntries());
-        self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
+        self::assertInstanceOf(\DateTimeInterface::class, $sut->getInvoiceDate());
 
         self::assertSame($formatter, $sut->getFormatter());
 
@@ -74,7 +74,7 @@ class InvoiceModelTest extends TestCase
         self::assertEquals($number, $sut->getInvoiceNumber());
 
         self::assertSame($template, $sut->getTemplate());
-        self::assertInstanceOf(\DateTime::class, $sut->getDueDate());
+        self::assertInstanceOf(\DateTimeInterface::class, $sut->getDueDate());
     }
 
     public function testDueDate(): void
