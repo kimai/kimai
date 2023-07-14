@@ -107,7 +107,7 @@ kimai:
             REPORTING: ['view_reporting','view_other_reporting','project_reporting','customer_reporting']
             # permissions which are deactivated, as these features are hidden for now
             # brave users can try to activate them and be surprised what happens
-            REGISTER_BETA: ['contract_other_profile']
+            REGISTER_BETA: []
         # mapping a "role name" to an array of "set names"
         maps:
             ROLE_USER: ['TIMESHEET','PROFILE']
@@ -118,10 +118,8 @@ kimai:
         roles:
             ROLE_USER: ['view_team_member','time_team_project','create_tag','view_reporting']
             ROLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
-            # TODO contract_other_profile
-            ROLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
-            # TODO contract_other_profile
-            ROLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']
+            ROLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data','contract_other_profile']
+            ROLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data','contract_other_profile']
 # --------------------------------------------------------------------------------
 
 
