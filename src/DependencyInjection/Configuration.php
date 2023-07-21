@@ -305,7 +305,7 @@ final class Configuration implements ConfigurationInterface
                             ->defaultValue(0)
                         ->end()
                         ->integerNode('long_running_duration')
-                            ->defaultValue(600)
+                            ->defaultValue(0)
                         ->end()
                         ->booleanNode('require_activity')
                             ->defaultTrue()
