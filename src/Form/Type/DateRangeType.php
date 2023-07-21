@@ -74,7 +74,7 @@ final class DateRangeType extends AbstractType
                 'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
             ];
 
-            $thisYear = (int)$factory->createStartOfYear()->format('Y');
+            $thisYear = (int) $factory->createStartOfYear()->format('Y');
             for ($i = 0; $i < 3; $i++) {
                 $year = $thisYear - $i;
                 $ranges[$year] = [$year . '-01-01', $year . '-12-31'];
