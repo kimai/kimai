@@ -128,8 +128,14 @@ final class MPdfConverter implements HtmlToPdfConverter
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
 
+        // lowercase all font names, otherwise they cannot be loaded
+        // see https://github.com/kimai/www.kimai.org/issues/280
         if (\array_key_exists('fonts', $options)) {
-            $fontData = array_merge($fontData, $options['fonts']);
+            $fonts = [];
+            foreach ($options['fonts'] as $name => $values) {
+                $fonts[strtolower($name)] = $values;
+            }
+            $fontData = array_merge($fontData, $fonts);
         }
 
         return $fontData;

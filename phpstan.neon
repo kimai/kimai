@@ -4002,12 +4002,12 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTime, DateTime\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 3
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedTime\\(\\) expects DateTime, DateTime\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 2
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
@@ -4045,11 +4045,6 @@ parameters:
             message: "#^Parameter \\#2 \\$today of method App\\\\Customer\\\\CustomerStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
-
-        -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 3
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
             message: "#^Cannot call method getAddress\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
@@ -4137,13 +4132,8 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 4
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedMonthName\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
+            count: 2
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -

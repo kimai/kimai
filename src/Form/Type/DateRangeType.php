@@ -49,6 +49,7 @@ final class DateRangeType extends AbstractType
             'format' => $formFormat,
             'separator' => self::DATE_SPACER,
             'allow_empty' => true,
+            'with_presets' => true,
             'attr' => [
                 'pattern' => $pattern . self::DATE_SPACER . $pattern
             ],
@@ -61,25 +62,27 @@ final class DateRangeType extends AbstractType
         $user = $options['user'];
         $factory = DateTimeFactory::createByUser($user);
 
-        $ranges = [
-            'daterangepicker.allTime' => [null, null],
-            'daterangepicker.today' => [$factory->createDateTime('00:00:00'), $factory->createDateTime('23:59:59')],
-            'daterangepicker.yesterday' => [$factory->createDateTime('-1 day 00:00:00'), $factory->createDateTime('-1 day 23:59:59')],
-            'daterangepicker.thisWeek' => [$factory->getStartOfWeek(), $factory->getEndOfWeek()],
-            'daterangepicker.lastWeek' => [$factory->getStartOfWeek('-1 week'), $factory->getEndOfWeek('-1 week')],
-            'daterangepicker.thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
-            'daterangepicker.lastMonth' => [$factory->getStartOfLastMonth(), $factory->getEndOfLastMonth()],
-            'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
-        ];
+        if ($options['with_presets']) {
+            $ranges = [
+                'daterangepicker.allTime' => [null, null],
+                'daterangepicker.today' => [$factory->createDateTime('00:00:00'), $factory->createDateTime('23:59:59')],
+                'daterangepicker.yesterday' => [$factory->createDateTime('-1 day 00:00:00'), $factory->createDateTime('-1 day 23:59:59')],
+                'daterangepicker.thisWeek' => [$factory->getStartOfWeek(), $factory->getEndOfWeek()],
+                'daterangepicker.lastWeek' => [$factory->getStartOfWeek('-1 week'), $factory->getEndOfWeek('-1 week')],
+                'daterangepicker.thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
+                'daterangepicker.lastMonth' => [$factory->getStartOfLastMonth(), $factory->getEndOfLastMonth()],
+                'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
+            ];
 
-        $thisYear = (int) $factory->createStartOfYear()->format('Y');
-        for ($i = 0; $i < 3; $i++) {
-            $year = $thisYear - $i;
-            $ranges[$year] = [$year . '-01-01', $year . '-12-31'];
+            $thisYear = (int) $factory->createStartOfYear()->format('Y');
+            for ($i = 0; $i < 3; $i++) {
+                $year = $thisYear - $i;
+                $ranges[$year] = [$year . '-01-01', $year . '-12-31'];
+            }
+
+            $view->vars['ranges'] = $ranges;
+            $view->vars['rangeFormat'] = $options['format'];
         }
-
-        $view->vars['ranges'] = $ranges;
-        $view->vars['rangeFormat'] = $options['format'];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-separator' => $options['separator'],

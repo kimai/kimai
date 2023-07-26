@@ -238,11 +238,8 @@ trait RendererTestTrait
         $query->setEnd(new \DateTime());
         $query->setProjects([$project, $project2]);
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter(), $customer, $template, $query);
         $model->addEntries($entries);
-        $model->setQuery($query);
         $model->setUser($user);
 
         $calculator = new DefaultCalculator();
@@ -326,11 +323,8 @@ trait RendererTestTrait
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter(), $customer, $template, $query);
         $model->addEntries($entries);
-        $model->setQuery($query);
         $model->setUser($user);
 
         $calculator = new DefaultCalculator();

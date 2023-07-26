@@ -6613,11 +6613,6 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydratorTest\\:\\:assertModelStructure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
@@ -6633,21 +6628,6 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydratorTest\\:\\:testHydrate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:assertModelStructure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$hasProject with no type specified\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
@@ -6659,11 +6639,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:testHydrate\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
 
@@ -6721,21 +6696,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceItemTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/InvoiceItemTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceModelTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/InvoiceModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceModelTest\\:\\:testEmptyObjectThrowsExceptionOnNumberGenerator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/InvoiceModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceModelTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/InvoiceModelTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\NumberGenerator\\\\DateNumberGeneratorTest\\:\\:getSut\\(\\) has no return type specified\\.$#"

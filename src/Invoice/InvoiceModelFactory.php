@@ -11,7 +11,10 @@ namespace App\Invoice;
 
 use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
+use App\Entity\Customer;
+use App\Entity\InvoiceTemplate;
 use App\Project\ProjectStatisticService;
+use App\Repository\Query\InvoiceQuery;
 
 final class InvoiceModelFactory
 {
@@ -22,8 +25,14 @@ final class InvoiceModelFactory
     ) {
     }
 
-    public function createModel(InvoiceFormatter $formatter): InvoiceModel
+    public function createModel(InvoiceFormatter $formatter, Customer $customer, InvoiceTemplate $template, InvoiceQuery $query): InvoiceModel
     {
-        return new InvoiceModel($formatter, $this->customerStatisticService, $this->projectStatisticService, $this->activityStatisticService);
+        $model = new InvoiceModel($formatter, $this->customerStatisticService, $this->projectStatisticService, $this->activityStatisticService);
+
+        $model->setCustomer($customer);
+        $model->setTemplate($template);
+        $model->setQuery($query);
+
+        return $model;
     }
 }

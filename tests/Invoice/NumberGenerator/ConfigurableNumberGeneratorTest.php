@@ -10,9 +10,11 @@
 namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Entity\Customer;
+use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Repository\InvoiceRepository;
+use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -156,9 +158,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $user->method('getAccountNumber')->willReturn('0815');
 
         $sut = $this->getSut($format, $counter);
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, new InvoiceTemplate(), new InvoiceQuery());
         $model->setInvoiceDate($invoiceDate);
-        $model->setCustomer($customer);
         $model->setUser($user);
         $sut->setModel($model);
 
@@ -200,9 +201,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $this->expectExceptionMessage(sprintf('Unknown %s found', $brokenPart));
 
         $sut = $this->getSut($format);
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
         $model->setInvoiceDate($invoiceDate);
-        $model->setCustomer(new Customer('foo'));
         $sut->setModel($model);
 
         $sut->getInvoiceNumber();
@@ -235,9 +235,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $customer->setName(null);
 
         $sut = $this->getSut($format);
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, new InvoiceTemplate(), new InvoiceQuery());
         $model->setInvoiceDate(new \DateTime());
-        $model->setCustomer($customer);
         $model->setUser($user);
         $sut->setModel($model);
 

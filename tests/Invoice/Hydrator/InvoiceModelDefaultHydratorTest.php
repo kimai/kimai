@@ -20,7 +20,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $model = $this->getInvoiceModel();
 
@@ -30,7 +30,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
         $this->assertModelStructure($result);
     }
 
-    protected function assertModelStructure(array $model, $hasProject = true)
+    protected function assertModelStructure(array $model, bool $hasProject = true): void
     {
         $keys = [
             'invoice.due_date',

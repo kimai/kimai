@@ -9,7 +9,7 @@
 
 namespace App\Invoice;
 
-use DateTime;
+use DateTimeInterface;
 
 /**
  * @internal this is subject to change
@@ -20,15 +20,15 @@ interface InvoiceFormatter
 
     public function setLocale(string $locale): void;
 
-    public function getFormattedDateTime(DateTime $date): string;
+    public function getFormattedDateTime(DateTimeInterface $date): string;
 
-    public function getFormattedTime(DateTime $date): string;
+    public function getFormattedTime(DateTimeInterface $date): string;
 
     public function getFormattedAmount(float $amount): string;
 
     public function getFormattedMoney(float $amount, ?string $currency, bool $withCurrency = true): string;
 
-    public function getFormattedMonthName(DateTime $date): string;
+    public function getFormattedMonthName(DateTimeInterface $date): string;
 
     public function getFormattedDuration(int $seconds): string;
 

@@ -23,21 +23,19 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceModelTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $formatter = new DebugFormatter();
-        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter);
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
 
-        self::assertNull($sut->getQuery());
-        self::assertNull($sut->getCustomer());
-        self::assertNull($sut->getDueDate());
+        self::assertNotNull($sut->getQuery());
+        self::assertNotNull($sut->getCustomer());
+        self::assertNotNull($sut->getTemplate());
+
         self::assertNull($sut->getCalculator());
-
         self::assertEmpty($sut->getEntries());
         self::assertIsArray($sut->getEntries());
-
-        self::assertNull($sut->getTemplate());
-        self::assertInstanceOf(\DateTime::class, $sut->getInvoiceDate());
+        self::assertInstanceOf(\DateTimeInterface::class, $sut->getInvoiceDate());
 
         self::assertSame($formatter, $sut->getFormatter());
 
@@ -47,27 +45,24 @@ class InvoiceModelTest extends TestCase
         self::assertSame($newFormatter, $sut->getFormatter());
     }
 
-    public function testEmptyObjectThrowsExceptionOnNumberGenerator()
+    public function testEmptyObjectThrowsExceptionOnNumberGenerator(): void
     {
         $formatter = new DebugFormatter();
-        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter);
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('InvoiceModel::getInvoiceNumber() cannot be called before calling setNumberGenerator()');
         $sut->getInvoiceNumber();
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
-        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-
-        $query = new InvoiceQuery();
-        self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
-        self::assertSame($query, $sut->getQuery());
-
         $customer = new Customer('foo');
-        self::assertInstanceOf(InvoiceModel::class, $sut->setCustomer($customer));
-        self::assertSame($customer, $sut->getCustomer());
+        $query = new InvoiceQuery();
+        $template = new InvoiceTemplate();
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
+
+        self::assertSame($query, $sut->getQuery());
 
         $calculator = new DefaultCalculator();
         self::assertInstanceOf(InvoiceModel::class, $sut->setCalculator($calculator));
@@ -78,11 +73,28 @@ class InvoiceModelTest extends TestCase
         $number = $sut->getInvoiceNumber();
         self::assertEquals($number, $sut->getInvoiceNumber());
 
-        $template = new InvoiceTemplate();
-        self::assertNull($sut->getDueDate());
-        self::assertInstanceOf(InvoiceModel::class, $sut->setTemplate($template));
         self::assertSame($template, $sut->getTemplate());
-        /* @phpstan-ignore-next-line */
-        self::assertInstanceOf(\DateTime::class, $sut->getDueDate());
+        self::assertInstanceOf(\DateTimeInterface::class, $sut->getDueDate());
+    }
+
+    public function testDueDate(): void
+    {
+        $customer = new Customer('foo');
+        $query = new InvoiceQuery();
+        $template = new InvoiceTemplate();
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
+
+        $dueDate = $sut->getDueDate();
+        $dueDays = $template->getDueDays();
+        self::assertNotNull($dueDays);
+        $expected = new \DateTimeImmutable('+' . $dueDays . ' days');
+
+        self::assertEquals($expected->format('Y-m-d'), $dueDate->format('Y-m-d'));
+
+        $sut->setInvoiceDate(new \DateTimeImmutable('2022-05-23'));
+        $template->setDueDays(14);
+        $dueDate = $sut->getDueDate();
+        $expected = new \DateTimeImmutable('2022-06-06');
+        self::assertEquals($expected->format('Y-m-d'), $dueDate->format('Y-m-d'));
     }
 }

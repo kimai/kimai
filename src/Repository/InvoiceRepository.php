@@ -91,24 +91,27 @@ class InvoiceRepository extends EntityRepository
         return $result['counter'];
     }
 
-    public function getCounterForDay(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
+    public function getCounterForDay(\DateTimeInterface $date, ?Customer $customer = null, ?User $user = null): int
     {
+        $date = \DateTime::createFromInterface($date);
         $start = (clone $date)->setTime(0, 0, 0);
         $end = (clone $date)->setTime(23, 59, 59);
 
         return $this->getCounterFor($start, $end, $customer, $user);
     }
 
-    public function getCounterForMonth(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
+    public function getCounterForMonth(\DateTimeInterface $date, ?Customer $customer = null, ?User $user = null): int
     {
+        $date = \DateTime::createFromInterface($date);
         $start = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('t'))->setTime(23, 59, 59);
 
         return $this->getCounterFor($start, $end, $customer, $user);
     }
 
-    public function getCounterForYear(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
+    public function getCounterForYear(\DateTimeInterface $date, ?Customer $customer = null, ?User $user = null): int
     {
+        $date = \DateTime::createFromInterface($date);
         $start = (clone $date)->setDate((int) $date->format('Y'), 1, 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), 12, 31)->setTime(23, 59, 59);
 

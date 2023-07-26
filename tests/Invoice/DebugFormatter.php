@@ -13,12 +13,12 @@ use App\Invoice\InvoiceFormatter;
 
 class DebugFormatter implements InvoiceFormatter
 {
-    public function getFormattedDateTime(\DateTime $date): string
+    public function getFormattedDateTime(\DateTimeInterface $date): string
     {
         return $date->format('d.m.Y');
     }
 
-    public function getFormattedTime(\DateTime $date): string
+    public function getFormattedTime(\DateTimeInterface $date): string
     {
         return $date->format('H:i');
     }
@@ -36,7 +36,7 @@ class DebugFormatter implements InvoiceFormatter
         return (string) $amount;
     }
 
-    public function getFormattedMonthName(\DateTime $date): string
+    public function getFormattedMonthName(\DateTimeInterface $date): string
     {
         return $date->format('m');
     }

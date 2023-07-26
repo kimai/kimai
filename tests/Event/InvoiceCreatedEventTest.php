@@ -9,8 +9,11 @@
 
 namespace App\Tests\Event;
 
+use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\InvoiceTemplate;
 use App\Event\InvoiceCreatedEvent;
+use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +26,7 @@ class InvoiceCreatedEventTest extends TestCase
     public function testDefaultValues()
     {
         $invoice = new Invoice();
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
 
         $sut = new InvoiceCreatedEvent($invoice, $model);
 

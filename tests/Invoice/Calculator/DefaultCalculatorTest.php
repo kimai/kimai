@@ -64,11 +64,8 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, new InvoiceQuery());
         $model->addEntries($entries);
-        $model->setQuery(new InvoiceQuery());
 
         $sut = $this->getCalculator();
         $sut->setModel($model);

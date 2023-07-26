@@ -29,39 +29,35 @@ class InvoiceFilenameTest extends TestCase
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
+        $query = new InvoiceQuery();
+        $project = new Project();
+        $project->setName('Demo ProjecT1');
 
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
+        $query->addProject($project);
+
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->setNumberGenerator($this->getNumberGeneratorSut());
-        $model->setTemplate($template);
-        $model->setCustomer($customer);
 
         $datePrefix = date('ymd');
 
         $sut = new InvoiceFilename($model);
 
-        self::assertEquals($datePrefix . '-foo', $sut->getFilename());
-        self::assertEquals($datePrefix . '-foo', (string) $sut);
+        self::assertEquals($datePrefix . '-foo-Demo_ProjecT1', $sut->getFilename());
+        self::assertEquals($datePrefix . '-foo-Demo_ProjecT1', (string) $sut);
 
         $customer->setCompany('barß / laölala #   ldksjf 123 MyAwesome GmbH');
         $sut = new InvoiceFilename($model);
 
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', $sut->getFilename());
-        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH', (string) $sut);
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH-Demo_ProjecT1', $sut->getFilename());
+        self::assertEquals($datePrefix . '-barss_laolala_ldksjf_123_MyAwesome_GmbH-Demo_ProjecT1', (string) $sut);
 
         $customer->setCompany('까깨꺄꺠꺼께껴꼐꼬꽈sssss');
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss', $sut->getFilename());
+        self::assertEquals($datePrefix . '-kkakkaekkyakkyaekkeokkekkyeokkyekkokkwasssss-Demo_ProjecT1', $sut->getFilename());
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
-        self::assertEquals($datePrefix . '-ss_n_-', $sut->getFilename());
-
-        $project = new Project();
-        $project->setName('Demo ProjecT1');
-
-        $query = new InvoiceQuery();
-        $query->addProject($project);
-        $model->setQuery($query);
+        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
 
         $customer->setCompany('\"#+ß.!$%&/()=?\\n=/*-+´_<>@' . "\n");
         $sut = new InvoiceFilename($model);
