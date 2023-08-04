@@ -71,6 +71,11 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         */
 
         let options = {
+            // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
+            onItemAdd: function(){
+                // remove remaining characters from input after selecting an item
+                this.setTextboxValue('');
+            },
             lockOptgroupOrder: true,
             allowEmptyOption: !isRequired,
             hidePlaceholder: false,

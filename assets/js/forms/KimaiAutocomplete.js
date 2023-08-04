@@ -41,6 +41,11 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
             }
 
             new TomSelect(node, {
+                // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
+                onItemAdd: function(){
+                    // remove remaining characters from input after selecting an item
+                    this.setTextboxValue('');
+                },
                 // if there are more than 500, they need to be found by "typing"
                 maxOptions: 500,
                 // the autocomplete is ONLY used, when the user can create tags
