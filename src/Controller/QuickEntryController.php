@@ -181,7 +181,13 @@ final class QuickEntryController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
+
+            if(!$form->isValid()){
+                $this->flashError('action.update.error', $form->getErrors());
+                return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
+            }
+
             /** @var QuickEntryWeek $data */
             $data = $form->getData();
 
