@@ -22,32 +22,43 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
     }
 
     /**
-     * @param TimesheetEntity $timesheet
+     * @param TimesheetEntity $value
      * @param Constraint $constraint
      */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetFutureTimes)) {
             throw new UnexpectedTypeException($constraint, TimesheetFutureTimes::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         if ($this->configuration->isTimesheetAllowFutureTimes()) {
             return;
         }
 
-        $now = new \DateTime('now', $timesheet->getBegin()->getTimezone());
+        $now = new \DateTime('now', $value->getBegin()->getTimezone());
 
         // allow configured default rounding time + 1 minute - see #1295
         $allowedDiff = ($this->configuration->getTimesheetDefaultRoundingBegin() * 60) + 60;
-        if (($now->getTimestamp() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
-            $this->context->buildViolation('The begin date cannot be in the future.')
+        $nowTs = $now->getTimestamp() + $allowedDiff;
+        if ($value->getBegin() !== null && $nowTs < $value->getBegin()->getTimestamp()) {
+            $this->context->buildViolation(TimesheetFutureTimes::getErrorName(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR))
                 ->atPath('begin_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
+                ->addViolation();
+        }
+
+        $allowedDiff = ($this->configuration->getTimesheetDefaultRoundingEnd() * 60) + 60;
+        $nowTs = $now->getTimestamp() + $allowedDiff;
+        if ($value->getEnd() !== null && $nowTs < $value->getEnd()->getTimestamp()) {
+            $this->context->buildViolation(TimesheetFutureTimes::getErrorName(TimesheetFutureTimes::END_IN_FUTURE_ERROR))
+                ->atPath('end_time')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetFutureTimes::END_IN_FUTURE_ERROR)
                 ->addViolation();
         }
     }
