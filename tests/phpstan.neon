@@ -9398,7 +9398,7 @@ parameters:
             path: Twig/ExtensionsTest.php
 
         -
-            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, \\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array<class-string, string>|\\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
             count: 6
             path: Twig/ExtensionsTest.php
 
@@ -9488,7 +9488,7 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, \\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array<class-string, string>|\\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
             count: 5
             path: Twig/LocaleFormatExtensionsTest.php
 
