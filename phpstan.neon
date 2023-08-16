@@ -4797,11 +4797,6 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\ActivityRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/ActivityRepository.php
@@ -4867,11 +4862,6 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/CustomerRepository.php
@@ -4932,11 +4922,6 @@ parameters:
             path: src/Repository/InvoiceRepository.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 2
-            path: src/Repository/InvoiceRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/InvoiceRepository.php
@@ -4955,11 +4940,6 @@ parameters:
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
             count: 1
             path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/InvoiceTemplateRepository.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
@@ -5074,11 +5054,6 @@ parameters:
         -
             message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
             count: 2
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
             path: src/Repository/ProjectRepository.php
 
         -
@@ -5237,16 +5212,6 @@ parameters:
             path: src/Repository/TagRepository.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Repository/TeamRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\TeamRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/TeamRepository.php
@@ -5333,11 +5298,6 @@ parameters:
 
         -
             message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
             count: 2
             path: src/Repository/TimesheetRepository.php
 
@@ -5433,11 +5393,6 @@ parameters:
 
         -
             message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
             count: 1
             path: src/Repository/UserRepository.php
 
@@ -5773,11 +5728,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStatisticsGrouped\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/TimesheetStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#"
             count: 1
             path: src/Timesheet/TimesheetStatisticService.php
 
@@ -6337,17 +6287,12 @@ parameters:
             path: src/Validator/Constraints/TimesheetExportedValidator.php
 
         -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
             count: 2
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
@@ -6790,3 +6735,93 @@ parameters:
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'commentContent'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'commentOneLiner'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'markdownToHtml'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'timesheetContent'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'colorize'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'KevinPapst\\\\\\\\TablerBundle\\\\\\\\Twig\\\\\\\\RuntimeExtension', 'icon'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\EncoreExtension', 'getEncoreEntryCssSo…'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\QrCodeExtension', 'qrCodeDataUriFuncti…'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'actions'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'generateTitle'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getJavascriptTransl…'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getProgressbarClass'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getTimePresets'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'trigger'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\TimesheetExtension', 'activeEntries'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\TimesheetExtension', 'favoriteEntries'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\WidgetExtension', 'renderWidget'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php
+
+        -
+            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'KevinPapst\\\\\\\\TablerBundle\\\\\\\\Twig\\\\\\\\RuntimeExtension', 'createIcon'\\} given\\.$#"
+            count: 1
+            path: src/Twig/RuntimeExtensions.php

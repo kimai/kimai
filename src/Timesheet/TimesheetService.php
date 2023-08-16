@@ -34,10 +34,16 @@ use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class TimesheetService
 {
+    /**
+     * @var array<string>
+     */
+    private array $doNotValidateCodes = [];
+
     public function __construct(
         private SystemConfiguration $configuration,
         private TimesheetRepository $repository,
@@ -236,8 +242,23 @@ final class TimesheetService
         $errors = $this->validator->validate($timesheet, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
+                if (\in_array($error->getCode(), $this->doNotValidateCodes, true)) {
+                    continue;
+                }
+
+                throw new ValidationFailedException($errors, 'Validation Failed');
+            }
         }
+    }
+
+    /**
+     * @param array<string> $validationCodes
+     */
+    public function setIgnoreValidationCodes(array $validationCodes): void
+    {
+        $this->doNotValidateCodes = $validationCodes;
     }
 
     /**

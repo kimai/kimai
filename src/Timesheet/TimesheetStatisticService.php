@@ -254,7 +254,7 @@ final class TimesheetStatisticService
             return null;
         }
 
-        return new DateTime($result, new \DateTimeZone($user->getTimezone()));
+        return new DateTime((string) $result, new \DateTimeZone($user->getTimezone()));
     }
 
     /**
