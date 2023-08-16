@@ -46,6 +46,10 @@
         <source>report_customer_monthly_projects</source>
         <target>Projetos por mês, por atividade e por usuário</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view">
+        <source>report_customer_view</source>
+        <target state="translated">Visão geral do cliente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

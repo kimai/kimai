@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>Faktura</target>
+        <target state="translated">Šablona faktury</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Timesheet</target>
+        <target state="translated">Pracovní výkaz</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>

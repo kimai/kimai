@@ -4,15 +4,39 @@
     <body>
       <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
-        <target>Template Fattura</target>
+        <target state="translated">Modello di fattura</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
-        <target>Fattura (default)</target>
+        <target state="translated">Fattura</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target state="translated">Foglio di presenza</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">Per ulteriori elaborazioni</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="translated">Attenzione: i file esistenti verranno sovrascritti. I tipi di file consentiti sono: %extensions%.</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Puoi scaricare altri modelli qui</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Fattura</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">Testo</target>
+      </trans-unit>
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
+        <source>Single service date</source>
+        <target state="translated">Data del servizio</target>
       </trans-unit>
     </body>
   </file>

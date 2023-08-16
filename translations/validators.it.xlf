@@ -78,6 +78,34 @@
         <source>A project needs to be selected.</source>
         <target>È necessario selezionare un progetto.</target>
       </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Questo non è un nome valido per un ruolo utente.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Una durata vuota non è consentita.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Siamo spiacenti, il budget è esaurito.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target state="translated">Si è verificato un problema durante il salvataggio.</target>
+      </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Hai un record di tempo attivo che non può essere fermato automaticamente.</target>
+      </trans-unit>
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target state="translated">Il valore specificato non è un formato giorno/ora valido.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Il codice fornito non è il token TOTP corretto.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

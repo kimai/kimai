@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sl" datatype="plaintext" original="teams.en.xlf">
+    <body>
+      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+        <source>teams.project_access</source>
+        <target state="translated">Dovolite dostop do projektov</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

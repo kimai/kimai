@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sl" datatype="plaintext" original="plugins.en.xlf">
+    <body>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+        <source>plugin.none_installed</source>
+        <target state="translated">Nimate še nameščenih vtičnikov.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Novi vtičniki s tržnice</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

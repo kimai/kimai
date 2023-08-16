@@ -4,7 +4,19 @@
     <body>
       <trans-unit id="vFSLi54" resname="plugin.none_installed">
         <source>plugin.none_installed</source>
-        <target>Non hai plugin installati per ora.</target>
+        <target state="translated">Non hai alcun plugin installato.</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Acquista ora</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">Più estensioni</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target state="translated">Nuovi plugin dal marketplace</target>
       </trans-unit>
     </body>
   </file>

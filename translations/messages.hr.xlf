@@ -684,7 +684,7 @@
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Kalendarski tjedan %week%</target>
+        <target state="translated">%week%. kalendarski tjedan</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -1172,7 +1172,7 @@
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="translated">%week% tjedan</target>
+        <target state="translated">%week%. tjedan</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
@@ -1601,6 +1601,54 @@
       <trans-unit id="5buBUCm" resname="receive_from">
         <source>receive_from</source>
         <target state="translated">Primi od pošiljaoca %name%</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target state="translated">Odobreno</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target state="translated">Zatraženo</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">Drugo</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target state="translated">Pošalji</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target state="translated">Izvještaj</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">Bolest, posjet liječniku, njega bliskih srodnika itd.</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target state="translated">Stanje tvog radnog vremena: %hours% h.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">Obiteljski događaji, selidbe, vremenski utjecaji itd.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target state="translated">Cijeli dan</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">Bolovanje</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">Do sada si iskoristio/la %used% od raspoloživih %days% dana godišnjeg odmora.</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target state="translated">Pola dana</target>
       </trans-unit>
     </body>
   </file>

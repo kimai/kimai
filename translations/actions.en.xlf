@@ -119,8 +119,8 @@
         <target>Remove widget</target>
       </trans-unit>
       <trans-unit id="5vJvarK" resname="syncronisation">
-        <source>syncronisation</source>
-        <target>Syncronisation</target>
+        <source>Synchronization</source>
+        <target state="translated">Synchronization</target>
       </trans-unit>
       <trans-unit id="2UL2SIZ" resname="import">
         <source>import</source>

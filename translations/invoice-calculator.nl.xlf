@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>Som berekening</target>
+        <target state="translated">Groepering van factuurregels</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -16,27 +16,43 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>gebruikers gegroepeerd – één invoer per gebruiker</target>
+        <target state="translated">Gebruiker</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>activiteiten gegroepeerd – één invoer per activiteit</target>
+        <target state="translated">Activiteit</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Eén invoer per project</target>
+        <target state="translated">Project</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Eén invoer per dag (gebruikt de startdatum)</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target>Wekelijks: Eén invoer per week (gebruikt de startdatum)</target>
+        <target state="translated">Kalender week</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Prijs: Eén invoer per prijs</target>
+        <target state="translated">Prijs</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Activiteit en gebruiker</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Project en gebruiker</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Datum en gebruiker</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Selecteer op welke velden de factuuritems moeten worden gegroepeerd</target>
       </trans-unit>
     </body>
   </file>

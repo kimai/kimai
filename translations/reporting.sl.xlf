@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sl" datatype="plaintext" original="reporting.en.xlf">
+    <body>
+      <trans-unit id="XV3FBpu" resname="report_user_week">
+        <source>report_user_week</source>
+        <target state="translated">Tedenski ogled za enega uporabnika</target>
+      </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month">
+        <source>report_user_month</source>
+        <target state="translated">Mesečni pregled za enega uporabnika</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="translated">Letni pogled za enega uporabnika</target>
+      </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target state="translated">Tedenski pogled za vse uporabnike</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

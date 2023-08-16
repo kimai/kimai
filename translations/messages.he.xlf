@@ -552,7 +552,7 @@
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
-        <target>משתמשים</target>
+        <target state="translated">משתמשים</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
@@ -844,7 +844,7 @@
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
-        <target>כן</target>
+        <target state="translated">התפנה</target>
       </trans-unit>
       <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
@@ -1545,6 +1545,54 @@
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
         <target state="translated">בלתי נראה</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target state="translated">אושר</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target state="translated">התבקש</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">מחלה</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">אחר</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target state="translated">הגשה</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">חולי, ביקור אצל הרופא, טיפול בקרובי משפחה ועוד.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">אירועים משפחתיים, מעבר דירה, תנאי מזג אוויר קשים וכו׳.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target state="translated">יום מלא</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target state="translated">חצי יום</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target state="translated">דוח</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">ניצלת %used% מתוך %days% ימי החופשה העומדים לרשותך עד כה.</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target state="translated">מאזן שעות העבודה שלך עומד על %hours% שעות.</target>
       </trans-unit>
     </body>
   </file>
