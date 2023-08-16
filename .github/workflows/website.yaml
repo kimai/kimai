@@ -1,0 +1,17 @@
+name: 'Website update'
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+jobs:
+  build:
+    name: Trigger version update for website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit repository_dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+          repository: kimai/www.kimai.org
+          event-type: kimai_release
