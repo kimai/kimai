@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sl" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="S9k1S7Z" resname="warning">
+        <source>warning</source>
+        <target state="translated">Opozorilo</target>
+      </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+        <source>timesheet.stop.success</source>
+        <target state="translated">Snemanje časa je bilo ustavljeno</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

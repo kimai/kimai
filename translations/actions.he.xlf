@@ -119,7 +119,7 @@
         <target state="translated">רענון</target>
       </trans-unit>
       <trans-unit id="5vJvarK" resname="syncronisation">
-        <source>syncronisation</source>
+        <source>Synchronization</source>
         <target state="translated">סנכרון</target>
       </trans-unit>
       <trans-unit id="2UL2SIZ" resname="import">

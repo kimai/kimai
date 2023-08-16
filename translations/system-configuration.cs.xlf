@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
-        <target>Konec</target>
+        <target state="translated">Vypnuto</target>
       </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>

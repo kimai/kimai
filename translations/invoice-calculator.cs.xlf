@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target>Výpočet hodnoty</target>
+        <target state="translated">Seskupení řádků faktury</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Výchozí: jeden záznam na časový záznam</target>
+        <target state="translated">Výchozí (jeden řádek na záznam)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>Hodiny: součty záznamů, celkem jedna položka</target>
+        <target state="translated">Všechno (celkově jedna položka)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Uživatel: jeden záznam na uživatele</target>
+        <target state="translated">Uživatel</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target>Aktivity: jeden záznam na aktivitu</target>
+        <target state="translated">Aktivita</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Projekty: jeden záznam na projekt</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Datum: jeden záznam na den (používá počáteční datum)</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Cena: jeden záznam za cenu</target>
+        <target state="translated">Cena</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Týdenní: jeden záznam týdně (používá počáteční datum)</target>
+        <target state="translated">Kalendářní týden</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Vyberte, podle kterých polí mají být položky faktury seskupeny</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Aktivita a uživatel</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Projekt a uživatel</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Datum a uživatel</target>
       </trans-unit>
     </body>
   </file>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
         <source>Default</source>
-        <target>Padrão</target>
+        <target state="translated">Predefinido</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>

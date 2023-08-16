@@ -46,6 +46,10 @@
         <source>report_user_year</source>
         <target state="translated">Vista annuale per un utente</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view">
+        <source>report_customer_view</source>
+        <target state="translated">Panoramica del cliente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

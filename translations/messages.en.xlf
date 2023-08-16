@@ -297,7 +297,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>User</source>
-        <target state="needs-translation">User</target>
+        <target state="translated">User</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -616,8 +616,8 @@
         <target>Evaluation</target>
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target>Complete month</target>
+        <source>Complete month</source>
+        <target state="needs-translation">Complete month</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
