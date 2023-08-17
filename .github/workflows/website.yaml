@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       kimai_version:
-          description: 'The Kimai version to update the website for'
-          required: true
+        description: 'The Kimai version to update the website for'
+        required: true
   release:
     types: [released]
 
