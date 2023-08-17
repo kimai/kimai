@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       kimai_version:
-        description: 'The Kimai version to update the website for'
+        description: 'Kimai version for the website'
         required: true
   release:
     types: [released]
@@ -20,10 +20,17 @@ jobs:
           # Determine between manual trigger and release event
           if [ -z "$input" ]; then
               echo "No input provided, using release tag"
-              echo "kimai_version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+              version="${{ github.event.release.tag_name }}"
           else
               echo "Using input provided: $input"
-              echo "kimai_version=$input" >> $GITHUB_ENV
+              version="$input"
+          fi
+            
+          echo "kimai_version=$version" >> $GITHUB_ENV
+
+          if [[ ! $version =~ ^2\.(0|[1-9]*)\.(0|[1-9]*)$ ]]; then
+            echo "Invalid version number: $version"
+            exit 1
           fi
 
       - name: Emit repository_dispatch
@@ -32,4 +39,4 @@ jobs:
           token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
           repository: kimai/www.kimai.org
           event-type: kimai_release
-          client_payload: '{"kimai_version": "$kimai_version"}'
+          client-payload: '{"kimai_version": "$kimai_version"}'
