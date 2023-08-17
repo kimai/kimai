@@ -32,4 +32,4 @@ jobs:
           token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
           repository: kimai/www.kimai.org
           event-type: kimai_release
-          client_payload: '{"kimai_version": "$kimai_version"}'
+          client-payload: '{"kimai_version": "$kimai_version"}'
