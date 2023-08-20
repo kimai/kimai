@@ -24,7 +24,7 @@ class ActivityRate implements RateInterface
 {
     use Rate;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity')]
+    #[ORM\ManyToOne(targetEntity: Activity::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Activity $activity = null;

@@ -127,21 +127,21 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity')]
+    #[ORM\ManyToOne(targetEntity: Activity::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ActivityExpanded')]
     private ?Activity $activity = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -203,7 +203,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[ORM\JoinTable(name: 'kimai2_timesheet_tags')]
     #[ORM\JoinColumn(name: 'timesheet_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Tag', inversedBy: 'timesheets', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'timesheets', cascade: ['persist'])]
     #[Assert\Valid]
     private Collection $tags;
     /**
@@ -211,7 +211,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      *
      * @var Collection<TimesheetMeta>
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\TimesheetMeta', mappedBy: 'timesheet', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: TimesheetMeta::class, mappedBy: 'timesheet', cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet'])]
     #[Serializer\Type(name: 'array<App\Entity\TimesheetMeta>')]

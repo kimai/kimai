@@ -22,7 +22,7 @@ trait Rate
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $id = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

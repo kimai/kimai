@@ -46,7 +46,7 @@ class UserPreference
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
     private ?int $id = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'preferences')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'preferences')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;

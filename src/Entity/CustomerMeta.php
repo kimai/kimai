@@ -22,7 +22,7 @@ class CustomerMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer', inversedBy: 'meta')]
+    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'meta')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Customer $customer = null;

@@ -20,7 +20,7 @@ class CustomerComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private Customer $customer;

@@ -54,7 +54,7 @@ class Tag
     /**
      * @var Collection<Timesheet>
      */
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Timesheet', mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToMany(targetEntity: Timesheet::class, mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
     private Collection $timesheets;
 
     public function __construct()
