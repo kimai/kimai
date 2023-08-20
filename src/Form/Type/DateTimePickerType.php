@@ -64,6 +64,10 @@ class DateTimePickerType extends AbstractType
         $dateOptions['input'] = $timeOptions['input'] = 'array';
         $dateOptions['error_bubbling'] = $timeOptions['error_bubbling'] = true;
 
+        $dateParts = ['year', 'month', 'day'];
+        $timeParts = ['hour', 'minute'];
+        $parts = array_merge($dateParts, $timeParts);
+
         $builder
             ->addViewTransformer(new DataTransformerChain([
                 new DateTimeToArrayTransformer($options['model_timezone'], $options['view_timezone'], $parts),
@@ -71,6 +75,29 @@ class DateTimePickerType extends AbstractType
                     'date' => $dateParts,
                     'time' => $timeParts,
                 ]),
+                new CallbackTransformer(
+                    function ($transform) {
+                        return $transform;
+                    },
+                    function ($reverseTransform) {
+                        if (\array_key_exists('date', $reverseTransform) && $reverseTransform['date'] === null) {
+                            $reverseTransform['time'] = [
+                                'year' => '',
+                                'month' => '',
+                                'day' => '',
+                            ];
+                        }
+                        // happened in DateTimePickerType - made it impossible to create an empty DateTime
+                        if (\array_key_exists('time', $reverseTransform) && $reverseTransform['time'] === null) {
+                            $reverseTransform['time'] = [
+                                'hour' => '',
+                                'minute' => '',
+                            ];
+                        }
+
+                        return $reverseTransform;
+                    }
+                ),
             ]))
             ->add('date', DatePickerType::class, $dateOptions)
             ->add('time', TimePickerType::class, $timeOptions)
