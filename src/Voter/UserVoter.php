@@ -34,6 +34,7 @@ final class UserVoter extends Voter
         'hourly-rate',
         'view_team_member',
         'contract',
+        'supervisor',
     ];
 
     public function __construct(private RolePermissionManager $permissionManager)

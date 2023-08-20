@@ -203,6 +203,7 @@ class ActivityControllerTest extends ControllerBaseTest
         ]);
 
         $location = $this->assertIsModalRedirect($client, '/details');
+        self::assertNotNull($location);
         $this->requestPure($client, $location);
 
         $this->assertDetailsPage($client);

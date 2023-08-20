@@ -17,6 +17,7 @@ use App\Form\Type\DateRangeType;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,7 +78,7 @@ abstract class ControllerBaseTest extends WebTestCase
         return self::getContainer()->get($service);
     }
 
-    protected function loadUserFromDatabase(string $username)
+    protected function loadUserFromDatabase(string $username): User
     {
         /** @var UserRepository $userRepository */
         $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
@@ -102,7 +103,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->clearConfigCache();
     }
 
-    protected function clearConfigCache()
+    protected function clearConfigCache(): void
     {
         /** @var ConfigurationService $service */
         $service = self::getContainer()->get(ConfigurationService::class);
@@ -146,30 +147,17 @@ abstract class ControllerBaseTest extends WebTestCase
         return $url;
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string $url
-     * @param string $method
-     * @param array $parameters
-     * @param string $content
-     * @return \Symfony\Component\DomCrawler\Crawler
-     */
-    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
     {
         return $client->request($method, $this->createUrl($url), $parameters, [], [], $content);
     }
 
-    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
+    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
     {
         return $client->request($method, $url, $parameters, [], [], $content);
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string $url
-     * @param string $method
-     */
-    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, ?string $method = 'GET')
+    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
     {
         $this->request($client, $url, $method);
 
@@ -189,7 +177,7 @@ abstract class ControllerBaseTest extends WebTestCase
         );
     }
 
-    protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = '')
+    protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = ''): void
     {
         $response = $client->getResponse();
         self::assertThat($response, new ResponseConstraint\ResponseIsSuccessful(), 'Response is not successful, got code: ' . $response->getStatusCode());
@@ -225,19 +213,19 @@ abstract class ControllerBaseTest extends WebTestCase
         );
     }
 
-    protected function assertAccessIsGranted(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [])
+    protected function assertAccessIsGranted(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = []): void
     {
         $this->request($client, $url, $method, $parameters);
         self::assertTrue($client->getResponse()->isSuccessful());
     }
 
-    protected function assertRouteNotFound(HttpKernelBrowser $client)
+    protected function assertRouteNotFound(HttpKernelBrowser $client): void
     {
         self::assertFalse($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
 
-    protected function assert404(Response $response, ?string $message = null)
+    protected function assert404(Response $response, ?string $message = null): void
     {
         $message = 'Page not found';
         self::assertFalse($response->isSuccessful());
@@ -245,7 +233,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertStringContainsString($message, $response->getContent());
     }
 
-    protected function assertMainContentClass(HttpKernelBrowser $client, string $classname)
+    protected function assertMainContentClass(HttpKernelBrowser $client, string $classname): void
     {
         self::assertStringContainsString('<section id="" class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
@@ -253,7 +241,7 @@ abstract class ControllerBaseTest extends WebTestCase
     /**
      * @param HttpKernelBrowser $client
      */
-    protected function assertHasDataTable(HttpKernelBrowser $client)
+    protected function assertHasDataTable(HttpKernelBrowser $client): void
     {
         self::assertStringContainsString('<table class="table table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
@@ -261,7 +249,7 @@ abstract class ControllerBaseTest extends WebTestCase
     /**
      * @param HttpKernelBrowser $client
      */
-    protected static function assertHasProgressbar(HttpKernelBrowser $client)
+    protected static function assertHasProgressbar(HttpKernelBrowser $client): void
     {
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('<div class="progress-bar', $content);
@@ -274,7 +262,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param string $class
      * @param int $count
      */
-    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count)
+    protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count): void
     {
         $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
         self::assertEquals($count, $node->count());
@@ -284,7 +272,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param array $buttons
      */
-    protected function assertPageActions(HttpKernelBrowser $client, array $buttons)
+    protected function assertPageActions(HttpKernelBrowser $client, array $buttons): void
     {
         $node = $client->getCrawler()->filter('div.page-header div.page-actions .pa-desktop a');
 
@@ -307,7 +295,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param array $fieldNames array of form-fields that should fail
      * @param bool $disableValidation whether the form should validate before submitting or not
      */
-    protected function assertHasValidationError(HttpKernelBrowser $client, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    protected function assertHasValidationError(HttpKernelBrowser $client, string $url, string $formSelector, array $formData, array $fieldNames, bool $disableValidation = true): void
     {
         $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
@@ -342,24 +330,16 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
-    /**
-     * @param string $role the USER role to use for the request
-     * @param string $url the URL of the page displaying the initial form to submit
-     * @param string $formSelector a selector to find the form to test
-     * @param array $formData values to fill in the form
-     * @param array $fieldNames array of form-fields that should fail
-     * @param bool $disableValidation whether the form should validate before submitting or not
-     */
-    protected function assertFormHasValidationError($role, $url, $formSelector, array $formData, array $fieldNames, $disableValidation = true)
+    protected function assertFormHasValidationError(string $role, string $url, string $formSelector, array $formData, array $fieldNames): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->assertHasValidationError($client, $url, $formSelector, $formData, $fieldNames, $disableValidation);
+        $this->assertHasValidationError($client, $url, $formSelector, $formData, $fieldNames);
     }
 
     /**
      * @param HttpKernelBrowser $client
      */
-    protected function assertHasNoEntriesWithFilter(HttpKernelBrowser $client)
+    protected function assertHasNoEntriesWithFilter(HttpKernelBrowser $client): void
     {
         $this->assertCalloutWidgetWithMessage($client, 'No entries were found based on your selected filters.');
     }
@@ -368,18 +348,18 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $message
      */
-    protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message)
+    protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message): void
     {
         $node = $client->getCrawler()->filter('div.alert.alert-warning.alert-important');
         self::assertStringContainsString($message, $node->text(null, true));
     }
 
-    protected function assertHasFlashDeleteSuccess(HttpKernelBrowser $client)
+    protected function assertHasFlashDeleteSuccess(HttpKernelBrowser $client): void
     {
         $this->assertHasFlashSuccess($client, 'Entry was deleted');
     }
 
-    protected function assertHasFlashSaveSuccess(HttpKernelBrowser $client)
+    protected function assertHasFlashSaveSuccess(HttpKernelBrowser $client): void
     {
         $this->assertHasFlashSuccess($client, 'Saved changes');
     }
@@ -388,7 +368,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string|null $message
      */
-    protected function assertHasFlashSuccess(HttpKernelBrowser $client, string $message = null)
+    protected function assertHasFlashSuccess(HttpKernelBrowser $client, string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'success', $message);
     }
@@ -397,12 +377,12 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string|null $message
      */
-    protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null)
+    protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'error', $message);
     }
 
-    private function assertHasFlashMessage(HttpKernelBrowser $client, string $type, string $message = null)
+    private function assertHasFlashMessage(HttpKernelBrowser $client, string $type, string $message = null): void
     {
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('ALERT.' . $type . '(\'', $content, 'Could not find flash ' . $type . ' message');
@@ -418,7 +398,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $url
      */
-    protected function assertIsRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
+    protected function assertIsRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true): void
     {
         self::assertResponseRedirects();
 
@@ -434,6 +414,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertEquals(201, $client->getResponse()->getStatusCode());
         self::assertTrue($client->getResponse()->headers->has('x-modal-redirect'), 'Could not find "x-modal-redirect" header');
         $location = $client->getResponse()->headers->get('x-modal-redirect');
+        self::assertNotNull($location);
 
         // check for meta refresh
         $expectedMeta = sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
@@ -450,14 +431,11 @@ abstract class ControllerBaseTest extends WebTestCase
         return $location;
     }
 
-    protected function assertRedirectUrl(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
+    protected function assertRedirectUrl(HttpKernelBrowser $client, string $url, bool $endsWith = true): void
     {
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         $location = $client->getResponse()->headers->get('Location');
-
-        if ($url === null) {
-            return;
-        }
+        self::assertNotNull($location);
 
         if ($endsWith) {
             self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
@@ -466,18 +444,21 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
-    protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix)
+    protected function assertExcelExportResponse(HttpKernelBrowser $client, string $prefix): void
     {
         /** @var BinaryFileResponse $response */
         $response = $client->getResponse();
         self::assertInstanceOf(BinaryFileResponse::class, $response);
 
+        $disposition = $response->headers->get('Content-Disposition');
+        self::assertNotNull($disposition);
+
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        self::assertStringContainsString('attachment; filename=' . $prefix, $response->headers->get('Content-Disposition'));
-        self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('attachment; filename=' . $prefix, $disposition);
+        self::assertStringContainsString('.xlsx', $disposition);
     }
 
-    protected function assertInvalidCsrfToken(HttpKernelBrowser $client, string $url, string $expectedRedirect)
+    protected function assertInvalidCsrfToken(HttpKernelBrowser $client, string $url, string $expectedRedirect): void
     {
         $this->request($client, $url);
 

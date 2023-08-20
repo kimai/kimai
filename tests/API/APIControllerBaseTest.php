@@ -78,7 +78,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertEquals($pageSize, $response->headers->get('X-Per-Page'));
     }
 
-    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, $method = 'GET'): void
+    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
     {
         $this->request($client, $url, $method);
         $this->assertResponseIsSecured($client->getResponse(), $url);
@@ -126,7 +126,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    public function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null): Crawler
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
     {
         $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
 
@@ -355,6 +355,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'enabled' => 'bool',
                     'alias' => '@string',
                     'title' => '@string',
+                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
                     'avatar' => '@string',
                     'color' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],

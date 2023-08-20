@@ -197,6 +197,7 @@ final class UserController extends BaseApiController
             'include_roles' => $this->isGranted('roles', $profile),
             'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
             'include_preferences' => $this->isGranted('preferences', $profile),
+            'include_supervisor' => $this->isGranted('supervisor', $profile),
         ]);
 
         $form->setData($profile);

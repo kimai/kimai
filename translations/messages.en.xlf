@@ -1621,6 +1621,10 @@
         <source>day_half</source>
         <target>Half day</target>
       </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target>Vorgesetzter</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

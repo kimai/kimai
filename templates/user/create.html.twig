@@ -10,26 +10,11 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {{ form_row(form.username) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {{ form_row(form.email) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.color) }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    {{ form_row(form.alias) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.title) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.accountNumber) }}
                 </div>
             </div>
 
@@ -42,6 +27,26 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.alias) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.title) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md{% if form.avatar is defined %}-6{% endif %}">
+                    {{ form_row(form.color) }}
+                </div>
+                {% if form.avatar is defined %}
+                <div class="col-md-6">
+                    {{ form_row(form.avatar) }}
+                </div>
+                {% endif %}
+            </div>
+
             {% if form.language is defined and form.timezone is defined %}
             <div class="row">
                 <div class="col-md-6">
@@ -52,6 +57,15 @@
                 </div>
             </div>
             {% endif %}
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.accountNumber) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.supervisor) }}
+                </div>
+            </div>
 
             {% if form.teams is defined or form.roles is defined %}
                 {% set length = 12 %}
