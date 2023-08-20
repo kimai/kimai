@@ -62,7 +62,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<input type="email"', $content);
         $this->assertStringContainsString('id="user_registration_form_email" name="user_registration_form[email]" required="required"', $content);
         $this->assertStringContainsString('<input type="text"', $content);
-        $this->assertStringContainsString('id="user_registration_form_username" name="user_registration_form[username]" required="required" maxlength="60" pattern="', $content);
+        $this->assertStringContainsString('id="user_registration_form_username" name="user_registration_form[username]" required="required" maxlength="64" pattern="', $content);
         $this->assertStringContainsString('<input type="password"', $content);
         $this->assertStringContainsString('id="user_registration_form_plainPassword_first" name="user_registration_form[plainPassword][first]" required="required"', $content);
         $this->assertStringContainsString('id="user_registration_form_plainPassword_second" name="user_registration_form[plainPassword][second]" required="required"', $content);

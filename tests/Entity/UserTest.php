@@ -91,6 +91,22 @@ class UserTest extends TestCase
     {
         $user = new User();
 
+        $monday = new \DateTime('2023-05-08 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $tuesday = new \DateTime('2023-05-09 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $wednesday = new \DateTime('2023-05-10 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $thursday = new \DateTime('2023-05-11 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $friday = new \DateTime('2023-05-12 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $saturday = new \DateTime('2023-05-13 12:00:00', new \DateTimeZone('Europe/Berlin'));
+        $sunday = new \DateTime('2023-05-14 12:00:00', new \DateTimeZone('Europe/Berlin'));
+
+        self::assertFalse($user->isWorkDay($monday));
+        self::assertFalse($user->isWorkDay($tuesday));
+        self::assertFalse($user->isWorkDay($wednesday));
+        self::assertFalse($user->isWorkDay($thursday));
+        self::assertFalse($user->isWorkDay($friday));
+        self::assertFalse($user->isWorkDay($saturday));
+        self::assertFalse($user->isWorkDay($sunday));
+
         $user->setWorkHoursMonday(7200);
         self::assertTrue($user->hasWorkHourConfiguration());
         $user->setWorkHoursTuesday(7300);
@@ -111,13 +127,21 @@ class UserTest extends TestCase
         self::assertEquals(7800, $user->getWorkHoursSunday());
         self::assertEquals(10, $user->getHolidaysPerYear());
 
-        self::assertEquals(7200, $user->getWorkHoursForDay(new \DateTime('2023-05-08 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7300, $user->getWorkHoursForDay(new \DateTime('2023-05-09 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7400, $user->getWorkHoursForDay(new \DateTime('2023-05-10 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7500, $user->getWorkHoursForDay(new \DateTime('2023-05-11 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7600, $user->getWorkHoursForDay(new \DateTime('2023-05-12 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7700, $user->getWorkHoursForDay(new \DateTime('2023-05-13 12:00:00', new \DateTimeZone('Europe/Berlin'))));
-        self::assertEquals(7800, $user->getWorkHoursForDay(new \DateTime('2023-05-14 12:00:00', new \DateTimeZone('Europe/Berlin'))));
+        self::assertEquals(7200, $user->getWorkHoursForDay($monday));
+        self::assertEquals(7300, $user->getWorkHoursForDay($tuesday));
+        self::assertEquals(7400, $user->getWorkHoursForDay($wednesday));
+        self::assertEquals(7500, $user->getWorkHoursForDay($thursday));
+        self::assertEquals(7600, $user->getWorkHoursForDay($friday));
+        self::assertEquals(7700, $user->getWorkHoursForDay($saturday));
+        self::assertEquals(7800, $user->getWorkHoursForDay($sunday));
+
+        self::assertTrue($user->isWorkDay($monday));
+        self::assertTrue($user->isWorkDay($tuesday));
+        self::assertTrue($user->isWorkDay($wednesday));
+        self::assertTrue($user->isWorkDay($thursday));
+        self::assertTrue($user->isWorkDay($friday));
+        self::assertTrue($user->isWorkDay($saturday));
+        self::assertTrue($user->isWorkDay($sunday));
 
         $user->setPublicHolidayGroup('10');
         self::assertEquals('10', $user->getPublicHolidayGroup());

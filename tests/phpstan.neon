@@ -4473,16 +4473,6 @@ parameters:
             path: Entity/UserValidationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testInvalidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testInvalidValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testInvalidValues\\(\\) has parameter \\$email with no type specified\\.$#"
             count: 1
             path: Entity/UserValidationTest.php
@@ -4494,16 +4484,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testInvalidValues\\(\\) has parameter \\$username with no type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testValidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:testValidValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/UserValidationTest.php
 

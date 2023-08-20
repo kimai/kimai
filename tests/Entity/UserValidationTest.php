@@ -25,14 +25,14 @@ class UserValidationTest extends KernelTestCase
         return [
             ['', ''],
             ['x', 'test@'], // too short username
-            [str_pad('#', 61, '-'), 'test@x.'], // too long username
+            [str_pad('#', 65, '-'), 'test@x.'], // too long username
         ];
     }
 
     /**
      * @dataProvider getInvalidTestData
      */
-    public function testInvalidValues($username, $email, $roles = [])
+    public function testInvalidValues($username, $email, $roles = []): void
     {
         $defaultFields = [
             'username', 'email'
@@ -49,7 +49,7 @@ class UserValidationTest extends KernelTestCase
         $this->assertHasViolationForField($user, $defaultFields, ['Profile']);
     }
 
-    public function testInvalidRoles()
+    public function testInvalidRoles(): void
     {
         $user = new User();
         $user->setUserIdentifier('foo');
@@ -59,7 +59,7 @@ class UserValidationTest extends KernelTestCase
         $this->assertHasViolationForField($user, ['roles'], ['RolesUpdate']);
     }
 
-    public function testValidRoles()
+    public function testValidRoles(): void
     {
         $user = new User();
         $user->setUserIdentifier('foo');
@@ -73,14 +73,14 @@ class UserValidationTest extends KernelTestCase
     {
         return [
             [str_pad('#', 8, '-'), 'test@x.x'], // shortest possible username
-            [str_pad('#', 60, '-'), 'test@x.x'], // longest possible username
+            [str_pad('#', 64, '-'), 'test@x.x'], // longest possible username
         ];
     }
 
     /**
      * @dataProvider getValidTestData
      */
-    public function testValidValues($username, $email, $roles = [])
+    public function testValidValues($username, $email, $roles = []): void
     {
         $user = new User();
         $user->setUserIdentifier($username);
