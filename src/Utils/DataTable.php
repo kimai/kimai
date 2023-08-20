@@ -9,7 +9,7 @@
 
 namespace App\Utils;
 
-use App\Form\MultiUpdate\MultiUpdateTable;
+use App\Form\MultiUpdate\MultiUpdateTableDTO;
 use App\Repository\Query\BaseQuery;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -20,7 +20,7 @@ final class DataTable implements \Countable, \IteratorAggregate
     private ?Pagination $pagination = null;
     private ?FormInterface $searchForm = null;
     /**
-     * @var FormInterface<MultiUpdateTable>|null
+     * @var FormInterface<MultiUpdateTableDTO>|null
      */
     private ?FormInterface $batchForm = null;
     private array $columns = [];
@@ -84,7 +84,7 @@ final class DataTable implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param FormInterface<MultiUpdateTable>|null $batchForm
+     * @param FormInterface<MultiUpdateTableDTO>|null $batchForm
      * @return void
      */
     public function setBatchForm(?FormInterface $batchForm): void
