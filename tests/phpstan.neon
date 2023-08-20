@@ -423,21 +423,6 @@ parameters:
             path: API/ApiDocControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ApiDocControllerTest\\:\\:testGetDocs\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ApiDocControllerTest\\:\\:testGetJsonDocs\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ApiDocControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 2
             path: API/ApiDocControllerTest.php
@@ -1249,101 +1234,6 @@ parameters:
 
         -
             message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:getRoleTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetCollection\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetCollectionWithQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetCollectionWithQuery2\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetEntity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetEntityAccessAllowedForOwnProfile\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetEntityAccessDenied\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testGetMyProfile\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testIsSecureForRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testNotFound\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPatchAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPatchActionWithInvalidUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPatchActionWithUnknownUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPatchActionWithValidationErrors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPostAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPostActionWithInvalidUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPostActionWithShortPassword\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\UserControllerTest\\:\\:testPostActionWithValidationErrors\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/UserControllerTest.php
 
@@ -2403,37 +2293,7 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assert404\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessIsGranted\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessIsGranted\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertCalloutWidgetWithMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertDataTableRowCount\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertExcelExportResponse\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertFormHasValidationError\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
 
@@ -2448,51 +2308,6 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasDataTable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasFlashDeleteSuccess\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasFlashError\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasFlashMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasFlashSaveSuccess\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasFlashSuccess\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasNoEntriesWithFilter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasProgressbar\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
@@ -2503,57 +2318,7 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertInvalidCsrfToken\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertIsModalRedirect\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertIsRedirect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertMainContentClass\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertPageActions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertPageActions\\(\\) has parameter \\$buttons with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertRedirectUrl\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertRequestIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertRouteNotFound\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertSuccessResponse\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:clearConfigCache\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
 
@@ -2563,17 +2328,7 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:loadUserFromDatabase\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:requestPure\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
 
@@ -2590,21 +2345,6 @@ parameters:
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 10
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 4
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringEndsWith\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Parameter \\#3 \\$method of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
             path: Controller/ControllerBaseTest.php
 
         -
@@ -3536,41 +3276,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
             path: Controller/Security/PasswordResetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testCheckAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testLoginAlreadyLoggedIn\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testLoginNegative\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testLoginPageIsRendered\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testLoginPositive\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testLogoutAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SecurityControllerTest\\:\\:testRootUrlIsRedirectedToLogin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/SecurityControllerTest.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
@@ -4719,106 +4424,6 @@ parameters:
 
         -
             message: "#^Cannot access offset 0 on iterable\\<App\\\\Entity\\\\Team\\>\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testAuth\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testCanSeeAllData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testDatetime\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testDisplayName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testEqualsTo\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testExportAnnotations\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testGetLocale\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testGetUsername\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testMaxLength\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testPasswordRequestedAt\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testPreferences\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testPreferencesCollectionIsCreatedOnBrokenUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testSerialize\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testSystemAccount\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testTeamMemberships\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testTeamMembershipsException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testTeams\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/UserTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserTest\\:\\:testWizards\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/UserTest.php
 

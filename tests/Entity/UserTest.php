@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $user = new User();
         self::assertInstanceOf(EquatableInterface::class, $user);
@@ -83,6 +83,8 @@ class UserTest extends TestCase
         self::assertEquals(0, $user->getHolidaysPerYear());
         self::assertFalse($user->hasWorkHourConfiguration());
         self::assertNull($user->getPublicHolidayGroup());
+        self::assertFalse($user->hasSupervisor());
+        self::assertNull($user->getSupervisor());
     }
 
     public function testWorkContract(): void
@@ -139,7 +141,7 @@ class UserTest extends TestCase
         self::assertTrue($sut->hasColor());
     }
 
-    public function testWizards()
+    public function testWizards(): void
     {
         $sut = new User();
         // internal name may not be changed
@@ -155,7 +157,7 @@ class UserTest extends TestCase
         self::assertTrue($sut->hasSeenWizard('profile'));
     }
 
-    public function testAuth()
+    public function testAuth(): void
     {
         $user = new User();
 
@@ -183,7 +185,7 @@ class UserTest extends TestCase
         self::assertTrue($user->isInternalUser());
     }
 
-    public function testDatetime()
+    public function testDatetime(): void
     {
         $date = new \DateTime('+1 day');
         $user = new User();
@@ -191,7 +193,7 @@ class UserTest extends TestCase
         self::assertEquals($date, $user->getRegisteredAt());
     }
 
-    public function testPasswordRequestedAt()
+    public function testPasswordRequestedAt(): void
     {
         $date = new \DateTime('-60 minutes');
         $sut = new User();
@@ -205,7 +207,7 @@ class UserTest extends TestCase
         self::assertTrue($sut->isPasswordRequestNonExpired(3610));
     }
 
-    public function testPreferences()
+    public function testPreferences(): void
     {
         $user = new User();
         self::assertNull($user->getPreference('test'));
@@ -228,7 +230,7 @@ class UserTest extends TestCase
         self::assertTrue($user->isExportDecimal());
     }
 
-    public function testDisplayName()
+    public function testDisplayName(): void
     {
         $user = new User();
 
@@ -244,7 +246,7 @@ class UserTest extends TestCase
         self::assertEquals('foo', (string) $user);
     }
 
-    public function testGetUsername()
+    public function testGetUsername(): void
     {
         $user = new User();
 
@@ -260,7 +262,7 @@ class UserTest extends TestCase
         self::assertEquals('foo', (string) $user);
     }
 
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $sut = new User();
         self::assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
@@ -271,7 +273,7 @@ class UserTest extends TestCase
         self::assertEquals('fr', $sut->getLocale());
     }
 
-    public function testTeams()
+    public function testTeams(): void
     {
         $sut = new User();
         $user = new User();
@@ -314,7 +316,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->hasTeamAssignment());
     }
 
-    public function testRoles()
+    public function testRoles(): void
     {
         $sut = new User();
         self::assertFalse($sut->canSeeAllData());
@@ -357,7 +359,7 @@ class UserTest extends TestCase
      *
      * @see #1562
      */
-    public function testMaxLength()
+    public function testMaxLength(): void
     {
         $sut = new User();
         $sut->setAlias('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
@@ -372,7 +374,7 @@ class UserTest extends TestCase
         self::assertEquals(50, mb_strlen($sut->getTitle()));
     }
 
-    public function testPreferencesCollectionIsCreatedOnBrokenUser()
+    public function testPreferencesCollectionIsCreatedOnBrokenUser(): void
     {
         // this code is only used in some rare edge cases, maybe even only in development ...
         // lets keep it, as it occured during the work on SAML authentication
@@ -390,7 +392,7 @@ class UserTest extends TestCase
         self::assertEquals('foobar', $sut->getPreferenceValue('test'));
     }
 
-    public function testCanSeeAllData()
+    public function testCanSeeAllData(): void
     {
         $sut = new User();
         $sut->addRole(User::ROLE_USER);
@@ -400,7 +402,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->initCanSeeAllData(true));
     }
 
-    public function testSystemAccount()
+    public function testSystemAccount(): void
     {
         $sut = new User();
         self::assertFalse($sut->isSystemAccount());
@@ -410,7 +412,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->isSystemAccount());
     }
 
-    public function testExportAnnotations()
+    public function testExportAnnotations(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -449,7 +451,7 @@ class UserTest extends TestCase
         }
     }
 
-    public function testEqualsTo()
+    public function testEqualsTo(): void
     {
         $sut = new User();
         $sut->setUserIdentifier('foo');
@@ -479,7 +481,7 @@ class UserTest extends TestCase
         self::assertTrue($sut2->isEqualTo($sut));
     }
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $sut = new User();
         $sut->setPassword('ABC-1234567890');
@@ -509,7 +511,7 @@ class UserTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testTeamMemberships()
+    public function testTeamMemberships(): void
     {
         $team = new Team('Foo');
 
@@ -564,12 +566,27 @@ class UserTest extends TestCase
         self::assertCount(1, $sut->getMemberships());
     }
 
-    public function testTeamMembershipsException()
+    public function testTeamMembershipsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $sut = new User();
         $member = new TeamMember();
         $member->setUser(new User());
         $sut->addMembership($member);
+    }
+
+    public function testSupervisor(): void
+    {
+        $user = new User();
+        self::assertFalse($user->hasSupervisor());
+        self::assertNull($user->getSupervisor());
+
+        $supervisor = new User();
+        $supervisor->setTitle('Cool boss');
+
+        $user->setSupervisor($supervisor);
+        self::assertTrue($user->hasSupervisor());
+        self::assertNotNull($user->getSupervisor());
+        self::assertSame($supervisor, $user->getSupervisor());
     }
 }

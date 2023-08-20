@@ -17,12 +17,12 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class ApiDocControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/doc');
     }
 
-    public function testGetDocs()
+    public function testGetDocs(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
@@ -47,7 +47,7 @@ class ApiDocControllerTest extends ControllerBaseTest
         self::assertEquals($expectedKeys, $actual, sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
     }
 
-    public function testGetJsonDocs()
+    public function testGetJsonDocs(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc.json');

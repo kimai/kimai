@@ -25,7 +25,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 class SecurityControllerTest extends ControllerBaseTest
 {
-    public function testRootUrlIsRedirectedToLogin()
+    public function testRootUrlIsRedirectedToLogin(): void
     {
         $client = self::createClient();
         $client->request('GET', '/');
@@ -35,7 +35,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/login'));
     }
 
-    public function testLoginPageIsRendered()
+    public function testLoginPageIsRendered(): void
     {
         $client = self::createClient();
         $this->request($client, '/login');
@@ -54,7 +54,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertStringNotContainsString('Register a new account', $content);
     }
 
-    public function testLoginPositive()
+    public function testLoginPositive(): void
     {
         $client = self::createClient();
         $this->request($client, '/login');
@@ -79,7 +79,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testLoginAlreadyLoggedIn()
+    public function testLoginAlreadyLoggedIn(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -94,7 +94,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testLoginNegative()
+    public function testLoginNegative(): void
     {
         $client = self::createClient();
         $this->request($client, '/login');
@@ -114,7 +114,7 @@ class SecurityControllerTest extends ControllerBaseTest
         self::assertStringContainsString('<div class="alert alert-important alert-danger">Invalid credentials.</div>', $client->getResponse()->getContent());
     }
 
-    public function testCheckAction()
+    public function testCheckAction(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
@@ -127,7 +127,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $sut->checkAction();
     }
 
-    public function testLogoutAction()
+    public function testLogoutAction(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must activate the logout in your security firewall configuration.');

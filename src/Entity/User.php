@@ -128,15 +128,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @var Collection<UserPreference>|null
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\UserPreference', mappedBy: 'user', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: UserPreference::class, mappedBy: 'user', cascade: ['persist'])]
     private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
      * @var Collection<TeamMember>
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\OneToMany(targetEntity: TeamMember::class, mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
@@ -216,6 +216,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private bool $totpEnabled = false;
     #[ORM\Column(name: 'system_account', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $systemAccount = false;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
+    private ?User $supervisor = null;
 
     use ColorTrait;
 
@@ -1280,5 +1286,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             '7' => $this->getWorkHoursSunday(),
             default => throw new \Exception('Unknown day: ' . $dateTime->format('Y-m-d'))
         };
+    }
+
+    public function isWorkDay(\DateTimeInterface $dateTime): bool
+    {
+        return $this->getWorkHoursForDay($dateTime) > 0;
+    }
+
+    public function hasSupervisor(): bool
+    {
+        return $this->supervisor !== null;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(?User $supervisor): void
+    {
+        $this->supervisor = $supervisor;
     }
 }

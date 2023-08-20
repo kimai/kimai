@@ -316,7 +316,8 @@ final class ProfileController extends AbstractController
                 'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST',
                 'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
-                'include_preferences' => false,
+                'include_preferences' => true,
+                'include_supervisor' => $this->isGranted('supervisor', $user),
             ]
         );
     }

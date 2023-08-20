@@ -1,20 +1,36 @@
 {% extends 'user/form.html.twig' %}
 
-{% block form_pre_content %}
-        <div class="row">
-            <div class="col-md-9">
-                {{ form_row(form.alias) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.color) }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-9">
-                {{ form_row(form.title) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.accountNumber) }}
-            </div>
-        </div>
+{% block form_content %}
+
+    {% form_theme form 'form/horizontal.html.twig' %}
+
+    {{ form_row(form._token) }}
+
+    <fieldset class="form-fieldset form-fieldset-light">
+        {{ form_row(form.alias) }}
+        {{ form_row(form.email) }}
+        {% if form.systemAccount is defined %}
+        {{ form_row(form.systemAccount) }}
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="form-fieldset form-fieldset-light">
+        {{ form_row(form.accountNumber) }}
+        {% if form.supervisor is defined %}
+        {{ form_row(form.supervisor) }}
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="form-fieldset form-fieldset-light">
+        {{ form_row(form.title) }}
+        {{ form_row(form.color) }}
+        {% if form.avatar is defined %}
+        {{ form_row(form.avatar) }}
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="form-fieldset form-fieldset-light">
+        {{- form_rest(form) -}}
+    </fieldset>
+
 {% endblock %}

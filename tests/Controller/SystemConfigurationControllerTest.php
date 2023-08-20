@@ -186,8 +186,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
                 '#system_configuration_form_timesheet_configuration_6_value', // hard_limit
-            ],
-            true
+            ]
         );
     }
 
@@ -297,8 +296,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 '#system_configuration_form_customer_configuration_0_value',
                 '#system_configuration_form_customer_configuration_1_value',
                 '#system_configuration_form_customer_configuration_2_value',
-            ],
-            true
+            ]
         );
     }
 
@@ -344,8 +342,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_theme_configuration_1_value',
-            ],
-            true
+            ]
         );
     }
 
@@ -413,8 +410,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 '#system_configuration_form_calendar_configuration_3_value',
                 '#system_configuration_form_calendar_configuration_4_value',
                 '#system_configuration_form_calendar_configuration_5_value',
-            ],
-            true
+            ]
         );
     }
 }

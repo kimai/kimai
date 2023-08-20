@@ -40,3 +40,21 @@
 fieldset:empty {
     display: none;
 }
+
+/* e.g. the work contract settings is user profile render rows with mb-3 and the last row doesn't need that */
+fieldset > .mb-3.row:last-child {
+    margin-bottom: 0!important;
+}
+
+.form-fieldset-light {
+    border-radius: 0;
+    margin-bottom: 0;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background-color: unset;
+}
+
+.form-fieldset-light:last-child {
+    border:none;
+}

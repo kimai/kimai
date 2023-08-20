@@ -16,18 +16,18 @@ use Symfony\Component\Form\FormEvents;
 
 trait ColorTrait
 {
-    protected function addColor(FormBuilderInterface $builder): void
+    protected function addColor(FormBuilderInterface $builder, bool $required = false): void
     {
         $builder
             ->add('color', ColorChoiceType::class, [
-                'required' => false,
+                'required' => $required,
             ])
         ;
 
         // this code exists only for backward compatibility
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($required) {
                 if (!$event->getForm()->getConfig()->hasOption('choices')) {
                     return;
                 }
@@ -42,7 +42,7 @@ trait ColorTrait
                 }
 
                 $event->getForm()->add('color', ColorChoiceType::class, [
-                    'required' => false,
+                    'required' => $required,
                     'choices' => $choices,
                 ]);
             }
