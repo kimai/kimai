@@ -1658,6 +1658,10 @@
         <source>time_off.intro</source>
         <target state="translated">A suas horas trabalhadas já somam %hours% horas.</target>
       </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">Supervisor</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
