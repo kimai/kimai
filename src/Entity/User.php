@@ -1253,9 +1253,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(int $holidays): void
+    public function setHolidaysPerYear(?int $holidays): void
     {
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays);
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
     }
 
     public function hasContractSettings(): bool
