@@ -13,6 +13,7 @@
         {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
+            {{ form_errors(form) }}
         {% endblock %}
         {# "table-responsive" does not work, because that would render dropdowns at the bottom behind the container #}
         {% block box_body_class %}p-0 maybe-table-responsive{% endblock %}
