@@ -22,7 +22,7 @@ class ProjectMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project', inversedBy: 'meta')]
+    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'meta')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Project $project = null;

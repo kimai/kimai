@@ -24,7 +24,7 @@ class CustomerRate implements RateInterface
 {
     use Rate;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Customer $customer = null;

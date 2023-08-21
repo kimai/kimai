@@ -25,7 +25,7 @@ class WorkingTime
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
     private ?int $id = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
@@ -38,7 +38,7 @@ class WorkingTime
     #[ORM\Column(name: 'actual', type: 'integer', nullable: false)]
     #[Assert\NotNull]
     private int $actualTime = 0;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'approved_by', nullable: true, onDelete: 'SET NULL')]
     private ?User $approvedBy = null;
     #[ORM\Column(name: 'approved_at', type: 'datetime', nullable: true)]

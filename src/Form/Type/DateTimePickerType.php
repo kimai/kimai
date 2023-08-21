@@ -11,6 +11,7 @@ namespace App\Form\Type;
 
 use App\API\BaseApiController;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\DataTransformer\ArrayToPartsTransformer;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DataTransformerChain;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToArrayTransformer;
@@ -22,10 +23,6 @@ class DateTimePickerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $parts = ['year', 'month', 'day', 'hour', 'minute'];
-        $dateParts = ['year', 'month', 'day'];
-        $timeParts = ['hour', 'minute'];
-
         // Only pass a subset of the options to children
         $dateOptions = array_intersect_key($options, array_flip([
             'years',
@@ -37,6 +34,8 @@ class DateTimePickerType extends AbstractType
             'translation_domain',
             'invalid_message',
             'invalid_message_parameters',
+            'model_timezone',
+            'view_timezone',
         ]));
 
         $timeOptions = array_intersect_key($options, array_flip([
@@ -45,6 +44,8 @@ class DateTimePickerType extends AbstractType
             'translation_domain',
             'invalid_message',
             'invalid_message_parameters',
+            'model_timezone',
+            'view_timezone',
         ]));
 
         if (false === $options['label']) {
@@ -63,6 +64,10 @@ class DateTimePickerType extends AbstractType
         $dateOptions['input'] = $timeOptions['input'] = 'array';
         $dateOptions['error_bubbling'] = $timeOptions['error_bubbling'] = true;
 
+        $dateParts = ['year', 'month', 'day'];
+        $timeParts = ['hour', 'minute'];
+        $parts = array_merge($dateParts, $timeParts);
+
         $builder
             ->addViewTransformer(new DataTransformerChain([
                 new DateTimeToArrayTransformer($options['model_timezone'], $options['view_timezone'], $parts),
@@ -70,6 +75,29 @@ class DateTimePickerType extends AbstractType
                     'date' => $dateParts,
                     'time' => $timeParts,
                 ]),
+                new CallbackTransformer(
+                    function ($transform) {
+                        return $transform;
+                    },
+                    function ($reverseTransform) {
+                        if (\array_key_exists('date', $reverseTransform) && $reverseTransform['date'] === null) {
+                            $reverseTransform['time'] = [
+                                'year' => '',
+                                'month' => '',
+                                'day' => '',
+                            ];
+                        }
+                        // happened in DateTimePickerType - made it impossible to create an empty DateTime
+                        if (\array_key_exists('time', $reverseTransform) && $reverseTransform['time'] === null) {
+                            $reverseTransform['time'] = [
+                                'hour' => '',
+                                'minute' => '',
+                            ];
+                        }
+
+                        return $reverseTransform;
+                    }
+                ),
             ]))
             ->add('date', DatePickerType::class, $dateOptions)
             ->add('time', TimePickerType::class, $timeOptions)

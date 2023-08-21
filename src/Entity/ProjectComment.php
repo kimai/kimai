@@ -20,7 +20,7 @@ class ProjectComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private Project $project;

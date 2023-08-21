@@ -24,7 +24,7 @@ class RolePermission
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Role')]
+    #[ORM\ManyToOne(targetEntity: Role::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Role $role = null;

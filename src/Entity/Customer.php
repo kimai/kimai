@@ -156,7 +156,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @var Collection<CustomerMeta>
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\CustomerMeta', mappedBy: 'customer', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: CustomerMeta::class, mappedBy: 'customer', cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer'])]
     #[Serializer\Type(name: 'array<App\Entity\CustomerMeta>')]
@@ -171,7 +171,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[ORM\JoinTable(name: 'kimai2_customers_teams')]
     #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'customers')]
+    #[ORM\ManyToMany(targetEntity: Team::class, cascade: ['persist'], inversedBy: 'customers')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
@@ -179,7 +179,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     /**
      * Default invoice template for this customer
      */
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\InvoiceTemplate')]
+    #[ORM\ManyToOne(targetEntity: InvoiceTemplate::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?InvoiceTemplate $invoiceTemplate = null;
     #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]

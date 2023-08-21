@@ -159,7 +159,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Regex(pattern: '/\//', match: false, groups: ['Registration', 'UserCreate', 'Profile'])]
-    #[Assert\Length(min: 2, max: 60, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 64, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $username = null;
@@ -1253,9 +1253,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(int $holidays): void
+    public function setHolidaysPerYear(?int $holidays): void
     {
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays);
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
     }
 
     public function hasContractSettings(): bool

@@ -55,11 +55,11 @@ class Invoice implements EntityWithMetaFields
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?Customer $customer = null;
-    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?User $user = null;
@@ -109,7 +109,7 @@ class Invoice implements EntityWithMetaFields
      *
      * @var Collection<InvoiceMeta>
      */
-    #[ORM\OneToMany(targetEntity: 'App\Entity\InvoiceMeta', mappedBy: 'invoice', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: InvoiceMeta::class, mappedBy: 'invoice', cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Invoice'])]
     #[Serializer\Type(name: 'array<App\Entity\InvoiceMeta>')]
