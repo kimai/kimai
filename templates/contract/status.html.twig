@@ -226,7 +226,7 @@
                                         {% if day.hasAddons() %}
                                             {% set statusTitle = '' %}
                                             {% for addon in day.getAddons() %}
-                                                {% set statusTitle = statusTitle ~ (addon.title|trans) ~ ' (' ~ addon.duration|duration(decimal) ~ ')' %}
+                                                {% set statusTitle = statusTitle ~ (addon.title|trans) ~ ' (' ~ addon.visibleDuration|duration(decimal) ~ ')' %}
                                                 {% if not loop.last %}
                                                     {% set statusTitle = statusTitle ~ ', ' %}
                                                 {% endif %}

@@ -11,14 +11,10 @@ namespace App\WorkingTime\Model;
 
 final class DayAddon
 {
-    private string $title;
-    private int $duration;
     private bool $billable = true;
 
-    public function __construct(string $title, int $duration)
+    public function __construct(private string $title, private int $duration, private int $visibleDuration)
     {
-        $this->title = $title;
-        $this->duration = $duration;
     }
 
     public function getTitle(): string
@@ -39,5 +35,10 @@ final class DayAddon
     public function setBillable(bool $billable): void
     {
         $this->billable = $billable;
+    }
+
+    public function getVisibleDuration(): int
+    {
+        return $this->visibleDuration;
     }
 }
