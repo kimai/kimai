@@ -1594,6 +1594,10 @@
         <source>time_off.intro</source>
         <target state="translated">מאזן שעות העבודה שלך עומד על %hours% שעות.</target>
       </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">פיקוח</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
