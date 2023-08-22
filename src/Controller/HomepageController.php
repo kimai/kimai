@@ -46,7 +46,7 @@ final class HomepageController extends AbstractController
         // if a user somehow managed to get a wrong locale into hos account (eg. an imported user from Kimai 1)
         // make sure that he will still see a beautiful page and not a 404
         if (!$service->isKnownLocale($userLanguage)) {
-            $userLanguage = $service->getDefaultLocale();
+            $userLanguage = 'en';
         }
 
         $routes = [];

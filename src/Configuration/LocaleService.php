@@ -32,11 +32,6 @@ final class LocaleService
         return \in_array($language, $this->getAllLocales());
     }
 
-    public function getDefaultLocale(): string
-    {
-        return Constants::DEFAULT_LOCALE;
-    }
-
     /**
      * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
      *

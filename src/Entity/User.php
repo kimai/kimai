@@ -55,7 +55,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
-    public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
+    public const DEFAULT_LANGUAGE = 'en';
     public const DEFAULT_FIRST_WEEKDAY = 'monday';
 
     public const AUTH_INTERNAL = 'kimai';
