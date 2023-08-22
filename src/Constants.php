@@ -17,11 +17,11 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '2.0.31';
+    public const VERSION = '2.0.32';
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
-    public const VERSION_ID = 20031;
+    public const VERSION_ID = 20032;
     /**
      * The software name
      */
@@ -38,10 +38,6 @@ class Constants
      * Homepage, used in multiple views
      */
     public const HOMEPAGE = 'https://www.kimai.org';
-    /**
-     * Application wide default locale
-     */
-    public const DEFAULT_LOCALE = 'en';
     /**
      * Default color for Customer, Project and Activity entities
      */
