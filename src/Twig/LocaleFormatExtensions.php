@@ -124,20 +124,6 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         $day = (int) $dateTime->format('w');
 
-        if ($this->fdowSunday === null) {
-            /** @var User|null $user */
-            $user = $this->security->getUser();
-            if ($user !== null) {
-                $this->fdowSunday = $user->isFirstDayOfWeekSunday();
-            } else {
-                $this->fdowSunday = false;
-            }
-        }
-
-        if ($this->fdowSunday) {
-            return ($day === 5 || $day === 6);
-        }
-
         return ($day === 0 || $day === 6);
     }
 
