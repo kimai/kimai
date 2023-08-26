@@ -171,6 +171,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
     #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Serializer\Expose]
+    #[Assert\Length(max: 30)]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'account_number')]
     private ?string $accountNumber = null;
@@ -195,6 +196,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Random string sent to the user email address in order to verify it.
      */
     #[ORM\Column(name: 'confirmation_token', type: 'string', length: 180, unique: true, nullable: true)]
+    #[Assert\Length(max: 180)]
     private ?string $confirmationToken = null;
     #[ORM\Column(name: 'password_requested_at', type: 'datetime', nullable: true)]
     private ?\DateTime $passwordRequestedAt = null;
@@ -1055,7 +1057,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function setAccountNumber(?string $accountNumber): void
     {
-        $this->accountNumber = $accountNumber;
+        // @CloudRequired because SAML mapping could include a longer value
+        $this->accountNumber = StringHelper::ensureMaxLength($accountNumber, 30);
     }
 
     public function isSystemAccount(): bool
