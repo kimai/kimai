@@ -9,8 +9,6 @@
 
 namespace App\Configuration;
 
-use App\Constants;
-
 final class LocaleService
 {
     public function __construct(private array $languageSettings)

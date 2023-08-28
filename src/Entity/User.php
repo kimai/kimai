@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use App\Validator\Constraints as Constraints;
