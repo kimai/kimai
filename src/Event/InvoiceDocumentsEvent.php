@@ -15,10 +15,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class InvoiceDocumentsEvent extends Event
 {
     /**
-     * @var array<InvoiceDocument>
-     */
-    private array $documents;
-    /**
      * Maximum amount of allowed invoice documents.
      */
     private int $maximum = 99;
@@ -26,9 +22,8 @@ final class InvoiceDocumentsEvent extends Event
     /**
      * @param InvoiceDocument[] $documents
      */
-    public function __construct(array $documents)
+    public function __construct(private array $documents)
     {
-        $this->documents = $documents;
     }
 
     /**

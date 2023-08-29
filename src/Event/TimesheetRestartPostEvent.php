@@ -13,15 +13,9 @@ use App\Entity\Timesheet;
 
 final class TimesheetRestartPostEvent extends AbstractTimesheetEvent
 {
-    /**
-     * @var Timesheet
-     */
-    private $original;
-
-    public function __construct(Timesheet $new, Timesheet $original)
+    public function __construct(Timesheet $new, private Timesheet $original)
     {
         parent::__construct($new);
-        $this->original = $original;
     }
 
     public function getOriginalTimesheet(): Timesheet

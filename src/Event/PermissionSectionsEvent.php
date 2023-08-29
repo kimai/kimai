@@ -18,9 +18,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class PermissionSectionsEvent extends Event
 {
     /**
-     * @var array
+     * @var array<PermissionSectionInterface>
      */
-    private $sections;
+    private array $sections = [];
 
     public function addSection(PermissionSectionInterface $section): PermissionSectionsEvent
     {

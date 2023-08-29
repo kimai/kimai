@@ -18,7 +18,7 @@ final class CalendarGoogleSourceEvent extends Event
     /**
      * @var GoogleSource[]
      */
-    private $sources = [];
+    private array $sources = [];
 
     public function __construct(private User $user)
     {

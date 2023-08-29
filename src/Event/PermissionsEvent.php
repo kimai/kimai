@@ -17,9 +17,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class PermissionsEvent extends Event
 {
     /**
-     * @var array
+     * @var array<string, array<string>>
      */
-    private $sections = [];
+    private array $sections = [];
 
     /**
      * @param string $section

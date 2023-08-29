@@ -18,7 +18,7 @@ abstract class AbstractMetaDisplayEvent extends Event implements MetaDisplayEven
     /**
      * @var MetaTableTypeInterface[]
      */
-    private $fields = [];
+    private array $fields = [];
 
     public function __construct(private BaseQuery $query, private string $location)
     {
