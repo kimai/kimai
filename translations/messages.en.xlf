@@ -1623,7 +1623,7 @@
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
-        <target>Vorgesetzter</target>
+        <target>Supervisor</target>
       </trans-unit>
     </body>
   </file>
