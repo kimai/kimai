@@ -9,10 +9,10 @@
 
 namespace App\Calendar;
 
-final class GoogleSource extends CalendarSource
+enum CalendarSourceType: string
 {
-    public function __construct(string $id, string $uri, ?string $color = null)
-    {
-        parent::__construct(CalendarSourceType::GOOGLE, $id, $uri, $color);
-    }
+    case GOOGLE = 'google';
+    case ICAL = 'ical';
+    case JSON = 'json';
+    case TIMESHEET = 'timesheet';
 }

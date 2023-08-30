@@ -94,6 +94,7 @@ final class CalendarController extends AbstractController
             'config' => $config,
             'dragAndDrop' => $dragAndDrop,
             'google' => $this->calendarService->getGoogleSources($profile),
+            'sources' => $this->calendarService->getSources($profile),
             'now' => $factory->createDateTime(),
             'defaultStartTime' => $defaultStart,
             'is_punch_mode' => $isPunchMode,
