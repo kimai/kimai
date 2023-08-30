@@ -458,6 +458,23 @@ export default class KimaiCalendar {
                     name: 'google',
                     editable: false,
                 }};
+            } else if (source.type === 'json') {
+                calendarSource = {...calendarSource, ...{
+                    id: 'json-' + source.id,
+                    editable: false,
+                    events: (fetchInfo, successCallback, failureCallback) => {
+                        let url = source.url.replace('{from}', DATES.formatForAPI(fetchInfo.start));
+                        url = url.replace('{to}', DATES.formatForAPI(fetchInfo.end));
+
+                        API.get(url, {}, result => {
+                            let apiEvents = [];
+                            for (const record of result) {
+                                apiEvents.push(record);
+                            }
+                            successCallback(apiEvents);
+                        }, failureCallback);
+                    },
+                }};
             } else if (source.type === 'ical') {
                 calendarSource = {...calendarSource, ...{
                     id: 'ical-' + source.id,
