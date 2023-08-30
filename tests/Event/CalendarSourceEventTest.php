@@ -9,6 +9,8 @@
 
 namespace App\Tests\Event;
 
+use App\Calendar\CalendarSource;
+use App\Calendar\CalendarSourceType;
 use App\Entity\User;
 use App\Event\CalendarSourceEvent;
 use PHPUnit\Framework\TestCase;
@@ -28,6 +30,9 @@ class CalendarSourceEventTest extends TestCase
         self::assertSame($user, $sut->getUser());
         self::assertIsArray($sut->getSources());
         self::assertEmpty($sut->getSources());
+
+        $sut->addSource(new CalendarSource(CalendarSourceType::TIMESHEET, '', ''));
+
         self::assertCount(1, $sut->getSources());
     }
 }
