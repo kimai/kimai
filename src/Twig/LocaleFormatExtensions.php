@@ -25,10 +25,14 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension implements LocaleAwareInterface
 {
+    /**
+     * @var array<int, bool>
+     */
+    private array $dayCache = [];
     private ?LocaleFormatter $formatter = null;
     private ?string $locale = null;
 
-    public function __construct(private LocaleService $localeService)
+    public function __construct(private LocaleService $localeService, private Security $security)
     {
     }
 
@@ -113,16 +117,28 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         return $this->locale;
     }
-
+    
     public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTimeInterface) {
             return false;
         }
 
-        $day = (int) $dateTime->format('w');
+        $day = (int) $dateTime->format('N');
 
-        return ($day === 0 || $day === 6);
+        if (!array_key_exists($day, $this->dayCache)) {
+            $isWeekend = ($day === 6 || $day === 7);
+
+            /** @var User|null $user */
+            $user = $this->security->getUser();
+            if ($user !== null && $user->hasWorkHourConfiguration()) {
+                $isWeekend = !$user->isWorkDay($dateTime);
+            }
+
+            $this->dayCache[$day] = $isWeekend;
+        }
+
+        return $this->dayCache[$day];
     }
 
     public function dateShort(\DateTimeInterface|string|null $date): string
