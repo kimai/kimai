@@ -43,7 +43,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('day_name', [$this, 'dayName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
-            new TwigFilter('date_full', [$this, 'dateTime']), // deprecated: needs to be kept for invoice and export templates
+            // cannot be deleted right now, needs to be kept for invoice and export templates
+            new TwigFilter('date_full', [$this, 'dateTime'], ['deprecated' => true, 'alternative' => 'date_time']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
