@@ -118,6 +118,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         return $this->locale;
     }
+
     public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTimeInterface) {
@@ -126,7 +127,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         $day = (int) $dateTime->format('N');
 
-        if (!array_key_exists($day, $this->dayCache)) {
+        if (!\array_key_exists($day, $this->dayCache)) {
             $isWeekend = ($day === 6 || $day === 7);
 
             /** @var User|null $user */
