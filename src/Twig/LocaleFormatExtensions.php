@@ -119,7 +119,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->locale;
     }
 
-    public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
+    public function isWeekend(\DateTimeInterface|string|null $dateTime, ?User $user = null): bool
     {
         if (!$dateTime instanceof \DateTimeInterface) {
             return false;
@@ -130,10 +130,10 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         if (!\array_key_exists($day, $this->dayCache)) {
             $isWeekend = ($day === 6 || $day === 7);
 
-            /** @var User|null $user */
-            $user = $this->security->getUser();
-            if ($user !== null && $user->hasWorkHourConfiguration()) {
-                $isWeekend = !$user->isWorkDay($dateTime);
+            /** @var User|null $tmp */
+            $tmp = $user ?? $this->security->getUser();
+            if ($tmp !== null && $tmp->hasWorkHourConfiguration()) {
+                $isWeekend = !$tmp->isWorkDay($dateTime);
             }
 
             $this->dayCache[$day] = $isWeekend;
