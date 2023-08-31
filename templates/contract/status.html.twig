@@ -213,7 +213,7 @@
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
                                 {% set class = 'text-end contractDay text-nowrap' %}
-                                {% if day.day is weekend %}
+                                {% if day.day is weekend(user) %}
                                     {% set class = class ~ ' weekend' %}
                                 {% endif %}
                                 {% if day.workingTime.expectedTime > 0 and day.workingTime.actualTime == 0 and now > day.day %}
