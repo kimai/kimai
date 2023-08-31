@@ -9,14 +9,14 @@
 
 namespace App\Event;
 
-use App\Calendar\GoogleSource;
+use App\Calendar\CalendarSource;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class CalendarGoogleSourceEvent extends Event
+final class CalendarSourceEvent extends Event
 {
     /**
-     * @var GoogleSource[]
+     * @var CalendarSource[]
      */
     private array $sources = [];
 
@@ -29,15 +29,13 @@ final class CalendarGoogleSourceEvent extends Event
         return $this->user;
     }
 
-    public function addSource(GoogleSource $source): CalendarGoogleSourceEvent
+    public function addSource(CalendarSource $source): void
     {
         $this->sources[] = $source;
-
-        return $this;
     }
 
     /**
-     * @return GoogleSource[]
+     * @return CalendarSource[]
      */
     public function getSources(): array
     {

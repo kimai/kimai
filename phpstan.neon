@@ -2132,11 +2132,6 @@ parameters:
             path: src/Event/CalendarConfigurationEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:setConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Event/CalendarConfigurationEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:setConfiguration\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
@@ -2162,22 +2157,12 @@ parameters:
             path: src/Event/PageActionsEvent.php
 
         -
-            message: "#^Property App\\\\Event\\\\PermissionSectionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PermissionSectionsEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\PermissionsEvent\\:\\:getPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionsEvent.php
 
         -
             message: "#^Method App\\\\Event\\\\PermissionsEvent\\:\\:getSection\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PermissionsEvent.php
-
-        -
-            message: "#^Property App\\\\Event\\\\PermissionsEvent\\:\\:\\$sections type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionsEvent.php
 

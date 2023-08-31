@@ -18,7 +18,7 @@ final class CalendarDragAndDropSourceEvent extends Event
     /**
      * @var DragAndDropSource[]
      */
-    private $sources = [];
+    private array $sources = [];
 
     public function __construct(private User $user, private int $maxEntries)
     {

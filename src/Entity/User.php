@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use App\Validator\Constraints as Constraints;
@@ -55,7 +54,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const DEFAULT_ROLE = self::ROLE_USER;
-    public const DEFAULT_LANGUAGE = Constants::DEFAULT_LOCALE;
+    public const DEFAULT_LANGUAGE = 'en';
     public const DEFAULT_FIRST_WEEKDAY = 'monday';
 
     public const AUTH_INTERNAL = 'kimai';
@@ -169,7 +168,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Email(mode: 'html5', groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
-    #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'account_number')]
@@ -195,6 +194,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Random string sent to the user email address in order to verify it.
      */
     #[ORM\Column(name: 'confirmation_token', type: 'string', length: 180, unique: true, nullable: true)]
+    #[Assert\Length(max: 180)]
     private ?string $confirmationToken = null;
     #[ORM\Column(name: 'password_requested_at', type: 'datetime', nullable: true)]
     private ?\DateTime $passwordRequestedAt = null;
@@ -1055,7 +1055,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function setAccountNumber(?string $accountNumber): void
     {
-        $this->accountNumber = $accountNumber;
+        // @CloudRequired because SAML mapping could include a longer value
+        $this->accountNumber = StringHelper::ensureMaxLength($accountNumber, 30);
     }
 
     public function isSystemAccount(): bool

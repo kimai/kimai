@@ -9,8 +9,6 @@
 
 namespace App\Configuration;
 
-use App\Constants;
-
 final class LocaleService
 {
     public function __construct(private array $languageSettings)
@@ -30,11 +28,6 @@ final class LocaleService
     public function isKnownLocale(string $language): bool
     {
         return \in_array($language, $this->getAllLocales());
-    }
-
-    public function getDefaultLocale(): string
-    {
-        return Constants::DEFAULT_LOCALE;
     }
 
     /**

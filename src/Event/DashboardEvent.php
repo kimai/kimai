@@ -17,7 +17,7 @@ final class DashboardEvent extends Event
     /**
      * @var array<string>
      */
-    private $widgets = [];
+    private array $widgets = [];
 
     public function __construct(private User $user)
     {

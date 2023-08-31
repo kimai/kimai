@@ -25,7 +25,7 @@ final class CalendarConfigurationEvent extends Event
         return $this->configuration;
     }
 
-    public function setConfiguration(array $configuration)
+    public function setConfiguration(array $configuration): void
     {
         foreach ($configuration as $key => $value) {
             if (\array_key_exists($key, $this->configuration)) {

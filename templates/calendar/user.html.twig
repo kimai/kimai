@@ -141,8 +141,8 @@
                     {% for source in google.sources %}
                     ,
                     {
-                        id: 'googleCompanyCalendar',
-                        type: 'google',
+                        id: 'googleCompanyCalendar{{ loop.index }}',
+                        type: '{{ source.typeName }}',
                         options: {
                             googleCalendarId: '{{ source.uri }}',
                             name: '{{ source.id }}',
@@ -152,6 +152,18 @@
                     }
                     {% endfor %}
                     {% endif %}
+                    {% for source in sources %}
+                    ,
+                    {
+                        id: '{{ source.id }}{{ loop.index }}',
+                        type: '{{ source.typeName }}',
+                        url: '{{ source.uri }}',
+                        options: {...{{ source.options|json_encode|raw }}, ...{
+                            color: '{{ source.color }}',
+                            textColor: '{{ source.color|font_contrast }}',
+                        }}
+                    }
+                    {% endfor %}
                 ],
                 url: {
                     update: (timesheetId) => {

@@ -57,7 +57,7 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 
         // Add the default locale at the first position of the array, because getPreferredLanguage()
         // returns the first element when no appropriate language is found
-        array_unshift($allLanguages, $this->localeService->getDefaultLocale());
+        array_unshift($allLanguages, 'en');
 
         $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
 

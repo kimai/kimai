@@ -38,6 +38,7 @@ php.ini
 /var/sessions/*
 /var/packages/*
 /var/plugins/*
+/var/plugins_old/
 *.disabled
 
 ###> symfony/framework-bundle ###

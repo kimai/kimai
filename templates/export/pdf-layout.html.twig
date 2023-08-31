@@ -84,6 +84,7 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
+            {% block summary_head_row_start %}{% endblock %}
             {% for summaryColumn in summaryColumns %}
                 {% if summaryColumn == 'customer' %}
                     <th>{{ 'customer'|trans }}</th>
@@ -93,6 +94,7 @@ mpdf-->
                     <th class="center">{{ summaryColumn|trans }}</th>
                 {% endif %}
             {% endfor %}
+            {% block summary_head_row_end %}{% endblock %}
         </tr>
         </thead>
         <tbody>
@@ -120,6 +122,7 @@ mpdf-->
             {% endif %}
             {% if customer is not same as(summary.customer) %}
                 <tr class="summary">
+                    {% block summary_customer_row_start %}{% endblock %}
                     {% for summaryColumn in summaryColumns %}
                         {% if summaryColumn == 'duration' %}
                             <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
@@ -131,6 +134,7 @@ mpdf-->
                             <td></td>
                         {% endif %}
                     {% endfor %}
+                    {% block summary_customer_row_end %}{% endblock %}
                 </tr>
                 {% set customerCurrency = summary.currency %}
                 {% set customer = summary.customer %}
@@ -140,6 +144,7 @@ mpdf-->
                 {% set customerCount = 0 %}
             {% endif %}
             <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
+                {% block summary_project_row_start %}{% endblock %}
                 {% for summaryColumn in summaryColumns %}
                     {% if summaryColumn == 'customer' %}
                         <td>{{ summary.customer }}</td>
@@ -168,6 +173,7 @@ mpdf-->
                         <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
                     {% endif %}
                 {% endfor %}
+                {% block summary_project_row_end %}{% endblock %}
             </tr>
             {% set customerDuration = customerDuration + summary.duration %}
             {% set customerRate = customerRate + summary.rate %}
@@ -176,6 +182,7 @@ mpdf-->
         {% endfor %}
         {% if showCustomerSummary and customer is not same as(null) %}
         <tr class="summary">
+            {% block summary_customer_summary_row_start %}{% endblock %}
             {% for summaryColumn in summaryColumns %}
                 {% if summaryColumn == 'duration' %}
                     <td class="totals duration">{{ customerDuration|duration(decimal) }}</td>
@@ -187,10 +194,12 @@ mpdf-->
                     <td></td>
                 {% endif %}
             {% endfor %}
+            {% block summary_customer_summary_row_end %}{% endblock %}
         </tr>
         {% endif %}
         {% if showTotalSummary and not multiCurrency %}
         <tr class="{% if not showCustomerSummary %}summary{% else %}summary-total{% endif %}">
+            {% block summary_summary_row_start %}{% endblock %}
             <td class="totals" colspan="2">
                 {{ 'sum.total'|trans }}
             </td>
@@ -205,6 +214,7 @@ mpdf-->
                     <td></td>
                 {% endif %}
             {% endfor %}
+            {% block summary_summary_row_end %}{% endblock %}
         </tr>
         {% endif %}
         </tbody>
@@ -224,6 +234,7 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
+            {% block items_head_row_start %}{% endblock %}
             <th>{{ 'date'|trans }}</th>
             {% if showUserColumn %}
                 <th>{{ 'user'|trans }}</th>
@@ -239,6 +250,7 @@ mpdf-->
                 {% endif %}
                 <th class="center">{{ 'rate'|trans }}</th>
             {% endif %}
+            {% block items_head_row_end %}{% endblock %}
         </tr>
         </thead>
         <tbody>
@@ -253,6 +265,7 @@ mpdf-->
                 {% set currency = null %}
             {% endif %}
             <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                {% block items_entry_row_start %}{% endblock %}
                 <td class="text-nowrap">
                     {% block date_begin %}{% if not showDateTimeShort %}{{ entry.begin|date_time }}{% else %}{{ entry.begin|date_short }}{% endif %}{% endblock %}
                     {% if entry.end %}
@@ -299,9 +312,12 @@ mpdf-->
                     {% endif %}
                     <td class="cost">{{ entryRate }}</td>
                 {% endif %}
+                {% block items_entry_row_end %}{% endblock %}
             </tr>
         {% endfor %}
+        {% block items_summary %}
         <tr class="summary">
+            {% block items_summary_row_start %}{% endblock %}
             {% if showUserColumn %}
                 <td colspan="3">{{ 'sum.total'|trans }}</td>
             {% else %}
@@ -317,7 +333,9 @@ mpdf-->
                 {% endif %}
                 <td class="totals cost">{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
             {% endif %}
+            {% block items_summary_row_end %}{% endblock %}
         </tr>
+        {% endblock %}
         </tbody>
     </table>
 {% endblock %}

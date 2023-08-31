@@ -58,13 +58,20 @@
             </div>
             {% endif %}
 
+            {% set length = 12 %}
+            {% if form.supervisor is defined  %}
+                {% set length = 6 %}
+            {% endif %}
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-{{ length }}">
                     {{ form_row(form.accountNumber) }}
                 </div>
-                <div class="col-md-6">
+                {% if form.supervisor is defined  %}
+                <div class="col-md-{{ length }}">
                     {{ form_row(form.supervisor) }}
                 </div>
+                {% endif %}
             </div>
 
             {% if form.teams is defined or form.roles is defined %}
