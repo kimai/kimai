@@ -17,7 +17,6 @@ use App\Utils\FormFormatConverter;
 use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
 use DateTime;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -26,11 +25,10 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension implements LocaleAwareInterface
 {
-    private ?bool $fdowSunday = null;
     private ?LocaleFormatter $formatter = null;
     private ?string $locale = null;
 
-    public function __construct(private LocaleService $localeService, private Security $security)
+    public function __construct(private LocaleService $localeService)
     {
     }
 
