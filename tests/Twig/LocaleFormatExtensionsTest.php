@@ -12,7 +12,6 @@ namespace App\Tests\Twig;
 use App\Configuration\LocaleService;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Entity\UserPreference;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -51,10 +50,9 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @param string|array $locale
      * @param array|string $dateSettings
-     * @param bool $fdowSunday
      * @return LocaleFormatExtensions
      */
-    protected function getSut($locale, $dateSettings, $fdowSunday = false)
+    protected function getSut($locale, $dateSettings, ?User $user = null)
     {
         $language = $locale;
         if (\is_array($locale)) {
@@ -62,9 +60,10 @@ class LocaleFormatExtensionsTest extends TestCase
             $dateSettings = $locale;
         }
 
-        $user = new User();
-        $user->setPreferenceValue(UserPreference::FIRST_WEEKDAY, ($fdowSunday ? 'sunday' : 'monday'));
-        $user->setTimezone('Europe/Vienna');
+        if ($user === null) {
+            $user = new User();
+            $user->setTimezone('Europe/Vienna');
+        }
         $security = $this->createMock(Security::class);
         $security->expects($this->any())->method('getUser')->willReturn($user);
 
@@ -553,7 +552,11 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testIsWeekend(): void
     {
-        $sut = $this->getSut('en', $this->localeEn, false);
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertFalse($sut->isWeekend(null));
+        self::assertFalse($sut->isWeekend('2022-01-01'));
+
+        // default case with default user (saturday and sunday is weekend)
         self::assertFalse($sut->isWeekend(new \DateTime('first monday this month')));
         self::assertFalse($sut->isWeekend(new \DateTime('first tuesday this month')));
         self::assertFalse($sut->isWeekend(new \DateTime('first wednesday this month')));
@@ -561,17 +564,22 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertFalse($sut->isWeekend(new \DateTime('first friday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first saturday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first sunday this month')));
-        self::assertFalse($sut->isWeekend(null));
 
-        $sut = $this->getSut('en', $this->localeEn, true);
-        self::assertFalse($sut->isWeekend(new \DateTime('first monday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first tuesday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first wednesday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first thursday this month')));
-        self::assertTrue($sut->isWeekend(new \DateTime('first friday this month')));
-        self::assertTrue($sut->isWeekend(new \DateTime('first saturday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first sunday this month')));
-        self::assertFalse($sut->isWeekend(null));
+        // seconds case: a user with work-hour configuration
+        $user = new User();
+        $user->setWorkHoursTuesday(1);
+        $user->setWorkHoursThursday(1);
+        $user->setWorkHoursSaturday(1);
+        $user->setWorkHoursSunday(1);
+
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertTrue($sut->isWeekend(new \DateTime('first monday this month'), $user));
+        self::assertFalse($sut->isWeekend(new \DateTime('first tuesday this month'), $user));
+        self::assertTrue($sut->isWeekend(new \DateTime('first wednesday this month'), $user));
+        self::assertFalse($sut->isWeekend(new \DateTime('first thursday this month'), $user));
+        self::assertTrue($sut->isWeekend(new \DateTime('first friday this month'), $user));
+        self::assertFalse($sut->isWeekend(new \DateTime('first saturday this month'), $user));
+        self::assertFalse($sut->isWeekend(new \DateTime('first sunday this month'), $user));
     }
 
     protected function getTimesheet($seconds): Timesheet
@@ -589,7 +597,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testChartMoney(): void
     {
-        $sut = $this->getSut('en', $this->localeEn, false);
+        $sut = $this->getSut('en', $this->localeEn);
         $this->assertEquals('-123456.78', $sut->moneyChart(-123456.78));
         $this->assertEquals('123456.78', $sut->moneyChart(123456.78));
         $this->assertEquals('123456.00', $sut->moneyChart(123456));
@@ -598,7 +606,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testChartDuration(): void
     {
-        $sut = $this->getSut('en', $this->localeEn, false);
+        $sut = $this->getSut('en', $this->localeEn);
         $this->assertEquals('34.29', $sut->durationChart(123456));
         $this->assertEquals('-34.29', $sut->durationChart(-123456));
     }

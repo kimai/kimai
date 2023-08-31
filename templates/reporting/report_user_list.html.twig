@@ -3,7 +3,7 @@
 {% block report_content %}
     {% embed 'reporting/user_list_period_data.html.twig' with {stats: stats, dataType: dataType, period_attribute: period_attribute, subReportRoute: subReportRoute, subReportDate: subReportDate, decimal: decimal} only %}
         {% block period_name %}
-            <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
+            <th class="text-center text-nowrap{% if column is today %} today{% endif %}">
                 {{ column|date_weekday }}
             </th>
         {% endblock %}
@@ -25,6 +25,6 @@
         {% block duration %}
             {{ period.totalDuration|duration(decimal) }}
         {% endblock %}
-        {% block period_cell_class %}{% if period.date is weekend %} weekend{% endif %}{% if period.date is today %} today{% endif %}{% endblock %}
+        {% block period_cell_class %}{% if period.date is weekend(userPeriod.user) %} weekend{% endif %}{% if period.date is today %} today{% endif %}{% endblock %}
     {% endembed %}
 {% endblock %}

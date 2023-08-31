@@ -26,7 +26,6 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension implements LocaleAwareInterface
 {
-    private ?bool $fdowSunday = null;
     private ?LocaleFormatter $formatter = null;
     private ?string $locale = null;
 
@@ -116,29 +115,21 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->locale;
     }
 
-    public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
+    public function isWeekend(\DateTimeInterface|string|null $dateTime, ?User $user = null): bool
     {
         if (!$dateTime instanceof \DateTimeInterface) {
             return false;
         }
 
-        $day = (int) $dateTime->format('w');
+        $day = (int) $dateTime->format('N');
 
-        if ($this->fdowSunday === null) {
-            /** @var User|null $user */
-            $user = $this->security->getUser();
-            if ($user !== null) {
-                $this->fdowSunday = $user->isFirstDayOfWeekSunday();
-            } else {
-                $this->fdowSunday = false;
-            }
+        /** @var User|null $tmp */
+        $tmp = $user ?? $this->security->getUser();
+        if ($tmp !== null && $tmp->hasWorkHourConfiguration()) {
+            return !$tmp->isWorkDay($dateTime);
         }
 
-        if ($this->fdowSunday) {
-            return ($day === 5 || $day === 6);
-        }
-
-        return ($day === 0 || $day === 6);
+        return ($day === 6 || $day === 7);
     }
 
     public function dateShort(\DateTimeInterface|string|null $date): string
