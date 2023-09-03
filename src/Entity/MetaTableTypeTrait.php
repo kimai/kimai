@@ -255,4 +255,12 @@ trait MetaTableTypeTrait
             $this->id = null;
         }
     }
+
+    /**
+     * Whether this field is defined by a plugin or just a value stored in the database.
+     */
+    public function isDefined(): bool
+    {
+        return $this->type !== null;
+    }
 }
