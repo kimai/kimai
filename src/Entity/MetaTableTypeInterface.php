@@ -136,5 +136,4 @@ interface MetaTableTypeInterface
      * Whether true if this field is defined by a plugin, or false if it is a value stored in the database.
      */
     public function isDefined(): bool;
-
 }
