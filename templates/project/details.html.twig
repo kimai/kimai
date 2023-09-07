@@ -120,7 +120,7 @@
                         </td>
                     </tr>
                 {% endif %}
-                {% for metaField in project.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
+                {% for metaField in project.visibleMetaFields|filter(field => field.defined)|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
                         <td colspan="3">{{ widgets.form_type_value(metaField.type, metaField.value, project) }}</td>

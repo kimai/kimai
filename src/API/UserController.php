@@ -85,6 +85,7 @@ final class UserController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
+        $query->setIsApiCall(true);
         $data = $this->repository->getUsersForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);

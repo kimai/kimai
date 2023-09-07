@@ -18,7 +18,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
-use Pagerfanta\Pagerfanta;
+use App\Utils\Pagination;
 
 /**
  * @covers \App\Repository\TimesheetRepository
@@ -35,7 +35,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $query = new TimesheetQuery();
 
         $result = $repository->getPagerfantaForQuery($query);
-        $this->assertInstanceOf(Pagerfanta::class, $result);
+        $this->assertInstanceOf(Pagination::class, $result);
 
         $result = $repository->getTimesheetsForQuery($query);
         $this->assertIsArray($result);

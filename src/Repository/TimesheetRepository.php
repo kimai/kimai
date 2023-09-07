@@ -408,11 +408,7 @@ class TimesheetRepository extends EntityRepository
 
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
-        $paginator = new Pagination($this->getPaginatorForQuery($query));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
     protected function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface

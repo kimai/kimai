@@ -90,6 +90,7 @@ final class CustomerController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
+        $query->setIsApiCall(true);
         $data = $this->repository->getCustomersForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);

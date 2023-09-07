@@ -290,10 +290,6 @@ class InvoiceRepository extends EntityRepository
 
     public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagination
     {
-        $paginator = new Pagination($this->getPaginatorForQuery($query));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 }

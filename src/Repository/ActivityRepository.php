@@ -371,11 +371,7 @@ class ActivityRepository extends EntityRepository
 
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
-        $paginator = new Pagination($this->getPaginatorForQuery($query));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
     protected function getPaginatorForQuery(ActivityQuery $query): PaginatorInterface
