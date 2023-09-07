@@ -115,11 +115,7 @@ class TeamRepository extends EntityRepository
 
     public function getPagerfantaForQuery(TeamQuery $query): Pagination
     {
-        $paginator = new Pagination($this->getPaginatorForQuery($query));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
     protected function getPaginatorForQuery(TeamQuery $query): PaginatorInterface

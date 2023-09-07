@@ -250,6 +250,7 @@ final class TimesheetController extends BaseApiController
             $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
+        $query->setIsApiCall(true);
         $data = $this->repository->getPagerfantaForQuery($query);
         $results = (array) $data->getCurrentPageResults();
 

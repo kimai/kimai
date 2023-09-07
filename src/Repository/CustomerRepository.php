@@ -224,11 +224,7 @@ class CustomerRepository extends EntityRepository
 
     public function getPagerfantaForQuery(CustomerQuery $query): Pagination
     {
-        $paginator = new Pagination($this->getPaginatorForQuery($query));
-        $paginator->setMaxPerPage($query->getPageSize());
-        $paginator->setCurrentPage($query->getPage());
-
-        return $paginator;
+        return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
     public function countCustomersForQuery(CustomerQuery $query): int
