@@ -19,6 +19,11 @@ final class Pagination extends Pagerfanta
     {
         parent::__construct($adapter);
 
+        if ($query !== null) {
+            $this->setMaxPerPage($query->getPageSize());
+            $this->setCurrentPage($query->getPage());
+        }
+
         if ($query === null || !$query->isApiCall()) {
             $this->setNormalizeOutOfRangePages(true);
         }
