@@ -158,8 +158,8 @@
         <target>Durée</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Utilisateur</target>
+        <source>User</source>
+        <target state="needs-translation">Utilisateur</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -1020,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
-        <target>Fichier</target>
+        <target state="translated">File</target>
       </trans-unit>
       <trans-unit id="o0yOFHL" resname="not_invoiced">
         <source>not_invoiced</source>
@@ -1100,7 +1100,7 @@
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
-        <target>Temps de travail</target>
+        <target state="needs-translation">Temps de travail</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -1204,7 +1204,7 @@
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
-        <target state="translated">Texte de la facture</target>
+        <target state="needs-translation">Texte de la facture</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
@@ -1268,7 +1268,7 @@
       </trans-unit>
       <trans-unit id="IDDfzoR" resname="invoiceLabel">
         <source>invoiceLabel</source>
-        <target state="translated">Texte de la facture</target>
+        <target state="needs-translation">Texte de la facture</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">
         <source>help.visible</source>
@@ -1536,11 +1536,19 @@
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
-        <target state="translated">Temps de travail</target>
+        <target state="needs-translation">Temps de travail</target>
       </trans-unit>
       <trans-unit id="PE2iiaW" resname="work_times_should.help">
         <source>work_times_should.help</source>
         <target state="translated">Les valeurs configurées ici sont utilisées pour calculer le compte horaire.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="needs-translation">Family events, moving house, weather chaos etc.</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="needs-translation">Confirmed by %user% at %date%</target>
       </trans-unit>
     </body>
   </file>

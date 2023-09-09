@@ -1586,6 +1586,18 @@
         <source>day_half</source>
         <target state="translated">Півдня</target>
       </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">Облік робочого часу аккаунту</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">Ревізія</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">Керівник</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

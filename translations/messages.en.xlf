@@ -617,7 +617,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month">
         <source>Complete month</source>
-        <target state="needs-translation">Complete month</target>
+        <target state="translated">Complete month</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
@@ -633,15 +633,15 @@
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>Review</source>
-        <target state="needs-translation">Review</target>
+        <target state="translated">Review</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
         <target>Working times</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
-        <source>Working time account</source>
-        <target state="needs-translation">Working time account</target>
+        <source>Account working times</source>
+        <target state="translated">Account working times</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>work_times_should</source>
