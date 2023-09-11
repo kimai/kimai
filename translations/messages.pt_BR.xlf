@@ -1503,8 +1503,8 @@
         <target state="translated">Horas trabalhadas</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
-        <source>work_times_account</source>
-        <target state="translated">Conta da hora de trabalho</target>
+        <source>Account working times</source>
+        <target state="translated">Horários de trabalho da conta</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>work_times_should</source>

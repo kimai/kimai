@@ -1650,6 +1650,10 @@
         <source>day_half</source>
         <target state="translated">半天</target>
       </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">主管</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
