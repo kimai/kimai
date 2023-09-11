@@ -10,7 +10,10 @@
                 {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_body %}
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                        {% if form.user is defined %}
+                            {{ form_row(form.user) }}
+                        {% endif %}
+                        {{ form_rest(form) }}
                         {{ form_end(form) }}
                     {% endblock %}
                 {% endembed %}
