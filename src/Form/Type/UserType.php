@@ -16,6 +16,8 @@ use App\Repository\UserRepository;
 use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -65,10 +67,6 @@ final class UserType extends AbstractType
                 'type' => 'integer',
                 'description' => 'User ID',
             ],
-            'attr' => [
-                'data-select-attributes' => 'color,title,username,initials,accountNumber,alias',
-                'data-renderer' => 'color',
-            ],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -91,6 +89,14 @@ final class UserType extends AbstractType
                 return $repo->getQueryBuilderForFormType($query);
             };
         });
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-select-attributes' => 'color,title,username,initials,accountNumber,alias',
+            'data-renderer' => 'color',
+        ]);
     }
 
     public function getParent(): string
