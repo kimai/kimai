@@ -253,7 +253,7 @@
             </table>
         </div>
     </div>
-    {% if (route is not empty and entries is not null) or multi_update_form is not null%}
+    {% if (route is not empty and entries is not null) or multi_update_form is not null %}
     <div class="card-footer d-flex align-items-center">
         {% if multi_update_form is not null %}
             {{ form_start(multi_update_form, {'attr': {'id': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
