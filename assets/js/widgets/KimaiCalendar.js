@@ -440,8 +440,14 @@ export default class KimaiCalendar {
                 calendarSource = {...calendarSource, ...{
                     id: 'kimai-' + source.id,
                     events: (fetchInfo, successCallback, failureCallback) => {
-                        let url = source.url.replace('{from}', DATES.formatForAPI(fetchInfo.start));
-                        url = url.replace('{to}', DATES.formatForAPI(fetchInfo.end));
+                        const targetFrom = DATES.formatForAPI(fetchInfo.start);
+                        const targetTo = DATES.formatForAPI(fetchInfo.end);
+
+                        let url = source.url;
+                        url = url.replace('{from}', targetFrom);
+                        url = url.replace('__FROM__', targetFrom);
+                        url = url.replace('{to}', targetTo);
+                        url = url.replace('__TO__', targetTo);
 
                         API.get(url, {}, result => {
                             let apiEvents = [];
@@ -463,8 +469,14 @@ export default class KimaiCalendar {
                     id: 'json-' + source.id,
                     editable: false,
                     events: (fetchInfo, successCallback, failureCallback) => {
-                        let url = source.url.replace('{from}', DATES.formatForAPI(fetchInfo.start));
-                        url = url.replace('{to}', DATES.formatForAPI(fetchInfo.end));
+                        const targetFrom = DATES.formatForAPI(fetchInfo.start);
+                        const targetTo = DATES.formatForAPI(fetchInfo.end);
+
+                        let url = source.url;
+                        url = url.replace('{from}', targetFrom);
+                        url = url.replace('__FROM__', targetFrom);
+                        url = url.replace('{to}', targetTo);
+                        url = url.replace('__TO__', targetTo);
 
                         API.get(url, {}, result => {
                             let apiEvents = [];
