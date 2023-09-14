@@ -1222,11 +1222,6 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectDateRangeController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
             message: "#^Parameter \\#1 \\$begin of method App\\\\Form\\\\Model\\\\DateRange\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
@@ -1242,28 +1237,13 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectDetailsController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDetailsController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectInactiveController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectInactiveController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectViewController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectViewController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Controller/Reporting/ProjectViewController.php
 
         -
