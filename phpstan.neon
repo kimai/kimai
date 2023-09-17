@@ -1907,21 +1907,6 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Cannot call method hasUser\\(\\) on App\\\\Entity\\\\Team\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Cannot call method removeMember\\(\\) on App\\\\Entity\\\\Team\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:__unserialize\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Entity/User.php
@@ -1943,11 +1928,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getMemberships\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getName\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -2022,32 +2002,7 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function mb_strstr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Parameter \\#1 \\$secret of class Scheb\\\\TwoFactorBundle\\\\Model\\\\Totp\\\\TotpConfiguration constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -2443,7 +2398,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$filename of method App\\\\Export\\\\ExportFilename\\:\\:convert\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 1
             path: src/Export/ExportFilename.php
 
         -

@@ -536,7 +536,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         $this->memberships->removeElement($member);
-        $member->getTeam()->removeMember($member);
+        if ($member->getTeam() !== null) {
+            $member->getTeam()->removeMember($member);
+        }
         $member->setUser(null);
         $member->setTeam(null);
     }
@@ -590,7 +592,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function hasTeamMember(User $user): bool
     {
         foreach ($this->memberships as $membership) {
-            if ($membership->getTeam()->hasUser($user)) {
+            if ($membership->getTeam() !== null && $membership->getTeam()->hasUser($user)) {
                 return true;
             }
         }
@@ -704,7 +706,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function isTeamleadOfUser(User $user): bool
     {
         foreach ($this->memberships as $membership) {
-            if ($membership->isTeamlead() && $membership->getTeam()->hasUser($user)) {
+            if ($membership->isTeamlead() && $membership->getTeam() !== null && $membership->getTeam()->hasUser($user)) {
                 return true;
             }
         }
@@ -747,7 +749,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->hasRole(static::ROLE_ADMIN);
     }
 
-    public function getDisplayName(): ?string
+    public function getDisplayName(): string
     {
         if (!empty($this->getAlias())) {
             return $this->getAlias();
