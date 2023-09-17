@@ -23,11 +23,11 @@ class TestUserEntity implements UserInterface
         return 'foo';
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
-    public function getTimeFormat()
+    public function getTimeFormat(): string
     {
         return 'H:i';
     }

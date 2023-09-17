@@ -2763,26 +2763,6 @@ parameters:
             path: Controller/PermissionControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\PluginControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/PluginControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\PluginControllerTest\\:\\:testIndexActionWithInstalledPlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/PluginControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\PluginControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/PluginControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\PluginControllerTest\\:\\:testIsSecureForRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/PluginControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionTabs\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: Controller/ProfileControllerTest.php
@@ -7931,16 +7911,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Security\\\\SessionHandlerTest\\:\\:testConstruct\\(\\) has no return type specified\\.$#"
             count: 1
             path: Security/SessionHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Security\\\\TestUserEntity\\:\\:eraseCredentials\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Security/TestUserEntity.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Security\\\\TestUserEntity\\:\\:getTimeFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Security/TestUserEntity.php
 
         -
             message: "#^Method App\\\\Tests\\\\Security\\\\UserCheckerTest\\:\\:testCheckPostAuthReturnsOnUnknownUserClass\\(\\) has no return type specified\\.$#"
