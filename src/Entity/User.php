@@ -619,7 +619,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
-        if ($this->hasTeamMember($user)) {
+        if ($this->isTeamleadOfUser($user)) {
             return true;
         }
 
@@ -696,6 +696,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         if (null !== ($member = $this->findMemberByTeam($team))) {
             return $member->isTeamlead();
+        }
+
+        return false;
+    }
+
+    public function isTeamleadOfUser(User $user): bool
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isTeamlead() && $membership->getTeam()->hasUser($user)) {
+                return true;
+            }
         }
 
         return false;
