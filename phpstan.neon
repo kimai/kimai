@@ -1572,22 +1572,12 @@ parameters:
             path: src/Entity/Activity.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:addTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Activity.php
 
         -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Activity.php
 
@@ -1632,32 +1622,7 @@ parameters:
             path: src/Entity/Bookmark.php
 
         -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setCreatedAt\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setCreatedBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setPinned\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Customer\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:addTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1668,11 +1633,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\Customer\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1747,27 +1707,12 @@ parameters:
             path: src/Entity/Project.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:addTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Project\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Project.php
 
         -
             message: "#^Method App\\\\Entity\\\\Project\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:localizeDates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Project.php
 
@@ -1912,11 +1857,6 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:addRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
@@ -1972,11 +1912,6 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setLanguage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has parameter \\$password with no type specified\\.$#"
             count: 1
             path: src/Entity/User.php
@@ -1987,17 +1922,7 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPreferenceValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setTimezone\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/User.php
 

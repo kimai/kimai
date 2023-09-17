@@ -253,7 +253,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * Make sure begin and end date have the correct timezone.
      * This will be called once for each item after being loaded from the database.
      */
-    protected function localizeDates()
+    protected function localizeDates(): void
     {
         if ($this->localized) {
             return;
@@ -392,7 +392,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         return $this;
     }
 
-    public function addTeam(Team $team)
+    public function addTeam(Team $team): void
     {
         if ($this->teams->contains($team)) {
             return;
@@ -402,7 +402,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         $team->addProject($this);
     }
 
-    public function removeTeam(Team $team)
+    public function removeTeam(Team $team): void
     {
         if (!$this->teams->contains($team)) {
             return;

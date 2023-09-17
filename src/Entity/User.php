@@ -371,7 +371,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @param string $name
      * @param bool|int|string|float|null $value
      */
-    public function setPreferenceValue(string $name, $value = null)
+    public function setPreferenceValue(string $name, $value = null): void
     {
         $pref = $this->getPreference($name);
 
@@ -421,7 +421,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getLocale();
     }
 
-    public function setLanguage(?string $language)
+    public function setLanguage(?string $language): void
     {
         if ($language === null) {
             $language = User::DEFAULT_LANGUAGE;
@@ -449,7 +449,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (string) $this->getPreferenceValue(UserPreference::SKIN, 'default', false);
     }
 
-    public function setTimezone(?string $timezone)
+    public function setTimezone(?string $timezone): void
     {
         if ($timezone === null) {
             $timezone = date_default_timezone_get();
@@ -785,18 +785,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
-    public function addRole(string $role)
+    public function addRole(string $role): void
     {
         $role = strtoupper($role);
         if ($role === static::DEFAULT_ROLE) {
-            return $this;
+            return;
         }
 
         if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
-
-        return $this;
     }
 
     public function eraseCredentials(): void
