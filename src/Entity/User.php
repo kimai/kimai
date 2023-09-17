@@ -599,6 +599,30 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
+     * Use this function to check if the current user can read data from the given user.
+     */
+    public function canSeeUser(User $user): bool
+    {
+        if ($this->canSeeAllData()) {
+            return true;
+        }
+
+        if (!$user->isEnabled()) {
+            return false;
+        }
+
+        if (!$this->isSystemAccount() && $user->isSystemAccount()) {
+            return false;
+        }
+
+        if ($this->hasTeamMember($user)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * List of all teams, this user is part of
      *
      * @return Team[]
