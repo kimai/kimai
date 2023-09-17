@@ -352,11 +352,6 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Method App\\\\Command\\\\ExportCreateCommand\\:\\:configure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$customerIDs of method App\\\\Repository\\\\CustomerRepository\\:\\:findByIds\\(\\) expects array\\<int\\>, mixed given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
@@ -4204,11 +4199,6 @@ parameters:
         -
             message: "#^Generator expects value type Symfony\\\\Component\\\\HttpKernel\\\\Bundle\\\\BundleInterface, object given\\.$#"
             count: 2
-            path: src/Kernel.php
-
-        -
-            message: "#^Method App\\\\Kernel\\:\\:build\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Kernel.php
 
         -
