@@ -603,6 +603,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function canSeeUser(User $user): bool
     {
+        if ($user->getId() === $this->getId()) {
+            return true;
+        }
+
         if ($this->canSeeAllData()) {
             return true;
         }
