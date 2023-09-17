@@ -232,7 +232,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         return $this;
     }
 
-    public function addTeam(Team $team)
+    public function addTeam(Team $team): void
     {
         if ($this->teams->contains($team)) {
             return;
@@ -242,7 +242,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         $team->addActivity($this);
     }
 
-    public function removeTeam(Team $team)
+    public function removeTeam(Team $team): void
     {
         if (!$this->teams->contains($team)) {
             return;

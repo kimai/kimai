@@ -246,7 +246,7 @@
 
 {% macro alert(type, description, title, icon, dismissible) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible}) }}
+    {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible, important: true}) }}
 {% endmacro %}
 
 {% macro callout(type, description, title, icon) %}

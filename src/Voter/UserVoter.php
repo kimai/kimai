@@ -22,6 +22,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 final class UserVoter extends Voter
 {
     private const ALLOWED_ATTRIBUTES = [
+        'access_user',
         'view',
         'edit',
         'roles',
@@ -62,8 +63,16 @@ final class UserVoter extends Voter
             return false;
         }
 
+        if (!($subject instanceof User)) {
+            return false;
+        }
+
         if ($attribute === 'contract') {
             return $this->permissionManager->hasRolePermission($user, 'contract_other_profile');
+        }
+
+        if ($attribute === 'access_user') {
+            return $user->canSeeUser($subject);
         }
 
         if ($attribute === 'view_team_member') {

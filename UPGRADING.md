@@ -21,9 +21,9 @@ now requires the `charset` and `serverVersion` params, e.g.: `DATABASE_URL=mysql
 
 - All plugins need to be updated: delete all previous version from your installation (`rm -r var/plugins/*`) before updating!
 - The `local.yaml` is not compatible with old version, remove it before the update and then re-create it after everything works
-  - dashboard default config
-  - removed: theme.branding.translation
-  - removed: kimai.plugin_dir
+  - removed: configuring the `dashboard` is not supported any longer
+  - removed: custom translation files via `theme.branding.translation`
+  - removed: changing the plugin directory via `kimai.plugin_dir`
 
 ### Developer
 

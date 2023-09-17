@@ -371,7 +371,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @param string $name
      * @param bool|int|string|float|null $value
      */
-    public function setPreferenceValue(string $name, $value = null)
+    public function setPreferenceValue(string $name, $value = null): void
     {
         $pref = $this->getPreference($name);
 
@@ -421,7 +421,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getLocale();
     }
 
-    public function setLanguage(?string $language)
+    public function setLanguage(?string $language): void
     {
         if ($language === null) {
             $language = User::DEFAULT_LANGUAGE;
@@ -449,7 +449,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (string) $this->getPreferenceValue(UserPreference::SKIN, 'default', false);
     }
 
-    public function setTimezone(?string $timezone)
+    public function setTimezone(?string $timezone): void
     {
         if ($timezone === null) {
             $timezone = date_default_timezone_get();
@@ -536,7 +536,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         $this->memberships->removeElement($member);
-        $member->getTeam()->removeMember($member);
+        if ($member->getTeam() !== null) {
+            $member->getTeam()->removeMember($member);
+        }
         $member->setUser(null);
         $member->setTeam(null);
     }
@@ -590,9 +592,37 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function hasTeamMember(User $user): bool
     {
         foreach ($this->memberships as $membership) {
-            if ($membership->getTeam()->hasUser($user)) {
+            if ($membership->getTeam() !== null && $membership->getTeam()->hasUser($user)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this function to check if the current user can read data from the given user.
+     */
+    public function canSeeUser(User $user): bool
+    {
+        if ($user->getId() === $this->getId()) {
+            return true;
+        }
+
+        if ($this->canSeeAllData()) {
+            return true;
+        }
+
+        if (!$user->isEnabled()) {
+            return false;
+        }
+
+        if (!$this->isSystemAccount() && $user->isSystemAccount()) {
+            return false;
+        }
+
+        if ($this->isTeamleadOfUser($user)) {
+            return true;
         }
 
         return false;
@@ -673,6 +703,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return false;
     }
 
+    public function isTeamleadOfUser(User $user): bool
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isTeamlead() && $membership->getTeam() !== null && $membership->getTeam()->hasUser($user)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function canSeeAllData(): bool
     {
         return $this->isSuperAdmin() || true === $this->isAllowedToSeeAllData;
@@ -708,7 +749,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->hasRole(static::ROLE_ADMIN);
     }
 
-    public function getDisplayName(): ?string
+    public function getDisplayName(): string
     {
         if (!empty($this->getAlias())) {
             return $this->getAlias();
@@ -744,18 +785,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
-    public function addRole(string $role)
+    public function addRole(string $role): void
     {
         $role = strtoupper($role);
         if ($role === static::DEFAULT_ROLE) {
-            return $this;
+            return;
         }
 
         if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
-
-        return $this;
     }
 
     public function eraseCredentials(): void

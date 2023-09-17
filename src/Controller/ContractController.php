@@ -68,6 +68,7 @@ final class ContractController extends AbstractController
         $page = new PageSetup('work_times');
         $page->setHelp('contract.html');
         $page->setActionName('contract');
+        $page->setActionPayload(['profile' => $profile, 'year' => $yearDate]);
         $page->setPaginationForm($form);
 
         // additional boxes by plugins

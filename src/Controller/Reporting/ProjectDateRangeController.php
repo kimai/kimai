@@ -16,6 +16,7 @@ use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
 use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -24,7 +25,7 @@ final class ProjectDateRangeController extends AbstractController
     #[Route(path: '/reporting/project_daterange', name: 'report_project_daterange', methods: ['GET', 'POST'])]
     #[IsGranted('report:project')]
     #[IsGranted(new Expression("is_granted('budget_any', 'project')"))]
-    public function __invoke(Request $request, ProjectStatisticService $service)
+    public function __invoke(Request $request, ProjectStatisticService $service): Response
     {
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();

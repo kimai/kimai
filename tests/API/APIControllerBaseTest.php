@@ -287,7 +287,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
             }
-            if (\array_key_exists('errors', $data[$fieldName]) && \count($data[$fieldName]['errors']) > 0) {
+            if (\array_key_exists('errors', (array) $data[$fieldName]) && \count($data[$fieldName]['errors']) > 0) {
                 $foundErrors[$fieldName] = \count($data[$fieldName]['errors']);
             }
         }

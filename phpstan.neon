@@ -1222,11 +1222,6 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectDateRangeController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
             message: "#^Parameter \\#1 \\$begin of method App\\\\Form\\\\Model\\\\DateRange\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
@@ -1242,28 +1237,13 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectDetailsController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDetailsController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectInactiveController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectInactiveController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectViewController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectViewController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Controller/Reporting/ProjectViewController.php
 
         -
@@ -1592,22 +1572,12 @@ parameters:
             path: src/Entity/Activity.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:addTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Activity.php
 
         -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Activity.php
 
@@ -1652,32 +1622,7 @@ parameters:
             path: src/Entity/Bookmark.php
 
         -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setCreatedAt\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setCreatedBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setMessage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CommentInterface\\:\\:setPinned\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/CommentInterface.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Customer\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:addTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1688,11 +1633,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\Customer\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1767,27 +1707,12 @@ parameters:
             path: src/Entity/Project.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:addTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Project\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Project.php
 
         -
             message: "#^Method App\\\\Entity\\\\Project\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:localizeDates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/Project.php
 
@@ -1927,27 +1852,7 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Cannot call method hasUser\\(\\) on App\\\\Entity\\\\Team\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Cannot call method removeMember\\(\\) on App\\\\Entity\\\\Team\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:__unserialize\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:addRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1963,11 +1868,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getMemberships\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getName\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -2012,11 +1912,6 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setLanguage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has parameter \\$password with no type specified\\.$#"
             count: 1
             path: src/Entity/User.php
@@ -2027,47 +1922,12 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPreferenceValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setTimezone\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function mb_strstr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Parameter \\#1 \\$secret of class Scheb\\\\TwoFactorBundle\\\\Model\\\\Totp\\\\TotpConfiguration constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -2463,7 +2323,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$filename of method App\\\\Export\\\\ExportFilename\\:\\:convert\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 1
             path: src/Export/ExportFilename.php
 
         -
@@ -6720,93 +6580,3 @@ parameters:
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'commentContent'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'commentOneLiner'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'markdownToHtml'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\MarkdownExtension', 'timesheetContent'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'colorize'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'KevinPapst\\\\\\\\TablerBundle\\\\\\\\Twig\\\\\\\\RuntimeExtension', 'icon'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\EncoreExtension', 'getEncoreEntryCssSo…'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\QrCodeExtension', 'qrCodeDataUriFuncti…'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'actions'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'generateTitle'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getJavascriptTransl…'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getProgressbarClass'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'getTimePresets'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\ThemeExtension', 'trigger'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\TimesheetExtension', 'activeEntries'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\TimesheetExtension', 'favoriteEntries'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'App\\\\\\\\Twig\\\\\\\\Runtime\\\\\\\\WidgetExtension', 'renderWidget'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php
-
-        -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\<class\\-string, string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{'KevinPapst\\\\\\\\TablerBundle\\\\\\\\Twig\\\\\\\\RuntimeExtension', 'createIcon'\\} given\\.$#"
-            count: 1
-            path: src/Twig/RuntimeExtensions.php

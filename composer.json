@@ -179,7 +179,13 @@
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
         "phpstan": [
-            "vendor/bin/phpstan analyse -c phpstan.neon",
+            "@phpstan-src",
+            "@phpstan-tests"
+        ],
+        "phpstan-src": [
+            "vendor/bin/phpstan analyse -c phpstan.neon"
+        ],
+        "phpstan-tests": [
             "vendor/bin/phpstan analyse -c tests/phpstan.neon"
         ],
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
