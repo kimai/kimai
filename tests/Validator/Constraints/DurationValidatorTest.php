@@ -28,7 +28,10 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         return new DurationValidator();
     }
 
-    public function getValidData()
+    /**
+     * @return array<array<string|int|null>>
+     */
+    public function getValidData(): array
     {
         return [
             ['2h'],
@@ -55,7 +58,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -65,7 +68,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getValidData
      */
-    public function testConstraintWithValidData(string|int|null $input)
+    public function testConstraintWithValidData(string|int|null $input): void
     {
         $constraint = new Duration();
         $this->validator->validate($input, $constraint);
@@ -75,7 +78,10 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getInvalidData()
+    /**
+     * @return array<array<string>>
+     */
+    public function getInvalidData(): array
     {
         return [
             ['13-13'],
@@ -96,7 +102,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getInvalidData
      */
-    public function testValidationError(string $input)
+    public function testValidationError(string $input): void
     {
         $constraint = new Duration([
             'message' => 'myMessage',
@@ -106,6 +112,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', '"' . $input . '"')
+            ->setParameter('{{ pattern }}', '/^-?[0-9]{1,}$|^-?[0-9]{1,}[,.]{1}[0-9]{1,}$|^-?[0-9]{1,}:[0-9]{1,}:[0-9]{1,}$|^-?[0-9]{1,}:[0-9]{1,}$|^[0-9]{1,}[hHmMsS]{1}$|^[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}$|^[0-9]{1,}[hHmM]{1}[0-9]{1,}[sS]{1}$|^[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}$|^[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}$/')
             ->setCode(Regex::REGEX_FAILED_ERROR)
             ->assertRaised();
     }
@@ -113,7 +120,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getInvalidData
      */
-    public function testValidationErrorUpperCase(string $input)
+    public function testValidationErrorUpperCase(string $input): void
     {
         $input = strtoupper($input);
         $constraint = new Duration([
@@ -124,6 +131,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', '"' . $input . '"')
+            ->setParameter('{{ pattern }}', '/^-?[0-9]{1,}$|^-?[0-9]{1,}[,.]{1}[0-9]{1,}$|^-?[0-9]{1,}:[0-9]{1,}:[0-9]{1,}$|^-?[0-9]{1,}:[0-9]{1,}$|^[0-9]{1,}[hHmMsS]{1}$|^[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}$|^[0-9]{1,}[hHmM]{1}[0-9]{1,}[sS]{1}$|^[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}$|^[0-9]{1,}[hH]{1}[0-9]{1,}[mM]{1}[0-9]{1,}[sS]{1}$/')
             ->setCode(Regex::REGEX_FAILED_ERROR)
             ->assertRaised();
     }

@@ -9588,36 +9588,6 @@ parameters:
             path: Validator/Constraints/DateTimeFormatValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:getInvalidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:getValidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:testConstraintIsInvalid\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:testConstraintWithValidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:testValidationError\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DurationValidatorTest\\:\\:testValidationErrorUpperCase\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DurationValidatorTest.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtoupper expects string, int\\|string given\\.$#"
             count: 1
             path: Validator/Constraints/DurationValidatorTest.php
