@@ -227,16 +227,6 @@ parameters:
             path: src/Command/AbstractBundleInstallerCommand.php
 
         -
-            message: "#^Method App\\\\Command\\\\AbstractBundleInstallerCommand\\:\\:importMigrations\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/AbstractBundleInstallerCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\AbstractBundleInstallerCommand\\:\\:installAssets\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/AbstractBundleInstallerCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$directory of function chdir expects string, string\\|false given\\.$#"
             count: 1
             path: src/Command/AbstractBundleInstallerCommand.php
@@ -255,11 +245,6 @@ parameters:
             message: "#^Method App\\\\Command\\\\AbstractResetCommand\\:\\:askConfirmation\\(\\) should return bool but returns mixed\\.$#"
             count: 1
             path: src/Command/AbstractResetCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\AbstractRoleCommand\\:\\:executeRoleCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/AbstractRoleCommand.php
 
         -
             message: "#^Method App\\\\Command\\\\AbstractRoleCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
@@ -330,11 +315,6 @@ parameters:
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
             count: 2
             path: src/Command/DeactivateUserCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\DemoteUserCommand\\:\\:executeRoleCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/DemoteUserCommand.php
 
         -
             message: "#^Method App\\\\Command\\\\DemoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
@@ -557,11 +537,6 @@ parameters:
             path: src/Command/PluginCommand.php
 
         -
-            message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/PromoteUserCommand.php
-
-        -
             message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: src/Command/PromoteUserCommand.php
@@ -579,11 +554,6 @@ parameters:
         -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
             count: 4
-            path: src/Command/ReloadCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\ReloadCommand\\:\\:rebuildCaches\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Command/ReloadCommand.php
 
         -
