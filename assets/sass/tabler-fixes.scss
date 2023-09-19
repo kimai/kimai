@@ -16,3 +16,19 @@ fieldset.form-fieldset legend {
 .dropdown-divider {
     --tblr-dropdown-divider-margin-y: .5rem;
 }
+
+/*
+fixes translucent scroll border, e.g. in timesheet modal duration dropdown
+https://github.com/tabler/tabler/issues/1606
+*/
+.dropdown-menu {
+    background-clip: border-box;
+}
+
+/*
+hide empty fieldset
+https://github.com/tabler/tabler/issues/1650
+*/
+fieldset:empty {
+    display: none;
+}
