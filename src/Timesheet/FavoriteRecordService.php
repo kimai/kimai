@@ -21,6 +21,8 @@ use App\Repository\TimesheetRepository;
  */
 final class FavoriteRecordService
 {
+    public const MAX_FAVORITES = 5;
+
     public function __construct(private TimesheetRepository $repository, private BookmarkRepository $bookmarkRepository)
     {
     }
@@ -35,7 +37,7 @@ final class FavoriteRecordService
         /** @var array<int> $favIds */
         $favIds = $this->getBookmark($user)->getContent();
         $recentIds = [];
-        if (\count($favIds) < 5) {
+        if (\count($favIds) < $limit) {
             $recentIds = $this->repository->getRecentActivityIds($user, null, $limit);
         }
         /** @var array<int> $ids */
@@ -98,7 +100,7 @@ final class FavoriteRecordService
             return;
         }
 
-        if (\count($ids) >= 5) {
+        if (\count($ids) >= self::MAX_FAVORITES) {
             array_pop($ids); // remove the last element and make space for a new id
         }
         array_unshift($ids, $timesheet->getId());
