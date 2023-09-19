@@ -1343,41 +1343,6 @@ parameters:
             path: Command/ActivateUserCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\AssetsInstallerFailureCommand\\:\\:installAssets\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testAssetsInstallIsOk\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testAssetsInstallReturnsNonZeroExitCode\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testAssetsInstallationFailure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testFullRun\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testInvalidNamespaceWillRaiseException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\BundleInstallerCommandTest\\:\\:testMissingMigrationThrowsException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$command of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Console\\\\Application\\:\\:add\\(\\) expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, object given\\.$#"
             count: 1
             path: Command/BundleInstallerCommandTest.php

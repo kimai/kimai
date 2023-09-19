@@ -25,23 +25,21 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class BundleInstallerCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
+    /**
+     * @param class-string $className
+     */
     protected function getCommand(string $className): Command
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
-
         $this->application->add(new $className());
 
         return $this->application->find('kimai:bundle:test:install');
     }
 
-    public function testFullRun()
+    public function testFullRun(): void
     {
         $command = $this->getCommand(TestBundleInstallerCommand::class);
         $commandTester = new CommandTester($command);
@@ -53,7 +51,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         self::assertEquals(0, $commandTester->getStatusCode());
     }
 
-    public function testMissingMigrationThrowsException()
+    public function testMissingMigrationThrowsException(): void
     {
         $command = $this->getCommand(InstallerWithMissingMigrationsCommand::class);
         $commandTester = new CommandTester($command);
@@ -64,7 +62,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 
-    public function testAssetsInstallationFailure()
+    public function testAssetsInstallationFailure(): void
     {
         $command = $this->getCommand(AssetsInstallerFailureCommand::class);
         $commandTester = new CommandTester($command);
@@ -75,7 +73,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 
-    public function testInvalidNamespaceWillRaiseException()
+    public function testInvalidNamespaceWillRaiseException(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Unsupported namespace given, expected "KimaiPlugin" but received "App". Please overwrite getBundleName() and return the correct bundle name.');
@@ -85,7 +83,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         $commandTester->execute(['command' => $command->getName()]);
     }
 
-    public function testAssetsInstallIsOk()
+    public function testAssetsInstallIsOk(): void
     {
         $command = $this->getCommand(InstallerWithAssetsCommand::class);
 
@@ -99,7 +97,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         self::assertEquals(0, $commandTester->getStatusCode());
     }
 
-    public function testAssetsInstallReturnsNonZeroExitCode()
+    public function testAssetsInstallReturnsNonZeroExitCode(): void
     {
         $command = $this->getCommand(InstallerWithAssetsCommand::class);
 
@@ -171,7 +169,7 @@ class AssetsInstallerFailureCommand extends TestBundleInstallerCommand
         return true;
     }
 
-    protected function installAssets(SymfonyStyle $io, OutputInterface $output)
+    protected function installAssets(SymfonyStyle $io, OutputInterface $output): void
     {
         throw new \Exception('Problem occurred while installing assets.');
     }
