@@ -3,8 +3,8 @@
 {% block main %}
 <div class="row">
 
-    <div class="col-12 col-md-3 mb-3 d-none d-md-block">
-        <div class="card">
+    <div class="col-12 col-xxl-2 col-md-3 mb-3 d-none d-md-block">
+        <div class="card sticky-xxl-top">
             <div class="list-group list-group-flush">
                 {% set sorted = [] %}
                 {% for section in sections %}
@@ -15,7 +15,7 @@
                     {% set sorted = sorted|merge([{'name': title, 'id': section.model.section, 'counter': section.form.children.configuration|length}]) %}
                 {% endfor %}
                 {% for section in sorted|sort((a, b) => a.name <=> b.name) %}
-                    <a class="list-group-item d-flex" href="#conf_{{ section.id }}">
+                    <a class="list-group-item d-flex ps-4 pe-4 p-lg-3 pb-md-2 pt-md-2" href="#conf_{{ section.id }}">
                         {{ section.name }}
                         <small class="text-body-secondary ms-auto">{{ section.counter }}</small>
                     </a>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-xxl-10 col-md-9">
         <div class="row">
             <div class="col-12">
                 {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
