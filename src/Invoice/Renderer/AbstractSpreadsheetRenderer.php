@@ -120,11 +120,9 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
     }
 
     /**
-     * @param Worksheet $worksheet
-     * @param int $invoiceItemCount
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    protected function addTemplateRows(Worksheet $worksheet, int $invoiceItemCount)
+    protected function addTemplateRows(Worksheet $worksheet, int $invoiceItemCount): void
     {
         $startRow = null;
         $rowCounter = 0;

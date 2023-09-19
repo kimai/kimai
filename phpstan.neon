@@ -3927,11 +3927,6 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Method App\\\\Invoice\\\\Renderer\\\\AbstractSpreadsheetRenderer\\:\\:addTemplateRows\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, mixed given\\.$#"
             count: 5
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
@@ -4008,21 +4003,6 @@ parameters:
 
         -
             message: "#^Cannot call method setInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\ServiceInvoice\\:\\:changeInvoiceStatus\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\ServiceInvoice\\:\\:deleteInvoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\ServiceInvoice\\:\\:markEntriesAsExported\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
 
