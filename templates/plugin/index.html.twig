@@ -12,10 +12,9 @@
             {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 {% set columns = {
-                    'name': {'class': 'alwaysVisible'},
+                    'name': {'class': 'alwaysVisible w-25'},
                     'description': {'class': 'd-none d-md-table-cell'},
                     'version': {'class': 'text-center w-min'},
-                    'actions': {'class': 'actions alwaysVisible'},
                 } %}
 
                 {% set tableName = 'plugins' %}
@@ -26,17 +25,13 @@
                 {% for plugin in plugins|sort((p1, p2) => p1.name|lower <=> p2.name|lower) %}
                     <tr>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                            {% if plugin.id != plugin.name %}
-                                <span data-toggle="tooltip" data-placement="top" title="{{ plugin.id }}">{{ plugin.name }}</span>
-                            {% else %}
-                                {{ plugin.name }}
-                            {% endif %}
+                            <a href="{{ plugin.metadata.homepage }}" title="{{ 'homepage'|trans }}" target="_blank">{{ plugin.name }}</a>
                         </td>
-                        <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ plugin.metadata.description }}</td>
-                        <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">{{ widgets.label(plugin.metadata.version, 'primary') }}</td>
-                        <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                            {% set event = actions(app.user, 'plugin', 'index', {'plugin': plugin}) %}
-                            {{ widgets.table_actions(event.actions) }}
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
+                            {{ plugin.metadata.description }}
+                        </td>
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">
+                            {{ widgets.label(plugin.metadata.version, 'primary', plugin.id) }}
                         </td>
                     </tr>
                 {% endfor %}
@@ -55,9 +50,9 @@
             {% endblock %}
             {% block box_body %}
                 {% set columns = {
-                    'name': {'class': 'alwaysVisible'},
+                    'name': {'class': 'alwaysVisible w-25'},
                     'description': {'class': 'd-none d-md-table-cell'},
-                    'actions': {'class': 'actions alwaysVisible'},
+                    'shop': {'class': 'w-min alwaysVisible'},
                 } %}
 
                 {% set tableName = 'extensions' %}
@@ -71,7 +66,7 @@
                             <a href="{{ extension.url }}" title="{{ 'homepage'|trans }}" target="_blank">{{ extension.name }}</a>
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
-                        <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                        <td class="{{ tables.data_table_column_class(tableName, columns, 'shop') }}">
                             {% if extension.buy is defined and extension.buy is not empty and (extension.minimum_version is not defined or (extension.minimum_version is not empty and constant('App\\Constants::VERSION') >= extension.minimum_version)) %}
                                 <a class="btn btn-icon btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
                             {% endif %}
