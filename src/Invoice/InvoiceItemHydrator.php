@@ -11,7 +11,7 @@ namespace App\Invoice;
 
 interface InvoiceItemHydrator
 {
-    public function setInvoiceModel(InvoiceModel $model);
+    public function setInvoiceModel(InvoiceModel $model): void;
 
     public function hydrate(InvoiceItem $item): array;
 }

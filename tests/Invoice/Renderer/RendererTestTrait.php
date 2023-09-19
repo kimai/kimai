@@ -26,6 +26,7 @@ use App\Invoice\DefaultInvoiceFormatter;
 use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Model\InvoiceDocument;
 use App\Repository\InvoiceRepository;
@@ -255,7 +256,7 @@ trait RendererTestTrait
         return $model;
     }
 
-    private function getNumberGeneratorSut()
+    private function getNumberGeneratorSut(): NumberGeneratorInterface
     {
         $repository = $this->createMock(InvoiceRepository::class);
         $repository

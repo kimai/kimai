@@ -32,14 +32,11 @@ final class SystemConfiguration
 
     /**
      * Set an array item to a given value using "dot" notation.
-     *
      * If no key is given to the method, the entire array will be replaced.
      *
-     * @param string $key
-     * @param mixed $value
-     * @return void
+     * @internal
      */
-    private function set(string $key, $value): void
+    public function set(string $key, mixed $value): void
     {
         if (\array_key_exists($key, $this->settings)) {
             if (\is_bool($this->settings[$key])) {
@@ -125,31 +122,35 @@ final class SystemConfiguration
 
     // ========== Array access methods ==========
 
+    /**
+     * @deprecated since 2.0.35
+     */
     public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
+    /**
+     * @deprecated since 2.0.35
+     */
     public function offsetGet($offset): mixed
     {
         return $this->find($offset);
     }
 
     /**
-     * @param mixed $offset
-     * @param mixed $value
-     * @throws \BadMethodCallException
+     * @deprecated since 2.0.35
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->set($offset, $value);
     }
 
     /**
-     * @param mixed $offset
+     * @deprecated since 2.0.35
      * @throws \BadMethodCallException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
     }

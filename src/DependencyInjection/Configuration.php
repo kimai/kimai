@@ -105,7 +105,7 @@ final class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    private function getProjectNode()
+    private function getProjectNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('project');
         /** @var ArrayNodeDefinition $node */

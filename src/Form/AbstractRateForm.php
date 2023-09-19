@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class AbstractRateForm extends AbstractType
 {
-    protected function addFields(FormBuilderInterface $builder, ?string $currency)
+    protected function addFields(FormBuilderInterface $builder, ?string $currency): void
     {
         $builder
             ->add('user', UserType::class, [

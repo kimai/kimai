@@ -37,7 +37,7 @@ final class UserPreferenceDisplayEvent extends Event
         return $this->preferences;
     }
 
-    public function addPreference(UserPreference $preference)
+    public function addPreference(UserPreference $preference): void
     {
         $this->preferences[] = $preference;
     }

@@ -852,16 +852,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:offsetSet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:offsetUnset\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
             message: "#^Parameter \\#1 \\$key of method App\\\\Configuration\\\\SystemConfiguration\\:\\:set\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
@@ -905,26 +895,6 @@ parameters:
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ActivityRepository\\:\\:deleteActivity\\(\\) expects App\\\\Entity\\\\Activity\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Auth\\\\SamlController\\:\\:assertionConsumerServiceAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Auth\\\\SamlController\\:\\:loginAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Auth\\\\SamlController\\:\\:logoutAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Auth\\\\SamlController\\:\\:metadataAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
 
         -
             message: "#^Parameter \\#1 \\$returnTo of method OneLogin\\\\Saml2\\\\Auth\\:\\:login\\(\\) expects string\\|null, mixed given\\.$#"
@@ -1072,11 +1042,6 @@ parameters:
             path: src/Controller/InvoiceController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\InvoiceController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/InvoiceController.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|false given\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
@@ -1085,11 +1050,6 @@ parameters:
             message: "#^Parameter \\#2 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\EntityWithMetaFieldsExporter\\:\\:export\\(\\) expects array, iterable\\<App\\\\Entity\\\\Invoice\\> given\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\PermissionController\\:\\:permissions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/PermissionController.php
 
         -
             message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(string\\|null\\)\\: mixed\\)\\|null, 'strtoupper' given\\.$#"
@@ -1149,11 +1109,6 @@ parameters:
         -
             message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
             count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\QuickEntryController\\:\\:quickEntry\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Controller/QuickEntryController.php
 
         -
@@ -1297,16 +1252,6 @@ parameters:
             path: src/Controller/Security/PasswordResetController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\Security\\\\SecurityController\\:\\:checkAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Security/SecurityController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\Security\\\\SecurityController\\:\\:logoutAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Security/SecurityController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Security\\\\SelfRegistrationController\\:\\:getTargetUrlFromSession\\(\\) should return string\\|null but returns mixed\\.$#"
             count: 1
             path: src/Controller/Security/SelfRegistrationController.php
@@ -1337,16 +1282,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\TimesheetAbstractController\\:\\:multiDelete\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\TimesheetAbstractController\\:\\:prepareQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Parameter \\#1 \\$id of method App\\\\Export\\\\ServiceExport\\:\\:getTimesheetExporterById\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
@@ -1357,11 +1292,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\TimesheetTeamController\\:\\:prepareQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^PHPDoc tag @var for variable \\$teams contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Controller/TimesheetTeamController.php
@@ -1370,11 +1300,6 @@ parameters:
             message: "#^PHPDoc tag @var for variable \\$users contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Controller/TimesheetTeamController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\UserController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/UserController.php
 
         -
             message: "#^Parameter \\#1 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\UserExporter\\:\\:export\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
@@ -1510,16 +1435,6 @@ parameters:
             message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:extractSinglePermissionsFromSet\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/DependencyInjection/AppExtension.php
-
-        -
-            message: "#^Method App\\\\DependencyInjection\\\\Configuration\\:\\:getProjectNode\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/DependencyInjection/Configuration.php
-
-        -
-            message: "#^Method App\\\\Doctrine\\\\AbstractMigration\\:\\:abortIfPlatformNotSupported\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Doctrine/AbstractMigration.php
 
         -
             message: "#^Method App\\\\Doctrine\\\\TimesheetSubscriber\\:\\:calculateFields\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
@@ -2002,11 +1917,6 @@ parameters:
             path: src/Event/ThemeJavascriptTranslationsEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\UserPreferenceDisplayEvent\\:\\:addPreference\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Event/UserPreferenceDisplayEvent.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 2
             path: src/Event/UserPreferenceEvent.php
@@ -2415,11 +2325,6 @@ parameters:
             message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
             count: 1
             path: src/Form/API/TimesheetApiEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\AbstractRateForm\\:\\:addFields\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/AbstractRateForm.php
 
         -
             message: "#^Cannot access offset mixed on mixed\\.$#"
@@ -3807,11 +3712,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydrator\\:\\:setInvoiceModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
             count: 3
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
@@ -3983,11 +3883,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Invoice\\\\InvoiceItemHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItemHydrator.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceItemHydrator\\:\\:setInvoiceModel\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Invoice/InvoiceItemHydrator.php
 

@@ -164,7 +164,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
         return $this->multiDelete($request);
     }
 
-    protected function prepareQuery(TimesheetQuery $query)
+    protected function prepareQuery(TimesheetQuery $query): void
     {
         $query->setCurrentUser($this->getUser());
     }

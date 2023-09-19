@@ -25,7 +25,7 @@ final class SamlController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'saml_login')]
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): Response
     {
         if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
@@ -50,11 +50,19 @@ final class SamlController extends AbstractController
             throw new \RuntimeException($error);
         }
 
-        $this->authFactory->create()->login($session->get('_security.main.target_path'));
+        // this does set headers and exit as $stay is not set to true
+        $url = $this->authFactory->create()->login($session->get('_security.main.target_path'));
+
+        if ($url === null) {
+            throw new \RuntimeException('SAML login failed');
+        }
+
+        // this line is not (yet) reached, as the previous call will exit
+        return $this->redirect($url);
     }
 
     #[Route(path: '/metadata', name: 'saml_metadata')]
-    public function metadataAction()
+    public function metadataAction(): Response
     {
         if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
@@ -69,7 +77,7 @@ final class SamlController extends AbstractController
     }
 
     #[Route(path: '/acs', name: 'saml_acs')]
-    public function assertionConsumerServiceAction()
+    public function assertionConsumerServiceAction(): Response
     {
         if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
@@ -79,7 +87,7 @@ final class SamlController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'saml_logout')]
-    public function logoutAction()
+    public function logoutAction(): Response
     {
         if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
