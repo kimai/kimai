@@ -199,9 +199,9 @@ class TimesheetRepository extends EntityRepository
             ->leftJoin('t.project', 'p')
             ->leftJoin('p.customer', 'c')
             ->groupBy('c.currency')
+            ->andWhere($qb->expr()->eq('t.billable', ':billable'))
+            ->setParameter('billable', true);
         ;
-
-        // TODO only billable?
 
         if ($begin !== null) {
             $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
