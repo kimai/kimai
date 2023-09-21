@@ -23,7 +23,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class UserAmountTotalTest extends AbstractWidgetTest
 {
-    protected function assertDefaultData(AbstractWidget $sut)
+    protected function assertDefaultData(AbstractWidget $sut): void
     {
         self::assertEquals(0.0, $sut->getData());
     }

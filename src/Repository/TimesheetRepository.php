@@ -168,7 +168,7 @@ class TimesheetRepository extends EntityRepository
             case 'active':
                 return $this->countActiveEntries($user);
             case 'duration':
-                return $this > $this->getDurationForTimeRange($begin, $end, $user, $billable);
+                return $this->getDurationForTimeRange($begin, $end, $user, $billable);
             case 'rate':
                 return $this->getRevenue($begin, $end, $user);
             case 'users':
@@ -177,12 +177,18 @@ class TimesheetRepository extends EntityRepository
                 return $this->queryTimeRange('COUNT(t.id)', $begin, $end, $user, $billable);
         }
 
-        throw new InvalidArgumentException('Invalid query type: ' . $type);
+        throw new InvalidArgumentException('Invalid query type: ' . $type); // @phpstan-ignore-line
     }
 
     public function getDurationForTimeRange(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): int
     {
-        return (int) $this->queryTimeRange('COALESCE(SUM(t.duration), 0)', $begin, $end, $user, $billable);
+        $tmp = $this->queryTimeRange('COALESCE(SUM(t.duration), 0)', $begin, $end, $user, $billable);
+
+        if (!is_numeric($tmp)) {
+            return 0;
+        }
+
+        return (int) $tmp;
     }
 
     /**
@@ -201,7 +207,6 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('c.currency')
             ->andWhere($qb->expr()->eq('t.billable', ':billable'))
             ->setParameter('billable', true);
-        ;
 
         if ($begin !== null) {
             $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
@@ -365,7 +370,13 @@ class TimesheetRepository extends EntityRepository
 
     public function countActiveUsers(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?bool $billable = null): int
     {
-        return $this->queryTimeRange('COUNT(DISTINCT(t.user))', $begin, $end, null, $billable);
+        $tmp = $this->queryTimeRange('COUNT(DISTINCT(t.user))', $begin, $end, null, $billable);
+
+        if (!is_numeric($tmp)) {
+            return 0;
+        }
+
+        return (int) $tmp;
     }
 
     /**

@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
+use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\UserDurationYear;
 
@@ -34,6 +35,11 @@ class UserDurationYearTest extends AbstractWidgetTypeTest
         $sut->setUser(new User());
 
         return $sut;
+    }
+
+    protected function assertDefaultData(AbstractWidget $sut): void
+    {
+        self::assertEquals(0, $sut->getData());
     }
 
     public function getDefaultOptions(): array

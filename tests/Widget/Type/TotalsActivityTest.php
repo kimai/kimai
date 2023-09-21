@@ -56,7 +56,7 @@ class TotalsActivityTest extends AbstractWidgetTest
         ];
     }
 
-    protected function assertDefaultData(AbstractWidgetType $sut)
+    protected function assertDefaultData(AbstractWidgetType $sut): void
     {
         self::assertEquals(1, $sut->getData());
     }

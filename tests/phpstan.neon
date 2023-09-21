@@ -10418,27 +10418,7 @@ parameters:
             path: Widget/Type/AbstractWidgetTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AbstractWidgetTypeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Widget/Type/AbstractWidgetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:testDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AbstractWidgetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:testFluentInterface\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AbstractWidgetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AbstractWidgetTypeTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/AbstractWidgetTypeTest.php
 
@@ -10446,16 +10426,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\ActiveUsersYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/ActiveUsersYearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\ActiveUsersYearTest\\:\\:testSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/ActiveUsersYearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountMonthTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AmountMonthTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountMonthTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10468,11 +10438,6 @@ parameters:
             path: Widget/Type/AmountMonthTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountTodayTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AmountTodayTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountTodayTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/AmountTodayTest.php
@@ -10481,11 +10446,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountTodayTest\\:\\:testSettings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/AmountTodayTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountTotalTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AmountTotalTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountTotalTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10498,11 +10458,6 @@ parameters:
             path: Widget/Type/AmountTotalTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountWeekTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AmountWeekTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountWeekTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/AmountWeekTest.php
@@ -10511,11 +10466,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountWeekTest\\:\\:testSettings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/AmountWeekTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountYearTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/AmountYearTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10613,11 +10563,6 @@ parameters:
             path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsActivityTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/TotalsActivityTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsActivityTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/TotalsActivityTest.php
@@ -10626,11 +10571,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsActivityTest\\:\\:testData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/TotalsActivityTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsCustomerTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/TotalsCustomerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsCustomerTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10643,11 +10583,6 @@ parameters:
             path: Widget/Type/TotalsCustomerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsProjectTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/TotalsProjectTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsProjectTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/TotalsProjectTest.php
@@ -10656,11 +10591,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsProjectTest\\:\\:testData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/TotalsProjectTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsUserTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/TotalsUserTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\TotalsUserTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10673,11 +10603,6 @@ parameters:
             path: Widget/Type/TotalsUserTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountMonthTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/UserAmountMonthTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountMonthTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserAmountMonthTest.php
@@ -10686,11 +10611,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountMonthTest\\:\\:testSettings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/UserAmountMonthTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountTodayTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/UserAmountTodayTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountTodayTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -10703,11 +10623,6 @@ parameters:
             path: Widget/Type/UserAmountTodayTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountTotalTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/UserAmountTotalTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountTotalTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserAmountTotalTest.php
@@ -10718,11 +10633,6 @@ parameters:
             path: Widget/Type/UserAmountTotalTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountWeekTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/UserAmountWeekTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountWeekTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserAmountWeekTest.php
@@ -10731,11 +10641,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountWeekTest\\:\\:testSettings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/UserAmountWeekTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountYearTest\\:\\:assertDefaultData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/UserAmountYearTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserAmountYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
