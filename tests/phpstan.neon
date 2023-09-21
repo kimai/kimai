@@ -10528,41 +10528,6 @@ parameters:
             path: Widget/Type/AmountYearTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Widget/Type/CounterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterTest\\:\\:testQueryWithUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/CounterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterTest\\:\\:testTemplateName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/CounterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Widget/Type/CounterYearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterYearTest\\:\\:testQueryWithUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/CounterYearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterYearTest\\:\\:testTemplateName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/CounterYearTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\CounterYearTest\\:\\:testTemplateNameWithFinancialYear\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/CounterYearTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\DailyWorkingTimeChartTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/DailyWorkingTimeChartTest.php
@@ -10604,16 +10569,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\MoreTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Widget/Type/MoreTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\MoreTest\\:\\:testData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Widget/Type/MoreTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\MoreTest\\:\\:testTemplateName\\(\\) has no return type specified\\.$#"
             count: 1
             path: Widget/Type/MoreTest.php
 

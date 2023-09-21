@@ -33,14 +33,6 @@ abstract class AbstractWidgetTypeTest extends AbstractWidgetTest
         $this->assertDefaultData($sut);
     }
 
-    public function testFluentInterface()
-    {
-        $sut = $this->createSut();
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setOptions([]));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setId(''));
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setTitle(''));
-    }
-
     public function testSetter()
     {
         $sut = $this->createSut();

@@ -9,22 +9,17 @@
 
 namespace App\Widget\Type;
 
-use App\Repository\TimesheetRepository;
-
-abstract class AbstractCounterDuration extends AbstractSimpleStatisticChart
+abstract class AbstractCounterDuration extends AbstractWidgetType
 {
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
             'icon' => 'duration',
         ], parent::getOptions($options));
-    }
-
-    public function getData(array $options = []): mixed
-    {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
-
-        return parent::getData($options);
     }
 
     public function getTitle(): string

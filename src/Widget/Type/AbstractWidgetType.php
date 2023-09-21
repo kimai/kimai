@@ -9,48 +9,18 @@
 
 namespace App\Widget\Type;
 
-use App\Widget\WidgetInterface;
-
 abstract class AbstractWidgetType extends AbstractWidget
 {
     private ?string $id = null;
     private string $title = '';
-    private int $height = WidgetInterface::HEIGHT_SMALL;
-    private int $width = WidgetInterface::WIDTH_SMALL;
     /**
      * @var array<string>
      */
     private array $permissions = [];
 
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
-
-    public function setHeight(int $height): AbstractWidgetType
-    {
-        $this->height = $height;
-
-        return $this;
-    }
-
-    public function getWidth(): int
-    {
-        return $this->width;
-    }
-
-    public function setWidth(int $width): AbstractWidgetType
-    {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    public function setId(string $id): self
+    public function setId(string $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     public function getId(): string
@@ -62,11 +32,9 @@ abstract class AbstractWidgetType extends AbstractWidget
         return (new \ReflectionClass($this))->getShortName();
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     public function getTitle(): string
@@ -74,13 +42,11 @@ abstract class AbstractWidgetType extends AbstractWidget
         return $this->title;
     }
 
-    public function setOptions(array $options): self
+    public function setOptions(array $options): void
     {
         foreach ($options as $key => $value) {
             $this->setOption($key, $value);
         }
-
-        return $this;
     }
 
     public function getPermissions(): array
@@ -88,10 +54,8 @@ abstract class AbstractWidgetType extends AbstractWidget
         return $this->permissions;
     }
 
-    public function setPermissions(array $permissions): AbstractWidgetType
+    public function setPermissions(array $permissions): void
     {
         $this->permissions = $permissions;
-
-        return $this;
     }
 }

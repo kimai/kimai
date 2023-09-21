@@ -29,6 +29,10 @@ abstract class AbstractAmountPeriod extends AbstractWidget
         return 'widget/widget-counter-money.html.twig';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -36,19 +40,12 @@ abstract class AbstractAmountPeriod extends AbstractWidget
         ], parent::getOptions($options));
     }
 
-    protected function getRevenue(?string $begin, ?string $end, array $options = [])
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, float>
+     */
+    protected function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, array $options = []): array
     {
-        $user = $this->getUser();
-        $timezone = new \DateTimeZone($user->getTimezone());
-
-        if ($begin !== null) {
-            $begin = new \DateTime($begin, $timezone);
-        }
-
-        if ($end !== null) {
-            $end = new \DateTime($end, $timezone);
-        }
-
         $data = $this->repository->getRevenue($begin, $end, null);
 
         $event = new RevenueStatisticEvent($begin, $end);

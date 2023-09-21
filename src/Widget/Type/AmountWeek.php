@@ -13,6 +13,10 @@ use App\Widget\WidgetInterface;
 
 final class AmountWeek extends AbstractAmountPeriod
 {
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge(['color' => WidgetInterface::COLOR_WEEK], parent::getOptions($options));
@@ -23,9 +27,12 @@ final class AmountWeek extends AbstractAmountPeriod
         return 'AmountWeek';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        return $this->getRevenue('monday this week 00:00:00', 'sunday this week 23:59:59', $options);
+        return $this->getRevenue($this->createWeekStartDate(), $this->createWeekEndDate(), $options);
     }
 
     public function getPermissions(): array

@@ -10,10 +10,9 @@
 namespace App\Tests\Widget\Type;
 
 use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\More;
 
 /**
- * @covers \App\Widget\Type\More
+ * @covers \App\Tests\Widget\Type\More
  */
 class MoreTest extends AbstractWidgetTypeTest
 {
@@ -27,13 +26,13 @@ class MoreTest extends AbstractWidgetTypeTest
         return [];
     }
 
-    public function testTemplateName()
+    public function testTemplateName(): void
     {
         $sut = new More();
         self::assertEquals('widget/widget-more.html.twig', $sut->getTemplateName());
     }
 
-    public function testData()
+    public function testData(): void
     {
         $sut = $this->createSut();
 

@@ -13,6 +13,10 @@ use App\Widget\WidgetInterface;
 
 final class AmountToday extends AbstractAmountPeriod
 {
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge(['color' => WidgetInterface::COLOR_TODAY], parent::getOptions($options));
@@ -23,9 +27,12 @@ final class AmountToday extends AbstractAmountPeriod
         return 'AmountToday';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        return $this->getRevenue('00:00:00', '23:59:59', $options);
+        return $this->getRevenue($this->createTodayStartDate(), $this->createTodayEndDate(), $options);
     }
 
     public function getPermissions(): array
