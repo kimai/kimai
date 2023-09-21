@@ -44,7 +44,7 @@ final class UserDurationWeek extends AbstractCounterDuration
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
+            return $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

@@ -44,7 +44,7 @@ final class UserDurationTotal extends AbstractCounterDuration
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, null, null, $this->getUser());
+            return $this->repository->getDurationForTimeRange(null, null, $this->getUser());
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

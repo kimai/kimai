@@ -39,7 +39,7 @@ final class ActiveUsersWeek extends AbstractActiveUsers
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_USER, $this->createWeekStartDate(), $this->createWeekEndDate(), null);
+            return $this->repository->countActiveUsers($this->createWeekStartDate(), $this->createWeekEndDate(), null);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

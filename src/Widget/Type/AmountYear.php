@@ -43,7 +43,7 @@ final class AmountYear extends AbstractCounterYear
     {
         try {
             /** @var array<Revenue> $data */
-            $data = $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_RATE, $begin, $end, null);
+            $data = $this->repository->getRevenue($begin, $end, null);
 
             $event = new RevenueStatisticEvent($begin, $end);
             foreach ($data as $row) {

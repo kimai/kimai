@@ -39,7 +39,7 @@ final class ActiveUsersMonth extends AbstractActiveUsers
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_USER, $this->createMonthStartDate(), $this->createMonthEndDate(), null);
+            return $this->repository->countActiveUsers($this->createMonthStartDate(), $this->createMonthEndDate(), null);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

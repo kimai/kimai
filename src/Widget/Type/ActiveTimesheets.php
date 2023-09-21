@@ -49,7 +49,7 @@ final class ActiveTimesheets extends AbstractWidgetType
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_ACTIVE, null, null, null);
+            return $this->repository->countActiveEntries();
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

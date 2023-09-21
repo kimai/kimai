@@ -39,7 +39,7 @@ final class ActiveUsersToday extends AbstractActiveUsers
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_USER, $this->createTodayStartDate(), $this->createTodayEndDate(), null);
+            return $this->repository->countActiveUsers($this->createTodayStartDate(), $this->createTodayEndDate(), null);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()
