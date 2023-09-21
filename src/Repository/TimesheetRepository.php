@@ -152,13 +152,10 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param self::STATS_QUERY_* $type
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
+    public function getStatistic(string $type, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
     {
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
@@ -182,12 +179,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
      * @return array<Revenue>
      */
-    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user): array
+    public function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -223,14 +217,10 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param string|string[] $select
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
-     * @param bool|null $billable
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange(string|array $select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
+    protected function queryTimeRange(string|array $select, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
     {
         $selects = $select;
         if (!\is_array($select)) {

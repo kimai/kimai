@@ -21,16 +21,16 @@ final class RevenueStatisticEvent extends Event
      */
     private array $revenue = [];
 
-    public function __construct(private ?\DateTime $begin, private ?\DateTime $end)
+    public function __construct(private ?\DateTimeInterface $begin, private ?\DateTimeInterface $end)
     {
     }
 
-    public function getBegin(): ?\DateTime
+    public function getBegin(): ?\DateTimeInterface
     {
         return $this->begin;
     }
 
-    public function getEnd(): ?\DateTime
+    public function getEnd(): ?\DateTimeInterface
     {
         return $this->end;
     }
