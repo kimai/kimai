@@ -11,7 +11,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [2.0.30](https://github.com/kimai/kimai/releases/tag/2.0.30)
 
 The `DATABASE_URL` in your environment settings ([.env](https://github.com/kimai/kimai/issues/4246) or in your [Docker](https://github.com/tobybatch/kimai2/issues/531) or webserver config)
-now requires the `charset` and `serverVersion` params, e.g.: `DATABASE_URL=mysql://user:password@127.0.0.1:3306/database?charset=utf8mb4&serverVersion=5.7` (examples in `.env`).
+now requires the `charset` and `serverVersion` params, e.g.: `DATABASE_URL=mysql://user:password@127.0.0.1:3306/database?charset=utf8mb4&serverVersion=10.5.8-MariaDB` (examples in `.env`).
 
 ## [2.0](https://github.com/kimai/kimai/releases/tag/2.0)
 
