@@ -52,7 +52,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
      *
      * @throws Exception
      */
-    protected function abortIfPlatformNotSupported()
+    protected function abortIfPlatformNotSupported(): void
     {
         $platform = $this->connection->getDatabasePlatform();
         if (!($platform instanceof MySQLPlatform)) {

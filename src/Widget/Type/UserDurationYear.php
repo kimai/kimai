@@ -9,11 +9,18 @@
 
 namespace App\Widget\Type;
 
+use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class UserDurationYear extends AbstractCounterYear
 {
+    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    {
+        parent::__construct($systemConfiguration);
+    }
+
     public function getId(): string
     {
         return 'userDurationYear';
@@ -24,6 +31,10 @@ final class UserDurationYear extends AbstractCounterYear
         return 'widget/widget-counter-duration.html.twig';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -32,12 +43,18 @@ final class UserDurationYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = []): mixed
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
-        $this->setQueryWithUser(true);
-
-        return parent::getData($options);
+        try {
+            return $this->repository->getDurationForTimeRange($begin, $end, $this->getUser());
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
     }
 
     protected function getFinancialYearTitle(): string

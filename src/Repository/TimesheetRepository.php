@@ -42,10 +42,15 @@ class TimesheetRepository extends EntityRepository
 {
     use RepositorySearchTrait;
 
+    /** @deprecated since 2.0.35 */
     public const STATS_QUERY_DURATION = 'duration';
+    /** @deprecated since 2.0.35 */
     public const STATS_QUERY_RATE = 'rate';
+    /** @deprecated since 2.0.35 */
     public const STATS_QUERY_USER = 'users';
+    /** @deprecated since 2.0.35 */
     public const STATS_QUERY_AMOUNT = 'amount';
+    /** @deprecated since 2.0.35 */
     public const STATS_QUERY_ACTIVE = 'active';
 
     /**
@@ -152,42 +157,44 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param self::STATS_QUERY_* $type
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
      * @return int|mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @deprecated since 2.0.35
      */
-    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
+    public function getStatistic(string $type, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
     {
+        @trigger_error('Repository method getStatistic() is deprecated, use explicit methods instead', E_USER_DEPRECATED);
+
         switch ($type) {
-            case self::STATS_QUERY_ACTIVE:
-                return \count($this->getActiveEntries($user));
-            case self::STATS_QUERY_DURATION:
-                $what = 'COALESCE(SUM(t.duration), 0)';
-                break;
-            case self::STATS_QUERY_RATE:
+            case 'active':
+                return $this->countActiveEntries($user);
+            case 'duration':
+                return $this->getDurationForTimeRange($begin, $end, $user, $billable);
+            case 'rate':
                 return $this->getRevenue($begin, $end, $user);
-            case self::STATS_QUERY_USER:
-                $what = 'COUNT(DISTINCT(t.user))';
-                break;
-            case self::STATS_QUERY_AMOUNT:
-                $what = 'COUNT(t.id)';
-                break;
-            default:
-                throw new InvalidArgumentException('Invalid query type: ' . $type);
+            case 'users':
+                return $this->countActiveUsers($begin, $end, $billable);
+            case 'amount':
+                return $this->queryTimeRange('COUNT(t.id)', $begin, $end, $user, $billable);
         }
 
-        return $this->queryTimeRange($what, $begin, $end, $user, $billable);
+        throw new InvalidArgumentException('Invalid query type: ' . $type); // @phpstan-ignore-line
+    }
+
+    public function getDurationForTimeRange(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): int
+    {
+        $tmp = $this->queryTimeRange('COALESCE(SUM(t.duration), 0)', $begin, $end, $user, $billable);
+
+        if (!is_numeric($tmp)) {
+            return 0;
+        }
+
+        return (int) $tmp;
     }
 
     /**
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
      * @return array<Revenue>
      */
-    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user): array
+    public function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -198,9 +205,8 @@ class TimesheetRepository extends EntityRepository
             ->leftJoin('t.project', 'p')
             ->leftJoin('p.customer', 'c')
             ->groupBy('c.currency')
-        ;
-
-        // TODO only billable?
+            ->andWhere($qb->expr()->eq('t.billable', ':billable'))
+            ->setParameter('billable', true);
 
         if ($begin !== null) {
             $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
@@ -223,14 +229,10 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param string|string[] $select
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param User|null $user
-     * @param bool|null $billable
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange(string|array $select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null): mixed
+    private function queryTimeRange(string|array $select, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
     {
         $selects = $select;
         if (!\is_array($select)) {
@@ -349,6 +351,34 @@ class TimesheetRepository extends EntityRepository
         return $this->getHydratedResultsByQuery($qb, false);
     }
 
+    public function countActiveEntries(?User $user = null): int
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('COUNT(t)')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->isNull('t.end'))
+            ->orderBy('t.begin', 'DESC');
+
+        if (null !== $user) {
+            $qb->andWhere('t.user = :user');
+            $qb->setParameter('user', $user);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countActiveUsers(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?bool $billable = null): int
+    {
+        $tmp = $this->queryTimeRange('COUNT(DISTINCT(t.user))', $begin, $end, null, $billable);
+
+        if (!is_numeric($tmp)) {
+            return 0;
+        }
+
+        return (int) $tmp;
+    }
+
     /**
      * This method causes me some headaches ...
      *
@@ -411,7 +441,7 @@ class TimesheetRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    protected function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
+    private function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb

@@ -24,6 +24,10 @@ final class TotalsCustomer extends AbstractWidget
         return 'stats.customerTotal';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -33,6 +37,9 @@ final class TotalsCustomer extends AbstractWidget
         ], parent::getOptions($options));
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();

@@ -7,13 +7,15 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Widget\Type;
+namespace App\Tests\Widget\Type;
+
+use App\Widget\Type\AbstractWidgetType;
 
 class More extends AbstractWidgetType
 {
     private mixed $data = null;
 
-    public function setData($data): self
+    public function setData(mixed $data): self
     {
         $this->data = $data;
 
@@ -21,8 +23,7 @@ class More extends AbstractWidgetType
     }
 
     /**
-     * @param array $options
-     * @return mixed|null
+     * @param array<string, string|bool|int|null> $options
      */
     public function getData(array $options = []): mixed
     {

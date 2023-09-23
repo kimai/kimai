@@ -59,6 +59,9 @@ final class UserTeamProjects extends AbstractWidget
         return 'UserTeamProjects';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();

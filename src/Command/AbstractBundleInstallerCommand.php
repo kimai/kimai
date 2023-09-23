@@ -148,7 +148,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function installAssets(SymfonyStyle $io, OutputInterface $output)
+    protected function installAssets(SymfonyStyle $io, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('assets:install');
         $cmdInput = new ArrayInput([]);
@@ -160,12 +160,12 @@ abstract class AbstractBundleInstallerCommand extends Command
         $io->writeln('');
     }
 
-    protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
+    protected function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
         $config = $this->getMigrationConfigFilename();
 
         if (null === $config) {
-            return false;
+            return;
         }
 
         if (!file_exists($config)) {

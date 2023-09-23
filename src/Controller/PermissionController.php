@@ -46,7 +46,7 @@ final class PermissionController extends AbstractController
 
     #[Route(path: '', name: 'admin_user_permissions', methods: ['GET', 'POST'])]
     #[IsGranted('role_permissions')]
-    public function permissions(EventDispatcherInterface $dispatcher, CsrfTokenManagerInterface $csrfTokenManager, RoleService $roleService)
+    public function permissions(EventDispatcherInterface $dispatcher, CsrfTokenManagerInterface $csrfTokenManager, RoleService $roleService): Response
     {
         $all = $this->roleRepository->findAll();
         $existing = [];

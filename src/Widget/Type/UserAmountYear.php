@@ -13,14 +13,15 @@ use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
 use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserAmountYear extends AbstractCounterYear
 {
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
+    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($repository, $systemConfiguration);
+        parent::__construct($systemConfiguration);
     }
 
     public function getTemplateName(): string
@@ -43,6 +44,10 @@ final class UserAmountYear extends AbstractCounterYear
         return 'UserAmountYear';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -51,20 +56,26 @@ final class UserAmountYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = []): mixed
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
-        $this->setQueryWithUser(true);
+        try {
+            /** @var array<Revenue> $data */
+            $data = $this->repository->getRevenue($begin, $end, $this->getUser());
 
-        /** @var array<Revenue> $data */
-        $data = parent::getData($options);
+            $event = new UserRevenueStatisticEvent($this->getUser(), $begin, $end);
+            foreach ($data as $row) {
+                $event->addRevenue($row->getCurrency(), $row->getAmount());
+            }
+            $this->dispatcher->dispatch($event);
 
-        $event = new UserRevenueStatisticEvent($this->getUser(), $this->getBegin(), $this->getEnd());
-        foreach ($data as $row) {
-            $event->addRevenue($row->getCurrency(), $row->getAmount());
+            return $event->getRevenue();
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
         }
-        $this->dispatcher->dispatch($event);
-
-        return $event->getRevenue();
     }
 }

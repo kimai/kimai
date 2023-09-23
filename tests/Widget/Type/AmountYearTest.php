@@ -24,7 +24,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class AmountYearTest extends AbstractWidgetTypeTest
 {
-    protected function assertDefaultData(AbstractWidgetType $sut)
+    protected function assertDefaultData(AbstractWidgetType $sut): void
     {
         self::assertEquals([], $sut->getData());
     }

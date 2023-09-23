@@ -10,33 +10,38 @@
 namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
-use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 
-abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
+abstract class AbstractCounterYear extends AbstractWidgetType
 {
     private bool $isFinancialYear = false;
 
-    public function __construct(TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
+    public function __construct(private SystemConfiguration $systemConfiguration)
     {
-        parent::__construct($repository);
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        $this->setBegin('01 january this year 00:00:00');
-        $this->setEnd('31 december this year 23:59:59');
+        $begin = $this->createDate('01 january this year 00:00:00');
+        $end = $this->createDate('31 december this year 23:59:59');
 
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $factory = new DateTimeFactory($this->getTimezone());
             $begin = $factory->createStartOfFinancialYear($financialYear);
-            $this->setBegin($begin);
-            $this->setEnd($factory->createEndOfFinancialYear($begin));
+            $end = $factory->createEndOfFinancialYear($begin);
             $this->isFinancialYear = true;
         }
 
-        return parent::getData($options);
+        return $this->getYearData($begin, $end, $options);
     }
+
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
+    abstract protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed;
 
     abstract protected function getFinancialYearTitle(): string;
 

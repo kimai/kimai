@@ -113,8 +113,8 @@ class DateTimePickerType extends AbstractType
                 'example' => (new \DateTime())->format(BaseApiController::DATE_FORMAT_PHP),
             ],
             'input' => 'datetime',
-            'model_timezone' => null,
-            'view_timezone' => null,
+            'model_timezone' => date_default_timezone_get(),
+            'view_timezone' => date_default_timezone_get(),
             // Don't modify \DateTime classes by reference, we treat
             // them like immutable value objects
             'by_reference' => false,

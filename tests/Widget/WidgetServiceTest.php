@@ -9,7 +9,7 @@
 
 namespace App\Tests\Widget;
 
-use App\Widget\Type\More;
+use App\Tests\Widget\Type\More;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
 

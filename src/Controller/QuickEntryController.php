@@ -18,6 +18,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -33,7 +34,7 @@ final class QuickEntryController extends AbstractController
     }
 
     #[Route(path: '/{begin}', name: 'quick_entry', methods: ['GET', 'POST'])]
-    public function quickEntry(Request $request, ?string $begin = null)
+    public function quickEntry(Request $request, ?string $begin = null): Response
     {
         $factory = $this->getDateTimeFactory();
 

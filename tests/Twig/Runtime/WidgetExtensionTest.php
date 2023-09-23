@@ -10,8 +10,8 @@
 namespace App\Tests\Twig\Runtime;
 
 use App\Entity\User;
+use App\Tests\Widget\Type\More;
 use App\Twig\Runtime\WidgetExtension;
-use App\Widget\Type\More;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;

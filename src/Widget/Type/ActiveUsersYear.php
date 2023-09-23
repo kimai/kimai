@@ -9,11 +9,22 @@
 
 namespace App\Widget\Type;
 
+use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class ActiveUsersYear extends AbstractCounterYear
 {
+    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    {
+        parent::__construct($systemConfiguration);
+    }
+
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -22,12 +33,18 @@ final class ActiveUsersYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = []): mixed
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_USER);
-        $this->setQueryWithUser(false);
-
-        return parent::getData($options);
+        try {
+            return $this->repository->countActiveUsers($begin, $end, null);
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
     }
 
     protected function getFinancialYearTitle(): string

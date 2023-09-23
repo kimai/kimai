@@ -17,7 +17,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
     private InvoiceModel $model;
 
-    public function setInvoiceModel(InvoiceModel $model)
+    public function setInvoiceModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }

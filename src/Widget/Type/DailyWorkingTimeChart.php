@@ -45,6 +45,10 @@ final class DailyWorkingTimeChart extends AbstractWidget
         return true;
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -56,30 +60,30 @@ final class DailyWorkingTimeChart extends AbstractWidget
         ], parent::getOptions($options));
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
-
         $dateTimeFactory = DateTimeFactory::createByUser($user);
 
-        if ($options['begin'] === null) {
-            $options['begin'] = $dateTimeFactory->getStartOfWeek();
+        $begin = $options['begin'];
+        if (!($begin instanceof \DateTimeInterface)) {
+            if (\is_string($begin)) {
+                $begin = new DateTime($begin, new \DateTimeZone($user->getTimezone()));
+            } else {
+                $begin = $dateTimeFactory->getStartOfWeek();
+            }
         }
 
-        if ($options['begin'] instanceof \DateTimeInterface) {
-            $begin = $options['begin'];
-        } else {
-            $begin = new DateTime($options['begin'], new \DateTimeZone($user->getTimezone()));
-        }
-
-        if ($options['end'] === null) {
-            $options['end'] = $dateTimeFactory->getEndOfWeek($begin);
-        }
-
-        if ($options['end'] instanceof \DateTimeInterface) {
-            $end = $options['end'];
-        } else {
-            $end = new DateTime($options['end'], new \DateTimeZone($user->getTimezone()));
+        $end = $options['end'];
+        if (!($end instanceof \DateTimeInterface)) {
+            if (\is_string($end)) {
+                $end = new DateTime($end, new \DateTimeZone($user->getTimezone()));
+            } else {
+                $end = $dateTimeFactory->getEndOfWeek($begin);
+            }
         }
 
         $activities = [];

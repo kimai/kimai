@@ -13,16 +13,21 @@ use App\Configuration\SystemConfiguration;
 use App\Event\RevenueStatisticEvent;
 use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class AmountYear extends AbstractCounterYear
 {
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
+    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($repository, $systemConfiguration);
+        parent::__construct($systemConfiguration);
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge([
@@ -31,21 +36,27 @@ final class AmountYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = []): mixed
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
-        $this->setQueryWithUser(false);
+        try {
+            /** @var array<Revenue> $data */
+            $data = $this->repository->getRevenue($begin, $end, null);
 
-        /** @var array<Revenue> $data */
-        $data = parent::getData($options);
+            $event = new RevenueStatisticEvent($begin, $end);
+            foreach ($data as $row) {
+                $event->addRevenue($row->getCurrency(), $row->getAmount());
+            }
+            $this->dispatcher->dispatch($event);
 
-        $event = new RevenueStatisticEvent($this->getBegin(), $this->getEnd());
-        foreach ($data as $row) {
-            $event->addRevenue($row->getCurrency(), $row->getAmount());
+            return $event->getRevenue();
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
         }
-        $this->dispatcher->dispatch($event);
-
-        return $event->getRevenue();
     }
 
     public function getId(): string

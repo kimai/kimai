@@ -71,10 +71,10 @@ interface WidgetInterface
      * make sure that the given $options will overwrite the internal option for
      * this one call.
      *
-     * @param array $options
+     * @param array<string, string|bool|int|null> $options
      * @return mixed|null
      */
-    public function getData(array $options = []);
+    public function getData(array $options = []): mixed;
 
     /**
      * Returns all widget options to be used in the frontend.
@@ -86,7 +86,7 @@ interface WidgetInterface
      * return array_merge($this->options, $options);
      *
      * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null|null>
+     * @return array<string, string|bool|int|null>
      */
     public function getOptions(array $options = []): array;
 

@@ -30,7 +30,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
-        "endroid/qr-code": "^4.4.9",
+        "endroid/qr-code": "^4.8",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
@@ -44,8 +44,8 @@
         "pagerfanta/pagerfanta": "^3.0",
         "phpoffice/phpspreadsheet": "^1.16",
         "phpoffice/phpword": "^1.0",
-        "psr/container": "^1.0||^2.0",
-        "psr/log": "^2.0||^3.0",
+        "psr/container": "^2.0",
+        "psr/log": "^3.0",
         "scheb/2fa-backup-code": "^6.2",
         "scheb/2fa-bundle": "^6.2",
         "scheb/2fa-totp": "^6.2",
@@ -68,7 +68,7 @@
         "symfony/translation": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/validator": "^6.0",
-        "symfony/webpack-encore-bundle": "^1.16",
+        "symfony/webpack-encore-bundle": "^2.0",
         "symfony/yaml": "^6.0",
         "twig/cssinliner-extra": "^3.0",
         "twig/extra-bundle": "^3.0",
@@ -201,7 +201,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "6.2.*"
+            "require": "6.3.*"
         }
     }
 }

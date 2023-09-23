@@ -134,11 +134,9 @@ final class SamlProvider
                     throw new \RuntimeException('Missing user attribute: ' . $key);
                 }
 
-                if (!\array_key_exists(0, $attributes[$key])) {
-                    throw new \RuntimeException('Missing user attribute value: ' . $key);
+                if (\is_array($attributes[$key]) && isset($attributes[$key][0])) {
+                    $results[] = $attributes[$key][0];
                 }
-
-                $results[] = $attributes[$key][0];
             } else {
                 $results[] = $part;
             }

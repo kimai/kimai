@@ -30,10 +30,10 @@ class DebugRendererTest extends TestCase
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = [])
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
     {
         $itemHydrator = new class() implements InvoiceItemHydrator {
-            public function setInvoiceModel(InvoiceModel $model)
+            public function setInvoiceModel(InvoiceModel $model): void
             {
             }
 
@@ -75,7 +75,7 @@ class DebugRendererTest extends TestCase
         self::assertEquals('21.03.12', $data['model']['invoice.last']);
     }
 
-    protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0)
+    protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0): void
     {
         $keys = [
             'invoice.due_date',
@@ -243,7 +243,7 @@ class DebugRendererTest extends TestCase
         $this->assertEquals($keys, $givenKeys);
     }
 
-    protected function assertEntryStructure(array $model, array $metaFields)
+    protected function assertEntryStructure(array $model, array $metaFields): void
     {
         $keys = [
             'entry.row',

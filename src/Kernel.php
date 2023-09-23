@@ -72,7 +72,7 @@ class Kernel extends BaseKernel
         return $this->getProjectDir() . '/var/log';
     }
 
-    protected function build(ContainerBuilder $container)
+    protected function build(ContainerBuilder $container): void
     {
         $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag(self::TAG_TIMESHEET_CALCULATOR);
         $container->registerForAutoconfiguration(ExportRendererInterface::class)->addTag(self::TAG_EXPORT_RENDERER);

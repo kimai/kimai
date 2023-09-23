@@ -10,10 +10,19 @@
 namespace App\Widget\Type;
 
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class ActiveTimesheets extends AbstractSimpleStatisticChart
+final class ActiveTimesheets extends AbstractWidgetType
 {
+    public function __construct(private TimesheetRepository $repository)
+    {
+    }
+
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge(['color' => WidgetInterface::COLOR_TOTAL, 'icon' => 'duration'], parent::getOptions($options));
@@ -34,12 +43,18 @@ final class ActiveTimesheets extends AbstractSimpleStatisticChart
         return 'stats.activeRecordings';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        $this->setQueryWithUser(false);
-        $this->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
-
-        return parent::getData($options);
+        try {
+            return $this->repository->countActiveEntries();
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
     }
 
     public function getTemplateName(): string

@@ -33,7 +33,7 @@ final class PromoteUserCommand extends AbstractRoleCommand
             );
     }
 
-    protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role)
+    protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role): void
     {
         $username = $user->getUserIdentifier();
         if ($super) {

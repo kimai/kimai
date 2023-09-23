@@ -9,10 +9,20 @@
 
 namespace App\Widget\Type;
 
+use App\Repository\TimesheetRepository;
+use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class DurationTotal extends AbstractCounterDuration
 {
+    public function __construct(private TimesheetRepository $repository)
+    {
+    }
+
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge(['color' => WidgetInterface::COLOR_TOTAL], parent::getOptions($options));
@@ -33,10 +43,17 @@ final class DurationTotal extends AbstractCounterDuration
         return 'stats.durationTotal';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        $this->setQueryWithUser(false);
-
-        return parent::getData($options);
+        try {
+            return $this->repository->getDurationForTimeRange(null, null, null);
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
     }
 }

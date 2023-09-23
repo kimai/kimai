@@ -46,10 +46,7 @@ final class ExportCreateCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create exports')

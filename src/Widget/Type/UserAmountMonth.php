@@ -13,6 +13,10 @@ use App\Widget\WidgetInterface;
 
 final class UserAmountMonth extends AbstractUserRevenuePeriod
 {
+    /**
+     * @param array<string, string|bool|int|null> $options
+     * @return array<string, string|bool|int|null>
+     */
     public function getOptions(array $options = []): array
     {
         return array_merge(['color' => WidgetInterface::COLOR_MONTH], parent::getOptions($options));
@@ -23,8 +27,11 @@ final class UserAmountMonth extends AbstractUserRevenuePeriod
         return 'UserAmountMonth';
     }
 
+    /**
+     * @param array<string, string|bool|int|null> $options
+     */
     public function getData(array $options = []): mixed
     {
-        return $this->getRevenue('first day of this month 00:00:00', 'last day of this month 23:59:59', $options);
+        return $this->getRevenue($this->createMonthStartDate(), $this->createMonthEndDate(), $options);
     }
 }
