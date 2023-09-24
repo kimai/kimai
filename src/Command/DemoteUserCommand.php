@@ -33,9 +33,6 @@ final class DemoteUserCommand extends AbstractRoleCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role): void
     {
         $username = $user->getUserIdentifier();

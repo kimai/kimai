@@ -836,9 +836,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->email !== null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -864,9 +861,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->confirmationToken;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
