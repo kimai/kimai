@@ -30,7 +30,7 @@ final class ModifiedSubscriber implements EventSubscriber, DataSubscriberInterfa
 
     public function onFlush(OnFlushEventArgs $args): void
     {
-        $uow = $args->getObjectManager()->getUnitOfWork();;
+        $uow = $args->getObjectManager()->getUnitOfWork();
         $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
