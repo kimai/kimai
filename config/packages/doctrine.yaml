@@ -26,6 +26,7 @@ doctrine:
         default_entity_manager: default
         entity_managers:
             default:
+                report_fields_where_declared: true
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true
