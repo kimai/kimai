@@ -34,7 +34,7 @@ class TimesheetTest extends TestCase
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
         self::assertTrue($sut->isBillable());
-        self::assertNull($sut->getModifiedAt());
+        self::assertNotNull($sut->getModifiedAt());
         self::assertSame(0, $sut->getDuration());
         self::assertSame(0, $sut->getDuration(true));
         self::assertSame(0, $sut->getDuration(false));
@@ -179,7 +179,7 @@ class TimesheetTest extends TestCase
     public function testClone(): void
     {
         $sut = new Timesheet();
-        self::assertNull($sut->getModifiedAt());
+        self::assertNotNull($sut->getModifiedAt());
         $sut->setExported(true);
         $sut->setDescription('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
 
@@ -210,7 +210,7 @@ class TimesheetTest extends TestCase
         $clone = clone $sut;
 
         self::assertNotNull($sut->getModifiedAt());
-        self::assertNull($clone->getModifiedAt());
+        self::assertNotNull($clone->getModifiedAt());
 
         foreach ($sut->getMetaFields() as $metaField) {
             $cloneMeta = $clone->getMetaField($metaField->getName());
