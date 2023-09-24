@@ -11,6 +11,7 @@ namespace App\Doctrine;
 
 use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
@@ -18,6 +19,7 @@ use Doctrine\ORM\Events;
 /**
  * A listener to make sure all Timesheet entries will be calculated properly (e.g. duration and rates).
  */
+#[AsDoctrineListener(event: Events::onFlush, priority: 50)]
 final class TimesheetSubscriber implements EventSubscriber, DataSubscriberInterface
 {
     /**
