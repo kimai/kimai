@@ -15,7 +15,6 @@ use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -189,12 +188,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
     private ?string $category = self::WORK;
-    /**
-     * @internal used for limiting queries, eg. via API sync
-     */
     #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
-    #[Gedmo\Timestampable]
-    private ?\DateTime $modifiedAt = null;
+    private \DateTimeInterface $modifiedAt;
     /**
      * Tags
      *
@@ -223,6 +218,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     {
         $this->tags = new ArrayCollection();
         $this->meta = new ArrayCollection();
+        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 
     /**
@@ -590,9 +586,14 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this;
     }
 
-    public function getModifiedAt(): ?DateTime
+    public function getModifiedAt(): \DateTimeInterface
     {
         return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $dateTime): void
+    {
+        $this->modifiedAt = $dateTime;
     }
 
     /**
@@ -687,7 +688,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         }
 
         // field will not be set, if it contains a value
-        $this->modifiedAt = null;
+        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $this->exported = false;
 
         $currentMeta = $this->meta;
