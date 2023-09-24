@@ -21,7 +21,7 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 

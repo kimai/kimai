@@ -13,7 +13,7 @@ use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Repository\UserRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

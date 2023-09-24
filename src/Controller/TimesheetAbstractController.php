@@ -33,7 +33,7 @@ use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

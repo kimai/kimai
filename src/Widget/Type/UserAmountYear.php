@@ -15,7 +15,7 @@ use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class UserAmountYear extends AbstractCounterYear
 {

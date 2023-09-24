@@ -22,7 +22,7 @@ use App\Security\RolePermissionManager;
 use App\Security\RoleService;
 use App\User\PermissionService;
 use App\Utils\PageSetup;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

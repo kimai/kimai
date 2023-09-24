@@ -33,6 +33,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route(path: '/timesheets')]
 #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]

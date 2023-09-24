@@ -14,7 +14,7 @@ use App\Event\ExportItemsQueryEvent;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Repository\Query\ExportQuery;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class ServiceExport
 {

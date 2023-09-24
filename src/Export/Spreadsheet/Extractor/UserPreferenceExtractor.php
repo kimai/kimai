@@ -12,7 +12,7 @@ namespace App\Export\Spreadsheet\Extractor;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\ColumnDefinition;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal

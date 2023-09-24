@@ -12,7 +12,7 @@ namespace App\Export\Spreadsheet\Extractor;
 use App\Entity\EntityWithMetaFields;
 use App\Event\MetaDisplayEventInterface;
 use App\Export\Spreadsheet\ColumnDefinition;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal

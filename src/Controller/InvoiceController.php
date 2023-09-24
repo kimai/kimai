@@ -38,6 +38,7 @@ use App\Repository\Query\InvoiceQuery;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
@@ -48,7 +49,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 /**

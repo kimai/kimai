@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

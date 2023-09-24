@@ -23,7 +23,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\UserLanguageType;
 use App\Form\Type\YesNoType;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

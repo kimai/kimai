@@ -11,7 +11,7 @@ namespace App\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
 use App\Project\ProjectStatisticService;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 final class HtmlRendererFactory

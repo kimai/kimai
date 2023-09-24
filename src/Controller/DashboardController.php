@@ -16,7 +16,7 @@ use App\Repository\BookmarkRepository;
 use App\Utils\PageSetup;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

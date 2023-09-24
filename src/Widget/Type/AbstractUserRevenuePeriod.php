@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Event\UserRevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractUserRevenuePeriod extends AbstractWidget
 {

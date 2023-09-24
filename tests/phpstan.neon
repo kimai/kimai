@@ -1673,7 +1673,7 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
+            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Psr\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
