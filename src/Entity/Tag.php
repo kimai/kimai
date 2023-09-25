@@ -39,7 +39,7 @@ class Tag
     #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100, normalizer: 'trim')]
-    #[Assert\Regex(pattern: '/,/', match: false, message: 'Tag name cannot contain comma')]
+    #[Assert\Regex(pattern: '/,/', message: 'Tag name cannot contain comma', match: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $name = null;

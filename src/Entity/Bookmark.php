@@ -29,7 +29,7 @@ class Bookmark
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
     #[ORM\Column(name: 'type', type: 'string', length: 20, nullable: false)]

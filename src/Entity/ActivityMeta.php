@@ -23,7 +23,7 @@ class ActivityMeta implements MetaTableTypeInterface
     use MetaTableTypeTrait;
 
     #[ORM\ManyToOne(targetEntity: Activity::class, inversedBy: 'meta')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?Activity $activity = null;
 

@@ -47,7 +47,7 @@ class Team
      *
      * @var Collection<TeamMember>
      */
-    #[ORM\OneToMany(targetEntity: TeamMember::class, mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamMember::class, cascade: ['persist', 'remove'], fetch: 'LAZY', orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\Count(min: 1)]
     #[Serializer\Expose]
@@ -59,7 +59,7 @@ class Team
      *
      * @var Collection<Customer>
      */
-    #[ORM\ManyToMany(targetEntity: Customer::class, mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Customer::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Customer'))]
@@ -69,7 +69,7 @@ class Team
      *
      * @var Collection<Project>
      */
-    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity', 'Expanded'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Project'))]
@@ -79,7 +79,7 @@ class Team
      *
      * @var Collection<Activity>
      */
-    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity', 'Expanded'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Activity'))]

@@ -127,21 +127,21 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\ManyToOne(targetEntity: Activity::class)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ActivityExpanded')]
     private ?Activity $activity = null;
     #[ORM\ManyToOne(targetEntity: Project::class)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
@@ -206,7 +206,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      *
      * @var Collection<TimesheetMeta>
      */
-    #[ORM\OneToMany(targetEntity: TimesheetMeta::class, mappedBy: 'timesheet', cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'timesheet', targetEntity: TimesheetMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet'])]
     #[Serializer\Type(name: 'array<App\Entity\TimesheetMeta>')]
