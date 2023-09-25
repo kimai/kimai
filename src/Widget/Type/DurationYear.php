@@ -22,8 +22,8 @@ final class DurationYear extends AbstractCounterYear
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {
@@ -34,7 +34,7 @@ final class DurationYear extends AbstractCounterYear
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {

@@ -48,8 +48,8 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {
@@ -87,7 +87,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     public function getData(array $options = []): mixed
     {

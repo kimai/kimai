@@ -53,7 +53,7 @@ final class UserTeams extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     public function getData(array $options = []): mixed
     {
