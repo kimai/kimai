@@ -65,6 +65,12 @@ security:
                 max_attempts: 5
                 interval: '5 minutes'
 
+            login_link:
+                check_route: link_login_check
+                signature_properties: ['id']
+                lifetime: 300
+                max_uses: 1
+
     access_decision_manager:
         strategy: unanimous
         allow_if_all_abstain: false
