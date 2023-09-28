@@ -1625,6 +1625,14 @@
         <source>supervisor</source>
         <target>Supervisor</target>
       </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target>Request new password</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target>The next time the user logs in, they must enter a new password.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

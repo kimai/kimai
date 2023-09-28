@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Form\Type\TeamType;
 use App\Form\Type\UserRoleType;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -63,6 +64,12 @@ class UserCreateType extends UserEditType
                 'required' => false,
             ]);
         }
+
+        $builder->add('requiresPasswordReset', YesNoType::class, [
+            'label' => 'force_password_change',
+            'help' => 'force_password_change_help',
+            'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
