@@ -29,16 +29,15 @@ class UserLoginLinkCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
 
         $loginLinkHandler = $this->createMock(LoginLinkHandlerInterface::class);
-        $userRepository = $container->get(UserRepository::class);
+        $userRepository = $this->createMock(UserRepository::class);
         $requestStack = $this->createMock(RequestStack::class);
 
         $this->application->add(new UserLoginLinkCommand($loginLinkHandler, $userRepository, $requestStack));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
