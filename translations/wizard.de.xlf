@@ -22,6 +22,14 @@
         <source>wizard.profile.description</source>
         <target>Einige Grundeinstellungen um Ihnen die Arbeit mit Kimai zu erleichtern.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target>Ihr Passwort</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target>Bitte geben Sie ihr neues Passwort ein, das von nun an für die Anmeldung gelten soll.</target>
+      </trans-unit>
       <trans-unit id="8p.2pXa" resname="wizard.done.title">
         <source>wizard.done.title</source>
         <target>Herzlichen Glückwunsch</target>

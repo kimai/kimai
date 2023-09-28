@@ -957,7 +957,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPasswordRequestedAt(\DateTime $date = null): User
+    public function setPasswordRequestedAt(?\DateTime $date = null): User
     {
         $this->passwordRequestedAt = $date;
 
@@ -1105,6 +1105,20 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getName(): string
     {
         return $this->getDisplayName();
+    }
+
+    public function requiresPasswordReset(): bool
+    {
+        if (!$this->isInternalUser() || !$this->isEnabled()) {
+            return false;
+        }
+
+        return $this->getPreferenceValue('__pw_reset__') === '1';
+    }
+
+    public function setRequiresPasswordReset(bool $require = true): void
+    {
+        $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
     }
 
     public function hasSeenWizard(string $wizard): bool
