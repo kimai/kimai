@@ -5717,11 +5717,6 @@ parameters:
             path: src/Utils/MenuItemModel.php
 
         -
-            message: "#^Method App\\\\Utils\\\\MenuItemModel\\:\\:getRouteArgs\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/MenuItemModel.php
-
-        -
             message: "#^Method App\\\\Utils\\\\MenuItemModel\\:\\:setChildRoutes\\(\\) has parameter \\$routes with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/MenuItemModel.php
