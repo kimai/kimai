@@ -3,7 +3,7 @@
 {% block login_form %}
 
     <p>
-        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime|duration})|nl2br }}
     </p>
 
 {% endblock %}

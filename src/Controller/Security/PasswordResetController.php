@@ -108,7 +108,7 @@ final class PasswordResetController extends AbstractController
         }
 
         return $this->render('security/password-reset/check_email.html.twig', [
-            'tokenLifetime' => ceil($this->configuration->getPasswordResetRetryLifetime() / 3600),
+            'tokenLifetime' => $this->configuration->getPasswordResetRetryLifetime(),
         ]);
     }
 
