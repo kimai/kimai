@@ -33,9 +33,11 @@ trait TwigRendererTrait
         }
 
         // enable basic security measures
-        $sandbox = new SandboxExtension(new InvoicePolicy());
-        $sandbox->enableSandbox();
-        $twig->addExtension($sandbox);
+        if (!$twig->hasExtension(SandboxExtension::class)) {
+            $sandbox = new SandboxExtension(new InvoicePolicy());
+            $sandbox->enableSandbox();
+            $twig->addExtension($sandbox);
+        }
 
         $content = $twig->render($template, $options);
 

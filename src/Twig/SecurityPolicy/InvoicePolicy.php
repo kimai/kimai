@@ -9,8 +9,13 @@
 
 namespace App\Twig\SecurityPolicy;
 
+use App\Invoice\InvoiceModel;
+use App\Pdf\PdfContext;
+use Symfony\Component\String\UnicodeString;
+use Twig\Markup;
 use Twig\Sandbox\SecurityPolicy;
 use Twig\Sandbox\SecurityPolicyInterface;
+use Twig\Template;
 
 /**
  * Represents the security policy for custom Twig invoice templates.
@@ -24,11 +29,29 @@ final class InvoicePolicy implements SecurityPolicyInterface
         $this->policy = new ChainPolicy();
         $this->policy->addPolicy(new DefaultPolicy());
         $this->policy->addPolicy(new SecurityPolicy(
-            [], // tags
-            ['map', 'escape', 'trans', 'nl2str', 'default', 'md2html', 'nl2br', 'trim', 'raw', 'date_short', 'duration', 'amount', 'money', 'join'], // filters
-            [], // methods
+            ['block', 'if', 'for', 'set', 'extends'],
+            [
+                // Twig core filters
+                'map', 'escape', 'trans', 'default', 'nl2br', 'trim', 'raw',
+                'join', 'u', 'slice', 'date', 'month_name', 'first', 'country_name',
+                'replace', 'length', 'number_format', 'split',
+
+                // Kimai filters
+                'md2html', 'desc2html', 'comment2html', 'comment1line', 'multiline_indent', 'nl2str',
+                'date_short', 'duration', 'amount', 'money', 'duration_decimal',
+            ],
+            [
+                PdfContext::class => ['setoption'],
+                InvoiceModel::class => ['toarray'],
+            ],
             [], // properties
-            [] // functions
+            [
+                // Twig core functions
+                'cycle', 'asset', 'range',
+
+                // Kimai functions
+                'encore_entry_css_source', 'qr_code_data_uri', 'config',
+            ]
         ));
     }
 
@@ -39,6 +62,20 @@ final class InvoicePolicy implements SecurityPolicyInterface
 
     public function checkMethodAllowed($obj, $method): void
     {
+        if ($obj instanceof Template || $obj instanceof Markup || $obj instanceof UnicodeString) {
+            return;
+        }
+
+        $lm = strtolower($method);
+
+        if (str_starts_with($lm, 'get') || str_starts_with($lm, 'is') || str_starts_with($lm, 'has')) {
+            return;
+        }
+
+        if ($lm === '__tostring') {
+            return;
+        }
+
         $this->policy->checkMethodAllowed($obj, $method);
     }
 
