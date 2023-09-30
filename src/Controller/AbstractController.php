@@ -76,13 +76,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     /**
      * @template TFormType of FormTypeInterface<TData>
-     * @template TData of mixed
+     * @template TData of array|object
      * @param class-string<TFormType> $type
-     * @param TData|null $data
+     * @param TData $data
      * @param array<mixed> $options
-     * @return FormInterface<TData|null>
+     * @return FormInterface<TData>
      */
-    protected function createFormWithName(string $name, string $type = FormType::class, mixed $data = null, array $options = []): FormInterface
+    protected function createFormWithName(string $name, string $type, mixed $data, array $options = []): FormInterface
     {
         return $this->container->get('form.factory')->createNamed($name, $type, $data, $options);
     }
