@@ -21,8 +21,7 @@
 /config/bundles-local.php
 /var/data/*
 /var/cache/*
-/var/invoices/*
-/var/invoices_old/
+/var/invoices*
 /var/export/*
 /var/log/*
 /var/sessions/*
