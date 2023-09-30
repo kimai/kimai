@@ -309,7 +309,7 @@ class ConfigurationTest extends TestCase
                     1 => 'templates/invoice/renderer/',
                 ],
                 'number_format' => '{Y}/{cy,3}',
-                'upload_twig' => true,
+                'upload_twig' => false,
             ],
             'export' => [
                 'documents' => [
