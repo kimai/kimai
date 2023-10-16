@@ -42,7 +42,7 @@ final class ReportUsersMonthController extends AbstractController
     {
         $data = $this->getData($request, $statisticService, $userRepository);
 
-        $content = $this->container->get('twig')->render('reporting/report_user_list_export.html.twig', $data);
+        $content = $this->renderView('reporting/report_user_list_export.html.twig', $data);
 
         $reader = new Html();
         $spreadsheet = $reader->loadFromString($content);
