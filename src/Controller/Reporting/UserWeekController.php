@@ -9,10 +9,13 @@
 
 namespace App\Controller\Reporting;
 
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DailyStatistic;
 use App\Reporting\WeekByUser\WeekByUser;
 use App\Reporting\WeekByUser\WeekByUserForm;
 use Exception;
+use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +35,21 @@ final class UserWeekController extends AbstractUserReportController
     public function weekByUser(Request $request): Response
     {
         return $this->render('reporting/report_by_user.html.twig', $this->getData($request));
+    }
+
+    #[Route(path: '/week_export', name: 'report_user_week_export', methods: ['GET', 'POST'])]
+    public function export(Request $request): Response
+    {
+        $data = $this->getData($request);
+
+        $content = $this->renderView('reporting/report_by_user_data.html.twig', $data);
+
+        $reader = new Html();
+        $spreadsheet = $reader->loadFromString($content);
+
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-export-user-weekly');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     private function getData(Request $request): array
@@ -88,6 +106,7 @@ final class UserWeekController extends AbstractUserReportController
             'current' => $start,
             'next' => $next,
             'previous' => $previous,
+            'export_route' => 'report_user_week_export',
         ];
     }
 }
