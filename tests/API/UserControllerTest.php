@@ -45,7 +45,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users');
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -59,7 +61,10 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users?full=true');
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -73,7 +78,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 2, 'orderBy' => 'email', 'order' => 'DESC', 'term' => 'chris']);
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -87,7 +94,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users', 'GET', ['visible' => 3, 'orderBy' => 'email', 'order' => 'DESC']);
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -101,7 +110,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users/1');
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('UserEntity', $result);
@@ -114,7 +125,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/api/users/me');
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('UserEntity', $result);
@@ -138,7 +151,9 @@ class UserControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/users/2');
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('UserEntity', $result);
@@ -164,7 +179,9 @@ class UserControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -252,7 +269,9 @@ class UserControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
         self::assertFalse($result['enabled']);
 
         $data = [
@@ -267,7 +286,9 @@ class UserControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/users/' . $result['id'], 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('UserEntity', $result);
         $this->assertNotEmpty($result['id']);

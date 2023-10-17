@@ -1238,11 +1238,6 @@ parameters:
             path: API/UserControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 9
-            path: API/UserControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 8
             path: API/UserControllerTest.php
