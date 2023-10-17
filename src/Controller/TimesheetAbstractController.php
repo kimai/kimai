@@ -334,6 +334,13 @@ abstract class TimesheetAbstractController extends AbstractController
             $execute = false;
             /** @var Timesheet $timesheet */
             foreach ($timesheets as $timesheet) {
+                if ($dto->isReplaceDescription()) {
+                    $timesheet->setDescription($dto->getDescription());
+                    $execute = true;
+                } elseif($dto->getDescription() !== null && $dto->getDescription() !== '') {
+                    $timesheet->setDescription($timesheet->getDescription() . PHP_EOL . $dto->getDescription());
+                    $execute = true;
+                }
                 if ($dto->isReplaceTags()) {
                     foreach ($timesheet->getTags() as $tag) {
                         $timesheet->removeTag($tag);

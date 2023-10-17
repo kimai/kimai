@@ -49,6 +49,8 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
      * @var array<string>
      */
     private array $updateMeta = [];
+    private bool $replaceDescription = false;
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -96,6 +98,16 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
     public function setTags(iterable $tags): void
     {
         $this->tags = $tags;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     public function getUser(): ?User
@@ -146,6 +158,16 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
     public function setReplaceTags(bool $replaceTags): void
     {
         $this->replaceTags = $replaceTags;
+    }
+
+    public function isReplaceDescription(): bool
+    {
+        return $this->replaceDescription;
+    }
+
+    public function setReplaceDescription(bool $replaceDescription): void
+    {
+        $this->replaceDescription = $replaceDescription;
     }
 
     public function getFixedRate(): ?float

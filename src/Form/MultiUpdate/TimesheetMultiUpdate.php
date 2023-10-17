@@ -11,6 +11,7 @@ namespace App\Form\MultiUpdate;
 
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
+use App\Form\Type\DescriptionType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
@@ -141,13 +142,33 @@ final class TimesheetMultiUpdate extends AbstractType
             'label' => false,
             'required' => true,
             'expanded' => true,
+            'label_attr' => [
+                'class' => 'radio-inline',
+            ],
             'choices' => [
-                'replaceTags' => true,
-                'appendTags' => false,
+                'append' => false,
+                'replace' => true,
             ]
         ]);
 
         $builder->add('tags', TagsType::class, [
+            'required' => false,
+        ]);
+
+        $builder->add('replaceDescription', ChoiceType::class, [
+            'label' => false,
+            'required' => true,
+            'expanded' => true,
+            'label_attr' => [
+                'class' => 'radio-inline',
+            ],
+            'choices' => [
+                'append' => false,
+                'replace' => true,
+            ]
+        ]);
+
+        $builder->add('description', DescriptionType::class, [
             'required' => false,
         ]);
 

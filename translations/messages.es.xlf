@@ -910,9 +910,9 @@
         <source>status</source>
         <target>Situación</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replaceTags">
-        <source>replaceTags</source>
-        <target>Reemplazar etiquetas</target>
+      <trans-unit id="tl01EdS" resname="replace">
+        <source>replace</source>
+        <target>Reemplazar</target>
       </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
@@ -957,10 +957,6 @@
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrado el</target>
-      </trans-unit>
-      <trans-unit id="ICpl9sx" resname="appendTags">
-        <source>appendTags</source>
-        <target>Agregar etiquetas</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
