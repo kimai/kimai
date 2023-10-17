@@ -55,6 +55,20 @@ class UserControllerTest extends APIControllerBaseTest
         }
     }
 
+    public function testGetCollectionFull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/users?full=true');
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(7, \count($result));
+        foreach ($result as $user) {
+            self::assertApiResponseTypeStructure('UserEntity', $user);
+        }
+    }
+
     public function testGetCollectionWithQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);

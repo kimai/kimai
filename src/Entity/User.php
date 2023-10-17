@@ -297,6 +297,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('apiToken')]
+    #[Serializer\Groups(['Default'])]
+    public function hasApiToken(): bool
+    {
+        return $this->apiToken !== null;
+    }
+
     public function getPlainApiToken(): ?string
     {
         return $this->plainApiToken;
