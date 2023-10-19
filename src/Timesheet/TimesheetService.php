@@ -31,7 +31,7 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\ConstraintViolation;

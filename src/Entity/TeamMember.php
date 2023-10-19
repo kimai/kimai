@@ -26,14 +26,14 @@ class TeamMember
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default', 'Entity', 'Team_Entity'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'members')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default', 'Entity', 'User_Entity'])]

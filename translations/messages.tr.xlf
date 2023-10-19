@@ -906,14 +906,6 @@
         <source>profile.registration_date</source>
         <target>Kayıt tarihi</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="appendTags">
-        <source>appendTags</source>
-        <target>Etiketleri ekle</target>
-      </trans-unit>
-      <trans-unit id="tl01EdS" resname="replaceTags">
-        <source>replaceTags</source>
-        <target>Etiketleri değiştir</target>
-      </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target state="translated">Süresi ne olursa olsun her kayıt aynı fiyatı alır</target>

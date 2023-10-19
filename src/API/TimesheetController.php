@@ -33,6 +33,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route(path: '/timesheets')]
 #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
@@ -93,7 +93,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'exported', requirements: '0|1', strict: true, nullable: true, description: 'Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)')]
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
-    #[Rest\QueryParam(name: 'full', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
@@ -257,7 +257,8 @@ final class TimesheetController extends BaseApiController
         $view = new View($results, 200);
         $this->addPagination($view, $data);
 
-        if (null !== $paramFetcher->get('full')) {
+        $full = $paramFetcher->get('full');
+        if ($full === '1' || $full === 'true') {
             $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
         } else {
             $view->getContext()->setGroups(self::GROUPS_COLLECTION);

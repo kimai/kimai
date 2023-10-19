@@ -49,29 +49,32 @@ class WizardSubscriber implements EventSubscriberInterface
         $uri = $event->getRequest()->getRequestUri();
 
         // never require 2FA on API calls
-        if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false) {
+        if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false || stripos($uri, '/wizard/') !== false) {
             return;
         }
 
         $user = $token->getUser();
 
-        if ($user instanceof User) {
-            if (stripos($uri, '/wizard/') !== false) {
+        if (!($user instanceof User)) {
+            return;
+        }
+
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return;
+        }
+
+        foreach (User::WIZARDS as $wizard) {
+            if (!$user->hasSeenWizard($wizard)) {
+                $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => $wizard]));
+                $event->setResponse($response);
+
                 return;
             }
+        }
 
-            if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-                return;
-            }
-
-            foreach (User::WIZARDS as $wizard) {
-                if (!$user->hasSeenWizard($wizard)) {
-                    $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => $wizard]));
-                    $event->setResponse($response);
-
-                    return;
-                }
-            }
+        if ($user->requiresPasswordReset()) {
+            $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
+            $event->setResponse($response);
         }
     }
 }

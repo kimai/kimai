@@ -21,7 +21,7 @@ abstract class AbstractCounterYear extends AbstractWidgetType
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     public function getData(array $options = []): mixed
     {
@@ -39,7 +39,7 @@ abstract class AbstractCounterYear extends AbstractWidgetType
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     abstract protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed;
 

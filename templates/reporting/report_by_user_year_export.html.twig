@@ -1,0 +1,8 @@
+{% embed 'reporting/report_by_user_data.html.twig' %}
+    {% block period_name %}
+        <th>{{ column|month_name }} {{ column|date_format('Y') }}</th>
+    {% endblock %}
+    {% block column_classes_project %}{% endblock %}
+    {% block column_classes_activity %}{% endblock %}
+    {% block column_classes_total %}{% endblock %}
+{% endembed %}

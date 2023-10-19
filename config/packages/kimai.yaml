@@ -151,11 +151,13 @@ kimai:
 # --------------------------------------------------------------------------------
 # INVOICES
 # --------------------------------------------------------------------------------
-#    invoice:
-#        # all files in these directories will be used as invoice documents (if supported by a renderer)
-#        documents:
-#            - 'var/invoices/'
-#            - 'templates/invoice/renderer/'
+#   invoice:
+#       # all files in these directories will be used as invoice documents (if supported by a renderer)
+#       documents:
+#           - 'var/invoices/'
+#           - 'templates/invoice/renderer/'
+#       # allow to upload twig templates as invoice documents
+#       upload_twig: true
 # --------------------------------------------------------------------------------
 
 

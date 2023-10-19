@@ -35,7 +35,7 @@ use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

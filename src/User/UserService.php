@@ -22,7 +22,7 @@ use App\Event\UserUpdatePreEvent;
 use App\Repository\UserRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

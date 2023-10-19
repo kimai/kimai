@@ -18,6 +18,7 @@ use App\Form\PasswordResetForm;
 use App\User\LoginManager;
 use App\User\UserService;
 use DateTime;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,6 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/resetting')]
@@ -108,7 +108,7 @@ final class PasswordResetController extends AbstractController
         }
 
         return $this->render('security/password-reset/check_email.html.twig', [
-            'tokenLifetime' => ceil($this->configuration->getPasswordResetRetryLifetime() / 3600),
+            'tokenLifetime' => $this->configuration->getPasswordResetRetryLifetime(),
         ]);
     }
 

@@ -21,9 +21,6 @@ final class Extensions extends AbstractExtension
 {
     public const REPORT_DATE = 'Y-m-d';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -37,9 +34,6 @@ final class Extensions extends AbstractExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

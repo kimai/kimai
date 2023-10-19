@@ -33,9 +33,6 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -74,9 +71,6 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

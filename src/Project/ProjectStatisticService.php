@@ -36,7 +36,7 @@ use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @final

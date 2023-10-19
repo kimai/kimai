@@ -17,10 +17,12 @@
 <table class="table table-hover dataTable">
     <thead>
         <tr>
-            <th>&nbsp;</th>
+            <th>{% block upper_left %}{{ user.displayName }}{% endblock %}</th>
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in period.dateTimes %}
-                {% block period_name %}{% endblock %}
+                {% block period_name %}
+                    <th>{{ column|date_short }}</th>
+                {% endblock %}
                 {% set columns = columns + 1 %}
                 {% set dateKey = column|report_date %}
                 {% set totalsDuration = totalsDuration|merge({(dateKey): 0}) %}

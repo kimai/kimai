@@ -343,7 +343,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue('{Y}/{cy,3}')
                 ->end()
                 ->booleanNode('upload_twig')
-                    ->defaultTrue()
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;

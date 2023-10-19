@@ -25,7 +25,7 @@ use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

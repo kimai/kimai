@@ -928,7 +928,7 @@ parameters:
 
         -
             message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 2
+            count: 1
             path: src/Controller/CalendarController.php
 
         -
@@ -2578,12 +2578,12 @@ parameters:
 
         -
             message: "#^Cannot access offset 'customer' on mixed\\.$#"
-            count: 3
+            count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdate.php
 
         -
             message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 6
+            count: 2
             path: src/Form/MultiUpdate/TimesheetMultiUpdate.php
 
         -
@@ -3603,12 +3603,12 @@ parameters:
 
         -
             message: "#^Cannot access offset 'activity' on mixed\\.$#"
-            count: 3
+            count: 1
             path: src/Form/Type/QuickEntryWeekType.php
 
         -
             message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 3
+            count: 1
             path: src/Form/Type/QuickEntryWeekType.php
 
         -
@@ -4293,7 +4293,7 @@ parameters:
 
         -
             message: "#^Cannot access offset 'lastRecord' on mixed\\.$#"
-            count: 2
+            count: 1
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -4438,7 +4438,7 @@ parameters:
 
         -
             message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 3
+            count: 1
             path: src/Reporting/ProjectDetails/ProjectDetailsForm.php
 
         -
@@ -5713,11 +5713,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Utils\\\\MenuItemModel\\:\\:__construct\\(\\) has parameter \\$routeArgs with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/MenuItemModel.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\MenuItemModel\\:\\:getRouteArgs\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/MenuItemModel.php
 

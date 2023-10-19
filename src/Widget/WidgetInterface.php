@@ -71,7 +71,7 @@ interface WidgetInterface
      * make sure that the given $options will overwrite the internal option for
      * this one call.
      *
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      * @return mixed|null
      */
     public function getData(array $options = []): mixed;
@@ -85,8 +85,8 @@ interface WidgetInterface
      * You can validate the options or simply return:
      * return array_merge($this->options, $options);
      *
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array;
 

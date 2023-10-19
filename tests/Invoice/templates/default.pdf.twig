@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-{% set fallback = app.request is not null ? app.request.locale : 'en' %}
-{% set language = model.template.language|default(fallback) %}
+{% set language = invoice['invoice.language'] %}
 {% set currency = model.currency %}
 <html lang="{{ language }}">
 <head>

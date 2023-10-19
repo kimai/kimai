@@ -13,7 +13,11 @@
 
     <div class="row mb-3">
         <div class="d-flex">
-            {{ 'api_password.intro'|trans }}
+            <div class="me-auto">
+                <p>{{ 'api_password.intro'|trans }}</p>
+
+                <p>{{ 'username'|trans }}: {{ user.userIdentifier }}</p>
+            </div>
 
             <div class="ms-auto">
                 <a class="btn btn-icon" target="_blank" href="{{ path('api.swagger_ui') }}" data-toggle="tooltip" title="Swagger API Docs">{{ icon('documentation', true) }}</a>

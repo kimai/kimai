@@ -22,7 +22,7 @@ use App\Repository\ProjectRepository;
 use App\Utils\Context;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**

@@ -68,8 +68,8 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {

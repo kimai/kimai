@@ -22,6 +22,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\SearchTerm;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -32,7 +33,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsCommand(name: 'kimai:invoice:create')]
 final class InvoiceCreateCommand extends Command

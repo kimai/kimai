@@ -48,7 +48,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * Customer for this project
      */
     #[ORM\ManyToOne(targetEntity: Customer::class)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
@@ -137,7 +137,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @var Collection<ProjectMeta>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMeta::class, mappedBy: 'project', cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'project', targetEntity: ProjectMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: 'array<App\Entity\ProjectMeta>')]
@@ -152,7 +152,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[ORM\JoinTable(name: 'kimai2_projects_teams')]
     #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity: Team::class, cascade: ['persist'], inversedBy: 'projects')]
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'projects', cascade: ['persist'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]

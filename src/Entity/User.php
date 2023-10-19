@@ -42,9 +42,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'username', label: 'username', exp: 'object.getUserIdentifier()')]
 #[Exporter\Expose(name: 'timezone', label: 'timezone', exp: 'object.getTimezone()')]
 #[Exporter\Expose(name: 'language', label: 'language', exp: 'object.getLanguage()')]
-#[Exporter\Expose(name: 'last_login', label: 'lastLogin', exp: 'object.getLastLogin()', type: 'datetime')]
-#[Exporter\Expose(name: 'roles', label: 'roles', exp: 'object.getRoles()', type: 'array')]
-#[Exporter\Expose(name: 'active', label: 'active', exp: 'object.isEnabled()', type: 'boolean')]
+#[Exporter\Expose(name: 'last_login', label: 'lastLogin', type: 'datetime', exp: 'object.getLastLogin()')]
+#[Exporter\Expose(name: 'roles', label: 'roles', type: 'array', exp: 'object.getRoles()')]
+#[Exporter\Expose(name: 'active', label: 'active', type: 'boolean', exp: 'object.isEnabled()')]
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
@@ -127,15 +127,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @var Collection<UserPreference>|null
      */
-    #[ORM\OneToMany(targetEntity: UserPreference::class, mappedBy: 'user', cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
     private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
      * @var Collection<TeamMember>
      */
-    #[ORM\OneToMany(targetEntity: TeamMember::class, mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMember::class, cascade: ['persist'], fetch: 'LAZY', orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
@@ -217,7 +217,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'system_account', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $systemAccount = false;
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(ref: '#/components/schemas/User')]
@@ -295,6 +295,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->apiToken = $apiToken;
 
         return $this;
+    }
+
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('apiToken')]
+    #[Serializer\Groups(['Default'])]
+    public function hasApiToken(): bool
+    {
+        return $this->apiToken !== null;
     }
 
     public function getPlainApiToken(): ?string
@@ -836,9 +844,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->email !== null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -864,9 +869,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->confirmationToken;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -963,7 +965,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPasswordRequestedAt(\DateTime $date = null): User
+    public function setPasswordRequestedAt(?\DateTime $date = null): User
     {
         $this->passwordRequestedAt = $date;
 
@@ -1111,6 +1113,20 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getName(): string
     {
         return $this->getDisplayName();
+    }
+
+    public function requiresPasswordReset(): bool
+    {
+        if (!$this->isInternalUser() || !$this->isEnabled()) {
+            return false;
+        }
+
+        return $this->getPreferenceValue('__pw_reset__') === '1';
+    }
+
+    public function setRequiresPasswordReset(bool $require = true): void
+    {
+        $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
     }
 
     public function hasSeenWizard(string $wizard): bool

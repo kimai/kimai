@@ -23,7 +23,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -39,6 +39,7 @@ final class UserController extends BaseApiController
     public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
+    public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
 
     public function __construct(
         private ViewHandlerInterface $viewHandler,
@@ -60,6 +61,7 @@ final class UserController extends BaseApiController
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
@@ -88,7 +90,13 @@ final class UserController extends BaseApiController
         $query->setIsApiCall(true);
         $data = $this->repository->getUsersForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+
+        $full = $paramFetcher->get('full');
+        if ($full === '1' || $full === 'true') {
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
+        } else {
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+        }
 
         return $this->viewHandler->handle($view);
     }

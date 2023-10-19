@@ -20,11 +20,13 @@
 {% endblock %}
 
 {% block wizard_progress_bar %}
-    {{ progress_bar({current: percent, max: 100, min: 0}) }}
+    {% if percent is defined and percent is not null %}
+        {{ progress_bar({current: percent, max: 100, min: 0}) }}
+    {% endif %}
 {% endblock %}
 
 {% block wizard_previous_button %}
-    {% if previous is defined %}
+    {% if previous is defined and previous is not null %}
         {{ button(false, { title : 'Previous'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': previous}) }, 'link') }}
     {% endif %}
 {% endblock %}
@@ -33,7 +35,7 @@
     {% if form is defined %}
         {{ submit_button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true }, 'primary') }}
     {% else %}
-        {% if next is defined %}
+        {% if next is defined and next is not null %}
             {{ button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': next}) }, 'primary') }}
         {% endif %}
     {% endif %}

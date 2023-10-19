@@ -169,7 +169,7 @@ class Kernel extends BaseKernel
         $container->registerExtension(new AppExtension());
 
         $container->setParameter('container.autowiring.strict_mode', true);
-        $container->setParameter('container.dumper.inline_class_loader', true);
+        $container->setParameter('.container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir() . '/config';
 
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');

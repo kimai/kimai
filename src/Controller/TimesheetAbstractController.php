@@ -33,7 +33,7 @@ use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -334,6 +334,13 @@ abstract class TimesheetAbstractController extends AbstractController
             $execute = false;
             /** @var Timesheet $timesheet */
             foreach ($timesheets as $timesheet) {
+                if ($dto->isReplaceDescription()) {
+                    $timesheet->setDescription($dto->getDescription());
+                    $execute = true;
+                } elseif($dto->getDescription() !== null && $dto->getDescription() !== '') {
+                    $timesheet->setDescription($timesheet->getDescription() . PHP_EOL . $dto->getDescription());
+                    $execute = true;
+                }
                 if ($dto->isReplaceTags()) {
                     foreach ($timesheet->getTags() as $tag) {
                         $timesheet->removeTag($tag);

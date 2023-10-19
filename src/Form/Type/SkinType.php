@@ -26,6 +26,7 @@ final class SkinType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'label' => 'skin',
             'search' => false,
             'required' => true,
             'choices' => self::THEMES,

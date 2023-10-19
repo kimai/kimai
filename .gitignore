@@ -1,45 +1,34 @@
 # some hosters require a htaccess to change the PHP version
-.htaccess
-.env-*
-.idea/
-.DS_Store
-rector.php
-phpstan.sh
+/public/.htaccess
+/.env-*
+/.idea/
+/.DS_Store
+/phpstan.sh
 
 # custom apache rules e.g. to deactivate ioncube loader
-public/.user.ini
+/public/.user.ini
 
 # for symfony local webserver
-php.ini
-.php-version
+/php.ini
+/.php-version
 
 # YARN 2
-.yarnrc.yml
-.yarn
+/.yarnrc.yml
+/.yarn
 
 # for keeping empty directories
-!.gitkeep
-
-/bin/*
-!/bin/console
-*local.yaml
+/config/packages/local.yaml
 /config/bundles-local.php
-
-/templates/invoice/renderer/.~lock*
-/translations/branding.*.xlf
-
 /var/data/*
-/var/coverage/
 /var/cache/*
-
-/var/invoices/*
+/var/invoices*
 /var/export/*
 /var/log/*
 /var/sessions/*
 /var/packages/*
 /var/plugins/*
 /var/plugins_old/
-*.disabled
+/var/plugins/*/*.disabled
 
 ###> symfony/framework-bundle ###
 /.env.local

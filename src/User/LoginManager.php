@@ -12,12 +12,12 @@ namespace App\User;
 use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\Security\UserChecker;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class LoginManager
 {

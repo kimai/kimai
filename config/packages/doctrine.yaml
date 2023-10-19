@@ -18,6 +18,7 @@ doctrine:
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
+                schema_manager_factory: doctrine.dbal.default_schema_manager_factory
 
         types:
             datetime: App\Doctrine\UTCDateTimeType
@@ -26,6 +27,7 @@ doctrine:
         default_entity_manager: default
         entity_managers:
             default:
+                report_fields_where_declared: true
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true

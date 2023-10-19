@@ -966,14 +966,6 @@
         <source>profile.registration_date</source>
         <target>Regisztrált ekkor</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="appendTags">
-        <source>appendTags</source>
-        <target>Címkék megnyitása</target>
-      </trans-unit>
-      <trans-unit id="tl01EdS" resname="replaceTags">
-        <source>replaceTags</source>
-        <target>Címkék cseréje</target>
-      </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Minden alkalommal a felvétel ugyanazt az értéket kapja, függetlenül a terjedelmétől</target>

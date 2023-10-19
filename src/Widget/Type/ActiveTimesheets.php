@@ -9,6 +9,7 @@
 
 namespace App\Widget\Type;
 
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
@@ -20,16 +21,25 @@ final class ActiveTimesheets extends AbstractWidgetType
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge(['color' => WidgetInterface::COLOR_TOTAL, 'icon' => 'duration'], parent::getOptions($options));
+        // we can safely assume that the user can see
+        $route = 'admin_timesheet';
+
+        return array_merge([
+            'color' => WidgetInterface::COLOR_TOTAL,
+            'icon' => 'duration',
+            'route' => $route,
+            'routeOptions' => ['state' => TimesheetQuery::STATE_RUNNING],
+        ], parent::getOptions($options));
     }
 
     public function getPermissions(): array
     {
+        // if you ever loosen that check, make sure that the above link is probably removed
         return ['view_all_data'];
     }
 
@@ -44,7 +54,7 @@ final class ActiveTimesheets extends AbstractWidgetType
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
     public function getData(array $options = []): mixed
     {

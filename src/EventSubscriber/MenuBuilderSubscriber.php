@@ -14,8 +14,8 @@ use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

@@ -9,7 +9,6 @@
 
 namespace App\Security;
 
-use App\Entity\User;
 use Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContextInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Condition\TwoFactorConditionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -22,9 +21,6 @@ final class TwoFactorCondition implements TwoFactorConditionInterface
 
     public function shouldPerformTwoFactorAuthentication(AuthenticationContextInterface $context): bool
     {
-        /** @var User $user */
-        $user = $context->getUser();
-
         // never require 2FA on API calls
         if (str_starts_with($context->getRequest()->getRequestUri(), '/api/')) {
             return false;

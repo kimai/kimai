@@ -1238,11 +1238,6 @@ parameters:
             path: API/UserControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 9
-            path: API/UserControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 8
             path: API/UserControllerTest.php
@@ -1673,7 +1668,7 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
+            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Psr\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -5178,26 +5173,6 @@ parameters:
             path: Export/Renderer/PdfRendererFactoryTest.php
 
         -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Export/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\PdfRendererTest\\:\\:testConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\PdfRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: Export/Renderer/PdfRendererTest.php
-
-        -
             message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getIcon\\(\\)\\.$#"
             count: 1
             path: Export/Renderer/XlsxRendererTest.php
@@ -5633,44 +5608,9 @@ parameters:
             path: Export/Timesheet/CsvRendererTest.php
 
         -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Export/Timesheet/HtmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\HtmlRendererTest\\:\\:testConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/HtmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\HtmlRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/HtmlRendererTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Export/Timesheet/HtmlRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Export/Timesheet/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\PdfRendererTest\\:\\:testConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\PdfRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/PdfRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: Export/Timesheet/PdfRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\XlsxRendererTest\\:\\:testConfiguration\\(\\) has no return type specified\\.$#"
@@ -6458,47 +6398,17 @@ parameters:
             path: Invoice/Renderer/PdfRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\PdfRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\PdfRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
-
-        -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: Invoice/Renderer/PdfRendererTest.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 3
             path: Invoice/Renderer/PdfRendererTest.php
 
         -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
-
-        -
-            message: "#^Cannot call method setLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TwigRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TwigRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TwigRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Renderer/TwigRendererTest.php
 

@@ -355,14 +355,17 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('COUNT(t)')
+        $qb->select($qb->expr()->count('t'))
             ->from(Timesheet::class, 't')
             ->andWhere($qb->expr()->isNull('t.end'))
-            ->orderBy('t.begin', 'DESC');
+        ;
 
         if (null !== $user) {
-            $qb->andWhere('t.user = :user');
-            $qb->setParameter('user', $user);
+            $qb
+                ->andWhere('t.user = :user')
+                ->groupBy('t.user')
+                ->setParameter('user', $user)
+            ;
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();

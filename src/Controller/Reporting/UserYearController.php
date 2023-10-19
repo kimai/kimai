@@ -11,6 +11,8 @@ namespace App\Controller\Reporting;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DateStatisticInterface;
 use App\Model\MonthlyStatistic;
 use App\Reporting\YearByUser\YearByUser;
@@ -18,6 +20,7 @@ use App\Reporting\YearByUser\YearByUserForm;
 use DateTime;
 use DateTimeInterface;
 use Exception;
+use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +40,21 @@ final class UserYearController extends AbstractUserReportController
     public function yearByUser(Request $request, SystemConfiguration $systemConfiguration): Response
     {
         return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request, $systemConfiguration));
+    }
+
+    #[Route(path: '/year_export', name: 'report_user_year_export', methods: ['GET', 'POST'])]
+    public function export(Request $request, SystemConfiguration $systemConfiguration): Response
+    {
+        $data = $this->getData($request, $systemConfiguration);
+
+        $content = $this->renderView('reporting/report_by_user_year_export.html.twig', $data);
+
+        $reader = new Html();
+        $spreadsheet = $reader->loadFromString($content);
+
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-export-user-yearly');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     private function getData(Request $request, SystemConfiguration $systemConfiguration): array
@@ -104,6 +122,7 @@ final class UserYearController extends AbstractUserReportController
             'current' => $start,
             'next' => $next,
             'previous' => $previous,
+            'export_route' => 'report_user_year_export',
         ];
     }
 

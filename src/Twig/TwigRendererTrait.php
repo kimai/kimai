@@ -9,9 +9,11 @@
 
 namespace App\Twig;
 
+use App\Twig\SecurityPolicy\InvoicePolicy;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Environment;
+use Twig\Extension\SandboxExtension;
 
 /**
  * @internal
@@ -28,6 +30,13 @@ trait TwigRendererTrait
         }
         if ($formatLocale !== null) {
             $previousFormatLocale = $this->switchFormatLocale($twig, $formatLocale);
+        }
+
+        // enable basic security measures
+        if (!$twig->hasExtension(SandboxExtension::class)) {
+            $sandbox = new SandboxExtension(new InvoicePolicy());
+            $sandbox->enableSandbox();
+            $twig->addExtension($sandbox);
         }
 
         $content = $twig->render($template, $options);

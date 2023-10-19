@@ -1,6 +1,6 @@
 controllers:
     resource: ../src/Controller/
-    type: annotation
+    type: attribute
     prefix: /{_locale}
     requirements:
         _locale: '%app_locales%'
@@ -19,17 +19,17 @@ api.swagger:
 
 api:
     resource: ../src/API/
-    type: annotation
+    type: attribute
     prefix: /api
 
 auth:
     resource: ../src/Controller/Auth/
-    type: annotation
+    type: attribute
     prefix: /auth
 
 security:
     resource: ../src/Controller/Security/
-    type: annotation
+    type: attribute
     prefix: /{_locale}
     requirements:
         _locale: '%app_locales%'
@@ -38,7 +38,7 @@ security:
 
 kernel:
     resource: ../src/Kernel.php
-    type: annotation
+    type: attribute
 
 home:
     path: /

@@ -10,10 +10,13 @@
 namespace App\Controller\Reporting;
 
 use App\Entity\User;
+use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
+use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DailyStatistic;
 use App\Reporting\MonthByUser\MonthByUser;
 use App\Reporting\MonthByUser\MonthByUserForm;
 use Exception;
+use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +36,21 @@ final class UserMonthController extends AbstractUserReportController
     public function monthByUser(Request $request): Response
     {
         return $this->render('reporting/report_by_user.html.twig', $this->getData($request));
+    }
+
+    #[Route(path: '/month_export', name: 'report_user_month_export', methods: ['GET', 'POST'])]
+    public function export(Request $request): Response
+    {
+        $data = $this->getData($request);
+
+        $content = $this->renderView('reporting/report_by_user_data.html.twig', $data);
+
+        $reader = new Html();
+        $spreadsheet = $reader->loadFromString($content);
+
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-export-user-monthly');
+
+        return $writer->getFileResponse($spreadsheet);
     }
 
     private function getData(Request $request): array
@@ -95,6 +113,7 @@ final class UserMonthController extends AbstractUserReportController
             'current' => $start,
             'next' => $nextMonth,
             'previous' => $previousMonth,
+            'export_route' => 'report_user_month_export',
         ];
     }
 }

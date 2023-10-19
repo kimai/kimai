@@ -20,7 +20,7 @@ use App\Event\ActivityUpdatePreEvent;
 use App\Repository\ActivityRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**

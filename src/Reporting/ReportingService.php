@@ -11,7 +11,7 @@ namespace App\Reporting;
 
 use App\Entity\User;
 use App\Event\ReportingEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class ReportingService

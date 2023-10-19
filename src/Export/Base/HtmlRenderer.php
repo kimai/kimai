@@ -21,9 +21,11 @@ use App\Event\UserPreferenceDisplayEvent;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Twig\SecurityPolicy\ExportPolicy;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Twig\Extension\SandboxExtension;
 
 class HtmlRenderer
 {
@@ -92,6 +94,11 @@ class HtmlRenderer
         $userPreferences = $event->getPreferences();
 
         $summary = $this->calculateSummary($timesheets);
+
+        // enable basic security measures
+        $sandbox = new SandboxExtension(new ExportPolicy());
+        $sandbox->enableSandbox();
+        $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,

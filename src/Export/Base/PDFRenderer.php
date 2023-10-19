@@ -16,8 +16,10 @@ use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
+use App\Twig\SecurityPolicy\ExportPolicy;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Twig\Extension\SandboxExtension;
 
 class PDFRenderer implements DispositionInlineInterface
 {
@@ -76,6 +78,12 @@ class PDFRenderer implements DispositionInlineInterface
         $context->setOption('filename', $filename->getFilename());
 
         $summary = $this->calculateSummary($timesheets);
+
+        // enable basic security measures
+        $sandbox = new SandboxExtension(new ExportPolicy());
+        $sandbox->enableSandbox();
+        $this->twig->addExtension($sandbox);
+
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,

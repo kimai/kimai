@@ -7,6 +7,7 @@
                 {{ column|date_weekday }}
             </th>
         {% endblock %}
+        {% block upper_left %}&nbsp;{% endblock %}
         {% block column_classes_project -%}
             {% if column.date is weekend(user) %} weekend{% endif %}{% if column.date is today %} today{% endif %}
         {%- endblock %}

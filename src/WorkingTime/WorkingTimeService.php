@@ -20,7 +20,7 @@ use App\Timesheet\DateTimeFactory;
 use App\WorkingTime\Model\Month;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal this API and the entire namespace is instable: you should expect changes!

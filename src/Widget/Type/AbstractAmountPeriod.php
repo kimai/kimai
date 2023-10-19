@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Event\RevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractAmountPeriod extends AbstractWidget
 {
@@ -30,8 +30,8 @@ abstract class AbstractAmountPeriod extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
-     * @return array<string, string|bool|int|null>
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {
@@ -41,7 +41,7 @@ abstract class AbstractAmountPeriod extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null> $options
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
      * @return array<string, float>
      */
     protected function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, array $options = []): array

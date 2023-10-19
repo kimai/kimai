@@ -7,12 +7,14 @@
     <div class="card-body">
         <div class="row align-items-center">
             <div class="col-auto">
+                {% if not url is empty %}<a href="{{ url }}">{% endif %}
                 <span class="bg-{{ options.color|default('green') }} text-white avatar">
                     <i class="{{ options.icon|icon(true, options.icon) }}"></i>
                 </span>
+                {% if not url is empty %}</a>{% endif %}
             </div>
             <div class="col">
-                {% if not url is empty %}<a href="{{ url }}">{% endif %}
+
                 <div class="font-weight-medium">
                     {{ title|trans }}
                 </div>
@@ -21,7 +23,6 @@
                         {{ data }}
                     {% endblock %}
                 </div>
-                {% if not url is empty %}</a>{% endif %}
             </div>
         </div>
     </div>

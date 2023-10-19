@@ -22,7 +22,7 @@ use App\Repository\Query\CustomerQuery;
 use App\Utils\NumberGenerator;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CustomerService

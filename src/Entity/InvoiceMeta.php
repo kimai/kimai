@@ -23,7 +23,7 @@ class InvoiceMeta implements MetaTableTypeInterface
     use MetaTableTypeTrait;
 
     #[ORM\ManyToOne(targetEntity: Invoice::class, inversedBy: 'meta')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?Invoice $invoice = null;
 

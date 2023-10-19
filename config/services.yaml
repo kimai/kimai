@@ -91,16 +91,10 @@ services:
     App\Doctrine\TimesheetSubscriber:
         class: App\Doctrine\TimesheetSubscriber
         arguments: [!tagged timesheet.calculator]
-        tags:
-            - { name: doctrine.event_subscriber, priority: 50 }
 
     # updates timestampable columns (higher priority, so the TimesheetSubscriber will be executed later)
-    Gedmo\Timestampable\TimestampableListener:
-        class: Gedmo\Timestampable\TimestampableListener
-        tags:
-            - { name: doctrine.event_subscriber, priority: 60 }
-        calls:
-            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    App\Doctrine\ModifiedSubscriber:
+        class: App\Doctrine\ModifiedSubscriber
 
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR

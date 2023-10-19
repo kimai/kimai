@@ -15,6 +15,7 @@ use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 /**
@@ -25,7 +26,7 @@ use Twig\Environment;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = new PDFRenderer(
             $this->createMock(Environment::class),
@@ -36,12 +37,14 @@ class PdfRendererTest extends AbstractRendererTest
         $this->assertEquals('pdf', $sut->getId());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
+        /** @var RequestStack $stack */
         $stack = self::getContainer()->get('request_stack');
+        /** @var string $cacheDir */
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
         $converter = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
         $request = new Request();

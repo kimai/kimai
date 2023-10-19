@@ -23,7 +23,7 @@ class TimesheetMeta implements MetaTableTypeInterface
     use MetaTableTypeTrait;
 
     #[ORM\ManyToOne(targetEntity: Timesheet::class, inversedBy: 'meta')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?Timesheet $timesheet = null;
 

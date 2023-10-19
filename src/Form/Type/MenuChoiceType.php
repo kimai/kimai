@@ -11,7 +11,7 @@ namespace App\Form\Type;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\Options;

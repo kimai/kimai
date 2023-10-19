@@ -14,6 +14,7 @@ use App\Entity\UserPreference;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
+use App\Form\UserPasswordType;
 use App\User\UserService;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,6 +59,11 @@ final class WizardController extends AbstractController
                 ->setMethod('POST')
                 ->getForm();
 
+            $next = 'done';
+            if ($user->requiresPasswordReset()) {
+                $next = 'password';
+            }
+
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -72,13 +78,44 @@ final class WizardController extends AbstractController
                 if ($data['reload'] === '1') {
                     return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $data['language']]);
                 } else {
-                    return $this->redirectToRoute('wizard', ['wizard' => 'done', '_locale' => $data['language']]);
+                    return $this->redirectToRoute('wizard', ['wizard' => $next, '_locale' => $data['language']]);
                 }
             }
 
             return $this->render('wizard/profile.html.twig', [
                 'percent' => \intval(100 / \count(User::WIZARDS) * 1),
                 'previous' => 'intro',
+                'next' => $next,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        if ($wizard === 'password' || $user->requiresPasswordReset()) {
+            $form = $this->createForm(UserPasswordType::class, $user, [
+                'action' => $this->generateUrl('wizard', ['wizard' => 'password']),
+                'method' => 'POST',
+            ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setRequiresPasswordReset(false);
+                $userService->updateUser($user);
+
+                return $this->redirectToRoute('wizard', ['wizard' => 'done']);
+            }
+
+            $previous = 'profile';
+            $percent = \intval(100 / \count(User::WIZARDS) * 1);
+
+            if ($user->requiresPasswordReset()) {
+                $previous = null;
+                $percent = null;
+            }
+
+            return $this->render('wizard/password.html.twig', [
+                'percent' => $percent,
+                'previous' => $previous,
                 'next' => 'done',
                 'form' => $form->createView(),
             ]);

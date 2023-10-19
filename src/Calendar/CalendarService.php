@@ -18,7 +18,7 @@ use App\Event\CalendarSourceEvent;
 use App\Event\RecentActivityEvent;
 use App\Repository\TimesheetRepository;
 use App\Utils\Color;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class CalendarService
 {
