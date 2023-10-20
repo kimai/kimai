@@ -183,7 +183,7 @@ class TimesheetTest extends TestCase
         $sut->setExported(true);
         $sut->setDescription('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
 
-        $modifiedDate = new \DateTime();
+        $modifiedDate = new \DateTimeImmutable();
 
         $reflection = new \ReflectionClass($sut);
         $property = $reflection->getProperty('modifiedAt');
