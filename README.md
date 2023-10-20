@@ -74,8 +74,6 @@ It is open for changes and input from the community, your [ideas and questions](
 Release versions will be created on a regular basis, every couple of weeks latest.
 Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
 
-Until 2.0 is widely adopted, the [1.x branch](https://github.com/kimai/kimai/tree/1.x) will receive (critical) bug and security fixes. 
-
 ## Contributing
 
 You want to contribute to this repository? This is so great!
