@@ -9,15 +9,15 @@
 
 namespace App\Model;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 
 class Day
 {
-    public function __construct(private DateTimeInterface $day)
+    public function __construct(private DateTimeImmutable $day)
     {
     }
 
-    public function getDay(): DateTimeInterface
+    public function getDay(): DateTimeImmutable
     {
         return $this->day;
     }

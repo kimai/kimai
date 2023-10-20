@@ -117,7 +117,8 @@ final class WorkingTimeService
             }
 
             $workingTime->setApprovedBy($approver);
-            $workingTime->setApprovedAt($approvalDate);
+            // FIXME see calling method
+            $workingTime->setApprovedAt(\DateTimeImmutable::createFromInterface($approvalDate));
             $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
         }
 

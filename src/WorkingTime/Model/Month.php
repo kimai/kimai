@@ -18,7 +18,7 @@ use App\Model\Month as BaseMonth;
  */
 final class Month extends BaseMonth
 {
-    public function __construct(\DateTimeInterface $month, private User $user)
+    public function __construct(\DateTimeImmutable $month, private User $user)
     {
         parent::__construct($month);
     }
@@ -67,7 +67,7 @@ final class Month extends BaseMonth
         return null;
     }
 
-    protected function createDay(\DateTimeInterface $day): Day
+    protected function createDay(\DateTimeImmutable $day): Day
     {
         return new Day($day);
     }

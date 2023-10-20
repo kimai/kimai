@@ -22,7 +22,7 @@ class WorkingTimeTest extends TestCase
     {
         $user = new User();
         $user->setUsername('bar');
-        $date = new \DateTime();
+        $date = new \DateTimeImmutable();
         $sut = new WorkingTime($user, $date);
 
         self::assertSame($user, $sut->getUser());
@@ -36,7 +36,7 @@ class WorkingTimeTest extends TestCase
         self::assertNull($sut->getApprovedBy());
         self::assertFalse($sut->isApproved());
 
-        $approvedAt = new \DateTime('2023-01-01 12:00:00', new \DateTimeZone('Europe/Vienna'));
+        $approvedAt = new \DateTimeImmutable('2023-01-01 12:00:00', new \DateTimeZone('Europe/Vienna'));
         $approvedBy = new User();
         $approvedBy->setUsername('foo');
 
