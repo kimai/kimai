@@ -23,12 +23,12 @@ and so much more.
 
 ### Versions
 
-There are two versions of Kimai existing:
+There are two [versions](https://www.kimai.org/documentation/versions.html) of Kimai existing:
 
-- [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1 only)
-- [Version 1](https://github.com/kimai/kimai/tree/1.x) — the "old" version, in maintenance mode since Jan. 2023 (PHP 7.4, PHP 8.1) 
+- [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1+)
+- [Version 1](https://github.com/kimai/kimai/tree/1.x) — the "old" version, EOL since mid of 2023 (PHP 7.4) 
 
-If you start fresh, do **not** use Version 1, it won't receive any more updates.
+If you start fresh, do **NOT** use Version 1, it doesn't receive any more updates.
 
 ### Links
 
