@@ -36,9 +36,32 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'join', 'u', 'slice', 'date', 'month_name', 'first', 'country_name',
                 'replace', 'length', 'number_format', 'split',
 
-                // Kimai filters
-                'md2html', 'desc2html', 'comment2html', 'comment1line', 'multiline_indent', 'nl2str',
-                'date_short', 'duration', 'amount', 'money', 'duration_decimal',
+                // src/Twig/RuntimeExtensions.php
+                'md2html',
+                'desc2html',
+                'comment2html',
+                'comment1line',
+
+                // src/Twig/Extensions.php
+                'multiline_indent',
+                'color',
+                'font_contrast',
+                'default_color',
+                'nl2str',
+
+                // src/Twig/LocaleFormatExtensions.php
+                'month_name',
+                'day_name',
+                'date_short',
+                'date_time',
+                'date_full',
+                'date_format',
+                'date_weekday',
+                'time',
+                'duration',
+                'duration_decimal',
+                'money',
+                'amount',
             ],
             [
                 PdfContext::class => ['setoption'],
