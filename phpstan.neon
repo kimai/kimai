@@ -2007,11 +2007,6 @@ parameters:
             path: src/Export/Base/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Parameter \\#1 \\$file of class Symfony\\\\Component\\\\HttpFoundation\\\\BinaryFileResponse constructor expects SplFileInfo\\|string, mixed given\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
             message: "#^Parameter \\#1 \\$id of method Symfony\\\\Contracts\\\\Translation\\\\TranslatorInterface\\:\\:trans\\(\\) expects string, string\\|null given\\.$#"
             count: 5
             path: src/Export/Base/AbstractSpreadsheetRenderer.php

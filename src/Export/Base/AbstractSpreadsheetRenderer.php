@@ -215,7 +215,7 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void
     {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate ?? 0);
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate ?? 0.0);
         $this->setRateStyle($sheet, $column, $row, $currency);
     }
 
@@ -310,7 +310,7 @@ abstract class AbstractSpreadsheetRenderer
                 };
             }
             if (!isset($columns['username']['header'])) {
-                $columns['username']['header'] = function (Worksheet $sheet, $row, $column): int {
+                $columns['username']['header'] = function (Worksheet $sheet, int $row, int $column): int {
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('name'));
 
                     return 1;
@@ -426,7 +426,7 @@ abstract class AbstractSpreadsheetRenderer
             $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
 
             $columns['timesheet-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($timesheetMetaFields): int {
+                'header' => function (Worksheet $sheet, int $row, int $column) use ($timesheetMetaFields): int {
                     foreach ($timesheetMetaFields as $metaField) {
                         $sheet->setCellValue(CellAddress::fromColumnAndRow($column++, $row), $this->translator->trans($metaField->getLabel()));
                     }
@@ -454,7 +454,7 @@ abstract class AbstractSpreadsheetRenderer
             $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
 
             $columns['customer-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($customerMetaFields): int {
+                'header' => function (Worksheet $sheet, int $row, int $column) use ($customerMetaFields): int {
                     foreach ($customerMetaFields as $metaField) {
                         $sheet->setCellValue(CellAddress::fromColumnAndRow($column++, $row), $this->translator->trans($metaField->getLabel()));
                     }
@@ -481,7 +481,7 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['project-meta'])) {
             $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
             $columns['project-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($projectMetaFields): int {
+                'header' => function (Worksheet $sheet, int $row, int $column) use ($projectMetaFields): int {
                     foreach ($projectMetaFields as $metaField) {
                         $sheet->setCellValue(CellAddress::fromColumnAndRow($column++, $row), $this->translator->trans($metaField->getLabel()));
                     }
@@ -508,7 +508,7 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['activity-meta'])) {
             $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
             $columns['activity-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($activityMetaFields): int {
+                'header' => function (Worksheet $sheet, int $row, int $column) use ($activityMetaFields): int {
                     foreach ($activityMetaFields as $metaField) {
                         $sheet->setCellValue(CellAddress::fromColumnAndRow($column++, $row), $this->translator->trans($metaField->getLabel()));
                     }
@@ -537,7 +537,7 @@ abstract class AbstractSpreadsheetRenderer
             $this->dispatcher->dispatch($event);
             $userPreferences = $event->getPreferences();
             $columns['user-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($userPreferences): int {
+                'header' => function (Worksheet $sheet, int $row, int $column) use ($userPreferences): int {
                     foreach ($userPreferences as $metaField) {
                         $sheet->setCellValue(CellAddress::fromColumnAndRow($column++, $row), $this->translator->trans($metaField->getLabel()));
                     }
@@ -575,7 +575,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['customer_number'])) {
             if (!isset($columns['customer_number']['header'])) {
-                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column): int {
+                $columns['customer_number']['header'] = function (Worksheet $sheet, int $row, int $column): int {
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('number'));
 
                     return 1;
@@ -595,7 +595,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
             if (!isset($columns['customer_vat']['header'])) {
-                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column): int {
+                $columns['customer_vat']['header'] = function (Worksheet $sheet, int $row, int $column): int {
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('vat_id'));
 
                     return 1;
@@ -615,7 +615,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
             if (!isset($columns['order_number']['header'])) {
-                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column): int {
+                $columns['order_number']['header'] = function (Worksheet $sheet, int $row, int $column): int {
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('orderNumber'));
 
                     return 1;
@@ -767,11 +767,11 @@ abstract class AbstractSpreadsheetRenderer
     abstract public function getFileExtension(): string;
 
     /**
-     * @param mixed $file
+     * @param string $file
      * @param string $filename
      * @return BinaryFileResponse
      */
-    protected function getFileResponse($file, $filename): BinaryFileResponse
+    protected function getFileResponse(string $file, string $filename): BinaryFileResponse
     {
         $response = new BinaryFileResponse($file);
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
