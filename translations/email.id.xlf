@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="id" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target state="translated">Reset kata sandi Anda</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject">
+        <source>registration.subject</source>
+        <target state="translated">Aktifkan akun Anda</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+        <source>reset.subject</source>
+        <target state="translated">Reset kata sandi Anda</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target state="translated">Itu bisa terjadi …</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target state="translated">Aktifkan akun Anda</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Anda mendaftar di Kimai time-tracker dengan alamat e-mail %email%. Harap aktifkan akun Anda dalam beberapa jam ke depan, sebelum tautan kadaluwarsa.</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title">
+        <source>registration.title</source>
+        <target state="translated">Selamat datang %username%</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro">
+        <source>reset.intro</source>
+        <target state="translated">Jadi, Anda lupa kata sandi Anda? Jangan khawatir: Kimai akan membantu Anda membuat yang baru:</target>
+      </trans-unit>
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target state="translated">Jika tombol tidak berfungsi, tolong salin &amp; tempel URL berikut ke peramban Anda: %url%</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">Ini adalah email yang dibuat secara otomatis. Tolong jangan balas, alamat ini tidak akan dibaca.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

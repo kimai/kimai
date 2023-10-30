@@ -178,7 +178,7 @@
         <target>Duración</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
+        <source>User</source>
         <target state="translated">Usuario</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
@@ -187,7 +187,7 @@
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
-        <target>Descripción</target>
+        <target state="translated">Descripción</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
@@ -1477,6 +1477,162 @@
       <trans-unit id="m8V2yFG" resname="status.progress">
         <source>status.progress</source>
         <target state="translated">En curso</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">Borrado</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">Creado por</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">Creado en</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>Complete month</source>
+        <target state="translated">El mes completo</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Evaluación</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">Horas de objetivo</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target state="translated">Los valores configurados aquí se utilizan para calcular las horas.</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Este documento sirve como prueba de las horas trabajadas.</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Contrato laboral</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">Una vez finalizado el mes, el usuario ya no podrás crear ni editar los horarios para ese periodo.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">Revisar</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">Invisible</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">PDF del mes completo</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Horario laboral</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">Días festivos</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target state="translated">Informe</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target state="translated">Jornada completa</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Por defecto</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target state="translated">Enviar a %name%</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
+        <source>Holidays per year</source>
+        <target state="translated">Vacaciones por año</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">No se han configurado horas previstas para este usuario en la configuración del contrato de trabajo.</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">Enfermedad, consulta médica, cuidados de parientes cercanos, etc.</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target state="translated">Tiempo de descanso</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Reservas manuales</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">Vacaciones</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">Enfermedad</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">Otro</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target state="translated">Tu cuenta de jornada laboral tiene un saldo de %hours% horas.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">Eventos familiares, mudanza, caos meterorológico etc.</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target state="translated">Enviar</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">¡Las reservas manuales no pueden cambiar o borrar posteriormente!</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target state="translated">Día festivo</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target state="translated">Recibir de %name%</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Horas trabajadas</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">Has utilizado %used% de tus %days% días de vacaciones disponibles.</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">Supervisor</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">Confimado por %user% el %date%</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target state="translated">Media jornada</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">Ausencia</target>
       </trans-unit>
     </body>
   </file>

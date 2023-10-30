@@ -280,8 +280,8 @@
         <target>نام</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>توضیحات</target>
+        <source>Description</source>
+        <target state="translated">توضیحات</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>

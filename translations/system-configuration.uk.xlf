@@ -296,7 +296,7 @@
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>
-        <target state="translated">Дозволений замінник: %replacer%</target>
+        <target state="translated">Дозволена заміна: %replacer%</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

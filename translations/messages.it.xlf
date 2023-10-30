@@ -214,8 +214,8 @@
         <target state="translated">Utente</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Descrizione</target>
+        <source>Description</source>
+        <target state="translated">Descrizione</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
@@ -1640,6 +1640,14 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">Supervisore</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Richiedi nuova password</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">Al successivo accesso l'utente dovrà inserire una nuova password.</target>
       </trans-unit>
     </body>
   </file>

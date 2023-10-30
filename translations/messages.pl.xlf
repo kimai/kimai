@@ -198,8 +198,8 @@
         <target>Użytkownik</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Opis</target>
+        <source>Description</source>
+        <target state="translated">Opis</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>

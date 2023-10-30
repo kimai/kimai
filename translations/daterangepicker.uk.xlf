@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
         <source>This year — until today</source>
-        <target state="translated">Цей рік — до сьогодні</target>
+        <target state="translated">Цей рік до сьогодні</target>
       </trans-unit>
     </body>
   </file>

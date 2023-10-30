@@ -303,9 +303,9 @@
         <source>username</source>
         <target>Benutzer</target>
       </trans-unit>
-      <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Beschreibung</target>
+      <trans-unit id="yQRveje" resname="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beschreibung</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>

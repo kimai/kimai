@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">ההגדרות החשבונות ביותר הושלמו. יש עוד המון כאלה שניתן לכוון בהמשך דרך פרופיל המשתמש שלך.</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">נא למלא את הסיסמה החדשה שלך שתשמש אותך להיכנס מעכשיו.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">הסיסמה שלך</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -278,7 +278,7 @@
         <target state="translated">使用者名稱</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
+        <source>Description</source>
         <target state="translated">描述</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">

@@ -190,8 +190,8 @@
         <target>用户</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>描述</target>
+        <source>Description</source>
+        <target state="translated">描述</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
@@ -1645,6 +1645,14 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">主管</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">账户工作时间</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">审查</target>
       </trans-unit>
     </body>
   </file>

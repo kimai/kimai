@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="pa" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <!-- Global template keys -->
+      <!-- Login / Security -->
+      <!-- Menu / Navbar items -->
+      <!-- Error templates -->
+      <!-- General labels -->
+      <!-- Buttons & Actions -->
+      <!-- Dashboard -->
+      <!-- Widgets -->
+      <!-- Timesheet -->
+      <!-- Column modal -->
+      <!-- User profile -->
+      <!-- 2FA  -->
+      <!-- END 2FA  -->
+      <!-- Notifications -->
+      <!-- Options for user-preference calendar_initial_view -->
+      <!-- User timesheet calendar -->
+      <!-- Projects -->
+      <!-- Customer -->
+      <!-- Users -->
+      <!-- Plugins -->
+      <!-- ROLES -->
+      <!-- Statistics data for Dashboard & Users profile -->
+      <!-- Invoice -->
+      <!-- Export -->
+      <!-- Navbar - recent entries and activities -->
+      <!-- TOOLBARS -->
+      <!-- QUICK ENTRIES -->
+      <trans-unit id="XohImNo" resname="password" approved="no">
+        <source>Password</source>
+        <target state="translated">ਪਾਸਵਰਡ</target>
+      </trans-unit>
+      <trans-unit id="CT59X9u" resname="contact" approved="no">
+        <source>Contact</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
+      <trans-unit id="N7mikjJ" resname="time_tracking">
+        <source>time_tracking</source>
+        <target state="translated">ਸਮਾਂ ਟਰੈਕਿੰਗ</target>
+      </trans-unit>
+      <trans-unit id=".3dyBTq" resname="both" approved="no">
+        <source>Both</source>
+        <target state="translated">ਦੋਵੇਂ</target>
+      </trans-unit>
+      <trans-unit id="hLEZkoC" resname="password_repeat">
+        <source>password_repeat</source>
+        <target state="translated">ਪਾਸਵਰਡ ਦੁਬਾਰਾ</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">ਅਨਲੌਕ</target>
+      </trans-unit>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
+        <target state="translated">API ਪਾਸਵਰਡ</target>
+      </trans-unit>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
+        <target state="translated">ਗਾਹਕ</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create">
+        <source>create</source>
+        <target state="translated">ਬਣਾਓ</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no">
+        <source>no</source>
+        <target state="translated">ਨਹੀਂ</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">ਖਾਤਾ ਅਨਲੌਕ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="8W_TZI0" resname="searchTerm">
+        <source>searchTerm</source>
+        <target state="translated">ਖੋਜ ਸ਼ਬਦ</target>
+      </trans-unit>
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
+        <source>menu.reporting</source>
+        <target state="translated">ਰਿਪੋਰਟਿੰਗ</target>
+      </trans-unit>
+      <trans-unit id="COyxNde" resname="delete.not_in_use">
+        <source>delete.not_in_use</source>
+        <target state="translated">ਇਸ ਆਈਟਮ ਨੂੰ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਮਿਟਾਇਆ ਜਾ ਸਕਦਾ ਹੈ।</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout">
+        <source>menu.logout</source>
+        <target state="translated">ਲਾੱਗ ਆਊਟ</target>
+      </trans-unit>
+      <trans-unit id="_x2He8M" resname="user_profile">
+        <source>user_profile</source>
+        <target state="translated">ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes">
+        <source>yes</source>
+        <target state="translated">ਹਾਂ</target>
+      </trans-unit>
+      <trans-unit id="zFfl7jw" resname="sum.total">
+        <source>sum.total</source>
+        <target state="translated">ਕੁੱਲ</target>
+      </trans-unit>
+      <trans-unit id="1o0.9vf" resname="asc">
+        <source>asc</source>
+        <target state="translated">ਚੜ੍ਹਦਾ</target>
+      </trans-unit>
+      <trans-unit id="OTDmccn" resname="attachments">
+        <source>attachments</source>
+        <target state="translated">ਫਾਈਲਾਂ</target>
+      </trans-unit>
+      <trans-unit id="mflwMcX" resname="rates.title">
+        <source>rates.title</source>
+        <target state="translated">ਕੀਮਤਾਂ</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">ਆਟੋਮੈਟਿਕ</target>
+      </trans-unit>
+      <trans-unit id="DUDrvjk" resname="remove_default">
+        <source>remove_default</source>
+        <target state="translated">ਮਨਪਸੰਦ ਖੋਜ ਨੂੰ ਮਿਟਾਓ</target>
+      </trans-unit>
+      <trans-unit id="l4ZOh4." resname="desc">
+        <source>desc</source>
+        <target state="translated">ਉਤਰਦਾ</target>
+      </trans-unit>
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target state="translated">ਲਾਜ਼ਮੀ</target>
+      </trans-unit>
+      <trans-unit id="ebTjBb9" resname="my_times">
+        <source>my_times</source>
+        <target state="translated">ਮੇਰਾ ਸਮਾਂ</target>
+      </trans-unit>
+      <trans-unit id="I3TZF5S" resname="cancel">
+        <source>cancel</source>
+        <target state="translated">ਰੱਦ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="6OKwCUB" resname="menu.system">
+        <source>menu.system</source>
+        <target state="translated">ਸਿਸਟਮ</target>
+      </trans-unit>
+      <trans-unit id=".0CFrRV" resname="upload">
+        <source>upload</source>
+        <target state="translated">ਅੱਪਲੋਡ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
+        <target state="translated">ਪ੍ਰਾਜੈਕਟਾਂ</target>
+      </trans-unit>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+        <source>api_token_repeat</source>
+        <target state="translated">API ਪਾਸਵਰਡ ਦੁਬਾਰਾ</target>
+      </trans-unit>
+      <trans-unit id="PyZ8KrQ" resname="confirm">
+        <source>confirm</source>
+        <target state="translated">ਪੁਸ਼ਟੀ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target state="translated">ਲੱਭਣਾ</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
+        <target state="translated">ਲਾੱਗ ਆਊਟ</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">ਕਿਰਪਾ ਕਰਕੇ ਪੂਰੀ ਪਹੁੰਚ ਲਈ ਆਪਣਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">ਐਪਲੀਕੇਸ਼ਨ</target>
+      </trans-unit>
+      <trans-unit id="wvvYSw_" resname="menu.admin">
+        <source>menu.admin</source>
+        <target state="translated">ਪ੍ਰਸ਼ਾਸਨ</target>
+      </trans-unit>
+      <trans-unit id="yxQop43" resname="all_times">
+        <source>all_times</source>
+        <target state="translated">ਹਰ ਸਮੇਂ</target>
+      </trans-unit>
+      <trans-unit id="UoOv6mx" resname="menu.homepage">
+        <source>menu.homepage</source>
+        <target state="translated">ਡੈਸ਼ਬੋਰਡ</target>
+      </trans-unit>
+      <trans-unit id="O5w1jzb" resname="file">
+        <source>file</source>
+        <target state="translated">ਫਾਈਲ</target>
+      </trans-unit>
+      <trans-unit id="hBNESu6" resname="my.profile">
+        <source>my.profile</source>
+        <target state="translated">ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
+        <target state="translated">ਟਿੱਪਣੀ</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">ਹਟਾਇਆ ਗਿਆ</target>
+      </trans-unit>
+      <trans-unit id="QEMUsfS" resname="hours">
+        <source>hours</source>
+        <target state="translated">ਘੰਟੇ</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>Project</source>
+        <target state="translated">ਪ੍ਰੋਜੈਕਟ</target>
+      </trans-unit>
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
+        <source>menu.system_configuration</source>
+        <target state="translated">ਸੈਟਿੰਗਾਂ</target>
+      </trans-unit>
+      <trans-unit id="xUl3nXn" resname="rate">
+        <source>rate</source>
+        <target state="translated">ਕੀਮਤ</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>User</source>
+        <target state="translated">ਯੂਜ਼ਰ</target>
+      </trans-unit>
+      <trans-unit id="pWFFJwz" resname="id">
+        <source>id</source>
+        <target state="translated">ID</target>
+      </trans-unit>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
+        <target state="translated">ਟੀਮਾਂ</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="translated">ਤਾਰੀਖ਼</target>
+      </trans-unit>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
+        <target state="translated">ਟੈਗ</target>
+      </trans-unit>
+      <trans-unit id="qbD0dHa" resname="timeBudget">
+        <source>timeBudget</source>
+        <target state="translated">ਸਮਾਂ ਬਜਟ</target>
+      </trans-unit>
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
+        <source>hourlyRate</source>
+        <target state="translated">ਘੰਟੇ ਦੀ ਕੀਮਤ</target>
+      </trans-unit>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
+        <target state="translated">ਗਾਹਕ</target>
+      </trans-unit>
+      <trans-unit id="giREF.l" resname="email">
+        <source>E-mail</source>
+        <target state="translated">E-mail</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description">
+        <source>Description</source>
+        <target state="translated">ਵਰਣਨ</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
+        <target state="translated">ਨਾਮ</target>
+      </trans-unit>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
+        <target state="translated">ਯੂਜ਼ਰ</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">ਡਿਜ਼ਾਈਨ</target>
+      </trans-unit>
+      <trans-unit id="KhBzpuZ" resname="tag">
+        <source>tag</source>
+        <target state="translated">ਟੈਗ</target>
+      </trans-unit>
+      <trans-unit id="JGaf9IK" resname="Doctor">
+        <source>Doctor</source>
+        <target state="translated">ਡਾਕਟਰ</target>
+      </trans-unit>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
+        <target state="translated">ਬਜਟ</target>
+      </trans-unit>
+      <trans-unit id="eI_tMbq" resname="endtime">
+        <source>endtime</source>
+        <target state="translated">ਅੰਤ</target>
+      </trans-unit>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
+        <target state="translated">ਟੀਮ</target>
+      </trans-unit>
+      <trans-unit id="BHk4pZ3" resname="starttime">
+        <source>starttime</source>
+        <target state="translated">ਸ਼ੁਰੂ</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
+        <target state="translated">ਯੂਜ਼ਰ</target>
+      </trans-unit>
+      <trans-unit id="pO8wS6Q" resname="language">
+        <source>language</source>
+        <target state="translated">ਭਾਸ਼ਾ</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">ਬਿਲ ਦੀ ਜਾਣਕਾਰੀ</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">ਇਨਵੌਇਸ ਟੈਕਸਟ</target>
+      </trans-unit>
+      <trans-unit id="A6TLLQa" resname="profile.password">
+        <source>profile.password</source>
+        <target state="translated">ਪਾਸਵਰਡ</target>
+      </trans-unit>
+      <trans-unit id="yqea9Nt" resname="duration">
+        <source>duration</source>
+        <target state="translated">ਮਿਆਦ</target>
+      </trans-unit>
+      <trans-unit id="hOZxcaK" resname="menu.plugin">
+        <source>menu.plugin</source>
+        <target state="translated">ਪਲੱਗ ਇਨ</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
