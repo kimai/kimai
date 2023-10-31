@@ -60,6 +60,7 @@ security:
             logout:
                 path: logout
                 target: homepage
+                enable_csrf: true
 
             login_throttling:
                 max_attempts: 5
