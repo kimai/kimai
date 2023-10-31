@@ -1923,77 +1923,12 @@ parameters:
             path: Configuration/SamlConfigurationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getDefaultLoaderSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getDefaultSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
             count: 1
             path: Configuration/SystemConfigurationTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testCalendarWithLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testCalendarWithoutLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testDefaultWithLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testDefaultWithMixedConfigs\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testDefaultWithoutLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testFormDefaultWithLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testFormDefaultWithoutLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testOffsetUnsetThrowsException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testTimesheetWithLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testTimesheetWithoutLoader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:testUnknownConfigs\\(\\) has no return type specified\\.$#"
             count: 1
             path: Configuration/SystemConfigurationTest.php
 

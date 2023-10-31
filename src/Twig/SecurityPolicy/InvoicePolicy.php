@@ -31,14 +31,113 @@ final class InvoicePolicy implements SecurityPolicyInterface
         $this->policy->addPolicy(new SecurityPolicy(
             ['block', 'if', 'for', 'set', 'extends'],
             [
-                // Twig core filters
-                'map', 'escape', 'trans', 'default', 'nl2br', 'trim', 'raw',
-                'join', 'u', 'slice', 'date', 'month_name', 'first', 'country_name',
-                'replace', 'length', 'number_format', 'split',
+                // =================================================================
+                // vendor/twig/twig/src/Extension/CoreExtension.php
 
-                // Kimai filters
-                'md2html', 'desc2html', 'comment2html', 'comment1line', 'multiline_indent', 'nl2str',
-                'date_short', 'duration', 'amount', 'money', 'duration_decimal',
+                // formatting filters
+                'date',
+                'date_modify',
+                'format',
+                'replace',
+                'number_format',
+                'abs',
+                'round',
+
+                // encoding
+                'url_encode',
+                'json_encode',
+                'convert_encoding',
+
+                // string filters
+                'title',
+                'capitalize',
+                'upper',
+                'lower',
+                'striptags',
+                'trim',
+                'nl2br',
+                'spaceless',
+
+                // array helpers
+                'join',
+                'split',
+                'sort',
+                'merge',
+                'batch',
+                'column',
+                'filter',
+                'map',
+                'reduce',
+
+                // string/array filters
+                'reverse',
+                'length',
+                'slice',
+                'first',
+                'last',
+
+                // iteration and runtime
+                'default',
+                'keys',
+
+                // =================================================================
+                // vendor/twig/twig/src/Extension/EscaperExtension.php
+                'escape',
+                'e',
+                'raw',
+
+                // =================================================================
+                // vendor/symfony/twig-bridge/Extension/TranslationExtension.php
+                'trans',
+
+                // =================================================================
+                // vendor/twig/string-extra/StringExtension.php
+                'u',
+                'slug',
+
+                // =================================================================
+                // vendor/twig/intl-extra/IntlExtension.php
+                'country_name',
+                'currency_name',
+                'currency_symbol',
+                'language_name',
+                'locale_name',
+                'format_currency',
+                'format_number',
+                'format_*_number',
+                'format_datetime',
+                'format_date',
+                'format_time',
+
+                // =================================================================
+                // src/Twig/LocaleFormatExtensions.php
+                'month_name',
+                'day_name',
+                'date_short',
+                'date_time',
+                'date_full',
+                'date_format',
+                'date_weekday',
+                'time',
+                'duration',
+                'duration_decimal',
+                'money',
+                'amount',
+
+                // =================================================================
+                // src/Twig/RuntimeExtensions.php
+                'md2html',
+                'desc2html',
+                'comment2html',
+                'comment1line',
+
+                // =================================================================
+                // src/Twig/Extensions.php
+                'multiline_indent',
+                'color',
+                'font_contrast',
+                'default_color',
+                'nl2str',
             ],
             [
                 PdfContext::class => ['setoption'],
@@ -46,11 +145,37 @@ final class InvoicePolicy implements SecurityPolicyInterface
             ],
             [], // properties
             [
-                // Twig core functions
-                'cycle', 'asset', 'range',
+                // =================================================================
+                // vendor/twig/twig/src/Extension/CoreExtension.php
+                'max',
+                'min',
+                'range',
+                'constant',
+                'cycle',
+                'random',
+                'date',
+                'asset',
+                'range',
 
-                // Kimai functions
-                'encore_entry_css_source', 'qr_code_data_uri', 'config',
+                // =================================================================
+                // vendor/symfony/twig-bridge/Extension/TranslationExtension.php
+                't',
+
+                // =================================================================
+                // vendor/symfony/webpack-encore-bundle/src/Twig/EntryFilesTwigExtension.php
+                'encore_entry_css_source',
+
+                // =================================================================
+                // vendor/symfony/twig-bridge/Extension/AssetExtension.php
+                'asset',
+
+                // =================================================================
+                // Twig/RuntimeExtensions.php
+                'qr_code_data_uri',
+
+                // =================================================================
+                // Twig/Configuration.php
+                'config',
             ]
         ));
     }

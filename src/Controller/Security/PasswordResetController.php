@@ -17,7 +17,6 @@ use App\Event\EmailPasswordResetEvent;
 use App\Form\PasswordResetForm;
 use App\User\LoginManager;
 use App\User\UserService;
-use DateTime;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\FormInterface;
@@ -83,7 +82,7 @@ final class PasswordResetController extends AbstractController
             // this will finally send the email
             $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
 
-            $user->setPasswordRequestedAt(new DateTime());
+            $user->markPasswordRequested();
             $this->userService->updateUser($user);
         }
 
@@ -138,8 +137,7 @@ final class PasswordResetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setConfirmationToken(null);
-            $user->setPasswordRequestedAt(null);
+            $user->markPasswordResetted();
             $user->setEnabled(true);
 
             $this->userService->updateUser($user);

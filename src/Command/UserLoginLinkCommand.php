@@ -77,7 +77,7 @@ final class UserLoginLinkCommand extends Command
         $loginLink = $loginLinkDetails->getUrl();
 
         if ($input->getOption('password-reset') === true) {
-            $user->setPasswordRequestedAt(new \DateTime());
+            $user->markPasswordRequested();
             $user->setRequiresPasswordReset(true);
             $this->userRepository->saveUser($user);
         }

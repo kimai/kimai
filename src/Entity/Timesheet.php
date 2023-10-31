@@ -188,8 +188,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
     private ?string $category = self::WORK;
-    #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
-    private \DateTimeInterface $modifiedAt;
+    #[ORM\Column(name: 'modified_at', type: 'datetime_immutable', nullable: true)]
+    private \DateTimeImmutable $modifiedAt; // @phpstan-ignore-line - create migration and update all null values and then make it not null
     /**
      * Tags
      *
@@ -586,12 +586,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this;
     }
 
-    public function getModifiedAt(): \DateTimeInterface
+    public function getModifiedAt(): \DateTimeImmutable
     {
         return $this->modifiedAt;
     }
 
-    public function setModifiedAt(\DateTimeInterface $dateTime): void
+    public function setModifiedAt(\DateTimeImmutable $dateTime): void
     {
         $this->modifiedAt = $dateTime;
     }

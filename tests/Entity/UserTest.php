@@ -219,7 +219,7 @@ class UserTest extends TestCase
 
     public function testPasswordRequestedAt(): void
     {
-        $date = new \DateTime('-60 minutes');
+        $date = new \DateTimeImmutable('-60 minutes');
         $sut = new User();
         self::assertFalse($sut->isPasswordRequestNonExpired(3599));
 

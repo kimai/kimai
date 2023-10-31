@@ -20,17 +20,15 @@ class Year
 
     public function __construct(private DateTimeInterface $month)
     {
-        $monthDate = new \DateTimeImmutable();
-        $monthDate = $monthDate->setDate((int) $this->month->format('Y'), 1, 1);
-        $monthDate = $monthDate->setTime(1, 0);
+        $monthDate = new \DateTimeImmutable($this->month->format('Y-01-01 01:00:00'), $this->month->getTimezone());
         for ($i = 1; $i < 13; $i++) {
-            $month = $this->createMonth($monthDate);
-            $this->setMonth($month);
+            $tmp = $this->createMonth($monthDate);
+            $this->setMonth($tmp);
             $monthDate = $monthDate->add(new \DateInterval('P1M'));
         }
     }
 
-    protected function createMonth(\DateTimeInterface $month): Month
+    protected function createMonth(\DateTimeImmutable $month): Month
     {
         return new Month($month);
     }

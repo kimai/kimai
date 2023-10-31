@@ -28,7 +28,7 @@ final class Year extends BaseYear
         return $this->user;
     }
 
-    protected function createMonth(\DateTimeInterface $month): Month
+    protected function createMonth(\DateTimeImmutable $month): Month
     {
         return new Month($month, $this->user);
     }

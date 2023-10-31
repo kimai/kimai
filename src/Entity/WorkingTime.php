@@ -41,9 +41,9 @@ class WorkingTime
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'approved_by', nullable: true, onDelete: 'SET NULL')]
     private ?User $approvedBy = null;
-    #[ORM\Column(name: 'approved_at', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'approved_at', type: 'datetime_immutable', nullable: true)]
     #[Assert\NotNull]
-    private ?\DateTimeInterface $approvedAt = null;
+    private ?\DateTimeImmutable $approvedAt = null;
 
     public function __construct(User $user, \DateTimeInterface $date)
     {
@@ -96,12 +96,12 @@ class WorkingTime
         $this->approvedBy = $approvedBy;
     }
 
-    public function getApprovedAt(): ?\DateTimeInterface
+    public function getApprovedAt(): ?\DateTimeImmutable
     {
         return $this->approvedAt;
     }
 
-    public function setApprovedAt(?\DateTimeInterface $approvedAt): void
+    public function setApprovedAt(?\DateTimeImmutable $approvedAt): void
     {
         $this->approvedAt = $approvedAt;
     }

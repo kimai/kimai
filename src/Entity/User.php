@@ -196,8 +196,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'confirmation_token', type: 'string', length: 180, unique: true, nullable: true)]
     #[Assert\Length(max: 180)]
     private ?string $confirmationToken = null;
-    #[ORM\Column(name: 'password_requested_at', type: 'datetime', nullable: true)]
-    private ?\DateTime $passwordRequestedAt = null;
+    #[ORM\Column(name: 'password_requested_at', type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $passwordRequestedAt = null;
     /**
      * List of all role names
      */
@@ -958,26 +958,31 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): User
+    public function setConfirmationToken($confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
-
-        return $this;
     }
 
-    public function setPasswordRequestedAt(?\DateTime $date = null): User
+    public function markPasswordRequested(): void
+    {
+        $this->setPasswordRequestedAt(new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone())));
+    }
+
+    public function markPasswordResetted(): void
+    {
+        $this->setConfirmationToken(null);
+        $this->setPasswordRequestedAt(null);
+    }
+
+    public function setPasswordRequestedAt(?\DateTimeImmutable $date): void
     {
         $this->passwordRequestedAt = $date;
-
-        return $this;
     }
 
     /**
      * Gets the timestamp that the user requested a password reset.
-     *
-     * @return DateTime|null
      */
-    public function getPasswordRequestedAt(): ?DateTime
+    public function getPasswordRequestedAt(): ?\DateTimeImmutable
     {
         return $this->passwordRequestedAt;
     }

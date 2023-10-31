@@ -20,7 +20,7 @@ class Month
 
     public function __construct(private \DateTimeInterface $month)
     {
-        $date = new \DateTimeImmutable($this->month->format('Y-m-01 00:00:00'));
+        $date = new \DateTimeImmutable($this->month->format('Y-m-01 00:00:00'), $month->getTimezone());
         $start = $date->format('m');
         while ($start === $date->format('m')) {
             $day = $this->createDay($date);
@@ -29,7 +29,7 @@ class Month
         }
     }
 
-    protected function createDay(\DateTimeInterface $day): Day
+    protected function createDay(\DateTimeImmutable $day): Day
     {
         return new Day($day);
     }
