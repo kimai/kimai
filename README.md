@@ -26,9 +26,9 @@ and so much more.
 There are two [versions](https://www.kimai.org/documentation/versions.html) of Kimai existing:
 
 - [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1+)
-- [Version 1](https://github.com/kimai/kimai/tree/1.x) — the "old" version, EOL since mid of 2023 (PHP 7.4) 
+- [Version 1](https://github.com/kimai/kimai/tree/1.x) — EOL since mid of 2023 (PHP 7.4) 
 
-If you start fresh, do **NOT** use Version 1, it doesn't receive any more updates.
+Do **NOT** use Version 1, it won't get any more updates!
 
 ### Links
 
