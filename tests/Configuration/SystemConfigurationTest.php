@@ -24,14 +24,17 @@ class SystemConfigurationTest extends TestCase
      * @param array $loaderSettings
      * @return SystemConfiguration
      */
-    protected function getSut(array $settings, array $loaderSettings = [])
+    protected function getSut(array $settings, array $loaderSettings = []): SystemConfiguration
     {
         $loader = new TestConfigLoader($loaderSettings);
 
         return SystemConfigurationFactory::create($loader, $settings);
     }
 
-    protected function getDefaultSettings()
+    /**
+     * @return array<string, array<mixed>>
+     */
+    protected function getDefaultSettings(): array
     {
         return [
             'timesheet' => [
@@ -106,7 +109,10 @@ class SystemConfigurationTest extends TestCase
         ];
     }
 
-    protected function getDefaultLoaderSettings()
+    /**
+     * @return array<Configuration>
+     */
+    protected function getDefaultLoaderSettings(): array
     {
         return [
             (new Configuration())->setName('defaults.customer.timezone')->setValue('Russia/Moscov'),
@@ -123,7 +129,7 @@ class SystemConfigurationTest extends TestCase
         ];
     }
 
-    public function testDefaultWithoutLoader()
+    public function testDefaultWithoutLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('Europe/London', $sut->find('defaults.customer.timezone'));
@@ -133,7 +139,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
     }
 
-    public function testDefaultWithLoader()
+    public function testDefaultWithLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals('Russia/Moscov', $sut->find('defaults.customer.timezone'));
@@ -143,7 +149,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertFalse($sut->isSamlActive());
     }
 
-    public function testDefaultWithMixedConfigs()
+    public function testDefaultWithMixedConfigs(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
@@ -157,7 +163,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
-    public function testOffsetUnsetThrowsException()
+    public function testOffsetUnsetThrowsException(): void
     {
         $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('SystemBundleConfiguration does not support offsetUnset()');
@@ -166,7 +172,7 @@ class SystemConfigurationTest extends TestCase
         $sut->offsetUnset('dfsdf');
     }
 
-    public function testUnknownConfigs()
+    public function testUnknownConfigs(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
@@ -182,7 +188,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('foooo-bar!', $sut->find('xxxxxxxx.yyyyyyyyy'));
     }
 
-    public function testCalendarWithoutLoader()
+    public function testCalendarWithoutLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('07:49', $sut->getCalendarBusinessTimeBegin());
@@ -199,7 +205,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(2, \count($sources));
     }
 
-    public function testCalendarWithLoader()
+    public function testCalendarWithLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals('00:30:00', $sut->getCalendarSlotDuration());
@@ -207,7 +213,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(2, \count($sources));
     }
 
-    public function testFormDefaultWithoutLoader()
+    public function testFormDefaultWithoutLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals('Europe/London', $sut->getCustomerDefaultTimezone());
@@ -220,7 +226,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertNull($sut->getFinancialYearStart());
     }
 
-    public function testFormDefaultWithLoader()
+    public function testFormDefaultWithLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals('Russia/Moscov', $sut->getCustomerDefaultTimezone());
@@ -232,7 +238,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('USD', $sut->getUserDefaultCurrency());
     }
 
-    public function testTimesheetWithoutLoader()
+    public function testTimesheetWithoutLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
         $this->assertEquals(99, $sut->getTimesheetActiveEntriesHardLimit());
@@ -250,7 +256,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(5, $sut->getTimesheetIncrementMinutes());
     }
 
-    public function testTimesheetWithLoader()
+    public function testTimesheetWithLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
         $this->assertEquals(7, $sut->getTimesheetActiveEntriesHardLimit());
