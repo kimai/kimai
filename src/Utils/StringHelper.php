@@ -30,7 +30,7 @@ final class StringHelper
     public static function sanitizeDDE(string $text): string
     {
         // see #3189
-        if (\strlen($text) === 0) {
+        if ($text === '') {
             return $text;
         }
 
@@ -43,7 +43,7 @@ final class StringHelper
         }
 
         if ($sanitize) {
-            // trying to prevent fucking Microsoft "feature" DDE
+            // trying to prevent horrible Microsoft "feature" DDE
             $text = "' " . $text;
         }
 
