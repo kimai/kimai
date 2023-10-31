@@ -13,11 +13,9 @@ use App\Invoice\InvoiceModel;
 use App\Pdf\PdfContext;
 use Symfony\Component\String\UnicodeString;
 use Twig\Markup;
-use Twig\Node\Expression\Filter\DefaultFilter;
 use Twig\Sandbox\SecurityPolicy;
 use Twig\Sandbox\SecurityPolicyInterface;
 use Twig\Template;
-use Twig\TwigFilter;
 
 /**
  * Represents the security policy for custom Twig invoice templates.
@@ -140,7 +138,6 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'font_contrast',
                 'default_color',
                 'nl2str',
-
             ],
             [
                 PdfContext::class => ['setoption'],
@@ -171,7 +168,6 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 // =================================================================
                 // vendor/symfony/twig-bridge/Extension/AssetExtension.php
                 'asset',
-
 
                 // =================================================================
                 // Twig/RuntimeExtensions.php
