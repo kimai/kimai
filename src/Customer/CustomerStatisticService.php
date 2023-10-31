@@ -11,23 +11,33 @@ namespace App\Customer;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\User;
+use App\Event\CustomerBudgetStatisticEvent;
 use App\Event\CustomerStatisticEvent;
 use App\Model\CustomerBudgetStatisticModel;
 use App\Model\CustomerStatistic;
+use App\Reporting\CustomerView\CustomerViewModel;
+use App\Reporting\CustomerView\CustomerViewQuery;
+use App\Repository\CustomerRepository;
+use App\Repository\Loader\CustomerLoader;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @final
  */
 class CustomerStatisticService
 {
-    public function __construct(private TimesheetRepository $timesheetRepository, private EventDispatcherInterface $dispatcher)
+    public function __construct(
+        private CustomerRepository $customerRepository,
+        private TimesheetRepository $timesheetRepository,
+        private EventDispatcherInterface $dispatcher
+    )
     {
     }
 
@@ -85,6 +95,7 @@ class CustomerStatisticService
         $result = $qb->getQuery()->getResult();
 
         if (null !== $result) {
+            /** @var array{'id': string, 'duration': int, 'internalRate': float, 'counter': int, 'rate': float, 'billable': int, 'exported': int} $resultRow */
             foreach ($result as $resultRow) {
                 $statistic = $statistics[$resultRow['id']];
                 $statistic->setDuration($statistic->getDuration() + $resultRow['duration']);
@@ -113,12 +124,16 @@ class CustomerStatisticService
         return $statistics;
     }
 
+    /**
+     * @param array<Customer> $customers
+     */
     private function createStatisticQueryBuilder(array $customers, DateTime $begin = null, ?DateTime $end = null): QueryBuilder
     {
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(p.customer) AS id')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->join(Customer::class, 'c', Query\Expr\Join::WITH, 'p.customer = c.id')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
@@ -148,5 +163,178 @@ class CustomerStatisticService
         }
 
         return $qb;
+    }
+
+    /**
+     * @param CustomerViewQuery $query
+     * @return Customer[]
+     */
+    public function findCustomersForView(CustomerViewQuery $query): array
+    {
+        $user = $query->getUser();
+
+        $qb = $this->customerRepository->createQueryBuilder('c');
+        $qb
+            ->select('c')
+            ->andWhere($qb->expr()->eq('c.visible', true))
+            ->addGroupBy('c')
+        ;
+
+        if ($query->isIncludeWithBudget()) {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gt('c.timeBudget', 0),
+                    $qb->expr()->gt('c.budget', 0)
+                )
+            );
+        } elseif ($query->isIncludeWithoutBudget()) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('c.timeBudget', 0),
+                    $qb->expr()->eq('c.budget', 0)
+                )
+            );
+        }
+
+        $this->customerRepository->addPermissionCriteria($qb, $user);
+
+        /** @var Customer[] $customers */
+        $customers = $qb->getQuery()->getResult();
+
+        // pre-cache customer objects instead of joining them
+        $loader = new CustomerLoader($this->customerRepository->createQueryBuilder('c')->getEntityManager(), false);
+        $loader->loadResults($customers);
+
+        return $customers;
+    }
+
+    /**
+     * @param User $user
+     * @param Customer[] $customers
+     * @param DateTime $today
+     * @return CustomerViewModel[]
+     */
+    public function getCustomerView(User $user, array $customers, DateTime $today): array
+    {
+        $today = clone $today;
+
+        /** @var array<int, CustomerViewModel> $customerViews */
+        $customerViews = [];
+        foreach ($customers as $customer) {
+            $customerViews[$customer->getId()] = new CustomerViewModel($customer);
+        }
+
+        $budgetStats = $this->getBudgetStatisticModelForCustomers($customers, $today);
+        foreach ($budgetStats as $model) {
+            $customerViews[$model->getCustomer()->getId()]->setBudgetStatisticModel($model);
+        }
+
+        $customerIds = array_keys($customerViews);
+
+        $tplQb = $this->timesheetRepository->createQueryBuilder('t');
+        $tplQb
+            ->select('c.id AS id')
+            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->join(Customer::class, 'c', Query\Expr\Join::WITH, 'p.customer = c.id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('COALESCE(SUM(t.duration), 0) AS duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
+            ->andWhere($tplQb->expr()->in('c.id', ':customer'))
+            ->groupBy('id')
+            ->setParameter('customer', array_values($customerIds))
+        ;
+
+        $qb = clone $tplQb;
+
+        $result = $qb->getQuery()->getScalarResult();
+        /** @var array{'duration': int, 'amount': int, 'rate': float, 'id': string, 'exported': int} $row */
+        foreach ($result as $row) {
+            $customerViews[$row['id']]->setDurationTotal($row['duration']);
+            $customerViews[$row['id']]->setRateTotal($row['rate']);
+            $customerViews[$row['id']]->setTimesheetCounter($row['amount']);
+        }
+
+        $qb = clone $tplQb;
+        $qb
+            ->addSelect('t.exported')
+            ->addSelect('t.billable')
+            ->addGroupBy('t.exported')
+            ->addGroupBy('t.billable')
+        ;
+        $result = $qb->getQuery()->getScalarResult();
+        /** @var array{'duration': int, 'billable': int, 'rate': float, 'exported': int, 'id': string} $row */
+        foreach ($result as $row) {
+            $view = $customerViews[$row['id']];
+            if ($row['billable'] === 1 && $row['exported'] === 1) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+            } elseif ($row['billable'] === 1 && $row['exported'] === 0) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+                $view->setNotBilledDuration($view->getNotBilledDuration() + $row['duration']);
+                $view->setNotBilledRate($view->getNotBilledRate() + $row['rate']);
+            } elseif ($row['billable'] === 0 && $row['exported'] === 0) {
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+            }
+            // the last possible case $row['billable'] === 0 && $row['exported'] === 1 is extremely unlikely and not used
+        }
+
+        return array_values($customerViews);
+    }
+
+    /**
+     * @param Customer[] $customers
+     * @param DateTime $today
+     * @return CustomerBudgetStatisticModel[]
+     */
+    public function getBudgetStatisticModelForCustomers(array $customers, DateTime $today): array
+    {
+        $models = [];
+        $monthly = [];
+        $allTime = [];
+
+        foreach ($customers as $customer) {
+            $models[$customer->getId()] = new CustomerBudgetStatisticModel($customer);
+            if ($customer->isMonthlyBudget()) {
+                $monthly[] = $customer;
+            } else {
+                $allTime[] = $customer;
+            }
+        }
+
+        $statisticsTotal = $this->getBudgetStatistic($customers);
+        foreach ($statisticsTotal as $id => $statistic) {
+            $models[$id]->setStatisticTotal($statistic);
+        }
+
+        $dateFactory = new DateTimeFactory($today->getTimezone());
+
+        $begin = null;
+        $end = $today;
+
+        if (\count($monthly) > 0) {
+            $begin = $dateFactory->getStartOfMonth($today);
+            $end = $dateFactory->getEndOfMonth($today);
+            $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        if (\count($allTime) > 0) {
+            // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
+            $statistics = $this->getBudgetStatistic($allTime, null, $today);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        $event = new CustomerBudgetStatisticEvent($models, $begin, $end);
+        $this->dispatcher->dispatch($event);
+
+        return $models;
     }
 }

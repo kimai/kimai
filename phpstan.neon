@@ -1332,46 +1332,6 @@ parameters:
             path: src/Customer/CustomerStatisticService.php
 
         -
-            message: "#^Cannot access offset 'billable' on mixed\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'counter' on mixed\\.$#"
-            count: 3
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 4
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'exported' on mixed\\.$#"
-            count: 2
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'internalRate' on mixed\\.$#"
-            count: 3
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 4
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Method App\\\\Customer\\\\CustomerStatisticService\\:\\:createStatisticQueryBuilder\\(\\) has parameter \\$customers with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
             message: "#^Method App\\\\Customer\\\\CustomerStatisticService\\:\\:getBudgetStatistic\\(\\) should return array\\<int, App\\\\Model\\\\CustomerStatistic\\> but returns array\\<int\\|string, App\\\\Model\\\\CustomerStatistic\\>\\.$#"
             count: 1
             path: src/Customer/CustomerStatisticService.php

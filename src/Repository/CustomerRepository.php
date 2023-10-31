@@ -75,7 +75,7 @@ class CustomerRepository extends EntityRepository
         return $this->count([]);
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams);
         if ($permissions->count() > 0) {
