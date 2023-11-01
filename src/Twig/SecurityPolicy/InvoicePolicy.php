@@ -170,12 +170,22 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'asset',
 
                 // =================================================================
+                // vendor/symfony/twig-bridge/Extension/SecurityExtension.php
+                'is_granted',
+
+                // =================================================================
                 // Twig/RuntimeExtensions.php
                 'qr_code_data_uri',
 
                 // =================================================================
                 // Twig/Configuration.php
                 'config',
+
+                // =================================================================
+                // Twig/LocaleFormatExtensions.php
+                'create_date',
+                'month_names',
+                'locale_format',
             ]
         ));
     }
