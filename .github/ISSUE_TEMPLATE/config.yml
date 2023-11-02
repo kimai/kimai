@@ -3,9 +3,6 @@ contact_links:
     - name: Read our documentation
       url: https://www.kimai.org/documentation/
       about: Save your time! There is an instant solution for many issues in the documentation.
-    - name: Docker image issue tracker
-      url: https://github.com/tobybatch/kimai2/issues
-      about: For issues specific for Kimai Docker deployment
     - name: Ask a Question
       url: https://github.com/kimai/kimai/discussions
       about: Want to discuss something with a community? Do it in discussions!
