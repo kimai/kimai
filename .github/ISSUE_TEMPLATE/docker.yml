@@ -35,7 +35,7 @@ body:
     -   type: textarea
         id: compose
         attributes:
-            label: Docker compose file (with passwords redacted)
+            label: Docker compose file (redact your credentials)
             description: >
                 ```yaml
                 version: '3.5'
