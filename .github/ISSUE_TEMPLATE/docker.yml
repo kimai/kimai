@@ -1,0 +1,46 @@
+name: Docker issue
+description: Experiencing an issue with your Docker Setup?
+labels: [ "docker" ]
+body:
+    -   type: markdown
+        attributes:
+            value: |
+                Thank you for reporting an issue with your docker setup! This form will guide you to create a useful issue report.
+    -   type: textarea
+        id: describe
+        attributes:
+            label: Describe the problem
+            description: >
+                Please provide a clear and concise description of what the issue is and the steps to reproduce the behaviour:
+                    1. Start the container '...'
+                    2. Click on '....'
+                    3. See error xyz
+        validations:
+            required: true
+    -   type: textarea
+        id: image
+        attributes:
+            label: Describe your setup (OS, Docker versions)
+            description: >
+                - OS: [e.g. Linux, Windows, Mac]
+                - Docker version: [e.g. 19.03.2]
+                - Docker compose version: [e.g. 1.21.0]
+        validations:
+            required: true
+    -   type: textarea
+        id: command
+        attributes:
+            label: Command used to run the container
+            description: e.g. docker run -v ....
+    -   type: textarea
+        id: compose
+        attributes:
+            label: Docker compose file (with passwords redacted)
+            description: >
+                ```yaml
+                version: '3.5'
+                services:
+                    image: ...
+                ```
+        validations:
+            required: true
