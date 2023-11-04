@@ -34,11 +34,15 @@ final class RoleType extends AbstractType
             ]
         ]);
 
-        $replacer = function ($roleName) {
+        $replacer = function ($roleName) :?string {
+            if ($roleName === null) {
+                return null;
+            }
+
             if (\is_string($roleName)) {
                 $roleName = preg_replace('/[^a-zA-Z_]/', '_', $roleName);
-                $roleName = preg_replace('/_+/', '_', $roleName);
-                $roleName = ltrim($roleName, '_');
+                $roleName = preg_replace('/_+/', '_', $roleName ?? '');
+                $roleName = ltrim($roleName ?? '', '_');
                 $roleName = rtrim($roleName, '_');
                 $roleName = strtoupper($roleName);
             }
