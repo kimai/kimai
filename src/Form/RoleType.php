@@ -34,7 +34,7 @@ final class RoleType extends AbstractType
             ]
         ]);
 
-        $replacer = function ($roleName) :?string {
+        $replacer = function ($roleName): ?string {
             if ($roleName === null) {
                 return null;
             }
