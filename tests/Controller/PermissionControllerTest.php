@@ -19,17 +19,17 @@ use App\Entity\User;
  */
 class PermissionControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/admin/permissions');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
-    public function testPermissions()
+    public function testPermissions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
@@ -52,17 +52,17 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertStringContainsString('<th data-field="ROLE_SUPER_ADMIN" class="alwaysVisible text-center bg-orange-lt col_ROLE_SUPER_ADMIN">', $content);
     }
 
-    public function testCreateRoleIsSecured()
+    public function testCreateRoleIsSecured(): void
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/create');
     }
 
-    public function testCreateRoleIsSecuredForRole()
+    public function testCreateRoleIsSecuredForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
-    public function testCreateRole()
+    public function testCreateRole(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions/roles/create');
@@ -79,17 +79,17 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertTableHeader($content);
     }
 
-    public function testDeleteRoleIsSecured()
+    public function testDeleteRoleIsSecured(): void
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/delete/sdfsdfsdfsd');
     }
 
-    public function testDeleteRoleIsSecuredForRole()
+    public function testDeleteRoleIsSecuredForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
-    public function testDeleteRole()
+    public function testDeleteRole(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions/roles/create');
@@ -132,7 +132,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
 
         $this->request($client, '/admin/permissions');
-        $node = $client->getCrawler()->filter('table.dataTable thead th a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card .card-title a.confirmation-link');
         self::assertEquals(1, $node->count());
 
         $this->request($client, $node->attr('href'));
@@ -148,17 +148,17 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testSavePermissionIsSecured()
+    public function testSavePermissionIsSecured(): void
     {
         $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1/asdfasdf', 'POST');
     }
 
-    public function testSavePermissionIsSecuredForRole()
+    public function testSavePermissionIsSecuredForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
     }
 
-    public function testSavePermission()
+    public function testSavePermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions/roles/create');
