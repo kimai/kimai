@@ -22,6 +22,7 @@ class RoleTest extends TestCase
         $sut = new Role();
         self::assertNull($sut->getId());
         self::assertNull($sut->getName());
+        self::assertFalse($sut->isUser());
     }
 
     public function testSetterAndGetter(): void
@@ -30,8 +31,13 @@ class RoleTest extends TestCase
 
         $sut->setName('foo');
         self::assertEquals('FOO', $sut->getName());
+        self::assertFalse($sut->isUser());
 
         $sut->setName('BAR');
         self::assertEquals('BAR', $sut->getName());
+        self::assertFalse($sut->isUser());
+
+        $sut->setName('ROLE_USER');
+        self::assertTrue($sut->isUser());
     }
 }

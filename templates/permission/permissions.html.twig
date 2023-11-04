@@ -9,6 +9,7 @@
         'name': 'alwaysVisible',
     } %}
     {% set canEditPermissions = is_granted('role_permissions') %}
+    <div class="row g-2 mb-3">
     {% for role in roles %}
         {% set class = 'alwaysVisible text-center' %}
         {% if role.name == 'ROLE_SUPER_ADMIN' %}
@@ -16,17 +17,48 @@
         {% elseif role.name == 'ROLE_USER' %}
             {% set class = class ~ ' bg-green-lt' %}
         {% endif %}
-        {% set options = {'class': class} %}
-        {% if canEditPermissions and (role.name not in system_roles) %}
-            {% set widget %}
-                &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
-            {% endset %}
-            {% set options = options|merge({'html_after': widget}) %}
+        {% set columns = columns|merge({(role.name): {'class': class}}) %}
+        {% set roleUsers = [] %}
+        {% for user in users %}
+            {% if user.hasRole(role.getName()) %}
+                {% set roleUsers = roleUsers|merge([user]) %}
+            {% endif %}
+        {% endfor %}
+
+        {% if not role.isUser() %}
+        <div class="col-xl-4 col-lg-6 col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h4 class="card-title">
+                            {{ role.getName()|trans }}
+                            {% if canEditPermissions and (role.name not in system_roles) %}
+                                &nbsp;
+                                <a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
+                            {% endif %}
+                        </h4>
+                        <div class="list-unstyled d-flex mb-0">
+                            {% if is_granted('view_user') %}
+                                <a href="{{ path('admin_user', {'role': role.getName()}) }}" class="fs-6 mb-1">{{ 'amount'|trans }}: {{ roleUsers|length }}</a>
+                            {% else %}
+                                <span class="fs-6 mb-1">Total {{ roleUsers|length }} users</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div class="list-unstyled d-flex align-items-center avatars avatar-list avatar-list-stacked mb-0">
+                            {% for user in roleUsers %}
+                                {{ widgets.user_avatar(user, user.displayName, 'avatar-rounded avatar-xs')  }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endif %}
-        {% set columns = columns|merge({
-            (role.name): options,
-        }) %}
     {% endfor %}
+    </div>
+
 
     {% set tableName = 'user_admin_permissions' %}
 

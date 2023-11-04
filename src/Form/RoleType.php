@@ -34,19 +34,40 @@ final class RoleType extends AbstractType
             ]
         ]);
 
+        $replacer = function ($roleName): ?string {
+            if ($roleName === null) {
+                return null;
+            }
+
+            if (\is_string($roleName)) {
+                $roleName = preg_replace('/[^a-zA-Z_]/', '_', $roleName);
+                $roleName = preg_replace('/_+/', '_', $roleName ?? '');
+                $roleName = ltrim($roleName ?? '', '_');
+                $roleName = rtrim($roleName, '_');
+                $roleName = strtoupper($roleName);
+            }
+
+            return $roleName;
+        };
+
         // help the user to figure out the allowed name
         $builder->get('name')->addViewTransformer(
             new CallbackTransformer(
-                function ($roleName) {
-                    if (\is_string($roleName)) {
-                        $roleName = str_replace(' ', '_', $roleName);
-                        $roleName = str_replace('-', '_', $roleName);
-                    }
-
-                    return $roleName;
+                function ($roleName) use ($replacer) {
+                    return $replacer($roleName);
                 },
                 function ($roleName) {
                     return $roleName;
+                }
+            )
+        );
+        $builder->get('name')->addModelTransformer(
+            new CallbackTransformer(
+                function ($roleName) {
+                    return $roleName;
+                },
+                function ($roleName) use ($replacer) {
+                    return $replacer($roleName);
                 }
             )
         );

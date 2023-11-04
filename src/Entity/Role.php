@@ -46,4 +46,9 @@ class Role
 
         return $this;
     }
+
+    public function isUser(): bool
+    {
+        return $this->name === User::ROLE_USER;
+    }
 }
