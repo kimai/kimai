@@ -106,7 +106,7 @@ final class RegenerateLocalesCommand extends Command
             if (str_contains($settings['time'], 'a ')) {
                 $settings['time'] = str_replace('a ', '', $settings['time']) . ' a';
             }
-            $settings['time'] = str_replace(' ', ' ', $settings['time']);
+            $settings['time'] = str_replace("\u{202f}", ' ', $settings['time']);
 
             // make sure that sub-locales of a RTL language are also flagged as RTL
             $rtlLocale = $locale;
