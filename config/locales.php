@@ -199,7 +199,7 @@
   ],
   'en_CH' => 
   [
-    'date' => 'dd/MM/y',
+    'date' => 'dd.MM.y',
     'time' => 'HH:mm',
     'rtl' => false,
   ],
@@ -457,7 +457,7 @@
   ],
   'en_MV' => 
   [
-    'date' => 'M/d/yy',
+    'date' => 'd-M-yy',
     'time' => 'HH:mm',
     'rtl' => false,
   ],
@@ -1316,19 +1316,19 @@
   'ko' => 
   [
     'date' => 'yy. M. d.',
-    'time' => 'a h:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
   ],
   'ko_KP' => 
   [
     'date' => 'yy. M. d.',
-    'time' => 'a h:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
   ],
   'ko_KR' => 
   [
     'date' => 'yy. M. d.',
-    'time' => 'a h:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
   ],
   'nb_NO' => 
@@ -1589,6 +1589,12 @@
     'time' => 'HH:mm',
     'rtl' => false,
   ],
+  'uk' => 
+  [
+    'date' => 'dd.MM.yy',
+    'time' => 'HH:mm',
+    'rtl' => false,
+  ],
   'vi' => 
   [
     'date' => 'dd/MM/y',
@@ -1605,6 +1611,12 @@
   [
     'date' => 'y/M/d',
     'time' => 'HH:mm',
+    'rtl' => false,
+  ],
+  'zh_Hant' => 
+  [
+    'date' => 'y/M/d',
+    'time' => 'Bh:mm',
     'rtl' => false,
   ],
 ];
