@@ -98,11 +98,12 @@ final class RegenerateLocalesCommand extends Command
             $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
             $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
 
-            // special case when time pattern starts with A / a => this will lead to an error
-            // \DateTimeImmutable::getLastErrors() => Meridian can only come after an hour has been found
             $settings['date'] = $shortDate->getPattern();
             $settings['time'] = $shortTime->getPattern();
 
+            // see https://github.com/kimai/kimai/issues/4402 - Korean time format failed parsing
+            // special case when time pattern starts with A / a => this will lead to an error
+            // \DateTimeImmutable::getLastErrors() => Meridian can only come after an hour has been found
             if (str_contains($settings['time'], 'a ')) {
                 $settings['time'] = str_replace('a ', '', $settings['time']) . ' a';
             }
