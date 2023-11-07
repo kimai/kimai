@@ -762,8 +762,8 @@
         <target>Name</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Beschreibung</target>
+        <source>Description</source>
+        <target state="translated">Beschreibung</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>

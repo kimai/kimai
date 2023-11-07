@@ -166,8 +166,8 @@
         <target>Identifiant</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Description</target>
+        <source>Description</source>
+        <target state="translated">Description</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>

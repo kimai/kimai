@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
-        <target state="translated">ایجاد پروژه</target>
+        <target state="needs-translation">ایجاد پروژه</target>
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>

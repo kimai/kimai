@@ -15,8 +15,8 @@
         <target>לא</target>
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both">
-        <source>both</source>
-        <target>הכול</target>
+        <source>Both</source>
+        <target state="translated">גם וגם</target>
       </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
@@ -195,8 +195,8 @@
         <target>שם משתמש</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>תיאור</target>
+        <source>Description</source>
+        <target state="translated">תיאור</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
@@ -1589,6 +1589,22 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">פיקוח</target>
+      </trans-unit>
+      <trans-unit id="ICpl9sx" resname="append">
+        <source>append</source>
+        <target state="translated">הוספה לסוף</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">בקשת סיסמה חדשה</target>
+      </trans-unit>
+      <trans-unit id="tl01EdS" resname="replace">
+        <source>replace</source>
+        <target state="translated">החלפה</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">בכניסה הבאה של המשתמש, צריך למלא סיסמה חדש.</target>
       </trans-unit>
     </body>
   </file>

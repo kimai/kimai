@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="pa" datatype="plaintext" original="invoice-calculator.en.xlf">
+    <body>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target state="translated">ਯੂਜ਼ਰ</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target state="translated">ਪ੍ਰੋਜੈਕਟ</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="translated">ਤਾਰੀਖ਼</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -170,8 +170,8 @@
         <target>Uživatelské jméno</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Popis</target>
+        <source>Description</source>
+        <target state="translated">Popis</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>

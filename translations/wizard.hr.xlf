@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">Najvažnije postavke su sada postavljene. Postoji mnogo više postavki koje kasnije možeš prilagoditi u tvom korisničkom profilu.</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">Upiši svoju novu lozinku koja će se od sada koristiti za prijavu.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">Tvoja lozinka</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

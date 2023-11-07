@@ -186,8 +186,8 @@
         <target>Gebruikersnaam</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Beschrijving</target>
+        <source>Description</source>
+        <target state="translated">Beschrijving</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>

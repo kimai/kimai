@@ -150,7 +150,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% h. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
+        <target state="translated">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% sata. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -263,7 +263,7 @@
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
-        <target>Opis</target>
+        <target state="translated">Opis</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
@@ -374,7 +374,7 @@
       </trans-unit>
       <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
-        <target>Izbriži</target>
+        <target state="translated">Izbriši</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
@@ -646,8 +646,8 @@
         <target>Korisnička uloga</target>
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
-        <source>Allowed character: A-Z and _</source>
-        <target>Dozvoljeni znakovi: A-Z i _</target>
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">Dozvoljeni znakovi: A-Z i _ (barem 5 velikih slova)</target>
       </trans-unit>
       <!--
               Admin: Plugins
@@ -1088,7 +1088,7 @@
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
-        <target state="translated">Prikaži unose bez rezervacija</target>
+        <target state="translated">Prikaži unose bez uknjiženja</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
-        <target>Zadnje rezerviranje vremena</target>
+        <target state="translated">Bez uknjiženja vremena od</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -1124,7 +1124,7 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target>Broj vremenskih zapisa: %records%, ukupno trajanje: %duration%.</target>
+        <target state="translated">Broj trenutačno postojećih vremenskih zapisa: %records%. Ukupno trajanje: %duration%.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
@@ -1404,7 +1404,7 @@
       </trans-unit>
       <trans-unit id="nqEYrfk" resname="security.unlock.intro">
         <source>security.unlock.intro</source>
-        <target state="translated">Za potpun pristup upiši tvoje korisničko ime</target>
+        <target state="translated">Za potpuni pristup upiši tvoju lozinku</target>
       </trans-unit>
       <trans-unit id="853W5Iu" resname="security.unlock.button">
         <source>security.unlock.button</source>
@@ -1456,7 +1456,7 @@
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
-        <target state="translated">24 sati</target>
+        <target state="translated">24 sata</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
@@ -1520,7 +1520,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
-        <target state="translated">Utrošeni sati</target>
+        <target state="translated">Odrađeni sati</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1628,7 +1628,7 @@
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
-        <target state="translated">Stanje tvog radnog vremena: %hours% h.</target>
+        <target state="translated">Tvoj račun radnog vremena ima saldo od %hours% sati.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
@@ -1653,6 +1653,22 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">Nadzornik</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">Račun radnog vremena</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">Pregled</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Zatrži novu lozinku</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">Pri sljedećoj prijavi će korisnik morati unijeti novu lozinku.</target>
       </trans-unit>
     </body>
   </file>

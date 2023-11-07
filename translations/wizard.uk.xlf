@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>
-        <target state="translated">Цей майстер допоможе Вам налаштувати Kimai під Ваші потреби.</target>
+        <target state="translated">Цей майстер допоможе Вам налаштувати Kimai під власні потреби.</target>
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator">
         <source>wizard.separator</source>
@@ -29,6 +29,14 @@
       <trans-unit id="k1SzMuI" resname="wizard.done.description">
         <source>wizard.done.description</source>
         <target state="translated">Найбільш важливі налаштування вже виконані. Ще є багато інших налаштувань, які Ви пізніше зможете зробити у своєму профілі.</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">Будь ласка, введіть свій новий пароль, який буде тепер використовуватися.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">Ваш пароль</target>
       </trans-unit>
     </body>
   </file>

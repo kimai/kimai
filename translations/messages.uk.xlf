@@ -767,7 +767,7 @@
         <target state="translated">Досягнуто максимальної кількості %max% рахунків. Ви з можете додати ще, якщо якийсь вилучите.</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
+        <source>Description</source>
         <target state="translated">Опис</target>
       </trans-unit>
       <trans-unit id="eI_tMbq" resname="endtime">
@@ -1589,6 +1589,22 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">Керівник</target>
+      </trans-unit>
+      <trans-unit id="ICpl9sx" resname="append">
+        <source>append</source>
+        <target state="translated">Додати</target>
+      </trans-unit>
+      <trans-unit id="tl01EdS" resname="replace">
+        <source>replace</source>
+        <target state="translated">Замінити</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Запитати новий пароль</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">Наступного разу, при вході, буде потрібно використовувати новий пароль.</target>
       </trans-unit>
     </body>
   </file>

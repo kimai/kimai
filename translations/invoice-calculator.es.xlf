@@ -4,39 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
-        <target state="translated">Cálculo de la suma</target>
+        <target state="translated">Agrupación de lineas de facturación</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Predeterminado: una entrada por registro de tiempo</target>
+        <target state="translated">Predeterminado (una entrada por registro)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target state="translated">Horas: registros resumidos, una entrada total</target>
+        <target state="translated">Todo (una entrada en total)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Usuario: una entrada por usuario</target>
+        <target state="translated">Usuario</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Actividad: una entrada por actividad</target>
+        <target state="translated">Actividad</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Proyecto: una entrada por proyecto</target>
+        <target state="translated">Proyecto</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Fecha: una entrada por día (usa la fecha de inicio)</target>
+        <target state="translated">Fecha</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">Precio: una entrada por precio</target>
+        <target state="translated">Precio</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">Semanal: una entrada por semana (usa la fecha de inicio)</target>
+        <target state="translated">Semana natural</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Actividad y usuario</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Proyecto y usuario</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Fecha y usuario</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Seleccionar por que campos deberían agruparse las partidas de factura</target>
       </trans-unit>
     </body>
   </file>

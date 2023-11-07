@@ -250,8 +250,8 @@
         <target>Όνομα χρήστη</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
-        <source>description</source>
-        <target>Περιγραφή</target>
+        <source>Description</source>
+        <target state="translated">Περιγραφή</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>

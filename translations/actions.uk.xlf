@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="YCc5UoO" resname="widget_remove">
         <source>Remove widget</source>
-        <target state="translated">Видалити віджет</target>
+        <target state="translated">Вилучити віджет</target>
       </trans-unit>
       <trans-unit id="QCf1FUG" resname="reload">
         <source>reload</source>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Dozvoljeno je najviše {{ value }} h.</target>
+        <target state="translated">Maksimalan broj dozvoljenih sati je {{ value }}.</target>
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>
