@@ -101,6 +101,14 @@ final class RegenerateLocalesCommand extends Command
             $settings['date'] = $shortDate->getPattern();
             $settings['time'] = $shortTime->getPattern();
 
+            // see https://github.com/kimai/kimai/issues/4402 - Korean time format failed parsing
+            // special case when time pattern starts with A / a => this will lead to an error
+            // \DateTimeImmutable::getLastErrors() => Meridian can only come after an hour has been found
+            if (str_contains($settings['time'], 'a ')) {
+                $settings['time'] = str_replace('a ', '', $settings['time']) . ' a';
+            }
+            $settings['time'] = str_replace("\u{202f}", ' ', $settings['time']);
+
             // make sure that sub-locales of a RTL language are also flagged as RTL
             $rtlLocale = $locale;
             if (substr_count($rtlLocale, '_') === 1) {
