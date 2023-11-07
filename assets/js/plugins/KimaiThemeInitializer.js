@@ -9,7 +9,7 @@
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
-import { Tooltip } from 'bootstrap';
+import { Tooltip, Offcanvas } from 'bootstrap';
 import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiThemeInitializer extends KimaiPlugin {
@@ -20,6 +20,10 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
             return new Tooltip(tooltipTriggerEl);
         });
+
+        // support for offcanvas elements
+        const offcanvasElementList = document.querySelectorAll('.offcanvas');
+        [...offcanvasElementList].map(offcanvasEl => new Offcanvas(offcanvasEl));
 
         // activate all form plugins
         /** @type {KimaiForm} FORMS */
