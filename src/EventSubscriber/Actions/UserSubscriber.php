@@ -47,10 +47,6 @@ final class UserSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('edit', $id, $action);
         }
 
-        if ($this->isGranted('preferences', $user)) {
-            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
-        }
-
         if (($event->getUser()->getId() === $user->getId() && $this->isGranted('report:user')) || $this->isGranted('report:other')) {
             $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
             $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);

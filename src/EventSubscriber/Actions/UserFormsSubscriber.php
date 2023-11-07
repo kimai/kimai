@@ -33,6 +33,9 @@ final class UserFormsSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('edit', $user)) {
             $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'profile-stats', 'translation_domain' => 'actions']);
         }
+        if ($this->isGranted('preferences', $user)) {
+            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
+        }
         if ($this->isGranted('password', $user)) {
             $event->addAction('password', ['url' => $this->path('user_profile_password', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.password']);
         }
