@@ -288,7 +288,7 @@ final class ProfileController extends AbstractController
         }
 
         return $this->render('user/preferences.html.twig', [
-            'tab' => 'preferences',
+            'tab' => 'settings',
             'user' => $profile,
             'form' => $form->createView(),
             'sections' => $sections

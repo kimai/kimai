@@ -17,6 +17,7 @@ use App\Utils\FormFormatConverter;
 use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
 use DateTime;
+use DateTimeInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Extension\AbstractExtension;
@@ -132,7 +133,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return (string) $this->getFormatter()->dateShort($date);
     }
 
-    public function dateTime(DateTime|string|null $date): string
+    public function dateTime(DateTimeInterface|string|null $date): string
     {
         return (string) $this->getFormatter()->dateTime($date);
     }

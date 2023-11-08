@@ -18,25 +18,16 @@ body:
         validations:
             required: true
     -   type: textarea
-        id: image
+        id: environment
         attributes:
-            label: Describe your setup (OS, Docker versions)
+            label: Describe your setup and add your Docker compose file (redact your credentials)
             description: >
-                - OS: [e.g. Linux, Windows, Mac]
-                - Docker version: [e.g. 19.03.2]
-                - Docker compose version: [e.g. 1.21.0]
-        validations:
-            required: true
-    -   type: textarea
-        id: command
-        attributes:
-            label: Command used to run the container
-            description: e.g. docker run -v ....
-    -   type: textarea
-        id: compose
-        attributes:
-            label: Docker compose file (redact your credentials)
-            description: >
+                Your working environment:
+                    - OS: [e.g. Linux, Windows, Mac]
+                    - Docker version: [e.g. 19.03.2]
+                    - Docker compose version: [e.g. 1.21.0]
+                    
+                Docker compose file:
                 ```yaml
                 version: '3.5'
                 services:
@@ -44,3 +35,8 @@ body:
                 ```
         validations:
             required: true
+    -   type: input
+        id: command
+        attributes:
+            label: Command used to run the container
+            description: e.g. docker run -v ....

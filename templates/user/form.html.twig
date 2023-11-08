@@ -2,18 +2,19 @@
 
 {% block profile_content %}
 
-    {% import "user/actions.html.twig" as actions %}
-    {% set event = actions(app.user, 'user_forms', tab, {'user': user}) %}
-
     <div class="card">
         <div class="card-header">
+            {% block form_header %}
             <ul class="nav nav-pills card-header-pills" data-bs-toggle="tabs">
+                {% import "user/actions.html.twig" as actions %}
+                {% set event = actions(app.user, 'user_forms', tab, {'user': user}) %}
                 {% for name, settings in event.actions %}
                     <li class="nav-item" role="presentation">
                         <a href="{{ settings.url }}" class="nav-link{% if tab == name %} active{% endif %}" role="tab">{{ settings.title|trans({}, settings.translation_domain ?? 'messages') }}</a>
                     </li>
                 {% endfor %}
             </ul>
+            {% endblock %}
         </div>
         {% block form_body %}
         {{ form_start(form) }}

@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/app.9acfcfc8.js"
+        "/build/app.63b27bee.js"
       ],
       "css": [
         "/build/app.fc41168c.css"
@@ -45,7 +45,7 @@
     "calendar": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/calendar.3f4f78fe.js"
+        "/build/calendar.a1cbcd7b.js"
       ],
       "css": [
         "/build/calendar.bb473428.css"
@@ -63,7 +63,7 @@
   },
   "integrity": {
     "/build/runtime.f0079159.js": "sha384-H22sAW1aTvyIPqvHOvGXWSWTxf0y6mptp+MsVmyXCfjx/WJjBbhX9gbUZ+qIuihV",
-    "/build/app.9acfcfc8.js": "sha384-tzbF0uEmHghIo+D5IuKarLYkwB3AyrLMTEFqR5mqaXCP5VSOWx3t+ZfD81kd80T+",
+    "/build/app.63b27bee.js": "sha384-1CV+he7m+KfetJpq/DmRwKfUhKH4L7MImv7rRUz/mr/KNR3VkT0fQJHF7ViPTVYE",
     "/build/app.fc41168c.css": "sha384-3Td9W7KogJoBiywzWOgpkPPNHEIT8/a/SkMZM5NgIRmuChj/3PeOKkOHVJQlhP2E",
     "/build/export-pdf.d367a32e.js": "sha384-Z5baqnzjI636nYFs4g63ViIKBZKRW4Jhv/7PQmTEQlqhfA7eK0vUMUtiyy0R5A9u",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
@@ -72,7 +72,7 @@
     "/build/invoice-pdf.ce9aace0.js": "sha384-mtZkXrpsXFMX2YvmmTlCm91QgsTlZLzLJnDAFcTuBDtDZ7TNkqLYkfCeLzFLVfwb",
     "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
     "/build/chart.f5becfac.js": "sha384-GSqETm8wULiVXyizvwRompfwu63r/C0Qd/AvrHDE4cqAKiIGCssb3QyBtGu1WN+W",
-    "/build/calendar.3f4f78fe.js": "sha384-RD8enOf0Foe7IhSOGnv2DCes4QUCvLjlONH0HFq3RK9l/ozrFZakTX6SWwKOoEda",
+    "/build/calendar.a1cbcd7b.js": "sha384-rDvqiEk91ZGY5lHb7vYIUWM2M550H6JAOLt1c3KO5H+toq7Ico7d/KoEDeG52cVW",
     "/build/calendar.bb473428.css": "sha384-900W9o8666Qpw21rLP7hn5Ql8tWd40k0IcE3QpFm7E7V6bKva7xQgGlyzVuuh4GK",
     "/build/dashboard.6774a712.js": "sha384-lBwkNqUPv+IBbznagiFakY2BOIueq/Bg89wHO2XeM9YAZ51rPkrvdMd+XmFupHsM",
     "/build/dashboard.18f5a8b7.css": "sha384-PBD8ftb2yBoSjRe2sN5Xb4dEz045kOEUfcIufdSis+tWoWdAx5j4Yic+F/6CYbrP"

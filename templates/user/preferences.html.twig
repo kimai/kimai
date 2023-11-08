@@ -1,10 +1,9 @@
-{% extends 'user/layout.html.twig' %}
-{% from "macros/widgets.html.twig" import form_errors %}
+{% extends 'user/form.html.twig' %}
 
-{% block profile_content %}
+{% block form_content %}
 
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
+    {% form_theme form 'form/horizontal.html.twig' %}
+
     {% for section in sections %}
 
         {% set show = false %}
@@ -15,17 +14,13 @@
         {% endfor %}
 
         {% if show %}
-            {% embed '@theme/embeds/card.html.twig' %}
-                {% block box_body %}
-                    {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                        {{ form_widget(pref) }}
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
+            <fieldset class="form-fieldset form-fieldset-light mb-3">
+                {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_widget(pref) }}
+                {% endfor %}
+            </fieldset>
         {% endif %}
 
     {% endfor %}
-    <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-    {{ form_end(form) }}
 
 {% endblock %}

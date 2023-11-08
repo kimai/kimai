@@ -2052,11 +2052,6 @@ parameters:
             path: src/Export/Base/HtmlRenderer.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 5
             path: src/Export/Base/HtmlRenderer.php
@@ -2113,11 +2108,6 @@ parameters:
 
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
             count: 1
             path: src/Export/Base/PDFRenderer.php
 
