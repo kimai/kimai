@@ -11,7 +11,7 @@ namespace App\Utils;
 
 use App\Configuration\LocaleService;
 use App\Entity\Timesheet;
-use DateTime;
+use DateTimeInterface;
 use Exception;
 use IntlDateFormatter;
 use NumberFormatter;
@@ -195,7 +195,7 @@ final class LocaleFormatter
         return (string) $formatted;
     }
 
-    public function dateTime(DateTime|string|null $date): ?string
+    public function dateTime(DateTimeInterface|string|null $date): ?string
     {
         if ($date === null || $date === '') {
             return null;
