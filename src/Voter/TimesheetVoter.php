@@ -105,7 +105,7 @@ final class TimesheetVoter extends Voter
                 break;
 
             case 'duplicate':
-                if (!$this->canDuplicate($user, $subject)) {
+                if (!$this->canStart($subject)) {
                     return false;
                 }
                 $permission = self::EDIT;
@@ -187,15 +187,6 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        if (!$this->isAllowedInLockdown($user, $timesheet)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function canDuplicate(User $user, Timesheet $timesheet): bool
-    {
         if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;
         }
