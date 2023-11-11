@@ -32,7 +32,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         return $this->getLockdownVoter();
     }
 
-    protected function assertVote(User $user, $subject, $attribute, $result)
+    protected function assertVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
@@ -43,18 +43,18 @@ class TimesheetVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $this->assertVote($user, $subject, $attribute, $result);
     }
 
     public function getTestData()
     {
-        $user0 = $this->getUser(0, 'unknown');
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = $this->getTestUser(0, 'unknown');
+        $user1 = $this->getTestUser(1, User::ROLE_USER);
+        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
+        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
 
         $timesheet1 = $this->getTimesheet($user1);
         $timesheet2 = $this->getTimesheet($user2);
@@ -63,7 +63,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         $timesheet5 = $this->getTimesheet($user2);
         $timesheet5->setExported(true);
         $timesheet6 = $this->getTimesheet($user1);
-        $timesheet6->getActivity()->setVisible(false);
+        $timesheet6->getActivity()?->setVisible(false);
 
         $result = VoterInterface::ACCESS_GRANTED;
         $times = [
@@ -99,9 +99,9 @@ class TimesheetVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getLockDownTestData
      */
-    public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace)
+    public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace): void
     {
-        $user = $this->getUser(1, User::ROLE_USER);
+        $user = $this->getTestUser(1, User::ROLE_USER);
 
         $begin = new \DateTime('now');
         $begin->modify($beginModifier);
@@ -119,19 +119,20 @@ class TimesheetVoterTest extends AbstractVoterTest
     public function getLockDownTestData()
     {
         yield ['view', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
-        yield ['duplicate', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
+        yield ['start', VoterInterface::ACCESS_DENIED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
         yield ['delete', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
         yield ['edit', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
         yield ['duplicate', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
         yield ['delete', VoterInterface::ACCESS_DENIED, '-50 days', 'first day of last month', 'last day of last month', '+1 days'];
     }
 
-    public function testSpecialCases()
+    public function testSpecialCases(): void
     {
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $user1 = $this->getTestUser(1, User::ROLE_USER);
+        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
+        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
 
         // unknown attribute
         $timesheet = $this->getTimesheet($user3);
@@ -148,17 +149,17 @@ class TimesheetVoterTest extends AbstractVoterTest
 
         // hidden activities might not be started
         $timesheet = $this->getTimesheet($user1);
-        $timesheet->getActivity()->setVisible(false);
+        $timesheet->getActivity()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden projects might not be started
         $timesheet = $this->getTimesheet($user1);
-        $timesheet->getProject()->setVisible(false);
+        $timesheet->getProject()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden customers might not be started
         $timesheet = $this->getTimesheet($user1);
-        $timesheet->getProject()->getCustomer()->setVisible(false);
+        $timesheet->getProject()?->getCustomer()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without activity
         $timesheet = new Timesheet();
@@ -172,7 +173,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
     }
 
-    protected function getTimesheet($user)
+    protected function getTimesheet($user): Timesheet
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
@@ -193,7 +194,7 @@ class TimesheetVoterTest extends AbstractVoterTest
      * @param string $role
      * @return User
      */
-    protected function getUser($id, $role)
+    protected function getTestUser(int $id, string $role): User
     {
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn($id);
