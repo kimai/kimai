@@ -89,6 +89,7 @@
             resizeGrid();
         });
 
+        {% if widgets|length > 0 %}
         document.addEventListener('kimai.initialized', function() {
             grid = GridStack.init({
                 'float': false,
@@ -110,6 +111,7 @@
             document.dispatchEvent(new Event('dashboard.initialized'));
             document.getElementById('dashboard-grid-container').style.visibility = 'visible';
         });
+        {% endif %}
 
         {% if form is defined %}
         function removeWidget(button, widgetId)
