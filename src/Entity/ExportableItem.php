@@ -13,25 +13,20 @@ use Doctrine\Common\Collections\Collection;
 
 interface ExportableItem
 {
+    public function getId(): ?int;
+
     /**
      * Whether this item was already exported.
-     *
-     * @return bool
      */
     public function isExported(): bool;
 
     /**
      * Whether this item should be included in invoices.
-     *
-     * @return bool
      */
     public function isBillable(): bool;
 
     /**
      * Returns the named meta field or null.
-     *
-     * @param string $name
-     * @return MetaTableTypeInterface|null
      */
     public function getMetaField(string $name): ?MetaTableTypeInterface;
 
@@ -44,8 +39,6 @@ interface ExportableItem
 
     /**
      * Returns the amount for this item.
-     *
-     * @return float
      */
     public function getAmount(): float;
 
@@ -83,15 +76,13 @@ interface ExportableItem
 
     /**
      * A name representation for this type of item.
-     *
-     * @return string
+     * Example: "timesheet"
      */
     public function getType(): string;
 
     /**
      * A name representation for the category of this item.
-     *
-     * @return string
+     * Example: "work"
      */
     public function getCategory(): string;
 }
