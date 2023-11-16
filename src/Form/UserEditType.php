@@ -96,6 +96,14 @@ class UserEditType extends AbstractType
                 'ignore_users' => ($user instanceof User && $user->getId() !== null ? [$user] : []),
             ]);
         }
+
+        if ($options['include_password_reset']) {
+            $builder->add('requiresPasswordReset', YesNoType::class, [
+                'label' => 'force_password_change',
+                'help' => 'force_password_change_help',
+                'required' => false,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -109,6 +117,7 @@ class UserEditType extends AbstractType
             'include_active_flag' => true,
             'include_preferences' => true,
             'include_supervisor' => true,
+            'include_password_reset' => true,
         ]);
     }
 }
