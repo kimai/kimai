@@ -100,6 +100,8 @@ class TagRepository extends EntityRepository
     public function getTagCount(TagQuery $query): Pagination
     {
         $qb = $this->getQueryBuilderForQuery($query);
+        $qb1 = clone $qb;
+
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
@@ -107,9 +109,7 @@ class TagRepository extends EntityRepository
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        $paginator = new QueryBuilderPaginator($qb, $counter);
+        $paginator = new QueryBuilderPaginator($qb1, $counter);
 
         $pager = new Pagination($paginator);
         $pager->setMaxPerPage($query->getPageSize());
