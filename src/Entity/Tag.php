@@ -52,6 +52,8 @@ class Tag
     use ColorTrait;
 
     /**
+     * This is ONLY here, so we can count the amount of timesheets.
+     *
      * @var Collection<Timesheet>
      */
     #[ORM\ManyToMany(targetEntity: Timesheet::class, mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
@@ -87,26 +89,6 @@ class Tag
     public function setVisible(bool $visible): void
     {
         $this->visible = $visible;
-    }
-
-    public function addTimesheet(Timesheet $timesheet): void
-    {
-        if ($this->timesheets->contains($timesheet)) {
-            return;
-        }
-
-        $this->timesheets->add($timesheet);
-        $timesheet->addTag($this);
-    }
-
-    public function removeTimesheet(Timesheet $timesheet): void
-    {
-        if (!$this->timesheets->contains($timesheet)) {
-            return;
-        }
-
-        $this->timesheets->removeElement($timesheet);
-        $timesheet->removeTag($this);
     }
 
     public function __toString(): string
