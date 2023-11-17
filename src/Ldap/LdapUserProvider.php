@@ -53,17 +53,12 @@ final class LdapUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
-        if (!$user->isLdapUser() && null === $user->getPreferenceValue('ldap.dn')) {
+        if (!$user->isLdapUser()) {
             throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUserIdentifier()));
         }
 
         try {
             $this->ldapManager->updateUser($user);
-
-            // updating old LDAP accounts
-            if (!$user->isLdapUser() && null !== $user->getPreferenceValue('ldap.dn')) {
-                $user->setAuth(User::AUTH_LDAP);
-            }
         } catch (LdapDriverException $ex) {
             throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUserIdentifier()));
         }

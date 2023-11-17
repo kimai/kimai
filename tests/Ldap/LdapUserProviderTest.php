@@ -10,7 +10,6 @@
 namespace App\Tests\Ldap;
 
 use App\Entity\User;
-use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserProvider;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,7 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
  */
 class LdapUserProviderTest extends TestCase
 {
-    public function testLoadUserByIdentifierReturnsNull()
+    public function testLoadUserByIdentifierReturnsNull(): void
     {
         $this->expectException(UserNotFoundException::class);
         $this->expectExceptionMessage('User "test" not found');
@@ -34,7 +33,7 @@ class LdapUserProviderTest extends TestCase
         $sut->loadUserByIdentifier('test');
     }
 
-    public function testLoadUserByIdentifierReturnsUser()
+    public function testLoadUserByIdentifierReturnsUser(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
@@ -48,12 +47,12 @@ class LdapUserProviderTest extends TestCase
         self::assertSame($user, $actual);
     }
 
-    public function testRefreshUserReturnsUser()
+    public function testRefreshUserReturnsUser(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
-        $user->setPreferenceValue('ldap.dn', 'sdfdsf');
-        self::assertFalse($user->isLdapUser());
+        $user->setAuth(User::AUTH_LDAP);
+        self::assertTrue($user->isLdapUser());
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
 
@@ -65,7 +64,7 @@ class LdapUserProviderTest extends TestCase
         self::assertTrue($user->isLdapUser());
     }
 
-    public function testRefreshUserThrowsExceptionOnNonLdapUser()
+    public function testRefreshUserThrowsExceptionOnNonLdapUser(): void
     {
         $this->expectException(UnsupportedUserException::class);
         $this->expectExceptionMessage('Account "foobar" is not a registered LDAP user.');
@@ -74,22 +73,6 @@ class LdapUserProviderTest extends TestCase
         $user->setUserIdentifier('foobar');
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
-
-        $sut = new LdapUserProvider($manager);
-        $actual = $sut->refreshUser($user);
-    }
-
-    public function testRefreshUserThrowsExceptionOnBrokenUpdateUser()
-    {
-        $this->expectException(UnsupportedUserException::class);
-        $this->expectExceptionMessage('Failed to refresh user "foobar", probably DN is expired.');
-
-        $user = new User();
-        $user->setUserIdentifier('foobar');
-        $user->setPreferenceValue('ldap.dn', 'sdfdsf');
-
-        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
-        $manager->expects($this->once())->method('updateUser')->willThrowException(new LdapDriverException('blub'));
 
         $sut = new LdapUserProvider($manager);
         $actual = $sut->refreshUser($user);

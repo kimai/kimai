@@ -86,10 +86,6 @@ class UserPreference
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     * @return UserPreference
-     */
     public function setId(int $id): UserPreference
     {
         $this->id = $id;
@@ -111,7 +107,13 @@ class UserPreference
 
     public function getName(): ?string
     {
-        return $this->sanitizeName($this->name);
+        $sanitized = $this->sanitizeName($this->name);
+
+        if ($sanitized !== $this->name) {
+            $this->name = $sanitized;
+        }
+
+        return $this->name;
     }
 
     public function matches(string $name): bool
@@ -119,7 +121,7 @@ class UserPreference
         return $this->sanitizeName($name) === $this->getName();
     }
 
-    public function sanitizeName(?string $name): string
+    private function sanitizeName(?string $name): string
     {
         return str_replace(['.', '-'], '_', $name);
     }
@@ -150,9 +152,6 @@ class UserPreference
 
     /**
      * Sets the form type to edit that setting.
-     *
-     * @param string $type
-     * @return UserPreference
      */
     public function setType(string $type): UserPreference
     {

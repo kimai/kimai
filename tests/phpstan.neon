@@ -6488,31 +6488,6 @@ parameters:
             path: Ldap/LdapManagerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapUserProviderTest\\:\\:testLoadUserByIdentifierReturnsNull\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Ldap/LdapUserProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapUserProviderTest\\:\\:testLoadUserByIdentifierReturnsUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Ldap/LdapUserProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapUserProviderTest\\:\\:testRefreshUserReturnsUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Ldap/LdapUserProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapUserProviderTest\\:\\:testRefreshUserThrowsExceptionOnBrokenUpdateUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Ldap/LdapUserProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapUserProviderTest\\:\\:testRefreshUserThrowsExceptionOnNonLdapUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Ldap/LdapUserProviderTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Ldap\\\\SanitizingExceptionTest\\:\\:testMessagesAreSanitized\\(\\) has no return type specified\\.$#"
             count: 1
             path: Ldap/SanitizingExceptionTest.php
