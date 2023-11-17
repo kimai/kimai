@@ -82,13 +82,7 @@ class LdapManager
      */
     public function updateUser(User $user)
     {
-        $baseDn = $user->getPreferenceValue('ldap_dn');
-
-        if (null === $baseDn) {
-            throw new LdapDriverException('This account is not a registered LDAP user');
-        }
-
-        // always look up the users current DN first, as the cached DN might have been renamed in LDAP
+        // always look up the users current DN first, as the current user might be upgraded from local to LDAP
         $userFresh = $this->findUserByUsername($user->getUserIdentifier());
         if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap_dn'))) {
             throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));

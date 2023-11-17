@@ -206,7 +206,7 @@ class LdapManagerTest extends TestCase
         $user = new User();
         $user->setUserIdentifier('foobar');
 
-        $user->setPreferenceValue('ldap.dn', 'fooooooooooo');
+        $user->setPreferenceValue('ldap_dn', 'fooooooooooo');
         $expected = [
             [
                 0 => ['dn' => 'blub', 'uid' => ['blub']],
@@ -245,7 +245,7 @@ class LdapManagerTest extends TestCase
 
         $user = new User();
         $user->setUserIdentifier('foobar');
-        $user->setPreferenceValue('ldap.dn', 'xxxxxxx');
+        $user->setPreferenceValue('ldap_dn', 'xxxxxxx');
 
         $expected = [
             [
@@ -280,7 +280,7 @@ class LdapManagerTest extends TestCase
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
-        $user->setPreferenceValue('ldap.dn', 'sssssss');
+        $user->setPreferenceValue('ldap_dn', 'sssssss');
 
         $expected = [
             [
@@ -323,7 +323,7 @@ class LdapManagerTest extends TestCase
         $userOrig = clone $user;
         $sut->updateUser($user);
         self::assertEquals($userOrig->setEmail('foobar')->setAuth(User::AUTH_LDAP), $user);
-        self::assertEquals($user->getPreferenceValue('ldap.dn'), 'blub-updated');
+        self::assertEquals($user->getPreferenceValue('ldap_dn'), 'blub-updated');
     }
 
     public function getValidConfigsTestData()
@@ -452,7 +452,7 @@ class LdapManagerTest extends TestCase
 
         $user = new User();
         $user->setUserIdentifier('Karl-Heinz');
-        $user->setPreferenceValue('ldap.dn', 'blub');
+        $user->setPreferenceValue('ldap_dn', 'blub');
         $userOrig = clone $user;
         $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN'])->setAuth(User::AUTH_LDAP);
 
