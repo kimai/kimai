@@ -82,7 +82,7 @@ class LdapManager
      */
     public function updateUser(User $user)
     {
-        $baseDn = $user->getPreferenceValue('ldap.dn');
+        $baseDn = $user->getPreferenceValue('ldap_dn');
 
         if (null === $baseDn) {
             throw new LdapDriverException('This account is not a registered LDAP user');
@@ -90,10 +90,10 @@ class LdapManager
 
         // always look up the users current DN first, as the cached DN might have been renamed in LDAP
         $userFresh = $this->findUserByUsername($user->getUserIdentifier());
-        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap.dn'))) {
+        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap_dn'))) {
             throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
-        $user->setPreferenceValue('ldap.dn', $baseDn);
+        $user->setPreferenceValue('ldap_dn', $baseDn);
 
         $params = $this->config->getUserParameters();
         $entries = $this->driver->search($baseDn, $params['attributesFilter']);
@@ -185,7 +185,7 @@ class LdapManager
             $user->setPassword('');
         }
         $user->setAuth(User::AUTH_LDAP);
-        $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
+        $user->setPreferenceValue('ldap_dn', $ldapEntry['dn']);
     }
 
     /**
