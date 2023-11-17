@@ -77,23 +77,16 @@ class LdapManager
      * - syncing user attributes
      * - syncing roles
      *
-     * @param User $user
      * @throws LdapDriverException
      */
-    public function updateUser(User $user)
+    public function updateUser(User $user): void
     {
-        $baseDn = $user->getPreferenceValue('ldap.dn');
-
-        if (null === $baseDn) {
-            throw new LdapDriverException('This account is not a registered LDAP user');
-        }
-
-        // always look up the users current DN first, as the cached DN might have been renamed in LDAP
+        // always look up the users current DN first, as the current user might be upgraded from local to LDAP
         $userFresh = $this->findUserByUsername($user->getUserIdentifier());
-        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap.dn'))) {
+        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap_dn'))) {
             throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
-        $user->setPreferenceValue('ldap.dn', $baseDn);
+        $user->setPreferenceValue('ldap_dn', $baseDn);
 
         $params = $this->config->getUserParameters();
         $entries = $this->driver->search($baseDn, $params['attributesFilter']);
@@ -142,23 +135,16 @@ class LdapManager
 
     // ===================================================================
 
-    private function createUser(): User
+    public function hydrate(array $ldapEntry): User
     {
         $user = new User();
         $user->setEnabled(true);
-
-        return $user;
-    }
-
-    public function hydrate(array $ldapEntry): User
-    {
-        $user = $this->createUser();
         $this->hydrateUser($user, $ldapEntry);
 
         return $user;
     }
 
-    public function hydrateUser(User $user, array $ldapEntry)
+    public function hydrateUser(User $user, array $ldapEntry): void
     {
         $userParams = $this->config->getUserParameters();
         $attributeMap = [];
@@ -185,14 +171,14 @@ class LdapManager
             $user->setPassword('');
         }
         $user->setAuth(User::AUTH_LDAP);
-        $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
+        $user->setPreferenceValue('ldap_dn', $ldapEntry['dn']);
     }
 
     /**
      * @param User $user
      * @param array $entries
      */
-    public function hydrateRoles(User $user, array $entries)
+    public function hydrateRoles(User $user, array $entries): void
     {
         $roleParams = $this->config->getRoleParameters();
         $allowedRoles = $this->roles->getAvailableNames();
@@ -236,7 +222,7 @@ class LdapManager
         return $role;
     }
 
-    private function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap)
+    private function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap): void
     {
         $sawUsername = false;
         /** @var array $attr */

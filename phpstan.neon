@@ -4077,27 +4077,12 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateRoles\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateUser\\(\\) has parameter \\$ldapEntry with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateUserWithAttributesMap\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
@@ -4108,11 +4093,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateUserWithAttributesMap\\(\\) has parameter \\$ldapUserAttributes with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:updateUser\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
