@@ -103,7 +103,7 @@ class TagRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
-            ->select($qb->expr()->count('tag.name'))
+            ->select($qb->expr()->count('tag.id'))
         ;
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
