@@ -59,6 +59,7 @@
         "symfony/http-client": "^6.0",
         "symfony/intl": "^6.0",
         "symfony/mailer": "^6.0",
+        "symfony/mime": "^6.0",
         "symfony/monolog-bundle": "^3.4",
         "symfony/rate-limiter": "^6.0",
         "symfony/runtime": "^6.0",
