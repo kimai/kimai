@@ -73,7 +73,9 @@ abstract class AbstractSpreadsheetRenderer
         'end' => [],
         'duration' => [],
         'rate' => [],
-        'rate_internal' => [],
+        'rate_internal' => [
+            'label' => 'internalRate', // different translation key
+        ],
         'user' => [],
         'username' => [],
         'customer' => [],
@@ -675,7 +677,7 @@ abstract class AbstractSpreadsheetRenderer
                 $amount = $settings['header']($sheet, $recordsHeaderRow, $recordsHeaderColumn);
                 $recordsHeaderColumn += $amount;
             } else {
-                $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans($label));
+                $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans((array_key_exists('label', $settings) && is_string($settings['label'])) ? $settings['label'] : $label));
             }
         }
 
