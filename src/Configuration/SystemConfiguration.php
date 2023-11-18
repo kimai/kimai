@@ -518,10 +518,16 @@ final class SystemConfiguration
     {
         $config = $this->find($key);
 
-        if ($config === null || trim($config) === '') {
+        if ($config === null) {
             return $fallback;
         }
 
-        return (string) $config;
+        $config = (string) $config;
+
+        if (trim($config) === '') {
+            return $fallback;
+        }
+
+        return $config;
     }
 }
