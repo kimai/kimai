@@ -28,7 +28,7 @@ class SpreadsheetExporter
     /**
      * @var CellFormatterInterface[]
      */
-    private $formatter = [];
+    private array $formatter = [];
 
     public function __construct(private TranslatorInterface $translator)
     {
