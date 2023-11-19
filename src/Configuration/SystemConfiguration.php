@@ -399,7 +399,7 @@ final class SystemConfiguration
 
     public function getTimesheetTrackingMode(): string
     {
-        return (string) $this->find('timesheet.mode');
+        return $this->getString('timesheet.mode', 'default');
     }
 
     public function isTimesheetMarkdownEnabled(): bool
@@ -440,19 +440,6 @@ final class SystemConfiguration
     public function getTimesheetDefaultRoundingDuration(): int
     {
         return (int) $this->find('timesheet.rounding.default.duration');
-    }
-
-    private function getIncrement(string $key, int $fallback, int $min = 1): int
-    {
-        $config = $this->find($key);
-
-        if ($config === null || trim($config) === '') {
-            return $fallback;
-        }
-
-        $config = (int) $config;
-
-        return max($config, $min);
     }
 
     public function getTimesheetIncrementDuration(): int
@@ -510,5 +497,37 @@ final class SystemConfiguration
     public function isProjectCopyTeamsOnCreate(): bool
     {
         return $this->find('project.copy_teams_on_create') === true;
+    }
+
+    // ========== Helper functions ==========
+
+    private function getIncrement(string $key, int $fallback, int $min = 1): int
+    {
+        $config = $this->find($key);
+
+        if ($config === null || trim($config) === '') {
+            return $fallback;
+        }
+
+        $config = (int) $config;
+
+        return max($config, $min);
+    }
+
+    private function getString(string $key, string $fallback): string
+    {
+        $config = $this->find($key);
+
+        if ($config === null) {
+            return $fallback;
+        }
+
+        $config = (string) $config;
+
+        if (trim($config) === '') {
+            return $fallback;
+        }
+
+        return $config;
     }
 }

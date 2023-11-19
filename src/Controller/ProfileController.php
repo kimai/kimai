@@ -318,6 +318,7 @@ final class ProfileController extends AbstractController
                 'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
                 'include_preferences' => true,
                 'include_supervisor' => $this->isGranted('supervisor', $user),
+                'include_password_reset' => $this->isGranted('password', $user),
             ]
         );
     }

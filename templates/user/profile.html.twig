@@ -9,9 +9,6 @@
     <fieldset class="form-fieldset form-fieldset-light">
         {{ form_row(form.alias) }}
         {{ form_row(form.email) }}
-        {% if form.systemAccount is defined %}
-        {{ form_row(form.systemAccount) }}
-        {% endif %}
     </fieldset>
 
     <fieldset class="form-fieldset form-fieldset-light">

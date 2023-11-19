@@ -223,3 +223,15 @@ services:
         class:     App\Repository\WorkingTimeRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\WorkingTime']
+
+    monolog.formatter.kimai:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] [%%extra.channel%%] %%level_name%%: %%message%% %%context%% %%extra%%\n"
+            - "Y-m-d H:i:s"
+
+    monolog.formatter.deprecation:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] %%message%% %%context%%\n"
+            - "Y-m-d H:i:s"

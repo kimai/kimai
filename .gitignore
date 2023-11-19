@@ -2,7 +2,7 @@
 /public/.htaccess
 /.env-*
 /.idea/
-/.DS_Store
+.DS_Store
 /phpstan.sh
 
 # custom apache rules e.g. to deactivate ioncube loader
@@ -22,12 +22,11 @@
 /var/data/*
 /var/cache/*
 /var/invoices*
-/var/export/*
+/var/export*
 /var/log/*
 /var/sessions/*
 /var/packages/*
-/var/plugins/*
-/var/plugins_old/
+/var/plugins*
 /var/plugins/*/*.disabled
 
 ###> symfony/framework-bundle ###

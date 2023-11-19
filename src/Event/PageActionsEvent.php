@@ -151,16 +151,13 @@ class PageActionsEvent extends ThemeEvent
         $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create', 'accesskey' => 'a']);
     }
 
-    public function addEdit(string $url, bool $modal = true): void
+    public function addEdit(string $url, bool $modal = true, string $class = ''): void
     {
-        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'translation_domain' => 'actions', 'title' => 'edit']);
+        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' . ($class === '' ? '' : ' ' . $class) : $class), 'translation_domain' => 'actions', 'title' => 'edit']);
     }
 
     /**
      * Link to a configuration section.
-     *
-     * @param string $url
-     * @return void
      */
     public function addSettings(string $url): void
     {

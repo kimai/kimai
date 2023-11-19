@@ -10053,11 +10053,6 @@ parameters:
             path: Voter/TeamVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
@@ -10083,22 +10078,7 @@ parameters:
             path: Voter/TimesheetVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getTimesheet\\(\\) has parameter \\$user with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testSpecialCases\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testVote\\(\\) has no return type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
 
@@ -10114,11 +10094,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:testWithLockdown\\(\\) has no return type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
 

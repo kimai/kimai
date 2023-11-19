@@ -411,10 +411,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this->internalRate;
     }
 
-    /**
-     * @param Tag $tag
-     * @return Timesheet
-     */
     public function addTag(Tag $tag): Timesheet
     {
         if ($this->tags->contains($tag)) {
@@ -425,9 +421,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this;
     }
 
-    /**
-     * @param Tag $tag
-     */
     public function removeTag(Tag $tag): void
     {
         if (!$this->tags->contains($tag)) {

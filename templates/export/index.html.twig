@@ -197,6 +197,7 @@
             {% endif %}
 
             {{ tables.datatable_header(tableName, columns, query) }}
+            {% set edit_route = is_granted('view_other_timesheet') ? 'admin_timesheet_edit' : 'timesheet_edit' %}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% if entry.fixedRate is not null %}
@@ -204,7 +205,8 @@
                 {% else %}
                     {% set rate = entry.hourlyRate %}
                 {% endif %}
-                <tr>
+                <tr{%- if entry.type == 'timesheet' and is_granted('edit', entry) %}
+                    class="modal-ajax-form open-edit" data-href="{{ path(edit_route, {'id': entry.id}) }}"{% endif -%}>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">
                         {{ widgets.user_avatar(entry.user) }}
                     </td>

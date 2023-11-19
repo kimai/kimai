@@ -51,7 +51,7 @@
                                     {% if widget.hasForm() %}
                                         {{ card_tool_button('configuration', {'title': 'settings', 'translation_domain': 'actions', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}
                                     {% endif %}
-                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'translation_domain': 'actions', 'url': '#', 'onclick': "removeWidget('" ~ widget.id ~ "'); return false;"}) }}
+                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'translation_domain': 'actions', 'url': '#', 'onclick': "removeWidget(this, '" ~ widget.id ~ "'); return false;"}) }}
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -89,6 +89,7 @@
             resizeGrid();
         });
 
+        {% if widgets|length > 0 %}
         document.addEventListener('kimai.initialized', function() {
             grid = GridStack.init({
                 'float': false,
@@ -110,10 +111,18 @@
             document.dispatchEvent(new Event('dashboard.initialized'));
             document.getElementById('dashboard-grid-container').style.visibility = 'visible';
         });
+        {% endif %}
 
         {% if form is defined %}
-        function removeWidget(widgetId)
+        function removeWidget(button, widgetId)
         {
+            {# hackish way to remove tooltip, as we do not have a reference in the frontend to the bootstrap tooltip classes #}
+            const id = button.attributes['aria-describedBy'].value;
+            const tooltip = document.getElementById(id);
+            if (tooltip !== null) {
+                tooltip.remove();
+            }
+
             const widget = document.querySelector('div[data-widget=' + widgetId + ']');
             if (widget !== null) {
                 grid.removeWidget(widget);

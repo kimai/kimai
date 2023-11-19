@@ -25,6 +25,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default
+        enable_lazy_ghost_objects: true
         entity_managers:
             default:
                 report_fields_where_declared: true

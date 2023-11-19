@@ -73,8 +73,12 @@ abstract class AbstractSpreadsheetRenderer
         'end' => [],
         'duration' => [],
         'rate' => [],
-        'rate_internal' => [],
-        'user' => [],
+        'rate_internal' => [
+            'label' => 'internalRate', // different translation key
+        ],
+        'user' => [
+            'label' => 'name'
+        ],
         'username' => [],
         'customer' => [],
         'project' => [],
@@ -307,13 +311,6 @@ abstract class AbstractSpreadsheetRenderer
                         $username = $entity->getUser()->getUserIdentifier();
                     }
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $username);
-                };
-            }
-            if (!isset($columns['username']['header'])) {
-                $columns['username']['header'] = function (Worksheet $sheet, int $row, int $column): int {
-                    $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('name'));
-
-                    return 1;
                 };
             }
         }
@@ -675,7 +672,7 @@ abstract class AbstractSpreadsheetRenderer
                 $amount = $settings['header']($sheet, $recordsHeaderRow, $recordsHeaderColumn);
                 $recordsHeaderColumn += $amount;
             } else {
-                $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans($label));
+                $sheet->setCellValue(CellAddress::fromColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow), $this->translator->trans((\array_key_exists('label', $settings) && \is_string($settings['label'])) ? $settings['label'] : $label));
             }
         }
 

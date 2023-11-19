@@ -59,6 +59,7 @@
         "symfony/http-client": "^6.0",
         "symfony/intl": "^6.0",
         "symfony/mailer": "^6.0",
+        "symfony/mime": "^6.0",
         "symfony/monolog-bundle": "^3.4",
         "symfony/rate-limiter": "^6.0",
         "symfony/runtime": "^6.0",
@@ -173,8 +174,7 @@
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
-            "bin/console lint:xliff translations",
-            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
+            "bin/console lint:xliff translations"
         ],
         "tests": "vendor/bin/phpunit tests/",
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
