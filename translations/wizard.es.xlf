@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">Los ajustes más importantes ya están completos. Hay muchos más que puedes personalizar más adelante en tu perfil de usuario.</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">Por favor, introduzca su nueva contraseña, que se utilizará para iniciar sesión a partir de ahora.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">Tu contraseña</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

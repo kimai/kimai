@@ -35,9 +35,9 @@
         <source>confirm.delete</source>
         <target>Wollen Sie das wirklich löschen?</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" approved="yes">
         <source>admin_entity.delete_confirm</source>
-        <target>Diese Daten werden ebenfalls mit gelöscht! Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:</target>
+        <target state="final">Diese Daten werden ebenfalls mit gelöscht! Alternativ können Sie einen Eintrag auswählen, auf welchen alle existierenden Daten übertragen werden:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1133,9 +1133,9 @@
         <source>help.invoiceTemplate</source>
         <target>Die Rechnung wird mit dieser Vorlage generiert.</target>
       </trans-unit>
-      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" approved="yes">
         <source>help.invoiceTemplate_customer</source>
-        <target>Rechnungen für diesen Kunden werden standardmäßig mit dieser Vorlage generiert. Sie kann bei Bedarf während der Rechnungserstellung geändert werden.</target>
+        <target state="final">Rechnungen für diesen Kunden werden standardmäßig mit dieser Vorlage generiert. Sie kann bei Bedarf während der Rechnungserstellung geändert werden.</target>
       </trans-unit>
       <trans-unit id="ohNu8DK" resname="due_days">
         <source>due_days</source>
@@ -1631,7 +1631,7 @@
       </trans-unit>
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
-        <target>Bei der nächsten Anmeldung muss der Benutzer ein neues Passwort hinterlegen</target>
+        <target state="translated">Bei der nächsten Anmeldung muss der Benutzer ein neues Passwort hinterlegen.</target>
       </trans-unit>
     </body>
   </file>

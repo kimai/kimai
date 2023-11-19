@@ -1368,7 +1368,7 @@
       </trans-unit>
       <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
         <source>help.invoiceTemplate_customer</source>
-        <target state="translated">Por padrão, as faturas para este cliente são geradas a partir deste modelo. Pode ser alterado durante a geração da fatura, caso seja necessário.</target>
+        <target state="translated">As faturas para este cliente são geradas a partir deste modelo. Pode ser alterado durante a geração da fatura, caso seja necessário.</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>

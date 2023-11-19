@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="9XidDHG" resname="wizard.intro.title">
         <source>wizard.intro.title</source>
-        <target state="translated">Benvenuto/a in Kimai</target>
+        <target state="translated">Benvenuto in Kimai</target>
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>

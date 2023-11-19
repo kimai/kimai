@@ -1250,6 +1250,330 @@
         <source>created_at</source>
         <target state="translated">Luotu klo</target>
       </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Laskun päivämäärä</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">Kansalliset vapaapäivät</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target state="translated">Raportoi</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">Aktivoitu</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target state="translated">Koko päivä</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Oletus</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target state="translated">Lähetä henkilölle %name%</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
+        <source>Holidays per year</source>
+        <target state="translated">Vapaapäivät vuodessa</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">Lasku luodaan tällä mallilla.</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">Sairaus, lääkärikäynti, läheisen sairaus tms.</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Työtuntini tänään</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>Complete month</source>
+        <target state="translated">Vahvista kuukausi</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target state="translated">Hyväksytty</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Manuaaliset varaukset</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Olet estänyt ilmoitukset. Tarkasta selaimesi tiedoista, kuinka voit sallia ne.</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">Loma</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">Lisäasetukset</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">Arviointi</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">Kiitos että hyväksyit ilmoitukset!</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">Sairas</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro">
+        <source>api_password.intro</source>
+        <target state="translated">API salasanaa käytetään Kimain ja sinun sovelluksesi väliseen tiedonsiirtoon</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target state="translated">API ei käytettävissä</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Vahvista koodi aktivoidaksesi kaksivaiheisen tunnistautumisen tälle tilille.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Laskut tälle asiakkaalle luodaan oletuksena tällä mallilla. Mallia voi vaihtaa laskun luomisen yhteydessä, mikäli tarpeen.</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target state="translated">Pyydetty</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">Design</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">Et ole vielä syöttänyt API salasanaa. Turvallisuussyistä et voi käyttää API:a ennen salasanan tallentamista.</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profiili</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">Tilin työajat</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">Työpöytä</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed">
+        <source>plugin.installed</source>
+        <target state="translated">Asennetut lisäosat</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Työtuntini tässä kuussa</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">Muu</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">Ilmoitukset</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">Voit aktivoida uuden laitteen skannaamalla kuvan sovelluksessasi.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">Perhetapahtumat, muutto, sääolosuhteet tms.</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Työtuntini tällä viikolla</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target state="translated">Lähetä</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">Työsopimus</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24 tuntia</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Manuaalisia varauksia ei pysty jälkikäteen muokkaamaan tai poistamaan!</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark">
+        <source>skin.dark</source>
+        <target state="translated">Tumma</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">Vahvistuskoodi</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">Kaksivaiheinen (2FA)</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target state="translated">Kansallinen vapaapäivä</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">Kuukauden vahvistamisen jälkeen käyttäjä ei enää pysty lisäämään tai muokkaamaan kyseisen jakson aikoja.</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">Ei tuloksia haulla "%input%"</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target state="translated">Deaktivoitu</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">Näytetään %start% – %end%, yhteensä %total%.</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target state="translated">Vastaanota henkilöltä %name%</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">Anna vahvistuskoodi kirjautumisen vahvistamiseksi.</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target state="translated">Luo lasku</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">Tarkista</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">Taulukon sarakkeet</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices">
+        <source>all_invoices</source>
+        <target state="translated">Laskuhistoria</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">Suosikit</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Työskennellyt tunnit</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">Olet käyttänyt %used% vapaata saatavilla olevista %days% päivästä.</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Työtuntini tänä vuonna</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">Piilotettu</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">Valitut / korostetut käyttäjät ovat tiiminvetäjiä.</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">Tätä tekstiä käytetään laskuissa ja sitä voi käyttää esim. tarkemmille toimitusehdoille.</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target state="translated">Vapaaryhmä</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light">
+        <source>skin.light</source>
+        <target state="translated">Kirkas</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Voit vaihtaa laskun päivämäärää tästä</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">Esihenkilö</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">Luo uusi nimellä "%input%"</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">Käyttäjä %user% vahvistanut ajassa %date%</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Pyydä uutta salasanaa</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">Kun käyttäjä kirjautuu seuraavan kerran, hänen täytyy syöttää uusi salasana.</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">Laskun teksti</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">Vahvistetun kuukauden PDF</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Työtuntini yhteensä</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">Aika</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Voit järjestellä widgettejä vetämällä ja pudottamalla. Widgetin lisääminen tallentaa odottavat muutokset.</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">Valitse</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target state="translated">Puoli päivää</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">Poissaolo</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">Työajat</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open">
+        <source>mark_as_open</source>
+        <target state="translated">Merkitse avoimeksi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

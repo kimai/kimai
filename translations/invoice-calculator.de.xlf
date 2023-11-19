@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
         <source>invoice_calculator.help</source>
-        <target>Anhand welcher Felder sollen Rechnungsposten gruppiert werden?</target>
+        <target state="translated">Wählen Sie aus, nach welchen Feldern die Rechnungsposten gruppiert werden sollen</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>

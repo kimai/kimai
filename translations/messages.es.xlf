@@ -1634,6 +1634,42 @@
         <source>absence</source>
         <target state="translated">Ausencia</target>
       </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">La duración puede ser tanto positiva (aumento del tiempo) como negativa (reducción del tiempo).</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target state="translated">Aprobado</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target state="translated">Solicitado</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target state="translated">Horario</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">Horario de atención al público</target>
+      </trans-unit>
+      <trans-unit id="ICpl9sx" resname="append">
+        <source>append</source>
+        <target state="translated">Adjuntar</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target state="translated">grupo de vacaciones</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Solicitar una nueva contraseña</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">La próxima vez que el usuario se conecte, deberá introducir una nueva contraseña.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

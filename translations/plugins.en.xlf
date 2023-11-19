@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="plugins.en.xlf">
     <body>
@@ -7,8 +7,8 @@
         <target>You have no plugins installed yet.</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>New plugins from the marketplace</target>
+        <source>Available plugins</source>
+        <target state="translated">Available plugins</target>
       </trans-unit>
       <trans-unit id="6Bl7IPj" resname="buy">
         <source>Buy now</source>

@@ -118,6 +118,14 @@
         <source>reload</source>
         <target state="translated">Yeniden yükle</target>
       </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import">
+        <source>import</source>
+        <target state="translated">İçe aktar</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation">
+        <source>Synchronization</source>
+        <target state="translated">Eşzamanlama</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

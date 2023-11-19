@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="export.en.xlf">
     <body>
-      </body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
+        <source>Default</source>
+        <target state="translated">Bawaan</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
