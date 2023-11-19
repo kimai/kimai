@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Öntanımlı: her zaman kaydı için bir kayıt</target>
+        <target state="translated">Öntanımlı (her zaman kaydı için bir kayıt)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Kullanıcı: her kullanıcı için bir kayıt</target>
+        <target state="translated">Kullanıcı</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Proje: her proje için bir kayıt</target>
+        <target state="translated">Proje</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Tarih: her gün için bir kayıt (başlangıç tarihini kullanır)</target>
+        <target state="translated">Tarih</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
@@ -37,6 +37,22 @@
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
         <target>Fiyat: her fiyat için bir kayıt</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Etkinlik ve kullanıcı</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Proje ve kullanıcı</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Tarih ve kullanıcı</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Fatura kalemlerinin hangi alanlara göre gruplandırılacağını seçin</target>
       </trans-unit>
     </body>
   </file>

@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
-        <target>Devi selezionare almeno un utente o una squadra.</target>
+        <target state="translated">Devi selezionare almeno un utente o una team.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>Almeno un caposquadra deve essere assegnato alla squadra.</target>
+        <target state="translated">Almeno un responsabile team deve essere assegnato al team.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
         <source>An activity needs to be selected.</source>

@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">En önemli ayarlar artık tamamlandı. Daha sonra kullanıcı profilinizde özelleştirebileceğiniz çok daha fazlası var.</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">Lütfen bundan sonra oturum açmak için kullanacağınız yeni parolanızı girin.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">Parolanız</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

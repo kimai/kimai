@@ -31,4 +31,12 @@
       <!-- QUICK ENTRIES -->
     </body>
   </file>
+  <file original="validators.en.xlf" source-language="en" target-language="id" datatype="plaintext">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Setidaknya satu pemimpin tim harus ditugaskan ke tim.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

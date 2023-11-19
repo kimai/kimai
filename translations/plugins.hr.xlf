@@ -7,8 +7,8 @@
         <target>Još nemaš instaliranih dodataka.</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Novi dodaci iz trgovine</target>
+        <source>Available plugins</source>
+        <target state="translated">Dostupni dodaci</target>
       </trans-unit>
       <trans-unit id="6Bl7IPj" resname="buy">
         <source>Buy now</source>

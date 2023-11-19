@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
-        <target>Página principal</target>
+        <target state="translated">Página de inicio</target>
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
@@ -117,6 +117,14 @@
       <trans-unit id="QCf1FUG" resname="reload">
         <source>reload</source>
         <target state="translated">Recarga</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import">
+        <source>import</source>
+        <target state="translated">Importar</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation">
+        <source>Synchronization</source>
+        <target state="translated">Sincronización</target>
       </trans-unit>
     </body>
   </file>

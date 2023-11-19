@@ -1624,7 +1624,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Varsayılan</target>
+        <target state="translated">Öntanımlı</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group">
         <source>public_holiday.group</source>
@@ -1653,6 +1653,22 @@
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
         <target state="translated">Süpervizör</target>
+      </trans-unit>
+      <trans-unit id="ICpl9sx" resname="append">
+        <source>append</source>
+        <target state="translated">Sonuna ekle</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">Yeni parola iste</target>
+      </trans-unit>
+      <trans-unit id="tl01EdS" resname="replace">
+        <source>replace</source>
+        <target state="translated">Değiştir</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">Kullanıcı bir sonraki oturum açışında yeni bir parola girmelidir.</target>
       </trans-unit>
     </body>
   </file>

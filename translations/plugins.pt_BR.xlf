@@ -11,8 +11,8 @@
         <target state="translated">Compre agora</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Novos plugins do mercado</target>
+        <source>Available plugins</source>
+        <target state="translated">Plug-ins disponíveis</target>
       </trans-unit>
       <trans-unit id="jZAB0yx" resname="shop">
         <source>Plugin Shop</source>

@@ -1388,7 +1388,7 @@
       </trans-unit>
       <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
         <source>help.invoiceTemplate_customer</source>
-        <target state="translated">Računi za ovog klijenta se standardno generiraju s ovim predloškom. Po potrebi se može promijeniti tijekom generiranja računa.</target>
+        <target state="translated">Računi za ovog klijenta se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>

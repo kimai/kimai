@@ -7,8 +7,8 @@
         <target state="translated">Es sind noch keine Plugins installiert.</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Neue Plugins vom Marktplatz</target>
+        <source>Available plugins</source>
+        <target state="translated">Verfügbare Erweiterungen</target>
       </trans-unit>
       <trans-unit id="6Bl7IPj" resname="buy">
         <source>Buy now</source>

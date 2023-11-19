@@ -15,8 +15,8 @@
         <target state="translated">Más extensiones</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Nuevos complementos del mercado</target>
+        <source>Available plugins</source>
+        <target state="translated">Plugins disponibles</target>
       </trans-unit>
     </body>
   </file>
