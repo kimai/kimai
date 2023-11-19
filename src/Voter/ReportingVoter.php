@@ -22,6 +22,7 @@ final class ReportingVoter extends Voter
     private const ALLOWED_ATTRIBUTES = [
         'report:customer',
         'report:other',
+        'report:activity',
         'report:project',
         'report:user',
     ];
@@ -53,6 +54,10 @@ final class ReportingVoter extends Voter
             case 'report:other':
                 $permissions[] = 'view_other_reporting';
                 $permissions[] = 'view_other_timesheet';
+                break;
+
+            case 'report:activity':
+                $permissions[] = 'activity_reporting';
                 break;
 
             case 'report:project':

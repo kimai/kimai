@@ -104,7 +104,7 @@ kimai:
             BILLABLE: ['edit_billable_own_timesheet','edit_billable_other_timesheet']
             TEAMS: ['view_team','create_team','edit_team','delete_team']
             LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
-            REPORTING: ['view_reporting','view_other_reporting','project_reporting','customer_reporting']
+            REPORTING: ['view_reporting','view_other_reporting','activity_reporting','project_reporting','customer_reporting']
             # permissions which are deactivated, as these features are hidden for now
             # brave users can try to activate them and be surprised what happens
             REGISTER_BETA: []
