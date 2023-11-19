@@ -9,15 +9,15 @@
 
 namespace App\Logger;
 
-use Monolog\LogRecord;
 use Monolog\Attribute\AsMonologProcessor;
+use Monolog\LogRecord;
 
 final class LogProcessor
 {
     #[AsMonologProcessor]
     public function __invoke(LogRecord $record): LogRecord
     {
-        if (array_key_exists('bundle', $record->context)) {
+        if (\array_key_exists('bundle', $record->context)) {
             $record->extra['channel'] = strtoupper($record->context['bundle']);
         } else {
             $record->extra['channel'] = $record->channel;
