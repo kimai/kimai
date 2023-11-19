@@ -76,7 +76,9 @@ abstract class AbstractSpreadsheetRenderer
         'rate_internal' => [
             'label' => 'internalRate', // different translation key
         ],
-        'user' => [],
+        'user' => [
+            'label' => 'name'
+        ],
         'username' => [],
         'customer' => [],
         'project' => [],
@@ -309,13 +311,6 @@ abstract class AbstractSpreadsheetRenderer
                         $username = $entity->getUser()->getUserIdentifier();
                     }
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $username);
-                };
-            }
-            if (!isset($columns['username']['header'])) {
-                $columns['username']['header'] = function (Worksheet $sheet, int $row, int $column): int {
-                    $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $this->translator->trans('name'));
-
-                    return 1;
                 };
             }
         }
