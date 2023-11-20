@@ -62,12 +62,12 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             throw new BadCredentialsException('The presented user needs to be a Kimai user.');
         }
 
-        // removing this code allows to upgrade from local to LDAP users
-        // if (!$user->isLdapUser()) {
-        //    return;
-        // }
-
         if (!$this->ldapManager->bind($user->getUserIdentifier(), $presentedPassword)) {
+            // if the login failed an the user is registered with "kimai" auth, return here,
+            // so the FormLogin authenticator can take over and user can login via internal database
+            if (!$user->isLdapUser()) {
+                return;
+            }
             throw new BadCredentialsException('The presented password is invalid.');
         }
 
