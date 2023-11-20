@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -22,17 +23,19 @@ use Symfony\Component\Security\Http\EntryPoint\Exception\NotAnEntryPointExceptio
 
 final class LdapAuthenticator implements AuthenticationEntryPointInterface, InteractiveAuthenticatorInterface
 {
-    public function __construct(private AuthenticatorInterface $authenticator, private LdapConfiguration $configuration)
+    public function __construct(private AuthenticatorInterface $authenticator, private LdapConfiguration $configuration, private LoggerInterface $logger)
     {
     }
 
     public function supports(Request $request): bool
     {
-        if (!class_exists('Laminas\Ldap\Ldap')) {
+        if (!$this->configuration->isActivated()) {
             return false;
         }
 
-        if (!$this->configuration->isActivated()) {
+        if (!class_exists('Laminas\Ldap\Ldap')) {
+            $this->logger->debug('Failed loading LDAP authenticator, missing Laminas dependency');
+
             return false;
         }
 
