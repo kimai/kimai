@@ -35,6 +35,7 @@ final class LdapAuthenticator implements AuthenticationEntryPointInterface, Inte
 
         if (!class_exists('Laminas\Ldap\Ldap')) {
             $this->logger->debug('Failed loading LDAP authenticator, missing Laminas dependency');
+
             return false;
         }
 
