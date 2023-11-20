@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AuthenticatorFactoryInterface;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -67,6 +68,7 @@ final class FormLoginLdapFactory extends AbstractFactory implements Authenticato
             ->setArguments([
                 new Reference($authenticatorId),
                 new Reference(LdapConfiguration::class),
+                new Reference(LoggerInterface::class),
             ]);
 
         return $ldapAuthenticatorId;
