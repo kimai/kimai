@@ -63,8 +63,8 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
         }
 
         if (!$this->ldapManager->bind($user->getUserIdentifier(), $presentedPassword)) {
-            // if the login failed an the user is registered with "kimai" auth, return here,
-            // so the FormLogin authenticator can take over and user can login via internal database
+            // if the login failed and the user is registered with "kimai" auth, simply return:
+            // the FormLogin authenticator will take over and the user can log in via internal database
             if (!$user->isLdapUser()) {
                 return;
             }
