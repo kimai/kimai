@@ -405,11 +405,11 @@
         <source>color</source>
         <target state="translated">Väri</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target state="translated">Vaihda</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target state="translated">Lisää</target>
       </trans-unit>
