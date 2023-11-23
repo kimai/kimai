@@ -114,17 +114,9 @@
         <source>The chosen date is not a working day.</source>
         <target>Das ausgewählte Datum ist kein Arbeitstag.</target>
       </trans-unit>
-      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
-        <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Die maximale Dauer von {{ value }} Stunden wurde überschritten.</target>
-      </trans-unit>
       <trans-unit id="N21br.P" resname="The chosen date is already locked.">
         <source>The chosen date is already locked.</source>
         <target>Das ausgewählte Datum ist bereits gesperrt.</target>
-      </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Das Enddatum darf nicht früher sein als das Startdatum.</target>
       </trans-unit>
       <trans-unit id="6H84TMs" resname="An absence must be assigned to a user.">
         <source>An absence must be assigned to a user.</source>
