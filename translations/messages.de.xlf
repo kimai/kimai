@@ -1573,6 +1573,10 @@
         <source>absence</source>
         <target>Abwesenheit</target>
       </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target>Abwesenheitskalender</target>
+      </trans-unit>
       <trans-unit id="4PMHpIp" resname="time_off">
         <source>time_off</source>
         <target>Freizeitausgleich</target>
