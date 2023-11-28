@@ -9,13 +9,10 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\User;
-use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use App\Utils\MenuService;
 use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -24,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security)
+    public function __construct(private MenuService $menuService)
     {
     }
 
@@ -37,15 +34,7 @@ final class MenuBuilderSubscriber implements EventSubscriberInterface
 
     public function onSetupNavbar(MenuEvent $event): void
     {
-        $menuEvent = new ConfigureMainMenuEvent();
-
-        /** @var User $user */
-        $user = $this->security->getUser();
-
-        // error pages don't have a user and will fail when is_granted() is called
-        if (null !== $user) {
-            $this->eventDispatcher->dispatch($menuEvent);
-        }
+        $menuEvent = $this->menuService->getKimaiMenu();
 
         foreach ($menuEvent->getMenu()->getChildren() as $child) {
             if ($child->getRoute() === null && !$child->hasChildren()) {
