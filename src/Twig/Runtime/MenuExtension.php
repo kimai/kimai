@@ -10,6 +10,7 @@
 namespace App\Twig\Runtime;
 
 use App\Entity\User;
+use App\Utils\MenuItemModel;
 use App\Utils\MenuService;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -19,6 +20,9 @@ final class MenuExtension implements RuntimeExtensionInterface
     {
     }
 
+    /**
+     * @return array<MenuItemModel>
+     */
     public function getUserShortcuts(User $user): array
     {
         $shortcuts = $user->getPreferenceValue('favorite_routes');

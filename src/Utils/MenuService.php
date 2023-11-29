@@ -13,13 +13,12 @@ use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Twig\Environment;
 
 final class MenuService
 {
     private ?ConfigureMainMenuEvent $menuEvent = null;
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security, private Environment $twig)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security)
     {
     }
 
