@@ -110,7 +110,7 @@ tabler:
         profile: fas fa-user-edit
         profile-stats: far fa-chart-bar
         project: fas fa-briefcase
-        repeat: fas fa-redo-alt
+        repeat: fas fa-repeat
         reporting: far fa-chart-bar
         report: far fa-chart-bar
         review: fas fa-user-check
