@@ -100,6 +100,7 @@
         {% if is_granted('view_own_timesheet') %}
             {% include 'partials/recent-activities.html.twig' %}
         {% endif %}
+        {% include 'partials/user-shortcuts.html.twig' %}
         {% block navbar_extensions_after %}
             {% set event = trigger(constant('App\\Event\\ThemeEvent::TOOLBAR')) %}
             {{ event.content|raw }}
