@@ -1542,6 +1542,18 @@
         <source>supervisor</source>
         <target state="translated">Kierowca</target>
       </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target>Wydatki</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target>Categories</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

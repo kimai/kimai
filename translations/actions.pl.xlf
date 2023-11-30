@@ -118,6 +118,10 @@
         <source>reload</source>
         <target state="translated">Załaduj ponownie</target>
       </trans-unit>
+      <trans-unit id="uB83oEO" resname="audit">
+        <source>audit</source>
+        <target>Historia zmian</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

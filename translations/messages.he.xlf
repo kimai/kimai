@@ -1606,6 +1606,18 @@
         <source>force_password_change_help</source>
         <target state="translated">בכניסה הבאה של המשתמש, צריך למלא סיסמה חדש.</target>
       </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target>הוצאות</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target>קטגוריות</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>קטגוריה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

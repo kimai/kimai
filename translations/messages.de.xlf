@@ -1637,6 +1637,38 @@
         <source>force_password_change_help</source>
         <target state="translated">Bei der nächsten Anmeldung muss der Benutzer ein neues Passwort hinterlegen.</target>
       </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target>Übersicht</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target>Ausgaben</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target>Importer</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target>Eigene Felder</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target>Übersetzungen</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target>Übersetzung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
