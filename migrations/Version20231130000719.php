@@ -28,7 +28,7 @@ final class Version20231130000719 extends AbstractMigration
     {
         // select u1.* from kimai2_user_preferences u1 where u1.name like '%.%' and exists(select 1 from kimai2_user_preferences u2 where u2.name = replace(u1.name, '.', '_') and u1.user_id = u2.user_id);
         // select u1.* from kimai2_user_preferences u1 where u1.name like '%.%';
-        $this->addSql("delete u1 from kimai2_user_preferences u1 where u1.name like '%.%' and exists(select 1 from kimai2_user_preferences u2 where u2.name = replace(u1.name, '.', '_') and u1.user_id = u2.user_id)");
+        $this->addSql("delete u1 from kimai2_user_preferences u1 where u1.name like '%.%' and exists(select 1 from (SELECT name, user_id FROM kimai2_user_preferences WHERE name LIKE '%_%') u2 where u2.name = replace(u1.name, '.', '_') and u1.user_id = u2.user_id)");
         $this->addSql("update kimai2_user_preferences set `name` = replace(`name`, '.', '_')");
     }
 
