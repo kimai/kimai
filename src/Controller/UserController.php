@@ -70,8 +70,8 @@ final class UserController extends AbstractController
         $table->setReloadEvents('kimai.userUpdate');
 
         $table->addColumn('avatar', ['class' => 'alwaysVisible w-avatar', 'title' => null, 'orderBy' => false]);
-        $table->addColumn('user', ['class' => 'alwaysVisible', 'orderBy' => 'user']);
-        $table->addColumn('username', ['class' => 'd-none']);
+        //$table->addColumn('user', ['class' => 'alwaysVisible', 'orderBy' => 'user']);
+        $table->addColumn('username', ['class' => 'alwaysVisible']);
         $table->addColumn('alias', ['class' => 'd-none']);
         $table->addColumn('account_number', ['class' => 'd-none']);
         $table->addColumn('title', ['class' => 'd-none']);
