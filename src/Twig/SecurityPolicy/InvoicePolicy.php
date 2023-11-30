@@ -29,7 +29,7 @@ final class InvoicePolicy implements SecurityPolicyInterface
         $this->policy = new ChainPolicy();
         $this->policy->addPolicy(new DefaultPolicy());
         $this->policy->addPolicy(new SecurityPolicy(
-            ['block', 'if', 'for', 'set', 'extends'],
+            ['block', 'if', 'for', 'set', 'extends', 'import'],
             [
                 // =================================================================
                 // vendor/twig/twig/src/Extension/CoreExtension.php
@@ -102,9 +102,16 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'currency_symbol',
                 'language_name',
                 'locale_name',
+                'timezone_name',
                 'format_currency',
                 'format_number',
-                'format_*_number',
+                'format_decimal_number',
+                'format_currency_number',
+                'format_percent_number',
+                'format_scientific_number',
+                'format_spellout_number',
+                'format_ordinal_number',
+                'format_duration_number',
                 'format_datetime',
                 'format_date',
                 'format_time',
