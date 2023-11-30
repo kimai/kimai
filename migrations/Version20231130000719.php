@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+final class Version20231130000719 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return 'Fix user preferences with dots in the name';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // select u1.* from kimai2_user_preferences u1 where u1.name like '%.%' and exists(select 1 from kimai2_user_preferences u2 where u2.name = replace(u1.name, '.', '_') and u1.user_id = u2.user_id);
+        // select u1.* from kimai2_user_preferences u1 where u1.name like '%.%';
+        $this->addSql("delete u1 from kimai2_user_preferences u1 where u1.name like '%.%' and exists(select 1 from kimai2_user_preferences u2 where u2.name = replace(u1.name, '.', '_') and u1.user_id = u2.user_id)");
+        $this->addSql("update kimai2_user_preferences set `name` = replace(`name`, '.', '_')");
+    }
+
+    public function down(Schema $schema): void
+    {
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
+}
