@@ -1669,6 +1669,10 @@
         <source>Translation</source>
         <target>Übersetzung</target>
       </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target>Audit-Logs</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

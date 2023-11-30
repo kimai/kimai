@@ -126,10 +126,6 @@
         <source>import</source>
         <target>Import</target>
       </trans-unit>
-      <trans-unit id="uB83oEO" resname="audit">
-        <source>audit</source>
-        <target>Audit logs</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

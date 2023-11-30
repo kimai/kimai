@@ -1554,6 +1554,10 @@
         <source>Categories</source>
         <target>Categories</target>
       </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target>Historia zmian</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
