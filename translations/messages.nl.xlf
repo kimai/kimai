@@ -1634,6 +1634,18 @@
         <source>holiday</source>
         <target state="translated">Vakantie</target>
       </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target>Kosten</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target>Categorie</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target>Categorieën</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

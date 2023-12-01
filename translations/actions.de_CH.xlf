@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
-        <target state="translated">Aktivitäten filtern</target>
+        <target state="translated">Tätigkeiten filtern</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
-        <target state="translated">Aktivität erstellen</target>
+        <target state="translated">Tätigkeit erstellen</target>
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>

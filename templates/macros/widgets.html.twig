@@ -277,7 +277,7 @@
 
 {% macro action_button(icon, values, type) %}
     {% import '@theme/components/button.html.twig' as macro %}
-    {% set values = values|merge({'tooltip_attr': 'data-toggle'}) %}
+    {% set values = (values ?? {})|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.button(icon, values, type) }}
 {% endmacro %}
 

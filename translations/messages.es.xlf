@@ -910,7 +910,7 @@
         <source>status</source>
         <target>Situación</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Reemplazar</target>
       </trans-unit>
@@ -1654,7 +1654,7 @@
         <source>Account working times</source>
         <target state="translated">Horario de atención al público</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target state="translated">Adjuntar</target>
       </trans-unit>
