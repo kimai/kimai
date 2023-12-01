@@ -766,11 +766,11 @@
         <source>globalsOnly</source>
         <target>Uniquement global</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Remplacer</target>
       </trans-unit>
@@ -1549,6 +1549,10 @@
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target state="needs-translation">Confirmed by %user% at %date%</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target>Champs personnalisés</target>
       </trans-unit>
     </body>
   </file>

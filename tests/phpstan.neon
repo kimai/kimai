@@ -8853,21 +8853,6 @@ parameters:
             path: Twig/Runtime/WidgetExtensionTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\RuntimeExtensionsTest\\:\\:testGetFilterDefinition\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/RuntimeExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\RuntimeExtensionsTest\\:\\:testGetFilters\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/RuntimeExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\RuntimeExtensionsTest\\:\\:testGetFunctions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/RuntimeExtensionsTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Utils\\\\ColorTest\\:\\:assertIsValidColor\\(\\) has no return type specified\\.$#"
             count: 1
             path: Utils/ColorTest.php

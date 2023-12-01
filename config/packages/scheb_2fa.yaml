@@ -8,9 +8,10 @@ scheb_two_factor:
     totp:
         enabled: true
         template: security/2fa.html.twig    # Overwritten template
-        window: 1                           # How many codes before/after the current one would be accepted as valid
+        leeway: 29                          # How many seconds the code is valid
         issuer: Kimai                       # Issuer name used in QR code
 
     two_factor_condition: App\Security\TwoFactorCondition
 
-    # FIXME add backup codes - https://symfony.com/bundles/SchebTwoFactorBundle/current/backup_codes.html
+    # TODO add:  backup codes - https://symfony.com/bundles/SchebTwoFactorBundle/current/backup_codes.html
+    # TODO add: Trusted device feature - https://github.com/scheb/2fa/blob/6.x/doc/configuration.rst

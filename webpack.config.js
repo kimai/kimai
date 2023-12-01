@@ -26,7 +26,9 @@ Encore
     .enableSingleRuntimeChunk()
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps(!Encore.isProduction())
-    .enableBuildNotifications()
+
+    // disabled as ""webpack-notifier": "^1.13"" id currently only compatible with rosetta
+    //.enableBuildNotifications()
 
     .enableSassLoader(function(sassOptions) {}, {
         resolveUrlLoader: false
