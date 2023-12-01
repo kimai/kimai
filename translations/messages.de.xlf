@@ -1673,6 +1673,10 @@
         <source>Audit logs</source>
         <target>Audit-Logs</target>
       </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target>Eigene Inhalte</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
