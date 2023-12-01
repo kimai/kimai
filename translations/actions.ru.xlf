@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
-        <target state="translated">Создать табель</target>
+        <target state="translated">Добавить время</target>
       </trans-unit>
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
-        <target>Сообщить</target>
+        <target state="translated">Отчет</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>

@@ -249,6 +249,10 @@
         <source>my.profile</source>
         <target state="translated">Profil saya</target>
       </trans-unit>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
+        <target state="translated">kata sandi API</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
