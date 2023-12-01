@@ -38,10 +38,12 @@ Do **NOT** use Version 1, it won't get any more updates!
 
 ### Requirements
 
-- PHP 8.1 minimum
+- PHP 8.1.3 minimum
 - MariaDB or MySQL
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
+
+Support for PHP 8.2 and 8.3.
 
 ## Installation
 
