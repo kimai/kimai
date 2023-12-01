@@ -106,6 +106,50 @@
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">El código ingresado no es el símbolo TOTP correcto.</target>
       </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed.">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">Es un día festivo, no se admiten reservas.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">No tiene suficientes horas extra, las restantes son {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">No se puede reservar una ausencia antes del primer día laborable.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left.">
+        <source>Not enough holidays left.</source>
+        <target state="translated">No quedan vacaciones.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date.">
+        <source>An absence must have a date.</source>
+        <target state="translated">Las ausencias deben tener una fecha.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">Puede reservar un máximo de {{ value }} días a la vez.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known.">
+        <source>This absence type is not known.</source>
+        <target state="translated">Se desconoce este tipo de ausencia.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user.">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">Se debe asignar una ausencia a un usuario.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day.">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">No se pueden tener dos ausencias de este tipo en un mismo día.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day.">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">La fecha elegida no es un día laborable.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked.">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">La fecha elegida ya está cerrada.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

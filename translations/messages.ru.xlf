@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
-        <target>Создать</target>
+        <target state="translated">Добавить</target>
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
@@ -77,11 +77,11 @@
       </trans-unit>
       <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
-        <target state="translated">Учёт времени</target>
+        <target state="translated">Мое время</target>
       </trans-unit>
       <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
-        <target state="translated">Табели</target>
+        <target state="translated">Общее время</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -104,7 +104,7 @@
             -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>По выбранному фильтру записи не найдены.</target>
+        <target state="translated">В данном представлении записи не найдены! Измените фильтр или создайте новую запись.</target>
       </trans-unit>
       <!--
               General labels
@@ -274,11 +274,11 @@
       </trans-unit>
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">Доступ через API</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
-        <target>Роли / Задачи</target>
+        <target state="translated">Роли и права</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
@@ -662,7 +662,7 @@
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
-        <target>Сегодня, %day%</target>
+        <target state="translated">Сегодня (%day%)</target>
       </trans-unit>
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
@@ -882,11 +882,11 @@
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Полный год %year%</target>
+        <target state="translated">Весь год (%year%)</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Неделя календаря %week%</target>
+        <target state="translated">Неделя года (%week%)</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -962,7 +962,7 @@
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
-        <target state="translated">Отчёт</target>
+        <target state="translated">Отчеты</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
@@ -1254,7 +1254,7 @@
       </trans-unit>
       <trans-unit id="FeFBn_3" resname="profile.2fa">
         <source>profile.2fa</source>
-        <target state="translated">Двухфакторная (2FA)</target>
+        <target state="translated">Второй фактор (2FA)</target>
       </trans-unit>
       <trans-unit id="IRzPWmL" resname="login.2fa_intro">
         <source>login.2fa_intro</source>
@@ -1314,7 +1314,7 @@
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
-        <target state="translated">Трудовой договор</target>
+        <target state="translated">Распорядок</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
         <source>evaluation</source>
@@ -1438,11 +1438,83 @@
       </trans-unit>
       <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
         <source>help.invoiceTemplate</source>
-        <target state="translated">Инвойс формируется по этому шаблону.</target>
+        <target state="translated">Счет будет сформирован по этому шаблону.</target>
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month">
         <source>Complete month</source>
         <target state="needs-translation">Полный месяц</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">Расширенные настройки</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">Показаны записи с %start% по %end% из %total%.</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed">
+        <source>status.closed</source>
+        <target state="translated">Завершено</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned">
+        <source>status.planned</source>
+        <target state="translated">Запланировано</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress">
+        <source>status.progress</source>
+        <target state="translated">Исполняется</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">Пожалуйста, выберите</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">Праздничные дни</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">Болезнь, визит к врачу, уход за близкими родственниками и т.д.</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target state="translated">Отгулы</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">Болезнь</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">Прочее</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target state="translated">Вы можете использовать %hours% часов для отгулов.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">Семейные события, переезд, непогода и т. д.</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target state="translated">Создать счет</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">На данный момент вы взяли %used% из %days% доступных дней отпуска.</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">Руководитель</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">Дата счета</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">Здесь вы можете изменить дату выставления счета</target>
       </trans-unit>
     </body>
   </file>

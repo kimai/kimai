@@ -882,6 +882,22 @@
         <source>error.directory_protected</source>
         <target state="translated">"%dir%"ディレクトリは書き込み制限がかけられています。</target>
       </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">削除されました</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">によって作成されました</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">に作成されました</target>
+      </trans-unit>
+      <trans-unit id="JGaf9IK" resname="Doctor">
+        <source>Doctor</source>
+        <target state="translated">ドクター</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

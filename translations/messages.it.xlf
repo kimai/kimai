@@ -919,7 +919,7 @@
       </trans-unit>
       <trans-unit id="Qn2ouiL" resname="exported">
         <source>exported</source>
-        <target>Esportate</target>
+        <target state="translated">Esportato</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
@@ -1555,7 +1555,7 @@
       </trans-unit>
       <trans-unit id="zlmddHB" resname="public_holidays">
         <source>public_holidays</source>
-        <target state="translated">Giorni festivi</target>
+        <target state="translated">Festività pubbliche</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -1587,7 +1587,7 @@
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group">
         <source>public_holiday.group</source>
-        <target state="translated">Gruppo vacanze</target>
+        <target state="translated">Gruppo ferie</target>
       </trans-unit>
       <trans-unit id="csAXaBa" resname="button.request">
         <source>button.request</source>
@@ -1648,6 +1648,50 @@
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
         <target state="translated">Al successivo accesso l'utente dovrà inserire una nuova password.</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Categoria</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Spese</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Registri di controllo</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Traduzione</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Calendario assenze</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Campi personalizzati</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Panoramica</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Importatore</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Traduzioni</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Categorie</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Contenuti personalizzati</target>
       </trans-unit>
     </body>
   </file>
