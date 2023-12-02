@@ -48,11 +48,13 @@ function runServer() {
   /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
   chown -R $USER_ID:$GROUP_ID /opt/kimai/var
   if [ -e /use_apache ]; then
+    echo "🏁 Running 🪶 apache server"
     exec /usr/sbin/apache2 -D FOREGROUND
   elif [ -e /use_fpm ]; then
+    echo "🏁 Running 🐘 php-fpm server"
     exec php-fpm
   else
-    echo "Error, unknown server type"
+    echo "⚠️ Error, unknown server type"
   fi
 }
 
