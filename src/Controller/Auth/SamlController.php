@@ -12,10 +12,10 @@ namespace App\Controller\Auth;
 use App\Configuration\SamlConfigurationInterface;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 #[Route(path: '/saml')]
 final class SamlController extends AbstractController
@@ -32,7 +32,7 @@ final class SamlController extends AbstractController
         }
 
         $session = $request->getSession();
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
+        $authErrorKey = SecurityRequestAttributes::AUTHENTICATION_ERROR;
 
         $error = null;
 
