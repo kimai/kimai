@@ -142,8 +142,12 @@ class BaseQuery
         return $this->orderBy;
     }
 
-    public function setOrderBy(string $orderBy): self
+    public function setOrderBy(?string $orderBy): self
     {
+        if ($orderBy === null) {
+            $orderBy = $this->defaults['orderBy'];
+        }
+
         $this->orderBy = $orderBy;
 
         return $this;
@@ -154,8 +158,12 @@ class BaseQuery
         return $this->order;
     }
 
-    public function setOrder(string $order): self
+    public function setOrder(?string $order): self
     {
+        if ($order === null) {
+            $order = $this->defaults['order'];
+        }
+
         if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
