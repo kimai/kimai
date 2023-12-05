@@ -1023,6 +1023,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
+        if ($this->enabled !== $user->isEnabled()) {
+            return false;
+        }
+
         return true;
     }
 
