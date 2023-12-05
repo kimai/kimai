@@ -145,7 +145,7 @@ class BaseQuery
     public function setOrderBy(?string $orderBy): self
     {
         if ($orderBy === null) {
-            $orderBy = $this->defaults['orderBy'];
+            $orderBy = (string) $this->defaults['orderBy']; // @phpstan-ignore-line
         }
 
         $this->orderBy = $orderBy;
@@ -161,7 +161,7 @@ class BaseQuery
     public function setOrder(?string $order): self
     {
         if ($order === null) {
-            $order = $this->defaults['order'];
+            $order = (string) $this->defaults['order']; // @phpstan-ignore-line
         }
 
         if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {

@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * @template-implements UserProviderInterface<User>
+ */
 final class LdapUserProvider implements UserProviderInterface
 {
     public function __construct(private LdapManager $ldapManager, private ?LoggerInterface $logger = null)

@@ -27,7 +27,7 @@ final class KimaiUserProvider implements UserProviderInterface, PasswordUpgrader
     private ?ChainUserProvider $provider = null;
 
     /**
-     * @param iterable|UserProviderInterface[] $providers
+     * @param iterable<UserProviderInterface<User>> $providers
      */
     public function __construct(private iterable $providers, private SystemConfiguration $configuration)
     {
@@ -61,12 +61,12 @@ final class KimaiUserProvider implements UserProviderInterface, PasswordUpgrader
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        return $this->getInternalProvider()->loadUserByIdentifier($identifier);
+        return $this->getInternalProvider()->loadUserByIdentifier($identifier); // @phpstan-ignore-line
     }
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        return $this->getInternalProvider()->refreshUser($user);
+        return $this->getInternalProvider()->refreshUser($user); // @phpstan-ignore-line
     }
 
     public function supportsClass(string $class): bool
