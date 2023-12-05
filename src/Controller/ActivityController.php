@@ -31,6 +31,7 @@ use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -147,7 +148,9 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
-            $teams = $activity->getTeams();
+            $query = new TeamQuery();
+            $query->addActivity($activity);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins

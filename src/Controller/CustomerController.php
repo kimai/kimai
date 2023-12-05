@@ -33,6 +33,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -328,7 +329,9 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $customer) || $this->isGranted('details', $customer) || $this->isGranted('view_team')) {
-            $teams = $customer->getTeams();
+            $query = new TeamQuery();
+            $query->addCustomer($customer);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins

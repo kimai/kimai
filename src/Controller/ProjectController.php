@@ -36,6 +36,7 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\Context;
 use App\Utils\DataTable;
@@ -351,7 +352,9 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {
-            $teams = $project->getTeams();
+            $query = new TeamQuery();
+            $query->addProject($project);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins
