@@ -20,10 +20,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class UserPreferenceEvent extends Event
 {
     /**
-     * @param User $user
-     * @param UserPreference[] $preferences
+     * @param array<UserPreference> $preferences
      */
-    public function __construct(private User $user, private array $preferences, private $booting = true)
+    public function __construct(private readonly User $user, private array $preferences, private readonly bool $booting = true)
     {
     }
 

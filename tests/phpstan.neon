@@ -4478,11 +4478,6 @@ parameters:
             path: Event/PermissionsEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\PrepareUserEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/PrepareUserEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\ProjectBudgetStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ProjectBudgetStatisticEventTest.php
@@ -4606,16 +4601,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Event\\\\UserPreferenceDisplayEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/UserPreferenceDisplayEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\UserPreferenceEventTest\\:\\:testDuplicatePreferenceThrowsException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/UserPreferenceEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\UserPreferenceEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/UserPreferenceEventTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Event\\\\UserRevenueStatisticEventTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"

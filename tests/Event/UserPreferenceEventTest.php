@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserPreferenceEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $user = new User();
         $user->setAlias('foo');
@@ -28,14 +28,18 @@ class UserPreferenceEventTest extends TestCase
         $sut = new UserPreferenceEvent($user, []);
 
         $this->assertEquals($user, $sut->getUser());
+        $this->assertTrue($sut->isBooting());
         $this->assertEquals([], $sut->getPreferences());
 
         $sut->addPreference($pref);
 
         $this->assertEquals([$pref], $sut->getPreferences());
+
+        $sut = new UserPreferenceEvent($user, [], false);
+        $this->assertFalse($sut->isBooting());
     }
 
-    public function testDuplicatePreferenceThrowsException()
+    public function testDuplicatePreferenceThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

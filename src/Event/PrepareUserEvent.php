@@ -19,7 +19,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class PrepareUserEvent extends Event
 {
-    public function __construct(private User $user, private $booting = true)
+    public function __construct(private User $user, private bool $booting = true)
     {
     }
 
