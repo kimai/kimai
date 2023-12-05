@@ -20,6 +20,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @template-implements PasswordUpgraderInterface<User>
+ * @template-implements UserProviderInterface<User>
  */
 final class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {

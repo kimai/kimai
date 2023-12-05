@@ -5137,11 +5137,6 @@ parameters:
             path: src/Saml/SamlProvider.php
 
         -
-            message: "#^Parameter \\#1 \\$identifier of method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserProviderInterface\\:\\:loadUserByIdentifier\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Saml/SamlProvider.php
-
-        -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
             count: 1
             path: src/Saml/SamlProvider.php
