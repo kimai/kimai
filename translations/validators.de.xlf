@@ -136,7 +136,7 @@
       </trans-unit>
       <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
-        <target>Sie haben nicht genug Überstunden, es verbleiben {{ Wert }}.</target>
+        <target>Sie haben nicht genug Überstunden, es verbleiben {{ value }}.</target>
       </trans-unit>
       <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day.">
         <source>You cannot have two absences of this type at one day.</source>
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target>Sie können maximal {{ Wert }} Tage auf einmal buchen.</target>
+        <target>Sie können maximal {{ value }} Tage auf einmal buchen.</target>
       </trans-unit>
     </body>
   </file>
