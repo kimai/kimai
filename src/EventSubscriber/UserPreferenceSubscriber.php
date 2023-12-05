@@ -137,7 +137,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $event = new UserPreferenceEvent($user, $this->getDefaultPreferences($user));
+        $event = new UserPreferenceEvent($user, $this->getDefaultPreferences($user), $event->isBooting());
         $this->eventDispatcher->dispatch($event);
 
         foreach ($event->getPreferences() as $preference) {

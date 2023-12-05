@@ -14,7 +14,8 @@ use App\Entity\UserPreference;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event should be used, if further user preferences should be added dynamically.
+ * Add further user-preference definitions dynamically.
+ * This is used on every page load, do not query the database when this is dispatched.
  */
 final class UserPreferenceEvent extends Event
 {
@@ -22,8 +23,16 @@ final class UserPreferenceEvent extends Event
      * @param User $user
      * @param UserPreference[] $preferences
      */
-    public function __construct(private User $user, private array $preferences)
+    public function __construct(private User $user, private array $preferences, private $booting = true)
     {
+    }
+
+    /**
+     * Whether this event is dispatched for the currently logged in user during kernel boot.
+     */
+    public function isBooting(): bool
+    {
+        return $this->booting;
     }
 
     /**

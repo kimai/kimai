@@ -248,7 +248,7 @@ final class ProfileController extends AbstractController
     public function preferencesAction(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserRepository $userRepository): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
-        $event = new PrepareUserEvent($profile);
+        $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
 
         $form = $this->createPreferencesForm($profile);
