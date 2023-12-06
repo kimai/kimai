@@ -36,15 +36,12 @@ trait MetaTableTypeTrait
     private ?string $name = null;
     /**
      * Value of the meta (custom) field
-     *
-     * ATTENTION:
-     * This field can be used to temporary hold data in another format (e.g. array) during form transformation,
      */
     #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    private mixed $value = null;
+    private ?string $value = null;
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $visible = false;
@@ -61,6 +58,14 @@ trait MetaTableTypeTrait
      */
     private array $options = [];
     private int $order = 0;
+    /**
+     * Used for data conversion during form transformation.
+     *
+     * ATTENTION: This field can be used to temporary hold data in another format (e.g. array) during form transformation.
+     * TODO unclear when "array" should happen. the above statement is old and maybe we can remove the "mixed” type
+     */
+    private mixed $data = null;
+    private bool $updated = false;
 
     public function getName(): ?string
     {
@@ -80,41 +85,47 @@ trait MetaTableTypeTrait
 
     public function getValue(): mixed
     {
-        if ($this->value === null) {
+        $value = $this->updated ? $this->data : $this->value;
+
+        if ($value === null) {
             return null;
         }
 
         return match ($this->type) {
-            YesNoType::class, CheckboxType::class => (\is_string($this->value) || \is_int($this->value)) ? (bool) $this->value : $this->value,
-            IntegerType::class => (\is_string($this->value) || \is_int($this->value)) ? (int) $this->value : $this->value,
-            NumberType::class => (\is_string($this->value) || \is_float($this->value)) ? (float) $this->value : $this->value,
-            default => $this->value,
+            YesNoType::class, CheckboxType::class => (\is_string($value) || \is_int($value)) ? (bool) $value : $value,
+            IntegerType::class => (\is_string($value) || \is_int($value)) ? (int) $value : $value,
+            NumberType::class => (\is_string($value) || \is_float($value)) ? (float) $value : $value,
+            default => $value
         };
     }
 
     /**
-     * Value will not be serialized before its stored, so it should be a primitive type.
-     *
-     * @param mixed $value
-     * @return MetaTableTypeInterface
+     * Value will not be serialized before its stored, so it should be a primitive/scalar type.
      */
     public function setValue(mixed $value): MetaTableTypeInterface
     {
+        $this->data = $value;
+        $this->updated = true;
+
         // unchecked checkboxes / false bool would save an empty string in the database
         // those cannot be searched in the database
         if (null !== $value) {
             switch ($this->type) {
                 case YesNoType::class:
                 case CheckboxType::class:
-                    if (\is_string($value) || \is_bool($value)) {
-                        $value = (int) $value;
-                    } else {
+                    if (!\is_int($value) && !\is_bool($value) && !\is_string($value)) {
                         throw new \InvalidArgumentException('Failed converting meta-field bool value');
+                    } else {
+                        $value = (string) $value;
                     }
             }
         }
 
-        $this->value = $value;
+        if ($value === null) {
+            $this->value = $value;
+        } elseif (\is_scalar($value)) {
+            $this->value = (string) $value;
+        }
 
         return $this;
     }
