@@ -1,8 +1,8 @@
-#  _  ___                 _ ____
-# | |/ (_)_ __ ___   __ _(_)___ \
-# | ' /| | '_ ` _ \ / _` | | __) |
-# | . \| | | | | | | (_| | |/ __/
-# |_|\_\_|_| |_| |_|\__,_|_|_____|
+#  _  ___                 _
+# | |/ (_)_ __ ___   __ _(_)
+# | ' /| | '_ ` _ \ / _` | |
+# | . \| | | | | | | (_| | |
+# |_|\_\_|_| |_| |_|\__,_|_|
 #
 
 # Source base [fpm/apache]
@@ -23,9 +23,6 @@ FROM alpine:latest AS git-dev
 # pass-through Arguments in every stage. See: https://benkyriakou.com/posts/docker-args-empty
 ARG KIMAI
 ARG TIMEZONE
-# I need to do this check somewhere, we discard all but the checkout so doing here doesn't hurt
-ADD .docker/test-kimai-version.sh /test-kimai-version.sh
-RUN /test-kimai-version.sh
 RUN apk add --no-cache git && \
     git clone --depth 1 --branch ${KIMAI} https://github.com/kimai/kimai.git /opt/kimai
 
