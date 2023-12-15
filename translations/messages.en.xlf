@@ -687,6 +687,10 @@
         <source>holiday</source>
         <target>Holiday</target>
       </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target>Parental leave</target>
+      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Preferences</target>
@@ -1588,6 +1592,10 @@
       <trans-unit id="_WlU8Fp" resname="sickness">
         <source>sickness</source>
         <target>Sickness</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target>Sickness of a child</target>
       </trans-unit>
       <trans-unit id="2SmKENG" resname="other">
         <source>other</source>
