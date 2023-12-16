@@ -485,7 +485,7 @@ final class SystemConfiguration
     public function getThemeColorChoices(): string
     {
         $config = $this->find('theme.color_choices');
-        if (is_string($config) && $config !== '') {
+        if (\is_string($config) && $config !== '') {
             return $config;
         }
 
