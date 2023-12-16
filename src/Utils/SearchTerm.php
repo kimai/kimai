@@ -57,14 +57,14 @@ final class SearchTerm
         return $this->fields;
     }
 
-    public function getSearchTerm(): ?string
+    public function getSearchTerm(): string
     {
         return $this->term;
     }
 
     public function hasSearchTerm(): bool
     {
-        return !empty($this->term);
+        return $this->term !== '';
     }
 
     public function getOriginalSearch(): string

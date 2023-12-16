@@ -69,6 +69,10 @@ final class ColorChoiceType extends AbstractType implements DataTransformerInter
         ]);
     }
 
+    /**
+     * @param string $config
+     * @return array<string, string>
+     */
     private function convertStringToColorArray(string $config): array
     {
         $config = explode(',', $config);

@@ -30,14 +30,15 @@ final class ProjectDateRangeController extends AbstractController
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
 
-        $query = new ProjectDaterangeQuery($dateFactory->getStartOfMonth(), $user);
+        $defaultStart = $dateFactory->getStartOfMonth();
+        $query = new ProjectDaterangeQuery($defaultStart, $user);
         $form = $this->createFormForGetRequest(ProjectDateRangeForm::class, $query, [
             'timezone' => $user->getTimezone()
         ]);
         $form->submit($request->query->all(), false);
 
         $dateRange = new DateRange(true);
-        $dateRange->setBegin($query->getMonth());
+        $dateRange->setBegin($query->getMonth() ?? $defaultStart);
         $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
 
         $projects = $service->findProjectsForDateRange($query, $dateRange);

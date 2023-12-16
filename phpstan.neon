@@ -637,16 +637,6 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Cannot access property \\$original on SimpleXMLElement\\|null\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
-            message: "#^Cannot access property \\$target\\-language on SimpleXMLElement\\|null\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
             message: "#^Cannot call method asXML\\(\\) on SimpleXMLElement\\|false\\.$#"
             count: 5
             path: src/Command/TranslationCommand.php
@@ -813,11 +803,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getSamlProvider\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getThemeColorChoices\\(\\) should return string\\|null but returns float\\|int\\<min, \\-1\\>\\|int\\<1, max\\>\\|string\\|true\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
@@ -1139,11 +1124,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Form\\\\Model\\\\DateRange\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
@@ -3472,16 +3452,6 @@ parameters:
             path: src/Form/Type/ColorChoiceType.php
 
         -
-            message: "#^Method App\\\\Form\\\\Type\\\\ColorChoiceType\\:\\:convertStringToColorArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
-            message: "#^Parameter \\#1 \\$config of method App\\\\Form\\\\Type\\\\ColorChoiceType\\:\\:convertStringToColorArray\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
             message: "#^Class App\\\\Form\\\\Type\\\\ColorPickerType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
             count: 1
             path: src/Form/Type/ColorPickerType.php
@@ -4360,11 +4330,6 @@ parameters:
             message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsRepository\\:\\:getGroupedByCustomerProjectActivityUser\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsRepository.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeQuery\\:\\:\\$month \\(DateTime\\) does not accept DateTime\\|null\\.$#"
-            count: 1
-            path: src/Reporting/ProjectDateRange/ProjectDateRangeQuery.php
 
         -
             message: "#^Cannot access offset 'project' on mixed\\.$#"

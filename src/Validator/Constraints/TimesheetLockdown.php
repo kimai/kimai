@@ -23,7 +23,7 @@ final class TimesheetLockdown extends TimesheetConstraint
      */
     public \DateTime|string|null $now;
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

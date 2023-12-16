@@ -33,7 +33,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
     {
     }
 
-    public function supports(Request $request): ?bool
+    public function supports(Request $request): bool
     {
         if (str_contains($request->getRequestUri(), '/api/')) {
             return !str_contains($request->getRequestUri(), '/api/doc');
@@ -95,7 +95,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
         return null;
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $data = [
             'message' => $exception instanceof CustomUserMessageAuthenticationException ? $exception->getMessage() : 'Invalid credentials'

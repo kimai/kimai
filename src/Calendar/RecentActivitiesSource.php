@@ -62,7 +62,7 @@ final class RecentActivitiesSource implements DragAndDropSource
         return $this->entries;
     }
 
-    public function getBlockInclude(): ?string
+    public function getBlockInclude(): string
     {
         return 'calendar/drag-drop.html.twig';
     }

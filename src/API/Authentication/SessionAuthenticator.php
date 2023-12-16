@@ -38,7 +38,7 @@ final class SessionAuthenticator extends AbstractAuthenticator
         return $token;
     }
 
-    public function supports(Request $request): ?bool
+    public function supports(Request $request): bool
     {
         if (str_contains($request->getRequestUri(), '/api/')) {
             // API docs can only be access, when the user is logged in
@@ -62,7 +62,7 @@ final class SessionAuthenticator extends AbstractAuthenticator
         return $this->authenticator->onAuthenticationSuccess($request, $token, $firewallName);
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         return $this->authenticator->onAuthenticationFailure($request, $exception);
     }

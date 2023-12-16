@@ -127,7 +127,7 @@ class UserService
         return $user;
     }
 
-    public function findUserByUsernameOrEmail(string $usernameOrEmail): ?User
+    public function findUserByUsernameOrEmail(string $usernameOrEmail): User
     {
         return $this->repository->loadUserByIdentifier($usernameOrEmail);
     }

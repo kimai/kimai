@@ -64,7 +64,7 @@ final class PasswordResetController extends AbstractController
         $username = $request->request->get('username');
         $user = $this->userService->findUserByUsernameOrEmail($username);
 
-        if (null !== $user && !$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
+        if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
             if (!$user->isInternalUser()) {
                 throw $this->createAccessDeniedException(
                     sprintf('The user "%s" tried to reset the password, but it is registered as "%s" auth-type.', $user->getUserIdentifier(), $user->getAuth())
