@@ -147,7 +147,7 @@
             <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </span>
         {{ block('form_widget_simple') }}
-        {% set time_presets = form_time_presets(app.user.timezone, format) %}
+        {% set time_presets = form_time_presets(app.user.timezone) %}
         {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
         <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-end pre-scrollable">
@@ -155,6 +155,7 @@
                 {% for index in [0, 1, 2, 3] %}
                     <div class="dropdown-menu-column" style="min-width: 4rem">
                         {% for value in time_presets %}
+                            {% set value = value|time %}
                             {% if loop.index0 % 4 == index %}
                                 <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
                             {% endif %}
