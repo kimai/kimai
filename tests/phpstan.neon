@@ -7123,16 +7123,6 @@ parameters:
             path: Reporting/ProjectInactive/ProjectInactiveQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Reporting\\\\ProjectView\\\\ProjectViewModelTest\\:\\:testDefaults\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Reporting/ProjectView/ProjectViewModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Reporting\\\\ProjectView\\\\ProjectViewModelTest\\:\\:testSetterGetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Reporting/ProjectView/ProjectViewModelTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Reporting\\\\ProjectView\\\\ProjectViewQueryTest\\:\\:testDefaults\\(\\) has no return type specified\\.$#"
             count: 1
             path: Reporting/ProjectView/ProjectViewQueryTest.php
@@ -8439,11 +8429,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\TranslationsTest\\:\\:testReplacerWereNotTranslated\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: TranslationsTest.php
-
-        -
-            message: "#^Offset 'target\\-language' does not exist on SimpleXMLElement\\|null\\.$#"
             count: 1
             path: TranslationsTest.php
 
