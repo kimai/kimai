@@ -727,13 +727,11 @@ class ProjectStatisticService
         $endMonth = (clone $startOfWeek)->modify('last day of this month');
 
         $projectViews = [];
-        foreach ($projects as $project) {
-            $projectViews[$project->getId()] = new ProjectViewModel($project);
-        }
 
         $budgetStats = $this->getBudgetStatisticModelForProjects($projects, $today);
         foreach ($budgetStats as $model) {
-            $projectViews[$model->getProject()->getId()]->setBudgetStatisticModel($model);
+            $project = $model->getProject();
+            $projectViews[$project->getId()] = new ProjectViewModel($model);
         }
 
         $projectIds = array_keys($projectViews);
@@ -741,7 +739,6 @@ class ProjectStatisticService
         $tplQb = $this->timesheetRepository->createQueryBuilder('t');
         $tplQb
             ->select('IDENTITY(t.project) AS id')
-            ->addSelect('COUNT(t.id) as amount')
             ->addSelect('COALESCE(SUM(t.duration), 0) AS duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($tplQb->expr()->in('t.project', ':project'))
@@ -749,14 +746,11 @@ class ProjectStatisticService
             ->setParameter('project', array_values($projectIds))
         ;
 
+        // find the most recent timesheet for each project
         $qb = clone $tplQb;
         $qb->addSelect('MAX(t.date) as lastRecord');
-
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
-            $projectViews[$row['id']]->setDurationTotal($row['duration']);
-            $projectViews[$row['id']]->setRateTotal($row['rate']);
-            $projectViews[$row['id']]->setTimesheetCounter($row['amount']);
             if ($row['lastRecord'] !== null) {
                 // might be the wrong timezone
                 $projectViews[$row['id']]->setLastRecord($factory->createDateTime($row['lastRecord']));
@@ -799,34 +793,6 @@ class ProjectStatisticService
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
-        }
-
-        $qb = clone $tplQb;
-        $qb
-            ->addSelect('t.exported')
-            ->addSelect('t.billable')
-            ->addGroupBy('t.exported')
-            ->addGroupBy('t.billable')
-        ;
-        $result = $qb->getQuery()->getScalarResult();
-        foreach ($result as $row) {
-            /** @var ProjectViewModel $view */
-            $view = $projectViews[$row['id']];
-            if ($row['billable'] === 1 && $row['exported'] === 1) {
-                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
-                $view->setBillableRate($view->getBillableRate() + $row['rate']);
-            } elseif ($row['billable'] === 1 && $row['exported'] === 0) {
-                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
-                $view->setBillableRate($view->getBillableRate() + $row['rate']);
-                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
-                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
-                $view->setNotBilledDuration($view->getNotBilledDuration() + $row['duration']);
-                $view->setNotBilledRate($view->getNotBilledRate() + $row['rate']);
-            } elseif ($row['billable'] === 0 && $row['exported'] === 0) {
-                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
-                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
-            }
-            // the last possible case $row['billable'] === 0 && $row['exported'] === 1 is extremely unlikely and not used
         }
 
         return array_values($projectViews);

@@ -10,6 +10,8 @@
 namespace App\Tests\Reporting\ProjectView;
 
 use App\Entity\Project;
+use App\Model\ProjectBudgetStatisticModel;
+use App\Model\Statistic\BudgetStatistic;
 use App\Reporting\ProjectView\ProjectViewModel;
 use PHPUnit\Framework\TestCase;
 
@@ -18,10 +20,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectViewModelTest extends TestCase
 {
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $project = new Project();
-        $sut = new ProjectViewModel($project);
+        $model = new ProjectBudgetStatisticModel($project);
+        $total = new BudgetStatistic();
+        $model->setStatisticTotal($total);
+        $sut = new ProjectViewModel($model);
 
         self::assertSame($project, $sut->getProject());
         self::assertSame(0, $sut->getDurationDay());
@@ -32,27 +37,33 @@ class ProjectViewModelTest extends TestCase
         self::assertSame(0.0, $sut->getNotExportedRate());
         self::assertSame(0.0, $sut->getRateTotal());
         self::assertNull($sut->getLastRecord());
-        self::assertSame(0, $sut->getTimesheetCounter());
         self::assertNull($sut->getLastRecord());
         self::assertSame(0.0, $sut->getBillableRate());
         self::assertSame(0, $sut->getBillableDuration());
-        self::assertSame(0, $sut->getNotBilledDuration());
-        self::assertSame(0.0, $sut->getNotBilledRate());
     }
 
-    public function testSetterGetter()
+    public function testSetterGetter(): void
     {
-        $sut = new ProjectViewModel(new Project());
+        $project = new Project();
+
+        $model = new ProjectBudgetStatisticModel($project);
+        $total = new BudgetStatistic();
+        $total->setCounter(123);
+        $total->setDuration(3456789);
+        $total->setDurationBillable(3456789);
+        $total->setDurationBillableExported(3400000);
+        $total->setRate(789.0);
+        $total->setRateBillable(16789.0);
+        $total->setRateBillableExported(10000.0);
+        $model->setStatisticTotal($total);
+
+        $sut = new ProjectViewModel($model);
 
         $date = new \DateTime();
 
         $sut->setDurationDay(123456789);
         $sut->setDurationMonth(23456789);
-        $sut->setDurationTotal(3456789);
         $sut->setDurationWeek(456789);
-        $sut->setNotExportedDuration(56789);
-        $sut->setNotExportedRate(6789);
-        $sut->setRateTotal(789);
         $sut->setLastRecord($date);
 
         self::assertSame(123456789, $sut->getDurationDay());
@@ -65,18 +76,10 @@ class ProjectViewModelTest extends TestCase
         self::assertSame($date, $sut->getLastRecord());
 
         $date = new \DateTime();
-        $sut->setTimesheetCounter(123);
         $sut->setLastRecord($date);
-        $sut->setBillableRate(123.456);
-        $sut->setBillableDuration(321);
-        $sut->setNotBilledDuration(9876);
-        $sut->setNotBilledRate(4705.23);
 
-        self::assertSame(123, $sut->getTimesheetCounter());
         self::assertSame($date, $sut->getLastRecord());
-        self::assertSame(123.456, $sut->getBillableRate());
-        self::assertSame(321, $sut->getBillableDuration());
-        self::assertSame(9876, $sut->getNotBilledDuration());
-        self::assertSame(4705.23, $sut->getNotBilledRate());
+        self::assertSame(16789.0, $sut->getBillableRate());
+        self::assertSame(3456789, $sut->getBillableDuration());
     }
 }
