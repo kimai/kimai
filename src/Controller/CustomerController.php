@@ -34,6 +34,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -308,6 +309,15 @@ final class CustomerController extends AbstractController
         $rates = [];
         $now = $this->getDateTimeFactory()->createDateTime();
 
+        $exportUrl = null;
+        $invoiceUrl = null;
+        if ($this->isGranted('create_export')) {
+            $exportUrl = $this->generateUrl('export', ['customers[]' => $customer->getId(), 'projects[]' => '', 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'preview' => true, 'billable' => true]);
+        }
+        if ($this->isGranted('view_invoice')) {
+            $invoiceUrl = $this->generateUrl('invoice', ['customers[]' => $customer->getId(), 'projects[]' => '', 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'billable' => true]);
+        }
+
         if ($this->isGranted('edit', $customer)) {
             if ($this->isGranted('create_team')) {
                 $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
@@ -356,7 +366,9 @@ final class CustomerController extends AbstractController
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
             'now' => $now,
-            'boxes' => $boxes
+            'boxes' => $boxes,
+            'export_url' => $exportUrl,
+            'invoice_url' => $invoiceUrl,
         ]);
     }
 

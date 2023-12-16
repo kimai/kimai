@@ -15,14 +15,14 @@
                     <table class="table table-hover dataTable">
                         <tr>
                             <td>{{ 'timeBudget'|trans }}</td>
-                            <td class="text-nowrap text-end">
+                            <td class="text-nowrap text-end w-min">
                                 {% if entity.timeBudget > 0 %}
                                     {{ entity.timeBudget|duration }}
                                 {% else %}
                                     -
                                 {% endif %}
                             </td>
-                            <td class="text-nowrap text-end">
+                            <td class="text-nowrap text-end w-min">
                                 {% if entity.timeBudget > 0 %}
                                 100%
                                 {% else %}
@@ -47,6 +47,18 @@
                             <td>{{ 'billable'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.durationBillable|duration }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'not_exported'|trans }}</td>
+                            <td class="text-nowrap text-end">
+                                {% set not_exported = (stats.statisticTotal.durationBillable - stats.statisticTotal.durationBillableExported) %}
+                                {% if export_url is defined and export_url is not null %}
+                                    <a href="{{ export_url }}">{{ not_exported|duration }}</a>
+                                {% else %}
+                                    {{ not_exported|duration }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap text-end">-</td>
                         </tr>
                         {% if entity.timeBudget > 0 %}
                         <tr>
@@ -87,14 +99,14 @@
                     <table class="table table-hover dataTable">
                         <tr>
                             <td>{{ 'budget'|trans }}</td>
-                            <td class="text-nowrap text-end">
+                            <td class="text-nowrap text-end w-min">
                                 {% if entity.budget > 0 %}
                                     {{ entity.budget|money(currency) }}
                                 {% else %}
                                     -
                                 {% endif %}
                             </td>
-                            <td class="text-nowrap text-end">
+                            <td class="text-nowrap text-end w-min">
                                 {% if entity.budget > 0 %}
                                     100%
                                 {% else %}
@@ -119,6 +131,18 @@
                             <td>{{ 'billable'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.rateBillable|money(currency) }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'not_invoiced'|trans }}</td>
+                            <td class="text-nowrap text-end">
+                                {% set not_exported = (stats.statisticTotal.rateBillable - stats.statisticTotal.rateBillableExported) %}
+                                {% if invoice_url is defined and invoice_url is not null %}
+                                    <a href="{{ invoice_url }}">{{ not_exported|money(currency) }}</a>
+                                {% else %}
+                                    {{ not_exported|money(currency) }}
+                                {% endif %}
+                            </td>
+                            <td class="text-nowrap text-end">-</td>
                         </tr>
                         {% set percentReached = 0 %}
                         {% if stats.rateBillable > 0 %}
