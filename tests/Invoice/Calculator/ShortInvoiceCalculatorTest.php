@@ -56,7 +56,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setUser(new User())
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->addTag((new Tag())->setName('foo'))
             ->addTag((new Tag())->setName('bar'))
@@ -70,7 +70,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setUser(new User())
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-28'))
             ->setEnd(new \DateTime())
             ->addTag((new Tag())->setName('bar1'))
         ;
@@ -83,7 +83,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setUser(new User())
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
         ;
 
@@ -106,8 +106,11 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(5800, $sut->getTimeWorked());
         $this->assertEquals(1, \count($sut->getEntries()));
 
-        /** @var InvoiceItem $result */
-        $result = $sut->getEntries()[0];
+        $entries = $sut->getEntries();
+        self::assertCount(1, $entries);
+        $result = $entries[0];
+
+        $this->assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
         $this->assertEquals('activity description', $result->getDescription());
         $this->assertEquals(293.27, $result->getHourlyRate());
         $this->assertNull($result->getFixedRate());

@@ -37,6 +37,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries(): void
     {
+        $date = new DateTime();
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
@@ -85,7 +86,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new DateTime())
+            ->setBegin($date)
             ->setEnd(new DateTime('2018-11-28'))
             ->setDuration(400)
             ->setRate(1947.99)
@@ -123,8 +124,11 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals(378.02, $entries[0]->getRate());
-        $this->assertEquals(195.11, $entries[1]->getRate());
+        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[2]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals(378.02, $entries[1]->getRate());
+        $this->assertEquals(195.11, $entries[0]->getRate());
         $this->assertEquals(1947.99, $entries[2]->getRate());
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
     }
