@@ -21,6 +21,15 @@ abstract class AbstractCalculator
      */
     abstract public function getEntries(): array;
 
+    protected function sortEntries(array $items): array
+    {
+        usort($items, function (InvoiceItem $item1, InvoiceItem $item2) {
+            return $item1->getBegin() <=> $item2->getBegin();
+        });
+
+        return $items;
+    }
+
     abstract public function getId(): string;
 
     public function setModel(InvoiceModel $model): void

@@ -126,11 +126,10 @@ class DateUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(4, $entries);
-        $this->assertEquals(378.02, $entries[0]->getRate());
-        $this->assertEquals(111.11, $entries[1]->getRate());
-        $this->assertEquals(1947.99, $entries[2]->getRate());
-        $this->assertEquals(84, $entries[3]->getRate());
-        self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate() + $entries[3]->getRate());
+        $this->assertEquals(378.02, $entries[2]->getRate());
+        $this->assertEquals(111.11, $entries[0]->getRate());
+        $this->assertEquals(1947.99, $entries[3]->getRate());
+        $this->assertEquals(84, $entries[1]->getRate());
     }
 
     public function testDescriptionByTimesheet(): void

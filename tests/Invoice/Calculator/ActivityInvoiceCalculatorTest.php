@@ -54,7 +54,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
@@ -74,7 +74,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-28'))
             ->setEnd(new \DateTime())
             ->setDuration(1800)
             ->setRate(111.11)
@@ -84,7 +84,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-28'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(1947.99)
@@ -94,7 +94,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -114,7 +114,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $timesheet7 = new Timesheet();
         $timesheet7
             ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setEnd(new \DateTime('2018-11-18'))
             ->setDuration(0)
             ->setRate(0)
             ->setUser(new User())
