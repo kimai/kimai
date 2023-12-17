@@ -7,7 +7,7 @@
 
 # Source base [fpm/apache]
 ARG BASE="fpm"
-ARG PHP_VER="8.1"
+ARG PHP_VER="8.2"
 ARG COMPOSER_VER="latest"
 # Branch name
 ARG KIMAI="main"
@@ -77,7 +77,7 @@ RUN apk add --no-cache \
 
 
 # apache debian php extension base
-FROM php:${PHP_VER}-apache-buster AS apache-php-ext-base
+FROM php:${PHP_VER}-apache-bookworm AS apache-php-ext-base
 RUN apt-get update
 RUN apt-get install -y \
         libldap2-dev \
@@ -162,7 +162,7 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 # apache base build
 ###########################
 
-FROM php:${PHP_VER}-apache-buster AS apache-base
+FROM php:${PHP_VER}-apache-bookworm AS apache-base
 ARG KIMAI
 ARG TIMEZONE
 COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
@@ -170,7 +170,7 @@ RUN apt-get update && \
     apt-get install -y \
         bash \
         haveged \
-        libicu63 \
+        libicu72 \
         libpng16-16 \
         libzip4 \
         libxslt1.1 \
@@ -217,25 +217,25 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # PHP extension xsl
 COPY --from=php-ext-xsl /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini
-COPY --from=php-ext-xsl /usr/local/lib/php/extensions/no-debug-non-zts-20210902/xsl.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/xsl.so
+COPY --from=php-ext-xsl /usr/local/lib/php/extensions/no-debug-non-zts-20220829/xsl.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/xsl.so
 # PHP extension pdo_mysql
 COPY --from=php-ext-pdo_mysql /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini
-COPY --from=php-ext-pdo_mysql /usr/local/lib/php/extensions/no-debug-non-zts-20210902/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/pdo_mysql.so
+COPY --from=php-ext-pdo_mysql /usr/local/lib/php/extensions/no-debug-non-zts-20220829/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/pdo_mysql.so
 # PHP extension zip
 COPY --from=php-ext-zip /usr/local/etc/php/conf.d/docker-php-ext-zip.ini /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
-COPY --from=php-ext-zip /usr/local/lib/php/extensions/no-debug-non-zts-20210902/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/zip.so
+COPY --from=php-ext-zip /usr/local/lib/php/extensions/no-debug-non-zts-20220829/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/zip.so
 # PHP extension ldap
 COPY --from=php-ext-ldap /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini
-COPY --from=php-ext-ldap /usr/local/lib/php/extensions/no-debug-non-zts-20210902/ldap.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/ldap.so
+COPY --from=php-ext-ldap /usr/local/lib/php/extensions/no-debug-non-zts-20220829/ldap.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/ldap.so
 # PHP extension gd
 COPY --from=php-ext-gd /usr/local/etc/php/conf.d/docker-php-ext-gd.ini /usr/local/etc/php/conf.d/docker-php-ext-gd.ini
-COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20210902/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/gd.so
+COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20220829/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/gd.so
 # PHP extension intl
 COPY --from=php-ext-intl /usr/local/etc/php/conf.d/docker-php-ext-intl.ini /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
-COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20210902/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/intl.so
+COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20220829/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/intl.so
 # PHP extension redis
 COPY --from=php-ext-redis /usr/local/etc/php/conf.d/docker-php-ext-redis.ini /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
-COPY --from=php-ext-redis /usr/local/lib/php/extensions/no-debug-non-zts-20210902/redis.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/redis.so
+COPY --from=php-ext-redis /usr/local/lib/php/extensions/no-debug-non-zts-20220829/redis.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/redis.so
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 ENV DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
