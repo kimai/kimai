@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\Customer;
 use App\Entity\Timesheet;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DatePickerType;
@@ -103,8 +104,9 @@ class TimesheetEditForm extends AbstractType
 
         // -----------------------------------------------------
         $query = new CustomerFormTypeQuery($customer);
-        $query->setUser($options['user']);
+        $query->setUser($options['user']); // @phpstan-ignore-line
         $qb = $this->customers->getQueryBuilderForFormType($query);
+        /** @var array<Customer> $customers */
         $customers = $qb->getQuery()->getResult();
         $customerCount = \count($customers);
 
