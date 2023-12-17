@@ -164,12 +164,12 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(6, $entries);
-        $this->assertEquals('2018-11-08', $entries[0]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-18', $entries[1]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-18', $entries[2]->getBegin()->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[4]->getBegin()->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[5]->getBegin()->format('Y-m-d'));
+        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-18', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-18', $entries[2]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[4]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[5]->getBegin()?->format('Y-m-d'));
 
         $this->assertEquals(404.38, $entries[5]->getRate());
         $this->assertEquals(2032.74, $entries[1]->getRate());

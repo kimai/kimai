@@ -124,9 +124,9 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals('2018-11-28', $entries[0]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[1]->getBegin()->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[2]->getBegin()->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[2]->getBegin()?->format('Y-m-d'));
         $this->assertEquals(378.02, $entries[1]->getRate());
         $this->assertEquals(195.11, $entries[0]->getRate());
         $this->assertEquals(1947.99, $entries[2]->getRate());

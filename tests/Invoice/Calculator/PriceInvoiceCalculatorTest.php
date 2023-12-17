@@ -128,10 +128,10 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = $sut->getEntries();
         self::assertCount(4, $entries);
 
-        $this->assertEquals('2018-11-28', $entries[0]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[1]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[2]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[3]->getBegin()->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[2]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[3]->getBegin()?->format('Y-m-d'));
 
         $this->assertEquals(378.02, $entries[3]->getRate());
         $this->assertEquals(111.11, $entries[0]->getRate());

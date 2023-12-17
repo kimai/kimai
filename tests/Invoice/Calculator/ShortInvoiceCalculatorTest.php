@@ -110,7 +110,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         self::assertCount(1, $entries);
         $result = $entries[0];
 
-        $this->assertEquals('2018-11-28', $result->getBegin()->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
         $this->assertEquals('activity description', $result->getDescription());
         $this->assertEquals(293.27, $result->getHourlyRate());
         $this->assertNull($result->getFixedRate());

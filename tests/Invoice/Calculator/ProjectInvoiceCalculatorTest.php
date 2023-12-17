@@ -124,9 +124,9 @@ class ProjectInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
 
-        $this->assertEquals('2018-11-08', $entries[0]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[1]->getBegin()->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[2]->getBegin()->format('Y-m-d'));
+        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
 
         $this->assertEquals(404.38, $entries[2]->getRate());
         $this->assertEquals(2032.74, $entries[0]->getRate());
