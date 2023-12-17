@@ -30,6 +30,7 @@ final class ProjectDateRangeForm extends AbstractType
         ]);
 
         $builder->add('month', MonthPickerType::class, [
+            'required' => true,
             'label' => false,
             'view_timezone' => $options['timezone'],
             'model_timezone' => $options['timezone'],

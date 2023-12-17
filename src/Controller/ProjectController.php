@@ -36,6 +36,8 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\TeamQuery;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Utils\Context;
 use App\Utils\DataTable;
@@ -334,6 +336,15 @@ final class ProjectController extends AbstractController
         $rates = [];
         $now = $this->getDateTimeFactory()->createDateTime();
 
+        $exportUrl = null;
+        $invoiceUrl = null;
+        if ($this->isGranted('create_export') && $project->getCustomer() !== null) {
+            $exportUrl = $this->generateUrl('export', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'preview' => true, 'billable' => true]);
+        }
+        if ($this->isGranted('view_invoice') && $project->getCustomer() !== null) {
+            $invoiceUrl = $this->generateUrl('invoice', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'billable' => true]);
+        }
+
         if ($this->isGranted('edit', $project)) {
             if ($this->isGranted('create_team')) {
                 $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
@@ -351,7 +362,9 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {
-            $teams = $project->getTeams();
+            $query = new TeamQuery();
+            $query->addProject($project);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins
@@ -375,7 +388,9 @@ final class ProjectController extends AbstractController
             'teams' => $teams,
             'rates' => $rates,
             'now' => $now,
-            'boxes' => $boxes
+            'boxes' => $boxes,
+            'export_url' => $exportUrl,
+            'invoice_url' => $invoiceUrl,
         ]);
     }
 

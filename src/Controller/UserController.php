@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\UserExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
@@ -112,7 +113,7 @@ final class UserController extends AbstractController
 
     #[Route(path: '/create', name: 'admin_user_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_user')]
-    public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository): Response
+    public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository, EventDispatcherInterface $dispatcher): Response
     {
         $user = $this->createNewDefaultUser($config);
         $editForm = $this->getCreateUserForm($user);
@@ -125,6 +126,14 @@ final class UserController extends AbstractController
 
             $userRepository->saveUser($user);
             $this->flashSuccess('action.update.success');
+
+            try {
+                $event = new PrepareUserEvent($user, false);
+                $dispatcher->dispatch($event);
+                $userRepository->saveUser($user);
+            } catch (\Exception $ex) {
+                // it should be no problem, if creating default user preferences fails
+            }
 
             return $this->redirectToRouteAfterCreate('user_profile_edit', ['username' => $user->getUserIdentifier()]);
         }

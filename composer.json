@@ -202,7 +202,7 @@
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "6.3.*"
+            "require": "6.4.*"
         }
     }
 }

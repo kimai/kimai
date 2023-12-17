@@ -22,7 +22,7 @@ final class DateTimeFormat extends Constraint
     public ?string $separator = null;
     public ?string $message = 'This datetime format is invalid.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::PROPERTY_CONSTRAINT;
     }

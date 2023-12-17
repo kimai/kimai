@@ -76,9 +76,9 @@ final class WizardController extends AbstractController
                 $userService->updateUser($user);
 
                 if ($data['reload'] === '1') {
-                    return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $data['language']]);
+                    return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $user->getLanguage()]);
                 } else {
-                    return $this->redirectToRoute('wizard', ['wizard' => $next, '_locale' => $data['language']]);
+                    return $this->redirectToRoute('wizard', ['wizard' => $next, '_locale' => $user->getLanguage()]);
                 }
             }
 

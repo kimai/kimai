@@ -44,12 +44,14 @@ final class TimesheetEntry implements DragAndDropEntry
 
     public function getTitle(): string
     {
-        if ($this->timesheet->getActivity() !== null && $this->timesheet->getActivity()->getName() !== null) {
-            return $this->timesheet->getActivity()->getName();
+        $activity = $this->timesheet->getActivity();
+        if ($activity !== null && $activity->getName() !== null) {
+            return $activity->getName();
         }
 
-        if (null !== $this->timesheet->getProject() && $this->timesheet->getProject()->getName() !== null) {
-            return $this->timesheet->getProject()->getName();
+        $project = $this->timesheet->getProject();
+        if ($project !== null && $project->getName() !== null) {
+            return $project->getName();
         }
 
         return $this->timesheet->getDescription() ?? '';
@@ -60,7 +62,7 @@ final class TimesheetEntry implements DragAndDropEntry
         return $this->color;
     }
 
-    public function getBlockName(): ?string
+    public function getBlockName(): string
     {
         return 'dd_timesheet';
     }

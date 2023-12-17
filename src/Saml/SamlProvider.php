@@ -18,6 +18,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class SamlProvider
 {
+    /**
+     * @param UserProviderInterface<User> $userProvider
+     */
     public function __construct(
         private UserRepository $repository,
         private UserProviderInterface $userProvider,
@@ -30,8 +33,10 @@ final class SamlProvider
         $user = null;
 
         try {
-            /** @var User $user */
-            $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
+            if ($token->getUserIdentifier() !== null) {
+                /** @var User $user */
+                $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
+            }
         } catch (UserNotFoundException $e) {
         }
 

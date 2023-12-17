@@ -395,7 +395,7 @@
                                 </div>
                                 <div class="datagrid-content">
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                        {{ project_view.notBilledRate|money(currency) }}
+                                        {{ project_view.notExportedRate|money(currency) }}
                                     </a>
                                 </div>
                             </div>

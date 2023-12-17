@@ -18,10 +18,15 @@ use PHPUnit\Framework\TestCase;
  */
 class PrepareUserEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $user = new User();
         $sut = new PrepareUserEvent($user);
         $this->assertSame($user, $sut->getUser());
+        $this->assertTrue($sut->isBooting());
+
+        $sut = new PrepareUserEvent($user, false);
+        $this->assertSame($user, $sut->getUser());
+        $this->assertFalse($sut->isBooting());
     }
 }

@@ -35,6 +35,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
  * @template-implements PasswordUpgraderInterface<User>
+ * @template-implements UserProviderInterface<User>
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
 {

@@ -31,6 +31,8 @@ use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\TeamQuery;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -135,6 +137,22 @@ final class ActivityController extends AbstractController
         $defaultTeam = null;
         $now = $this->getDateTimeFactory()->createDateTime();
 
+        $exportUrl = null;
+        $invoiceUrl = null;
+        $params = ['customers[]' => '', 'projects[]' => '', 'activities[]' => $activity->getId(), 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'billable' => true];
+        if ($activity->getProject() !== null) {
+            $params['projects[]'] = $activity->getProject()->getId();
+            if ($activity->getProject()->getCustomer() !== null) {
+                $params['customers[]'] = $activity->getProject()->getCustomer()->getId();
+            }
+        }
+        if ($this->isGranted('create_export')) {
+            $exportUrl = $this->generateUrl('export', array_merge($params, ['preview' => true]));
+        }
+        if ($this->isGranted('view_invoice')) {
+            $invoiceUrl = $this->generateUrl('invoice', $params);
+        }
+
         if ($this->isGranted('edit', $activity)) {
             if ($this->isGranted('create_team')) {
                 $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
@@ -147,7 +165,9 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
-            $teams = $activity->getTeams();
+            $query = new TeamQuery();
+            $query->addActivity($activity);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins
@@ -168,7 +188,9 @@ final class ActivityController extends AbstractController
             'team' => $defaultTeam,
             'teams' => $teams,
             'now' => $now,
-            'boxes' => $boxes
+            'boxes' => $boxes,
+            'export_url' => $exportUrl,
+            'invoice_url' => $invoiceUrl,
         ]);
     }
 

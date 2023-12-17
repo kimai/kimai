@@ -482,10 +482,10 @@ final class SystemConfiguration
         return (bool) $this->find('theme.avatar_url');
     }
 
-    public function getThemeColorChoices(): ?string
+    public function getThemeColorChoices(): string
     {
         $config = $this->find('theme.color_choices');
-        if (!empty($config)) {
+        if (\is_string($config) && $config !== '') {
             return $config;
         }
 

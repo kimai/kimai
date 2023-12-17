@@ -637,16 +637,6 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Cannot access property \\$original on SimpleXMLElement\\|null\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
-            message: "#^Cannot access property \\$target\\-language on SimpleXMLElement\\|null\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
             message: "#^Cannot call method asXML\\(\\) on SimpleXMLElement\\|false\\.$#"
             count: 5
             path: src/Command/TranslationCommand.php
@@ -813,11 +803,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getSamlProvider\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getThemeColorChoices\\(\\) should return string\\|null but returns float\\|int\\<min, \\-1\\>\\|int\\<1, max\\>\\|string\\|true\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
@@ -1139,11 +1124,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Form\\\\Model\\\\DateRange\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
@@ -3472,16 +3452,6 @@ parameters:
             path: src/Form/Type/ColorChoiceType.php
 
         -
-            message: "#^Method App\\\\Form\\\\Type\\\\ColorChoiceType\\:\\:convertStringToColorArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
-            message: "#^Parameter \\#1 \\$config of method App\\\\Form\\\\Type\\\\ColorChoiceType\\:\\:convertStringToColorArray\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
             message: "#^Class App\\\\Form\\\\Type\\\\ColorPickerType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
             count: 1
             path: src/Form/Type/ColorPickerType.php
@@ -4232,38 +4202,18 @@ parameters:
             path: src/Plugin/PluginMetadata.php
 
         -
-            message: "#^Cannot access offset 'amount' on mixed\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'billable' on mixed\\.$#"
-            count: 3
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 9
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'exported' on mixed\\.$#"
             count: 3
             path: src/Project/ProjectStatisticService.php
 
         -
             message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 8
+            count: 4
             path: src/Project/ProjectStatisticService.php
 
         -
             message: "#^Cannot access offset 'lastRecord' on mixed\\.$#"
             count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 6
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -4332,11 +4282,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$durationTotal of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationTotal\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$durationWeek of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationWeek\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
@@ -4352,11 +4297,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$rateTotal of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setRateTotal\\(\\) expects float, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$recordDuration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDurationBillable\\(\\) expects int, float\\|int given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
@@ -4368,11 +4308,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$recordDuration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDurationExported\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheetCounter of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setTimesheetCounter\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
 
@@ -4397,11 +4332,6 @@ parameters:
             path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsRepository.php
 
         -
-            message: "#^Property App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeQuery\\:\\:\\$month \\(DateTime\\) does not accept DateTime\\|null\\.$#"
-            count: 1
-            path: src/Reporting/ProjectDateRange/ProjectDateRangeQuery.php
-
-        -
             message: "#^Cannot access offset 'project' on mixed\\.$#"
             count: 1
             path: src/Reporting/ProjectDetails/ProjectDetailsForm.php
@@ -4420,11 +4350,6 @@ parameters:
             message: "#^Property App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsModel\\:\\:\\$usersMonthly \\(array\\<string, array\\<int, App\\\\Model\\\\Statistic\\\\UserYear\\>\\>\\) does not accept array\\<string, array\\<int\\|string, App\\\\Model\\\\Statistic\\\\UserYear\\>\\>\\.$#"
             count: 1
             path: src/Reporting/ProjectDetails/ProjectDetailsModel.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:getBudgetStatisticModel\\(\\) should return App\\\\Model\\\\BudgetStatisticModelInterface but returns App\\\\Model\\\\BudgetStatisticModelInterface\\|null\\.$#"
-            count: 1
-            path: src/Reporting/ProjectView/ProjectViewModel.php
 
         -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
@@ -5134,11 +5059,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, string\\|null given\\.$#"
             count: 2
-            path: src/Saml/SamlProvider.php
-
-        -
-            message: "#^Parameter \\#1 \\$identifier of method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserProviderInterface\\:\\:loadUserByIdentifier\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
             path: src/Saml/SamlProvider.php
 
         -
