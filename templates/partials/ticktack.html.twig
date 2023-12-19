@@ -4,7 +4,7 @@
     {# fake entry, because at least one html template node is needed #}
     {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
 {% endif %}
-<div class="nav-item d-flex me-1 ticktac">
+<div class="nav-item d-flex me-sm-3 me-1 ticktac">
     <div class="btn-list">
         {% set class = "btn-outline-white" %}
         {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
