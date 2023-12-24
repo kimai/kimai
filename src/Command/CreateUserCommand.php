@@ -16,6 +16,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -43,6 +44,7 @@ final class CreateUserCommand extends AbstractUserCommand
                 User::DEFAULT_ROLE
             )
             ->addArgument('password', InputArgument::OPTIONAL, 'Password for the new user (requested if not provided)')
+            ->addOption('request-password', null, InputOption::VALUE_NONE, 'The user needs to set a new password during next login')
         ;
     }
 
@@ -68,6 +70,10 @@ final class CreateUserCommand extends AbstractUserCommand
         $user->setEmail($email);
         $user->setEnabled(true);
         $user->setRoles(explode(',', $role));
+
+        if ($input->getOption('request-password') === true) {
+            $user->setRequiresPasswordReset(true);
+        }
 
         try {
             $this->userService->saveNewUser($user);
