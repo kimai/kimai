@@ -1068,36 +1068,6 @@ parameters:
             path: API/Serializer/ValidationFailedExceptionErrorHandlerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecurePing\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecurePlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecureVersion\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testPing\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testPlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testVersion\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 3
             path: API/StatusControllerTest.php
@@ -6936,81 +6906,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Pdf\\\\PdfContextTest\\:\\:testSetterAndGetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Pdf/PdfContextTest.php
-
-        -
-            message: "#^Cannot call method getDescription\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getHomepage\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Plugin\\\\Plugin\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getKimaiVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getMetadata\\(\\) on App\\\\Plugin\\\\Plugin\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testAdd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testLoadMetadata\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testUnknownRendererReturnsNull\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$plugin of method App\\\\Plugin\\\\PluginManager\\:\\:loadMetadata\\(\\) expects App\\\\Plugin\\\\Plugin, App\\\\Plugin\\\\Plugin\\|null given\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginMetadataTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginMetadataTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Project\\\\ProjectServiceTest\\:\\:testCannotSavePersistedProjectAsNew\\(\\) has no return type specified\\.$#"

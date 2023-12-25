@@ -17,22 +17,22 @@ use App\Entity\User;
  */
 class StatusControllerTest extends APIControllerBaseTest
 {
-    public function testIsSecurePing()
+    public function testIsSecurePing(): void
     {
         $this->assertUrlIsSecured('/api/ping');
     }
 
-    public function testIsSecureVersion()
+    public function testIsSecureVersion(): void
     {
         $this->assertUrlIsSecured('/api/version');
     }
 
-    public function testIsSecurePlugins()
+    public function testIsSecurePlugins(): void
     {
         $this->assertUrlIsSecured('/api/plugins');
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/ping');
@@ -42,7 +42,7 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertEquals(['message' => 'pong'], $result);
     }
 
-    public function testVersion()
+    public function testVersion(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/version');
@@ -62,12 +62,13 @@ class StatusControllerTest extends APIControllerBaseTest
         );
     }
 
-    public function testPlugins()
+    public function testPlugins(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/plugins');
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertIsArray($result);
+        // no asserts, as plugins are disabled in tests
     }
 }

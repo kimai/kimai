@@ -66,7 +66,6 @@ final class StatusController extends BaseApiController
     {
         $plugins = [];
         foreach ($pluginManager->getPlugins() as $plugin) {
-            $pluginManager->loadMetadata($plugin);
             $plugins[] = new Plugin($plugin);
         }
 

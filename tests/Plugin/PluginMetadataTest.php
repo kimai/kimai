@@ -17,12 +17,11 @@ use PHPUnit\Framework\TestCase;
  */
 class PluginMetadataTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testNonExistingDirectoryThrowsException(): void
     {
-        $sut = new PluginMetadata();
-        $this->assertNull($sut->getDescription());
-        $this->assertNull($sut->getHomepage());
-        $this->assertNull($sut->getVersion());
-        $this->assertNull($sut->getKimaiVersion());
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Bundle "Plugin" does not ship composer.json, which is required since 2.0.');
+
+        new PluginMetadata(__DIR__);
     }
 }

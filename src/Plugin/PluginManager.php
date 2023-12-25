@@ -9,23 +9,23 @@
 
 namespace App\Plugin;
 
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
 final class PluginManager
 {
     /**
      * @var array<Plugin>|null
      */
     private ?array $plugins = null;
-    /**
-     * @var iterable<PluginInterface>
-     */
-    private iterable $bundles;
 
     /**
-     * @param iterable<PluginInterface> $plugins
+     * @param iterable<PluginInterface> $bundles
      */
-    public function __construct(iterable $plugins)
+    public function __construct(
+        #[TaggedIterator(PluginInterface::class)]
+        private readonly iterable $bundles
+    )
     {
-        $this->bundles = $plugins;
     }
 
     /**
@@ -46,29 +46,27 @@ final class PluginManager
         return $this->plugins;
     }
 
+    public function hasPlugin(string $name): bool
+    {
+        foreach ($this->bundles as $plugin) {
+            if ($plugin->getName() === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getPlugin(string $name): ?Plugin
     {
         $plugins = $this->getPlugins();
 
         foreach ($plugins as $plugin) {
-            if ($plugin->getName() === $name) {
+            if ($plugin->getId() === $name) {
                 return $plugin;
             }
         }
 
         return null;
-    }
-
-    /**
-     * Call this method and pass a plugin, to set its metadata.
-     * This is not pre-filled by default, as it would mean to parse several composer.json on each request.
-     *
-     * @param Plugin $plugin
-     * @throws \Exception
-     */
-    public function loadMetadata(Plugin $plugin): void
-    {
-        $meta = PluginMetadata::loadFromComposer($plugin->getPath());
-        $plugin->setMetadata($meta);
     }
 }

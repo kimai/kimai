@@ -11,42 +11,38 @@ namespace App\Plugin;
 
 final class Plugin
 {
-    private string $id;
-    private string $path;
     private ?PluginMetadata $metadata = null;
 
-    public function __construct(PluginInterface $bundle)
+    public function __construct(private readonly PluginInterface $bundle)
     {
-        $this->id = $bundle->getName();
-        $this->path = $bundle->getPath();
     }
 
-    public function getMetadata(): ?PluginMetadata
+    public function getMetadata(): PluginMetadata
     {
+        if ($this->metadata === null) {
+            $this->metadata = new PluginMetadata($this->getPath());
+        }
+
         return $this->metadata;
-    }
-
-    public function setMetadata(PluginMetadata $metadata): void
-    {
-        $this->metadata = $metadata;
     }
 
     public function getPath(): string
     {
-        return $this->path;
+        return $this->bundle->getPath();
     }
 
     public function getName(): string
     {
-        if ($this->metadata !== null && $this->metadata->getName() !== null) {
-            return $this->metadata->getName();
+        $meta = $this->getMetadata();
+        if ($meta->getName() !== null) {
+            return $meta->getName();
         }
 
-        return $this->id;
+        return $this->getId();
     }
 
     public function getId(): string
     {
-        return $this->id;
+        return $this->bundle->getName();
     }
 }
