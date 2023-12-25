@@ -1685,6 +1685,10 @@
         <source>Custom content</source>
         <target>Eigene Inhalte</target>
       </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target>Tage</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
