@@ -19,10 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class InstallCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -37,7 +34,7 @@ class InstallCommandTest extends KernelTestCase
         ));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $command = $this->application->find('kimai:install');
         self::assertInstanceOf(InstallCommand::class, $command);

@@ -37,9 +37,9 @@ class ExportCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    protected Application $application;
+    private Application $application;
 
-    private function clearExportFiles()
+    private function clearExportFiles(): void
     {
         $path = __DIR__ . '/../_data/export/';
 
@@ -103,7 +103,7 @@ class ExportCreateCommandTest extends KernelTestCase
      * @param array $options
      * @return CommandTester
      */
-    protected function createExport(array $options = [])
+    protected function createExport(array $options = []): CommandTester
     {
         $command = $this->application->find('kimai:export:create');
         $commandTester = new CommandTester($command);
@@ -114,7 +114,7 @@ class ExportCreateCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    protected function assertCommandErrors(array $options = [], string $errorMessage = '')
+    protected function assertCommandErrors(array $options = [], string $errorMessage = ''): void
     {
         $commandTester = $this->createExport($options);
 
@@ -122,7 +122,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('[ERROR] ' . $errorMessage, $output);
     }
 
-    protected function assertCommandResult(array $options = [], string $message = '')
+    protected function assertCommandResult(array $options = [], string $message = ''): void
     {
         $commandTester = $this->createExport($options);
 
@@ -130,47 +130,47 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('[OK] ' . $message, $output);
     }
 
-    public function testCreateWithUnknownExportFilter()
+    public function testCreateWithUnknownExportFilter(): void
     {
         $this->assertCommandErrors(['--exported' => 'foo'], 'Unknown "exported" filter given');
     }
 
-    public function testCreateWithUnknownTemplate()
+    public function testCreateWithUnknownTemplate(): void
     {
         $this->assertCommandErrors(['--template' => 'foo'], 'Unknown export "template", available are:');
     }
 
-    public function testCreateWithMissingTemplate()
+    public function testCreateWithMissingTemplate(): void
     {
         $this->assertCommandErrors([], 'You must pass the "template" option');
     }
 
-    public function testCreateWithInvalidStart()
+    public function testCreateWithInvalidStart(): void
     {
         $this->assertCommandErrors(['--template' => 'csv', '--start' => '202ß-ä1-01'], 'Invalid start date given');
     }
 
-    public function testCreateWithInvalidEnd()
+    public function testCreateWithInvalidEnd(): void
     {
         $this->assertCommandErrors(['--template' => 'csv', '--end' => '202ß-ä1-01'], 'Invalid end date given');
     }
 
-    public function testCreateWithInvalidDirectory()
+    public function testCreateWithInvalidDirectory(): void
     {
         $this->assertCommandErrors(['--template' => 'csv', '--directory' => '/tzuikmnbgtz/'], 'Invalid "directory" given: /tzuikmnbgtz/');
     }
 
-    public function testCreateWithInvalidEmail()
+    public function testCreateWithInvalidEmail(): void
     {
         $this->assertCommandErrors(['--template' => 'csv', '--email' => ['tzuikmnbgtz']], 'Invalid "email" given: tzuikmnbgtz');
     }
 
-    public function testCreateWithInvalidEmails()
+    public function testCreateWithInvalidEmails(): void
     {
         $this->assertCommandErrors(['--template' => 'csv', '--email' => ['foo@example.com', 'foo@1']], 'Invalid "email" given: foo@1');
     }
 
-    public function testCreateWithMissingEntries()
+    public function testCreateWithMissingEntries(): void
     {
         $options = ['--set-exported' => null, '--customer' => [1], '--template' => 'csv', '--start' => '2020-01-01', '--end' => '2020-03-01'];
         $commandTester = $this->createExport($options);
@@ -179,7 +179,11 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('[OK] No entries found, skipping', $output);
     }
 
-    protected function prepareFixtures(\DateTime $start)
+    /**
+     * @param \DateTime $start
+     * @return array{0: Customer, 1: array<Project>}
+     */
+    private function prepareFixtures(\DateTime $start): array
     {
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
@@ -200,7 +204,7 @@ class ExportCreateCommandTest extends KernelTestCase
         return [$customer, $project];
     }
 
-    public function testCreateExportByCustomer()
+    public function testCreateExportByCustomer(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -213,7 +217,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Saved export to: ', $output);
     }
 
-    public function testCreateExportByProject()
+    public function testCreateExportByProject(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -226,7 +230,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Saved export to: ', $output);
     }
 
-    public function testCreateExportWithEmail()
+    public function testCreateExportWithEmail(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();

@@ -35,7 +35,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    protected Application $application;
+    private Application $application;
 
     private function clearInvoiceFiles(): void
     {
