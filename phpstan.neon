@@ -5232,21 +5232,6 @@ parameters:
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
-            message: "#^Method App\\\\Timesheet\\\\RoundingService\\:\\:__construct\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\RoundingService\\:\\:getRoundingRules\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
-
-        -
-            message: "#^Property App\\\\Timesheet\\\\RoundingService\\:\\:\\$rulesCache type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
-
-        -
             message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 2
             path: src/Timesheet/TimesheetService.php
