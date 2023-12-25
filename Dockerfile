@@ -238,7 +238,7 @@ COPY --from=php-ext-redis /usr/local/etc/php/conf.d/docker-php-ext-redis.ini /us
 COPY --from=php-ext-redis /usr/local/lib/php/extensions/no-debug-non-zts-20220829/redis.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/redis.so
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
-ENV DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/kimai.sqlite
+ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
 ENV APP_SECRET=change_this_to_something_unique
 # The default container name for nginx is nginx
 ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
