@@ -11,8 +11,10 @@ namespace App\Export;
 
 use App\Entity\Timesheet;
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AutoconfigureTag]
 interface TimesheetExportInterface
 {
     /**

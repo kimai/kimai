@@ -10,6 +10,7 @@
 namespace App\Timesheet\TrackingMode;
 
 use App\Entity\Timesheet;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @internal do not implement this interface in your bundle, but rather drop a PR to add it to Kimai core
  */
+#[AutoconfigureTag]
 interface TrackingModeInterface
 {
     /**

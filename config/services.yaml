@@ -60,18 +60,6 @@ services:
         arguments:
             $cacheDirectory: '%kernel.cache_dir%'
 
-    App\Plugin\PluginManager:
-        arguments: [!tagged kimai.plugin]
-
-    App\Validator\Constraints\TimesheetValidator:
-        arguments: [!tagged timesheet.validator]
-
-    App\Validator\Constraints\ProjectValidator:
-        arguments: [!tagged project.validator]
-        
-    App\Validator\Constraints\QuickEntryTimesheetValidator:
-        arguments: [!tagged timesheet.validator]
-
     App\Utils\FileHelper:
         arguments:
             $dataDir: '%kimai.data_dir%'
@@ -84,33 +72,17 @@ services:
             $mailer: '@App\Mail\KimaiMailer'
 
     # ================================================================================
-    # DATABASE
-    # ================================================================================
-
-    # updates timesheet records and apply configured rate & rounding rules
-    App\Doctrine\TimesheetSubscriber:
-        class: App\Doctrine\TimesheetSubscriber
-        arguments: [!tagged timesheet.calculator]
-
-    # updates timestampable columns (higher priority, so the TimesheetSubscriber will be executed later)
-    App\Doctrine\ModifiedSubscriber:
-        class: App\Doctrine\ModifiedSubscriber
-
-    # ================================================================================
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================
 
     App\Timesheet\RoundingService:
         arguments:
-            $roundingModes: !tagged timesheet.rounding_mode
+            # this is currently required, as local.yaml allows to configure several rules,
+            # while the database system only allows one rounding rule
             $rules: '%kimai.timesheet.rounding%'
 
     App\Timesheet\RateService:
         arguments: ['%kimai.timesheet.rates%']
-
-    App\Timesheet\TrackingModeService:
-        arguments: 
-            $modes: !tagged timesheet.tracking_mode
 
     # ================================================================================
     # SECURITY & VOTER

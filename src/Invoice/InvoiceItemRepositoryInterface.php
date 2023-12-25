@@ -11,7 +11,9 @@ namespace App\Invoice;
 
 use App\Entity\ExportableItem;
 use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag]
 interface InvoiceItemRepositoryInterface
 {
     /**

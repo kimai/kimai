@@ -10,13 +10,15 @@
 namespace App\Tests\DependencyInjection\Compiler;
 
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
+use App\Export\ExportRepositoryInterface;
 use App\Export\Renderer\CsvRenderer;
 use App\Export\Renderer\HtmlRenderer;
+use App\Export\RendererInterface;
 use App\Export\ServiceExport;
 use App\Export\Timesheet\PDFRenderer;
 use App\Export\Timesheet\XlsxRenderer;
+use App\Export\TimesheetExportInterface;
 use App\Export\TimesheetExportRepository;
-use App\Kernel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -38,17 +40,17 @@ class ExportServiceCompilerPassTest extends TestCase
 
         $renderers = [CsvRenderer::class, HtmlRenderer::class];
         foreach ($renderers as $renderer) {
-            $container->register($renderer)->addTag(Kernel::TAG_EXPORT_RENDERER);
+            $container->register($renderer)->addTag(RendererInterface::class);
         }
 
         $exporters = [PDFRenderer::class, XlsxRenderer::class];
         foreach ($exporters as $exporter) {
-            $container->register($exporter)->addTag(Kernel::TAG_TIMESHEET_EXPORTER);
+            $container->register($exporter)->addTag(TimesheetExportInterface::class);
         }
 
         $repositories = [TimesheetExportRepository::class];
         foreach ($repositories as $repository) {
-            $container->register($repository)->addTag(Kernel::TAG_EXPORT_REPOSITORY);
+            $container->register($repository)->addTag(ExportRepositoryInterface::class);
         }
 
         return $container;

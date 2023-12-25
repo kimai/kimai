@@ -10,9 +10,9 @@
 namespace App\Tests\DependencyInjection\Compiler;
 
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
-use App\Kernel;
 use App\Widget\Type\ActiveTimesheets;
 use App\Widget\Type\ActiveUsersMonth;
+use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -32,7 +32,7 @@ class WidgetCompilerPassTest extends TestCase
 
         $widgets = [ActiveTimesheets::class, ActiveUsersMonth::class];
         foreach ($widgets as $widget) {
-            $container->register($widget)->addTag(Kernel::TAG_WIDGET);
+            $container->register($widget)->addTag(WidgetInterface::class);
         }
 
         return $container;

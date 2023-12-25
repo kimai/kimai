@@ -10,11 +10,13 @@
 namespace App\Timesheet;
 
 use App\Entity\Timesheet;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 /**
  * A calculator is called before a Timesheet entity will be updated.
  * These classes will normally be used when calculating duration or rates.
  */
+#[AutoconfigureTag]
 interface CalculatorInterface
 {
     /**

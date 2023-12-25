@@ -12,6 +12,7 @@ namespace App\Timesheet;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\RoundingInterface;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 final class RoundingService
 {
@@ -24,7 +25,12 @@ final class RoundingService
      * @param RoundingInterface[] $roundingModes
      * @param array<string, array{'days': array<string>, 'begin': int, 'end': int, 'duration': int, 'mode': string}> $rules
      */
-    public function __construct(private SystemConfiguration $configuration, private iterable $roundingModes, private array $rules)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        #[TaggedIterator(RoundingInterface::class)]
+        private readonly iterable $roundingModes,
+        private readonly array $rules
+    )
     {
     }
 
