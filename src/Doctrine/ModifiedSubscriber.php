@@ -9,7 +9,6 @@
 
 namespace App\Doctrine;
 
-use App\Entity\Timesheet;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
