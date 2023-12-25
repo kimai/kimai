@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\ModifiedAt;
 use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
@@ -45,7 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\VirtualProperty('TagsAsArray', exp: 'object.getTagsAsArray()', options: [new Serializer\SerializedName('tags'), new Serializer\Type(name: 'array<string>'), new Serializer\Groups(['Default'])])]
 #[Constraints\Timesheet]
 #[Constraints\TimesheetDeactivated]
-class Timesheet implements EntityWithMetaFields, ExportableItem
+class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 {
     /**
      * Category: Normal work-time (default category)
