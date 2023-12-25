@@ -2,6 +2,42 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>timesheet</source>
+        <target state="translated">時間表</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">發票</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">用於進一步處理</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target state="translated">發票</target>
+      </trans-unit>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+        <source>invoice_renderer</source>
+        <target state="translated">發票模板</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="translated">注意：現有檔案將被覆寫。允許的檔案類型為：%extensions%。</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">文字</target>
+      </trans-unit>
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
+        <source>Single service date</source>
+        <target state="translated">服務日期</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">您可以在此處下載更多模板</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

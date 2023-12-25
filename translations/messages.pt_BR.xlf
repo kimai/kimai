@@ -187,7 +187,7 @@
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
-        <target>Despesas</target>
+        <target state="translated">Orçamento</target>
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
@@ -1669,6 +1669,58 @@
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
         <target state="translated">Na próxima vez que o usuário se autenticar, ele deverá digitar uma nova senha.</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Categoria</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Despesas</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Registros de auditoria</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Tradução</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Conteúdo personalizado</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Calendário de ausências</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Campos personalizados</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Visão geral</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Importador</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Traduções</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Categorias</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">Doença da criança</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Licença parental</target>
       </trans-unit>
     </body>
   </file>

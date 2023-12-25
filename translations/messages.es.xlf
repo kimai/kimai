@@ -1714,6 +1714,14 @@
         <source>Custom content</source>
         <target state="translated">Contenido personalizado</target>
       </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">Enfermedad de un hijo</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Permiso parental</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

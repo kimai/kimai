@@ -2,17 +2,17 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
     <body>
-      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator" approved="yes">
         <source>invoice_number_generator</source>
-        <target>Generatore di numerazione fattura</target>
+        <target state="final">Generatore di numerazione fatture</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" approved="yes">
         <source>date</source>
-        <target state="translated">Data</target>
+        <target state="final">Data</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
-        <target state="translated">Formato configurato</target>
+        <target state="final">Formato configurato</target>
       </trans-unit>
     </body>
   </file>

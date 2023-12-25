@@ -1618,6 +1618,46 @@
         <source>Category</source>
         <target>קטגוריה</target>
       </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">מחלת ילד</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">יומני פיקוח</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">תרגום</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">תוכן מותאם אישית</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">לוח שנה העדרויות</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">שדות מותאמים אישית</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">חופשת לידה</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">סקירה כללית</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">מייבא</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">תרגומים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

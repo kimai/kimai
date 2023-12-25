@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="plugins.en.xlf">
     <body>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>Available plugins</source>
+        <target state="translated">可安裝的外掛程式</target>
+      </trans-unit>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+        <source>plugin.none_installed</source>
+        <target state="translated">您尚未安裝任何外掛程式。</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">更多外掛程式</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">購買</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

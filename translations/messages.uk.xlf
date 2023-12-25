@@ -1606,6 +1606,26 @@
         <source>force_password_change_help</source>
         <target state="translated">Наступного разу, при вході, буде потрібно використовувати новий пароль.</target>
       </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Категорія</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Витрати</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Користувацький вміст</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Огляд</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Категорії</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

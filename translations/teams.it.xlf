@@ -12,23 +12,23 @@
       </trans-unit>
       <trans-unit id=".yIcFDx" resname="team.visibility_global">
         <source>team.visibility_global</source>
-        <target>Visibile a chiunque, in assenza del gruppo assegnato.</target>
+        <target state="translated">Visibile a tutti, poiché non è stato ancora assegnato alcun team.</target>
       </trans-unit>
       <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
         <source>team.visibility_restricted</source>
-        <target>Visibile solo ai seguenti gruppi e a tutti gli amministratori.</target>
+        <target state="translated">Visibile solo ai seguenti team e a tutti gli amministratori.</target>
       </trans-unit>
       <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
-        <target>Progetto con accesso limitato perchè i permessi di gruppo sono impostati per i clienti.</target>
+        <target state="translated">Il progetto ha accesso limitato perché le autorizzazioni del team sono impostate per il cliente.</target>
       </trans-unit>
       <trans-unit id="cZEIdcu" resname="team.create_default">
         <source>team.create_default</source>
-        <target>Crea un nuovo gruppo per limitare l'accesso</target>
+        <target state="translated">Crea un nuovo team per limitare l'accesso</target>
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
-        <target>L'attività ha un accesso limitato, perché le autorizzazioni del gruppo sono impostate per il progetto e/o il cliente.</target>
+        <target state="translated">L'attività ha accesso limitato perché le autorizzazioni del team sono impostate per il progetto e/o il cliente.</target>
       </trans-unit>
       <trans-unit id="6g81kYY" approved="no" resname="team.member">
         <source>team.member</source>

@@ -2,45 +2,45 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" approved="yes">
         <source>button_copy_url_to_browser</source>
-        <target>Se il pulsante non fuzniona, cortesemente copiate &amp; e incollate la URL nel vostro browser: %url%</target>
+        <target state="final">Se il pulsante non funziona, copia e incolla il seguente URL nel tuo browser: %url%</target>
       </trans-unit>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" approved="yes">
         <source>automated_email_dont_answer</source>
-        <target>Questa è un'e-mail generata automaticamente. Si prega di non rispondere; l'indirizzo non verrà letto.</target>
+        <target state="final">Questa è un'e-mail generata automaticamente. Non rispondere, questo indirizzo non verrà letto.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" approved="yes">
         <source>registration.subject</source>
-        <target>Attiva il tuo account</target>
+        <target state="final">Attiva il tuo account</target>
       </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
+      <trans-unit id="QtcznHC" resname="registration.title" approved="yes">
         <source>registration.title</source>
-        <target>Benvenuto/a %username%</target>
+        <target state="final">Benvenuto %username%</target>
       </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button" approved="yes">
         <source>registration.button</source>
-        <target>Attiva il tuo account</target>
+        <target state="final">Attiva il tuo account</target>
       </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
+      <trans-unit id="IkjnHoP" resname="registration.intro" approved="yes">
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="translated">Ti sei registrato al cronometro Kimai con l'indirizzo %email%. Si prega di provvedere ad attivare l'account prima che il collegamento scada.</target>
+        <target state="final">Ti sei registrato al time-tracker Kimai con l'indirizzo e-mail %email%. Attiva il tuo account nelle prossime ore, prima che il collegamento scada.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" approved="yes">
         <source>reset.subject</source>
-        <target>Ripristina la password</target>
+        <target state="final">Reimposta password</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
+      <trans-unit id="G2mhn_2" resname="reset.title" approved="yes">
         <source>reset.title</source>
-        <target>Quello può succedere…</target>
+        <target state="final">Può succedere…</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" approved="yes">
         <source>reset.button</source>
-        <target>Ripristina la tua password</target>
+        <target state="final">Reimposta password</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
+      <trans-unit id="rhkMAep" resname="reset.intro" approved="yes">
         <source>reset.intro</source>
-        <target>… password dimenticata? Non preoccuparti: Kimai ti aiuterà a crearne una nuova:</target>
+        <target state="final">...così hai dimenticato la password? Non preoccuparti, Kimai ti aiuterà a crearne una nuova:</target>
       </trans-unit>
     </body>
   </file>

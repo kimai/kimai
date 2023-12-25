@@ -1654,6 +1654,66 @@
         <source>Review</source>
         <target state="translated">审查</target>
       </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">翻译</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">自定义内容</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">自定义字段</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append">
+        <source>append</source>
+        <target state="translated">添加</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">请求新密码</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace">
+        <source>replace</source>
+        <target state="translated">替换</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">翻译</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">下一次用户们登录，他们必须输入密码。</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">类别</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">费用</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">审计日志</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">缺勤日历</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">概述</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">输入者</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">类别</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

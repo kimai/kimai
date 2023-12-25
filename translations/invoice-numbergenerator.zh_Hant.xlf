@@ -2,6 +2,18 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
     <body>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">設定的格式</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="translated">日期</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">發票編號產生器</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
