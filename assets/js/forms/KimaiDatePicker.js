@@ -57,6 +57,16 @@ export default class KimaiDatePicker extends KimaiFormPlugin {
             if (element.dataset.format === undefined) {
                 console.log('Trying to bind litepicker to an element without data-format attribute');
             }
+            if (element.hasAttribute('min') !== undefined) {
+                options = {...options, ...{
+                    'minDate': element.getAttribute('min'),
+                }};
+            }
+            if (element.hasAttribute('max') !== undefined) {
+                options = {...options, ...{
+                    'maxDate': element.getAttribute('max'),
+                }};
+            }
             options = {...options, ...{
                 format: element.dataset.format,
                 showTooltip: false,
@@ -66,7 +76,7 @@ export default class KimaiDatePicker extends KimaiFormPlugin {
                 firstDay: FIRST_DOW, // Litepicker: 0 = Sunday, 1 = Monday
                 setup: (picker) => {
                     // nasty hack, because litepicker does not trigger change event on the input and the available
-                    // event "selected" is triggered why to often, even when moving the cursor inside the input
+                    // event "selected" is triggered way to often, even when moving the cursor inside the input
                     // element (not even typing is necessary) and so we have to make sure that the manual "click" event
                     // (works for touch as well) happened before we actually dispatch the change event manually ...
                     // what? report forms would be submitted upon cursor move without the "preselect” check

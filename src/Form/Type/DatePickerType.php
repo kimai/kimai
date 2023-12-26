@@ -15,6 +15,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -50,6 +52,20 @@ class DatePickerType extends AbstractType
         ));
     }
 
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        if ($options['min_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'min' => $options['min_day'],
+            ]);
+        }
+        if ($options['max_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'max' => $options['max_day'],
+            ]);
+        }
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $format = $this->localeService->getDateFormat(\Locale::getDefault());
@@ -64,6 +80,8 @@ class DatePickerType extends AbstractType
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
             'force_time' => null,
+            'min_day' => null,
+            'max_day' => null,
         ]);
     }
 
