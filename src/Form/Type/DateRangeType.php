@@ -50,6 +50,8 @@ final class DateRangeType extends AbstractType
             'separator' => self::DATE_SPACER,
             'allow_empty' => true,
             'with_presets' => true,
+            'min_day' => null,
+            'max_day' => null,
             'attr' => [
                 'pattern' => $pattern . self::DATE_SPACER . $pattern
             ],
@@ -87,6 +89,18 @@ final class DateRangeType extends AbstractType
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-separator' => $options['separator'],
         ]);
+
+        if ($options['min_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'min' => $options['min_day'],
+            ]);
+        }
+
+        if ($options['max_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'max' => $options['max_day'],
+            ]);
+        }
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

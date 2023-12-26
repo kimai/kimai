@@ -14,22 +14,9 @@ use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
-use App\Export\ExportRepositoryInterface;
-use App\Export\RendererInterface as ExportRendererInterface;
-use App\Export\TimesheetExportInterface;
-use App\Invoice\CalculatorInterface as InvoiceCalculator;
-use App\Invoice\InvoiceItemRepositoryInterface;
-use App\Invoice\NumberGeneratorInterface;
-use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
-use App\Timesheet\CalculatorInterface as TimesheetCalculator;
-use App\Timesheet\Rounding\RoundingInterface;
-use App\Timesheet\TrackingMode\TrackingModeInterface;
-use App\Validator\Constraints\ProjectConstraint;
-use App\Validator\Constraints\TimesheetConstraint;
-use App\Widget\WidgetInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -47,21 +34,6 @@ class Kernel extends BaseKernel
     public const PLUGIN_DIRECTORY = '/var/plugins';
     public const CONFIG_EXTS = '.{php,yaml}';
 
-    public const TAG_PLUGIN = 'kimai.plugin';
-    public const TAG_WIDGET = 'widget';
-    public const TAG_EXPORT_RENDERER = 'export.renderer';
-    public const TAG_EXPORT_REPOSITORY = 'export.repository';
-    public const TAG_INVOICE_RENDERER = 'invoice.renderer';
-    public const TAG_INVOICE_NUMBER_GENERATOR = 'invoice.number_generator';
-    public const TAG_INVOICE_CALCULATOR = 'invoice.calculator';
-    public const TAG_INVOICE_REPOSITORY = 'invoice.repository';
-    public const TAG_TIMESHEET_CALCULATOR = 'timesheet.calculator';
-    public const TAG_TIMESHEET_VALIDATOR = 'timesheet.validator';
-    public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
-    public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
-    public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
-    public const TAG_PROJECT_VALIDATOR = 'project.validator';
-
     public function getCacheDir(): string
     {
         return $this->getProjectDir() . '/var/cache/' . $this->environment;
@@ -74,21 +46,6 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container): void
     {
-        $container->registerForAutoconfiguration(TimesheetCalculator::class)->addTag(self::TAG_TIMESHEET_CALCULATOR);
-        $container->registerForAutoconfiguration(ExportRendererInterface::class)->addTag(self::TAG_EXPORT_RENDERER);
-        $container->registerForAutoconfiguration(ExportRepositoryInterface::class)->addTag(self::TAG_EXPORT_REPOSITORY);
-        $container->registerForAutoconfiguration(InvoiceRendererInterface::class)->addTag(self::TAG_INVOICE_RENDERER);
-        $container->registerForAutoconfiguration(NumberGeneratorInterface::class)->addTag(self::TAG_INVOICE_NUMBER_GENERATOR);
-        $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
-        $container->registerForAutoconfiguration(InvoiceItemRepositoryInterface::class)->addTag(self::TAG_INVOICE_REPOSITORY);
-        $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
-        $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
-        $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
-        $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
-        $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
-        $container->registerForAutoconfiguration(TimesheetConstraint::class)->addTag(self::TAG_TIMESHEET_VALIDATOR);
-        $container->registerForAutoconfiguration(ProjectConstraint::class)->addTag(self::TAG_PROJECT_VALIDATOR);
-
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addAuthenticatorFactory(new FormLoginLdapFactory());
@@ -152,7 +109,7 @@ class Kernel extends BaseKernel
                 throw new \Exception(sprintf('Bundle "%s" does not implement %s, which is not supported since 2.0.', $bundleName, PluginInterface::class));
             }
 
-            $meta = PluginMetadata::loadFromComposer($fullPath);
+            $meta = new PluginMetadata($fullPath);
 
             if ($meta->getKimaiVersion() > Constants::VERSION_ID) {
                 throw new \Exception(sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
@@ -173,7 +130,7 @@ class Kernel extends BaseKernel
         $confDir = $this->getProjectDir() . '/config';
 
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
-        // to get rid of the local.yaml from the list, we load it afterwards explicit
+        // to get rid of the local.yaml from the list, we load it afterward explicit
         $finder = (new Finder())
             ->files()
             ->in([$confDir . '/packages/'])
@@ -199,8 +156,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
-    /** @phpstan-ignore-next-line */
-    private function configureRoutes(RoutingConfigurator $routes): void
+    private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line
     {
         $configDir = $this->getConfigDir();
 

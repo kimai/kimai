@@ -1068,36 +1068,6 @@ parameters:
             path: API/Serializer/ValidationFailedExceptionErrorHandlerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecurePing\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecurePlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testIsSecureVersion\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testPing\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testPlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\StatusControllerTest\\:\\:testVersion\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/StatusControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 3
             path: API/StatusControllerTest.php
@@ -1308,31 +1278,6 @@ parameters:
             path: Command/ActivateUserCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ActivateUserCommandTest\\:\\:callCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ActivateUserCommandTest\\:\\:testActivate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ActivateUserCommandTest\\:\\:testActivateOnActiveUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ActivateUserCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ActivateUserCommandTest\\:\\:testWithMissingUsername\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\ActivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
             count: 1
             path: Command/ActivateUserCommandTest.php
@@ -1393,31 +1338,6 @@ parameters:
             path: Command/DeactivateUserCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DeactivateUserCommandTest\\:\\:callCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DeactivateUserCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DeactivateUserCommandTest\\:\\:testDeactivate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DeactivateUserCommandTest\\:\\:testDeactivateOnDeactivatedUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DeactivateUserCommandTest\\:\\:testWithMissingUsername\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\DeactivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
             count: 1
             path: Command/DeactivateUserCommandTest.php
@@ -1425,46 +1345,6 @@ parameters:
         -
             message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
             count: 2
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:callCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testDemoteAdminFailsOnTeamlead\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testDemoteRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testDemoteRoleAndSuperFails\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testDemoteSuper\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testDemoteSuperFailsOnTeamlead\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\DemoteUserCommandTest\\:\\:testWithMissingUsername\\(\\) has no return type specified\\.$#"
-            count: 1
             path: Command/DemoteUserCommandTest.php
 
         -
@@ -1478,27 +1358,12 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandErrors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandResult\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandResult\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:clearExportFiles\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/ExportCreateCommandTest.php
 
@@ -1514,71 +1379,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:prepareFixtures\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateExportByCustomer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateExportByProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateExportWithEmail\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithInvalidDirectory\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithInvalidEmail\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithInvalidEmails\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithInvalidEnd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithInvalidStart\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithMissingEntries\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithMissingTemplate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithUnknownExportFilter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:testCreateWithUnknownTemplate\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/ExportCreateCommandTest.php
 
@@ -1614,11 +1414,6 @@ parameters:
 
         -
             message: "#^Cannot call method getConnection\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/InstallCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InstallCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/InstallCommandTest.php
 
@@ -1673,11 +1468,6 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PluginCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/PluginCommandTest.php
@@ -1688,53 +1478,8 @@ parameters:
             path: Command/PluginCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:testWithPlugins\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PluginCommandTest.php
-
-        -
             message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
             count: 2
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:callCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testPromoteRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testPromoteRoleAndSuperFails\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testPromoteSuper\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testPromoteSuperFailsOnSuperAdmin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testPromoteTeamleadFailsOnTeamlead\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\PromoteUserCommandTest\\:\\:testWithMissingUsername\\(\\) has no return type specified\\.$#"
-            count: 1
             path: Command/PromoteUserCommandTest.php
 
         -
@@ -1783,27 +1528,7 @@ parameters:
             path: Command/UpdateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\UpdateCommandTest\\:\\:testFullRun\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/UpdateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getCommandTester\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/VersionCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/VersionCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/VersionCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:testVersion\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/VersionCommandTest.php
 
@@ -6936,81 +6661,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Pdf\\\\PdfContextTest\\:\\:testSetterAndGetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Pdf/PdfContextTest.php
-
-        -
-            message: "#^Cannot call method getDescription\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getHomepage\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Plugin\\\\Plugin\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getKimaiVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getMetadata\\(\\) on App\\\\Plugin\\\\Plugin\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Cannot call method getVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testAdd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testLoadMetadata\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginManagerTest\\:\\:testUnknownRendererReturnsNull\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$plugin of method App\\\\Plugin\\\\PluginManager\\:\\:loadMetadata\\(\\) expects App\\\\Plugin\\\\Plugin, App\\\\Plugin\\\\Plugin\\|null given\\.$#"
-            count: 1
-            path: Plugin/PluginManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginMetadataTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginMetadataTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Plugin\\\\PluginTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Plugin/PluginTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Project\\\\ProjectServiceTest\\:\\:testCannotSavePersistedProjectAsNew\\(\\) has no return type specified\\.$#"

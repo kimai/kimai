@@ -25,10 +25,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class DemoteUserCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -42,7 +39,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $this->application->add(new DemoteUserCommand($userService));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
@@ -50,7 +47,7 @@ class DemoteUserCommandTest extends KernelTestCase
         self::assertInstanceOf(DemoteUserCommand::class, $command);
     }
 
-    protected function callCommand(?string $username, ?string $role, bool $super = false)
+    private function callCommand(?string $username, ?string $role, bool $super = false): CommandTester
     {
         $command = $this->application->find('kimai:user:demote');
         $input = [
@@ -75,7 +72,7 @@ class DemoteUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testDemoteRole()
+    public function testDemoteRole(): void
     {
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_TEAMLEAD');
 
@@ -90,7 +87,7 @@ class DemoteUserCommandTest extends KernelTestCase
         self::assertFalse($user->hasTeamleadRole());
     }
 
-    public function testDemoteSuper()
+    public function testDemoteSuper(): void
     {
         $commandTester = $this->callCommand('susan_super', null, true);
 
@@ -105,7 +102,7 @@ class DemoteUserCommandTest extends KernelTestCase
         self::assertFalse($user->isSuperAdmin());
     }
 
-    public function testDemoteSuperFailsOnTeamlead()
+    public function testDemoteSuperFailsOnTeamlead(): void
     {
         $commandTester = $this->callCommand('tony_teamlead', null, true);
 
@@ -113,7 +110,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[WARNING] User "tony_teamlead" doesn\'t have the super administrator role.', $output);
     }
 
-    public function testDemoteAdminFailsOnTeamlead()
+    public function testDemoteAdminFailsOnTeamlead(): void
     {
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_ADMIN', false);
 
@@ -121,7 +118,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[WARNING] User "tony_teamlead" didn\'t have "ROLE_ADMIN" role.', $output);
     }
 
-    public function testDemoteRoleAndSuperFails()
+    public function testDemoteRoleAndSuperFails(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('You can pass either the role or the --super option (but not both simultaneously).');
@@ -129,7 +126,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $this->callCommand('john_user', 'ROLE_TEAMLEAD', true);
     }
 
-    public function testWithMissingUsername()
+    public function testWithMissingUsername(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');

@@ -150,6 +150,10 @@
         <source>You can book a maximum of {{ value }} days at once.</source>
         <target>Sie können maximal {{ value }} Tage auf einmal buchen.</target>
       </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target>Der Zeitraum der Abwesenheit darf nicht über einen Jahreswechsel hinweg gehen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

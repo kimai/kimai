@@ -21,10 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class VersionCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -38,14 +35,14 @@ class VersionCommandTest extends KernelTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testVersion(array $options, $result)
+    public function testVersion(array $options, $result): void
     {
         $commandTester = $this->getCommandTester($options);
         $output = $commandTester->getDisplay();
         $this->assertEquals($result . PHP_EOL, $output);
     }
 
-    public function getTestData()
+    public function getTestData(): array // @phpstan-ignore-line
     {
         return [
             [[], 'Kimai ' . Constants::VERSION . ' by Kevin Papst.'],
@@ -54,7 +51,7 @@ class VersionCommandTest extends KernelTestCase
         ];
     }
 
-    protected function getCommandTester(array $options = [])
+    protected function getCommandTester(array $options = []): CommandTester
     {
         $command = $this->application->find('kimai:version');
         $commandTester = new CommandTester($command);

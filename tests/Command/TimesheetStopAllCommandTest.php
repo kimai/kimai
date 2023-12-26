@@ -21,10 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class TimesheetStopAllCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
     protected function setUp(): void
     {

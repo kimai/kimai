@@ -20,11 +20,9 @@ class PluginMetadata
     private ?string $name = null;
 
     /**
-     * @param string $path
-     * @return PluginMetadata
      * @throws \Exception
      */
-    public static function loadFromComposer(string $path): PluginMetadata
+    public function __construct(string $path)
     {
         if (!is_dir($path) || !is_readable($path)) {
             throw new \Exception(sprintf('Bundle directory "%s" cannot be accessed.', $path));
@@ -59,16 +57,13 @@ class PluginMetadata
             throw new \Exception(sprintf('Bundle "%s" defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.', $pluginName));
         }
 
-        $meta = new self();
-        $meta->description = $json['description'] ?? '';
-        $meta->homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
-        $meta->name = $json['extra']['kimai']['name'];
-        $meta->kimaiVersion = $json['extra']['kimai']['require'];
+        $this->description = $json['description'] ?? '';
+        $this->homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
+        $this->name = $json['extra']['kimai']['name'];
+        $this->kimaiVersion = $json['extra']['kimai']['require'];
 
         // the version field is required if we use composer to install a plugin via var/packages/
-        $meta->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
-
-        return $meta;
+        $this->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
     }
 
     public function getDescription(): ?string

@@ -10,7 +10,8 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Validator\Constraints\Timesheet as TimesheetConstraint;
+use App\Validator\Constraints\Timesheet as TimesheetEntityConstraint;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -18,9 +19,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @param Constraint[] $constraints
+     * @param TimesheetConstraint[] $constraints
      */
-    public function __construct(private iterable $constraints)
+    public function __construct(
+        #[TaggedIterator(TimesheetConstraint::class)]
+        private iterable $constraints
+    )
     {
     }
 
@@ -30,8 +34,8 @@ final class TimesheetValidator extends ConstraintValidator
      */
     public function validate(mixed $timesheet, Constraint $constraint): void
     {
-        if (!($constraint instanceof TimesheetConstraint)) {
-            throw new UnexpectedTypeException($constraint, Timesheet::class);
+        if (!($constraint instanceof TimesheetEntityConstraint)) {
+            throw new UnexpectedTypeException($constraint, TimesheetEntityConstraint::class);
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {

@@ -9,14 +9,13 @@
 
 namespace App\Doctrine;
 
-use App\Entity\Timesheet;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 
 /**
- * Automatically set the modifiedAt field for all Timesheet entries.
+ * Automatically set the modifiedAt field for all ModifiedAt instances.
  */
 #[AsDoctrineListener(event: Events::onFlush, priority: 60)]
 final class ModifiedSubscriber implements EventSubscriber, DataSubscriberInterface
@@ -34,17 +33,15 @@ final class ModifiedSubscriber implements EventSubscriber, DataSubscriberInterfa
         $now = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if (!($entity instanceof Timesheet)) {
-                continue;
+            if ($entity instanceof ModifiedAt) {
+                $entity->setModifiedAt($now);
             }
-            $entity->setModifiedAt($now);
         }
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if (!($entity instanceof Timesheet)) {
-                continue;
+            if ($entity instanceof ModifiedAt) {
+                $entity->setModifiedAt($now);
             }
-            $entity->setModifiedAt($now);
         }
     }
 }

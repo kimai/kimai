@@ -7,11 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export;
+namespace App\Doctrine;
 
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-
-#[AutoconfigureTag]
-interface RendererInterface extends ExportRendererInterface
+interface ModifiedAt
 {
+    public function setModifiedAt(\DateTimeImmutable $dateTime): void;
 }

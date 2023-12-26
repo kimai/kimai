@@ -15,8 +15,10 @@
         <div class="d-flex">
             <div class="me-auto">
                 <p>{{ 'api_password.intro'|trans }}</p>
-
-                <p>{{ 'username'|trans }}: {{ user.userIdentifier }}</p>
+                <ul>
+                    <li>{{ 'username'|trans }}: {{ user.userIdentifier }}</li>
+                    <li>URL: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}</li>
+                </ul>
             </div>
 
             <div class="ms-auto">

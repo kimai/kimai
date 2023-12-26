@@ -11,6 +11,7 @@ namespace App\Timesheet;
 
 use App\Configuration\SystemConfiguration;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 final class TrackingModeService
@@ -19,7 +20,11 @@ final class TrackingModeService
      * @param SystemConfiguration $configuration
      * @param TrackingModeInterface[] $modes
      */
-    public function __construct(private SystemConfiguration $configuration, private iterable $modes)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        #[TaggedIterator(TrackingModeInterface::class)]
+        private readonly iterable $modes
+    )
     {
     }
 

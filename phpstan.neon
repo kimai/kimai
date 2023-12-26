@@ -82,11 +82,6 @@ parameters:
             path: src/API/Model/PageAction.php
 
         -
-            message: "#^Cannot call method getVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: src/API/Model/Plugin.php
-
-        -
             message: "#^Property App\\\\API\\\\Model\\\\Plugin\\:\\:\\$name is never read, only written\\.$#"
             count: 1
             path: src/API/Model/Plugin.php
@@ -525,16 +520,6 @@ parameters:
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
-
-        -
-            message: "#^Cannot call method getKimaiVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: src/Command/PluginCommand.php
-
-        -
-            message: "#^Cannot call method getVersion\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: src/Command/PluginCommand.php
 
         -
             message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
@@ -1935,11 +1920,6 @@ parameters:
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/EventSubscriber/Actions/ActivitySubscriber.php
-
-        -
-            message: "#^Cannot call method getHomepage\\(\\) on App\\\\Plugin\\\\PluginMetadata\\|null\\.$#"
-            count: 1
-            path: src/EventSubscriber/Actions/PluginSubscriber.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
@@ -5230,21 +5210,6 @@ parameters:
             message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\RoundingService\\:\\:__construct\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\RoundingService\\:\\:getRoundingRules\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
-
-        -
-            message: "#^Property App\\\\Timesheet\\\\RoundingService\\:\\:\\$rulesCache type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/RoundingService.php
 
         -
             message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"

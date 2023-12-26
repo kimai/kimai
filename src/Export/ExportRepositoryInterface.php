@@ -11,7 +11,9 @@ namespace App\Export;
 
 use App\Entity\ExportableItem;
 use App\Repository\Query\ExportQuery;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
+#[AutoconfigureTag]
 interface ExportRepositoryInterface
 {
     /**

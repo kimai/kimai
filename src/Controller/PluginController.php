@@ -28,7 +28,6 @@ final class PluginController extends AbstractController
         $installed = [];
         $plugins = $manager->getPlugins();
         foreach ($plugins as $plugin) {
-            $manager->loadMetadata($plugin);
             $installed[] = $plugin->getId();
         }
 

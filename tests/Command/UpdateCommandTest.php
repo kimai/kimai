@@ -22,10 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class UpdateCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
     protected function getCommand(): Command
     {
@@ -41,7 +38,7 @@ class UpdateCommandTest extends KernelTestCase
         return $this->application->find('kimai:update');
     }
 
-    public function testFullRun()
+    public function testFullRun(): void
     {
         $command = $this->getCommand();
         $commandTester = new CommandTester($command);
