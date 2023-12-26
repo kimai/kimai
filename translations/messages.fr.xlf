@@ -1548,11 +1548,35 @@
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
-        <target state="needs-translation">Confirmed by %user% at %date%</target>
+        <target state="translated">Confirmé par %user% le %date%</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields">
         <source>Meta fields</source>
         <target>Champs personnalisés</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
+        <source>Holidays per year</source>
+        <target state="translated">Congés par an</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">Réservations manuelles</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">Congé</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Les réservations manuelles ne peuvent être ni modifiées ni supprimées !</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">Heures travaillées</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">Invisible</target>
       </trans-unit>
     </body>
   </file>

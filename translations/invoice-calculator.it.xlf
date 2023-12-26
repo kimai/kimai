@@ -2,57 +2,57 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="MviRJeB" resname="invoice_calculator">
+      <trans-unit id="MviRJeB" resname="invoice_calculator" approved="yes">
         <source>invoice_calculator</source>
-        <target state="translated">Raggruppamento righe fattura</target>
+        <target state="final">Raggruppamento righe fattura</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
-        <target state="translated">Predefinito (una riga per voce)</target>
+        <target state="final">Predefinito (una voce per riga)</target>
       </trans-unit>
-      <trans-unit id="_bAHi13" resname="short">
+      <trans-unit id="_bAHi13" resname="short" approved="yes">
         <source>short</source>
-        <target state="translated">Tutto (una voce in totale)</target>
+        <target state="final">Tutto (una voce in totale)</target>
       </trans-unit>
-      <trans-unit id="aDtTH0H" resname="price">
+      <trans-unit id="aDtTH0H" resname="price" approved="yes">
         <source>price</source>
-        <target state="translated">Prezzo</target>
+        <target state="final">Prezzo</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" approved="yes">
         <source>user</source>
-        <target state="translated">Utente</target>
+        <target state="final">Utente</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" approved="yes">
         <source>activity</source>
-        <target state="translated">Attività</target>
+        <target state="final">Attività</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" approved="yes">
         <source>project</source>
-        <target state="translated">Progetto</target>
+        <target state="final">Progetto</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" approved="yes">
         <source>date</source>
-        <target state="translated">Data</target>
+        <target state="final">Data</target>
       </trans-unit>
-      <trans-unit id="iFDs7Zh" resname="weekly">
+      <trans-unit id="iFDs7Zh" resname="weekly" approved="yes">
         <source>weekly</source>
-        <target state="translated">Calendario settimanale</target>
+        <target state="final">Calendario settimanale</target>
       </trans-unit>
-      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" approved="yes">
         <source>invoice_calculator.help</source>
-        <target state="translated">Seleziona in base a quali campi devono essere raggruppate le voci della fattura</target>
+        <target state="final">Seleziona in base a quali campi devono essere raggruppate le voci della fattura</target>
       </trans-unit>
-      <trans-unit id="oRa0mkz" resname="activity_user">
+      <trans-unit id="oRa0mkz" resname="activity_user" approved="yes">
         <source>activity_user</source>
-        <target state="translated">Attività e utente</target>
+        <target state="final">Attività e utente</target>
       </trans-unit>
-      <trans-unit id="AJm1952" resname="project_user">
+      <trans-unit id="AJm1952" resname="project_user" approved="yes">
         <source>project_user</source>
-        <target state="translated">Progetto e utente</target>
+        <target state="final">Progetto e utente</target>
       </trans-unit>
-      <trans-unit id="0l1P9cz" resname="date_user">
+      <trans-unit id="0l1P9cz" resname="date_user" approved="yes">
         <source>date_user</source>
-        <target state="translated">Data e utente</target>
+        <target state="final">Data e utente</target>
       </trans-unit>
     </body>
   </file>

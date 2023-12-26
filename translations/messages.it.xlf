@@ -5,305 +5,305 @@
       <!--
               Global template keys
             -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
+      <trans-unit id="N7mikjJ" resname="time_tracking" approved="yes">
         <source>time_tracking</source>
-        <target state="translated">Time-tracking</target>
+        <target state="final">Time-tracking</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="inmIkP6" resname="yes" approved="yes">
         <source>yes</source>
-        <target>Sì</target>
+        <target state="final">Sì</target>
       </trans-unit>
-      <trans-unit id="k5Apjz_" resname="no">
+      <trans-unit id="k5Apjz_" resname="no" approved="yes">
         <source>no</source>
-        <target>No</target>
+        <target state="final">No</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both">
-        <source>both</source>
-        <target>Entrambe</target>
+      <trans-unit id=".3dyBTq" resname="both" approved="yes">
+        <source>Both</source>
+        <target state="final">Entrambe</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" approved="yes">
         <source>This is a mandatory field</source>
-        <target state="translated">Obbligatorio</target>
+        <target state="final">Obbligatorio</target>
       </trans-unit>
-      <trans-unit id="_ohHsMM" resname="create">
+      <trans-unit id="_ohHsMM" resname="create" approved="yes">
         <source>create</source>
-        <target>Crea</target>
+        <target state="final">Crea</target>
       </trans-unit>
-      <trans-unit id="DYHuW58" resname="confirm.delete">
+      <trans-unit id="DYHuW58" resname="confirm.delete" approved="yes">
         <source>confirm.delete</source>
-        <target>Sicuro/a di cancellare?</target>
+        <target state="final">Vuoi davvero eliminarlo?</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" approved="yes">
         <source>admin_entity.delete_confirm</source>
-        <target>I dati saranno cancellati In alternativa è possibile selezionare una voce in cui trasferirli:</target>
+        <target state="final">Anche questi dati verranno cancellati! In alternativa è possibile selezionare una voce alla quale verranno trasferiti tutti i dati:</target>
       </trans-unit>
-      <trans-unit id="COyxNde" resname="delete.not_in_use">
+      <trans-unit id="COyxNde" resname="delete.not_in_use" approved="yes">
         <source>delete.not_in_use</source>
-        <target>L'oggetto può essere cancellato.</target>
+        <target state="final">Questo elemento può essere eliminato in modo sicuro.</target>
       </trans-unit>
-      <trans-unit id="I3TZF5S" resname="cancel">
+      <trans-unit id="I3TZF5S" resname="cancel" approved="yes">
         <source>cancel</source>
-        <target>Annulla</target>
+        <target state="final">Annulla</target>
       </trans-unit>
-      <trans-unit id="PyZ8KrQ" resname="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm" approved="yes">
         <source>confirm</source>
-        <target>Conferma</target>
+        <target state="final">Conferma</target>
       </trans-unit>
-      <trans-unit id=".0CFrRV" resname="upload">
+      <trans-unit id=".0CFrRV" resname="upload" approved="yes">
         <source>upload</source>
-        <target>Carica</target>
+        <target state="final">Carica</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="JBkykGe" resname="search" approved="yes">
         <source>search</source>
-        <target>Cerca</target>
+        <target state="final">Cerca</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
+      <trans-unit id="hBNESu6" resname="my.profile" approved="yes">
         <source>my.profile</source>
-        <target>Il mio profilo</target>
+        <target state="final">Il mio profilo</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" approved="yes">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% voci?</target>
+        <target state="final">%action% %count% voci?</target>
       </trans-unit>
-      <trans-unit id="OTDmccn" resname="attachments">
+      <trans-unit id="OTDmccn" resname="attachments" approved="yes">
         <source>attachments</source>
-        <target>File</target>
+        <target state="final">File</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" approved="yes">
         <source>rates.empty</source>
-        <target>Nessuna tariffa oraria è stata ancora configurata.</target>
+        <target state="final">Non è stato configurato alcun prezzo.</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title" approved="yes">
         <source>rates.title</source>
-        <target>Tasse</target>
+        <target state="final">Prezzi</target>
       </trans-unit>
       <!--
               Login / Security
             -->
-      <trans-unit id="XohImNo" resname="password">
+      <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
-        <target state="translated">Password</target>
+        <target state="final">Password</target>
       </trans-unit>
-      <trans-unit id="hLEZkoC" resname="password_repeat">
+      <trans-unit id="hLEZkoC" resname="password_repeat" approved="yes">
         <source>password_repeat</source>
-        <target>Ripeti password</target>
+        <target state="final">Ripeti password</target>
       </trans-unit>
-      <trans-unit id="ACcM9j_" resname="logout">
+      <trans-unit id="ACcM9j_" resname="logout" approved="yes">
         <source>logout</source>
-        <target>Disconnetti</target>
+        <target state="final">Disconnetti</target>
       </trans-unit>
-      <trans-unit id="_x2He8M" resname="user_profile">
+      <trans-unit id="_x2He8M" resname="user_profile" approved="yes">
         <source>user_profile</source>
-        <target>Il mio profilo</target>
+        <target state="final">Il mio profilo</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
+      <trans-unit id="T4nAM7X" resname="api_token" approved="yes">
         <source>api_token</source>
-        <target>Password API</target>
+        <target state="final">Password API</target>
       </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+      <trans-unit id="aq59Sk8" resname="api_token_repeat" approved="yes">
         <source>api_token_repeat</source>
-        <target>Ripeti password API</target>
+        <target state="final">Ripeti password API</target>
       </trans-unit>
-      <trans-unit id=".372.o7" resname="login_required">
+      <trans-unit id=".372.o7" resname="login_required" approved="yes">
         <source>login_required</source>
-        <target>Permessi insufficenti. Ridirezionare all'accesso?</target>
+        <target state="final">Autorizzazione mancante. Reindirizzare all'accesso?</target>
       </trans-unit>
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="UoOv6mx" resname="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage" approved="yes">
         <source>menu.homepage</source>
-        <target>Pannello di controllo</target>
+        <target state="final">Pannello di controllo</target>
       </trans-unit>
-      <trans-unit id="wvvYSw_" resname="menu.admin">
+      <trans-unit id="wvvYSw_" resname="menu.admin" approved="yes">
         <source>menu.admin</source>
-        <target>Amministrazione</target>
+        <target state="final">Amministrazione</target>
       </trans-unit>
-      <trans-unit id="6OKwCUB" resname="menu.system">
+      <trans-unit id="6OKwCUB" resname="menu.system" approved="yes">
         <source>menu.system</source>
-        <target>Sistema</target>
+        <target state="final">Sistema</target>
       </trans-unit>
-      <trans-unit id="wBTFKFR" resname="menu.logout">
+      <trans-unit id="wBTFKFR" resname="menu.logout" approved="yes">
         <source>menu.logout</source>
-        <target>Disconnetti</target>
+        <target state="final">Disconnetti</target>
       </trans-unit>
-      <trans-unit id="ebTjBb9" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times" approved="yes">
         <source>my_times</source>
-        <target state="translated">Mio tempo</target>
+        <target state="final">Mio tempo</target>
       </trans-unit>
-      <trans-unit id="ypVQO7o" resname="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting" approved="yes">
         <source>menu.reporting</source>
-        <target>Rapporti</target>
+        <target state="final">Rapporti</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" approved="yes">
         <source>all_times</source>
-        <target state="translated">Tempo di tutti</target>
+        <target state="final">Tempo di tutti</target>
       </trans-unit>
-      <trans-unit id="IeshU90" resname="customers">
+      <trans-unit id="IeshU90" resname="customers" approved="yes">
         <source>customers</source>
-        <target>Clienti</target>
+        <target state="final">Clienti</target>
       </trans-unit>
-      <trans-unit id="JXfA9Ve" resname="projects">
+      <trans-unit id="JXfA9Ve" resname="projects" approved="yes">
         <source>projects</source>
-        <target>Progetti</target>
+        <target state="final">Progetti</target>
       </trans-unit>
-      <trans-unit id="YkyVVAY" resname="activities">
+      <trans-unit id="YkyVVAY" resname="activities" approved="yes">
         <source>activities</source>
-        <target>Attività</target>
+        <target state="final">Attività</target>
       </trans-unit>
-      <trans-unit id="fftM9nd" resname="users">
+      <trans-unit id="fftM9nd" resname="users" approved="yes">
         <source>users</source>
-        <target>Utenti</target>
+        <target state="final">Utenti</target>
       </trans-unit>
-      <trans-unit id="_t.2z4V" resname="teams">
+      <trans-unit id="_t.2z4V" resname="teams" approved="yes">
         <source>teams</source>
-        <target>Gruppi</target>
+        <target state="final">Team</target>
       </trans-unit>
-      <trans-unit id="hOZxcaK" resname="menu.plugin">
+      <trans-unit id="hOZxcaK" resname="menu.plugin" approved="yes">
         <source>menu.plugin</source>
-        <target>Plugins</target>
+        <target state="final">Plugin</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration" approved="yes">
         <source>menu.system_configuration</source>
-        <target>Impostazioni</target>
+        <target state="final">Impostazioni</target>
       </trans-unit>
-      <trans-unit id="l4wviUE" resname="tags">
+      <trans-unit id="l4wviUE" resname="tags" approved="yes">
         <source>tags</source>
-        <target>Etichette</target>
+        <target state="final">Etichette</target>
       </trans-unit>
       <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
-        <target>Diagnostica</target>
+        <target state="translated">Medico</target>
       </trans-unit>
       <!--
               Error templates
             -->
-      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found" approved="yes">
         <source>error.no_entries_found</source>
-        <target>Nessuna informazione trovata.</target>
+        <target state="final">Nessuna voce trovata in base ai filtri selezionati.</target>
       </trans-unit>
-      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found" approved="yes">
         <source>error.no_comments_found</source>
-        <target>Non ci sono commenti fino'ora.</target>
+        <target state="final">Non sono stati ancora pubblicati commenti.</target>
       </trans-unit>
       <!--
               General labels
             -->
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" approved="yes">
         <source>date</source>
-        <target>Data</target>
+        <target state="final">Data</target>
       </trans-unit>
-      <trans-unit id="BHk4pZ3" resname="starttime">
+      <trans-unit id="BHk4pZ3" resname="starttime" approved="yes">
         <source>starttime</source>
-        <target>Inizio</target>
+        <target state="final">Inizio</target>
       </trans-unit>
-      <trans-unit id="eI_tMbq" resname="endtime">
+      <trans-unit id="eI_tMbq" resname="endtime" approved="yes">
         <source>endtime</source>
-        <target>Fine</target>
+        <target state="final">Fine</target>
       </trans-unit>
-      <trans-unit id="yqea9Nt" resname="duration">
+      <trans-unit id="yqea9Nt" resname="duration" approved="yes">
         <source>duration</source>
-        <target>Durata</target>
+        <target state="final">Durata</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Utente</target>
+      <trans-unit id="BPiZbad" resname="user" approved="yes">
+        <source>User</source>
+        <target state="final">Utente</target>
       </trans-unit>
-      <trans-unit id="FveKfWM" resname="username">
+      <trans-unit id="FveKfWM" resname="username" approved="yes">
         <source>username</source>
-        <target state="translated">Utente</target>
+        <target state="final">Utente</target>
       </trans-unit>
-      <trans-unit id="yQRveje" resname="description">
+      <trans-unit id="yQRveje" resname="description" approved="yes">
         <source>Description</source>
-        <target state="translated">Descrizione</target>
+        <target state="final">Descrizione</target>
       </trans-unit>
-      <trans-unit id="gqNTf.D" resname="name">
+      <trans-unit id="gqNTf.D" resname="name" approved="yes">
         <source>name</source>
-        <target>Nome</target>
+        <target state="final">Nome</target>
       </trans-unit>
-      <trans-unit id="xEuy.VF" resname="comment">
+      <trans-unit id="xEuy.VF" resname="comment" approved="yes">
         <source>comment</source>
-        <target>Commento</target>
+        <target state="final">Commento</target>
       </trans-unit>
-      <trans-unit id="pWFFJwz" resname="id">
+      <trans-unit id="pWFFJwz" resname="id" approved="yes">
         <source>id</source>
-        <target>ID</target>
+        <target state="final">ID</target>
       </trans-unit>
-      <trans-unit id="1C7xSXk" resname="visible">
-        <source>visible</source>
-        <target>Visibile</target>
+      <trans-unit id="1C7xSXk" resname="visible" approved="yes">
+        <source>Visible</source>
+        <target state="final">Visibile</target>
       </trans-unit>
-      <trans-unit id="CvlqjtY" resname="budget">
+      <trans-unit id="CvlqjtY" resname="budget" approved="yes">
         <source>budget</source>
-        <target>Βudget</target>
+        <target state="final">Βudget</target>
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
         <target>Tempo budget</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" approved="yes">
         <source>activity</source>
-        <target>Attività</target>
+        <target state="final">Attività</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Progetto</target>
+      <trans-unit id="JEIQ5IQ" resname="project" approved="yes">
+        <source>Project</source>
+        <target state="final">Progetto</target>
       </trans-unit>
-      <trans-unit id="KhBzpuZ" resname="tag">
+      <trans-unit id="KhBzpuZ" resname="tag" approved="yes">
         <source>tag</source>
-        <target>Etichette</target>
+        <target state="final">Etichette</target>
       </trans-unit>
-      <trans-unit id="E_bHhGR" resname="hourlyRate">
+      <trans-unit id="E_bHhGR" resname="hourlyRate" approved="yes">
         <source>hourlyRate</source>
-        <target>Tariffa oraria</target>
+        <target state="final">Tariffa oraria</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Visualizza layout</target>
       </trans-unit>
-      <trans-unit id="QEMUsfS" resname="hours">
+      <trans-unit id="QEMUsfS" resname="hours" approved="yes">
         <source>hours</source>
-        <target>Ore</target>
+        <target state="final">Ore</target>
       </trans-unit>
-      <trans-unit id="xUl3nXn" resname="rate">
+      <trans-unit id="xUl3nXn" resname="rate" approved="yes">
         <source>rate</source>
-        <target state="translated">Prezzo</target>
+        <target state="final">Prezzo</target>
       </trans-unit>
-      <trans-unit id="djL6LMC" resname="help.rate">
+      <trans-unit id="djL6LMC" resname="help.rate" approved="yes">
         <source>help.rate</source>
-        <target>Tariffa oraria da addebitare</target>
+        <target state="final">Tariffa oraria da addebitare</target>
       </trans-unit>
-      <trans-unit id="5ofAsOs" resname="internalRate">
+      <trans-unit id="5ofAsOs" resname="internalRate" approved="yes">
         <source>internalRate</source>
-        <target>Costo interno</target>
+        <target state="final">Costo interno</target>
       </trans-unit>
-      <trans-unit id="Cxv_0wG" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate" approved="yes">
         <source>help.internalRate</source>
-        <target>Costi interni (se questo non è specificato, è utilizzata la tariffa oraria)</target>
+        <target state="final">Se non specificato, viene usato il prezzo normale</target>
       </trans-unit>
-      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates" approved="yes">
         <source>recalculate_rates</source>
-        <target>Ricalcola tariffe</target>
+        <target state="final">Ricalcola prezzi</target>
       </trans-unit>
-      <trans-unit id="pO8wS6Q" resname="language">
+      <trans-unit id="pO8wS6Q" resname="language" approved="yes">
         <source>language</source>
-        <target>Lingua</target>
+        <target state="final">Lingua</target>
       </trans-unit>
-      <trans-unit id="tsRYY4d" resname="customer">
+      <trans-unit id="tsRYY4d" resname="customer" approved="yes">
         <source>customer</source>
-        <target>Cliente</target>
+        <target state="final">Cliente</target>
       </trans-unit>
-      <trans-unit id="giREF.l" resname="email">
-        <source>email</source>
-        <target>E-mail</target>
+      <trans-unit id="giREF.l" resname="email" approved="yes">
+        <source>E-mail</source>
+        <target state="final">E-mail</target>
       </trans-unit>
-      <trans-unit id="yosi0Nu" resname="team">
+      <trans-unit id="yosi0Nu" resname="team" approved="yes">
         <source>team</source>
-        <target>Gruppo</target>
+        <target state="final">Team</target>
       </trans-unit>
       <trans-unit id="evFI7nW" resname="teamlead">
         <source>teamlead</source>
-        <target>Capogruppo</target>
+        <target state="translated">Responsabile team</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="L05Qw2x" resname="my_teams">
         <source>my_teams</source>
-        <target>I miei gruppi</target>
+        <target state="translated">I miei team</target>
       </trans-unit>
       <trans-unit id="Ia0kvPi" resname="my_team_projects">
         <source>my_team_projects</source>
@@ -598,7 +598,7 @@
       </trans-unit>
       <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
-        <target state="translated">Capogruppo</target>
+        <target state="translated">Responsabile team</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -965,13 +965,13 @@
         <source>update_browser_title</source>
         <target>Aggiorna il titolo del browser</target>
       </trans-unit>
-      <trans-unit id="XP5zkiN" resname="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty" approved="yes">
         <source>modal.dirty</source>
-        <target>La forma è cambiata. Fai clic su «Salva» per salvare le modifiche o su «Chiudi» per annullarle.</target>
+        <target state="final">Il modulo è cambiato. Fai clic su "Salva" per salvare le modifiche o "Chiudi" per annullare.</target>
       </trans-unit>
-      <trans-unit id="zFfl7jw" resname="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total" approved="yes">
         <source>sum.total</source>
-        <target>Totale</target>
+        <target state="final">Totale</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -985,9 +985,9 @@
         <source>tax_rate</source>
         <target>Aliquota fiscale</target>
       </trans-unit>
-      <trans-unit id="O5w1jzb" resname="file">
+      <trans-unit id="O5w1jzb" resname="file" approved="yes">
         <source>file</source>
-        <target>File</target>
+        <target state="final">File</target>
       </trans-unit>
       <trans-unit id="o0yOFHL" resname="not_invoiced">
         <source>not_invoiced</source>
@@ -997,25 +997,25 @@
         <source>not_exported</source>
         <target>Non esportato</target>
       </trans-unit>
-      <trans-unit id="VSo_gmO" resname="orderBy">
+      <trans-unit id="VSo_gmO" resname="orderBy" approved="yes">
         <source>orderBy</source>
-        <target>Ordina per</target>
+        <target state="final">Ordina per</target>
       </trans-unit>
-      <trans-unit id="l4ZOh4." resname="desc">
+      <trans-unit id="l4ZOh4." resname="desc" approved="yes">
         <source>desc</source>
-        <target>Decrescente</target>
+        <target state="final">Discendente</target>
       </trans-unit>
-      <trans-unit id="1o0.9vf" resname="asc">
+      <trans-unit id="1o0.9vf" resname="asc" approved="yes">
         <source>asc</source>
-        <target>Ascendente</target>
+        <target state="final">Ascendente</target>
       </trans-unit>
-      <trans-unit id="CiA4s9E" resname="set_as_default">
+      <trans-unit id="CiA4s9E" resname="set_as_default" approved="yes">
         <source>set_as_default</source>
-        <target>Salva l'impostazione come preferita per la ricerca</target>
+        <target state="final">Salva impostazione come preferita per la ricerca</target>
       </trans-unit>
-      <trans-unit id="8W_TZI0" resname="searchTerm">
+      <trans-unit id="8W_TZI0" resname="searchTerm" approved="yes">
         <source>searchTerm</source>
-        <target>Termine di ricerca</target>
+        <target state="final">Termine di ricerca</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
@@ -1025,9 +1025,9 @@
         <source>invoice.payment_date</source>
         <target>Data di pagamento</target>
       </trans-unit>
-      <trans-unit id="DUDrvjk" resname="remove_default">
+      <trans-unit id="DUDrvjk" resname="remove_default" approved="yes">
         <source>remove_default</source>
-        <target>Elimina il preferito di ricerca</target>
+        <target state="final">Elimina ricerca preferita</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -1049,13 +1049,13 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Anno finanziario</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes">
         <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">È stata inviata un'e-mail. Contiene un collegamento su cui è necessario fare clic per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la cartella della posta indesiderata o riprova.</target>
+        <target state="final">È stata inviata un'e-mail. Contiene un collegamento su cui devi fare clic per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la cartella della posta indesiderata o riprova.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
+      <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">È stata inviata un'e-mail a %email%. Contiene un link che devi cliccare per attivare il tuo account.</target>
+        <target state="final">È stata inviata un'e-mail a %email%. Contiene un collegamento su cui devi fare clic per attivare il tuo account.</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1069,9 +1069,9 @@
         <source>stats.workingTime</source>
         <target>Tempo di lavoro</target>
       </trans-unit>
-      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries" approved="yes">
         <source>error.too_many_entries</source>
-        <target>La richiesta non può essere elaborata. Sono stati trovati troppi risultati.</target>
+        <target state="final">La richiesta non può essere elaborata. Sono stati trovati troppi risultati.</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
@@ -1141,13 +1141,13 @@
         <source>status.canceled</source>
         <target>Annullata</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" approved="yes">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target>La directory «%dir%» non esiste e non può essere creata.</target>
+        <target state="final">La cartella "%dir%" non esiste e non può essere creata.</target>
       </trans-unit>
-      <trans-unit id="C2TGff0" resname="error.directory_protected">
+      <trans-unit id="C2TGff0" resname="error.directory_protected" approved="yes">
         <source>error.directory_protected</source>
-        <target>La directory «%dir%» è protetta da scrittura.</target>
+        <target state="final">La cartella"%dir%" è protetta da scrittura.</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
@@ -1161,17 +1161,17 @@
         <source>Updated at</source>
         <target>Aggiornato il</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern" approved="yes">
         <source>Display of entries in selection lists</source>
-        <target state="translated">Visualizzazione delle voci nelle liste di selezione</target>
+        <target state="final">Visualizzazione voci negli elenchi di selezione</target>
       </trans-unit>
-      <trans-unit id="U_D.NIy" resname="automatic">
+      <trans-unit id="U_D.NIy" resname="automatic" approved="yes">
         <source>automatic</source>
-        <target>Automatico</target>
+        <target state="final">Automatico</target>
       </trans-unit>
-      <trans-unit id="OJ.wI1U" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText" approved="yes">
         <source>invoiceText</source>
-        <target state="translated">Testo della fattura</target>
+        <target state="final">Dati di fatturazione</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
@@ -1181,33 +1181,33 @@
         <source>about.title</source>
         <target state="translated">Informazioni su Kimai</target>
       </trans-unit>
-      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" approved="yes">
         <source>security.unlock.intro</source>
-        <target state="translated">Inserisci la tua password per l'accesso completo</target>
+        <target state="final">Inserisci la tua password per l'accesso completo</target>
       </trans-unit>
-      <trans-unit id="3rJ5QDP" resname="help.teams">
+      <trans-unit id="3rJ5QDP" resname="help.teams" approved="yes">
         <source>help.teams</source>
-        <target state="translated">Limita la visibilità ai team selezionati.</target>
+        <target state="final">Limita la visibilità ai team selezionati.</target>
       </trans-unit>
-      <trans-unit id="1MfS6X5" resname="remove_filter">
+      <trans-unit id="1MfS6X5" resname="remove_filter" approved="yes">
         <source>remove_filter</source>
-        <target state="translated">Reimposta filtro di ricerca</target>
+        <target state="final">Reimposta filtro di ricerca</target>
       </trans-unit>
-      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" approved="yes">
         <source>Apps</source>
-        <target state="translated">Applicazioni</target>
+        <target state="final">Applicazioni</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
+      <trans-unit id="KgBw0BS" resname="skin" approved="yes">
         <source>skin</source>
-        <target state="translated">Design</target>
+        <target state="final">Tema</target>
       </trans-unit>
-      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" approved="yes">
         <source>help.invoiceLabel</source>
-        <target state="translated">Questo testo sostituisce il nome dell'oggetto, consentendo etichette più dettagliate per le voci della fattura.</target>
+        <target state="final">Questo testo sostituisce il nome dell'oggetto, consentendo etichette più dettagliate per le voci della fattura.</target>
       </trans-unit>
-      <trans-unit id="AeMGtJO" resname="help.visible">
+      <trans-unit id="AeMGtJO" resname="help.visible" approved="yes">
         <source>help.visible</source>
-        <target state="translated">Se l'impostazione è disattivata, l'oggetto non viene visualizzato nelle caselle a discesa e nelle visualizzazioni a elenco.</target>
+        <target state="final">Se l'impostazione è disattivata, l'oggetto non viene visualizzato nelle caselle a discesa e nelle visualizzazioni a elenco.</target>
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable">
         <source>help.billable</source>
@@ -1217,9 +1217,9 @@
         <source>select.add_new</source>
         <target state="translated">Crea un nuovo file con il nome «%input%»</target>
       </trans-unit>
-      <trans-unit id="aOJITgv" resname="help.invoiceText">
+      <trans-unit id="aOJITgv" resname="help.invoiceText" approved="yes">
         <source>help.invoiceText</source>
-        <target state="translated">Questo testo viene utilizzato nei documenti di fattura e può essere usato, ad esempio, per annotare ulteriori condizioni di consegna.</target>
+        <target state="final">Questo testo viene usato nei documenti di fatturazione e può essere usato, ad esempio, per annotare ulteriori condizioni di consegna.</target>
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
@@ -1237,17 +1237,17 @@
         <source>time</source>
         <target state="translated">Ora</target>
       </trans-unit>
-      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" approved="yes">
         <source>security.unlock.title</source>
-        <target state="translated">Sblocca l'account</target>
+        <target state="final">Sblocca account</target>
       </trans-unit>
-      <trans-unit id="853W5Iu" resname="security.unlock.button">
+      <trans-unit id="853W5Iu" resname="security.unlock.button" approved="yes">
         <source>security.unlock.button</source>
-        <target state="translated">Sblocca</target>
+        <target state="final">Sblocca</target>
       </trans-unit>
-      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" approved="yes">
         <source>invoiceLabel</source>
-        <target state="translated">Testo della fattura</target>
+        <target state="final">Testo della fattura</target>
       </trans-unit>
       <trans-unit id="3WHV.yf" resname="activated">
         <source>Activated</source>
@@ -1307,7 +1307,7 @@
       </trans-unit>
       <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
-        <target state="translated">Gli utenti disattivati non possono più accedere e vengono nascosti nei report e nelle caselle di selezione</target>
+        <target state="translated">Gli utenti disattivati non possono più accedere e vengono nascosti nei rapporti e nelle caselle di selezione</target>
       </trans-unit>
       <trans-unit id="PLLl1E0" resname="system_account">
         <source>system_account</source>
@@ -1315,7 +1315,7 @@
       </trans-unit>
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
-        <target state="translated">Sarà nascosto nei report e nei menu a discesa</target>
+        <target state="translated">Sarà nascosto nei rapporti e nei menu a discesa</target>
       </trans-unit>
       <trans-unit id="On18MKP" resname="plugin.installed">
         <source>plugin.installed</source>
@@ -1409,13 +1409,13 @@
         <source>help.globalActivity</source>
         <target state="translated">Se non selezioni un progetto, questa attività diventa globale e può essere combinata con qualsiasi progetto. Se selezioni un progetto, l'attività può essere utilizzata solo con quel progetto. L'impostazione non può essere modificata successivamente.</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" approved="yes">
         <source>skin.light</source>
-        <target state="translated">Chiaro</target>
+        <target state="final">Chiaro</target>
       </trans-unit>
-      <trans-unit id="WOFPb2i" resname="skin.dark">
+      <trans-unit id="WOFPb2i" resname="skin.dark" approved="yes">
         <source>skin.dark</source>
-        <target state="translated">Scuro</target>
+        <target state="final">Scuro</target>
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
@@ -1505,21 +1505,21 @@
         <source>work_times_is</source>
         <target state="translated">È-ore</target>
       </trans-unit>
-      <trans-unit id="EX27Gdt" resname="created_by">
+      <trans-unit id="EX27Gdt" resname="created_by" approved="yes">
         <source>created_by</source>
-        <target state="translated">Creato da</target>
+        <target state="final">Creato da</target>
       </trans-unit>
-      <trans-unit id="EYXzfTO" resname="deleted">
+      <trans-unit id="EYXzfTO" resname="deleted" approved="yes">
         <source>deleted</source>
-        <target state="translated">Eliminato</target>
+        <target state="final">Eliminato</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
         <target state="translated">Dopo aver completato il mese, l'utente non sarà più in grado di creare o modificare gli orari per quel periodo.</target>
       </trans-unit>
-      <trans-unit id="6Hip2aF" resname="created_at">
+      <trans-unit id="6Hip2aF" resname="created_at" approved="yes">
         <source>created_at</source>
-        <target state="translated">Creato a</target>
+        <target state="final">Creato a</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1557,13 +1557,13 @@
         <source>public_holidays</source>
         <target state="translated">Festività pubbliche</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
-        <target state="translated">Predefinito</target>
+        <target state="final">Predefinito</target>
       </trans-unit>
-      <trans-unit id="t1r372x" resname="invisible">
+      <trans-unit id="t1r372x" resname="invisible" approved="yes">
         <source>invisible</source>
-        <target state="translated">Invisibile</target>
+        <target state="final">Invisibile</target>
       </trans-unit>
       <trans-unit id="4PMHpIp" resname="time_off">
         <source>time_off</source>
@@ -1571,7 +1571,7 @@
       </trans-unit>
       <trans-unit id="GIgQHa4" resname="absence">
         <source>absence</source>
-        <target state="translated">Assenza</target>
+        <target state="translated">Assenze</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
@@ -1623,7 +1623,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Eventi familiari, trasloco, caos meteorologico ecc.</target>
+        <target state="translated">Eventi familiari, trasloco, caos meteorologico, ecc.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1692,6 +1692,14 @@
       <trans-unit id="YRRgZCe" resname="Custom content">
         <source>Custom content</source>
         <target state="translated">Contenuti personalizzati</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">Malattia di un bambino</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Congedo parentale</target>
       </trans-unit>
     </body>
   </file>

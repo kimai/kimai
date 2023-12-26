@@ -1088,7 +1088,7 @@
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
-        <target state="translated">Prikaži unose bez uknjiženja</target>
+        <target state="translated">Prikaži unose bez rezevacija</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
-        <target state="translated">Bez uknjiženja vremena od</target>
+        <target state="translated">Bez rezeviranja vremena od</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -1512,7 +1512,7 @@
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
-        <target state="translated">Ručna uknjiženja</target>
+        <target state="translated">Ručne rezervacije</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1540,7 +1540,7 @@
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
-        <target state="translated">Ručna uknjiženja se naknadno ne mogu promijeniti niti izbrisati!</target>
+        <target state="translated">Ručne rezervacije se naknadno ne mogu promijeniti niti izbrisati!</target>
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
@@ -1669,6 +1669,58 @@
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
         <target state="translated">Pri sljedećoj prijavi će korisnik morati unijeti novu lozinku.</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Kategorija</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">Bolest djeteta</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Troškovi</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Dnevnici revizija</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Prijevod</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Prilagođen sadržaj</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Kalendar odsutnosti</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Prilagođena polja</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Roditeljski dopust</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Pregled</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Uvoznik</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Prijevodi</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Kategorije</target>
       </trans-unit>
     </body>
   </file>

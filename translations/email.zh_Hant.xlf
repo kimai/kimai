@@ -2,6 +2,46 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="email.en.xlf">
     <body>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target state="translated">重設您的密碼</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject">
+        <source>registration.subject</source>
+        <target state="translated">啟用您的帳號</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+        <source>reset.subject</source>
+        <target state="translated">重設您的密碼</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target state="translated">這種事有可能發生……</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target state="translated">啟用您的帳號</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">您在 Kimai 時間追蹤器上註冊了電子信箱 %email%。請在接下來的幾個小時內，在鏈結過期之前啟用您的帳號。</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title">
+        <source>registration.title</source>
+        <target state="translated">歡迎 %username%</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro">
+        <source>reset.intro</source>
+        <target state="translated">……您忘記密碼了嗎？別擔心：Kimai 將協助您設定新的密碼：</target>
+      </trans-unit>
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target state="translated">如果該按鈕無效，請複製以下網址並在瀏覽器中貼上： %url%</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">這是一封自動產生的電子郵件。請勿回覆，傳送至該地址的信件不會被閱讀。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

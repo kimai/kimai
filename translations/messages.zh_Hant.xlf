@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">這些數據也將被刪除！或者，您可以選擇將所有數據傳輸到的條目：</target>
+        <target state="translated">這項資料也將被刪除！不過，您可以將所有資料移轉到所選擇的項目：</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -150,11 +150,11 @@
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
-        <target state="translated">沒有權限。 重新登入？</target>
+        <target state="translated">權限不足。要移至登入頁面嗎？</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">已發送電子郵件到 %email%。內容包含一個啟用連結，您必須點擊才能啟用您的帳戶。</target>
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">已傳送電子郵件到 %email%。內容包含一個啟用連結，您必須點擊才能啟用您的帳號。</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
@@ -232,7 +232,7 @@
             -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target state="translated">根據您選擇的過濾器未找到任何條目。</target>
+        <target state="translated">根據您選擇的篩選器未找到任何條目。</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
-        <target state="translated">費率</target>
+        <target state="translated">費用</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
@@ -559,15 +559,15 @@
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
-        <target state="translated">今天, %day%</target>
+        <target state="translated">今天，%day%</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">月曆周 %week%</target>
+        <target state="translated">周曆 %week%</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="translated">周 %week%</target>
+        <target state="translated">第 %week% 周</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -760,6 +760,918 @@
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target state="translated">狀態</target>
+      </trans-unit>
+      <trans-unit id="OxdYMR3" resname="active.entries">
+        <source>active.entries</source>
+        <target state="translated">您的活躍時間紀錄</target>
+      </trans-unit>
+      <trans-unit id="WVU_S.A" resname="recent.activities">
+        <source>recent.activities</source>
+        <target state="translated">重啟一項您最近的活動</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date">
+        <source>invoice_date</source>
+        <target state="translated">發票日期</target>
+      </trans-unit>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
+        <target state="translated">預審</target>
+      </trans-unit>
+      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+        <source>invoice.subtotal</source>
+        <target state="translated">小計</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays">
+        <source>public_holidays</source>
+        <target state="translated">法定假日</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">刪除</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="translated">發票文件已達上限 %max% 張。可刪除任一個後再新增。</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">我的總營收</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">限制對所選取的團隊的可見度。</target>
+      </trans-unit>
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
+        <source>entryState.not_exported</source>
+        <target state="translated">開啟</target>
+      </trans-unit>
+      <trans-unit id="rAJrxSK" resname="invoice.due_days">
+        <source>invoice.due_days</source>
+        <target state="translated">付款對象</target>
+      </trans-unit>
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
+        <source>stats.activeRecordings</source>
+        <target state="translated">進行中的紀錄</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget">
+        <source>includeWithBudget</source>
+        <target state="translated">顯示設有預算的項目</target>
+      </trans-unit>
+      <trans-unit id="spHpd_I" resname="entryState.stopped">
+        <source>entryState.stopped</source>
+        <target state="translated">停止</target>
+      </trans-unit>
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target state="translated">要更新的欄位必須先透過點選核取方塊來啟用。</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed">
+        <source>status.closed</source>
+        <target state="translated">已完成</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by">
+        <source>created_by</source>
+        <target state="translated">建立者</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report">
+        <source>button.report</source>
+        <target state="translated">報告</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target state="translated">建立於</target>
+      </trans-unit>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
+        <target state="translated">總價格</target>
+      </trans-unit>
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
+        <source>globalsOnly</source>
+        <target state="translated">僅全域</target>
+      </trans-unit>
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
+        <source>export.document_title</source>
+        <target state="translated">支出清單</target>
+      </trans-unit>
+      <trans-unit id="ulYFDIo" resname="button.ods">
+        <source>button.ods</source>
+        <target state="translated">ODS</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target state="translated">已啟用</target>
+      </trans-unit>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
+        <target state="translated">可預訂期限</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="translated">已跳過額外 %rows% 橫行的預覽……</target>
+      </trans-unit>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
+        <source>invoice_bank_account</source>
+        <target state="translated">銀行帳戶</target>
+      </trans-unit>
+      <trans-unit id="dicW36D" resname="mark_as_exported">
+        <source>mark_as_exported</source>
+        <target state="translated">標示為已匯出</target>
+      </trans-unit>
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
+        <source>invoice.filter</source>
+        <target state="translated">篩選發票資料</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending">
+        <source>status.pending</source>
+        <target state="translated">待進行</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target state="translated">解除鎖定</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">持續時間可正（增加是-時間）可負（減少是-時間）。</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full">
+        <source>day_full</source>
+        <target state="translated">整天</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help">
+        <source>user.language.help</source>
+        <target state="translated">除了介面的翻譯外，該設定還影響時間、日期、貨幣格式。</target>
+      </trans-unit>
+      <trans-unit id="4XKFnWh" resname="invoice.from">
+        <source>invoice.from</source>
+        <target state="translated">始於</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">預設</target>
+      </trans-unit>
+      <trans-unit id="N778uJ6" resname="export.summary">
+        <source>export.summary</source>
+        <target state="translated">總計</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to">
+        <source>send_to</source>
+        <target state="translated">傳送到 %name%</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
+        <source>Holidays per year</source>
+        <target state="translated">每年假日數</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">使用此模板產生發票。</target>
+      </trans-unit>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
+        <source>invoice_tax_number</source>
+        <target state="translated">加值型營業稅編號:</target>
+      </trans-unit>
+      <trans-unit id="xm7mqoK" resname="entryState.running">
+        <source>entryState.running</source>
+        <target state="translated">活躍</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">尚未在聘僱合約設定中為此使用者設定目標工時。</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
+        <target state="translated">發票</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro">
+        <source>sickness.intro</source>
+        <target state="translated">生病、看病、照顧近親、等。</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+        <source>stats.userDurationToday</source>
+        <target state="translated">我的本日工時</target>
+      </trans-unit>
+      <trans-unit id="9p2KQag" resname="invoice.signature_user">
+        <source>invoice.signature_user</source>
+        <target state="translated">確認：日期 / 顧問姓名 / 簽名</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">這段文字取代該目標的名稱，可為發票項目增加更詳細的標籤。</target>
+      </trans-unit>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
+        <source>batch_meta_fields</source>
+        <target state="translated">額外欄位</target>
+      </trans-unit>
+      <trans-unit id="Qn2ouiL" resname="exported">
+        <source>exported</source>
+        <target state="translated">已匯出</target>
+      </trans-unit>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
+        <target state="translated">員工人數</target>
+      </trans-unit>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
+        <target state="translated">所有</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned">
+        <source>status.planned</source>
+        <target state="translated">已計劃</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month">
+        <source>Complete month</source>
+        <target state="translated">已核定月份</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off">
+        <source>time_off</source>
+        <target state="translated">請假</target>
+      </trans-unit>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
+        <target state="translated">數量</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved">
+        <source>status.approved</source>
+        <target state="translated">已核可</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">我的本周營收</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target state="translated">解除鎖定帳號</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings">
+        <source>manual_bookings</source>
+        <target state="translated">手動預約</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">您已拒絕通知。請參閱您的網路瀏覽器的說明文件以暸解如何開啟通知。</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">分類</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday">
+        <source>holiday</source>
+        <target state="translated">假日</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings">
+        <source>extended_settings</source>
+        <target state="translated">更多設定</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation">
+        <source>evaluation</source>
+        <target state="translated">評等</target>
+      </trans-unit>
+      <trans-unit id="TPzFWUs" resname="invoice.service_date">
+        <source>invoice.service_date</source>
+        <target state="translated">服務日期</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target state="translated">感謝您允許通知！</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">子女病假</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress">
+        <source>status.progress</source>
+        <target state="translated">進行中</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales">
+        <source>help_locales</source>
+        <target state="translated">支援的語言與格式化規則</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness">
+        <source>sickness</source>
+        <target state="translated">病假</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should">
+        <source>work_times_should</source>
+        <target state="translated">目標時數</target>
+      </trans-unit>
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
+        <source>invoice.total_working_time</source>
+        <target state="translated">總持續時間</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro">
+        <source>api_password.intro</source>
+        <target state="translated">API 密碼用於 Kimai 和您的應用程式之間的通訊</target>
+      </trans-unit>
+      <trans-unit id="1GruCMx" resname="export">
+        <source>export</source>
+        <target state="translated">匯出</target>
+      </trans-unit>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
+        <target state="translated">模板</target>
+      </trans-unit>
+      <trans-unit id="r49TNAg" resname="daily_stats">
+        <source>daily_stats</source>
+        <target state="translated">在時間表中顯示每日統計資料</target>
+      </trans-unit>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
+        <target state="translated">內部匯率</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target state="translated">無法使用 API</target>
+      </trans-unit>
+      <trans-unit id="PE2iiaW" resname="work_times_should.help">
+        <source>work_times_should.help</source>
+        <target state="translated">這裡所設定的數值會用於計算鐘點。</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">請確認代碼，以啟用該帳號的雙重要素驗證。</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">此客戶的發票預設使用此模板產生。若有需要，可以在發票產生途中修改。</target>
+      </trans-unit>
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+        <source>profile.first_entry</source>
+        <target state="translated">工作開始於</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
+        <target state="translated">類別</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">費用</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">該文件用於工作時數的證明。</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">審查紀錄</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">翻譯</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target state="translated">付款日</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested">
+        <source>status.requested</source>
+        <target state="translated">已請求</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is">
+        <source>work_times_is</source>
+        <target state="translated">是-小時</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target state="translated">已取消</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
+        <target state="translated">設計</target>
+      </trans-unit>
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target state="translated">您尚未輸入 API 密碼。基於安全考量，您必須先儲存密碼才能使用 API。</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target state="translated">資料</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account">
+        <source>Account working times</source>
+        <target state="translated">帳號工作時數</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target state="translated">桌面</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target state="translated">如果不選擇專案，此活動將變為全域活動，並且可以與任何專案組合。如果您選擇一個專案，則該活動只能用於該專案。稍後便無法再修改此設定。</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed">
+        <source>plugin.installed</source>
+        <target state="translated">已安裝的外掛程式</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">自訂內容</target>
+      </trans-unit>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
+        <target state="translated">顯示設有「每月」預算的項目</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target state="translated">%percent%% 已使用（%left% 本月仍可用）</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">我的本月工時</target>
+      </trans-unit>
+      <trans-unit id="EohvnQA" resname="number">
+        <source>number</source>
+        <target state="translated">帳號</target>
+      </trans-unit>
+      <trans-unit id="033t0aO" resname="payment_terms">
+        <source>payment_terms</source>
+        <target state="translated">付款條件</target>
+      </trans-unit>
+      <trans-unit id="7zptTeh" resname="update_browser_title">
+        <source>update_browser_title</source>
+        <target state="translated">更新瀏覽器標題</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target state="translated">其它</target>
+      </trans-unit>
+      <trans-unit id="hx7vsMA" resname="invoice.to">
+        <source>invoice.to</source>
+        <target state="translated">至</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro">
+        <source>time_off.intro</source>
+        <target state="translated">你的工作時數收支餘額為 %hours% 小時。</target>
+      </trans-unit>
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target state="translated">%percent%% 已用 (%left% 仍可用)</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target state="translated">本月已用 %percent%%</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications">
+        <source>notifications</source>
+        <target state="translated">通知</target>
+      </trans-unit>
+      <trans-unit id="zPcx3O_" resname="invoice_print">
+        <source>invoice_print</source>
+        <target state="translated">發票</target>
+      </trans-unit>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
+        <target state="translated">每月</target>
+      </trans-unit>
+      <trans-unit id="x_W5sV4" resname="invoice.number">
+        <source>invoice.number</source>
+        <target state="translated">發票編號</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target state="translated">您可以透過掃描應用程式中的影像來啟用新裝置。</target>
+      </trans-unit>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
+        <target state="translated">預算類型</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help">
+        <source>active.help</source>
+        <target state="translated">已停用的使用者無法再次登入，並且會在報告與選擇框中隱藏</target>
+      </trans-unit>
+      <trans-unit id="ElDyzrx" resname="export.page_of">
+        <source>export.page_of</source>
+        <target state="translated">%page% / %pages% 頁</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro">
+        <source>absence_other.intro</source>
+        <target state="translated">家庭活動、搬家、天氣惡劣、等。</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">我的本周工時</target>
+      </trans-unit>
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
+        <source>export.clear_all</source>
+        <target state="translated">請問是否要將所有紀錄標示為已開啟？</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request">
+        <source>button.request</source>
+        <target state="translated">提交</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract">
+        <source>work_contract</source>
+        <target state="translated">聘僱合約</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24">
+        <source>hour_24</source>
+        <target state="translated">24-小時</target>
+      </trans-unit>
+      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+        <source>timesheet.start</source>
+        <target state="translated">建立新的時間紀錄</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">手動預約稍後既無法修改也無法刪除！</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target state="translated">從清單中選擇一個新使用者加入團隊。之後您可以決定該使用者是否為團隊組長。</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark">
+        <source>skin.dark</source>
+        <target state="translated">灰暗</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target state="translated">驗證碼</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target state="translated">雙重要素驗證 (2FA)</target>
+      </trans-unit>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
+        <target state="translated">已啟用</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">缺勤日曆</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target state="translated">每周工作時數</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday">
+        <source>public_holiday</source>
+        <target state="translated">法定假日</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target state="translated">您的搜尋將產生 %count% 條結果。如果匯出失敗，您必須再縮小您的搜尋範圍。</target>
+      </trans-unit>
+      <trans-unit id="d5wyWRD" resname="export.full_list">
+        <source>export.full_list</source>
+        <target state="translated">完整清單</target>
+      </trans-unit>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
+        <target state="translated">所有已啟用的使用者</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target state="translated">如果設定未開啟，則只能記錄針對特定專案的活動的時間。</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+        <source>complete_month.help</source>
+        <target state="translated">核定該月後，使用者將無法再建立或編輯該月份的時間。</target>
+      </trans-unit>
+      <trans-unit id="igCkqAP" resname="pageSize">
+        <source>pageSize</source>
+        <target state="translated">頁面大小</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results">
+        <source>search.no_results</source>
+        <target state="translated">找不到「%input%」的結果</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">自訂欄位</target>
+      </trans-unit>
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
+        <source>help.internalRate</source>
+        <target state="translated">內部成本 （如果未指定，則使用正常匯率）</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target state="translated">已停用</target>
+      </trans-unit>
+      <trans-unit id="W_TXvSi" resname="button.csv">
+        <source>button.csv</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination">
+        <source>pagination</source>
+        <target state="translated">顯示第 %start% 到第 %end% 條項目，共 %total% 條。</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity">
+        <source>no_activity</source>
+        <target state="translated">無活動</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from">
+        <source>receive_from</source>
+        <target state="translated">接收自 %name%</target>
+      </trans-unit>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
+        <target state="translated">顯示設有「生命周期」預算的項目</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target state="translated">請輸入驗證碼以完成註冊。</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target state="translated">目前有 %records% 條時間紀錄，總持續時間為 %duration%。</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help">
+        <source>system_account.help</source>
+        <target state="translated">將在報告與下拉式選單中隱藏</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target state="translated">建立發票</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review">
+        <source>Review</source>
+        <target state="translated">審核</target>
+      </trans-unit>
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
+        <source>export.date_copyright</source>
+        <target state="translated">使用 %kimai% 於 %date% 建立</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target state="translated">新項目的預設值</target>
+      </trans-unit>
+      <trans-unit id="N68vyvo" resname="invoice.total">
+        <source>invoice.total</source>
+        <target state="translated">總計</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">如果未開啟此設定，則目標不會顯示在下拉式選單與清單檢視中。</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target state="translated">表格縱行</target>
+      </trans-unit>
+      <trans-unit id="EO57yXg" resname="invoice.tax">
+        <source>invoice.tax</source>
+        <target state="translated">稅</target>
+      </trans-unit>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
+        <target state="translated">顯示非預訂項目</target>
+      </trans-unit>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
+        <target state="translated">上一項</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices">
+        <source>all_invoices</source>
+        <target state="translated">發票歷史</target>
+      </trans-unit>
+      <trans-unit id="xEYQXPy" resname="profile.settings">
+        <source>profile.settings</source>
+        <target state="translated">資料</target>
+      </trans-unit>
+      <trans-unit id="_DDecAV" resname="entryState.exported">
+        <source>entryState.exported</source>
+        <target state="translated">已清除</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target state="translated">我的最愛</target>
+      </trans-unit>
+      <trans-unit id="IoKfYkz" resname="unit_price">
+        <source>unit_price</source>
+        <target state="translated">單價</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result">
+        <source>work_times_result</source>
+        <target state="translated">工作時數</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">育嬰假</target>
+      </trans-unit>
+      <trans-unit id="X_NRsed" resname="status.new">
+        <source>status.new</source>
+        <target state="translated">新</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">概覽</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro">
+        <source>holiday.intro</source>
+        <target state="translated">您共有 %days% 天的可用假日，已使用 %used% 天。</target>
+      </trans-unit>
+      <trans-unit id="dherSTU" resname="export_decimal">
+        <source>export_decimal</source>
+        <target state="translated">在匯出資料中使用小數表示持續時間</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target state="translated">請輸入您的密碼以正常存取</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+        <source>stats.userDurationYear</source>
+        <target state="translated">我的本年度工時</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible">
+        <source>invisible</source>
+        <target state="translated">不可見</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">目前已選擇 / 突出顯示的使用者是團隊組長。</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+        <source>Apps</source>
+        <target state="translated">應用程式</target>
+      </trans-unit>
+      <trans-unit id="aAa5uRR" resname="button.pdf">
+        <source>button.pdf</source>
+        <target state="translated">PDF</target>
+      </trans-unit>
+      <trans-unit id="X70dwP8" resname="button.print">
+        <source>button.print</source>
+        <target state="translated">列印</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target state="translated">新增使用者</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">這段文字用於發票文件，用途包含記錄進一步的交貨條件。</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append">
+        <source>append</source>
+        <target state="translated">附加</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter">
+        <source>remove_filter</source>
+        <target state="translated">重設搜尋篩選器</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at">
+        <source>Updated at</source>
+        <target state="translated">更新於</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+        <source>public_holiday.group</source>
+        <target state="translated">假日分類</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light">
+        <source>skin.light</source>
+        <target state="translated">明亮</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help">
+        <source>invoice_date.help</source>
+        <target state="translated">你可以在這裡修改發票日期</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account">
+        <source>system_account</source>
+        <target state="translated">系統-帳號</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">如果未開啟此設定，則之後所記錄的所有時間項目都將標示為「不可計費」。</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor">
+        <source>supervisor</source>
+        <target state="translated">主管</target>
+      </trans-unit>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
+        <target state="translated">未計費</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new">
+        <source>select.add_new</source>
+        <target state="translated">建立名稱為「%input%」的新項目</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">匯入者</target>
+      </trans-unit>
+      <trans-unit id="cjgNYUB" resname="entryState">
+        <source>entryState</source>
+        <target state="translated">紀錄</target>
+      </trans-unit>
+      <trans-unit id="PHJwR4w" resname="status.paid">
+        <source>status.paid</source>
+        <target state="translated">已付款</target>
+      </trans-unit>
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
+        <source>invoice.signature_customer</source>
+        <target state="translated">確認：日期 / 客戶姓名 / 簽名</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+        <source>confirmed_by_at</source>
+        <target state="translated">由 %user% 於 %date% 確認</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday">
+        <source>stats.userAmountToday</source>
+        <target state="translated">我的本日營收</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">請求新密碼</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace">
+        <source>replace</source>
+        <target state="translated">取代</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">翻譯</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">使用者下次登入時，必須輸入新密碼。</target>
+      </trans-unit>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
+        <target state="translated">生命周期</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+        <source>invoiceLabel</source>
+        <target state="translated">發票文字</target>
+      </trans-unit>
+      <trans-unit id="ohNu8DK" resname="due_days">
+        <source>due_days</source>
+        <target state="translated">付款期限（天）</target>
+      </trans-unit>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
+        <target state="translated">未匯出</target>
+      </trans-unit>
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
+        <source>admin_invoice_template.title</source>
+        <target state="translated">發票模板</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+        <source>completed_month_pdf</source>
+        <target state="translated">已核定月份 PDF</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
+        <source>stats.userAmountYear</source>
+        <target state="translated">我的本年度營收</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">我的總工時</target>
+      </trans-unit>
+      <trans-unit id="qtjPKUT" resname="export.mark_all">
+        <source>export.mark_all</source>
+        <target state="translated">請問是否要將所有紀錄標示為已清除？</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time">
+        <source>time</source>
+        <target state="translated">時間</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">允許全域活動</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">分類</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">我的本月營收</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">您可以拖放以重新排列小工具。新增小工具時會儲存未套用的更動。</target>
+      </trans-unit>
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
+        <source>button.xlsx</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose">
+        <source>please_choose</source>
+        <target state="translated">請選擇</target>
+      </trans-unit>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
+        <target state="translated">顯示未設定預算的項目</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half">
+        <source>day_half</source>
+        <target state="translated">半天</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">缺勤</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times">
+        <source>work_times</source>
+        <target state="translated">工作時數</target>
+      </trans-unit>
+      <trans-unit id="vjmoQGo" resname="export.period">
+        <source>export.period</source>
+        <target state="translated">期間</target>
+      </trans-unit>
+      <trans-unit id="iwWaUoa" resname="export.filter">
+        <source>export.filter</source>
+        <target state="translated">篩選資料以匯出</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open">
+        <source>mark_as_open</source>
+        <target state="translated">標示為已開啟</target>
       </trans-unit>
     </body>
   </file>

@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
-        <target>Начать заново</target>
+        <target state="translated">Перезапустить</target>
       </trans-unit>
       <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>

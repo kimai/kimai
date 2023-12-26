@@ -150,8 +150,8 @@
         <target state="translated">ИД</target>
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible">
-        <source>visible</source>
-        <target>Видимость</target>
+        <source>Visible</source>
+        <target state="translated">Видимый</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
-        <target state="translated">Ставка</target>
+        <target state="translated">Стоимость</target>
       </trans-unit>
       <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
@@ -658,7 +658,7 @@
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%month% %year%</target>
+        <target state="translated">Месяц (%month% %year%)</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -926,7 +926,7 @@
       </trans-unit>
       <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>
-        <target>Платный</target>
+        <target state="translated">Подлежащий оплате</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -966,11 +966,11 @@
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target>Сборы</target>
+        <target state="translated">Расценки</target>
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>Почасовая оплата пока не настроена.</target>
+        <target state="translated">Расценки еще не добавлены.</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
@@ -1286,7 +1286,7 @@
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable">
         <source>help.billable</source>
-        <target state="translated">Если настройка выключена, все записи о времени, записанные в будущем, будут помечены как «не оплачиваемые».</target>
+        <target state="translated">Если параметр отключен, все записи о времени, добавленные в будущем, будут помечены как «не подлежащие оплате».</target>
       </trans-unit>
       <trans-unit id="BrOQ92O" resname="notifications.denied">
         <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
@@ -1515,6 +1515,30 @@
       <trans-unit id="NOEx3FF" resname="invoice_date.help">
         <source>invoice_date.help</source>
         <target state="translated">Здесь вы можете изменить дату выставления счета</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Расходы</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Польз. контент</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Настр. поля</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Импортер</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Локализация</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence">
+        <source>absence</source>
+        <target state="translated">Отсутствие</target>
       </trans-unit>
     </body>
   </file>
