@@ -103,6 +103,7 @@ class CustomerEditForm extends AbstractType
                 'label' => 'homepage',
                 'required' => false,
                 'block_prefix' => 'homepage',
+                'default_protocol' => 'https',
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'timezone',
