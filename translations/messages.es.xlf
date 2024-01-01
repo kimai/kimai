@@ -1722,6 +1722,10 @@
         <source>parental</source>
         <target state="translated">Permiso parental</target>
       </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">Días</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

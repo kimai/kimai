@@ -2,21 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="export.en.xlf">
     <body>
-      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig" approved="yes">
         <source>Default</source>
-        <target state="translated">Predefinito</target>
+        <target state="final">Predefinito</target>
       </trans-unit>
-      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
-        <source>default-budget.pdf.twig</source>
-        <target>Con il budget rimasto</target>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig" approved="yes">
+        <source>With remaining budget</source>
+        <target state="final">Con il budget rimanente</target>
       </trans-unit>
-      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
-        <source>default-internal.pdf.twig</source>
-        <target>Con i costi interni</target>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig" approved="yes">
+        <source>With internal rates</source>
+        <target state="final">Con i costi interni</target>
       </trans-unit>
-      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" approved="yes">
         <source>Timesheet</source>
-        <target state="translated">Foglio di presenza</target>
+        <target state="final">Foglio di presenza</target>
       </trans-unit>
     </body>
   </file>
