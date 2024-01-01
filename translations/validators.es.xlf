@@ -150,6 +150,10 @@
         <source>The chosen date is already locked.</source>
         <target state="translated">La fecha elegida ya está cerrada.</target>
       </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">El periodo de ausencia no debe prolongarse más allá del cambio de año.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

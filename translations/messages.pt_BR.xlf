@@ -1722,6 +1722,10 @@
         <source>parental</source>
         <target state="translated">Licença parental</target>
       </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" approved="no">
+        <source>days</source>
+        <target state="translated">Dias</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
