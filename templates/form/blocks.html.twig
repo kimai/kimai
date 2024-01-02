@@ -394,9 +394,9 @@
 {# customer homepage, search for "homepage" block_prefix #}
 {% block homepage_widget -%}
     <div class="input-group input-group-flat">
-        <span class="input-group-text">
-            https://
-        </span>
+        {% if '://' not in value  %}
+            <span class="input-group-text">https://</span>
+        {% endif %}
         {{ block('url_widget') }}
     </div>
 {%- endblock homepage_widget %}
