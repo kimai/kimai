@@ -156,9 +156,6 @@
     "kevinpapst/tabler-bundle": {
         "version": "dev-initial"
     },
-    "laminas/laminas-escaper": {
-        "version": "2.7.0"
-    },
     "league/csv": {
         "version": "9.4.1"
     },

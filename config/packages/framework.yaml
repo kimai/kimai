@@ -1,9 +1,8 @@
 framework:
     # Deprecations for 7.0
     handle_all_throwables: true
-    # cannot be disabled, because of https://github.com/nelmio/NelmioApiDocBundle/pull/2164
     annotations:
-        enabled: true
+        enabled: false
 
     serializer:
         enable_attributes: true
