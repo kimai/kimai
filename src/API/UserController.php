@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/users')]
@@ -54,7 +54,7 @@ final class UserController extends BaseApiController
      */
     #[IsGranted('view_user')]
     #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
-    #[Rest\Get(path: '', name: 'get_users')]
+    #[Route(methods: ['GET'], path: '', name: 'get_users')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter users: 1=visible, 2=hidden, 3=all')]
@@ -107,7 +107,7 @@ final class UserController extends BaseApiController
     #[IsGranted('view', 'profile')]
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to fetch', required: true)]
-    #[Rest\Get(path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['GET'], path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function getAction(User $profile, EventDispatcherInterface $dispatcher): Response
@@ -126,7 +126,7 @@ final class UserController extends BaseApiController
      * Return the current user entity
      */
     #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
-    #[Rest\Get(path: '/me', name: 'me_user')]
+    #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function meAction(): Response
@@ -143,7 +143,7 @@ final class UserController extends BaseApiController
     #[IsGranted('create_user')]
     #[OA\Post(description: 'Creates a new user and returns it afterwards')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
-    #[Rest\Post(path: '', name: 'post_user')]
+    #[Route(methods: ['POST'], path: '', name: 'post_user')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
@@ -197,7 +197,7 @@ final class UserController extends BaseApiController
     #[OA\Patch(description: 'Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
-    #[Rest\Patch(path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, User $profile): Response

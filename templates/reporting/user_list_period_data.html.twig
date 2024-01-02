@@ -38,6 +38,25 @@
         {% set usersTotalDuration = 0 %}
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
+        {% for period in attribute(userPeriod, period_attribute) %}
+            {% if period.totalDuration > 0 %}
+                {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
+                {% set absoluteDuration = absoluteDuration + period.totalDuration %}
+            {% endif %}
+            {% if period.totalInternalRate > 0 %}
+                {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
+                {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
+            {% endif %}
+            {% if period.totalRate > 0 %}
+                {% set usersTotalRate = usersTotalRate + period.totalRate %}
+                {% set absoluteRate = absoluteRate + period.totalRate %}
+            {% endif %}
+            {% set reportDateKey = period.date|report_date %}
+            {% set totalsDuration = totalsDuration|merge({(reportDateKey): (totalsDuration[reportDateKey] + period.totalDuration)}) %}
+            {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
+            {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
+        {% endfor %}
+        {% if userPeriod.user.enabled or usersTotalDuration > 0 %}
         <tr class="user">
             {% if with_avatar %}
                 <td class="w-avatar">
@@ -51,24 +70,6 @@
             {% if showAccountNumber %}
                 <td>{{ userPeriod.user.accountNumber }}</td>
             {% endif %}
-            {% for period in attribute(userPeriod, period_attribute) %}
-                {% if period.totalDuration > 0 %}
-                    {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
-                    {% set absoluteDuration = absoluteDuration + period.totalDuration %}
-                {% endif %}
-                {% if period.totalInternalRate > 0 %}
-                    {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
-                    {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
-                {% endif %}
-                {% if period.totalRate > 0 %}
-                    {% set usersTotalRate = usersTotalRate + period.totalRate %}
-                    {% set absoluteRate = absoluteRate + period.totalRate %}
-                {% endif %}
-                {% set reportDateKey = period.date|report_date %}
-                {% set totalsDuration = totalsDuration|merge({(reportDateKey): (totalsDuration[reportDateKey] + period.totalDuration)}) %}
-                {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
-                {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
-            {% endfor %}
             <td class="text-nowrap text-center total{% block user_total_cell_class %}{% endblock %}"{% block user_total_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate_user %}{% endblock %}
@@ -92,6 +93,7 @@
                 </td>
             {% endfor %}
         </tr>
+        {% endif %}
     {% endfor %}
     </tbody>
     <tfoot>

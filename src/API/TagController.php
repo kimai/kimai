@@ -20,7 +20,7 @@ use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/tags')]
@@ -40,7 +40,7 @@ final class TagController extends BaseApiController
      * Fetch all existing tags
      */
     #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
-    #[Rest\Get(name: 'get_tags')]
+    #[Route(methods: ['GET'], name: 'get_tags')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
@@ -61,7 +61,7 @@ final class TagController extends BaseApiController
      */
     #[OA\Post(description: 'Creates a new tag and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created tag', content: new OA\JsonContent(ref: '#/components/schemas/TagEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TagEditForm'))]
-    #[Rest\Post(name: 'post_tag')]
+    #[Route(methods: ['POST'], name: 'post_tag')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
@@ -99,7 +99,7 @@ final class TagController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Tag ID to delete', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    #[Rest\Delete(path: '/{id}', name: 'delete_tag')]
+    #[Route(methods: ['DELETE'], path: '/{id}', name: 'delete_tag')]
     public function deleteAction(Tag $tag): Response
     {
         $this->repository->deleteTag($tag);

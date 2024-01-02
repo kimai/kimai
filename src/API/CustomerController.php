@@ -30,7 +30,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/customers')]
@@ -55,7 +55,7 @@ final class CustomerController extends BaseApiController
      * Returns a collection of customers (which are visible to the user)
      */
     #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
-    #[Rest\Get(path: '', name: 'get_customers')]
+    #[Route(methods: ['GET'], path: '', name: 'get_customers')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter customers: 1=visible, 2=hidden, 3=both')]
@@ -102,7 +102,7 @@ final class CustomerController extends BaseApiController
      * Returns one customer
      */
     #[OA\Response(response: 200, description: 'Returns one customer entity', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
-    #[Rest\Get(path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['GET'], path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function getAction(Customer $customer): Response
@@ -118,7 +118,7 @@ final class CustomerController extends BaseApiController
      */
     #[OA\Post(description: 'Creates a new customer and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
-    #[Rest\Post(path: '', name: 'post_customer')]
+    #[Route(methods: ['POST'], path: '', name: 'post_customer')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request, CustomerService $customerService): Response
@@ -161,7 +161,7 @@ final class CustomerController extends BaseApiController
     #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to update', required: true)]
-    #[Rest\Patch(path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, Customer $customer): Response
@@ -198,7 +198,7 @@ final class CustomerController extends BaseApiController
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
-    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
@@ -231,7 +231,7 @@ final class CustomerController extends BaseApiController
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rates will be returned', required: true)]
-    #[Rest\Get(path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['GET'], path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function getRatesAction(Customer $customer): Response
@@ -253,7 +253,7 @@ final class CustomerController extends BaseApiController
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
+    #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Customer $customer, #[MapEntity(mapping: ['rateId' => 'id'])] CustomerRate $rate): Response
     {
         if ($rate->getCustomer() !== $customer) {
@@ -274,7 +274,7 @@ final class CustomerController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]
-    #[Rest\Post(path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
+    #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     public function postRateAction(Customer $customer, Request $request): Response

@@ -48,15 +48,15 @@ final class CalendarEvent
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    #[Serializer\Type(name: 'DateTime')]
-    private \DateTimeInterface $start; // @phpstan-ignore-line
+    #[Serializer\Type(name: 'DateTimeImmutable')]
+    private \DateTimeImmutable $start; // @phpstan-ignore-line
     /**
      * Calendar entry end date
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    #[Serializer\Type(name: 'DateTime')]
-    private \DateTimeInterface $end; // @phpstan-ignore-line
+    #[Serializer\Type(name: 'DateTimeImmutable')]
+    private \DateTimeImmutable $end; // @phpstan-ignore-line
 
     public function setTitle(string $title): void
     {
@@ -65,12 +65,12 @@ final class CalendarEvent
 
     public function setStart(\DateTimeInterface $start): void
     {
-        $this->start = $start;
+        $this->start = \DateTimeImmutable::createFromInterface($start);
     }
 
     public function setEnd(\DateTimeInterface $end): void
     {
-        $this->end = $end;
+        $this->end = \DateTimeImmutable::createFromInterface($end);
     }
 
     public function setColor(?string $color): void

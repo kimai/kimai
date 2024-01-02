@@ -159,11 +159,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     /**
      * Adds a fully translated (both $message and all keys in $parameter) flash message to the stack.
      *
-     * @param string $type
-     * @param string $message
      * @param array<string, string> $parameter
-     * @return void
-     * @throws \Exception
      */
     private function addFlashTranslated(string $type, string $message, array $parameter = []): void
     {
@@ -183,9 +179,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     /**
      * Handles exception flash messages for failed update/create actions.
-     * @param \Exception $exception
-     * @param FormInterface $form
-     * @return void
      */
     protected function handleFormUpdateException(\Exception $exception, FormInterface $form): void
     {
@@ -262,10 +255,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     }
 
     /**
-     * @param FormInterface $form
-     * @param Request $request
      * @param array<string> $filterParams parameter names, which should not be saved (neither session, nor database)
-     * @return bool
      * @throws \Exception
      */
     protected function handleSearch(FormInterface $form, Request $request, array $filterParams = []): bool
