@@ -1689,6 +1689,10 @@
         <source>days</source>
         <target>Tage</target>
       </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target>Unbezahlter Urlaub</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
