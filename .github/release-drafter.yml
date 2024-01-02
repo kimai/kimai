@@ -35,7 +35,7 @@ version-resolver:
 template: |
     [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/)
 
-    **Compatible with PHP 8.1 and 8.2**
+    **Compatible with PHP 8.1 to 8.3**
     
     $CHANGES
     
