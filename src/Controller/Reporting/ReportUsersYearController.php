@@ -17,6 +17,7 @@ use App\Model\MonthlyStatistic;
 use App\Reporting\YearlyUserList\YearlyUserList;
 use App\Reporting\YearlyUserList\YearlyUserListForm;
 use App\Repository\Query\UserQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
@@ -75,6 +76,7 @@ final class ReportUsersYearController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $query = new UserQuery();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
 
