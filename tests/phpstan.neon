@@ -5913,16 +5913,6 @@ parameters:
             path: Invoice/Renderer/DocxRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Renderer/OdsRendererTest.php
