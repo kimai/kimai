@@ -17,6 +17,7 @@ use App\Entity\Team;
 use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
+use App\Repository\Query\DateRangeTrait;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\SearchTerm;
@@ -334,8 +335,14 @@ class BaseQueryTest extends TestCase
         $this->assertEquals([13, 27], $sut->getProjectIds());
     }
 
+    /**
+     * @param DateRangeTrait $sut
+     */
     protected function assertDateRangeTrait($sut): void
     {
+        $traits = class_uses($sut);
+        self::assertIsArray($traits);
+        self::assertArrayHasKey(DateRangeTrait::class, $traits);
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
 

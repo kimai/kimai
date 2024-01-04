@@ -40,7 +40,7 @@ class DateTimeFormatterTest extends AbstractFormatterTest
     public function testFormattedValueWithInvalidValue()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unsupported value given, only DateTime is supported');
+        $this->expectExceptionMessage('Unsupported value given, only DateTimeInterface is supported');
 
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();

@@ -15,10 +15,12 @@ final class ProjectBudgetStatisticEvent
 {
     /**
      * @param ProjectBudgetStatisticModel[] $models
-     * @param \DateTime|null $begin
-     * @param \DateTime|null $end
      */
-    public function __construct(private array $models, private ?\DateTime $begin = null, private ?\DateTime $end = null)
+    public function __construct(
+        private readonly array $models,
+        private readonly ?\DateTimeInterface $begin = null,
+        private readonly ?\DateTimeInterface $end = null
+    )
     {
     }
 
@@ -45,12 +47,12 @@ final class ProjectBudgetStatisticEvent
         return $this->models;
     }
 
-    public function getBegin(): ?\DateTime
+    public function getBegin(): ?\DateTimeInterface
     {
         return $this->begin;
     }
 
-    public function getEnd(): ?\DateTime
+    public function getEnd(): ?\DateTimeInterface
     {
         return $this->end;
     }
