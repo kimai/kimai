@@ -34,7 +34,6 @@ use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
-use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
@@ -73,7 +72,7 @@ class ProjectStatisticService
     public function findInactiveProjects(ProjectInactiveQuery $query): array
     {
         $user = $query->getUser();
-        $lastChange = clone $query->getLastChange();
+        $lastChange = DateTimeImmutable::createFromInterface($query->getLastChange());
         $now = new DateTimeImmutable('now', $lastChange->getTimezone());
 
         $qb2 = $this->projectRepository->createQueryBuilder('t1');
@@ -97,15 +96,15 @@ class ProjectStatisticService
                     $qb->expr()->lte('p.start', ':project_start')
                 )
             )
-            ->setParameter('project_start', $now, Types::DATETIME_MUTABLE)
+            ->setParameter('project_start', $now, Types::DATETIME_IMMUTABLE)
             ->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('p.end'),
                     $qb->expr()->gte('p.end', ':project_end')
                 )
             )
-            ->setParameter('project_end', $now, Types::DATETIME_MUTABLE)
-            ->setParameter('begin', $lastChange, Types::DATETIME_MUTABLE)
+            ->setParameter('project_end', $now, Types::DATETIME_IMMUTABLE)
+            ->setParameter('begin', $lastChange, Types::DATETIME_IMMUTABLE)
         ;
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
@@ -304,8 +303,6 @@ class ProjectStatisticService
 
     /**
      * @param Project[] $projects
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
      * @return array<int, ProjectStatistic>
      */
     public function getBudgetStatistic(array $projects, ?DateTimeInterface $begin = null, ?DateTimeInterface $end = null): array

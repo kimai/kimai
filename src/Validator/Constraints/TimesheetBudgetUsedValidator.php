@@ -58,8 +58,10 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return;
         }
 
+        $begin = $timesheet->getBegin();
+
         // we can only work with stopped entries
-        if (null === $timesheet->getEnd() || null === $timesheet->getUser()) {
+        if ($begin === null || $timesheet->getEnd() === null || $timesheet->getUser() === null) {
             return;
         }
 
@@ -115,7 +117,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             if ($duration === $rawData['duration'] &&
                 $rate === $rawData['rate'] &&
                 $timesheet->isBillable() === $rawData['billable'] &&
-                $timesheet->getBegin()->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
+                $begin->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
                 $timesheet->getProject()->getId() === $projectId &&
                 ($timesheet->getActivity() === null || $timesheet->getActivity()->getId() === $activityId)
             ) {
@@ -145,11 +147,11 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 }
             }
 
-            $monthWasChanged = $timesheet->getBegin()->format('Y.m') !== $rawData['begin']->format('Y.m');
+            $monthWasChanged = $begin->format('Y.m') !== $rawData['begin']->format('Y.m');
         }
 
-        $now = new DateTime('now', $timesheet->getBegin()->getTimezone());
-        $recordDate = $timesheet->getBegin();
+        $now = new DateTime('now', $begin->getTimezone());
+        $recordDate = $begin;
 
         if (null !== ($activity = $timesheet->getActivity()) && $activity->hasBudgets()) {
             $dateTime = $activity->isMonthlyBudget() ? $recordDate : $now;

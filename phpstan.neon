@@ -1109,21 +1109,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#2 \\$begin of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModelForProjectsByDateRange\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#3 \\$end of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModelForProjectsByDateRange\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
 
         -
@@ -5747,11 +5732,6 @@ parameters:
             path: src/Validator/Constraints/TeamValidator.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
@@ -5772,28 +5752,8 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
             count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Activity\\\\ActivityStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Customer\\\\CustomerStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
