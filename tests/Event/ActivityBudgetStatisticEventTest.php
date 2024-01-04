@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ActivityBudgetStatisticEventTest extends TestCase
 {
-    public function testStatistic()
+    public function testStatistic(): void
     {
         $activity = $this->createMock(Activity::class);
         $activity->expects($this->exactly(2))->method('getId')->willReturn(12);
@@ -39,7 +39,7 @@ class ActivityBudgetStatisticEventTest extends TestCase
         self::assertNull($sut->getModel(1));
         self::assertSame($model1, $sut->getModel(12));
         self::assertSame($model2, $sut->getModel(4));
-        self::assertSame($begin, $sut->getBegin());
-        self::assertSame($end, $sut->getEnd());
+        self::assertEquals($begin, $sut->getBegin());
+        self::assertEquals($end, $sut->getEnd());
     }
 }

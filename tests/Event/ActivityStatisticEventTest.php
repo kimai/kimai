@@ -25,7 +25,7 @@ class ActivityStatisticEventTest extends AbstractActivityEventTest
         return new ActivityStatisticEvent($activity, new ActivityStatistic());
     }
 
-    public function testStatistic()
+    public function testStatistic(): void
     {
         $activity = new Activity();
         $statistic = new ActivityStatistic();
@@ -39,7 +39,7 @@ class ActivityStatisticEventTest extends AbstractActivityEventTest
         $begin = new \DateTime('2020-08-08 12:34:56');
         $end = new \DateTime('2020-09-08 12:34:56');
         $sut = new ActivityStatisticEvent($activity, $statistic, $begin, $end);
-        self::assertSame($begin, $sut->getBegin());
-        self::assertSame($end, $sut->getEnd());
+        self::assertEquals($begin, $sut->getBegin());
+        self::assertEquals($end, $sut->getEnd());
     }
 }

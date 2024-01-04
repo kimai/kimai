@@ -347,14 +347,15 @@ class BaseQueryTest extends TestCase
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
 
-        $begin = new \DateTime('2013-11-23 13:45:07');
-        $end = new \DateTime('2014-01-01 23:45:11');
-        $dateRange->setBegin($begin);
-        $dateRange->setEnd($end);
+        $dateRange->setBegin(new \DateTimeImmutable('2013-11-23 13:45:07'));
+        $dateRange->setEnd(new \DateTimeImmutable('2014-01-01 23:45:11'));
 
-        self::assertSame($begin, $sut->getDateRange()->getBegin());
-        self::assertSame($begin, $sut->getBegin());
-        self::assertSame($end, $sut->getDateRange()->getEnd());
-        self::assertSame($end, $sut->getEnd());
+        $begin1 = new \DateTimeImmutable('2013-11-23 00:00:00');
+        $end1 = new \DateTimeImmutable('2014-01-01 23:59:59');
+
+        self::assertEquals($begin1, $sut->getDateRange()->getBegin());
+        self::assertEquals($begin1, $sut->getBegin());
+        self::assertEquals($end1, $sut->getDateRange()->getEnd());
+        self::assertEquals($end1, $sut->getEnd());
     }
 }

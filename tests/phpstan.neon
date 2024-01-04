@@ -4073,11 +4073,6 @@ parameters:
             path: Event/AbstractTimesheetMultipleEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ActivityBudgetStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ActivityBudgetStatisticEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\ActivityMetaDefinitionEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ActivityMetaDefinitionEventTest.php
@@ -4086,11 +4081,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Event\\\\ActivityMetaDisplayEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ActivityMetaDisplayEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ActivityStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ActivityStatisticEventTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Event\\\\CalendarConfigurationEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
@@ -4201,11 +4191,6 @@ parameters:
             message: "#^Parameter \\#1 \\$array of function array_values expects array, array\\|null given\\.$#"
             count: 5
             path: Event/PermissionsEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ProjectBudgetStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ProjectBudgetStatisticEventTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Event\\\\ProjectMetaDefinitionEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
