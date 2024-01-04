@@ -1,11 +1,13 @@
 #!/bin/sh -e
 
 # Test PHP/Kimai
-/opt/kimai/bin/console kimai:version
-if [ $? != 0 ]; then
-  echo "PHP/Kimai not responding"
-  exit 1
-fi
+# This does not work currently, as a real database is required
+# see https://github.com/kimai/kimai/issues/4503
+#/opt/kimai/bin/console kimai:version
+#if [ $? != 0 ]; then
+#  echo "PHP/Kimai not responding"
+#  exit 1
+#fi
 
 # Test FPM CGI
 if [ -f /use_fpm ]; then
