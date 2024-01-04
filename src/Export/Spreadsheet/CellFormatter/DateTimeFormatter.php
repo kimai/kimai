@@ -30,6 +30,6 @@ final class DateTimeFormatter implements CellFormatterInterface
         }
 
         $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), Date::PHPToExcel($value));
-        $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
+        $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 }
