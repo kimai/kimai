@@ -54,6 +54,7 @@ final class ReportingService
 
             if ($this->security->isGranted('report:customer')) {
                 if ($viewOther) {
+                    $event->addReport(new Report('customer_view', 'report_customer_view', 'report_customer_view', 'customer'));
                     $event->addReport(new Report('report_customer_monthly_projects', 'report_customer_monthly_projects', 'report_customer_monthly_projects', 'customer'));
                 }
             }

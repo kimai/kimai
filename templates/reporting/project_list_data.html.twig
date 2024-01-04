@@ -18,10 +18,10 @@
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
-    'lastRecord':       {'class': 'd-none d-sm-table-cell text-start hw-min w-min', 'title': 'last_record'|trans, 'columnClass': 'w-min'},
+    'lastRecord':       {'class': 'd-none text-start hw-min w-min', 'title': 'last_record'|trans, 'columnClass': 'w-min'},
     'today':            {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationToday'|trans},
     'week':             {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'd-none d-lg-table-cell text-end hw-min w-min', 'title': 'stats.durationMonth'|trans},
+    'month':            {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationMonth'|trans},
     'durationTotal':    {'class': 'text-end hw-min w-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
 }) %}
 {% if showTimeBudget and is_granted('create_export') %}

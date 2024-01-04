@@ -1,0 +1,16 @@
+{% extends 'reporting/customer_list_data.html.twig' %}
+
+{% block report_form_layout %}
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('filter', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.budgetType.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
