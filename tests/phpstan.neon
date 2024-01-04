@@ -4223,11 +4223,6 @@ parameters:
             path: Event/ProjectMetaQueryDisplayTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ProjectStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ProjectStatisticEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\RecentActivityEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/RecentActivityEventTest.php
@@ -6894,11 +6889,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBaseQuery\\(\\) has parameter \\$orderBy with no type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertDateRangeTrait\\(\\) has parameter \\$sut with no type specified\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
 

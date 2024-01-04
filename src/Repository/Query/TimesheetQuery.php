@@ -14,7 +14,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
-class TimesheetQuery extends ActivityQuery implements BillableInterface
+class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRangeInterface
 {
     use BillableTrait;
     use DateRangeTrait;
