@@ -52,7 +52,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
         $now = new \DateTime('now', $timesheetStart->getTimezone());
 
         if (!empty($constraint->now)) {
-            if ($constraint->now instanceof \DateTime) {
+            if ($constraint->now instanceof \DateTimeInterface) {
                 $now = $constraint->now;
             } elseif (\is_string($constraint->now)) {
                 try {

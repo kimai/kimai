@@ -158,10 +158,12 @@ final class ExportCreateCommand extends Command
                 return Command::FAILURE;
             }
         }
-        if (!$start instanceof \DateTime) {
+        if (!$start instanceof \DateTimeInterface) {
             $start = $dateFactory->getStartOfMonth();
         }
-        $start->setTime(0, 0, 0);
+
+        $start = \DateTimeImmutable::createFromInterface($start);
+        $start = $start->setTime(0, 0, 0);
 
         $end = $input->getOption('end');
         if (!empty($end)) {
@@ -174,11 +176,12 @@ final class ExportCreateCommand extends Command
             }
         }
 
-        if (empty($end)) {
+        if (!$end instanceof \DateTimeInterface) {
             $end = $dateFactory->getEndOfMonth($start);
         }
 
-        $end->setTime(23, 59, 59);
+        $end = \DateTimeImmutable::createFromInterface($end);
+        $end = $end->setTime(23, 59, 59);
 
         $directory = rtrim(sys_get_temp_dir(), '/') . '/';
         if ($input->getOption('directory') !== null) {

@@ -39,10 +39,12 @@ class DatePickerType extends AbstractType
                     return null;
                 }
 
-                if ($reverseTransform instanceof \DateTime && $options['force_time']) {
+                if ($reverseTransform instanceof \DateTimeInterface && $options['force_time']) {
                     if ($options['force_time'] === 'start') {
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
                         $reverseTransform->setTime(0, 0, 0);
                     } elseif ($options['force_time'] === 'end') {
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
                         $reverseTransform->setTime(23, 59, 59);
                     }
                 }

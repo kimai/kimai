@@ -20,9 +20,9 @@ trait DateRangeTrait
         return $this->dateRange?->getBegin();
     }
 
-    public function setBegin(\DateTime $begin): void
+    public function setBegin(\DateTimeInterface $begin): void
     {
-        $this->dateRange->setBegin($begin);
+        $this->dateRange->setBegin(\DateTime::createFromInterface($begin));
     }
 
     public function getEnd(): ?\DateTime
@@ -30,9 +30,9 @@ trait DateRangeTrait
         return $this->dateRange?->getEnd();
     }
 
-    public function setEnd(\DateTime $end): void
+    public function setEnd(\DateTimeInterface $end): void
     {
-        $this->dateRange->setEnd($end);
+        $this->dateRange->setEnd(\DateTime::createFromInterface($end));
     }
 
     public function getDateRange(): ?DateRange

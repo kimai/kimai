@@ -26,9 +26,9 @@ final class DateRange implements EquatableInterface
         return $this->begin;
     }
 
-    public function setBegin(DateTime $begin): DateRange
+    public function setBegin(\DateTimeInterface $begin): DateRange
     {
-        $this->begin = $begin;
+        $this->begin = DateTime::createFromInterface($begin);
         if ($this->resetTimes) {
             $this->begin->setTime(0, 0, 0);
         }
@@ -41,9 +41,9 @@ final class DateRange implements EquatableInterface
         return $this->end;
     }
 
-    public function setEnd(DateTime $end): DateRange
+    public function setEnd(\DateTimeInterface $end): DateRange
     {
-        $this->end = $end;
+        $this->end = DateTime::createFromInterface($end);
         if ($this->resetTimes) {
             $this->end->setTime(23, 59, 59);
         }
