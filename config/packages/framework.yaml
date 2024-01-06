@@ -1,4 +1,7 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
+parameters:
+    env(TRUSTED_PROXIES): ''
+
 framework:
     secret: '%env(APP_SECRET)%'
     csrf_protection: true
@@ -8,7 +11,7 @@ framework:
     serializer:
         enable_attributes: true
 
-    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_proxies: '%env(string:TRUSTED_PROXIES)%'
 
     exceptions:
         App\Validator\ValidationFailedException:
