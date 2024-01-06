@@ -109,8 +109,7 @@ final class AppExtension extends Extension
         $locales = explode('|', $container->getParameter('app_locales'));
 
         $directory = $container->getParameter('kernel.project_dir');
-        $config = $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
-        $settings = include $config;
+        $settings = include $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
 
         $appLocales = [];
         $defaults = [
