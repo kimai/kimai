@@ -2,153 +2,153 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." approved="yes">
         <source>This value is not a valid role.</source>
-        <target>Questo valore non è un ruolo valido.</target>
+        <target state="final">Questo valore non è un ruolo valido.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes">
         <source>End date must not be earlier then start date.</source>
-        <target>La data di fine non può essere prima di quella iniziale.</target>
+        <target state="final">La data di fine non deve essere precedente alla data di inizio.</target>
       </trans-unit>
-      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." approved="yes">
         <source>You must select at least one user or team.</source>
-        <target state="translated">Devi selezionare almeno un utente o una team.</target>
+        <target state="final">Devi selezionare almeno un utente o una team.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." approved="yes">
         <source>The begin date cannot be in the future.</source>
-        <target>La data di inizio non può essere futura.</target>
+        <target state="final">La data di inizio non può essere futura.</target>
       </trans-unit>
-      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." approved="yes">
         <source>The budget is completely used.</source>
-        <target>Il budget è esaurito. Del %budget% disponibile, %used% è stato prenotato finora, %free% può ancora essere utilizzato.</target>
+        <target state="final">Il budget è esaurito. Del %budget% disponibile, %used% è stato prenotato finora, %free% può ancora essere utilizzato.</target>
       </trans-unit>
-      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time." approved="yes">
         <source>The given value is not a valid time.</source>
-        <target>Il valore fornito non è un orario valido.</target>
+        <target state="final">Il valore fornito non è un orario valido.</target>
       </trans-unit>
-      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time." approved="yes">
         <source>You already have an entry for this time.</source>
-        <target>Hai già una voce per questo periodo.</target>
+        <target state="final">Hai già una voce per questo periodo.</target>
       </trans-unit>
-      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
-        <source>This period is locked, please choose a later date.</source>
-        <target>Questo periodo è bloccato, scegli una data successiva.</target>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." approved="yes">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="final">Questo periodo è bloccato, scegli una data successiva.</target>
       </trans-unit>
-      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
-        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
-        <target>Questo documento di fattura non può essere utilizzato, rinomina il file e caricalo di nuovo.</target>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." approved="yes">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="final">Questo documento di fatturazione non può essere usato, rinomina il file e caricalo di nuovo.</target>
       </trans-unit>
-      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." approved="yes">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Massimo {{ value }} ore permesse.</target>
+        <target state="final">Sono consentite al massimo {{ value }} ore.</target>
       </trans-unit>
-      <trans-unit id="S14XECA" resname="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used." approved="yes">
         <source>The username is already used.</source>
-        <target>L'username è già in uso.</target>
+        <target state="final">Il nome utente è già stato usato.</target>
       </trans-unit>
-      <trans-unit id="6u6oCwB" resname="The email is already used.">
-        <source>The email is already used.</source>
-        <target>L'email è già in uso.</target>
+      <trans-unit id="6u6oCwB" resname="The email is already used." approved="yes">
+        <source>This e-mail address is already in use.</source>
+        <target state="final">Questo indirizzo e-mail è già in uso.</target>
       </trans-unit>
-      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." approved="yes">
         <source>The entered passwords don't match.</source>
-        <target>Le password inserite non corrispondono.</target>
+        <target state="final">Le password inserite non corrispondono.</target>
       </trans-unit>
-      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." approved="yes">
         <source>An equal username is already used.</source>
-        <target>Un nome utente uguale è già usato.</target>
+        <target state="final">Il nome utente scelto non è disponibile.</target>
       </trans-unit>
-      <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal email is already used.</source>
-        <target>Un indirizzo e-mail uguale è già usato.</target>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." approved="yes">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="final">Nel sistema esiste già un account con questa e-mail.</target>
       </trans-unit>
-      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." approved="yes">
         <source>At least one team leader must be assigned to the team.</source>
-        <target state="translated">Almeno un responsabile team deve essere assegnato al team.</target>
+        <target state="final">Almeno un responsabile team deve essere assegnato al team.</target>
       </trans-unit>
-      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected." approved="yes">
         <source>An activity needs to be selected.</source>
-        <target>È necessario selezionare un'attività.</target>
+        <target state="final">È necessario selezionare un'attività.</target>
       </trans-unit>
-      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported." approved="yes">
         <source>This timesheet is already exported.</source>
-        <target>Questa scheda attività è già stata esportata.</target>
+        <target state="final">Questo foglio di presenza è già stata esportato.</target>
       </trans-unit>
-      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected." approved="yes">
         <source>A project needs to be selected.</source>
-        <target>È necessario selezionare un progetto.</target>
+        <target state="final">È necessario selezionare un progetto.</target>
       </trans-unit>
-      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." approved="yes">
         <source>This value is not a valid role name.</source>
-        <target state="translated">Questo non è un nome valido per un ruolo utente.</target>
+        <target state="final">Questo non è un nome valido per un ruolo utente.</target>
       </trans-unit>
-      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." approved="yes">
         <source>Duration cannot be zero.</source>
-        <target state="translated">Una durata vuota non è consentita.</target>
+        <target state="final">Non è consentita una durata vuota.</target>
       </trans-unit>
-      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." approved="yes">
         <source>Sorry, the budget is used up.</source>
-        <target state="translated">Siamo spiacenti, il budget è esaurito.</target>
+        <target state="final">Spiacente, il budget è esaurito.</target>
       </trans-unit>
-      <trans-unit id="gSAwscA" resname="Validation Failed">
+      <trans-unit id="gSAwscA" resname="Validation Failed" approved="yes">
         <source>Validation Failed</source>
-        <target state="translated">Si è verificato un problema durante il salvataggio.</target>
+        <target state="final">Si è verificato un problema durante il salvataggio.</target>
       </trans-unit>
-      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs" approved="yes">
         <source>Cannot stop running timesheet</source>
-        <target state="translated">Hai un record di tempo attivo che non può essere fermato automaticamente.</target>
+        <target state="final">Hai un registrazione di tempo attiva che non può essere fermata automaticamente.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format." approved="yes">
         <source>The given value is not a valid datetime format.</source>
-        <target state="translated">Il valore specificato non è un formato giorno/ora valido.</target>
+        <target state="final">Il valore fornito non è un formato giornaliero valido.</target>
       </trans-unit>
-      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." approved="yes">
         <source>The given code is not the correct TOTP token.</source>
-        <target state="translated">Il codice fornito non è il token TOTP corretto.</target>
+        <target state="final">Il codice fornito non è il token TOTP corretto.</target>
       </trans-unit>
-      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed.">
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." approved="yes">
         <source>This is a public holiday, booking not allowed.</source>
-        <target state="translated">Questa è una festività pubblica, la prenotazione non è consentita.</target>
+        <target state="final">Questa è una festività pubblica, la prenotazione non è consentita.</target>
       </trans-unit>
-      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." approved="yes">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
-        <target state="translated">Non hai abbastanza straordinari, ti restano {{ value }}.</target>
+        <target state="final">Non hai abbastanza straordinari, ti restano {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Un'assenza non può essere prenotata prima del primo giorno lavorativo.</target>
+        <target state="final">Un'assenza non può essere prenotata prima del primo giorno lavorativo.</target>
       </trans-unit>
-      <trans-unit id="IN37g5N" resname="Not enough holidays left.">
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." approved="yes">
         <source>Not enough holidays left.</source>
-        <target state="translated">Non sono rimaste abbastanza ferie.</target>
+        <target state="final">Non sono rimaste abbastanza ferie.</target>
       </trans-unit>
-      <trans-unit id="nLcihCc" resname="An absence must have a date.">
+      <trans-unit id="nLcihCc" resname="An absence must have a date." approved="yes">
         <source>An absence must have a date.</source>
-        <target state="translated">Un'assenza deve avere una data.</target>
+        <target state="final">Un'assenza deve avere una data.</target>
       </trans-unit>
-      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." approved="yes">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target state="translated">Puoi prenotare un massimo di {{ value }} giorni contemporaneamente.</target>
+        <target state="final">Puoi prenotare un massimo di {{ value }} giorni contemporaneamente, attualmente hai selezionato {{selected }}.</target>
       </trans-unit>
-      <trans-unit id="ZObikpA" resname="This absence type is not known.">
+      <trans-unit id="ZObikpA" resname="This absence type is not known." approved="yes">
         <source>This absence type is not known.</source>
-        <target state="translated">Questo tipo di assenza non è noto.</target>
+        <target state="final">Questo tipo di assenza non è noto.</target>
       </trans-unit>
-      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user.">
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." approved="yes">
         <source>An absence must be assigned to a user.</source>
-        <target state="translated">Un'assenza deve essere assegnata a un utente.</target>
+        <target state="final">Un'assenza deve essere assegnata a un utente.</target>
       </trans-unit>
-      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day.">
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." approved="yes">
         <source>You cannot have two absences of this type at one day.</source>
-        <target state="translated">Non puoi avere due assenze di questo tipo nello stesso giorno.</target>
+        <target state="final">Non puoi avere due assenze di questo tipo nello stesso giorno.</target>
       </trans-unit>
-      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day.">
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." approved="yes">
         <source>The chosen date is not a working day.</source>
-        <target state="translated">La data scelta non è un giorno lavorativo.</target>
+        <target state="final">La data scelta non è un giorno lavorativo.</target>
       </trans-unit>
-      <trans-unit id="N21br.P" resname="The chosen date is already locked.">
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." approved="yes">
         <source>The chosen date is already locked.</source>
-        <target state="translated">La data scelta è già bloccata.</target>
+        <target state="final">La data scelta è già bloccata.</target>
       </trans-unit>
       <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." approved="yes">
         <source>The period of absence must not extend beyond the turn of the year.</source>

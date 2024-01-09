@@ -1149,9 +1149,9 @@
         <source>error.directory_protected</source>
         <target state="final">La cartella"%dir%" è protetta da scrittura.</target>
       </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" approved="yes">
         <source>invoice_document.max_reached</source>
-        <target>La quantità massima di %max% documenti di fattura è stata raggiunta. Puoi aggiungerne altri dopo averne rimosso uno.</target>
+        <target state="final">Raggiunto l'importo massimo di %max% documenti di fatturazione. Puoi aggiungerne altri dopo averne rimosso uno.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1704,6 +1704,10 @@
       <trans-unit id="q1EATp1" resname="days" approved="yes">
         <source>days</source>
         <target state="final">Giorni</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" approved="yes">
+        <source>unpaid_vacation</source>
+        <target state="final">Ferie non pagate</target>
       </trans-unit>
     </body>
   </file>

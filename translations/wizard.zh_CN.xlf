@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">最重要的设置现已完成。您可以稍后在用户资料中自定义更多内容。</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">请输入您的新密码，此后将用于登录。</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">你的密码</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

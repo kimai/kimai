@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" approved="yes">
         <source>invoice_renderer</source>
-        <target state="translated">Modello di fattura</target>
+        <target state="final">Modello di fattura</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice" approved="yes">
         <source>invoice</source>
-        <target state="translated">Fattura</target>
+        <target state="final">Fattura</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
         <source>timesheet</source>
-        <target state="translated">Foglio di presenza</target>
+        <target state="final">Foglio di presenza</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic">
+      <trans-unit id="E5BwZHT" resname="programmatic" approved="yes">
         <source>programmatic</source>
-        <target state="translated">Per ulteriori elaborazioni</target>
+        <target state="final">Per ulteriori elaborazioni</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="7mEUv6C" resname="help.upload" approved="yes">
         <source>help.upload</source>
-        <target state="translated">Attenzione: i file esistenti verranno sovrascritti. I tipi di file consentiti sono: %extensions%.</target>
+        <target state="final">Attenzione: i file esistenti verranno sovrascritti. I tipi di file consentiti sono: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" approved="yes">
         <source>download_invoice_renderer</source>
-        <target state="translated">Puoi scaricare altri modelli qui</target>
+        <target state="final">Puoi scaricare ulteriori modelli qui</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
-        <target state="translated">Fattura</target>
+        <target state="final">Fattura</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text">
+      <trans-unit id="mC2ePrm" resname="text" approved="yes">
         <source>text</source>
-        <target state="translated">Testo</target>
+        <target state="final">Testo</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
+      <trans-unit id="m1UyfD9" resname="service-date" approved="yes">
         <source>Single service date</source>
-        <target state="translated">Data del servizio</target>
+        <target state="final">Data del servizio</target>
       </trans-unit>
     </body>
   </file>
