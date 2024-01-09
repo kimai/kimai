@@ -1,13 +1,14 @@
 #!/bin/sh -e
 
-# Test PHP/Kimai
-# This does not work currently, as a real database is required
-# see https://github.com/kimai/kimai/issues/4503
-#/opt/kimai/bin/console kimai:version
-#if [ $? != 0 ]; then
-#  echo "PHP/Kimai not responding"
-#  exit 1
-#fi
+if [ -z "$DATABASE_URL" ]; then
+  DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
+fi
+
+/opt/kimai/bin/console kimai:version
+if [ $? != 0 ]; then
+  echo "PHP/Kimai not responding"
+  exit 1
+fi
 
 # Test FPM CGI
 if [ -f /use_fpm ]; then
