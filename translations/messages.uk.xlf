@@ -1662,6 +1662,10 @@
         <source>Translations</source>
         <target state="translated">Переклади</target>
       </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Неоплачувана відпустка</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

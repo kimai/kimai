@@ -1726,6 +1726,10 @@
         <source>days</source>
         <target state="translated">Días</target>
       </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Vacaciones no retribuidas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

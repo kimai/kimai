@@ -128,7 +128,7 @@
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target state="translated">Puede reservar un máximo de {{ value }} días a la vez.</target>
+        <target state="translated">Puede reservar un máximo de {{ value }} días a la vez, actualmente ha seleccionado {{ selected }}.</target>
       </trans-unit>
       <trans-unit id="ZObikpA" resname="This absence type is not known.">
         <source>This absence type is not known.</source>

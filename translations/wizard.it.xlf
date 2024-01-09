@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="wizard.en.xlf">
     <body>
-      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" approved="yes">
         <source>wizard.intro.title</source>
-        <target state="translated">Benvenuto in Kimai</target>
+        <target state="final">Benvenuto in Kimai</target>
       </trans-unit>
-      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" approved="yes">
         <source>wizard.intro.description</source>
-        <target state="translated">Questa procedura guidata ti aiuterà a personalizzare Kimai in base alle tue esigenze.</target>
+        <target state="final">Questa procedura guidata ti aiuterà a personalizzare Kimai in base alle tue esigenze.</target>
       </trans-unit>
-      <trans-unit id="FCMK0ph" resname="wizard.separator">
+      <trans-unit id="FCMK0ph" resname="wizard.separator" approved="yes">
         <source>wizard.separator</source>
-        <target state="translated">Le tue impostazioni</target>
+        <target state="final">Le tue impostazioni</target>
       </trans-unit>
-      <trans-unit id="8_e6ApF" resname="wizard.profile.title">
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" approved="yes">
         <source>wizard.profile.title</source>
-        <target state="translated">Il tuo profilo</target>
+        <target state="final">Il tuo profilo</target>
       </trans-unit>
-      <trans-unit id="Mo1506M" resname="wizard.profile.description">
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" approved="yes">
         <source>wizard.profile.description</source>
-        <target state="translated">Alcune impostazioni di base per facilitare il lavoro con Kimai.</target>
+        <target state="final">Alcune impostazioni di base per facilitare il lavoro con Kimai.</target>
       </trans-unit>
-      <trans-unit id="8p.2pXa" resname="wizard.done.title">
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" approved="yes">
         <source>wizard.done.title</source>
-        <target state="translated">Congratulazioni</target>
+        <target state="final">Congratulazioni</target>
       </trans-unit>
-      <trans-unit id="k1SzMuI" resname="wizard.done.description">
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" approved="yes">
         <source>wizard.done.description</source>
-        <target state="translated">Le impostazioni più importanti sono ora complete. Molte altre possono essere personalizzate in seguito nel proprio profilo utente.</target>
+        <target state="final">Le impostazioni più importanti sono ora complete. Molte altre possono essere personalizzate in seguito nel proprio profilo utente.</target>
       </trans-unit>
-      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" approved="yes">
         <source>wizard.password.description</source>
-        <target state="translated">Inserisci la tua nuova password, che verrà utilizzata da ora in poi per accedere.</target>
+        <target state="final">Inserisci la tua nuova password, che verrà utilizzata da ora in poi per accedere.</target>
       </trans-unit>
-      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" approved="yes">
         <source>wizard.password.title</source>
-        <target state="translated">La tua password</target>
+        <target state="final">La tua password</target>
       </trans-unit>
     </body>
   </file>

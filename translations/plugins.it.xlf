@@ -2,21 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="plugins.en.xlf">
     <body>
-      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+      <trans-unit id="vFSLi54" resname="plugin.none_installed" approved="yes">
         <source>plugin.none_installed</source>
-        <target state="translated">Non hai alcun plugin installato.</target>
+        <target state="final">Non hai alcun plugin installato.</target>
       </trans-unit>
-      <trans-unit id="6Bl7IPj" resname="buy">
+      <trans-unit id="6Bl7IPj" resname="buy" approved="yes">
         <source>Buy now</source>
-        <target state="translated">Acquista ora</target>
+        <target state="final">Acquista ora</target>
       </trans-unit>
-      <trans-unit id="jZAB0yx" resname="shop">
+      <trans-unit id="jZAB0yx" resname="shop" approved="yes">
         <source>Plugin Shop</source>
-        <target state="translated">Più estensioni</target>
+        <target state="final">Più estensioni</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" approved="yes">
         <source>Available plugins</source>
-        <target state="translated">Plugin disponibili</target>
+        <target state="final">Plugin disponibili</target>
       </trans-unit>
     </body>
   </file>
