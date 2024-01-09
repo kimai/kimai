@@ -8,31 +8,30 @@
     "packages": [
         {
             "name": "azuyalabs/yasumi",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/azuyalabs/yasumi.git",
-                "reference": "a73f198d796100c237adf94f3fca1d15eb82b22b"
+                "reference": "37d1215d4f4012d3185bb9990c76ca17a4ff1c30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/azuyalabs/yasumi/zipball/a73f198d796100c237adf94f3fca1d15eb82b22b",
-                "reference": "a73f198d796100c237adf94f3fca1d15eb82b22b",
+                "url": "https://api.github.com/repos/azuyalabs/yasumi/zipball/37d1215d4f4012d3185bb9990c76ca17a4ff1c30",
+                "reference": "37d1215d4f4012d3185bb9990c76ca17a4ff1c30",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=7.4"
+                "php": ">=8.0"
             },
             "require-dev": {
                 "ext-intl": "*",
-                "friendsofphp/php-cs-fixer": "^2.19 || ^3.16",
-                "infection/infection": "^0.17 || ^0.26",
+                "friendsofphp/php-cs-fixer": "^2.19 || ^3.40",
                 "mikey179/vfsstream": "^1.6",
                 "phan/phan": "^5.4",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^8.5 || ^9.6",
-                "vimeo/psalm": "^5.9"
+                "vimeo/psalm": "^5.16"
             },
             "suggest": {
                 "ext-calendar": "For calculating the date of Easter"
@@ -78,7 +77,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2023-04-26T15:35:45+00:00"
+            "time": "2024-01-07T14:12:44+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3184,16 +3183,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.15.2",
+            "version": "v4.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "ed742a7650bb3b8c70bda102876a184678fa2447"
+                "reference": "31da761b6c9d275fb3bbee87c4c6888b17aec4ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/ed742a7650bb3b8c70bda102876a184678fa2447",
-                "reference": "ed742a7650bb3b8c70bda102876a184678fa2447",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/31da761b6c9d275fb3bbee87c4c6888b17aec4ad",
+                "reference": "31da761b6c9d275fb3bbee87c4c6888b17aec4ad",
                 "shasum": ""
             },
             "require": {
@@ -3290,9 +3289,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.15.2"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.16.2"
             },
-            "time": "2024-01-03T10:37:11+00:00"
+            "time": "2024-01-06T21:33:48+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -4069,16 +4068,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.24.5",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "fedf211ff14ec8381c9bf5714e33a7a552dd1acc"
+                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fedf211ff14ec8381c9bf5714e33a7a552dd1acc",
-                "reference": "fedf211ff14ec8381c9bf5714e33a7a552dd1acc",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bd84b629c8de41aa2ae82c067c955e06f1b00240",
+                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240",
                 "shasum": ""
             },
             "require": {
@@ -4110,9 +4109,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.5"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.25.0"
             },
-            "time": "2023-12-16T09:33:33+00:00"
+            "time": "2024-01-04T17:06:16+00:00"
         },
         {
             "name": "psr/cache",
@@ -10332,16 +10331,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.8.2",
+            "version": "4.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "a70a5dc5db26183c86f589ff3d76fb11e141fc58"
+                "reference": "598958d8a83cfbd44ba36388b2f9ed69e8b86ed4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/a70a5dc5db26183c86f589ff3d76fb11e141fc58",
-                "reference": "a70a5dc5db26183c86f589ff3d76fb11e141fc58",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/598958d8a83cfbd44ba36388b2f9ed69e8b86ed4",
+                "reference": "598958d8a83cfbd44ba36388b2f9ed69e8b86ed4",
                 "shasum": ""
             },
             "require": {
@@ -10407,9 +10406,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.8.2"
+                "source": "https://github.com/zircote/swagger-php/tree/4.8.3"
             },
-            "time": "2023-12-19T19:59:07+00:00"
+            "time": "2024-01-07T22:33:09+00:00"
         }
     ],
     "packages-dev": [
@@ -11011,25 +11010,27 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.18.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999"
+                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bcbb2179f97633e98bbbc87044ee2611c7d7999",
-                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
+                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=7.0"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "ircmaxell/php-yacc": "^0.0.7",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -11037,7 +11038,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.9-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -11061,9 +11062,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.18.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.0"
             },
-            "time": "2023-12-10T21:03:43+00:00"
+            "time": "2024-01-07T17:17:35+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -11178,16 +11179,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.50",
+            "version": "1.10.55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "06a98513ac72c03e8366b5a0cb00750b487032e4"
+                "reference": "9a88f9d18ddf4cf54c922fbeac16c4cb164c5949"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/06a98513ac72c03e8366b5a0cb00750b487032e4",
-                "reference": "06a98513ac72c03e8366b5a0cb00750b487032e4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9a88f9d18ddf4cf54c922fbeac16c4cb164c5949",
+                "reference": "9a88f9d18ddf4cf54c922fbeac16c4cb164c5949",
                 "shasum": ""
             },
             "require": {
@@ -11236,25 +11237,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-13T10:59:42+00:00"
+            "time": "2024-01-08T12:32:40+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.53",
+            "version": "1.3.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "85def57e5db6ac6c8a512200c0cfadf7b6621b10"
+                "reference": "f9555a2d54d685efd7003ae33c15e3d19d7d0c36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/85def57e5db6ac6c8a512200c0cfadf7b6621b10",
-                "reference": "85def57e5db6ac6c8a512200c0cfadf7b6621b10",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/f9555a2d54d685efd7003ae33c15e3d19d7d0c36",
+                "reference": "f9555a2d54d685efd7003ae33c15e3d19d7d0c36",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.10.12"
+                "phpstan/phpstan": "^1.10.48"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -11271,7 +11272,7 @@
                 "doctrine/dbal": "^2.13.8 || ^3.3.3",
                 "doctrine/lexer": "^1.2.1",
                 "doctrine/mongodb-odm": "^1.3 || ^2.1",
-                "doctrine/orm": "^2.11.0",
+                "doctrine/orm": "^2.14.0",
                 "doctrine/persistence": "^1.3.8 || ^2.2.1",
                 "gedmo/doctrine-extensions": "^3.8",
                 "nesbot/carbon": "^2.49",
@@ -11304,9 +11305,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.53"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.54"
             },
-            "time": "2023-11-21T10:31:58+00:00"
+            "time": "2024-01-05T15:44:44+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
