@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 if [ -z "$DATABASE_URL" ]; then
-  export DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
+  DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
 fi
 
 /opt/kimai/bin/console kimai:version
