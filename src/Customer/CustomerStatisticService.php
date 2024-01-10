@@ -17,6 +17,8 @@ use App\Model\CustomerStatistic;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -27,17 +29,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CustomerStatisticService
 {
-    public function __construct(private TimesheetRepository $timesheetRepository, private EventDispatcherInterface $dispatcher)
+    public function __construct(private readonly TimesheetRepository $timesheetRepository, private readonly EventDispatcherInterface $dispatcher)
     {
     }
 
     /**
-     * WARNING: this method does not respect the budget type. Your results will always be wither the "full lifetime data" or the "selected date-range".
-     *
-     * @param Customer $customer
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @return CustomerStatistic
+     * WARNING: this method does not respect the budget type. Your results will always be with the "full lifetime data" or the "selected date-range".
      */
     public function getCustomerStatistics(Customer $customer, ?DateTime $begin = null, ?DateTime $end = null): CustomerStatistic
     {
@@ -48,13 +45,13 @@ class CustomerStatisticService
         return $event->getStatistic();
     }
 
-    public function getBudgetStatisticModel(Customer $customer, DateTime $today): CustomerBudgetStatisticModel
+    public function getBudgetStatisticModel(Customer $customer, DateTimeInterface $today): CustomerBudgetStatisticModel
     {
         $stats = new CustomerBudgetStatisticModel($customer);
         $stats->setStatisticTotal($this->getCustomerStatistics($customer));
 
         $begin = null;
-        $end = $today;
+        $end = DateTime::createFromInterface($today);
 
         if ($customer->isMonthlyBudget()) {
             $dateFactory = new DateTimeFactory($today->getTimezone());
@@ -69,11 +66,9 @@ class CustomerStatisticService
 
     /**
      * @param Customer[] $customers
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
      * @return array<int, CustomerStatistic>
      */
-    private function getBudgetStatistic(array $customers, ?DateTime $begin = null, ?DateTime $end = null): array
+    private function getBudgetStatistic(array $customers, ?DateTimeInterface $begin = null, ?DateTimeInterface $end = null): array
     {
         $statistics = [];
         foreach ($customers as $customer) {
@@ -87,25 +82,25 @@ class CustomerStatisticService
         if (null !== $result) {
             foreach ($result as $resultRow) {
                 $statistic = $statistics[$resultRow['id']];
-                $statistic->setDuration($statistic->getDuration() + $resultRow['duration']);
-                $statistic->setRate($statistic->getRate() + $resultRow['rate']);
-                $statistic->setInternalRate($statistic->getInternalRate() + $resultRow['internalRate']);
-                $statistic->setCounter($statistic->getCounter() + $resultRow['counter']);
+                $statistic->addDuration((int) $resultRow['duration']);
+                $statistic->addRate((float) $resultRow['rate']);
+                $statistic->addInternalRate((float) $resultRow['internalRate']);
+                $statistic->addCounter((int) $resultRow['counter']);
                 if ($resultRow['billable']) {
-                    $statistic->setDurationBillable($statistic->getDurationBillable() + $resultRow['duration']);
-                    $statistic->setRateBillable($statistic->getRateBillable() + $resultRow['rate']);
-                    $statistic->setInternalRateBillable($statistic->getInternalRateBillable() + $resultRow['internalRate']);
-                    $statistic->setCounterBillable($statistic->getCounterBillable() + $resultRow['counter']);
+                    $statistic->addDurationBillable((int) $resultRow['duration']);
+                    $statistic->addRateBillable((float) $resultRow['rate']);
+                    $statistic->addInternalRateBillable((float) $resultRow['internalRate']);
+                    $statistic->addCounterBillable((int) $resultRow['counter']);
                     if ($resultRow['exported']) {
-                        $statistic->setDurationBillableExported($statistic->getDurationBillableExported() + $resultRow['duration']);
-                        $statistic->setRateBillableExported($statistic->getRateBillableExported() + $resultRow['rate']);
+                        $statistic->addDurationBillableExported((int) $resultRow['duration']);
+                        $statistic->addRateBillableExported((float) $resultRow['rate']);
                     }
                 }
                 if ($resultRow['exported']) {
-                    $statistic->setDurationExported($statistic->getDurationExported() + $resultRow['duration']);
-                    $statistic->setRateExported($statistic->getRateExported() + $resultRow['rate']);
-                    $statistic->setInternalRateExported($statistic->getInternalRateExported() + $resultRow['internalRate']);
-                    $statistic->setCounterExported($statistic->getCounterExported() + $resultRow['counter']);
+                    $statistic->addDurationExported((int) $resultRow['duration']);
+                    $statistic->addRateExported((float) $resultRow['rate']);
+                    $statistic->addInternalRateExported((float) $resultRow['internalRate']);
+                    $statistic->addCounterExported((int) $resultRow['counter']);
                 }
             }
         }
@@ -113,7 +108,7 @@ class CustomerStatisticService
         return $statistics;
     }
 
-    private function createStatisticQueryBuilder(array $customers, DateTime $begin = null, ?DateTime $end = null): QueryBuilder
+    private function createStatisticQueryBuilder(array $customers, ?DateTimeInterface $begin = null, ?DateTimeInterface $end = null): QueryBuilder
     {
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
@@ -136,14 +131,14 @@ class CustomerStatisticService
         if ($begin !== null) {
             $qb
                 ->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
+                ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
             ;
         }
 
         if ($end !== null) {
             $qb
                 ->andWhere($qb->expr()->lte('t.begin', ':end'))
-                ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+                ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
             ;
         }
 

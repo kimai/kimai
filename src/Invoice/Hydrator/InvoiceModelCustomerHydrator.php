@@ -48,7 +48,9 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.invoice_text' => $customer->getInvoiceText() ?? '',
         ];
 
-        $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
+        /** @var \DateTime $end */
+        $end = $model->getQuery()->getEnd();
+        $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $end);
 
         $values = array_merge($values, $this->getBudgetValues('customer.', $statistic, $model));
 
