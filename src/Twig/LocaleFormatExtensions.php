@@ -62,10 +62,10 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return [
             new TwigTest('weekend', [$this, 'isWeekend']),
             new TwigTest('today', function ($dateTime): bool {
-                if (!$dateTime instanceof \DateTime) {
+                if (!$dateTime instanceof \DateTimeInterface) {
                     return false;
                 }
-                $compare = new \DateTime('now', $dateTime->getTimezone());
+                $compare = new \DateTimeImmutable('now', $dateTime->getTimezone());
 
                 return $compare->format('Y-m-d') === $dateTime->format('Y-m-d');
             }),

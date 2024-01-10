@@ -16,8 +16,8 @@ services:
             $projectDirectory: '%kernel.project_dir%'
             $kernelEnvironment: '%kernel.environment%'
 
-    # make classes in src/ available to be used as services
-    # creates one service per class whose id is the fully-qualified class name
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
         exclude:

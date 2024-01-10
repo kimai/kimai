@@ -1,21 +1,23 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+parameters:
+    env(TRUSTED_PROXIES): ''
+
 framework:
-    # Deprecations for 7.0
+    secret: '%env(APP_SECRET)%'
+    csrf_protection: true
+    annotations: false
     handle_all_throwables: true
-    annotations:
-        enabled: false
 
     serializer:
         enable_attributes: true
 
-    # ---------------------------
+    trusted_proxies: '%env(string:TRUSTED_PROXIES)%'
 
     exceptions:
         App\Validator\ValidationFailedException:
             log_level: debug
 
-    secret: '%env(APP_SECRET)%'
     default_locale: en
-    csrf_protection: true
     http_method_override: false
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.

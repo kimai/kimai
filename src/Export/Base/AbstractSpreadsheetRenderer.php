@@ -186,7 +186,7 @@ abstract class AbstractSpreadsheetRenderer
 
         $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $excelDate);
         // TODO why is that format hardcoded and does not depend on the users locale?
-        $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
+        $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD);
     }
 
     protected function setDurationTotal(Worksheet $sheet, int $column, int $row, string $startCoordinate, string $endCoordinate): void

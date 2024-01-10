@@ -4073,11 +4073,6 @@ parameters:
             path: Event/AbstractTimesheetMultipleEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ActivityBudgetStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ActivityBudgetStatisticEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\ActivityMetaDefinitionEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ActivityMetaDefinitionEventTest.php
@@ -4086,11 +4081,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Event\\\\ActivityMetaDisplayEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ActivityMetaDisplayEventTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ActivityStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ActivityStatisticEventTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Event\\\\CalendarConfigurationEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
@@ -4203,11 +4193,6 @@ parameters:
             path: Event/PermissionsEventTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ProjectBudgetStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ProjectBudgetStatisticEventTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Event\\\\ProjectMetaDefinitionEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ProjectMetaDefinitionEventTest.php
@@ -4221,11 +4206,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Event\\\\ProjectMetaQueryDisplayTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Event/ProjectMetaQueryDisplayTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Event\\\\ProjectStatisticEventTest\\:\\:testStatistic\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Event/ProjectStatisticEventTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Event\\\\RecentActivityEventTest\\:\\:testGetterAndSetter\\(\\) has no return type specified\\.$#"
@@ -5913,16 +5893,6 @@ parameters:
             path: Invoice/Renderer/DocxRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Renderer/OdsRendererTest.php
@@ -6904,11 +6874,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBaseQuery\\(\\) has parameter \\$orderBy with no type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertDateRangeTrait\\(\\) has parameter \\$sut with no type specified\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
 

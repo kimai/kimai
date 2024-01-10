@@ -152,46 +152,6 @@ parameters:
             path: src/API/UserController.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'billable' on mixed\\.$#"
-            count: 1
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'counter' on mixed\\.$#"
-            count: 3
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 4
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'exported' on mixed\\.$#"
-            count: 2
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'internalRate' on mixed\\.$#"
-            count: 3
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 4
-            path: src/Activity/ActivityStatisticService.php
-
-        -
             message: "#^Method App\\\\Activity\\\\ActivityStatisticService\\:\\:createStatisticQueryBuilder\\(\\) has parameter \\$activities with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Activity/ActivityStatisticService.php
@@ -1109,21 +1069,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#2 \\$begin of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModelForProjectsByDateRange\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Parameter \\#3 \\$end of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModelForProjectsByDateRange\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
 
         -
@@ -1290,46 +1235,6 @@ parameters:
             message: "#^Method App\\\\Controller\\\\WidgetController\\:\\:workingtimechartAction\\(\\) has parameter \\$year with no type specified\\.$#"
             count: 1
             path: src/Controller/WidgetController.php
-
-        -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'billable' on mixed\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'counter' on mixed\\.$#"
-            count: 3
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 4
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'exported' on mixed\\.$#"
-            count: 2
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'internalRate' on mixed\\.$#"
-            count: 3
-            path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 4
-            path: src/Customer/CustomerStatisticService.php
 
         -
             message: "#^Method App\\\\Customer\\\\CustomerStatisticService\\:\\:createStatisticQueryBuilder\\(\\) has parameter \\$customers with no value type specified in iterable type array\\.$#"
@@ -3687,11 +3592,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
 
         -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Customer\\\\CustomerStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
-
-        -
             message: "#^Cannot call method getAddress\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -5747,11 +5647,6 @@ parameters:
             path: src/Validator/Constraints/TeamValidator.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
@@ -5772,28 +5667,8 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
             count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Activity\\\\ActivityStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Customer\\\\CustomerStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -

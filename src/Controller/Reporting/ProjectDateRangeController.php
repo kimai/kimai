@@ -10,6 +10,7 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Entity\Customer;
 use App\Form\Model\DateRange;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
@@ -37,15 +38,20 @@ final class ProjectDateRangeController extends AbstractController
         ]);
         $form->submit($request->query->all(), false);
 
+        $begin = $query->getMonth() ?? $defaultStart;
+
         $dateRange = new DateRange(true);
-        $dateRange->setBegin($query->getMonth() ?? $defaultStart);
-        $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
+        $dateRange->setBegin($begin);
+        $end = $dateFactory->getEndOfMonth($dateRange->getBegin()); // this resets the time
+
+        $dateRange->setEnd($end);
 
         $projects = $service->findProjectsForDateRange($query, $dateRange);
-        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $dateRange->getBegin(), $dateRange->getEnd(), $dateRange->getEnd());
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $begin, $end, $end);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
+            /** @var Customer $customer */
             $customer = $entry->getProject()->getCustomer();
             if (!isset($byCustomer[$customer->getId()])) {
                 $byCustomer[$customer->getId()] = ['customer' => $customer, 'projects' => []];

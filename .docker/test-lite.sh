@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-# Test PHP/Kimai
+if [ -z "$DATABASE_URL" ]; then
+  DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
+fi
+
 /opt/kimai/bin/console kimai:version
 if [ $? != 0 ]; then
   echo "PHP/Kimai not responding"
