@@ -18,7 +18,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
-    public const USER_ORDER_ALLOWED = ['username', 'alias', 'title', 'email'];
+    public const USER_ORDER_ALLOWED = ['username', 'alias', 'title', 'email', 'systemAccount'];
 
     private ?string $role = null;
     /**
