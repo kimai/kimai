@@ -67,6 +67,9 @@ final class UserType extends AbstractType
             // e.g. when editing a team that has disabled users, these users would be removed silently
             // see https://github.com/kimai/kimai/pull/1841
             'include_users' => [],
+            // includes the current user if it is a system-account, which is especially useful for forms pages,
+            // which have a user switcher and display the logged-in user by default
+            'include_current_user_if_system_account' => false,
             'documentation' => [
                 'type' => 'integer',
                 'description' => 'User ID',
@@ -101,8 +104,15 @@ final class UserType extends AbstractType
                 $userById[$user->getId()] = $user;
             }
 
+            $includeUsers = $options['include_users'];
+            if ($options['include_current_user_if_system_account'] === true) {
+                if ($options['user'] instanceof User && $options['user']->isSystemAccount()) {
+                    $includeUsers[] = $options['user'];
+                }
+            }
+
             /** @var User $user */
-            foreach ($options['include_users'] as $user) {
+            foreach ($includeUsers as $user) {
                 if (!\array_key_exists($user->getId(), $userById)) {
                     $userById[$user->getId()] = $user;
                 }
