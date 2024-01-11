@@ -287,10 +287,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
-                case 'user':
-                    $qb->addSelect('COALESCE(u.alias, u.username) as HIDDEN userOrder');
-                    $orderBy = 'userOrder';
-                    break;
                 default:
                     $orderBy = 'u.' . $orderBy;
                     break;
