@@ -94,6 +94,9 @@ final class UserType extends AbstractType
             }
 
             $users = array_filter($users, function (User $user) use ($ignoreIds) {
+                if ($user->getId() === null) {
+                    return false;
+                }
                 return !\in_array($user->getId(), $ignoreIds, true);
             });
 
@@ -113,7 +116,7 @@ final class UserType extends AbstractType
 
             /** @var User $user */
             foreach ($includeUsers as $user) {
-                if (!\array_key_exists($user->getId(), $userById)) {
+                if ($user->getId() !== null && !\array_key_exists($user->getId(), $userById)) {
                     $userById[$user->getId()] = $user;
                 }
             }
