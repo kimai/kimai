@@ -6923,11 +6923,6 @@ parameters:
             path: Repository/Query/TeamQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserFormTypeQueryTest\\:\\:testUsersAreAlwaysIncluded\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserFormTypeQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/UserQueryTest.php
