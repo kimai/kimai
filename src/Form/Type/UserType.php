@@ -27,6 +27,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class UserType extends AbstractType
 {
+    public function __construct(private readonly UserRepository $userRepository)
+    {
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -69,25 +73,46 @@ final class UserType extends AbstractType
             ],
         ]);
 
-        $resolver->setDefault('query_builder', function (Options $options) {
-            return function (UserRepository $repo) use ($options) {
-                $query = new UserFormTypeQuery();
-                $query->setUser($options['user']);
+        $resolver->setDefault('choices', function (Options $options) {
+            $query = new UserFormTypeQuery();
+            $query->setUser($options['user']);
 
-                if ($options['include_disabled'] === true) {
-                    $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+            if ($options['include_disabled'] === true) {
+                $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+            }
+
+            $qb = $this->userRepository->getQueryBuilderForFormType($query);
+            $users = $qb->getQuery()->getResult();
+
+            $ignoreIds = [];
+            /** @var User $user */
+            foreach ($options['ignore_users'] as $user) {
+                $ignoreIds[] = $user->getId();
+            }
+
+            $users = array_filter($users, function (User $user) use ($ignoreIds) {
+                return !\in_array($user->getId(), $ignoreIds, true);
+            });
+
+            /** @var array<int, User> $userById */
+            $userById = [];
+            /** @var User $user */
+            foreach ($users as $user) {
+                $userById[$user->getId()] = $user;
+            }
+
+            /** @var User $user */
+            foreach ($options['include_users'] as $user) {
+                if (!\array_key_exists($user->getId(), $userById)) {
+                    $userById[$user->getId()] = $user;
                 }
+            }
 
-                foreach ($options['ignore_users'] as $userToIgnore) {
-                    $query->addUserToIgnore($userToIgnore);
-                }
+            usort($userById, function (User $a, User $b) {
+                return $a->getDisplayName() <=> $b->getDisplayName();
+            });
 
-                if (!empty($options['include_users'])) {
-                    $query->setUsersAlwaysIncluded($options['include_users']);
-                }
-
-                return $repo->getQueryBuilderForFormType($query);
-            };
+            return array_values($userById);
         });
     }
 
