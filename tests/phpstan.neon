@@ -6913,29 +6913,9 @@ parameters:
             path: Repository/Query/ExportQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ProjectQueryTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ProjectQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TeamQueryTest\\:\\:assertUsers\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/TeamQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertSearchTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:testSystemAccount\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Result\\\\TimesheetResultStatisticTest\\:\\:testConstruct\\(\\) has no return type specified\\.$#"
