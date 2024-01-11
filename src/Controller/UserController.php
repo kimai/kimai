@@ -19,7 +19,6 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\Type\UserType;
 use App\Form\UserCreateType;
-use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -163,13 +162,7 @@ final class UserController extends AbstractController
                 ]
             ])
             ->add('user', UserType::class, [
-                'query_builder' => function (UserRepository $repo) use ($userToDelete) {
-                    $query = new UserFormTypeQuery();
-                    $query->addUserToIgnore($userToDelete);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'ignore_users' => [$userToDelete],
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_user_delete', ['id' => $userToDelete->getId()]))
