@@ -97,6 +97,7 @@ final class UserType extends AbstractType
                 if ($user->getId() === null) {
                     return false;
                 }
+
                 return !\in_array($user->getId(), $ignoreIds, true);
             });
 
