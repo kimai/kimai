@@ -1037,11 +1037,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/AbstractUserReportController.php
@@ -3644,11 +3639,6 @@ parameters:
         -
             message: "#^Cannot call method getTimeWorked\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 2
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 4
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
