@@ -102,6 +102,10 @@ final class UserVoter extends Voter
             return $subject->getId() === $user->getId() || $user->isSuperAdmin();
         }
 
+        if ($attribute === 'supervisor' && $subject->getId() === $user->getId()) {
+            return $user->isSuperAdmin();
+        }
+
         $permission = $attribute;
 
         // extend me for "team" support later on
