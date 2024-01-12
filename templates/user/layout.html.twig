@@ -15,7 +15,7 @@
                             <div class="col-auto" data-toggle="tooltip" title="{{ 'id'|trans }}: {{ user.id }}">
                                 {{ widgets.user_avatar(user, false, 'avatar-lg') }}
                             </div>
-                            <div class="col" style="min-width: 100px">
+                            <div class="col" style="min-width: 100px"{% block user_title_box_attributes %}{% endblock %}>
                                 <h4 class="card-title m-0">{{ widgets.username(user) }}</h4>
                                 {% if user.title is not empty %}
                                 <div class="text-body-secondary">

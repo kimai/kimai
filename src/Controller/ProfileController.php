@@ -309,15 +309,18 @@ final class ProfileController extends AbstractController
 
     private function createEditForm(User $user): FormInterface
     {
+        $currentUser = $this->getUser();
+
         return $this->createForm(
             UserEditType::class,
             $user,
             [
                 'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST',
-                'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
+                'include_active_flag' => $user !== $currentUser,
                 'include_preferences' => true,
                 'include_supervisor' => $this->isGranted('supervisor', $user),
+                'include_username' => $currentUser->isSuperAdmin() && $currentUser !== $user,
                 'include_password_reset' => $this->isGranted('password', $user),
             ]
         );
