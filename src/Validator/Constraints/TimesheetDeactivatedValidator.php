@@ -33,11 +33,7 @@ final class TimesheetDeactivatedValidator extends ConstraintValidator
         $this->validateActivityAndProject($value, $this->context);
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
-    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
+    private function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $newOrStarted = $timesheet->isRunning() || $timesheet->getId() === null;
 
