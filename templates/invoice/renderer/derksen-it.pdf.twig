@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="{{ invoice['invoice.language'] }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}{% endblock %}</title>
+    <style>
+        {{ encore_entry_css_source('invoice-pdf')|raw }}
+    </style>
+</head>
+<body>
+<!--mpdf
+<htmlpageheader name="header">
+    <table class="header">
+        <tr>
+            <td class="title">
+                {{ invoice['template.title'] }}
+            </td>
+            <td class="date text-right">
+                {{ 'date'|trans }}: {{ invoice['invoice.date'] }}
+            </td>
+        </tr>
+    </table>
+</htmlpageheader>
+<sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
+<htmlpagefooter name="footer">
+    <table class="footer">
+        <tr>
+            <td>
+                <strong>{{ 'contact'|trans }}</strong>:
+                {{ invoice['template.contact']|nl2str(' – ') }}
+                <br>
+                <strong>{{ 'invoice_bank_account'|trans }}</strong>:
+                {{ invoice['template.payment_details']|nl2str(' – ') }}
+            </td>
+            <td align="right">
+                {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
+            </td>
+        </tr>
+    </table>
+</htmlpagefooter>
+<sethtmlpagefooter page="ALL" value="on" name="footer" show-this-page="1" />
+mpdf-->
+    <table class="addresses">
+        <tr>
+            <td style="width:60%">
+                {{ 'invoice.to'|trans }}
+                <br>
+                <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong>
+                <br>
+                {{ invoice['customer.address']|nl2br }}
+                {% if invoice['customer.vat_id'] is not empty %}
+                    <br>
+                    {{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
+                {% endif %}
+            </td>
+            <td>
+                {{ 'invoice.from'|trans }}
+                <br>
+                <strong>{{ invoice['template.company'] }}</strong>
+                <br>
+                {{ invoice['template.address']|trim|nl2br }}
+                {% if invoice['template.vat_id'] is not empty %}
+                    <br>
+                    {{ 'vat_id'|trans }}:
+                    {{ invoice['template.vat_id'] }}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        {{ 'invoice.number'|trans }}:
+        {{ invoice['invoice.number'] }}
+
+        <br>
+        {{ 'invoice.due_days'|trans }}:
+        {{ invoice['invoice.due_date'] }}
+
+        {% if invoice['customer.number'] is not empty %}
+            <br>
+            {{ 'number'|trans }}:
+            {{ invoice['customer.number'] }}
+        {% endif %}
+
+        {% if invoice['query.project.order_number'] is defined and invoice['query.project.order_number'] is not empty %}
+            <br>
+            {{ 'orderNumber'|trans }}:
+            {{ invoice['query.project.order_number'] }}
+        {% endif %}
+    </p>
+
+    {% if invoice['customer.invoice_text'] is not empty%}
+        <p>{{ invoice['customer.invoice_text']|md2html }}</p>
+    {% endif %}
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th style="width:60%"><strong>{{ 'description'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'unit_price'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'amount'|trans }}</strong></th>
+                <th class="last text-right"><strong>{{ 'total_rate'|trans }}</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for invoiceLineItem in entries %}
+            <!-- CONTENT_PART -->
+            <tr>
+                <td>
+                    {% if invoiceLineItem['entry.description'] is not empty %}
+                        {{ invoiceLineItem['entry.description']|nl2br }}
+                    {% else %}
+                        {% if invoiceLineItem['entry.activity'] is defined %}
+                            {{ invoiceLineItem['entry.activity'] }} /
+                        {% endif %}
+                        {{ invoiceLineItem['entry.project'] }}
+                    {% endif %}
+                </td>
+                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.rate'] }}</td>
+                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.amount'] }}</td>
+                <td nowrap class="last text-nowrap text-right">{{ invoiceLineItem['entry.total'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            {% if not invoice['invoice.tax_hide'] %}
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ 'invoice.subtotal'|trans }}
+                </td>
+                <td class="last text-right">{{ invoice['invoice.subtotal'] }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">
+                    {{ 'invoice.tax'|trans }} ({{ invoice['invoice.vat'] }}%)
+                </td>
+                <td class="last text-right">{{ invoice['invoice.tax'] }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td colspan="3" class="text-right text-nowrap">
+                    <strong>{{ 'invoice.total'|trans }}</strong>
+                </td>
+                <td class="last text-right">
+                    <strong>{{ invoice['invoice.total'] }}</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    {% if invoice['template.payment_terms'] is not empty %}
+        <div class="paymentTerms">
+            {{ invoice['template.payment_terms']|md2html }}
+        </div>
+    {% endif %}
+</body>
+</html>

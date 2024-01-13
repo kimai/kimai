@@ -1,0 +1,49 @@
+{% extends 'export/pdf-layout.html.twig' %}
+{% set showRateColumn = false %}
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
+{% set showUserColumn = true %}
+{% set showPageBreak = false %}
+{% set showCustomerSummary = false %}
+{% set showTotalSummary = false %}
+{% set decimal = true %}
+{% set showDateTimeShort = true %}
+
+{% block description %}
+        {{ entry.activity.name }}
+{% endblock %}
+
+{% block items_header %}
+<br>
+{% endblock %}
+{% block summary_header %}
+    <h2 style="margin-bottom: 4px; padding-bottom: 0">{% block title %}{{ 'Uren verantwoording'|trans }}{% endblock %}</h2>
+    {% if query is defined %}
+    <p>
+        {{ 'export.period'|trans }}:
+        {{ query.begin|date_short }} - {{ query.end|date_short }}
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block pdf_footer %}
+<!--mpdf
+<htmlpagefooter name="myfooter">
+<table class="items">
+    <thead>
+    <tr>
+        <th>{{ 'Datum' }}</th>
+        <th>{{ 'Naam en handtekening' }}</th>
+    </tr>
+    </thead>
+    <tr>
+        <td>
+<div style="height:100px;font-size:100px;">&nbsp;</div>
+        </td>
+        <td><br></td>
+    </tr>
+</table>
+</htmlpagefooter>
+<sethtmlpagefooter name="myfooter" value="on" />
+mpdf-->
+{% endblock %}

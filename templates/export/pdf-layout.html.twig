@@ -8,6 +8,7 @@
 {% set showCustomerSummary = showCustomerSummary ?? true %}
 {% set showTotalSummary = showTotalSummary ?? true %}
 {% set showDateTimeShort = showDateTimeShort ?? false %}
+{% set showPageBreak = showPageBreak ?? true %}
 {% set now = create_date('now', app.user) %}
 {% set decimal = decimal ?? false %}
 {# this is only triggered, if a user exports from his personal timesheet screen #}
@@ -220,7 +221,9 @@ mpdf-->
         </tbody>
     </table>
 
-    <pagebreak>
+    {% if showPageBreak %}
+        <pagebreak>
+    {% endif %}
 {% endblock %}
 {% block items %}
     {% block items_header %}
