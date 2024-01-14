@@ -52,7 +52,7 @@ class FinancialYearCalculator
         return $dateTime->format('y');
     }
 
-    public function getFiscalYear(\DateTimeInterface $dateTime): string
+    public function getFinancialYear(\DateTimeInterface $dateTime): string
     {
         if ($this->isYearPrevious($dateTime)) {
             return ($dateTime->format('Y') - 1) . '-' . $dateTime->format('y');
