@@ -1693,6 +1693,14 @@
         <source>unpaid_vacation</source>
         <target>Unpaid holidays</target>
       </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target>User ID</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target>The unique user identifier is used for authentication and in exports</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

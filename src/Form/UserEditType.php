@@ -42,6 +42,14 @@ class UserEditType extends AbstractType
             $user = $options['data'];
         }
 
+        if ($options['include_username']) {
+            $builder->add('username', TextType::class, [
+                'label' => 'user_identifier',
+                'help' => 'user_identifier.help',
+                'required' => true,
+            ]);
+        }
+
         $builder->add('alias', TextType::class, [
             'label' => 'alias',
             'required' => false,
@@ -117,6 +125,7 @@ class UserEditType extends AbstractType
             'include_active_flag' => true,
             'include_preferences' => true,
             'include_supervisor' => true,
+            'include_username' => false,
             'include_password_reset' => true,
         ]);
     }
