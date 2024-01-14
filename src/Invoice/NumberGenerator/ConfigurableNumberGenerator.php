@@ -10,6 +10,7 @@
 namespace App\Invoice\NumberGenerator;
 
 use App\Configuration\SystemConfiguration;
+use App\Invoice\FinancialYearCalculator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\InvoiceRepository;
@@ -19,7 +20,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 {
     private ?InvoiceModel $model = null;
 
-    public function __construct(private InvoiceRepository $repository, private SystemConfiguration $configuration)
+    public function __construct(private InvoiceRepository $repository, private SystemConfiguration $configuration, private FinancialYearCalculator $calculator)
     {
     }
 
@@ -62,6 +63,9 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
             }
 
             return match ($format) {
+                'FY' => $this->calculator->getLongFinancialYear($invoiceDate),
+                'fy' => $this->calculator->getShortFinancialYear($invoiceDate),
+                'fiscal' => $this->calculator->getFinancialYear($invoiceDate),
                 'Y' => $invoiceDate->format('Y'),
                 'y' => $invoiceDate->format('y'),
                 'M' => $invoiceDate->format('m'),
