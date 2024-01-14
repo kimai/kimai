@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Invoice;
+namespace App\Invoice\Calculator;
 
 use App\Configuration\SystemConfiguration;
 

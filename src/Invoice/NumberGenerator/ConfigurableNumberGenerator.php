@@ -10,7 +10,7 @@
 namespace App\Invoice\NumberGenerator;
 
 use App\Configuration\SystemConfiguration;
-use App\Invoice\FinancialYearCalculator;
+use App\Invoice\Calculator\FinancialYearCalculator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGeneratorInterface;
 use App\Repository\InvoiceRepository;
