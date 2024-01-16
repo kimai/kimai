@@ -1173,6 +1173,10 @@
         <source>Support</source>
         <target state="translated">Support</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Spenden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

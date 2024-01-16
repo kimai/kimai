@@ -1222,6 +1222,10 @@
         <source>support</source>
         <target state="translated">도움 </target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Kimai의 미래를 위해 기부하기</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

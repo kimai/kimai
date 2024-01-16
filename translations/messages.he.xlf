@@ -1666,6 +1666,10 @@
         <source>support</source>
         <target state="translated">פורום</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">תרומה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

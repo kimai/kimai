@@ -906,6 +906,10 @@
         <source>support</source>
         <target>サポート</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Kimai の発展のために寄付を行う</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

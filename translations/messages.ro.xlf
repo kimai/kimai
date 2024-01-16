@@ -1282,6 +1282,10 @@
         <source>support</source>
         <target>Suport</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Donează</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

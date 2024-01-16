@@ -1613,6 +1613,10 @@
         <source>support</source>
         <target>Podpora</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Podporte</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

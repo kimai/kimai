@@ -1202,6 +1202,10 @@
         <source>support</source>
         <target>Hỗ trợ</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Quyên góp</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1391,6 +1391,10 @@
         <source>support</source>
         <target state="translated">انجمن</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">هدیه دادن</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

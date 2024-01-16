@@ -1582,6 +1582,10 @@
         <source>support</source>
         <target state="translated">Tuki</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Lahjoitus</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

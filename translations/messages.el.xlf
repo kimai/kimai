@@ -1213,6 +1213,10 @@
         <source>support</source>
         <target>Υποστήριξη</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Δωρίστε</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

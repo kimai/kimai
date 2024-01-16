@@ -1516,6 +1516,10 @@
         <source>support</source>
         <target>الدعم</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>تبرع لمستقبل KIMAI</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

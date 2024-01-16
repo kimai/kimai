@@ -1654,6 +1654,10 @@
         <source>support</source>
         <target>Ondersteuning</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Doneer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

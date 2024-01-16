@@ -1205,6 +1205,10 @@
         <source>support</source>
         <target>Subteno</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Donacu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

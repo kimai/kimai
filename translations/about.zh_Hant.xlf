@@ -2,10 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="mz4ieCN" resname="donate">
-        <source>donate</source>
-        <target state="translated">為了 Kimai 的未來捐款</target>
-      </trans-unit>
+      
     </body>
   </file>
 </xliff>

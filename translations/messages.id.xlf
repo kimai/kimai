@@ -261,6 +261,10 @@
         <source>Support</source>
         <target state="translated">Dukungan</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Menyumbang</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

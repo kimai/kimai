@@ -1734,6 +1734,10 @@
         <source>support</source>
         <target state="translated">Fórum</target>
       </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Doe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
