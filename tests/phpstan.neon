@@ -2263,26 +2263,6 @@ parameters:
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:assertHasMainHeader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:assertHasNavigation\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:testActiveEntries\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:testNavigationMenus\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 11
             path: Controller/LayoutControllerTest.php
