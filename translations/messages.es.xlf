@@ -1730,6 +1730,14 @@
         <source>unpaid_vacation</source>
         <target state="translated">Vacaciones no retribuidas</target>
       </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID de usuario</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">El id de usuario único se utiliza para la autenticación y en las exportaciones</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

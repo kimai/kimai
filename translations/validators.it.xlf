@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used." approved="yes">
         <source>The budget is completely used.</source>
-        <target state="final">Il budget è esaurito. Del %budget% disponibile, %used% è stato prenotato finora, %free% può ancora essere utilizzato.</target>
+        <target state="final">Il budget è esaurito. Del %budget% disponibile, %used% è stato prenotato finora, %free% può ancora essere usato.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time." approved="yes">
         <source>The given value is not a valid time.</source>

@@ -1556,7 +1556,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target state="translated">Nakon završavanja mjeseca, korisnik više neće moći stviriti butu uređivati vremena za to razdoblje.</target>
+        <target state="translated">Nakon završavanja mjeseca, korisnik više neće moći stvoriti niti uređivati vremena za to razdoblje.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1721,6 +1721,22 @@
       <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
         <target state="translated">Kategorije</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Neplaćeni praznici</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">Dani</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">Korisnički ID</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">Jedinstveni identifikator korisnika se koristi za autentifikaciju i izvoze</target>
       </trans-unit>
     </body>
   </file>

@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% записи?</target>
+        <target state="translated">%action% %count% запис(и)?</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target state="translated">Виплати</target>
+        <target state="translated">Розцінки</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
@@ -168,7 +168,7 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target state="translated">Погодинні ставки ще не налаштовані.</target>
+        <target state="translated">Розцінки ще не додано.</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
@@ -1665,6 +1665,14 @@
       <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
         <source>unpaid_vacation</source>
         <target state="translated">Неоплачувана відпустка</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID користувача</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">Унікальний ідентифікатор користувача використовується для автентифікації та експорту</target>
       </trans-unit>
     </body>
   </file>
