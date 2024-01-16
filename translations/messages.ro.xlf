@@ -1274,6 +1274,30 @@
         <source>stats.userDurationToday</source>
         <target state="translated">Orele mele de lucru astăzi</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentație</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Suport</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Donează</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Dată</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Formatul configurat</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Generator de numere de factură</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

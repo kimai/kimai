@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eu" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Denbora jarraipena</target>
@@ -1020,6 +1017,26 @@
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Kimairi buruz</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Laguntza</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Mantenua</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Dohaintza</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Data</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Faktura zenbaki sortzailea</target>
       </trans-unit>
     </body>
   </file>

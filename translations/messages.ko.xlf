@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ko" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target state="translated">타임 트래킹</target>
@@ -1213,6 +1210,30 @@
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
         <target state="translated">삭제됨</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">도움말</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">도움 </target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Kimai의 미래를 위해 기부하기</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">날짜</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target>구성된 형식</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">청구서번호-생성기</target>
       </trans-unit>
     </body>
   </file>

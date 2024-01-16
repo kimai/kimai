@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="id" datatype="plaintext" original="messages.en.xlf">
-    <body>
-      <!-- Global template keys -->
-      <!-- Login / Security -->
-      <!-- Menu / Navbar items -->
-      <!-- Error templates -->
-      <!-- General labels -->
-      <!-- Buttons & Actions -->
-      <!-- Dashboard -->
-      <!-- Widgets -->
-      <!-- Timesheet -->
-      <!-- Column modal -->
-      <!-- User profile -->
-      <!-- 2FA  -->
-      <!-- END 2FA  -->
-      <!-- Notifications -->
-      <!-- Options for user-preference calendar_initial_view -->
-      <!-- User timesheet calendar -->
-      <!-- Projects -->
-      <!-- Customer -->
-      <!-- Users -->
-      <!-- Plugins -->
-      <!-- ROLES -->
-      <!-- Statistics data for Dashboard & Users profile -->
-      <!-- Invoice -->
-      <!-- Export -->
-      <!-- Navbar - recent entries and activities -->
-      <!-- TOOLBARS -->
-      <!-- QUICK ENTRIES -->
-    </body>
-  </file>
-  <file original="validators.en.xlf" source-language="en" target-language="id" datatype="plaintext">
+  <file source-language="en" target-language="id" datatype="plaintext" original="validators.en.xlf">
     <body>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>

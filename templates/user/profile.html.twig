@@ -1,5 +1,11 @@
 {% extends 'user/form.html.twig' %}
 
+{% block user_title_box_attributes %}
+    {% if form.username is defined %}
+        ondblclick="document.getElementById('user_edit_username_hidden').style.display = 'flex'"
+    {% endif %}
+{% endblock %}
+
 {% block form_content %}
 
     {% form_theme form 'form/horizontal.html.twig' %}
@@ -9,6 +15,13 @@
     <fieldset class="form-fieldset form-fieldset-light">
         {{ form_row(form.alias) }}
         {{ form_row(form.email) }}
+        {% if form.username is defined %}
+            {% set styleUsername = 'display:none' %}
+            {% if form.username.vars.errors|length > 0 %}
+                {% set styleUsername = '' %}
+            {% endif %}
+            {{ form_row(form.username, {row_attr: {id: 'user_edit_username_hidden', style: styleUsername}}) }}
+        {% endif %}
     </fieldset>
 
     <fieldset class="form-fieldset form-fieldset-light">

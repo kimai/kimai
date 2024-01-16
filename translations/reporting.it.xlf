@@ -2,53 +2,53 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="reporting.en.xlf">
     <body>
-      <trans-unit id="XV3FBpu" resname="report_user_week">
+      <trans-unit id="XV3FBpu" resname="report_user_week" approved="yes">
         <source>report_user_week</source>
-        <target>Vista settimanale per un utente</target>
+        <target state="final">Vista settimanale per un utente</target>
       </trans-unit>
-      <trans-unit id="Ng47B75" resname="report_user_month">
+      <trans-unit id="Ng47B75" resname="report_user_month" approved="yes">
         <source>report_user_month</source>
-        <target>Vista mensile per un utente</target>
+        <target state="final">Vista mensile per un utente</target>
       </trans-unit>
-      <trans-unit id="zk30bmP" resname="report_monthly_users">
+      <trans-unit id="zk30bmP" resname="report_monthly_users" approved="yes">
         <source>report_monthly_users</source>
-        <target>Vista mensile per tutti gli utenti</target>
+        <target state="final">Vista mensile per tutti gli utenti</target>
       </trans-unit>
-      <trans-unit id="R.9yUkf" resname="report_project_view">
+      <trans-unit id="R.9yUkf" resname="report_project_view" approved="yes">
         <source>report_project_view</source>
-        <target>Panoramica del progetto</target>
+        <target state="final">Panoramica del progetto</target>
       </trans-unit>
-      <trans-unit id="1gBKwGH" resname="report_inactive_project">
+      <trans-unit id="1gBKwGH" resname="report_inactive_project" approved="yes">
         <source>report_inactive_project</source>
-        <target>Progetti inattivi</target>
+        <target state="final">Progetti inattivi</target>
       </trans-unit>
-      <trans-unit id="518eY_l" resname="report_project_details">
+      <trans-unit id="518eY_l" resname="report_project_details" approved="yes">
         <source>report_project_details</source>
-        <target>Dettagli del progetto</target>
+        <target state="final">Dettagli del progetto</target>
       </trans-unit>
-      <trans-unit id="VD98UBN" resname="report_yearly_users">
+      <trans-unit id="VD98UBN" resname="report_yearly_users" approved="yes">
         <source>report_yearly_users</source>
-        <target>Vista annuale per tutti gli utenti</target>
+        <target state="final">Vista annuale per tutti gli utenti</target>
       </trans-unit>
-      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+      <trans-unit id="q_A4AHD" resname="report_weekly_users" approved="yes">
         <source>report_weekly_users</source>
-        <target>Vista settimanale per tutti gli utenti</target>
+        <target state="final">Vista settimanale per tutti gli utenti</target>
       </trans-unit>
-      <trans-unit id="BQAsynV" resname="report_project_daterange">
+      <trans-unit id="BQAsynV" resname="report_project_daterange" approved="yes">
         <source>report_project_daterange</source>
-        <target>Rapporto mensile</target>
+        <target state="final">Rapporto mensile</target>
       </trans-unit>
-      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects" approved="yes">
         <source>report_customer_monthly_projects</source>
-        <target state="translated">Progetti per mese, attività e utente</target>
+        <target state="final">Progetti per mese, attività e utente</target>
       </trans-unit>
-      <trans-unit id="3JLmvfB" resname="report_user_year">
+      <trans-unit id="3JLmvfB" resname="report_user_year" approved="yes">
         <source>report_user_year</source>
-        <target state="translated">Vista annuale per un utente</target>
+        <target state="final">Vista annuale per un utente</target>
       </trans-unit>
-      <trans-unit id="Yz_lySk" resname="report_customer_view">
+      <trans-unit id="Yz_lySk" resname="report_customer_view" approved="yes">
         <source>report_customer_view</source>
-        <target state="translated">Panoramica del cliente</target>
+        <target state="final">Panoramica del cliente</target>
       </trans-unit>
     </body>
   </file>

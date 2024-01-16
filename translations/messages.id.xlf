@@ -2,33 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!-- Global template keys -->
-      <!-- Login / Security -->
-      <!-- Menu / Navbar items -->
-      <!-- Error templates -->
-      <!-- General labels -->
-      <!-- Buttons & Actions -->
-      <!-- Dashboard -->
-      <!-- Widgets -->
-      <!-- Timesheet -->
-      <!-- Column modal -->
-      <!-- User profile -->
-      <!-- 2FA  -->
-      <!-- END 2FA  -->
-      <!-- Notifications -->
-      <!-- Options for user-preference calendar_initial_view -->
-      <!-- User timesheet calendar -->
-      <!-- Projects -->
-      <!-- Customer -->
-      <!-- Users -->
-      <!-- Plugins -->
-      <!-- ROLES -->
-      <!-- Statistics data for Dashboard & Users profile -->
-      <!-- Invoice -->
-      <!-- Export -->
-      <!-- Navbar - recent entries and activities -->
-      <!-- TOOLBARS -->
-      <!-- QUICK ENTRIES -->
       <trans-unit id="XohImNo" resname="password" approved="no">
         <source>Password</source>
         <target state="translated">Password</target>
@@ -252,6 +225,22 @@
       <trans-unit id="T4nAM7X" resname="api_token">
         <source>api_token</source>
         <target state="translated">kata sandi API</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Dokumentasi</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>Support</source>
+        <target state="translated">Dukungan</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Menyumbang</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">Generator-nomorinvoice</target>
       </trans-unit>
     </body>
   </file>
