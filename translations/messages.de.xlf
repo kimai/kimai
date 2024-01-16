@@ -59,6 +59,10 @@
         <source>search</source>
         <target>Suchen</target>
       </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target>Suchfilter</target>
+      </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
         <target>Suchbegriff</target>
