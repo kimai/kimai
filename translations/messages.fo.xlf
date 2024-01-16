@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Tíðarfylgjan</target>
