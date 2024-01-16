@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Suporte</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target>Ajuda</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Faça um donativo</target>

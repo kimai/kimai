@@ -1646,6 +1646,10 @@
         <source>Categories</source>
         <target>Categorieën</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Help</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

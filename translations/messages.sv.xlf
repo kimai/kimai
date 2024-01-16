@@ -1614,6 +1614,10 @@
         <source>Review</source>
         <target state="translated">Undersökning</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

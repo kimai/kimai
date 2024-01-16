@@ -1383,6 +1383,10 @@
         <source>Activated</source>
         <target state="translated">فعال شد</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>مستندات</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

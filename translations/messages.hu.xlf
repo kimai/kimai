@@ -1218,6 +1218,10 @@
         <source>modal.columns.label</source>
         <target state="translated">Táblázat oszlopai</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Súgó</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

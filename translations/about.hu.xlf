@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Támogatás</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target>Súgó</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Támogasd</target>

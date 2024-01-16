@@ -1666,6 +1666,10 @@
         <source>unpaid_vacation</source>
         <target state="translated">Неоплачувана відпустка</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Документація</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

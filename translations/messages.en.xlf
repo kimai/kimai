@@ -1701,6 +1701,10 @@
         <source>user_identifier.help</source>
         <target>The unique user identifier is used for authentication and in exports</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

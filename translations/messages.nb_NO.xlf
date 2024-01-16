@@ -1444,6 +1444,10 @@
         <source>invoice_date.help</source>
         <target state="translated">Du kan endre fakturadato her</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentasjon</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

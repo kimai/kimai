@@ -1508,6 +1508,10 @@
         <source>work_times</source>
         <target state="translated">أوقات العمل</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>مساعدة</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

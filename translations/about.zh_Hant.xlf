@@ -6,10 +6,6 @@
         <source>support</source>
         <target state="translated">支援</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target state="translated">文件</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target state="translated">為了 Kimai 的未來捐款</target>

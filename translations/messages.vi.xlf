@@ -1194,6 +1194,10 @@
         <source>about.title</source>
         <target>Thông tin về Kimai</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Tài liệu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

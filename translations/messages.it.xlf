@@ -1709,6 +1709,10 @@
         <source>unpaid_vacation</source>
         <target state="final">Ferie non pagate</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help" approved="yes">
+        <source>help</source>
+        <target state="final">Documentazione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1726,6 +1726,10 @@
         <source>days</source>
         <target state="translated">Dias</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Ajuda</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Mantenua</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target>Laguntza</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Dohaintza</target>

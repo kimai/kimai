@@ -1722,6 +1722,10 @@
         <source>Categories</source>
         <target state="translated">Kategorije</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentacija</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1730,6 +1730,10 @@
         <source>unpaid_vacation</source>
         <target state="translated">Vacaciones no retribuidas</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentación</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

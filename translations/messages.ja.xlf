@@ -898,6 +898,10 @@
         <source>Doctor</source>
         <target state="translated">ドクター</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>ドキュメント</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

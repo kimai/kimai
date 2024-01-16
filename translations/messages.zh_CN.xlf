@@ -1730,6 +1730,10 @@
         <source>parental</source>
         <target state="translated">育儿假</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>文件</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

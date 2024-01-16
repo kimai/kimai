@@ -1197,6 +1197,10 @@
         <source>about.title</source>
         <target>Pri Kimai</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -477,6 +477,10 @@
         <source>actions</source>
         <target state="translated">Dejanja</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Dokumentacija</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

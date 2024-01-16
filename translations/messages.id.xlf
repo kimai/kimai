@@ -253,6 +253,10 @@
         <source>api_token</source>
         <target state="translated">kata sandi API</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Dokumentasi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -962,6 +962,10 @@
         <source>remove_filter</source>
         <target state="translated">Nulstil søgefilter</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

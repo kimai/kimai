@@ -1670,6 +1670,10 @@
         <source>force_password_change_help</source>
         <target state="translated">Kullanıcı bir sonraki oturum açışında yeni bir parola girmelidir.</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Yardım</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1578,6 +1578,10 @@
         <source>invisible</source>
         <target state="translated">Invisible</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

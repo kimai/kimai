@@ -1274,6 +1274,10 @@
         <source>stats.userDurationToday</source>
         <target state="translated">Orele mele de lucru astăzi</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentație</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1558,6 +1558,10 @@
         <source>Audit logs</source>
         <target>Historia zmian</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentacja</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

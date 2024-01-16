@@ -1701,6 +1701,10 @@
         <source>user_identifier.help</source>
         <target>Die eindeutige Benutzerkennung wird zur Authentifizierung und bei Exporten verwendet</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

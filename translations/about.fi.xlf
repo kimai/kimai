@@ -6,10 +6,6 @@
         <source>support</source>
         <target state="translated">Tuki</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target state="translated">Dokumentit</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target state="translated">Lahjoitus</target>

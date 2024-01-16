@@ -1205,6 +1205,10 @@
         <source>globalActivities</source>
         <target state="translated">Επέτρεψε καθολικές ενέργειες</target>
       </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Τεκμηρίωση</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
