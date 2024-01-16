@@ -974,6 +974,14 @@
         <source>donate</source>
         <target>Støt</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Dato</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Fakturanummergenerator</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

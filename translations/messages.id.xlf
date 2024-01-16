@@ -265,6 +265,10 @@
         <source>donate</source>
         <target state="translated">Menyumbang</target>
       </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">Generator-nomorinvoice</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

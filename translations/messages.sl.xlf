@@ -489,6 +489,10 @@
         <source>donate</source>
         <target state="translated">Donirajte</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Datum</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

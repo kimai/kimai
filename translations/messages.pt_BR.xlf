@@ -1738,6 +1738,18 @@
         <source>donate</source>
         <target>Doe</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Data</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target>Formato configurado</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Gerador de Números de Fatura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

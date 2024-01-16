@@ -321,6 +321,10 @@
         <source>menu.plugin</source>
         <target state="translated">ਪਲੱਗ ਇਨ</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">ਤਾਰੀਖ਼</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

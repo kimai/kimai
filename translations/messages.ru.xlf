@@ -1552,6 +1552,18 @@
         <source>donate</source>
         <target>Пожертвовать</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Дата</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Настроенный формат</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Генератор номеров счета</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

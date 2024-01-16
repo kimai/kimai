@@ -1721,6 +1721,18 @@
         <source>donate</source>
         <target state="final">Donazione</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date" approved="yes">
+        <source>invoice_number_generator.date</source>
+        <target state="final">Data</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default" approved="yes">
+        <source>invoice_number_generator.default</source>
+        <target state="final">Formato configurato</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator" approved="yes">
+        <source>invoice_number_generator</source>
+        <target state="final">Generatore di numerazione fatture</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -910,6 +910,14 @@
         <source>donate</source>
         <target>Kimai の発展のために寄付を行う</target>
       </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>日付</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>請求書番号 ジェネレーター</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
