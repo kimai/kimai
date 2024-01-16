@@ -43,6 +43,9 @@ final class TranslationCommand extends Command
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
             ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty keys and files which have no translated key at all')
+            ->addOption('move-resname', null, InputOption::VALUE_REQUIRED, 'Move a resname from one file to another (needs "source" and "target" options)')
+            ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Single source file to use')
+            ->addOption('target', null, InputOption::VALUE_REQUIRED, 'Single target file to use')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
             // @see https://www.deepl.com/de/pro#developer
@@ -61,12 +64,55 @@ final class TranslationCommand extends Command
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
+            //'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
+            'theme' => $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf',
         ];
 
+        $sources = [];
+        if ($input->getOption('source') !== null) {
+            $tmp = $input->getOption('source');
+            foreach ($bases as $directory) {
+                $files = glob($directory);
+                foreach ($files as $file) {
+                    if (explode('.', basename($file))[0] === $tmp) {
+                        $sources[] = $file;
+                    }
+                }
+            }
+            if (\count($sources) === 0) {
+                $io->error('Could not find translation "source" named: ' . $tmp);
+
+                return Command::FAILURE;
+            }
+        } else {
+            foreach ($bases as $directory) {
+                $files = glob($directory);
+                foreach ($files as $file) {
+                    $sources[] = $file;
+                }
+            }
+        }
+
+        $targets = [];
+        if ($input->getOption('target') !== null) {
+            $tmp = $input->getOption('target');
+            foreach ($bases as $directory) {
+                $files = glob($directory);
+                foreach ($files as $file) {
+                    if (explode('.', basename($file))[0] === $tmp) {
+                        $targets[] = $file;
+                    }
+                }
+            }
+            if (\count($targets) === 0) {
+                $io->error('Could not find translation "target" named: ' . $tmp);
+
+                return Command::FAILURE;
+            }
+        }
+
         if ($input->getOption('delete-resname')) {
-            $files = glob($bases['core']);
-            foreach ($files as $file) {
+            foreach ($sources as $file) {
                 $this->removeKey($file, $input->getOption('delete-resname'));
             }
         }
@@ -75,13 +121,23 @@ final class TranslationCommand extends Command
         // Fix resname vs. id
         // ==========================================================================
         if ($input->getOption('resname')) {
-            foreach ($bases as $directory) {
-                $files = glob($directory);
-
-                foreach ($files as $file) {
-                    $this->fixXlfFile($file);
-                }
+            foreach ($sources as $file) {
+                $this->fixXlfFile($file);
             }
+        }
+
+        // ==========================================================================
+        // Move resname from source to target
+        // ==========================================================================
+        $moveResname = $input->getOption('move-resname');
+        if (\is_string($moveResname)) {
+            if (\count($targets) === 0) {
+                $io->error('Moving a resname needs a target file');
+
+                return Command::FAILURE;
+            }
+
+            return $this->moveResname($io, $moveResname, $sources, $targets);
         }
 
         // ==========================================================================
@@ -90,39 +146,35 @@ final class TranslationCommand extends Command
         if ($input->getOption('fill-empty')) {
             $translateFrom = ['de-CH' => 'de', 'de_CH' => 'de', 'pt_BR' => 'pt', 'pt-BR' => 'pt', 'pt' => 'pt_BR'];
             $translations = [];
-            foreach ($bases as $directory) {
-                $files = glob($directory);
-
-                foreach ($files as $file) {
-                    $base = basename($file);
-                    $parts = explode('.', $base);
-                    $name = $parts[0];
-                    $fileLocale = $parts[1];
-                    $fromLocale = 'en';
-                    if (\array_key_exists($fileLocale, $translateFrom)) {
-                        $fromLocale = $translateFrom[$fileLocale];
-                    }
-
-                    if (!\array_key_exists($fromLocale, $translations)) {
-                        $translations[$fromLocale] = [];
-                    }
-
-                    if (!\array_key_exists($name, $translations[$fromLocale])) {
-                        $fromLocaleName = str_replace('.' . $fileLocale . '.', '.' . $fromLocale . '.', $file);
-                        if (!file_exists($fromLocaleName)) {
-                            $io->error('Could not find translation file: ' . $fromLocaleName);
-
-                            return Command::FAILURE;
-                        }
-                        $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
-                    }
-
-                    if (stripos($base, '.' . $fromLocale . '.xlf') !== false || stripos($base, '.' . $fromLocale . '.xliff') !== false) {
-                        continue;
-                    }
-
-                    $this->fillEmptyTranslations($file, $translations[$fromLocale][$name]);
+            foreach ($sources as $file) {
+                $base = basename($file);
+                $parts = explode('.', $base);
+                $name = $parts[0];
+                $fileLocale = $parts[1];
+                $fromLocale = 'en';
+                if (\array_key_exists($fileLocale, $translateFrom)) {
+                    $fromLocale = $translateFrom[$fileLocale];
                 }
+
+                if (!\array_key_exists($fromLocale, $translations)) {
+                    $translations[$fromLocale] = [];
+                }
+
+                if (!\array_key_exists($name, $translations[$fromLocale])) {
+                    $fromLocaleName = str_replace('.' . $fileLocale . '.', '.' . $fromLocale . '.', $file);
+                    if (!file_exists($fromLocaleName)) {
+                        $io->error('Could not find translation file: ' . $fromLocaleName);
+
+                        return Command::FAILURE;
+                    }
+                    $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
+                }
+
+                if (stripos($base, '.' . $fromLocale . '.xlf') !== false || stripos($base, '.' . $fromLocale . '.xliff') !== false) {
+                    continue;
+                }
+
+                $this->fillEmptyTranslations($file, $translations[$fromLocale][$name]);
             }
         }
 
@@ -130,13 +182,9 @@ final class TranslationCommand extends Command
         // Find wrong file extensions
         // ==========================================================================
         if ($input->getOption('extension')) {
-            foreach ([$bases['core'], $bases['plugins']] as $directory) {
-                $files = glob($directory);
-
-                foreach ($files as $file) {
-                    $file = str_replace($this->projectDirectory, '', $file);
-                    $io->warning($file);
-                }
+            foreach ($sources as $file) {
+                $file = str_replace($this->projectDirectory, '', $file);
+                $io->warning($file);
             }
         }
 
@@ -146,25 +194,23 @@ final class TranslationCommand extends Command
         if ($input->getOption('duplicates')) {
             $duplicates = [];
 
-            foreach ($bases as $directory) {
-                foreach (glob($directory) as $file) {
-                    $xml = simplexml_load_file($file);
-                    foreach ($xml->file->body->{'trans-unit'} as $unit) {
-                        $n = (string) $unit['resname'];
-                        if (!\array_key_exists($n, $duplicates)) {
-                            $duplicates[$n] = [];
-                        }
-                        $b = explode('.', basename($file))[0];
-                        if (!\in_array($b, $duplicates[$n])) {
-                            $duplicates[$n][] = $b;
-                        }
+            foreach ($sources as $file) {
+                $xml = simplexml_load_file($file);
+                foreach ($xml->file->body->{'trans-unit'} as $unit) {
+                    $n = (string) $unit['resname'];
+                    if (!\array_key_exists($n, $duplicates)) {
+                        $duplicates[$n] = [];
+                    }
+                    $b = explode('.', basename($file))[0];
+                    if (!\in_array($b, $duplicates[$n])) {
+                        $duplicates[$n][] = $b;
                     }
                 }
             }
 
-            foreach ($duplicates as $id => $files) {
-                if (\count($files) > 1) {
-                    $io->text($id . ' => ' . implode(', ', $files));
+            foreach ($duplicates as $id => $duplicateFiles) {
+                if (\count($duplicateFiles) > 1) {
+                    $io->text($id . ' => ' . implode(', ', $duplicateFiles));
                 }
             }
         }
@@ -173,10 +219,8 @@ final class TranslationCommand extends Command
         // Delete empty translation keys and files without any translation
         // ==========================================================================
         if ($input->getOption('delete-empty')) {
-            foreach ($bases as $directory) {
-                foreach (glob($directory) as $file) {
-                    $this->removeEmptyTranslations($io, $file);
-                }
+            foreach ($sources as $file) {
+                $this->removeEmptyTranslations($io, $file);
             }
         }
 
@@ -512,5 +556,76 @@ final class TranslationCommand extends Command
     private function generateId(string $source): string
     {
         return strtr(substr(base64_encode(hash('sha256', $source, true)), 0, 7), '/+', '._');
+    }
+
+    /**
+     * @param array<string> $sources
+     * @param array<string> $targets
+     */
+    private function moveResname(SymfonyStyle $io, string $resname, array $sources, array $targets): int
+    {
+        foreach ($sources as $source) {
+            $tmp = basename($source);
+            $pos = strpos($tmp, '.');
+            if ($pos === false) {
+                $io->error('Unexpected filename: ' . $source);
+
+                return Command::FAILURE;
+            }
+            $suffix = substr($tmp, $pos);
+            $target = null;
+            foreach ($targets as $t) {
+                if (str_ends_with($t, $suffix)) {
+                    $target = $t;
+                }
+            }
+
+            if ($target === null) {
+                $io->error('Cannot find translation target file for source: ' . $source);
+
+                return Command::FAILURE;
+            }
+
+            $sourceDocument = new \DOMDocument('1.0');
+            $sourceDocument->load($source);
+
+            $targetDocument = new \DOMDocument('1.0');
+            $targetDocument->load($target);
+
+            $movedNode = false;
+
+            /** @var \DOMElement $element */
+            foreach ($sourceDocument->getElementsByTagName('trans-unit') as $element) {
+                if (!$element->hasAttribute('resname')) {
+                    continue;
+                }
+
+                $key = $element->getAttribute('resname');
+
+                if ($key === $resname) {
+                    $newNode = $targetDocument->importNode($element, true);
+                    $targetDocument->documentElement->firstElementChild->firstElementChild->appendChild($newNode); // @phpstan-ignore-line
+                    $element->parentNode->removeChild($element); // @phpstan-ignore-line
+                    $movedNode = true;
+                    break;
+                }
+            }
+
+            if ($movedNode) {
+                $xmlDocument = new \DOMDocument('1.0');
+                $xmlDocument->preserveWhiteSpace = false;
+                $xmlDocument->formatOutput = true;
+                $xmlDocument->loadXML($sourceDocument->saveXML()); // @phpstan-ignore-line
+                file_put_contents($source, $xmlDocument->saveXML());
+
+                $xmlDocument = new \DOMDocument('1.0');
+                $xmlDocument->preserveWhiteSpace = false;
+                $xmlDocument->formatOutput = true;
+                $xmlDocument->loadXML($targetDocument->saveXML()); // @phpstan-ignore-line
+                file_put_contents($target, $xmlDocument->saveXML());
+            }
+        }
+
+        return Command::SUCCESS;
     }
 }

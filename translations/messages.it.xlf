@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="N7mikjJ" resname="time_tracking" approved="yes">
         <source>time_tracking</source>
         <target state="final">Time-tracking</target>
@@ -1716,6 +1713,30 @@
       <trans-unit id="uqv2Lrv" resname="user_identifier.help" approved="yes">
         <source>user_identifier.help</source>
         <target state="final">L'identificatore univoco dell'utente viene usato per l'autenticazione e nelle esportazioni</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help" approved="yes">
+        <source>help</source>
+        <target state="final">Documentazione</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support" approved="yes">
+        <source>Support</source>
+        <target state="final">Supporto</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate" approved="yes">
+        <source>donate</source>
+        <target state="final">Donazione</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date" approved="yes">
+        <source>invoice_number_generator.date</source>
+        <target state="final">Data</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default" approved="yes">
+        <source>invoice_number_generator.default</source>
+        <target state="final">Formato configurato</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator" approved="yes">
+        <source>invoice_number_generator</source>
+        <target state="final">Generatore di numerazione fatture</target>
       </trans-unit>
     </body>
   </file>
