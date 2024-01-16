@@ -1730,30 +1730,38 @@
         <source>unpaid_vacation</source>
         <target state="translated">Vacaciones no retribuidas</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target>Documentación</target>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID de usuario</target>
       </trans-unit>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target state="translated">Foro</target>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">El id de usuario único se utiliza para la autenticación y en las exportaciones</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
-        <source>donate</source>
-        <target>Donar</target>
-      </trans-unit>
-      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
-        <source>invoice_number_generator.date</source>
-        <target state="translated">Fecha</target>
-      </trans-unit>
-      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
-        <source>invoice_number_generator.default</source>
-        <target state="translated">formato configurado</target>
-      </trans-unit>
-      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
-        <source>invoice_number_generator</source>
-        <target>Generador de número de factura</target>
-      </trans-unit>
+        <trans-unit id="EGpYQvx" resname="help">
+            <source>help</source>
+            <target>Documentación</target>
+        </trans-unit>
+        <trans-unit id="oYYDCG5" resname="support">
+            <source>support</source>
+            <target state="translated">Foro</target>
+        </trans-unit>
+        <trans-unit id="mz4ieCN" resname="donate">
+            <source>donate</source>
+            <target>Donar</target>
+        </trans-unit>
+        <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+            <source>invoice_number_generator.date</source>
+            <target state="translated">Fecha</target>
+        </trans-unit>
+        <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+            <source>invoice_number_generator.default</source>
+            <target state="translated">formato configurado</target>
+        </trans-unit>
+        <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+            <source>invoice_number_generator</source>
+            <target>Generador de número de factura</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

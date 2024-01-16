@@ -1726,30 +1726,42 @@
         <source>days</source>
         <target state="translated">Dias</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
-        <source>help</source>
-        <target>Ajuda</target>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Férias não remuneradas</target>
       </trans-unit>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target state="translated">Fórum</target>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID do usuário</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
-        <source>donate</source>
-        <target>Doe</target>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">O identificador exclusivo do usuário é usado para a autenticação e para as exportações</target>
       </trans-unit>
-      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
-        <source>invoice_number_generator.date</source>
-        <target>Data</target>
-      </trans-unit>
-      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
-        <source>invoice_number_generator.default</source>
-        <target>Formato configurado</target>
-      </trans-unit>
-      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
-        <source>invoice_number_generator</source>
-        <target>Gerador de Números de Fatura</target>
-      </trans-unit>
+        <trans-unit id="EGpYQvx" resname="help">
+            <source>help</source>
+            <target>Ajuda</target>
+        </trans-unit>
+        <trans-unit id="oYYDCG5" resname="support">
+            <source>support</source>
+            <target state="translated">Fórum</target>
+        </trans-unit>
+        <trans-unit id="mz4ieCN" resname="donate">
+            <source>donate</source>
+            <target>Doe</target>
+        </trans-unit>
+        <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+            <source>invoice_number_generator.date</source>
+            <target>Data</target>
+        </trans-unit>
+        <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+            <source>invoice_number_generator.default</source>
+            <target>Formato configurado</target>
+        </trans-unit>
+        <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+            <source>invoice_number_generator</source>
+            <target>Gerador de Números de Fatura</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

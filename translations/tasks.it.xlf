@@ -2,113 +2,113 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="yes">
         <source>tasks.pending</source>
-        <target state="translated">Attività in sospeso</target>
+        <target state="final">Compiti in sospeso</target>
       </trans-unit>
-      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="yes">
         <source>task.help.title</source>
-        <target state="translated">Una breve descrizione dell'attività</target>
+        <target state="final">Una breve descrizione del compito</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
         <source>estimation</source>
-        <target state="translated">Stima del tempo</target>
+        <target state="final">Stima del tempo</target>
       </trans-unit>
-      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="yes">
         <source>task_started</source>
-        <target state="translated">Il lavoro è iniziato</target>
+        <target state="final">Il lavoro è iniziato</target>
       </trans-unit>
-      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="yes">
         <source>task_not_started</source>
-        <target state="translated">Non iniziato</target>
+        <target state="final">Non iniziato</target>
       </trans-unit>
-      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="yes">
         <source>task_overdue</source>
-        <target state="translated">In ritardo</target>
+        <target state="final">In ritardo</target>
       </trans-unit>
-      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="yes">
         <source>task.stop</source>
-        <target state="translated">Metti in pausa l'elaborazione</target>
+        <target state="final">Metti in pausa elaborazione</target>
       </trans-unit>
-      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="yes">
         <source>task.assign</source>
-        <target state="translated">Assegna a me</target>
+        <target state="final">Assegna a me</target>
       </trans-unit>
-      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="yes">
         <source>task.widget_rows</source>
-        <target state="translated">Quantità di attività per pagina nel widget dashboard</target>
+        <target state="final">Quantità di compiti per pagina nel pannello widget</target>
       </trans-unit>
-      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="yes">
         <source>task.help.end</source>
-        <target state="translated">L'attività deve essere completata entro questa data</target>
+        <target state="final">Il compito deve essere completata entro questa data</target>
       </trans-unit>
-      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="yes">
         <source>task.help.estimation</source>
-        <target state="translated">Tempo stimato necessario per completare l'attività in hh:mm</target>
+        <target state="final">Tempo stimato necessario per completare il compito in hh:mm</target>
       </trans-unit>
-      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="yes">
         <source>task.help.description</source>
-        <target state="translated">Questa descrizione verrà copiata in ogni record del foglio di presenza</target>
+        <target state="final">Questa descrizione verrà copiata in ogni registrazione del foglio di presenza</target>
       </trans-unit>
-      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="yes">
         <source>task_with_estimation</source>
-        <target state="translated">Con stima</target>
+        <target state="final">Con stima</target>
       </trans-unit>
-      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="yes">
         <source>task.start</source>
-        <target state="translated">Avvia l'elaborazione</target>
+        <target state="final">Avvia elaborazione</target>
       </trans-unit>
-      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="yes">
         <source>task.close</source>
-        <target state="translated">Completa attività</target>
+        <target state="final">Completa compito</target>
       </trans-unit>
-      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="yes">
         <source>task.reopen</source>
-        <target state="translated">Riapri attività</target>
+        <target state="final">Riapri compito</target>
       </trans-unit>
-      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="yes">
         <source>report_tasks_assigned</source>
-        <target state="translated">Attività per utente</target>
+        <target state="final">Compiti per utente</target>
       </trans-unit>
-      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="yes">
         <source>task.unassign</source>
-        <target state="translated">Attività di rilascio</target>
+        <target state="final">Rilascia compito</target>
       </trans-unit>
-      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="yes">
         <source>task.create</source>
-        <target state="translated">Crea attività</target>
+        <target state="final">Crea compito</target>
       </trans-unit>
-      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="yes">
         <source>tasks.my</source>
-        <target state="translated">Le mie attività</target>
+        <target state="final">I miei compiti</target>
       </trans-unit>
-      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="yes">
         <source>report_tasks_teams</source>
-        <target state="translated">Attività team</target>
+        <target state="final">Compiti team</target>
       </trans-unit>
-      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="yes">
         <source>Tasks</source>
-        <target state="translated">Attività</target>
+        <target state="final">Compiti</target>
       </trans-unit>
-      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="yes">
         <source>task_no_estimation</source>
-        <target state="translated">Senza stima</target>
+        <target state="final">Senza stima</target>
       </trans-unit>
-      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="yes">
         <source>task.help.team</source>
-        <target state="translated">Assegna questa attività a un team</target>
+        <target state="final">Assegna questo compito a un team</target>
       </trans-unit>
-      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="yes">
         <source>task.help.user</source>
-        <target state="translated">Assegna questa attività a un utente</target>
+        <target state="final">Assegna questo compito a un utente</target>
       </trans-unit>
-      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="yes">
         <source>task.help.tags</source>
-        <target state="translated">Questi tag verranno copiati in ogni record del foglio di presenza</target>
+        <target state="final">Questi tag verranno copiati in ogni registrazione del foglio di presenza</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
         <source>task_todo</source>
-        <target state="translated">Descrizione dell'attività</target>
+        <target state="final">Descrizione compito</target>
       </trans-unit>
     </body>
   </file>
