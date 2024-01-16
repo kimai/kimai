@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target>サポート</target>
-      </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Kimai の発展のために寄付を行う</target>

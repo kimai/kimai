@@ -1209,6 +1209,10 @@
         <source>help</source>
         <target>Τεκμηρίωση</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Υποστήριξη</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

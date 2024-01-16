@@ -6,10 +6,6 @@
         <source>donate</source>
         <target>تبرع لمستقبل KIMAI</target>
       </trans-unit>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target>الدعم</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

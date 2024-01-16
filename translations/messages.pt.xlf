@@ -1730,6 +1730,10 @@
         <source>help</source>
         <target>Ajuda</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Suporte</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

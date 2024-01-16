@@ -1169,6 +1169,10 @@
         <source>help</source>
         <target state="translated">Dokumentation</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>Support</source>
+        <target state="translated">Support</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

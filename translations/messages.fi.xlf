@@ -1578,6 +1578,10 @@
         <source>help</source>
         <target state="translated">Dokumentit</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Tuki</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

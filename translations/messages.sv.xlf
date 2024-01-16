@@ -1618,6 +1618,10 @@
         <source>help</source>
         <target>Dokumentation</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Support</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

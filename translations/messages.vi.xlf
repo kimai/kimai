@@ -1198,6 +1198,10 @@
         <source>help</source>
         <target>Tài liệu</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Hỗ trợ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

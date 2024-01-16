@@ -1726,6 +1726,10 @@
         <source>help</source>
         <target>Dokumentacija</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Forum</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

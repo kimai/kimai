@@ -257,6 +257,10 @@
         <source>help</source>
         <target state="translated">Dokumentasi</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>Support</source>
+        <target state="translated">Dukungan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

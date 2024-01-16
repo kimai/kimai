@@ -1218,6 +1218,10 @@
         <source>help</source>
         <target state="translated">도움말</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">도움 </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

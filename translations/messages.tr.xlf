@@ -1674,6 +1674,10 @@
         <source>help</source>
         <target state="translated">Yardım</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Forum</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

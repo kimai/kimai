@@ -1654,6 +1654,10 @@
         <source>help</source>
         <target>Dokumentace</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Podpora</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1222,6 +1222,10 @@
         <source>help</source>
         <target>Súgó</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Támogatás</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1387,6 +1387,10 @@
         <source>help</source>
         <target>مستندات</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">انجمن</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

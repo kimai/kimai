@@ -1677,6 +1677,10 @@
         <source>help</source>
         <target state="translated">文件</target>
       </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">支援</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
