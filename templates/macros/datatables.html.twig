@@ -230,7 +230,7 @@
 
                             {% else %}
                                 {% if headerOptions.batchUpdate is defined %}
-                                    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle">
+                                    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
                                 {% endif %}
                                 {{ headerTitle }}
                                 {% if headerOptions.html_after is defined %}
@@ -285,5 +285,5 @@
 {% endmacro %}
 
 {% macro datatable_multiupdate_row(id) %}
-    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle">
+    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox'|trans }}">
 {% endmacro %}
