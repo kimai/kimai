@@ -130,7 +130,7 @@ final class TranslationCommand extends Command
         // Move resname from source to target
         // ==========================================================================
         $moveResname = $input->getOption('move-resname');
-        if (is_string($moveResname)) {
+        if (\is_string($moveResname)) {
             if (\count($targets) === 0) {
                 $io->error('Moving a resname needs a target file');
 
@@ -569,6 +569,7 @@ final class TranslationCommand extends Command
             $pos = strpos($tmp, '.');
             if ($pos === false) {
                 $io->error('Unexpected filename: ' . $source);
+
                 return Command::FAILURE;
             }
             $suffix = substr($tmp, $pos);
