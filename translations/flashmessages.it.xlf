@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning" approved="yes">
         <source>timesheet.locked.warning</source>
-        <target state="final">Stai modificando un'attività già esportata</target>
+        <target state="final">Stai modificando una registrazione già esportata</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success" approved="yes">
         <source>action.update.success</source>

@@ -1658,6 +1658,14 @@
         <source>Translations</source>
         <target state="translated">תרגומים</target>
       </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">חופשות שאינן בתשלום</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">ימים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

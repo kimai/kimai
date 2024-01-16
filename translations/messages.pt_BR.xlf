@@ -1726,6 +1726,18 @@
         <source>days</source>
         <target state="translated">Dias</target>
       </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Férias não remuneradas</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID do usuário</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">O identificador exclusivo do usuário é usado para a autenticação e para as exportações</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
