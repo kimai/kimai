@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Podpora</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website">
-        <source>website</source>
-        <target>Úvodní stránka</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Dokumentace</target>

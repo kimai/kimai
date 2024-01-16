@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Υποστήριξη</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website">
-        <source>website</source>
-        <target>Αρχική σελίδα</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Τεκμηρίωση</target>

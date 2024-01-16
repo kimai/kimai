@@ -6,10 +6,6 @@
         <source>support</source>
         <target state="translated">Forum</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website">
-        <source>website</source>
-        <target>Web-stranica</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Dokumentacija</target>

@@ -6,10 +6,6 @@
         <source>Support</source>
         <target state="final">Supporto</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website" approved="yes">
-        <source>website</source>
-        <target state="final">Pagina Iniziale</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help" approved="yes">
         <source>help</source>
         <target state="final">Documentazione</target>

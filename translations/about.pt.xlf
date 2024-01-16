@@ -6,10 +6,6 @@
         <source>support</source>
         <target>Suporte</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website">
-        <source>website</source>
-        <target>Sítio web</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Ajuda</target>

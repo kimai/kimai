@@ -6,10 +6,6 @@
         <source>support</source>
         <target state="translated">论坛</target>
       </trans-unit>
-      <trans-unit id="dHqPOYO" resname="website">
-        <source>website</source>
-        <target>主页</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>文件</target>
