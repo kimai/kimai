@@ -1,6 +1,11 @@
 {% extends 'page_setup.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
+{% block form_addon %}
+    {% set event = actions(app.user, 'contract_links', 'index', {year: year, user: user}) %}
+    {{ widgets.actions(event.actions, {button_class: '', large: false}) }}
+{% endblock %}
+
 {% block main %}
 
     {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
