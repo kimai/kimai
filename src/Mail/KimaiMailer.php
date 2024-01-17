@@ -23,7 +23,7 @@ final class KimaiMailer implements MailerInterface
 
     public function send(RawMessage $message, Envelope $envelope = null): void
     {
-        if ($message instanceof Email && count($message->getFrom()) === 0) {
+        if ($message instanceof Email && \count($message->getFrom()) === 0) {
             $message->from($this->configuration->getFromAddress());
         }
 
