@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class EmailSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private KimaiMailer $mailer)
+    public function __construct(private readonly KimaiMailer $mailer)
     {
     }
 
