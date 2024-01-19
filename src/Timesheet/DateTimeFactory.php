@@ -135,6 +135,11 @@ final class DateTimeFactory
         return new DateTime($datetime, $this->getTimezone());
     }
 
+    public function create(string $datetime = 'now'): \DateTimeImmutable
+    {
+        return new \DateTimeImmutable($datetime, $this->getTimezone());
+    }
+
     /**
      * @param string $format
      * @param null|string $datetime

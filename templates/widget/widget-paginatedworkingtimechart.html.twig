@@ -1,5 +1,5 @@
 {% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
-    {% import "macros/widgets.html.twig" as widgets %}
+    {% from '@theme/components/buttons.html.twig' import action_cardtoolbutton %}
     {% block box_title %}
         {% if not title is empty %}{{ title|trans }}{% endif %}
     {% endblock %}
@@ -23,8 +23,8 @@
         {% else %}
             {% set nextWeek = nextWeek + 1 %}
         {% endif %}
-        {{ widgets.card_tool_button('left', {'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek})}) }}
-        {{ widgets.card_tool_button('right', {'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek})}) }}
+        {{ action_cardtoolbutton('left', {'title': 'stats.workingTimeWeekShort'|trans({'%week%': (prevWeek ~ '/' ~ prevYear)}), 'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek})}) }}
+        {{ action_cardtoolbutton('right', {'title': 'stats.workingTimeWeekShort'|trans({'%week%': (nextWeek ~ '/' ~ nextYear)}), 'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek})}) }}
     {% endblock %}
     {% block box_body %}
         {{ render_widget('DailyWorkingTimeChart', options|merge({'begin': data.begin, 'end': data.end})) }}

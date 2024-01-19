@@ -21,6 +21,7 @@
                         {{ form_widget(field) }}
                     {% endif %}
                 {% endfor %}
+                {% block form_addon %}{% endblock %}
             </div>
             {{ form_end(form) }}
         </div>

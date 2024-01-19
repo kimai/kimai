@@ -19,7 +19,6 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Form\Type\UserType;
 use App\Form\UserCreateType;
-use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -79,6 +78,7 @@ final class UserController extends AbstractController
         $table->addColumn('email', ['class' => 'd-none', 'orderBy' => false]);
         $table->addColumn('lastLogin', ['class' => 'd-none', 'orderBy' => false]);
         $table->addColumn('roles', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('system_account', ['class' => 'd-none', 'orderBy' => 'systemAccount']);
 
         foreach ($event->getPreferences() as $userPreference) {
             $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages', 'data' => $userPreference]);
@@ -163,13 +163,7 @@ final class UserController extends AbstractController
                 ]
             ])
             ->add('user', UserType::class, [
-                'query_builder' => function (UserRepository $repo) use ($userToDelete) {
-                    $query = new UserFormTypeQuery();
-                    $query->addUserToIgnore($userToDelete);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'ignore_users' => [$userToDelete],
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_user_delete', ['id' => $userToDelete->getId()]))

@@ -1037,11 +1037,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/AbstractUserReportController.php
@@ -3647,11 +3642,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 4
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -5658,11 +5648,6 @@ parameters:
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 

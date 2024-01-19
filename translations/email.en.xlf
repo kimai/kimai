@@ -42,6 +42,22 @@
         <source>reset.intro</source>
         <target>… so you forgot your password? Don't worry: Kimai will help you to create a new one:</target>
       </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+        <source>absence_created_supervisor_subject</source>
+        <target>New absence | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>absence_created_supervisor_message</source>
+            <target>
+A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

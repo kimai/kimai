@@ -21,22 +21,22 @@ class UserQueryTest extends BaseQueryTest
     public function testQuery(): void
     {
         $sut = new UserQuery();
-        $this->assertBaseQuery($sut, 'user');
+        $this->assertBaseQuery($sut, 'username');
         $this->assertInstanceOf(VisibilityInterface::class, $sut);
         $this->assertRole($sut);
         $this->assertSearchTeam($sut);
 
-        $this->assertResetByFormError(new UserQuery(), 'user');
+        $this->assertResetByFormError(new UserQuery(), 'username');
     }
 
-    protected function assertRole(UserQuery $sut)
+    protected function assertRole(UserQuery $sut): void
     {
         $this->assertNull($sut->getRole());
         $sut->setRole('ROLE_USER');
         $this->assertEquals('ROLE_USER', $sut->getRole());
     }
 
-    protected function assertSearchTeam(UserQuery $sut)
+    protected function assertSearchTeam(UserQuery $sut): void
     {
         $team = new Team('foo');
         $this->assertIsArray($sut->getSearchTeams());
@@ -46,7 +46,7 @@ class UserQueryTest extends BaseQueryTest
         $this->assertSame($team, $sut->getSearchTeams()[0]);
     }
 
-    public function testSystemAccount()
+    public function testSystemAccount(): void
     {
         $sut = new UserQuery();
         self::assertNull($sut->getSystemAccount());

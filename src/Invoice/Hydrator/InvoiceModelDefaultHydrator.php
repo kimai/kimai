@@ -133,11 +133,11 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $max = null;
 
         foreach ($entries as $entry) {
-            if ($min === null || $min->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
+            if ($min === null || $min->getBegin() > $entry->getBegin()) {
                 $min = $entry;
             }
 
-            if ($max === null || $max->getBegin()->getTimestamp() < $entry->getBegin()->getTimestamp()) {
+            if ($max === null || $max->getBegin() < $entry->getBegin()) {
                 $max = $entry;
             }
         }

@@ -9,28 +9,20 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\EmailEvent;
-use App\Mail\KimaiMailer;
+use KevinPapst\TablerBundle\Event\NotificationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Event subscriber to handle emails.
- */
-final class EmailSubscriber implements EventSubscriberInterface
+class NotificationsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly KimaiMailer $mailer)
-    {
-    }
-
     public static function getSubscribedEvents(): array
     {
         return [
-            EmailEvent::class => ['onMailEvent', 100],
+            NotificationEvent::class => ['onNotificationEvent', 100],
         ];
     }
 
-    public function onMailEvent(EmailEvent $event): void
+    public function onNotificationEvent(NotificationEvent $event): void
     {
-        $this->mailer->send($event->getEmail());
+        $event->setShowBadgeTotal(false);
     }
 }

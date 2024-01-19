@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class LayoutControllerTest extends ControllerBaseTest
 {
-    public function testNavigationMenus()
+    public function testNavigationMenus(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -30,18 +30,18 @@ class LayoutControllerTest extends ControllerBaseTest
         $this->assertHasNavigation($client);
     }
 
-    protected function assertHasMainHeader(HttpKernelBrowser $client, User $user)
+    protected function assertHasMainHeader(HttpKernelBrowser $client, User $user): void
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open user menu"', $content);
+        $this->assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open personal menu"', $content);
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
         $this->assertStringContainsString('href="/en/logout?_csrf_token=', $content);
     }
 
-    protected function assertHasNavigation(HttpKernelBrowser $client)
+    protected function assertHasNavigation(HttpKernelBrowser $client): void
     {
         $content = $client->getResponse()->getContent();
 
@@ -52,7 +52,7 @@ class LayoutControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('Calendar', $content);
     }
 
-    public function testActiveEntries()
+    public function testActiveEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -61,6 +61,6 @@ class LayoutControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<a href="/en/timesheet/create" class="modal-ajax-form ticktac-start btn', $content);
+        $this->assertStringContainsString('<a title="Start time-tracking" href="/en/timesheet/create" class="modal-ajax-form ticktac-start btn', $content);
     }
 }

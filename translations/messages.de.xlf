@@ -58,6 +58,10 @@
         <source>search</source>
         <target>Suchen</target>
       </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target>Suchfilter</target>
+      </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
         <target>Suchbegriff</target>
@@ -1328,7 +1332,11 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Neue Zeitmessung starten</target>
+        <target>Zeiterfassung starten</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target>Zeiterfassung stoppen</target>
       </trans-unit>
       <!-- TOOLBARS -->
       <trans-unit id="igCkqAP" resname="pageSize">
@@ -1394,6 +1402,14 @@
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
         <target>Felder die aktualisiert werden sollen, müssen zunächst durch einen Klick auf die zugehörige Checkbox freigeschaltet werden.</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target>Eintrag zur Batch-Update-Liste hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target>Alle Einträge für Batch-Update-Liste auswählen</target>
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>

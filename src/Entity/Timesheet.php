@@ -87,9 +87,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      * Reflects the date in the user timezone (not in UTC).
      * This value is automatically set through the begin column and ONLY used in statistic queries.
      */
-    #[ORM\Column(name: 'date_tz', type: 'date', nullable: false)]
+    #[ORM\Column(name: 'date_tz', type: 'date_immutable', nullable: false)]
     #[Assert\NotNull]
-    private ?DateTime $date = null;
+    private ?\DateTimeImmutable $date = null;
     /**
      * Time records start date-time.
      *
@@ -265,7 +265,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
         // make sure that the original date is always kept in UTC
-        $this->date = new DateTime($begin->format('Y-m-d 00:00:00'), new DateTimeZone('UTC'));
+        $this->date = new \DateTimeImmutable($begin->format('Y-m-d 00:00:00'), new DateTimeZone('UTC'));
 
         return $this;
     }
