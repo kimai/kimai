@@ -786,7 +786,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">Nieuwe tijdregistratie maken</target>
+        <target state="needs-translation">Nieuwe tijdregistratie maken</target>
       </trans-unit>
       <!--
               TOOLBARS

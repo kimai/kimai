@@ -802,7 +802,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">رکورد زمانی ایجاد کنید</target>
+        <target state="needs-translation">رکورد زمانی ایجاد کنید</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>

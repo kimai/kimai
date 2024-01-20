@@ -706,7 +706,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">Skapa ny tidrapport</target>
+        <target state="needs-translation">Skapa ny tidrapport</target>
       </trans-unit>
       <!--
               TOOLBARS

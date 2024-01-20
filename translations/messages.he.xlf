@@ -820,7 +820,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>יצירת רשומת זמן חדשה</target>
+        <target state="needs-translation">יצירת רשומת זמן חדשה</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -1689,6 +1689,14 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>מחולל מספר הזמנה</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">מזהה משתמש</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">מזהה המשתמש הייחודי שמשמש לאימות ובאריזות לייצוא</target>
       </trans-unit>
     </body>
   </file>

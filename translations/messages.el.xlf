@@ -977,7 +977,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Δημιουργήστε νέα εγγραφή ωρών</target>
+        <target state="needs-translation">Δημιουργήστε νέα εγγραφή ωρών</target>
       </trans-unit>
       <!--
               TOOLBARS

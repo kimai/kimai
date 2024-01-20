@@ -873,7 +873,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Krei novan temporegistraĵon</target>
+        <target state="needs-translation">Krei novan temporegistraĵon</target>
       </trans-unit>
       <!--
               TOOLBARS

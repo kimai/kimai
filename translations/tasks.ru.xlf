@@ -54,6 +54,18 @@
         <source>report_tasks_teams</source>
         <target state="translated">Задачи команды</target>
       </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Начать обработку</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Приостановить обработку</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Назначить себе</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

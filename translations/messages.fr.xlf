@@ -714,7 +714,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Créer une nouvelle fiche de temps</target>
+        <target state="needs-translation">Créer une nouvelle fiche de temps</target>
       </trans-unit>
       <!--
               TOOLBARS

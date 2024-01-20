@@ -1026,7 +1026,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Stvori nov vremenski zapis</target>
+        <target state="needs-translation">Stvori nov vremenski zapis</target>
       </trans-unit>
       <!--
               TOOLBARS

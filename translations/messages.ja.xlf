@@ -706,7 +706,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>新たに時間の記録を始める</target>
+        <target state="needs-translation">新たに時間の記録を始める</target>
       </trans-unit>
       <!--
               TOOLBARS

@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="final">Un'assenza non può essere prenotata prima del primo giorno lavorativo.</target>
+        <target state="final">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." approved="yes">
         <source>Not enough holidays left.</source>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="nLcihCc" resname="An absence must have a date." approved="yes">
         <source>An absence must have a date.</source>
-        <target state="final">Un'assenza deve avere una data.</target>
+        <target state="final">Un congedo deve avere una data.</target>
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." approved="yes">
         <source>You can book a maximum of {{ value }} days at once.</source>
@@ -132,15 +132,15 @@
       </trans-unit>
       <trans-unit id="ZObikpA" resname="This absence type is not known." approved="yes">
         <source>This absence type is not known.</source>
-        <target state="final">Questo tipo di assenza non è noto.</target>
+        <target state="final">Questo tipo di congedo è sconosciuto.</target>
       </trans-unit>
       <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." approved="yes">
         <source>An absence must be assigned to a user.</source>
-        <target state="final">Un'assenza deve essere assegnata a un utente.</target>
+        <target state="final">Un congedo deve essere assegnato a un utente.</target>
       </trans-unit>
       <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." approved="yes">
         <source>You cannot have two absences of this type at one day.</source>
-        <target state="final">Non puoi avere due assenze di questo tipo nello stesso giorno.</target>
+        <target state="final">Non puoi avere due congedi di questo tipo nello stesso giorno.</target>
       </trans-unit>
       <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." approved="yes">
         <source>The chosen date is not a working day.</source>
@@ -152,7 +152,7 @@
       </trans-unit>
       <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." approved="yes">
         <source>The period of absence must not extend beyond the turn of the year.</source>
-        <target state="final">Il periodo di assenza non potrà protrarsi oltre la fine dell'anno.</target>
+        <target state="final">Il periodo di congedo non deve superare la fine dell'anno.</target>
       </trans-unit>
     </body>
   </file>

@@ -568,7 +568,7 @@
             -->
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>إنشاء سجل زمني جديد</target>
+        <target state="needs-translation">إنشاء سجل زمني جديد</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1527,7 +1527,7 @@
       </trans-unit>
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
-        <target>مولد رقم فاتورة </target>
+        <target>مولد رقم فاتورة</target>
       </trans-unit>
     </body>
   </file>

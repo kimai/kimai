@@ -1264,7 +1264,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">建立新的時間紀錄</target>
+        <target state="needs-translation">建立新的時間紀錄</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>

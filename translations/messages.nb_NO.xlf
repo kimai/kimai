@@ -951,7 +951,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Opprett ny tidsregistrering</target>
+        <target state="needs-translation">Opprett ny tidsregistrering</target>
       </trans-unit>
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>

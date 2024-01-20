@@ -548,7 +548,7 @@
             -->
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Начать новый хронометраж</target>
+        <target state="needs-translation">Начать новый хронометраж</target>
       </trans-unit>
       <!--
               TOOLBARS

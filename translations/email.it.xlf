@@ -42,6 +42,22 @@
         <source>reset.intro</source>
         <target state="final">...così hai dimenticato la password? Non preoccuparti, Kimai ti aiuterà a crearne una nuova:</target>
       </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" approved="yes">
+        <source>absence_created_supervisor_subject</source>
+        <target state="final">Nuovo congedo | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
+        <source>absence_created_supervisor_message</source>
+        <target state="final">
+È stata creato un nuovo congedo per %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Controllali qui: %approval_url%
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

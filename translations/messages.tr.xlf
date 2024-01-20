@@ -782,7 +782,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">Yeni kayıt oluştur</target>
+        <target state="needs-translation">Yeni kayıt oluştur</target>
       </trans-unit>
       <!--
               TOOLBARS
