@@ -490,7 +490,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Upprætta eina nýggja tíðarinntøppan</target>
+        <target state="needs-translation">Upprætta eina nýggja tíðarinntøppan</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>

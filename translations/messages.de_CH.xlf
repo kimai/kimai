@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Neue Zeitmessung starten</target>
+        <target state="needs-translation">Neue Zeitmessung starten</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>

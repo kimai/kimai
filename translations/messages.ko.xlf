@@ -726,7 +726,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">새로운 타임시트 생성하기</target>
+        <target state="needs-translation">새로운 타임시트 생성하기</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1217,7 +1217,7 @@
       </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
-        <target state="translated">도움 </target>
+        <target state="translated">도움</target>
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>

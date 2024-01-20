@@ -155,8 +155,8 @@
         <target>Időtartam</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Felhasználó</target>
+        <source>User</source>
+        <target state="translated">Felhasználó</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -195,8 +195,8 @@
         <target>Tevékenység</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Projekt</target>
+        <source>Project</source>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
@@ -714,7 +714,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Új rögzítés indítása</target>
+        <target state="needs-translation">Új rögzítés indítása</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1238,6 +1238,10 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Számlaszám-generátor</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Alapértelmezett</target>
       </trans-unit>
     </body>
   </file>

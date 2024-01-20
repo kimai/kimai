@@ -821,7 +821,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Vytvoriť nový časový záznam</target>
+        <target state="needs-translation">Vytvoriť nový časový záznam</target>
       </trans-unit>
       <!--
               TOOLBARS

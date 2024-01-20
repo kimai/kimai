@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" approved="yes">
         <source>time_tracking</source>
-        <target state="final">Time-tracking</target>
+        <target state="final">Monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes" approved="yes">
         <source>yes</source>
@@ -388,7 +388,7 @@
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title" approved="yes">
         <source>modal.columns.title</source>
-        <target state="final">Personalizza visualizzazione</target>
+        <target state="final">Personalizza vista</target>
       </trans-unit>
       <trans-unit id="_0tuMNE" resname="fixedRate" approved="yes">
         <source>fixedRate</source>
@@ -901,7 +901,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start" approved="yes">
         <source>timesheet.start</source>
-        <target state="final">Crea una nuova registrazione</target>
+        <target state="final">Avvia il monitoraggio del tempo</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1052,7 +1052,7 @@
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">È stata inviata un'e-mail a %email%. Contiene un collegamento su cui devi fare clic per attivare il tuo account.</target>
+        <target state="final">È stata inviata un'e-mail a %email%. Contiene un collegamento su cui devi fare clic per attivare l'account.</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" approved="yes">
         <source>stats.amountFinancialYear</source>
@@ -1160,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern" approved="yes">
         <source>Display of entries in selection lists</source>
-        <target state="final">Visualizzazione voci negli elenchi di selezione</target>
+        <target state="final">Vista voci negli elenchi di selezione</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic" approved="yes">
         <source>automatic</source>
@@ -1568,7 +1568,7 @@
       </trans-unit>
       <trans-unit id="GIgQHa4" resname="absence" approved="yes">
         <source>absence</source>
-        <target state="final">Assenza</target>
+        <target state="final">Congedo</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to" approved="yes">
         <source>send_to</source>
@@ -1620,7 +1620,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" approved="yes">
         <source>absence_other.intro</source>
-        <target state="final">Eventi familiari, trasloco, caos meteorologico, ecc.</target>
+        <target state="final">Eventi familiari, trasloco, calamità naturali, ecc.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro" approved="yes">
         <source>time_off.intro</source>
@@ -1664,7 +1664,7 @@
       </trans-unit>
       <trans-unit id="YTzKpcP" resname="Absence calendar" approved="yes">
         <source>Absence calendar</source>
-        <target state="final">Calendario assenze</target>
+        <target state="final">Calendario congedi</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields" approved="yes">
         <source>Meta fields</source>
@@ -1737,6 +1737,22 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator" approved="yes">
         <source>invoice_number_generator</source>
         <target state="final">Generatore di numerazione fatture</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" approved="yes">
+        <source>batch_table_checkbox_all</source>
+        <target state="final">Seleziona tutte le voci per l'aggiornamento in blocco della lista</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" approved="yes">
+        <source>Search filter</source>
+        <target state="final">Filtro di ricerca</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" approved="yes">
+        <source>timesheet.stop</source>
+        <target state="final">Ferma il monitoraggio del tempo</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" approved="yes">
+        <source>batch_table_checkbox</source>
+        <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
       </trans-unit>
     </body>
   </file>

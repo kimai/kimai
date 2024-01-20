@@ -42,6 +42,22 @@
         <source>reset.intro</source>
         <target state="translated">… así que olvidaste tu contraseña? No te preocupes: Kimai te ayudará a crear una nueva:</target>
       </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nueva ausencia | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>absence_created_supervisor_message</source>
+        <target state="translated">
+Se ha creado una nueva ausencia para %absence_user%.
+
+Tipo_ausencia% - Comentario_ausencia%.
+
+%lista_ausencias%
+
+Por favor, revíselas en %approval_url%
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

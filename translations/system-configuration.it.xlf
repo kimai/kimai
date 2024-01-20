@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
         <source>Time tracking</source>
-        <target state="final">Time-tracking</target>
+        <target state="final">Monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme" approved="yes">
         <source>theme</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode" approved="yes">
         <source>timesheet.mode</source>
-        <target state="final">Modalità time-tracking</target>
+        <target state="final">Modalità monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default" approved="yes">
         <source>timesheet.mode_default</source>
@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration" approved="yes">
         <source>calendar.slot_duration</source>
-        <target state="final">Durata slot per la visualizzazione settimanale e giornaliera (hh:mm:ss)</target>
+        <target state="final">Durata slot per la vista settimanale e giornaliera (hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" approved="yes">
         <source>branding</source>
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin" approved="yes">
         <source>timesheet.default_begin</source>
-        <target state="final">Orario di inizio predefinito (non usato in tutte le modalità di time-tracking)</target>
+        <target state="final">Orario di inizio predefinito (non usato in tutte le modalità di monitoraggio del tempo)</target>
       </trans-unit>
       <trans-unit id="AzOiQES" resname="company.financial_year" approved="yes">
         <source>company.financial_year</source>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create" approved="yes">
         <source>activity.allow_inline_create</source>
-        <target state="final">Consenti la creazione di attività con modulo time-tracking</target>
+        <target state="final">Consenti la creazione di attività con modulo monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="yes">
         <source>copy_teams_on_create</source>

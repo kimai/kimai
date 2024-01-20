@@ -706,7 +706,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Criar novo registro de tempo</target>
+        <target state="needs-translation">Criar novo registro de tempo</target>
       </trans-unit>
       <!--
               TOOLBARS

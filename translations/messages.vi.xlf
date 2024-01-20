@@ -878,7 +878,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Tạo bản ghi thời gian mới</target>
+        <target state="needs-translation">Tạo bản ghi thời gian mới</target>
       </trans-unit>
       <!--
               TOOLBARS

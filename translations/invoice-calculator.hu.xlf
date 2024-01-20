@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Felhasználónként csoportosítva - egy bejegyzés felhasználónként</target>
+        <target state="translated">Felhasználó</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Projekt: projektenként egy nevezés</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>

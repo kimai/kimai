@@ -806,7 +806,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>创建新的时间记录</target>
+        <target state="needs-translation">创建新的时间记录</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1750,6 +1750,14 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>发票数字生成器</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">用户 ID</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">唯一的用户标识符用于身份验证和导出</target>
       </trans-unit>
     </body>
   </file>

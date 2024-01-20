@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Crează o nouă înregistrare</target>
+        <target state="needs-translation">Crează o nouă înregistrare</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
