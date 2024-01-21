@@ -166,9 +166,9 @@ class DateTimePickerType extends AbstractType
             'minute' => ''
         ];
 
-        if (is_string($time)) {
+        if (\is_string($time)) {
             $times = explode(':', $time);
-            if (count($times) > 1) {
+            if (\count($times) > 1) {
                 $values['hour'] = $times[0];
                 $values['minute'] = $times[1];
             }
