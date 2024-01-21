@@ -26,6 +26,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
+use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
@@ -54,6 +55,17 @@ final class ProfileController extends AbstractController
         return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUserIdentifier()]);
     }
 
+    private function getPageSetup(User $profile, string $view): PageSetup
+    {
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+        $page->setActionName('user');
+        $page->setActionView($view);
+        $page->setActionPayload(['user' => $profile]);
+
+        return $page;
+    }
+
     #[Route(path: '/{username}', name: 'user_profile', methods: ['GET'])]
     #[IsGranted('view', 'profile')]
     public function indexAction(User $profile, TimesheetRepository $repository, TimesheetStatisticService $statisticService): Response
@@ -74,6 +86,7 @@ final class ProfileController extends AbstractController
 
         $viewVars = [
             'tab' => 'charts',
+            'page_setup' => $this->getPageSetup($profile, 'charts'),
             'user' => $profile,
             'stats' => $userStats,
             'workingSince' => $workStartingDay,
@@ -105,6 +118,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/profile.html.twig', [
             'tab' => 'edit',
+            'page_setup' => $this->getPageSetup($profile, 'edit'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -128,6 +142,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/form.html.twig', [
             'tab' => 'password',
+            'page_setup' => $this->getPageSetup($profile, 'password'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -151,6 +166,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
+            'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -182,6 +198,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/form.html.twig', [
             'tab' => 'roles',
+            'page_setup' => $this->getPageSetup($profile, 'roles'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -208,6 +225,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/contract.html.twig', [
             'tab' => 'contract',
+            'page_setup' => $this->getPageSetup($profile, 'contract'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -243,6 +261,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/form.html.twig', [
             'tab' => 'teams',
+            'page_setup' => $this->getPageSetup($profile, 'teams'),
             'user' => $profile,
             'form' => $form->createView(),
         ]);
@@ -294,6 +313,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/preferences.html.twig', [
             'tab' => 'settings',
+            'page_setup' => $this->getPageSetup($profile, 'settings'),
             'user' => $profile,
             'form' => $form->createView(),
             'sections' => $sections
@@ -422,6 +442,7 @@ final class ProfileController extends AbstractController
 
         return $this->render('user/2fa.html.twig', [
             'tab' => '2fa',
+            'page_setup' => $this->getPageSetup($profile, '2fa'),
             'user' => $profile,
             'form' => $form->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
