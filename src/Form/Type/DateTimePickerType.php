@@ -48,6 +48,17 @@ class DateTimePickerType extends AbstractType
             'view_timezone',
         ]));
 
+        $defaultTime = ['hour' => '', 'minute' => ''];
+
+        if (\array_key_exists('force_time', $options)) {
+            $tmp = $options['force_time'];
+            if (\is_string($tmp)) {
+                $defaultTime = $this->parseTime($tmp);
+                unset($options['force_time']);
+                $timeOptions['required'] = false;
+            }
+        }
+
         if (false === $options['label']) {
             $dateOptions['label'] = false;
             $timeOptions['label'] = false;
@@ -79,7 +90,7 @@ class DateTimePickerType extends AbstractType
                     function ($transform) {
                         return $transform;
                     },
-                    function ($reverseTransform) {
+                    function ($reverseTransform) use ($defaultTime) {
                         if (\array_key_exists('date', $reverseTransform) && $reverseTransform['date'] === null) {
                             $reverseTransform['time'] = [
                                 'year' => '',
@@ -89,10 +100,7 @@ class DateTimePickerType extends AbstractType
                         }
                         // happened in DateTimePickerType - made it impossible to create an empty DateTime
                         if (\array_key_exists('time', $reverseTransform) && $reverseTransform['time'] === null) {
-                            $reverseTransform['time'] = [
-                                'hour' => '',
-                                'minute' => '',
-                            ];
+                            $reverseTransform['time'] = $defaultTime;
                         }
 
                         return $reverseTransform;
@@ -132,6 +140,7 @@ class DateTimePickerType extends AbstractType
                 return $options['compound'] ? [] : '';
             },
             'invalid_message' => 'Please enter a valid date and time.',
+            'force_time' => null, // one of: string (start, end) or a string to as argument for DateTime->modify() or null
         ]);
 
         // Don't add some defaults in order to preserve the defaults
@@ -145,6 +154,27 @@ class DateTimePickerType extends AbstractType
             'datetime',
             'string',
         ]);
+    }
+
+    /**
+     * @return array{'hour': string, 'minute': string}
+     */
+    private function parseTime(?string $time): array
+    {
+        $values = [
+            'hour' => '',
+            'minute' => ''
+        ];
+
+        if (\is_string($time)) {
+            $times = explode(':', $time);
+            if (\count($times) > 1) {
+                $values['hour'] = $times[0];
+                $values['minute'] = $times[1];
+            }
+        }
+
+        return $values;
     }
 
     public function getBlockPrefix(): string
