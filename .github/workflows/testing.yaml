@@ -24,6 +24,9 @@ jobs:
         name: Integration (${{ matrix.php }})
         steps:
 
+            -   name: Detect versions
+                run: mysql --version && php --version
+
             -   name: Clone Kimai
                 uses: actions/checkout@v4
                 with:
@@ -80,15 +83,15 @@ jobs:
                 run: composer tests-unit
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
-                    APP_ENV: dev
+                    APP_ENV: test
                     MAILER_URL: null://localhost
 
             -   name: Full test-suite
                 if: matrix.php != '8.2'
-                run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
+                run: vendor/bin/phpunit tests/
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
-                    APP_ENV: dev
+                    APP_ENV: test
                     MAILER_URL: null://localhost
                     TEST_WITH_BUNDLES: 1
 
