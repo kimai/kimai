@@ -30,9 +30,12 @@ final class TagsInputType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->addModelTransformer(new CollectionToArrayTransformer(), true)
-            ->addModelTransformer($this->transformer, true);
+        if ($options['allow_create'] === false) {
+            $this->transformer->setCreate(false);
+        }
+
+        $builder->addModelTransformer(new CollectionToArrayTransformer(), true);
+        $builder->addModelTransformer($this->transformer, true);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
