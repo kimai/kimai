@@ -4,7 +4,6 @@
 {% block title %}{{- get_title() -}}{% endblock %}
 
 {% block head %}
-    {{ parent() }}
     {% include 'partials/head.html.twig' %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
     {{ event.content|raw }}
