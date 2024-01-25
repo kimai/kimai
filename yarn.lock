@@ -1843,9 +1843,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/core@npm:1.0.0-beta18":
-  version: 1.0.0-beta18
-  resolution: "@tabler/core@npm:1.0.0-beta18"
+"@tabler/core@npm:1.0.0-beta19":
+  version: 1.0.0-beta19
+  resolution: "@tabler/core@npm:1.0.0-beta19"
   dependencies:
     "@popperjs/core": ^2.11.7
     bootstrap: 5.3.0-alpha3
@@ -1863,6 +1863,7 @@ __metadata:
     litepicker: ^2.0.12
     nouislider: ^15.7.0
     plyr: ^3.7.8
+    star-rating.js: ^4.3.0
     tinymce: ^6.4.2
     tom-select: ^2.2.2
   peerDependenciesMeta:
@@ -1892,11 +1893,13 @@ __metadata:
       optional: true
     plyr:
       optional: true
+    star-rating.js:
+      optional: true
     tinymce:
       optional: true
     tom-select:
       optional: true
-  checksum: eabeb8c6aa32a0b22cc17d202718a9ec0695a39d30fad0f67ad7d3215660fd94882e83f04514c688ae993c2de72a9625ee7a29b42a592ef31c394535cbe5e079
+  checksum: 478a44394d88a517f333a75a2ecf216cc5711f61e50f2b00c34f5ccc8d936ccb17d229e12d5fa300baef7d50a635a2d53666382a09187be230df59eca8884da5
   languageName: node
   linkType: hard
 
@@ -4897,7 +4900,7 @@ __metadata:
     "@fullcalendar/interaction": ^5.11
     "@fullcalendar/timegrid": ^5.11
     "@symfony/webpack-encore": ^4.0
-    "@tabler/core": 1.0.0-beta18
+    "@tabler/core": 1.0.0-beta19
     chart.js: ^3.9
     core-js: ^3.6
     eslint: ^8.0
