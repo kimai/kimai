@@ -112,14 +112,20 @@
 {% block page_pretitle %}{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('app') }}
+    {% if tabler_bundle.isRightToLeft() %}
+        {{ encore_entry_link_tags('app-rtl') }}
+    {% else %}
+        {{ encore_entry_link_tags('app') }}
+    {% endif %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
     {{ event.content|raw }}
 {% endblock %}
 
 {% block head %}
-    {{ parent() }}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="robots" content="noindex,nofollow">
     {{ encore_entry_script_tags('app') }}
     {% include 'partials/head.html.twig' %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
