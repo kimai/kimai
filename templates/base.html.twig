@@ -10,11 +10,13 @@
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
+        {% block modal_effects %}{% endblock %}
     {% endembed %}
     {% embed '@theme/embeds/modal.html.twig' %}
         {% block modal_id %}remote_modal{% endblock %}
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
+        {% block modal_effects %}{% endblock %}
         {% block modal_footer %}
             <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
         {% endblock %}
