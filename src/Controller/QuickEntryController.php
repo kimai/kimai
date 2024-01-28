@@ -10,7 +10,6 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet;
 use App\Form\QuickEntryForm;
 use App\Model\QuickEntryWeek;
 use App\Repository\Query\TimesheetQuery;
@@ -71,7 +70,6 @@ final class QuickEntryController extends AbstractController
         $result = $this->repository->getTimesheetResult($query);
 
         $rows = [];
-        /** @var Timesheet $timesheet */
         foreach ($result->getResults(true) as $timesheet) {
             $i = 0;
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
@@ -124,7 +122,6 @@ final class QuickEntryController extends AbstractController
         $defaultBegin = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
         $defaultHour = (int) $defaultBegin->format('H');
         $defaultMinute = (int) $defaultBegin->format('i');
-        $defaultBegin->setTime($defaultHour, $defaultMinute, 0, 0);
 
         $formModel = new QuickEntryWeek($startWeek);
 
@@ -136,8 +133,9 @@ final class QuickEntryController extends AbstractController
                     $tmp = $this->timesheetService->createNewTimesheet($user);
                     $tmp->setProject($row['project']);
                     $tmp->setActivity($row['activity']);
-                    $tmp->setBegin(clone $day['day']);
-                    $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $newTime = \DateTime::createFromInterface($day['day']);
+                    $newTime = $newTime->setTime($defaultHour, $defaultMinute);
+                    $tmp->setBegin($newTime);
                     $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 } else {
@@ -151,8 +149,9 @@ final class QuickEntryController extends AbstractController
         $empty->markAsPrototype();
         foreach ($week as $dayId => $day) {
             $tmp = $this->timesheetService->createNewTimesheet($user);
-            $tmp->setBegin(clone $day['day']);
-            $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+            $newTime = \DateTime::createFromInterface($day['day']);
+            $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
+            $tmp->setBegin($newTime);
             $this->timesheetService->prepareNewTimesheet($tmp);
             $empty->addTimesheet($tmp);
         }
@@ -165,8 +164,9 @@ final class QuickEntryController extends AbstractController
                 $model = $formModel->addRow($user);
                 foreach ($week as $dayId => $day) {
                     $tmp = $this->timesheetService->createNewTimesheet($user);
-                    $tmp->setBegin(clone $day['day']);
-                    $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $newTime = \DateTime::createFromInterface($day['day']);
+                    $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $tmp->setBegin($newTime);
                     $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 }
@@ -193,7 +193,7 @@ final class QuickEntryController extends AbstractController
                 foreach ($tmpModel->getTimesheets() as $timesheet) {
                     if ($timesheet->getId() !== null) {
                         $duration = $timesheet->getDuration(false);
-                        if ($duration === null || $timesheet->getEnd() === null) {
+                        if ($duration === null || $timesheet->isRunning()) {
                             $deleteTimesheets[] = $timesheet;
                         } else {
                             $saveTimesheets[] = $timesheet;

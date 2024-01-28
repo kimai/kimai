@@ -38,6 +38,18 @@
         <source>date</source>
         <target state="translated">التاريخ: إدخال واحد في اليوم (يستخدم تاريخ البدء)</target>
       </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">النشاط والمستخدِم</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">المشروع والمستخدِم</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">التاريخ والمستخدِم</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

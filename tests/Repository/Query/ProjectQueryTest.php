@@ -34,7 +34,7 @@ class ProjectQueryTest extends BaseQueryTest
         self::assertNull($sut->getGlobalActivities());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = new ProjectQuery();
 

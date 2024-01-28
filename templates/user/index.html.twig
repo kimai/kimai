@@ -33,6 +33,8 @@
         {{ widgets.badge_team_access(entry.teams) }}
     {% elseif column == 'active' %}
         {{ widgets.label_visible(entry.enabled) }}
+    {% elseif column == 'system_account' %}
+        {{ widgets.label_boolean(entry.systemAccount) }}
     {% elseif column == 'actions' %}
         {{ actions.user(entry, 'index') }}
     {% elseif column starts with 'mf_' %}

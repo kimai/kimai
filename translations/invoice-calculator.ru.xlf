@@ -50,6 +50,10 @@
         <source>date_user</source>
         <target state="translated">Дата и пользователь</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Выберите, по каким полям должны быть сгруппированы элементы счета-фактуры</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

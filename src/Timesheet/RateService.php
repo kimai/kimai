@@ -25,7 +25,7 @@ final class RateService implements RateServiceInterface
 
     public function calculate(Timesheet $record): Rate
     {
-        if (null === $record->getEnd()) {
+        if ($record->isRunning()) {
             return new Rate(0.00, 0.00);
         }
 

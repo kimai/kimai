@@ -19,8 +19,8 @@
         <target>Za ovo vrijeme već postoji unos.</target>
       </trans-unit>
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
-        <source>This period is locked, please choose a later date.</source>
-        <target>Ovo je razdoblje zaključano, odaberi kasniji datum.</target>
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="translated">Ovo je razdoblje zaključano. Odaberi jedan kasniji datum.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
@@ -128,7 +128,7 @@
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target state="translated">Možeš rezervirati najviše {{ value }} dana odjednom.</target>
+        <target state="translated">Možeš rezervirati najviše {{ value }} dana odjednom. Trenutačno si odabrao/la {{ selected }}.</target>
       </trans-unit>
       <trans-unit id="ZObikpA" resname="This absence type is not known.">
         <source>This absence type is not known.</source>
@@ -149,6 +149,10 @@
       <trans-unit id="N21br.P" resname="The chosen date is already locked.">
         <source>The chosen date is already locked.</source>
         <target state="translated">Odabrani datum je već zaključan.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">Razdoblje odsutnosti ne smije prijeći kraj godine.</target>
       </trans-unit>
     </body>
   </file>

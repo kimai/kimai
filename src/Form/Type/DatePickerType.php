@@ -39,13 +39,16 @@ class DatePickerType extends AbstractType
                     return null;
                 }
 
-                if ($reverseTransform instanceof \DateTimeInterface && $options['force_time']) {
+                if ($reverseTransform instanceof \DateTimeInterface && $options['force_time'] !== null) {
                     if ($options['force_time'] === 'start') {
                         $reverseTransform = \DateTime::createFromInterface($reverseTransform);
-                        $reverseTransform->setTime(0, 0, 0);
+                        $reverseTransform = $reverseTransform->setTime(0, 0, 0);
                     } elseif ($options['force_time'] === 'end') {
                         $reverseTransform = \DateTime::createFromInterface($reverseTransform);
-                        $reverseTransform->setTime(23, 59, 59);
+                        $reverseTransform = $reverseTransform->setTime(23, 59, 59);
+                    } elseif (\is_string($options['force_time'])) {
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
+                        $reverseTransform = $reverseTransform->modify($options['force_time']);
                     }
                 }
 
@@ -81,7 +84,7 @@ class DatePickerType extends AbstractType
             'format' => $formFormat,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
-            'force_time' => null,
+            'force_time' => null, // one of: string (start, end) or a string to as argument for DateTime->modify() or null
             'min_day' => null,
             'max_day' => null,
         ]);

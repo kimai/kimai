@@ -180,35 +180,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     {
         $qb = $this->createQueryBuilder('u');
 
-        $or = $qb->expr()->orX();
-
         if ($query->isShowVisible()) {
-            $or->add($qb->expr()->eq('u.enabled', ':enabled'));
+            $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
             $qb->setParameter('enabled', true, ParameterType::BOOLEAN);
-        }
-
-        $includeAlways = $query->getUsersAlwaysIncluded();
-        if (!empty($includeAlways)) {
-            $or->add($qb->expr()->in('u', ':users'));
-            $qb->setParameter('users', $includeAlways);
-        }
-
-        if ($or->count() > 0) {
-            $qb->andWhere($or);
-        }
-
-        if (\count($query->getUsersToIgnore()) > 0) {
-            $ids = array_map(function (User $user) {
-                return $user->getId();
-            }, $query->getUsersToIgnore());
-
-            $qb->andWhere($qb->expr()->notIn('u.id', $ids));
         }
 
         $qb->andWhere($qb->expr()->eq('u.systemAccount', ':system'));
         $qb->setParameter('system', false, Types::BOOLEAN);
-
-        $qb->orderBy('u.username', 'ASC');
+        $qb->addSelect("COALESCE(NULLIF(u.alias, ''), u.username) as HIDDEN userOrder");
+        $qb->orderBy('userOrder', 'ASC');
 
         $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
 
@@ -307,10 +287,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
-                case 'user':
-                    $qb->addSelect('COALESCE(u.alias, u.username) as HIDDEN userOrder');
-                    $orderBy = 'userOrder';
-                    break;
                 default:
                     $orderBy = 'u.' . $orderBy;
                     break;

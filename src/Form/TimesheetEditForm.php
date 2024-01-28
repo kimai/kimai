@@ -315,7 +315,7 @@ class TimesheetEditForm extends AbstractType
             function (FormEvent $event) {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
-                if (null === $timesheet || null === $timesheet->getEnd()) {
+                if (null === $timesheet || $timesheet->isRunning()) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }
@@ -340,7 +340,7 @@ class TimesheetEditForm extends AbstractType
 
                 // only apply the duration, if the end is not yet set
                 // without that check, the end would be overwritten and the real end time would be lost
-                if (($forceApply && $duration > 0) || ($duration > 0 && null === $timesheet->getEnd())) {
+                if (($forceApply && $duration > 0) || ($duration > 0 && $timesheet->isRunning())) {
                     $end = clone $timesheet->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
                     $timesheet->setEnd($end);

@@ -95,7 +95,12 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUserIdentifier()]);
+            $locale = $request->getLocale();
+            if ($this->getUser()->getId() === $profile->getId()) {
+                $locale = $profile->getPreferenceValue('language', $locale, false);
+            }
+
+            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUserIdentifier(), '_locale' => $locale]);
         }
 
         return $this->render('user/profile.html.twig', [

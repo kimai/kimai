@@ -32,9 +32,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ActionsController extends BaseApiController
 {
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private EventDispatcherInterface $dispatcher,
-        private TranslatorInterface $translator
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly TranslatorInterface $translator
     ) {
     }
 

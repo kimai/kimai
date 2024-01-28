@@ -27,7 +27,10 @@ final class YearByUserForm extends AbstractType
         ]);
 
         if ($options['include_user']) {
-            $builder->add('user', UserType::class, ['width' => false]);
+            $builder->add('user', UserType::class, [
+                'width' => false,
+                'include_current_user_if_system_account' => true
+            ]);
         }
     }
 

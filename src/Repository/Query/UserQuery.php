@@ -18,7 +18,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
-    public const USER_ORDER_ALLOWED = ['alias', 'user', 'username', 'title', 'email'];
+    public const USER_ORDER_ALLOWED = ['username', 'alias', 'title', 'email', 'systemAccount'];
 
     private ?string $role = null;
     /**
@@ -30,7 +30,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
     public function __construct()
     {
         $this->setDefaults([
-            'orderBy' => 'user',
+            'orderBy' => 'username',
             'searchTeams' => [],
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'systemAccount' => null,

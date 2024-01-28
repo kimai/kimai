@@ -17,13 +17,13 @@ use Symfony\Component\Mime\RawMessage;
 
 final class KimaiMailer implements MailerInterface
 {
-    public function __construct(private MailConfiguration $configuration, private MailerInterface $mailer)
+    public function __construct(private readonly MailConfiguration $configuration, private readonly MailerInterface $mailer)
     {
     }
 
     public function send(RawMessage $message, Envelope $envelope = null): void
     {
-        if ($message instanceof Email) {
+        if ($message instanceof Email && \count($message->getFrom()) === 0) {
             $message->from($this->configuration->getFromAddress());
         }
 

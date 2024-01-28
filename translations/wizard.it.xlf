@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="k1SzMuI" resname="wizard.done.description" approved="yes">
         <source>wizard.done.description</source>
-        <target state="final">Le impostazioni più importanti sono ora complete. Molte altre possono essere personalizzate in seguito nel proprio profilo utente.</target>
+        <target state="final">Le impostazioni essenziali sono state configurate. Esiste un'ampia gamma di opzioni personalizzabili che è possibile impostare successivamente nel proprio profilo utente.</target>
       </trans-unit>
       <trans-unit id="zlNbbUg" resname="wizard.password.description" approved="yes">
         <source>wizard.password.description</source>
-        <target state="final">Inserisci la tua nuova password, che verrà utilizzata da ora in poi per accedere.</target>
+        <target state="final">Inserisci la tua nuova password, che verrà usata da ora in poi per accedere.</target>
       </trans-unit>
       <trans-unit id="7Vipfs7" resname="wizard.password.title" approved="yes">
         <source>wizard.password.title</source>

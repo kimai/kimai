@@ -2263,26 +2263,6 @@ parameters:
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:assertHasMainHeader\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:assertHasNavigation\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:testActiveEntries\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:testNavigationMenus\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 11
             path: Controller/LayoutControllerTest.php
@@ -6913,34 +6893,9 @@ parameters:
             path: Repository/Query/ExportQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ProjectQueryTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ProjectQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TeamQueryTest\\:\\:assertUsers\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/TeamQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserFormTypeQueryTest\\:\\:testUsersAreAlwaysIncluded\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserFormTypeQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertSearchTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:testSystemAccount\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Result\\\\TimesheetResultStatisticTest\\:\\:testConstruct\\(\\) has no return type specified\\.$#"

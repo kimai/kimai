@@ -140,13 +140,13 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
 
         if (null !== $timesheetEnd) {
-            if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
+            if (null !== $projectEnd && $timesheetEnd > $projectEnd) {
                 $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_ALREADY_ENDED))
                     ->atPath($pathEnd)
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetBasic::PROJECT_ALREADY_ENDED)
                     ->addViolation();
-            } elseif (null !== $projectBegin && $timesheetEnd->getTimestamp() < $projectBegin->getTimestamp()) {
+            } elseif (null !== $projectBegin && $timesheetEnd < $projectBegin) {
                 $context->buildViolation(TimesheetBasic::getErrorName(TimesheetBasic::PROJECT_NOT_STARTED))
                     ->atPath($pathEnd)
                     ->setTranslationDomain('validators')

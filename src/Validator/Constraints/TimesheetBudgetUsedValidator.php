@@ -206,7 +206,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
     private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate): void
     {
         // using the locale of the assigned user is not the best solution, but allows to be independent of the request stack
-        $helper = new LocaleFormatter($this->localeService, $timesheet->getUser()->getLanguage());
+        $helper = new LocaleFormatter($this->localeService, $timesheet->getUser()?->getLocale() ?? 'en');
         $currency = $timesheet->getProject()->getCustomer()->getCurrency();
 
         $free = $budget - $rate;
