@@ -33,10 +33,10 @@ RUN rm -r tests
 
 
 # FPM base
-FROM tobybatch/kimai-base:fpm as fpm-base
+FROM kimai/kimai-base:fpm as fpm-base
 
 # Apache base
-FROM tobybatch/kimai-base:apache as apache-base
+FROM kimai/kimai-base:apache as apache-base
 COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 ###########################
