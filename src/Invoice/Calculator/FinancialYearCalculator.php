@@ -17,10 +17,13 @@ class FinancialYearCalculator
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
         if (!$financialYearStart = $this->systemConfiguration->getFinancialYearStart()){
-            $financialYearStart = date('Y') . '-01-01';
+            throw new \Exception('Financial year not set!');
         }
 
         $financialYearStart = \DateTime::createFromFormat('Y-m-d', $financialYearStart);
@@ -34,6 +37,9 @@ class FinancialYearCalculator
         return $dateTime->getTimestamp() <= $financialYearStart->getTimestamp();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getLongFinancialYear(\DateTimeInterface $dateTime): string
     {
         if ($this->isYearPrevious($dateTime)) {
@@ -43,6 +49,9 @@ class FinancialYearCalculator
         return $dateTime->format('Y');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getShortFinancialYear(\DateTimeInterface $dateTime): string
     {
         if ($this->isYearPrevious($dateTime)) {
@@ -52,6 +61,9 @@ class FinancialYearCalculator
         return $dateTime->format('y');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getFinancialYear(\DateTimeInterface $dateTime): string
     {
         if ($this->isYearPrevious($dateTime)) {
