@@ -12,6 +12,7 @@ namespace App\Tests\Invoice\NumberGenerator;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
+use App\Invoice\Calculator\FinancialYearCalculator;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
@@ -28,7 +29,13 @@ class ConfigurableNumberGeneratorTest extends TestCase
 {
     private function getSut(string $format, int $counter = 1): ConfigurableNumberGenerator
     {
-        $config = SystemConfigurationFactory::createStub(['invoice' => ['number_format' => $format]]);
+        $now = new \DateTime();
+        // Setting the Financial year to 1 April {current year} for testing both cases
+        $financialYearDate = $now->setDate($now->format('Y'), 4, 1);
+        $config = SystemConfigurationFactory::createStub([
+            'invoice' => ['number_format' => $format],
+            'company' => ['financial_year' => $financialYearDate]
+        ]);
 
         $repository = $this->createMock(InvoiceRepository::class);
         $repository
@@ -52,7 +59,9 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ->method('getCounterForDay')
             ->willReturn($counter);
 
-        return new ConfigurableNumberGenerator($repository, $config);
+        $calculator = new FinancialYearCalculator($config);
+
+        return new ConfigurableNumberGenerator($repository, $config, $calculator);
     }
 
     /**
@@ -146,9 +155,64 @@ class ConfigurableNumberGeneratorTest extends TestCase
     }
 
     /**
+     * @return array<int, array<int, string|\DateTime|int>>
+     */
+    public function getFinancialYearTestData(): array
+    {
+        $now = new \DateTime();
+
+        // year same as financial year
+        $invoiceDateSameYear = $now->setDate($now->format('Y'), 4, 1); // First date of the test FY date
+        // year different as financial year
+        $invoiceDateDifferentYear = $now->setDate(($now->format('Y') - 1), 3, 31); // Last date of the test FY date
+
+        return [
+            // simple tests for single calls
+            ['{FY}', $invoiceDateSameYear->format('Y'), $invoiceDateSameYear],
+            ['{fy}', $invoiceDateSameYear->format('y'), $invoiceDateSameYear],
+            [
+                '{fiscal}',
+                $invoiceDateSameYear->format('Y') . '-' . ($invoiceDateSameYear->format('y') + 1),
+                $invoiceDateSameYear
+            ],
+            // simple tests for single calls
+            ['{FY}', $invoiceDateDifferentYear->format('Y'), $invoiceDateDifferentYear],
+            ['{fy}', $invoiceDateDifferentYear->format('y'), $invoiceDateDifferentYear],
+            [
+                '{fiscal}',
+                $invoiceDateDifferentYear->format('Y') . '-' . ($invoiceDateDifferentYear->format('y') + 1),
+                $invoiceDateDifferentYear
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider getTestData
+     * @dataProvider getFinancialYearTestData
      */
     public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1): void
+    {
+        $customer = new Customer('Acme company');
+        $customer->setNumber('0815');
+
+        $user = $this->createMock(User::class);
+        $user->method('getId')->willReturn(13);
+        $user->method('getAccountNumber')->willReturn('0815');
+
+        $sut = $this->getSut($format, $counter);
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, new InvoiceTemplate(), new InvoiceQuery());
+        $model->setInvoiceDate($invoiceDate);
+        $model->setUser($user);
+        $sut->setModel($model);
+
+        $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
+        $this->assertEquals('default', $sut->getId());
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testGetInvoiceNumberForFinancialYear(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1): void
     {
         $customer = new Customer('Acme company');
         $customer->setNumber('0815');
