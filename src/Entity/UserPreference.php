@@ -28,7 +28,8 @@ class UserPreference
     public const HOURLY_RATE = 'hourly_rate';
     public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
-    public const LOCALE = 'language';
+    public const LANGUAGE = 'language';
+    public const LOCALE = 'locale';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
     public const WORK_HOURS_MONDAY = 'work_monday';

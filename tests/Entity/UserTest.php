@@ -43,6 +43,7 @@ class UserTest extends TestCase
         self::assertNull($user->getPasswordRequestedAt());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
+        self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
@@ -252,6 +253,18 @@ class UserTest extends TestCase
 
         $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());
+
+        self::assertEquals('en', $user->getLanguage());
+        self::assertEquals('en', $user->getLocale());
+        $user->setLanguage('it');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('it', $user->getLocale());
+        $user->setLocale('de');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('de', $user->getLocale());
+        $user->setPreferenceValue(UserPreference::LOCALE, 'hu');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('hu', $user->getLocale());
     }
 
     public function testDisplayName(): void
