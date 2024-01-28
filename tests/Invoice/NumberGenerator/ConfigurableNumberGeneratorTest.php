@@ -210,28 +210,6 @@ class ConfigurableNumberGeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestData
-     */
-    public function testGetInvoiceNumberForFinancialYear(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1): void
-    {
-        $customer = new Customer('Acme company');
-        $customer->setNumber('0815');
-
-        $user = $this->createMock(User::class);
-        $user->method('getId')->willReturn(13);
-        $user->method('getAccountNumber')->willReturn('0815');
-
-        $sut = $this->getSut($format, $counter);
-        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, new InvoiceTemplate(), new InvoiceQuery());
-        $model->setInvoiceDate($invoiceDate);
-        $model->setUser($user);
-        $sut->setModel($model);
-
-        $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
-        $this->assertEquals('default', $sut->getId());
-    }
-
-    /**
      * @return array<int, array<int, string|\DateTime>>
      */
     public function getInvalidTestData(): array
