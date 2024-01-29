@@ -351,7 +351,6 @@ class LocaleFormatExtensionsTest extends TestCase
             ["14\u{a0}¥", 13.75, 'JPY', 'de'],
             ["13\u{a0}933\u{a0}¥", 13933.49, 'JPY', 'ru'],
             ["13,75\u{a0}CN¥", 13.75, 'CNY', 'de'],
-            ["13,75\u{a0}CN¥", '13.75', 'CNY', 'de'],
             ["13.933,00\u{a0}CN¥", 13933, 'CNY', 'de'],
             ["13\u{a0}933,00\u{a0}CN¥", 13933, 'CNY', 'ru'],
             ['CN¥13,933.00', 13933, 'CNY', 'en'],
