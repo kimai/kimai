@@ -43,6 +43,7 @@ class UserTest extends TestCase
         self::assertNull($user->getPasswordRequestedAt());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
+        self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
@@ -288,13 +289,20 @@ class UserTest extends TestCase
 
     public function testGetLocale(): void
     {
-        $sut = new User();
-        self::assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
+        $user = new User();
+        self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
 
-        $language = new UserPreference(UserPreference::LOCALE, 'fr');
-        $sut->addPreference($language);
-
-        self::assertEquals('fr', $sut->getLocale());
+        self::assertEquals('en', $user->getLanguage());
+        self::assertEquals('en', $user->getLocale());
+        $user->setLanguage('it');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('it', $user->getLocale());
+        $user->setLocale('de');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('de', $user->getLocale());
+        $user->setPreferenceValue(UserPreference::LOCALE, 'hu');
+        self::assertEquals('it', $user->getLanguage());
+        self::assertEquals('hu', $user->getLocale());
     }
 
     public function testTeams(): void

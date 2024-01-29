@@ -9,30 +9,43 @@
 
 namespace App\Form\Type;
 
+use App\Configuration\LocaleService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Custom form field type to select the user language.
+ * Custom form field type to select the user language, which is used to translate the UI.
  * @extends AbstractType<string>
  */
 final class UserLanguageType extends AbstractType
 {
-    public function __construct(private UrlGeneratorInterface $router, private TranslatorInterface $translator)
+    public function __construct(private readonly LocaleService $localeService)
     {
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                if ($value === null) {
+                    return null;
+                }
+
+                return $this->localeService->getNearestTranslationLocale($value);
+            },
+            function ($value) {
+                return $value;
+            }
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $route = $this->router->generate('help_locales');
-        $message = $this->translator->trans('user.language.help');
-        $moreLink = $this->translator->trans('help_locales');
-
         $resolver->setDefaults([
-            'help_html' => true,
-            'help' => sprintf('%2$s <a href="%1$s" target="help_locales">%3$s</a>', $route, $message, $moreLink)
+            'label' => 'language',
+            'translated_only' => true,
         ]);
     }
 

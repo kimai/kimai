@@ -24,11 +24,11 @@ final class FormFormatConverter
      * This defines the mapping between ICU date format and PHP Date format.
      *
      * @see https://www.php.net/manual/en/datetime.format.php
-     * @var array
+     * @var array<string, string>
      */
     private static array $formatConvertRules = [
         // Litepicker interprets a year like 22 as 1922 instead of 2022
-        // so we have to make sure that it is always a4-digit year
+        // so we have to make sure that it is always a 4-digit year
         "'h'" => "\h",  // special format for fr_CA which includes 'h' as character
         'yy' => 'yyyy',
         'y' => 'yyyy',
@@ -47,10 +47,6 @@ final class FormFormatConverter
 
     /**
      * This works with ICU and DateTime format.
-     *
-     * @param string $format
-     * @param bool $html
-     * @return string
      */
     public function convertToPattern(string $format, bool $html = true): string
     {
@@ -83,8 +79,8 @@ final class FormFormatConverter
         $pattern = str_replace('g', self::PATTERN_HOUR_SINGLE, $pattern);
         $pattern = str_replace('i', self::PATTERN_MINUTES, $pattern);
         $pattern = str_replace('mm', self::PATTERN_MINUTES, $pattern);
-        $pattern = str_replace('A', '(AM|PM){1}', $pattern);
-        $pattern = str_replace('a', '(AM|PM){1}', $pattern);
+        $pattern = str_replace('A', '(AM|PM|am|pm){1}', $pattern);
+        $pattern = str_replace('a', '(AM|PM|am|pm){1}', $pattern);
         $pattern = str_replace('*****', 'h', $pattern);
 
         if (!$html) {

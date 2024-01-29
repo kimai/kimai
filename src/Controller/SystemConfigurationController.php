@@ -22,13 +22,13 @@ use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
-use App\Form\Type\LanguageType;
 use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\ProjectTypePatternType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
+use App\Form\Type\UserLanguageType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -504,7 +504,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.language'))
                         ->setLabel('language')
-                        ->setType(LanguageType::class)
+                        ->setType(UserLanguageType::class)
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')

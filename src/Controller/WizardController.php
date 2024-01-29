@@ -11,9 +11,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\UserPasswordType;
 use App\User\UserService;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -44,14 +45,16 @@ final class WizardController extends AbstractController
 
         if ($wizard === 'profile') {
             $data = [
-                UserPreference::LOCALE => $request->getLocale(),
+                UserPreference::LANGUAGE => $user->getPreferenceValue(UserPreference::LANGUAGE, $request->getLocale(), false),
+                UserPreference::LOCALE => $user->getPreferenceValue(UserPreference::LOCALE, $request->getLocale(), false),
                 UserPreference::TIMEZONE => $user->getTimezone(),
                 UserPreference::SKIN => $user->getSkin(),
                 'reload' => '0',
             ];
 
             $form = $this->createFormBuilder($data)
-                ->add(UserPreference::LOCALE, LanguageType::class)
+                ->add(UserPreference::LANGUAGE, UserLanguageType::class)
+                ->add(UserPreference::LOCALE, UserLocaleType::class, ['help' => null])
                 ->add(UserPreference::TIMEZONE, TimezoneType::class)
                 ->add(UserPreference::SKIN, SkinType::class)
                 ->add('reload', HiddenType::class)
@@ -69,7 +72,8 @@ final class WizardController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var array<string, string> $data */
                 $data = $form->getData();
-                $user->setLanguage($data[UserPreference::LOCALE]);
+                $user->setLanguage($data[UserPreference::LANGUAGE]);
+                $user->setLocale($data[UserPreference::LOCALE]);
                 $user->setTimezone($data[UserPreference::TIMEZONE]);
                 $user->setPreferenceValue(UserPreference::SKIN, $data[UserPreference::SKIN]);
                 $user->setWizardAsSeen('profile');

@@ -44,11 +44,7 @@ abstract class AbstractRendererTest extends KernelTestCase
     protected function getAbstractRenderer(string $classname)
     {
         $languages = [
-            'en' => [
-                'date' => 'Y.m.d',
-                'duration' => '%h:%m',
-                'time' => 'H:i',
-            ]
+            'en' => LocaleService::DEFAULT_SETTINGS
         ];
 
         $user = new User();

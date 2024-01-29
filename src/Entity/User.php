@@ -318,7 +318,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * Read-only list of of all visible user preferences.
+     * Read-only list of all visible user preferences.
      *
      * @internal only for API usage
      * @return UserPreference[]
@@ -334,6 +334,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $skip = [
             UserPreference::TIMEZONE,
             UserPreference::LOCALE,
+            UserPreference::LANGUAGE,
             UserPreference::SKIN,
             'calendar_initial_view',
             'login_initial_view',
@@ -406,13 +407,22 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return null;
     }
 
+    /**
+     * The locale used for formatting number, money, dates and times
+     */
     #[Serializer\VirtualProperty]
-    #[Serializer\SerializedName('language')]
+    #[Serializer\SerializedName('locale')]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
-        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
+        // uses language as fallback, because the language was here before
+        return (string) $this->getPreferenceValue(UserPreference::LOCALE, $this->getLanguage(), false);
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->setPreferenceValue(UserPreference::LOCALE, $locale ?? User::DEFAULT_LANGUAGE);
     }
 
     #[Serializer\VirtualProperty]
@@ -424,17 +434,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
+    /**
+     * The locale used for translations
+     */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('language')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getLanguage(): string
     {
-        return $this->getLocale();
+        return (string) $this->getPreferenceValue(UserPreference::LANGUAGE, User::DEFAULT_LANGUAGE, false);
     }
 
     public function setLanguage(?string $language): void
     {
-        if ($language === null) {
-            $language = User::DEFAULT_LANGUAGE;
-        }
-        $this->setPreferenceValue(UserPreference::LOCALE, $language);
+        $this->setPreferenceValue(UserPreference::LANGUAGE, $language ?? User::DEFAULT_LANGUAGE);
     }
 
     public function isFirstDayOfWeekSunday(): bool
