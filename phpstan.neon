@@ -493,11 +493,6 @@ parameters:
             path: src/Command/RegenerateLocalesCommand.php
 
         -
-            message: "#^Property App\\\\Command\\\\RegenerateLocalesCommand\\:\\:\\$rtlLocales type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Command/RegenerateLocalesCommand.php
-
-        -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
             count: 4
             path: src/Command/ReloadCommand.php
@@ -651,26 +646,6 @@ parameters:
             message: "#^Method App\\\\Configuration\\\\LdapConfiguration\\:\\:getUserParameters\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Configuration/LdapConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\LocaleService\\:\\:__construct\\(\\) has parameter \\$languageSettings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Configuration/LocaleService.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\LocaleService\\:\\:getDateFormat\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Configuration/LocaleService.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\LocaleService\\:\\:getTimeFormat\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Configuration/LocaleService.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\LocaleService\\:\\:isRightToLeft\\(\\) should return bool but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Configuration/LocaleService.php
 
         -
             message: "#^Method App\\\\Configuration\\\\SamlConfiguration\\:\\:getAttributeMapping\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1604,11 +1579,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getLocale\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -5406,11 +5376,6 @@ parameters:
             message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/FileHelper.php
-
-        -
-            message: "#^Property App\\\\Utils\\\\FormFormatConverter\\:\\:\\$formatConvertRules type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/FormFormatConverter.php
 
         -
             message: "#^Property App\\\\Utils\\\\JavascriptFormatConverter\\:\\:\\$formatConvertRules type has no value type specified in iterable type array\\.$#"
