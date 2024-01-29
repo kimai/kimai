@@ -30,7 +30,10 @@ class ProjectHelperTest extends TestCase
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->method('trans')->willReturn('dating');
 
-        return new ProjectHelper($config, $localeService, $translator);
+        $helper = new ProjectHelper($config, $localeService, $translator);
+        $helper->setLocale('en_US');
+
+        return $helper;
     }
 
     public function testInvalidPattern(): void

@@ -30,6 +30,7 @@ final class ProjectHelper
     private ?string $pattern = null;
     private bool $showStart = false;
     private bool $showEnd = false;
+    private ?string $locale = null;
 
     public function __construct(
         private readonly SystemConfiguration $configuration,
@@ -37,6 +38,16 @@ final class ProjectHelper
         private readonly TranslatorInterface $translator
     )
     {
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale ?? \Locale::getDefault();
     }
 
     public function getChoicePattern(): string
@@ -66,7 +77,7 @@ final class ProjectHelper
         if ($this->dateFormatter === null) {
             $this->showStart = stripos($name, self::PATTERN_START) !== false;
             $this->showEnd = stripos($name, self::PATTERN_END) !== false;
-            $locale = \Locale::getDefault();
+            $locale = $this->getLocale();
             $this->dateFormatter = new \IntlDateFormatter(
                 $locale,
                 \IntlDateFormatter::MEDIUM,
