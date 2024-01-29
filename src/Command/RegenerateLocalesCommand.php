@@ -9,7 +9,7 @@
 
 namespace App\Command;
 
-use App\DependencyInjection\AppExtension;
+use App\Configuration\LocaleService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,11 +29,16 @@ use Symfony\Component\Intl\Locales;
 #[AsCommand(name: 'kimai:reset:locales')]
 final class RegenerateLocalesCommand extends Command
 {
-    private string $defaultDate = 'dd.MM.y';
-    private string $defaultTime = 'HH:mm';
+    /**
+     * @var string[]
+     */
     private array $rtlLocales = ['ar', 'fa', 'he'];
-    // new locales were added here, to shrink the list a little bit
-    // this can be removed in the future, if there will ever be the need for it
+    /**
+     * new locales were added here, to shrink the list a little bit
+     * this can be removed in the future, if there will ever be the need for it
+     *
+     * @var string[]
+     */
     private array $noRegionCode = ['ar', 'id', 'pa', 'sl'];
 
     public function __construct(
@@ -59,9 +64,14 @@ final class RegenerateLocalesCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         // find all available locales from the translation filenames
-        $translationFilenames = $this->projectDirectory . DIRECTORY_SEPARATOR . 'translations/*.xlf';
+        $translationFilenames = glob($this->projectDirectory . DIRECTORY_SEPARATOR . 'translations/*.xlf');
+        if ($translationFilenames === false) {
+            $io->error('Failed reading translation files');
+
+            return Command::FAILURE;
+        }
         $firstLevelLocales = [];
-        foreach (glob($translationFilenames) as $file) {
+        foreach ($translationFilenames as $file) {
             $firstLevelLocales[] = explode('.', basename($file))[1];
         }
         $firstLevelLocales = array_unique($firstLevelLocales);
@@ -97,7 +107,7 @@ final class RegenerateLocalesCommand extends Command
                 continue;
             }
 
-            $appLocales[$locale] = AppExtension::LOCALE_DEFAULT_SETTINGS;
+            $appLocales[$locale] = LocaleService::DEFAULT_SETTINGS;
         }
 
         // make sure all keys are registered for every locale
