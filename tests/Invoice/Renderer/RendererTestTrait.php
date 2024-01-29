@@ -66,6 +66,7 @@ trait RendererTestTrait
                 'date' => 'yy.MM.dd',
                 'time' => 'H:i',
                 'rtl' => false,
+                'translation' => true,
             ]
         ];
 

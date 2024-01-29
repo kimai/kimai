@@ -1568,47 +1568,7 @@ parameters:
             path: Configuration/LdapConfigurationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:getDefaultSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:getSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:getSut\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testGetAllLocales\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testGetDateFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testGetDateTimeFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testGetDurationFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testGetTimeFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Configuration/LocaleServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\LocaleServiceTest\\:\\:testInvalidLocaleWithGivenLocale\\(\\) has no return type specified\\.$#"
             count: 1
             path: Configuration/LocaleServiceTest.php
 
@@ -4526,11 +4486,6 @@ parameters:
             message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, array\\<int\\|string, int\\|string\\>\\|int\\|string\\>\\|string given\\.$#"
             count: 1
             path: EventSubscriber/ProfileSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\RedirectToLocaleSubscriberTest\\:\\:testConstruct\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/RedirectToLocaleSubscriberTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\UserDetailsSubscriberTest\\:\\:testGetSubscribedEvents\\(\\) has no return type specified\\.$#"
@@ -8158,52 +8113,7 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getSut\\(\\) has parameter \\$dateSettings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getSut\\(\\) has parameter \\$locale with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getTimesheet\\(\\) has parameter \\$seconds with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testAmount\\(\\) has parameter \\$amount with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testAmount\\(\\) has parameter \\$locale with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testAmount\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney62_1\\(\\) has parameter \\$amount with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney62_1\\(\\) has parameter \\$currency with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney62_1\\(\\) has parameter \\$locale with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney62_1\\(\\) has parameter \\$result with no type specified\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
@@ -8230,16 +8140,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array<class-string, string>|\\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
             count: 5
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$languageSettings of class App\\\\Configuration\\\\LocaleService constructor expects array, array\\|string given\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$locale of method App\\\\Twig\\\\LocaleFormatExtensions\\:\\:setLocale\\(\\) expects string, array\\|string given\\.$#"
-            count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
