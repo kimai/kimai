@@ -1554,11 +1554,15 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target>Unterstützte Sprachen mit Formatierungsregeln</target>
+        <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale">
+        <source>locale</source>
+        <target state="translated">Format für Zeit, Datum und Geld</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Diese Einstellung ist neben der Übersetzung der Oberfläche ebenso zuständig für die Zeit-, Datums-, und Währungsformate.</target>
+        <target state="translated">Diese Einstellung ist für die Übersetzung der Software zuständig</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

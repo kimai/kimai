@@ -1554,11 +1554,15 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target>Supported languages with formatting rules</target>
+        <target>Here are examples of formatting rules for the supported languages</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale">
+        <source>locale</source>
+        <target state="translated">Format for time, date and currency</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target>In addition to translating the interface, this setting is also responsible for the time, date and currency formats.</target>
+        <target>This setting is responsible for the translation of the software</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
