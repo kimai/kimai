@@ -12,10 +12,9 @@ namespace App\Form\Helper;
 use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Project;
-use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class ProjectHelper implements LocaleAwareInterface
+final class ProjectHelper
 {
     public const PATTERN_NAME = '{name}';
     public const PATTERN_COMMENT = '{comment}';
@@ -31,20 +30,13 @@ final class ProjectHelper implements LocaleAwareInterface
     private ?string $pattern = null;
     private bool $showStart = false;
     private bool $showEnd = false;
-    private ?string $locale = null;
 
-    public function __construct(private SystemConfiguration $configuration, private LocaleService $localeService, private TranslatorInterface $translator)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        private readonly LocaleService $localeService,
+        private readonly TranslatorInterface $translator
+    )
     {
-    }
-
-    public function getLocale(): string
-    {
-        return $this->locale ?? \Locale::getDefault();
-    }
-
-    public function setLocale(string $locale): void
-    {
-        $this->locale = $locale;
     }
 
     public function getChoicePattern(): string
@@ -74,7 +66,7 @@ final class ProjectHelper implements LocaleAwareInterface
         if ($this->dateFormatter === null) {
             $this->showStart = stripos($name, self::PATTERN_START) !== false;
             $this->showEnd = stripos($name, self::PATTERN_END) !== false;
-            $locale = $this->getLocale();
+            $locale = \Locale::getDefault();
             $this->dateFormatter = new \IntlDateFormatter(
                 $locale,
                 \IntlDateFormatter::MEDIUM,
