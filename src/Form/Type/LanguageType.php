@@ -30,9 +30,10 @@ final class LanguageType extends AbstractType
         $resolver->setDefault('choices', function (Options $options) {
             $choices = [];
 
-            $locales = $this->localeService->getAllLocales();
             if ($options['translated_only'] === true) {
                 $locales = $this->localeService->getTranslatedLocales();
+            } else {
+                $locales = $this->localeService->getAllLocales();
             }
 
             foreach ($locales as $key) {

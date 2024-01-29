@@ -40,14 +40,14 @@ final class ProjectHelper
     {
     }
 
-    public function setLocale(?string $locale): void
-    {
-        $this->locale = $locale;
-    }
-
     public function getLocale(): string
     {
         return $this->locale ?? \Locale::getDefault();
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 
     public function getChoicePattern(): string

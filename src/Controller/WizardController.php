@@ -78,7 +78,6 @@ final class WizardController extends AbstractController
                 $user->setPreferenceValue(UserPreference::SKIN, $data[UserPreference::SKIN]);
                 $user->setWizardAsSeen('profile');
                 $userService->updateUser($user);
-                //dd($user->getPreferenceValue(UserPreference::LANGUAGE), $user->getPreferenceValue(UserPreference::LOCALE));
 
                 if ($data['reload'] === '1') {
                     return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $user->getLanguage()]);
