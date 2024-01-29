@@ -70,7 +70,7 @@ final class UserLoginLinkCommand extends Command
         }
 
         $request = new Request();
-        $request->setLocale($user->getLocale());
+        $request->setLocale($user->getLanguage());
         $this->requestStack->push($request);
 
         $loginLinkDetails = $this->loginLink->createLoginLink($user, $request);
