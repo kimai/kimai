@@ -71,26 +71,31 @@ class AppExtensionTest extends TestCase
                     'date' => 'M/d/yy',
                     'time' => 'h:mm a',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'de' => [
                     'date' => 'dd.MM.yy',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
                     'time' => 'H:mm',
                     'rtl' => true,
+                    'translation' => true,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
             ],
             'kimai.invoice.documents' => [

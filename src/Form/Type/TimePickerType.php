@@ -16,6 +16,8 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TimePickerType extends AbstractType
@@ -38,6 +40,11 @@ final class TimePickerType extends AbstractType
             'view_timezone' => date_default_timezone_get(),
             'block_prefix' => 'time'
         ]);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['format'] = $options['format'];
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

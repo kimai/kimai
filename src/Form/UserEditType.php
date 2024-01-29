@@ -15,6 +15,7 @@ use App\Form\Type\AvatarType;
 use App\Form\Type\MailType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
@@ -77,6 +78,10 @@ class UserEditType extends AbstractType
 
         if ($options['include_preferences']) {
             $builder->add('language', UserLanguageType::class, [
+                'required' => true,
+            ]);
+
+            $builder->add('locale', UserLocaleType::class, [
                 'required' => true,
             ]);
 

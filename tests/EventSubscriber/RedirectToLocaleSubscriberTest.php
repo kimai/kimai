@@ -22,10 +22,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RedirectToLocaleSubscriberTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
-        $sut = new RedirectToLocaleSubscriber($urlGenerator, new LocaleService(['de', 'en']));
+        $sut = new RedirectToLocaleSubscriber($urlGenerator, new LocaleService(['de' => LocaleService::DEFAULT_SETTINGS, 'en' => LocaleService::DEFAULT_SETTINGS]));
 
         self::assertEquals([KernelEvents::REQUEST => ['onKernelRequest']], RedirectToLocaleSubscriber::getSubscribedEvents());
 
