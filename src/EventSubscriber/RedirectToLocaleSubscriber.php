@@ -19,10 +19,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * When visiting the homepage, this listener redirects the user to the most
  * appropriate localized version according to the browser settings.
- *
- * See http://symfony.com/doc/current/components/http_kernel/introduction.html#the-kernel-request-event
- *
- * @author Oleg Voronkovich <oleg-voronkovich@yandex.ru>
  */
 final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
@@ -41,7 +37,7 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        // Ignore sub-requests and all URLs but the homepage
+        // only trigger on the homepage
         if ('/' !== $request->getPathInfo()) {
             return;
         }
@@ -53,7 +49,7 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $allLanguages = $this->localeService->getAllLocales();
+        $allLanguages = $this->localeService->getTranslatedLocales();
 
         // Add the default locale at the first position of the array, because getPreferredLanguage()
         // returns the first element when no appropriate language is found
