@@ -51,9 +51,4 @@ final class Version20230327143628 extends AbstractMigration
         $workingTimes->removeForeignKey('FK_F95E49334EA3CB3D');
         $schema->dropTable('kimai2_working_times');
     }
-
-    public function isTransactional(): bool
-    {
-        return false;
-    }
 }
