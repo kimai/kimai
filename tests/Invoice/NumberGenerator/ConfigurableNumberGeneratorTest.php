@@ -34,7 +34,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $financialYearDate = $now->setDate($now->format('Y'), 4, 1);
         $config = SystemConfigurationFactory::createStub([
             'invoice' => ['number_format' => $format],
-            'company' => ['financial_year' => $financialYearDate]
+            'company' => ['financial_year' => $financialYearDate->format('Y-m-d')]
         ]);
 
         $repository = $this->createMock(InvoiceRepository::class);
