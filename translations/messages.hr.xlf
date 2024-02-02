@@ -52,11 +52,11 @@
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
-        <target>Traži</target>
+        <target state="translated">Pretraga</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
-        <target>Traži pojam</target>
+        <target state="translated">Pojam pretrage</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -1026,7 +1026,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="needs-translation">Stvori nov vremenski zapis</target>
+        <target state="translated">Pokreni evidentiranje vremena</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1445,11 +1445,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Podržani jezici s pravilima formatiranja</target>
+        <target state="translated">Ovdje se nalaze primjeri s pravilima formatiranja za podržane jezike</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Osim prevođenja sučelja, ova je postavka također odgovorna za formate vremena, datuma i valute.</target>
+        <target state="translated">Ova je postavka odgovorna za prijevod softvera</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1492,8 +1492,8 @@
         <target state="translated">Evaluacija</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
-        <source>work_times</source>
-        <target state="translated">Radno vrijeme</target>
+        <source>Working times</source>
+        <target state="translated">Radna vremena</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1758,6 +1758,26 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Generator broja računa</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target state="translated">Prekini evidentiranje vremena</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Dodaj unos u popis skupnog aktualiziranja</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Odaberi sve unose za popis skupnog aktualiziranja</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">Filtar pretrage</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale">
+        <source>locale</source>
+        <target state="translated">Format za vrijeme, datum i valutu</target>
       </trans-unit>
     </body>
   </file>

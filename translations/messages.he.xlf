@@ -820,7 +820,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="needs-translation">יצירת רשומת זמן חדשה</target>
+        <target state="translated">התחלת מעקב שעות</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -1376,11 +1376,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">שפות נתמכות עם כללי עיצוב</target>
+        <target state="needs-translation">שפות נתמכות עם כללי עיצוב</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">בנוסף לתרגום המנשק, הגדרה זו אחראית גם על תבניות השעה, התאריך והמטבע.</target>
+        <target state="needs-translation">בנוסף לתרגום המנשק, הגדרה זו אחראית גם על תבניות השעה, התאריך והמטבע.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1697,6 +1697,22 @@
       <trans-unit id="uqv2Lrv" resname="user_identifier.help">
         <source>user_identifier.help</source>
         <target state="translated">מזהה המשתמש הייחודי שמשמש לאימות ובאריזות לייצוא</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">מסנן חיפוש</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target state="translated">עצירת מעקב שעות</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target state="translated">הוספת רשימה לרשימת עדכון מרוכזת</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">בחירת כל הרשומות לרשימת עדכון מרוכז</target>
       </trans-unit>
     </body>
   </file>

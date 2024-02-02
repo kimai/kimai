@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target>Feuille d'heures</target>
+        <target state="translated">Filtrer les feuille de temps</target>
       </trans-unit>
       <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
-        <target>Créer une fiche de temps</target>
+        <target state="translated">Créer une feuille de temps</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
@@ -117,6 +117,14 @@
       <trans-unit id="QCf1FUG" resname="reload">
         <source>reload</source>
         <target state="translated">Recharger</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import">
+        <source>import</source>
+        <target state="translated">Importation</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation">
+        <source>Synchronization</source>
+        <target state="translated">Synchronisation</target>
       </trans-unit>
     </body>
   </file>

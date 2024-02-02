@@ -1441,7 +1441,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Idiomas admitidos con reglas de formato</target>
+        <target state="needs-translation">Idiomas admitidos con reglas de formato</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
@@ -1453,7 +1453,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Además de traducir la interfaz, esta configuración también es responsable de los formatos de hora, fecha y moneda.</target>
+        <target state="needs-translation">Además de traducir la interfaz, esta configuración también es responsable de los formatos de hora, fecha y moneda.</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>

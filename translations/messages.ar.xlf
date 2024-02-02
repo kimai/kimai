@@ -1355,11 +1355,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">اللغات المدعومة بقواعد التنسيق</target>
+        <target state="needs-translation">اللغات المدعومة بقواعد التنسيق</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">بالإضافة إلى ترجمة الواجهة ، فإن هذا الإعداد مسؤول أيضا عن صِيَغ الوقت والتاريخ والعملة.</target>
+        <target state="needs-translation">بالإضافة إلى ترجمة الواجهة ، فإن هذا الإعداد مسؤول أيضا عن صِيَغ الوقت والتاريخ والعملة.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1528,6 +1528,34 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>مولد رقم فاتورة</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted">
+        <source>deleted</source>
+        <target state="translated">محذوف</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">مرشح البحث</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target state="translated">يُستخدم هذا النص في مستندات الفواتير ويمكن استخدامه على سبيل المثال لتدوين شروط التسليم الإضافية.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target state="translated">إذا كان الإعداد متوقفًا ، فلن يتم عرض الكائن في مربعات القائمة المنسدلة وقائمة العرض.</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target state="translated">حصر الرؤية في الفرق المحددة.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target state="translated">يحل هذا النص محل اسم الكائن، مما يسمح بتسميات أكثر تفصيلاً لعناصر الفاتورة.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target state="translated">في حالة إيقاف تشغيل الإعداد، سيتم وضع علامة "غير قابل للفوترة" على جميع المدخلات الزمنية المسجلة في المستقبل.</target>
       </trans-unit>
     </body>
   </file>

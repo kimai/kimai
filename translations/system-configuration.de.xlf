@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
-        <target>Überbuchung hinterlegter Budgets erlauben</target>
+        <target state="translated">Überbuchung von hinterlegten Budgets erlauben</target>
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
         <source>timesheet.rules.allow_overlapping_records</source>

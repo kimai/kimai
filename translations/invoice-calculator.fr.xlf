@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="needs-translation">Utilisateur</target>
+        <target state="translated">Utilisateur</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

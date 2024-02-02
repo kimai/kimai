@@ -6,6 +6,10 @@
         <source>wizard.intro.title</source>
         <target state="translated">Selamat Datang di Kimai</target>
       </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+        <source>wizard.intro.description</source>
+        <target state="translated">Wizard ini akan membantu Anda menyesuaikan Kimai dengan kebutuhan Anda.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

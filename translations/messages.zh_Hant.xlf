@@ -896,7 +896,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">除了介面的翻譯外，該設定還影響時間、日期、貨幣格式。</target>
+        <target state="needs-translation">除了介面的翻譯外，該設定還影響時間、日期、貨幣格式。</target>
       </trans-unit>
       <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>
@@ -1040,7 +1040,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">支援的語言與格式化規則</target>
+        <target state="needs-translation">支援的語言與格式化規則</target>
       </trans-unit>
       <trans-unit id="_WlU8Fp" resname="sickness">
         <source>sickness</source>

@@ -886,7 +886,7 @@
       </trans-unit>
       <trans-unit id="vKY0tof" resname="export.date_copyright" approved="yes">
         <source>export.date_copyright</source>
-        <target state="final">Creata il %date% con %kimai%</target>
+        <target state="final">Creato il %date% con %kimai%</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
@@ -1220,11 +1220,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales" approved="yes">
         <source>help_locales</source>
-        <target state="final">Lingue supportate con regole di formattazione</target>
+        <target state="final">Di seguito sono riportati esempi di regole di formattazione per le lingue supportate</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help" approved="yes">
         <source>user.language.help</source>
-        <target state="final">Oltre a tradurre l'interfaccia, questa impostazione è responsabile anche dei formati di ora, data e valuta.</target>
+        <target state="final">Questa impostazione è responsabile della traduzione del software</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24" approved="yes">
         <source>hour_24</source>
@@ -1753,6 +1753,10 @@
       <trans-unit id="f1Cgptu" resname="batch_table_checkbox" approved="yes">
         <source>batch_table_checkbox</source>
         <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" approved="yes">
+        <source>locale</source>
+        <target state="final">Formato per ora, data e valuta</target>
       </trans-unit>
     </body>
   </file>

@@ -42,6 +42,26 @@
         <source>reset.intro</source>
         <target>… ne sjećaš se više kako glasi lozinka? Ne brini: Kimai će ti pomoći stvoriti novu:</target>
       </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nova odsutnost | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Stvorena je nova odsutnost za %absence_user%.
+
+%absence_type% – %absence_comment%
+
+%absence_list%
+
+Pregledaj ih na: %approval_url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

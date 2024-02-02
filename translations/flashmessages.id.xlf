@@ -6,6 +6,10 @@
         <source>warning</source>
         <target state="translated">Peringatan</target>
       </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+        <source>timesheet.stop.success</source>
+        <target state="translated">Perekaman waktu dihentikan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
