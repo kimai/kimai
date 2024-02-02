@@ -23,7 +23,7 @@ class FinancialYearCalculator
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
         if (!$financialYearStart = $this->systemConfiguration->getFinancialYearStart()){
-            throw new \Exception('Financial year not set!');
+            throw new FinancialYearNotSetException('Financial year not set!');
         }
 
         $financialYearStart = \DateTime::createFromFormat('Y-m-d', $financialYearStart);
