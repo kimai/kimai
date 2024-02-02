@@ -34,7 +34,7 @@ class FinancialYearCalculator
             $financialYearStart->format('d')
         );
 
-        return $dateTime->getTimestamp() <= $financialYearStart->getTimestamp();
+        return $dateTime->getTimestamp() < $financialYearStart->getTimestamp();
     }
 
     /**
