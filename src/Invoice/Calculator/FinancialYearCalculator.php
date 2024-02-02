@@ -18,7 +18,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws \Exception
+     * @throws FinancialYearNotSetException
      */
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
@@ -38,7 +38,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws \Exception
+     * @throws FinancialYearNotSetException
      */
     public function getLongFinancialYear(\DateTimeInterface $dateTime): string
     {
@@ -50,7 +50,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws \Exception
+     * @throws FinancialYearNotSetException
      */
     public function getShortFinancialYear(\DateTimeInterface $dateTime): string
     {
@@ -62,7 +62,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws \Exception
+     * @throws FinancialYearNotSetException
      */
     public function getFinancialYear(\DateTimeInterface $dateTime): string
     {
