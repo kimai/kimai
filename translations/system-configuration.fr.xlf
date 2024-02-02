@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target>Feuille d'heures</target>
+        <target state="translated">Suivi du temps</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
-        <target>Autoriser le formatage markdown dans les descriptions et commentaires</target>
+        <target state="translated">Autoriser le formatage Markdown dans les descriptions et les commentaires</target>
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
@@ -20,11 +20,11 @@
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>
-        <target>[Par défaut] les horaires de début et de fin peuvent êtres modifiés</target>
+        <target state="translated">[Défaut] les temps de début et de fin peuvent êtres modifiés</target>
       </trans-unit>
       <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
         <source>timesheet.mode_punch</source>
-        <target>[Temps-réel] l'utilisateur peut démarrer et arrêter des enregistrements, mais ne peut pas modifier les heures ou la durée</target>
+        <target state="translated">[Temps-réel] l'utilisateur peut démarrer et arrêter les enregistrements, mais ne peut pas modifier les heures ou la durée</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
@@ -168,7 +168,7 @@
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
         <source>timesheet.rules.allow_overlapping_records</source>
-        <target>Autoriser le chevauchement des heures</target>
+        <target state="translated">Autoriser le chevauchement des entrées d'heures</target>
       </trans-unit>
       <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
         <source>timesheet.mode_duration_fixed_begin</source>
@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
-        <target>Autoriser la surréservation des budgets stockés</target>
+        <target state="translated">Autoriser le dépassement des budgets configurés</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>help.theme.color_choices</source>
@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
-        <target>Permettre l'utilisation d'URL pour les images d'avatars</target>
+        <target state="translated">Permettre l'usage des URL pour les images d'avatar</target>
       </trans-unit>
       <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities">
         <source>quick_entry.recent_activities</source>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
         <source>timesheet.rules.allow_zero_duration</source>
-        <target>Autoriser les entrées de temps avec une durée vide</target>
+        <target state="translated">Autoriser la saisie d'activités avec une durée vide</target>
       </trans-unit>
       <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
         <source>quick_entry.recent_activity_weeks</source>

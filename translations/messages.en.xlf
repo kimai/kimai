@@ -639,8 +639,8 @@
         <target state="translated">Review</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
-        <source>work_times</source>
-        <target>Working times</target>
+        <source>Working times</source>
+        <target state="translated">Working times</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
         <source>Account working times</source>
@@ -916,8 +916,8 @@
         <target>Financial year</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>Working time</target>
+        <source>Working time</source>
+        <target state="needs-translation">Working time</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>

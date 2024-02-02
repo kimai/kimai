@@ -6,6 +6,10 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target state="translated">Setidaknya satu pemimpin tim harus ditugaskan ke tim.</target>
       </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Kata sandi yang dimasukkan tidak cocok.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

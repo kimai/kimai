@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="email.en.xlf">
     <body>
@@ -41,6 +41,26 @@
       <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
         <target>… Então você esqueceu a sua senha? Não se preocupe: O Kimai vai ajudá-lo a criar uma nova:</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nova ausência | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Foi criada uma nova ausência para %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Revise-os em: %approval_url%</target>
       </trans-unit>
     </body>
   </file>

@@ -42,6 +42,28 @@
         <source>reset.intro</source>
         <target>Elfelejtette a jelszavát? Ne izguljon, a Kimai segít létrehozni egy újat:</target>
       </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="needs-translation">
+Új távollét jött létre %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Kérjük, tekintse át a következő címen: %approval_url%
+        </target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Új távollét | %absence_user% | %absence_type%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

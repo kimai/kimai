@@ -1445,11 +1445,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Stödda språk med formateringsregler</target>
+        <target state="needs-translation">Stödda språk med formateringsregler</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Förutom att översätta gränssnittet är denna inställning också ansvarig för tid, datum- och valutaformat.</target>
+        <target state="needs-translation">Förutom att översätta gränssnittet är denna inställning också ansvarig för tid, datum- och valutaformat.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

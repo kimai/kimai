@@ -1285,11 +1285,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Podporované jazyky s formátováním</target>
+        <target state="needs-translation">Podporované jazyky s formátováním</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Kromě překladu rozhraní toto nastavení ovlivňuje také čas, datum a měny.</target>
+        <target state="needs-translation">Kromě překladu rozhraní toto nastavení ovlivňuje také čas, datum a měny.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

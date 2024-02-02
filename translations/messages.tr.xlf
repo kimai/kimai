@@ -782,7 +782,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="needs-translation">Yeni kayıt oluştur</target>
+        <target state="translated">Zaman izlemeyi başlat</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1445,11 +1445,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Biçimlendirme kurallarına sahip desteklenen diller</target>
+        <target state="translated">Desteklenen diller için biçimlendirme kuralları örnekleri</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Bu ayar, arayüzü çevirmenin yanı sıra saat, tarih ve para birimi biçimlerinden de sorumludur.</target>
+        <target state="translated">Bu ayar, yazılımın çevirisinden sorumludur</target>
       </trans-unit>
       <trans-unit id="NOEx3FF" resname="invoice_date.help">
         <source>invoice_date.help</source>
@@ -1690,6 +1690,94 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target state="translated">Faturano-Oluşturucu</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Kategori</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Kategoriler</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">İçe aktarıcı</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Özel alanlar</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Denetim günlükleri</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Ebeveynlik izni</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Genel bakış</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Harcamalar</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Çeviriler</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Özel içerik</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">Arama süzgeci</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target state="translated">Zaman izlemeyi durdur</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Toplu güncelleme listesine kayıt ekle</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Toplu güncelleme listesi için tüm kayıtları seç</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Devamsızlık takvimi</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child">
+        <source>sickness_child</source>
+        <target state="translated">Çocuğun hastalanması</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">Günler</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Ücretsiz tatiller</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Çeviri</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">Kullanıcı kimliği</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">Benzersiz kullanıcı tanımlayıcısı kimlik doğrulama için ve dışa aktarmalarda kullanılır</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" approved="no">
+        <source>locale</source>
+        <target state="translated">Saat, tarih ve para birimi için biçim</target>
       </trans-unit>
     </body>
   </file>
