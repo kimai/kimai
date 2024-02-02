@@ -9,10 +9,16 @@
 
 namespace App\Doctrine;
 
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Tools\DsnParser;
 
 final class DsnParserFactory
 {
+    /**
+     * Copied here from Doctrine v3 DriverManager, as they are going to be removed in Doctrine 4.
+     *
+     * @var array<string, string>
+     */
     private static array $driverSchemeAliases = [
         'db2' => 'ibm_db2',
         'mssql' => 'pdo_sqlsrv',
@@ -30,6 +36,9 @@ final class DsnParserFactory
         return new DsnParser(self::$driverSchemeAliases);
     }
 
+    /**
+     * @return array<string, array<mixed>|bool|AbstractPlatform|int|string>
+     */
     public function parse(
         #[\SensitiveParameter]
         string $dsn
