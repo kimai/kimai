@@ -35,9 +35,4 @@ final class Version20230606125948 extends AbstractMigration
         $tags = $schema->getTable('kimai2_tags');
         $tags->dropColumn('visible');
     }
-
-    public function isTransactional(): bool
-    {
-        return false;
-    }
 }
