@@ -52,7 +52,7 @@ export default class KimaiAlert extends KimaiPlugin {
         }
 
         const html = `
-            <div class="modal modal-blur fade" id="` + id + `" tabindex="-1" role="dialog">
+            <div class="modal" id="` + id + `" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-status bg-` + this._mapClass('danger') + `"></div>
@@ -128,7 +128,7 @@ export default class KimaiAlert extends KimaiPlugin {
         }
 
         const html = `
-            <div class="modal modal-blur fade" tabindex="-1" role="dialog">
+            <div class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-status bg-` + this._mapClass(type) + `"></div>
@@ -227,7 +227,7 @@ export default class KimaiAlert extends KimaiPlugin {
 
         const css = this._mapClass('info');
         const html = `
-            <div class="modal modal-blur fade" tabindex="-1" role="dialog" data-bs-backdrop="static">
+            <div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-status bg-` + css + `"></div>

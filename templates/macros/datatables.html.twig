@@ -97,7 +97,7 @@
 
 {% macro data_table_column_modal(name, columns) %}
 {% set visibility = initialize_datatable(app.user, app.session, name, columns) %}
-<div class="modal modal-blur fade" data-bs-backdrop="static" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
+<div class="modal" data-bs-backdrop="static" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

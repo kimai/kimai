@@ -24,71 +24,32 @@ use Faker\Factory;
  */
 final class TimesheetFixtures implements TestFixture
 {
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var int
-     */
-    private $running = 0;
+    private int $running = 0;
     /**
      * @var Activity[]
      */
-    private $activities = [];
+    private array $activities = [];
     /**
      * @var Project[]
      */
-    private $projects = [];
-    /**
-     * @var \DateTime
-     */
-    private $startDate;
-    /**
-     * @var \DateTime
-     */
-    private $fixedStartDate;
-    /**
-     * @var bool
-     */
-    private $fixedRate = false;
+    private array $projects = [];
+    private ?\DateTime $startDate = null;
+    private ?\DateTime $fixedStartDate = null;
+    private bool $fixedRate = false;
     /**
      * @var callable
      */
     private $callback;
+    private bool $hourlyRate = false;
+    private bool $allowEmptyDescriptions = true;
+    private bool $exported = false;
     /**
-     * @var bool
+     * @var array<string|Tag>
      */
-    private $hourlyRate = false;
-    /**
-     * @var bool
-     */
-    private $allowEmptyDescriptions = true;
-    /**
-     * @var bool
-     */
-    private $exported = false;
-    /**
-     * @var bool
-     */
-    private $useTags = false;
-    /**
-     * @var array
-     */
-    private $tags = [];
+    private array $tags = [];
 
-    public function __construct(?User $user = null, ?int $amount = null)
+    public function __construct(private ?User $user = null, private int $amount = 0)
     {
-        if ($user !== null) {
-            $this->setUser($user);
-        }
-        if ($amount !== null) {
-            $this->setAmount($amount);
-        }
     }
 
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
@@ -183,13 +144,6 @@ final class TimesheetFixtures implements TestFixture
         return $this;
     }
 
-    public function setUseTags(bool $useTags): TimesheetFixtures
-    {
-        $this->useTags = $useTags;
-
-        return $this;
-    }
-
     /**
      * @param string[] $tags
      * @return TimesheetFixtures
@@ -234,14 +188,19 @@ final class TimesheetFixtures implements TestFixture
 
         $faker = Factory::create();
 
-        $users = [$this->user];
-        if ($this->user === null) {
+        $users = [];
+
+        if ($this->user !== null) {
+            $users[] = $this->user;
+        } else {
             $users = $this->getAllUsers($manager);
         }
 
         $tags = $this->getTagObjectList();
         foreach ($tags as $tag) {
-            $manager->persist($tag);
+            if ($tag->getId() === null) {
+                $manager->persist($tag);
+            }
         }
         $manager->flush();
 
@@ -310,21 +269,25 @@ final class TimesheetFixtures implements TestFixture
         return $created;
     }
 
+    /**
+     * @return array<Tag>
+     */
     private function getTagObjectList(): array
     {
-        if (true === $this->useTags) {
-            $all = [];
-            foreach ($this->tags as $tagName) {
-                $tagObject = new Tag();
-                $tagObject->setName($tagName);
-
-                $all[] = $tagObject;
+        $all = [];
+        foreach ($this->tags as $tagName) {
+            if ($tagName instanceof Tag) {
+                $all[] = $tagName;
+                continue;
             }
 
-            return $all;
+            $tagObject = new Tag();
+            $tagObject->setName($tagName);
+
+            $all[] = $tagObject;
         }
 
-        return [];
+        return $all;
     }
 
     private function getDateTime(int $i): \DateTime
@@ -433,9 +396,7 @@ final class TimesheetFixtures implements TestFixture
             $entry->setHourlyRate($hourlyRate);
         }
 
-        if (null !== $this->exported) {
-            $entry->setExported($this->exported);
-        }
+        $entry->setExported($this->exported);
 
         if ($setEndDate) {
             $entry->setEnd($end);

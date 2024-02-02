@@ -1,6 +1,8 @@
 {
-  "build/app.css": "/build/app.0ecb28c1.css",
-  "build/app.js": "/build/app.adf0b03a.js",
+  "build/app.css": "/build/app.4ccab775.css",
+  "build/app.js": "/build/app.8d1b738d.js",
+  "build/app-rtl.css": "/build/app-rtl.2e426047.css",
+  "build/app-rtl.js": "/build/app-rtl.3d445498.js",
   "build/export-pdf.css": "/build/export-pdf.d8a6c23b.css",
   "build/export-pdf.js": "/build/export-pdf.d367a32e.js",
   "build/invoice.css": "/build/invoice.5bea118e.css",
@@ -12,5 +14,11 @@
   "build/calendar.js": "/build/calendar.a1cbcd7b.js",
   "build/dashboard.css": "/build/dashboard.18f5a8b7.css",
   "build/dashboard.js": "/build/dashboard.6774a712.js",
-  "build/runtime.js": "/build/runtime.f0079159.js"
+  "build/runtime.js": "/build/runtime.f0079159.js",
+  "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.bb5be820.ttf",
+  "build/fonts/fa-brands-400.ttf": "/build/fonts/fa-brands-400.4c05cd9b.ttf",
+  "build/fonts/fa-solid-900.woff2": "/build/fonts/fa-solid-900.4cbe3db2.woff2",
+  "build/fonts/fa-brands-400.woff2": "/build/fonts/fa-brands-400.498f4d22.woff2",
+  "build/fonts/fa-regular-400.ttf": "/build/fonts/fa-regular-400.96e19e1a.ttf",
+  "build/fonts/fa-regular-400.woff2": "/build/fonts/fa-regular-400.83824cd5.woff2"
 }

@@ -83,6 +83,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             // if there are more than X entries, the other ones are hidden and can only be found
             // by typing some characters to trigger the internal option search
             maxOptions: 500,
+            sortField:[{field: '$order'}, {field: '$score'}],
         };
 
         let render = {

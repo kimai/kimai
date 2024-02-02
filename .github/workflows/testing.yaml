@@ -39,6 +39,9 @@ jobs:
                 env:
                     fail-fast: true
 
+            -   name: Determine software versions
+                run: mysql --version && php --version
+
             -   name: Determine composer cache directory
                 id: composer-cache
                 run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
@@ -79,14 +82,24 @@ jobs:
             -   name: Run quick unit-tests
                 run: composer tests-unit
                 env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
-                    APP_ENV: dev
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
+                    APP_ENV: test
                     MAILER_URL: null://localhost
 
+            -   name: Full test-suite
+                if: matrix.php != '8.2'
+                run: vendor/bin/phpunit tests/
+                env:
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
+                    APP_ENV: test
+                    MAILER_URL: null://localhost
+                    TEST_WITH_BUNDLES: 1
+
             -   name: Full test-suite with coverage
+                if: matrix.php == '8.2'
                 run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
                     APP_ENV: dev
                     MAILER_URL: null://localhost
                     TEST_WITH_BUNDLES: 1
@@ -106,7 +119,7 @@ jobs:
                     bin/console doctrine:migrations:migrate -n
                     bin/console doctrine:migrations:migrate first -n
                 env:
-                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
+                    DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
                     APP_ENV: dev
                     MAILER_URL: null://localhost
 

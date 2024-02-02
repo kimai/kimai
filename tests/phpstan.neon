@@ -3208,22 +3208,12 @@ parameters:
             path: DataFixtures/TimesheetFixtures.php
 
         -
-            message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:getTagObjectList\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\|null given\\.$#"
             count: 1
             path: DataFixtures/TimesheetFixtures.php
 
         -
             message: "#^Parameter \\#4 \\$description of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:\\$tags type has no value type specified in iterable type array\\.$#"
             count: 1
             path: DataFixtures/TimesheetFixtures.php
 
