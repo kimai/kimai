@@ -17,7 +17,7 @@ doctrine:
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
+                    collation: utf8mb4_unicode_ci
                 schema_manager_factory: doctrine.dbal.default_schema_manager_factory
 
         types:
