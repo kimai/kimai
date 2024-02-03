@@ -209,8 +209,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
+     * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
-    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'totp_secret', type: 'string', length: 255, nullable: true)]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;

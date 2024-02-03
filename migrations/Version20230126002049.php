@@ -42,7 +42,7 @@ final class Version20230126002049 extends AbstractMigration
 
         $users = $schema->getTable('kimai2_users');
         if (!$users->hasColumn('totp_secret')) {
-            $users->addColumn('totp_secret', 'string', ['notnull' => false, 'default' => null]);
+            $users->addColumn('totp_secret', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
             $users->addColumn('totp_enabled', 'boolean', ['notnull' => true, 'default' => false]);
         }
         if (!$users->hasColumn('system_account')) {
