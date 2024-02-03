@@ -92,4 +92,9 @@ class FinancialYearCalculator
     {
         return $this->financialYearStart;
     }
+
+    public function getFinancialYearEnd(): \DateTimeInterface|bool
+    {
+        return $this->financialYearEnd;
+    }
 }
