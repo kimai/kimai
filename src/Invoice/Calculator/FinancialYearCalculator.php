@@ -88,13 +88,27 @@ class FinancialYearCalculator
         return $dateTime->format('Y') . '-' . ($dateTime->format('y') + 1);
     }
 
+    /**
+     * @throws FinancialYearNotSetException
+     */
     public function getFinancialYearStart(): \DateTimeInterface|bool
     {
+        if (!$this->financialYearStart) {
+            throw new FinancialYearNotSetException('Financial year not set!');
+        };
+
         return $this->financialYearStart;
     }
 
+    /**
+     * @throws FinancialYearNotSetException
+     */
     public function getFinancialYearEnd(): \DateTimeInterface|bool
     {
+        if (!$this->financialYearEnd) {
+            throw new FinancialYearNotSetException('Financial year not set!');
+        };
+
         return $this->financialYearEnd;
     }
 }
