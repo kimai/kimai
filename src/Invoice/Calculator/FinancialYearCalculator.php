@@ -13,8 +13,23 @@ use App\Configuration\SystemConfiguration;
 
 class FinancialYearCalculator
 {
+    private \DateTimeInterface|null $financialYearStart = null;
+    private \DateTimeInterface|null $financialYearEnd = null;
+
     public function __construct(private SystemConfiguration $systemConfiguration)
     {
+        if (!$financialYearStart = $this->systemConfiguration->getFinancialYearStart()){
+            return;
+        }
+        $this->financialYearStart = \DateTime::createFromFormat('Y-m-d', $financialYearStart);
+        $this->setFinancialYearEndFromStartDate($this->financialYearStart);
+    }
+
+    private function setFinancialYearEndFromStartDate(\DateTimeInterface $financialYearStart): void
+    {
+        $this->financialYearEnd = $financialYearStart
+            ->add(\DateInterval::createFromDateString('1 year'))
+            ->sub(\DateInterval::createFromDateString('1 day'));
     }
 
     /**
@@ -22,11 +37,11 @@ class FinancialYearCalculator
      */
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
-        if (!$financialYearStart = $this->systemConfiguration->getFinancialYearStart()){
+        if (!$this->financialYearStart){
             throw new FinancialYearNotSetException('Financial year not set!');
         }
 
-        $financialYearStart = \DateTime::createFromFormat('Y-m-d', $financialYearStart);
+        $financialYearStart = clone $this->financialYearStart;
 
         $financialYearStart->setDate(
             $dateTime->format('Y'),
@@ -71,5 +86,10 @@ class FinancialYearCalculator
         }
 
         return $dateTime->format('Y') . '-' . ($dateTime->format('y') + 1);
+    }
+
+    public function getFinancialYearStart(): \DateTimeInterface|bool
+    {
+        return $this->financialYearStart;
     }
 }
