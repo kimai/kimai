@@ -60,7 +60,7 @@ class MonthTest extends AbstractTimesheetTest
     /**
      * @dataProvider getTestData
      */
-    public function testAllowedMonths($init, $month, $number)
+    public function testAllowedMonths($init, $month, $number): void
     {
         $sut = new Month($init);
         self::assertEquals($month, $sut->getMonth());
@@ -79,7 +79,7 @@ class MonthTest extends AbstractTimesheetTest
     /**
      * @dataProvider getInvalidTestData
      */
-    public function testInvalidMonths($month)
+    public function testInvalidMonths($month): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid month given. Expected 1-12, received "' . ((int) $month) . '".');

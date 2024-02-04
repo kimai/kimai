@@ -50,7 +50,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getValidData
      * @param string $input
      */
-    public function testConstraintWithValidData($input)
+    public function testConstraintWithValidData($input): void
     {
         $constraint = new DateTimeFormat();
         $this->validator->validate($input, $constraint);
@@ -72,7 +72,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getInvalidData
      * @param mixed $input
      */
-    public function testValidationError($input)
+    public function testValidationError($input): void
     {
         $constraint = new DateTimeFormat();
 

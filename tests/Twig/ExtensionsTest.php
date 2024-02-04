@@ -152,7 +152,7 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * @dataProvider getMultilineTestData
      */
-    public function testMultilineIndent($indent, $string, $expected)
+    public function testMultilineIndent($indent, $string, $expected): void
     {
         $sut = $this->getSut();
         self::assertEquals(implode("\n", $expected), $sut->multilineIndent($string, $indent));
@@ -214,7 +214,7 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * @dataProvider getTestDataReplaceNewline
      */
-    public function testReplaceNewline(string $replacer, $input, $expected)
+    public function testReplaceNewline(string $replacer, $input, $expected): void
     {
         $sut = $this->getSut();
 

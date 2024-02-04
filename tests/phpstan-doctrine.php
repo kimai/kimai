@@ -20,4 +20,4 @@ $debug = (bool) ($_SERVER['APP_DEBUG'] ?? (in_array($env, ['dev', 'test'])));
 $kernel = new Kernel($env, $debug);
 $kernel->boot();
 
-return $kernel->getContainer()->get('doctrine')->getManager();
+return $kernel->getContainer()->get('doctrine')->getManager(); // @phpstan-ignore-line

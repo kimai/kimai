@@ -82,7 +82,7 @@ class DateTimeFactoryTest extends TestCase
     /**
      * @dataProvider getStartOfWeekData
      */
-    public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day)
+    public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -119,7 +119,7 @@ class DateTimeFactoryTest extends TestCase
     /**
      * @dataProvider getEndOfWeekData
      */
-    public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day)
+    public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 

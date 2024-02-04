@@ -104,7 +104,7 @@ class ProfileSubscriberTest extends TestCase
     /**
      * @dataProvider getInvalidCookies
      */
-    public function testOnLoginSuccessWithInvalidProfile(string $cookieValue)
+    public function testOnLoginSuccessWithInvalidProfile(string $cookieValue): void
     {
         $manager = new ProfileManager();
         $sut = new ProfileSubscriber($manager);

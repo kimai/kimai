@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTimesheetCountedStatisticTest extends TestCase
 {
-    protected function assertDefaultValues(TimesheetCountedStatistic $sut)
+    public function assertDefaultValues(TimesheetCountedStatistic $sut): void
     {
         self::assertSame(0.0, $sut->getRate());
         self::assertSame(0.0, $sut->getRate());
@@ -55,7 +55,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         }
     }
 
-    protected function assertSetter(TimesheetCountedStatistic $sut)
+    public function assertSetter(TimesheetCountedStatistic $sut): void
     {
         $sut->setRate(23.97);
         $sut->setDuration(21);
@@ -102,7 +102,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertSame(987.12, $sut->getInternalRateBillable());
     }
 
-    protected function assertJsonSerialize(TimesheetCountedStatistic $sut)
+    public function assertJsonSerialize(TimesheetCountedStatistic $sut): void
     {
         self::assertInstanceOf(\JsonSerializable::class, $sut);
         $sut->setRate(23.97);

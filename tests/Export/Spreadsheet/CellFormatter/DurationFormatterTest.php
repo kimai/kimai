@@ -47,12 +47,12 @@ class DurationFormatterTest extends AbstractFormatterTest
         $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 
-    protected function assertNullValue(Cell $cell)
+    public function assertNullValue(Cell $cell): void
     {
         self::assertEquals('=0/86400', $cell->getValue());
     }
 
-    protected function assertCellStyle(Style $style)
+    public function assertCellStyle(Style $style): void
     {
         self::assertEquals(DurationFormatter::DURATION_FORMAT, $style->getNumberFormat()->getFormatCode());
     }

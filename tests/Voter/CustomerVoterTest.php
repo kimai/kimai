@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class CustomerVoterTest extends AbstractVoterTest
 {
-    protected function assertVote(User $user, $subject, $attribute, $result)
+    public function assertVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(CustomerVoter::class);

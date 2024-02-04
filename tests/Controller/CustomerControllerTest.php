@@ -513,7 +513,7 @@ class CustomerControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getValidationTestData
      */
-    public function testValidationForCreateAction(array $formData, array $validationFields)
+    public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
             User::ROLE_ADMIN,

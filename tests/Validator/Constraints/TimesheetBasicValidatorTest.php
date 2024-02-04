@@ -172,7 +172,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getProjectStartEndTestData
      */
-    public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations)
+    public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime('-10 hour'));

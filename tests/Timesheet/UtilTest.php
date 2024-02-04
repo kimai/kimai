@@ -20,7 +20,7 @@ class UtilTest extends TestCase
     /**
      * @dataProvider getRateCalculationData
      */
-    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate)
+    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate): void
     {
         $this->assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
     }

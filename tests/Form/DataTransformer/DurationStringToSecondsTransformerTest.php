@@ -49,7 +49,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getValidTestDataTransform
      */
-    public function testTransform($expected, $transform)
+    public function testTransform($expected, $transform): void
     {
         $this->assertEquals($expected, $this->sut->transform($transform));
     }
@@ -57,7 +57,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getInvalidTestDataTransform
      */
-    public function testInvalidTransformThrowsException($transform)
+    public function testInvalidTransformThrowsException($transform): void
     {
         $this->expectException(TransformationFailedException::class);
 
@@ -89,7 +89,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getValidTestDataReverseTransform
      */
-    public function testReverseTransform($transform, $expected)
+    public function testReverseTransform($transform, $expected): void
     {
         $this->assertEquals($expected, $this->sut->reverseTransform($transform));
     }
@@ -97,7 +97,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getInvalidTestDataReverseTransform
      */
-    public function testInvalidReverseTransformThrowsException($transform)
+    public function testInvalidReverseTransformThrowsException($transform): void
     {
         $this->expectException(TransformationFailedException::class);
 

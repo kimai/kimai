@@ -49,7 +49,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTestData
      */
-    public function testUserPeriodReport(int $user, string $dataType, string $title)
+    public function testUserPeriodReport(int $user, string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);

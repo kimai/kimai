@@ -46,7 +46,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getValidTimes
      */
-    public function testValidationSucceeds(?string $value)
+    public function testValidationSucceeds(?string $value): void
     {
         $this->validator->validate($value, new TimeFormat());
         $this->assertNoViolation();
@@ -69,7 +69,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getInvalidTimes
      */
-    public function testValidationProblem(?string $value)
+    public function testValidationProblem(?string $value): void
     {
         $this->validator->validate($value, new TimeFormat());
 

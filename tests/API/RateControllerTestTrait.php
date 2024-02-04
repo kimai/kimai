@@ -209,7 +209,7 @@ trait RateControllerTestTrait
         $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
-    protected function assertRateStructure(array $result, $user = null)
+    public function assertRateStructure(array $result, $user = null): void
     {
         $expectedKeys = [
             'id', 'rate', 'internalRate', 'isFixed', 'user'

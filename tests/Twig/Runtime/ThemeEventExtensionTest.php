@@ -145,7 +145,7 @@ class ThemeEventExtensionTest extends TestCase
     /**
      * @dataProvider getProgressbarColors
      */
-    public function testProgressbarClass(string $expected, int $percent, ?bool $reverseColors = false)
+    public function testProgressbarClass(string $expected, int $percent, ?bool $reverseColors = false): void
     {
         $sut = $this->getSut(false);
         self::assertEquals($expected, $sut->getProgressbarClass($percent, $reverseColors));

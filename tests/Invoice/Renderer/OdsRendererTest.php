@@ -45,7 +45,7 @@ class OdsRendererTest extends TestCase
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         /** @var OdsRenderer $sut */
         $sut = $this->getAbstractRenderer(OdsRenderer::class);

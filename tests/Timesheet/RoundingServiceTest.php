@@ -32,7 +32,7 @@ class RoundingServiceTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate($rules, $start, $end, $expectedStart, $expectedEnd, $expectedDuration)
+    public function testCalculate($rules, $start, $end, $expectedStart, $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);

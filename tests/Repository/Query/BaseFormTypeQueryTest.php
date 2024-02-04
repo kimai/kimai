@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BaseFormTypeQueryTest extends TestCase
 {
-    protected function assertBaseQuery(BaseFormTypeQuery $sut)
+    public function assertBaseQuery(BaseFormTypeQuery $sut): void
     {
         $this->assertActivity($sut);
         $this->assertProject($sut);
@@ -31,7 +31,7 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $this->assertUser($sut);
     }
 
-    protected function assertUser(BaseFormTypeQuery $sut)
+    public function assertUser(BaseFormTypeQuery $sut): void
     {
         self::assertEmpty($sut->getUser());
         $user = new User();
@@ -39,7 +39,7 @@ abstract class BaseFormTypeQueryTest extends TestCase
         self::assertSame($user, $sut->getUser());
     }
 
-    protected function assertTeams(BaseFormTypeQuery $sut)
+    public function assertTeams(BaseFormTypeQuery $sut): void
     {
         self::assertEmpty($sut->getTeams());
 
@@ -57,7 +57,7 @@ abstract class BaseFormTypeQueryTest extends TestCase
         self::assertCount(2, $sut->getTeams());
     }
 
-    protected function assertActivity(BaseFormTypeQuery $sut)
+    public function assertActivity(BaseFormTypeQuery $sut): void
     {
         $expected = new Activity();
         $expected->setName('foo-bar');
@@ -79,7 +79,7 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $this->assertFalse($sut->hasActivities());
     }
 
-    protected function assertCustomer(BaseFormTypeQuery $sut)
+    public function assertCustomer(BaseFormTypeQuery $sut): void
     {
         $expected = new Customer('foo-bar');
 
@@ -99,7 +99,7 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $this->assertFalse($sut->hasCustomers());
     }
 
-    protected function assertProject(BaseFormTypeQuery $sut)
+    public function assertProject(BaseFormTypeQuery $sut): void
     {
         $expected = new Project();
         $expected->setName('foo-bar');

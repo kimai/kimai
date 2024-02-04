@@ -144,7 +144,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation)
+    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation): void
     {
         $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
@@ -193,7 +193,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getConfigTestData
      */
-    public function testLockdownConfig(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation)
+    public function testLockdownConfig(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation): void
     {
         $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, $lockdownBegin, $lockdownEnd, $grace);
         $this->validator->initialize($this->context);

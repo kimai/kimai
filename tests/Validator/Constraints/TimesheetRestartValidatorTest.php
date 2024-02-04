@@ -63,7 +63,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testRestartDisallowed(bool $allowed, ?string $property, string $trackingMode)
+    public function testRestartDisallowed(bool $allowed, ?string $property, string $trackingMode): void
     {
         $this->validator = $this->createMyValidator($allowed, $trackingMode);
         $this->validator->initialize($this->context);

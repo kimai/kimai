@@ -18,7 +18,7 @@ use App\Timesheet\TrackingMode\DefaultMode;
  */
 class DefaultModeTest extends AbstractTrackingModeTest
 {
-    protected function assertDefaultBegin(Timesheet $timesheet)
+    public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNotNull($timesheet->getBegin());
         self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());

@@ -40,7 +40,7 @@ class CsvRendererTest extends AbstractRendererTest
     /**
      * @dataProvider getTestModel
      */
-    public function testRender($totalDuration, $totalRate, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
+    public function testRender($totalDuration, $totalRate, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 

@@ -193,7 +193,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertAddRate($client, 123.45, 1);
     }
 
-    protected function assertAddRate(HttpKernelBrowser $client, $rate, $projectId)
+    public function assertAddRate(HttpKernelBrowser $client, $rate, $projectId): void
     {
         $this->assertAccessIsGranted($client, '/admin/project/' . $projectId . '/rate');
         $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
@@ -581,7 +581,7 @@ class ProjectControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getValidationTestData
      */
-    public function testValidationForCreateAction(array $formData, array $validationFields)
+    public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
             User::ROLE_ADMIN,

@@ -217,7 +217,7 @@ class RateServiceTest extends TestCase
      *
      * @dataProvider getRuleDefinitions
      */
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
+    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
     {
         $end = $this->createDateTime('12:00:00');
         $start = clone $end;

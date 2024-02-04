@@ -51,7 +51,7 @@ class StringHelperTest extends TestCase
     /**
      * @dataProvider getDdeAttackStrings
      */
-    public function testSanitizeDde(string $input)
+    public function testSanitizeDde(string $input): void
     {
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
     }
@@ -65,7 +65,7 @@ class StringHelperTest extends TestCase
     /**
      * @dataProvider getNonDdeAttackStrings
      */
-    public function testSanitizeDdeWithCorrectStrings(string $input)
+    public function testSanitizeDdeWithCorrectStrings(string $input): void
     {
         self::assertEquals($input, StringHelper::sanitizeDDE($input));
     }

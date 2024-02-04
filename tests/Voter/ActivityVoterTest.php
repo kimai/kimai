@@ -26,12 +26,12 @@ class ActivityVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $this->assertVote($user, $subject, $attribute, $result);
     }
 
-    protected function assertVote(User $user, $subject, $attribute, $result)
+    public function assertVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ActivityVoter::class);

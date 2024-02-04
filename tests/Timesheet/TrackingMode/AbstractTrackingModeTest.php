@@ -33,7 +33,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         return $timesheet;
     }
 
-    protected function assertDefaultBegin(Timesheet $timesheet)
+    public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNull($timesheet->getBegin());
     }

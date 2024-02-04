@@ -29,7 +29,7 @@ class DurationTypeTest extends TypeTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testSubmitValidData($value, $expected)
+    public function testSubmitValidData($value, $expected): void
     {
         $data = ['duration' => $value];
         $model = new TypeTestModel(['duration' => 3600]);

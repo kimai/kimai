@@ -53,7 +53,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getValidRoles
      * @param string $role
      */
-    public function testConstraintWithValidRole($role)
+    public function testConstraintWithValidRole($role): void
     {
         $constraint = new Role();
         $this->validator->validate($role, $constraint);
@@ -86,7 +86,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getInvalidRoles
      * @param mixed $role
      */
-    public function testValidationError($role)
+    public function testValidationError($role): void
     {
         $constraint = new Role([
             'message' => 'myMessage',

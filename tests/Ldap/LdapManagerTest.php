@@ -391,7 +391,7 @@ class LdapManagerTest extends TestCase
     /**
      * @dataProvider getValidConfigsTestData
      */
-    public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery)
+    public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery): void
     {
         $expected = [
             0 => ['dn' => 'blub', 'uid' => ['blub']],

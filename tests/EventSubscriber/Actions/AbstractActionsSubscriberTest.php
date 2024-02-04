@@ -29,7 +29,7 @@ abstract class AbstractActionsSubscriberTest extends TestCase
         return new $className($auth, $router);
     }
 
-    protected function assertGetSubscribedEvent(string $className, string $name)
+    public function assertGetSubscribedEvent(string $className, string $name): void
     {
         $this->assertTrue(method_exists($className, 'getSubscribedEvents'));
         $events = $className::getSubscribedEvents();

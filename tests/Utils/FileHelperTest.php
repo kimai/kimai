@@ -35,7 +35,7 @@ class FileHelperTest extends TestCase
     /**
      * @dataProvider getFileTestData
      */
-    public function testEnsureMaxLength(string $expected, string $original)
+    public function testEnsureMaxLength(string $expected, string $original): void
     {
         self::assertEquals($expected, FileHelper::convertToAsciiFilename($original));
     }

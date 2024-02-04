@@ -34,7 +34,7 @@ class DurationCalculatorTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate($rules, $start, $end, $expectedDuration)
+    public function testCalculate($rules, $start, $end, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);

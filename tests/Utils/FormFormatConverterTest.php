@@ -33,7 +33,7 @@ class FormFormatConverterTest extends TestCase
     /**
      * @dataProvider getProblemPattern
      */
-    public function testProblemPattern($format, $example)
+    public function testProblemPattern($format, $example): void
     {
         $sut = new FormFormatConverter();
         $format = $sut->convert($format);

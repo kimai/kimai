@@ -50,7 +50,7 @@ class DateFormatterTest extends AbstractFormatterTest
         $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 
-    protected function assertCellStyle(Style $style)
+    public function assertCellStyle(Style $style): void
     {
         self::assertEquals(NumberFormat::FORMAT_DATE_YYYYMMDD2, $style->getNumberFormat()->getFormatCode());
     }

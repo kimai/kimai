@@ -26,7 +26,7 @@ class ConfigurationTest extends TestCase
         ];
     }
 
-    protected function assertConfig($inputConfig, $expectedConfig)
+    public function assertConfig($inputConfig, $expectedConfig): void
     {
         $finalizedConfig = $this->getCompiledConfig($inputConfig);
 

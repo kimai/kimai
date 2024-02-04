@@ -213,7 +213,7 @@ class RateCalculatorTest extends TestCase
      *
      * @dataProvider getRuleDefinitions
      */
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
+    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
     {
         $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $start = clone $end;

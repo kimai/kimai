@@ -73,7 +73,7 @@ class PaginationExtensionTest extends TestCase
         $this->assertPaginationHtml($result);
     }
 
-    protected function assertPaginationHtml($result)
+    public function assertPaginationHtml($result): void
     {
         // this makes sure that we show the correct amount of pagination links!
         $expected =

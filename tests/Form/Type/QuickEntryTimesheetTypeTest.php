@@ -45,7 +45,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testSubmitValidData($value, $expectedDuration)
+    public function testSubmitValidData($value, $expectedDuration): void
     {
         $data = ['duration' => $value];
 
