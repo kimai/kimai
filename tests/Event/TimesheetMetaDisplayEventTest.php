@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetMetaDisplayEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $query = new TimesheetQuery();
         $sut = new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT);

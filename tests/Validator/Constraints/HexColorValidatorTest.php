@@ -39,7 +39,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         yield [null];
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 

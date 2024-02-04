@@ -31,7 +31,7 @@ class KimaiMailerTest extends TestCase
         return new KimaiMailer($config, $mailer);
     }
 
-    public function testSendSetsFrom()
+    public function testSendSetsFrom(): void
     {
         $user = new User();
         $user->setUserIdentifier('Testing');

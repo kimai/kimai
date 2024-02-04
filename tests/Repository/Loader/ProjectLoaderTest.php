@@ -18,7 +18,7 @@ use App\Repository\Loader\ProjectLoader;
  */
 class ProjectLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $customer = $this->createMock(Customer::class);
         $customer->expects($this->once())->method('getId')->willReturn(13);

@@ -18,7 +18,7 @@ abstract class AbstractProjectEventTest extends TestCase
 {
     abstract protected function createProjectEvent(Project $project): AbstractProjectEvent;
 
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $project = new Project();
         $sut = $this->createProjectEvent($project);

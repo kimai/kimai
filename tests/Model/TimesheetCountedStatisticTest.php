@@ -16,17 +16,17 @@ use App\Model\TimesheetCountedStatistic;
  */
 class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertDefaultValues(new TimesheetCountedStatistic());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter(new TimesheetCountedStatistic());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertJsonSerialize(new TimesheetCountedStatistic());
     }

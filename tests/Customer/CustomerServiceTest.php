@@ -69,7 +69,7 @@ class CustomerServiceTest extends TestCase
         return new CustomerService($repository, $configuration, $validator, $dispatcher);
     }
 
-    public function testCannotSavePersistedCustomerAsNew()
+    public function testCannotSavePersistedCustomerAsNew(): void
     {
         $Customer = $this->createMock(Customer::class);
         $Customer->expects($this->once())->method('getId')->willReturn(1);
@@ -82,7 +82,7 @@ class CustomerServiceTest extends TestCase
         $sut->saveNewCustomer($Customer);
     }
 
-    public function testSaveNewCustomerHasValidationError()
+    public function testSaveNewCustomerHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
         $constraints->add(new ConstraintViolation('toooo many tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
@@ -98,7 +98,7 @@ class CustomerServiceTest extends TestCase
         $sut->saveNewCustomer(new Customer('foo'));
     }
 
-    public function testUpdateDispatchesEvents()
+    public function testUpdateDispatchesEvents(): void
     {
         $Customer = $this->createMock(Customer::class);
         $Customer->method('getId')->willReturn(1);
@@ -121,7 +121,7 @@ class CustomerServiceTest extends TestCase
         $sut->updateCustomer($Customer);
     }
 
-    public function testCreateNewCustomerDispatchesEvents()
+    public function testCreateNewCustomerDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
@@ -146,7 +146,7 @@ class CustomerServiceTest extends TestCase
         self::assertEquals('RUB', $customer->getCurrency());
     }
 
-    public function testSaveNewCustomerDispatchesEvents()
+    public function testSaveNewCustomerDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {

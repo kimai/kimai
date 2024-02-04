@@ -40,7 +40,7 @@ class FileHelperTest extends TestCase
         self::assertEquals($expected, FileHelper::convertToAsciiFilename($original));
     }
 
-    public function testDataDirectory()
+    public function testDataDirectory(): void
     {
         $data = realpath(__DIR__ . '/../_data/');
         $sut = new FileHelper($data);

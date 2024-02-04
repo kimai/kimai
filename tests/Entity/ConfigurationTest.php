@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Configuration();
         $this->assertNull($sut->getId());
@@ -25,7 +25,7 @@ class ConfigurationTest extends TestCase
         $this->assertNull($sut->getValue());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Configuration();
         $this->assertInstanceOf(Configuration::class, $sut->setName('foo-bar'));

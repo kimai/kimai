@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class XlsxWriterTest extends TestCase
 {
-    public function testWriter()
+    public function testWriter(): void
     {
         $sut = new XlsxWriter();
 

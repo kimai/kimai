@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class XlsxRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
@@ -30,7 +30,7 @@ class XlsxRendererTest extends AbstractRendererTest
         $this->assertEquals('xlsx', $sut->getIcon());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 

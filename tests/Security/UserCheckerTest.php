@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Exception\DisabledException;
  */
 class UserCheckerTest extends TestCase
 {
-    public function testCheckPreAuthReturnsOnUnknownUserClass()
+    public function testCheckPreAuthReturnsOnUnknownUserClass(): void
     {
         $sut = new UserChecker();
 
@@ -31,7 +31,7 @@ class UserCheckerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testCheckPostAuthReturnsOnUnknownUserClass()
+    public function testCheckPostAuthReturnsOnUnknownUserClass(): void
     {
         $sut = new UserChecker();
 
@@ -43,7 +43,7 @@ class UserCheckerTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testDisabledCannotLoginInCheckPreAuth()
+    public function testDisabledCannotLoginInCheckPreAuth(): void
     {
         $this->expectException(DisabledException::class);
         $this->expectExceptionMessage('User account is disabled.');
@@ -51,7 +51,7 @@ class UserCheckerTest extends TestCase
         (new UserChecker())->checkPreAuth((new User())->setEnabled(false));
     }
 
-    public function testDisabledCannotLoginInCheckPostAuth()
+    public function testDisabledCannotLoginInCheckPostAuth(): void
     {
         $this->expectException(DisabledException::class);
         $this->expectExceptionMessage('User account is disabled.');

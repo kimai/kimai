@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class WizardSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = WizardSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(KernelEvents::REQUEST, $events);

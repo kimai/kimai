@@ -32,7 +32,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
         return new DefaultMode((new RoundingServiceFactory($this))->create());
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->createSut();
 

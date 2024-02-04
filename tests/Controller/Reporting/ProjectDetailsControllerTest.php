@@ -21,12 +21,12 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class ProjectDetailsControllerTest extends ControllerBaseTest
 {
-    public function testReportIsSecure()
+    public function testReportIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting/project_details');
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 

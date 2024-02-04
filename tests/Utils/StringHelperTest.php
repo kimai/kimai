@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StringHelperTest extends TestCase
 {
-    public function testEnsureMaxLength()
+    public function testEnsureMaxLength(): void
     {
         self::assertNull(StringHelper::ensureMaxLength(null, 10));
         self::assertEquals('', StringHelper::ensureMaxLength('', 10));

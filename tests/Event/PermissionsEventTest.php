@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PermissionsEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $sut = new PermissionsEvent();
 

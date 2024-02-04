@@ -17,7 +17,7 @@ use InvalidArgumentException;
  */
 class MonthTest extends AbstractTimesheetTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Month('01');
         $this->assertDefaultValues($sut);
@@ -86,7 +86,7 @@ class MonthTest extends AbstractTimesheetTest
         new Month($month);
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = new Month('01');
         $this->assertSetter($sut);

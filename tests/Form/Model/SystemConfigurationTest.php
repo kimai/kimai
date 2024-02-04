@@ -19,14 +19,14 @@ use PHPUnit\Framework\TestCase;
  */
 class SystemConfigurationTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new SystemConfiguration();
         self::assertNull($sut->getSection());
         self::assertEquals([], $sut->getConfiguration());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new SystemConfiguration('foo');
 

@@ -87,12 +87,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         return [$rate1, $rate2];
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/customers');
     }
 
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/customers');
@@ -104,7 +104,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
-    public function testGetCollectionWithQuery()
+    public function testGetCollectionWithQuery(): void
     {
         $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -117,7 +117,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
-    public function testGetEntity()
+    public function testGetEntity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/customers/1');
@@ -127,7 +127,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
-    public function testGetEntityWithFullResponse()
+    public function testGetEntityWithFullResponse(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -171,12 +171,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Customer object not found by the @ParamConverter annotation.');
     }
 
-    public function testPostAction()
+    public function testPostAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -197,7 +197,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPostActionWithLeastFields()
+    public function testPostActionWithLeastFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -215,7 +215,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPostActionWithInvalidUser()
+    public function testPostActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $data = [
@@ -230,7 +230,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot create customers');
     }
 
-    public function testPostActionWithInvalidData()
+    public function testPostActionWithInvalidData(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -246,7 +246,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['country', 'currency', 'timezone'], true);
     }
 
-    public function testPatchAction()
+    public function testPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -268,7 +268,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPatchActionWithInvalidUser()
+    public function testPatchActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -285,12 +285,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot update customer');
     }
 
-    public function testPatchActionWithUnknownActivity()
+    public function testPatchActionWithUnknownActivity(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/customers/255', []);
     }
 
-    public function testInvalidPatchAction()
+    public function testInvalidPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -307,19 +307,19 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['currency']);
     }
 
-    public function testMetaActionNotAllowed()
+    public function testMetaActionNotAllowed(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode(['name' => 'asdasd']));
         $this->assertApiResponseAccessDenied($client->getResponse(), 'You are not allowed to update this customer');
     }
 
-    public function testMetaActionThrowsNotFound()
+    public function testMetaActionThrowsNotFound(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/customers/42/meta', []);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingName()
+    public function testMetaActionThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['value' => 'X'], [
             'code' => 400,
@@ -327,7 +327,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingValue()
+    public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
             'code' => 400,
@@ -335,7 +335,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingMetafield()
+    public function testMetaActionThrowsExceptionOnMissingMetafield(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
             'code' => 404,
@@ -343,7 +343,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaAction()
+    public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());

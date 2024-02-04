@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  */
 class TrackingModeServiceTest extends TestCase
 {
-    public function testDefaultTrackingModesAreRegistered()
+    public function testDefaultTrackingModesAreRegistered(): void
     {
         $sut = (new TrackingModeServiceFactory($this))->create('punch');
 
@@ -36,14 +36,14 @@ class TrackingModeServiceTest extends TestCase
         self::assertContains('duration_fixed_begin', $ids);
     }
 
-    public function testGetActiveMode()
+    public function testGetActiveMode(): void
     {
         $sut = (new TrackingModeServiceFactory($this))->create('punch');
 
         self::assertInstanceOf(PunchInOutMode::class, $sut->getActiveMode());
     }
 
-    public function testGetActiveModeThrowsExceptionOnlyInvalidMode()
+    public function testGetActiveModeThrowsExceptionOnlyInvalidMode(): void
     {
         $this->expectException(ServiceNotFoundException::class);
         $this->expectExceptionMessage('You have requested a non-existent service "xxxxxx"');

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetMetaDefinitionEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $timesheet = new Timesheet();
         $sut = new TimesheetMetaDefinitionEvent($timesheet);

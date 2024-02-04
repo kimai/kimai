@@ -112,7 +112,7 @@ class UserVoterTest extends AbstractVoterTest
         ];
     }
 
-    public function testViewTeamMember()
+    public function testViewTeamMember(): void
     {
         $userMock = $this->createMock(User::class);
         $userMock->method('getId')->willReturn(1);

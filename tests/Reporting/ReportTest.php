@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ReportTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $report = new Report('id', 'route', 'label', 'reporting');
         self::assertInstanceOf(ReportInterface::class, $report);

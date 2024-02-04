@@ -32,7 +32,7 @@ abstract class AbstractFormatterTest extends TestCase
         self::assertEquals($this->getExpectedValue(), $cell->getValue());
     }
 
-    public function testSetFormattedValue()
+    public function testSetFormattedValue(): void
     {
         $sut = $this->getFormatter();
 
@@ -45,7 +45,7 @@ abstract class AbstractFormatterTest extends TestCase
         $this->assertCellStyle($worksheet->getStyleByColumnAndRow(1, 1));
     }
 
-    public function testSetNull()
+    public function testSetNull(): void
     {
         $sut = $this->getFormatter();
 

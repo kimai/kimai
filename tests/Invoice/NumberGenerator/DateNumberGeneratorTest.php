@@ -40,7 +40,7 @@ class DateNumberGeneratorTest extends TestCase
         return new DateNumberGenerator($repository);
     }
 
-    public function testGetInvoiceNumber()
+    public function testGetInvoiceNumber(): void
     {
         $sut = $this->getSut(false, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
@@ -49,7 +49,7 @@ class DateNumberGeneratorTest extends TestCase
         $this->assertEquals('date', $sut->getId());
     }
 
-    public function testGetInvoiceNumberWithExisting()
+    public function testGetInvoiceNumberWithExisting(): void
     {
         $sut = $this->getSut(true, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
@@ -58,7 +58,7 @@ class DateNumberGeneratorTest extends TestCase
         $this->assertEquals('date', $sut->getId());
     }
 
-    public function testGetInvoiceNumberWithManyExisting()
+    public function testGetInvoiceNumberWithManyExisting(): void
     {
         $sut = $this->getSut(true, true);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));

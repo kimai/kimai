@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class ResetTestCommandTest extends KernelTestCase
 {
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
@@ -31,7 +31,7 @@ class ResetTestCommandTest extends KernelTestCase
         self::assertInstanceOf(ResetTestCommand::class, $command);
     }
 
-    public function testCommandNameIsNotEnabledInProd()
+    public function testCommandNameIsNotEnabledInProd(): void
     {
         $sut = new ResetTestCommand($this->createMock(EntityManagerInterface::class), 'prod');
         self::assertFalse($sut->isEnabled());

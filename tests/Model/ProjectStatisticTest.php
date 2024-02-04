@@ -16,17 +16,17 @@ use App\Model\CustomerStatistic;
  */
 class ProjectStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertDefaultValues(new CustomerStatistic());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter(new CustomerStatistic());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertJsonSerialize(new CustomerStatistic());
     }

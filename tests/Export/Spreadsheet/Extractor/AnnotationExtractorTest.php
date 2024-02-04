@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AnnotationExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -70,7 +70,7 @@ class AnnotationExtractorTest extends TestCase
         }
     }
 
-    public function testExceptionOnInvalidType()
+    public function testExceptionOnInvalidType(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -81,7 +81,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract(new \stdClass());
     }
 
-    public function testExceptionOnEmptyString()
+    public function testExceptionOnEmptyString(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -91,7 +91,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract('');
     }
 
-    public function testExceptionOnMissingExpression()
+    public function testExceptionOnMissingExpression(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -101,7 +101,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract(MissingExpressionOnClass::class);
     }
 
-    public function testExceptionOnMissingName()
+    public function testExceptionOnMissingName(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -111,7 +111,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract(MissingNameOnClass::class);
     }
 
-    public function testExceptionExpressionOnProperty()
+    public function testExceptionExpressionOnProperty(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -121,7 +121,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract(ExpressionOnProperty::class);
     }
 
-    public function testExceptionExpressionOnMethod()
+    public function testExceptionExpressionOnMethod(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -131,7 +131,7 @@ class AnnotationExtractorTest extends TestCase
         $sut->extract(ExpressionOnMethod::class);
     }
 
-    public function testExceptionExpressionOnMethodWithRequiredParameters()
+    public function testExceptionExpressionOnMethodWithRequiredParameters(): void
     {
         $sut = new AnnotationExtractor();
 

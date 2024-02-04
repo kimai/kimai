@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BinaryFileResponseWriterTest extends TestCase
 {
-    public function testSave()
+    public function testSave(): void
     {
         $sut = new BinaryFileResponseWriter(new XlsxWriter(), 'foobar');
 
@@ -33,7 +33,7 @@ class BinaryFileResponseWriterTest extends TestCase
         self::assertTrue(file_exists($file->getRealPath()));
     }
 
-    public function testGetResponse()
+    public function testGetResponse(): void
     {
         $sut = new BinaryFileResponseWriter(new XlsxWriter(), 'foobar');
 

@@ -42,7 +42,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -60,7 +60,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testNullIsInvalid()
+    public function testNullIsInvalid(): void
     {
         $this->validator->validate(null, new Role(['message' => 'myMessage']));
 

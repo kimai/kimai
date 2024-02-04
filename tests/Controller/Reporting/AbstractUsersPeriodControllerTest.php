@@ -35,7 +35,7 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
 
     abstract protected function getBoxId(): string;
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured($this->getReportUrl());
     }

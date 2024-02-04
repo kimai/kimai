@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryBuilderPaginatorTest extends TestCase
 {
-    public function testPaginator()
+    public function testPaginator(): void
     {
         $em = $this->createMock(EntityManager::class);
         $qb = new QueryBuilder($em);

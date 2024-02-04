@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TagArrayToStringTransformerTest extends TestCase
 {
-    public function testTransform()
+    public function testTransform(): void
     {
         $results = [
             (new Tag())->setName('foo'),
@@ -38,7 +38,7 @@ class TagArrayToStringTransformerTest extends TestCase
         $this->assertEquals('foo, bar', $actual);
     }
 
-    public function testReverseTransform()
+    public function testReverseTransform(): void
     {
         $results = [
             (new Tag())->setName('foo'),

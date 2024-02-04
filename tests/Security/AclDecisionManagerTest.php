@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
  */
 class AclDecisionManagerTest extends TestCase
 {
-    public function testFullyAuthenticated()
+    public function testFullyAuthenticated(): void
     {
         $manager = $this->createMock(AccessDecisionManagerInterface::class);
         $manager->expects($this->once())->method('decide')->willReturn(true);
@@ -31,7 +31,7 @@ class AclDecisionManagerTest extends TestCase
         self::assertTrue($result);
     }
 
-    public function testIsNotFullyAuthenticated()
+    public function testIsNotFullyAuthenticated(): void
     {
         $manager = $this->createMock(AccessDecisionManagerInterface::class);
         $manager->expects($this->once())->method('decide')->willReturn(false);

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceTemplateTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new InvoiceTemplate();
 
@@ -38,7 +38,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertTrue($sut->isDecimalDuration());
     }
 
-    public function testSetNullForOptionalValues()
+    public function testSetNullForOptionalValues(): void
     {
         $sut = new InvoiceTemplate();
 
@@ -49,7 +49,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentTerms(null));
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new InvoiceTemplate();
 
@@ -83,7 +83,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals($sut, clone $sut);
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $sut = new InvoiceTemplate();
 

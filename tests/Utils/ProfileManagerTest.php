@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
  */
 class ProfileManagerTest extends TestCase
 {
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $request = new Request();
         $session = new Session(new MockFileSessionStorage());
@@ -104,7 +104,7 @@ class ProfileManagerTest extends TestCase
         self::assertEquals($expected, $sut->getProfile($profile));
     }
 
-    public function testSetProfile()
+    public function testSetProfile(): void
     {
         $request = new Request();
         $session = new Session(new MockFileSessionStorage());

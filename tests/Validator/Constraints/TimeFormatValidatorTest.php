@@ -28,14 +28,14 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
         return new TimeFormatValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank());
     }
 
-    public function testWrongValueThrowsException()
+    public function testWrongValueThrowsException(): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Expected argument of type "string", "stdClass" given');

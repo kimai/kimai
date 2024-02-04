@@ -20,12 +20,12 @@ use App\Tests\Mocks\SystemConfigurationFactory;
  */
 class CalendarControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/calendar/');
     }
 
-    public function testCalendarAction()
+    public function testCalendarAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $fixtures = new TimesheetFixtures($this->getUserByRole(), 10);
@@ -42,13 +42,13 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $dragAndDropBoxes->count());
     }
 
-    public function testCalendarActionAsSuperAdmin()
+    public function testCalendarActionAsSuperAdmin(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/calendar/');
     }
 
-    public function testCalendarActionWithGoogleSource()
+    public function testCalendarActionWithGoogleSource(): void
     {
         $loader = new TestConfigLoader([]);
         $config = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());

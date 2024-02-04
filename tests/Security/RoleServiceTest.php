@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RoleServiceTest extends TestCase
 {
-    public function testWithEmptyRepository()
+    public function testWithEmptyRepository(): void
     {
         $real = [
             'ROLE_USER',
@@ -35,7 +35,7 @@ class RoleServiceTest extends TestCase
         self::assertEquals($real, $sut->getSystemRoles());
     }
 
-    public function testWithRepositoryData()
+    public function testWithRepositoryData(): void
     {
         $real = [
             'ROLE_TEAMLEAD',

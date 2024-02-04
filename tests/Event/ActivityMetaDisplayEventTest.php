@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ActivityMetaDisplayEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $query = new ActivityQuery();
         $sut = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT);

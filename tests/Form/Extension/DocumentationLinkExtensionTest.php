@@ -20,12 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DocumentationLinkExtensionTest extends TestCase
 {
-    public function testExtendedTypes()
+    public function testExtendedTypes(): void
     {
         self::assertEquals([FormType::class], DocumentationLinkExtension::getExtendedTypes());
     }
 
-    public function testConfigureOptions()
+    public function testConfigureOptions(): void
     {
         $resolver = new OptionsResolver();
         $sut = new DocumentationLinkExtension();

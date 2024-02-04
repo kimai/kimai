@@ -42,7 +42,7 @@ class LdapConfigurationTest extends TestCase
         ];
     }
 
-    public function testDefault()
+    public function testDefault(): void
     {
         $sut = $this->getSut([]);
         $this->assertFalse($sut->isActivated());
@@ -51,7 +51,7 @@ class LdapConfigurationTest extends TestCase
         $this->assertEquals([], $sut->getConnectionParameters());
     }
 
-    public function testMapping()
+    public function testMapping(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
         $this->assertTrue($sut->isActivated());

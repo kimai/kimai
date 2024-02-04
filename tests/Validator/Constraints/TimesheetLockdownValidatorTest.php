@@ -64,21 +64,21 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetLockdownValidator($auth, new LockdownService($config));
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage'])); // @phpstan-ignore-line
     }
 
-    public function testValidatorWithoutNowConstraint()
+    public function testValidatorWithoutNowConstraint(): void
     {
         $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
@@ -98,7 +98,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidatorWithEmptyTimesheet()
+    public function testValidatorWithEmptyTimesheet(): void
     {
         $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
@@ -109,7 +109,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    public function testValidatorWithoutNowStringConstraint()
+    public function testValidatorWithoutNowStringConstraint(): void
     {
         $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
@@ -125,7 +125,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    public function testValidatorWithEndBeforeStartPeriod()
+    public function testValidatorWithEndBeforeStartPeriod(): void
     {
         $this->validator = $this->createMyValidator(false, false, 'first day of this month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);

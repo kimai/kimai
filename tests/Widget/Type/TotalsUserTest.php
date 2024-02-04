@@ -61,7 +61,7 @@ class TotalsUserTest extends AbstractWidgetTest
         self::assertEquals(1, $sut->getData());
     }
 
-    public function testData()
+    public function testData(): void
     {
         $user = new User();
         $user->setAlias('foo');

@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class CsvRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserDetailsSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = UserDetailsSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(UserDetailsEvent::class, $events);

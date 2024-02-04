@@ -37,7 +37,7 @@ class DateTimeFormatterTest extends AbstractFormatterTest
         return Date::PHPToExcel($this->date);
     }
 
-    public function testFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only DateTimeInterface is supported');

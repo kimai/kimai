@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ColumnDefinitionTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new \App\Export\Spreadsheet\ColumnDefinition('foo', 'bar', function () {
             return 'hello world';

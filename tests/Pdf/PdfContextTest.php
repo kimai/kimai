@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PdfContextTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $sut = new PdfContext();
 
@@ -26,7 +26,7 @@ class PdfContextTest extends TestCase
         self::assertNull($sut->getOption('unknown'));
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new PdfContext();
 

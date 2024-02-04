@@ -53,7 +53,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
         ];
     }
 
-    public function testSettings()
+    public function testSettings(): void
     {
         $sut = $this->createSut();
 

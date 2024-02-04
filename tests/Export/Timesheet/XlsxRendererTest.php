@@ -21,14 +21,14 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class XlsxRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
         $this->assertEquals('xlsx', $sut->getId());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 

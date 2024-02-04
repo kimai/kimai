@@ -20,7 +20,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class ActivityEditFormTest extends TypeTestCase
 {
-    public function testWithGlobalNewActivity()
+    public function testWithGlobalNewActivity(): void
     {
         $model = new Activity();
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model);
@@ -40,7 +40,7 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertFalse($form->has('budgetType'));
     }
 
-    public function testWithGlobalNewActivityAndOptionsBudget()
+    public function testWithGlobalNewActivityAndOptionsBudget(): void
     {
         $model = new Activity();
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
@@ -51,7 +51,7 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertTrue($form->has('budgetType'));
     }
 
-    public function testWithGlobalNewActivityAndOptionsTimeBudget()
+    public function testWithGlobalNewActivityAndOptionsTimeBudget(): void
     {
         $model = new Activity();
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
@@ -62,7 +62,7 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertTrue($form->has('budgetType'));
     }
 
-    public function testWithGlobalNewActivityAndOptionsAllBudget()
+    public function testWithGlobalNewActivityAndOptionsAllBudget(): void
     {
         $model = new Activity();
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
@@ -74,7 +74,7 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertTrue($form->has('budgetType'));
     }
 
-    public function testWithGlobalExistingActivityAndOptions()
+    public function testWithGlobalExistingActivityAndOptions(): void
     {
         $model = $this->createMock(Activity::class);
         $model->expects($this->once())->method('getId')->willReturn(1);
@@ -87,7 +87,7 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertFalse($form->has('timeBudget'));
     }
 
-    public function testWithNonGlobalExistingActivityAndOptions()
+    public function testWithNonGlobalExistingActivityAndOptions(): void
     {
         $project = new Project();
         $customer = new Customer('foo');

@@ -35,7 +35,7 @@ class DurationFormatterTest extends AbstractFormatterTest
         return '=3600/86400';
     }
 
-    public function testFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only int is supported');

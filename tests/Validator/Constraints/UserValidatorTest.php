@@ -32,28 +32,28 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         return new UserValidator($userService);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
     }
 
-    public function testNullIsValid()
+    public function testNullIsValid(): void
     {
         $this->validator->validate(null, new User(['message' => 'myMessage'])); // @phpstan-ignore-line
 
         $this->assertNoViolation();
     }
 
-    public function testNonUserIsValid()
+    public function testNonUserIsValid(): void
     {
         $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage'])); // @phpstan-ignore-line
 
         $this->assertNoViolation();
     }
 
-    public function testEmptyUserIsValid()
+    public function testEmptyUserIsValid(): void
     {
         $user = new UserEntity();
         $user->setUserIdentifier('foo');
@@ -63,7 +63,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testUserIsValidWithEmptyRepository()
+    public function testUserIsValidWithEmptyRepository(): void
     {
         $user = new UserEntity();
         $user->setUserIdentifier('foo');
@@ -74,7 +74,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testUserIsInvalidWithRepository()
+    public function testUserIsInvalidWithRepository(): void
     {
         $existing = $this->createMock(UserEntity::class);
         $existing->expects($this->exactly(4))->method('getId')->willReturn(123);

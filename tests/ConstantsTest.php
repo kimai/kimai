@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConstantsTest extends TestCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
         $version = Constants::VERSION;
         $versionParts = explode('.', $version);

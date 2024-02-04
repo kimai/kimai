@@ -28,14 +28,14 @@ class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetMultiUserValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank());
     }
 
-    public function testEmptyTimesheet()
+    public function testEmptyTimesheet(): void
     {
         $timesheet = new MultiUserTimesheet();
 

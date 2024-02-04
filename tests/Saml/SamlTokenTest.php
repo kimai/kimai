@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SamlTokenTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $user = new User();
         $user->setUserIdentifier('foo');

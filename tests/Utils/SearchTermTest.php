@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SearchTermTest extends TestCase
 {
-    public function testNormalSearchTerm()
+    public function testNormalSearchTerm(): void
     {
         $sut = new SearchTerm('foo bar test 1');
         self::assertEquals('foo bar test 1', $sut->getSearchTerm());
@@ -29,7 +29,7 @@ class SearchTermTest extends TestCase
         self::assertEquals('foo bar test 1', (string) $sut);
     }
 
-    public function testWithMetaField()
+    public function testWithMetaField(): void
     {
         $sut = new SearchTerm('foo:bar');
         self::assertFalse($sut->hasSearchTerm());
@@ -41,7 +41,7 @@ class SearchTermTest extends TestCase
         self::assertEquals('foo:bar', $sut->getOriginalSearch());
     }
 
-    public function testWithMultipleMetaFields()
+    public function testWithMultipleMetaFields(): void
     {
         $sut = new SearchTerm('foo:bar bar:foo');
         self::assertFalse($sut->hasSearchTerm());
@@ -55,7 +55,7 @@ class SearchTermTest extends TestCase
         self::assertEquals('foo:bar bar:foo', $sut->getOriginalSearch());
     }
 
-    public function testComplexWithMultipleAndDuplicateMetaFields()
+    public function testComplexWithMultipleAndDuplicateMetaFields(): void
     {
         $sut = new SearchTerm('foo:bar hello bar:foo world test foo:bar wuff');
         self::assertTrue($sut->hasSearchTerm());

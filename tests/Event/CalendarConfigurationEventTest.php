@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CalendarConfigurationEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $configuration = [
           'a' => 'b',

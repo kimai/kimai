@@ -24,7 +24,7 @@ class OdsRendererTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testSupports()
+    public function testSupports(): void
     {
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
 

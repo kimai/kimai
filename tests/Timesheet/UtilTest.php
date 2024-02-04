@@ -39,7 +39,7 @@ class UtilTest extends TestCase
         yield [7360.99, 1234, 2523.1838];
     }
 
-    public function testCalculateRateWithRounding()
+    public function testCalculateRateWithRounding(): void
     {
         $total = 0.00;
         $seconds = 0;

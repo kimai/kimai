@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RoundingServiceTest extends TestCase
 {
-    public function testCalculateWithEmptyEnd()
+    public function testCalculateWithEmptyEnd(): void
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceItemTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $sut = new InvoiceItem();
 

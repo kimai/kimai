@@ -39,7 +39,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 

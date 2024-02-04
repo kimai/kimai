@@ -16,12 +16,12 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class QuickEntryControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/quick_entry');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/quick_entry');
@@ -52,7 +52,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
         self::assertCount(10, $columns);
     }
 
-    public function testIndexActionWith()
+    public function testIndexActionWith(): void
     {
         $client = $this->getClientForAuthenticatedUser();
 
