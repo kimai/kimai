@@ -578,9 +578,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="translated">會計年度</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target state="translated">工作時間</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">工作時間</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>

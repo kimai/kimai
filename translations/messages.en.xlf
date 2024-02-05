@@ -915,9 +915,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Financial year</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>Working time</source>
-        <target state="needs-translation">Working time</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
+        <source>Working hours</source>
+        <target state="final">Working hours</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>

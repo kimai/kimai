@@ -969,9 +969,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>السنة المالية</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>وقت العمل</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">وقت العمل</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>

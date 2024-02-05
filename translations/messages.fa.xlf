@@ -628,9 +628,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="translated">سال مالی</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target state="translated">زمان کار</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">زمان کار</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
