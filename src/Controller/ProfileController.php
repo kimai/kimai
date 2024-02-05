@@ -21,6 +21,7 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Form\UserTwoFactorType;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -84,13 +85,15 @@ final class ProfileController extends AbstractController
         // but we need a full year, because the chart needs always 12 month
         $begin = $dateFactory->createStartOfYear($begin);
 
+        $query = new TimesheetStatisticQuery($begin, $end, [$profile]);
+
         $viewVars = [
             'tab' => 'charts',
             'page_setup' => $this->getPageSetup($profile, 'charts'),
             'user' => $profile,
             'stats' => $userStats,
             'workingSince' => $workStartingDay,
-            'workMonths' => $statisticService->getMonthlyStats($begin, $end, [$profile])[0]
+            'workMonths' => $statisticService->getMonthlyStats($query)[0]
         ];
 
         return $this->render('user/stats.html.twig', $viewVars);

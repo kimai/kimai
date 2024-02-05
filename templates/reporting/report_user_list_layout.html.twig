@@ -5,6 +5,9 @@
     {% if form.team is defined %}
         {{ form_widget(form.team, {'label': false, 'placeholder': 'please_choose'}) }}
     {% endif %}
+    {% if form.project is defined %}
+        {{ form_widget(form.project, {'label': false, 'placeholder': 'please_choose'}) }}
+    {% endif %}
     {{ form_widget(form.sumType) }}
     {% from '@theme/components/buttons.html.twig' import submit_button %}
     {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}, 'primary') }}

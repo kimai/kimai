@@ -1033,11 +1033,6 @@ parameters:
             path: src/Controller/Reporting/CustomerMonthlyProjectsController.php
 
         -
-            message: "#^Parameter \\#3 \\$users of method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsRepository\\:\\:getGroupedByCustomerProjectActivityUser\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/CustomerMonthlyProjectsController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
@@ -1053,27 +1048,12 @@ parameters:
             path: src/Controller/Reporting/ReportUsersMonthController.php
 
         -
-            message: "#^Parameter \\#3 \\$users of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getDailyStatistics\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ReportUsersWeekController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersWeekController.php
 
         -
-            message: "#^Parameter \\#3 \\$users of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getDailyStatistics\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersWeekController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ReportUsersYearController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
-            message: "#^Parameter \\#3 \\$users of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStats\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
@@ -1181,11 +1161,6 @@ parameters:
             message: "#^PHPDoc tag @var for variable \\$users contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Controller/TimesheetTeamController.php
-
-        -
-            message: "#^Parameter \\#1 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\UserExporter\\:\\:export\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
-            count: 1
-            path: src/Controller/UserController.php
 
         -
             message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\Hasher\\\\UserPasswordHasherInterface\\:\\:hashPassword\\(\\) expects string, string\\|null given\\.$#"
@@ -4823,22 +4798,7 @@ parameters:
             path: src/Repository/UserRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:getHydratedResultsByQuery\\(\\) should return iterable\\<App\\\\Entity\\\\User\\> but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:saveUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
             message: "#^Parameter \\#1 \\$identifier of method App\\\\Repository\\\\UserRepository\\:\\:loadUserByIdentifier\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$results of method App\\\\Repository\\\\Loader\\\\UserLoader\\:\\:loadResults\\(\\) expects array\\<App\\\\Entity\\\\User\\|int\\>, mixed given\\.$#"
             count: 1
             path: src/Repository/UserRepository.php
 

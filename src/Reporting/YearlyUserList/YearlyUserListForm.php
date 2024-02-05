@@ -9,6 +9,7 @@
 
 namespace App\Reporting\YearlyUserList;
 
+use App\Form\Type\ProjectType;
 use App\Form\Type\ReportSumType;
 use App\Form\Type\TeamType;
 use App\Form\Type\YearPickerType;
@@ -30,6 +31,11 @@ final class YearlyUserListForm extends AbstractType
             'show_range' => true,
         ]);
         $builder->add('team', TeamType::class, [
+            'multiple' => false,
+            'required' => false,
+            'width' => false,
+        ]);
+        $builder->add('project', ProjectType::class, [
             'multiple' => false,
             'required' => false,
             'width' => false,

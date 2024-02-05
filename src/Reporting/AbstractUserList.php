@@ -9,6 +9,7 @@
 
 namespace App\Reporting;
 
+use App\Entity\Project;
 use App\Entity\Team;
 
 abstract class AbstractUserList
@@ -17,6 +18,7 @@ abstract class AbstractUserList
     private bool $decimal = false;
     private string $sumType = 'duration';
     private ?Team $team = null;
+    private ?Project $project = null;
 
     public function getDate(): ?\DateTimeInterface
     {
@@ -60,5 +62,15 @@ abstract class AbstractUserList
     public function setTeam(?Team $team = null): void
     {
         $this->team = $team;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): void
+    {
+        $this->project = $project;
     }
 }
