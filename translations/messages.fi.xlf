@@ -1269,7 +1269,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
+        <target state="needs-translation">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>

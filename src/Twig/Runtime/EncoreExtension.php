@@ -16,11 +16,11 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscriberInterface
 {
-    private string $publicDir;
-
-    public function __construct(private ContainerInterface $container, string $projectDirectory)
+    public function __construct(
+        private readonly ContainerInterface $container,
+        private readonly string $projectDirectory
+    )
     {
-        $this->publicDir = $projectDirectory . '/public';
     }
 
     public static function getSubscribedServices(): array
@@ -38,7 +38,7 @@ final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscri
         $source = '';
 
         foreach ($files as $file) {
-            $source .= file_get_contents($this->publicDir . '/' . $file);
+            $source .= file_get_contents($this->projectDirectory . '/public/' . $file);
         }
 
         $lookup->reset();

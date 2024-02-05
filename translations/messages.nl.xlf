@@ -1445,7 +1445,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Ondersteunde talen met opmaakregels</target>
+        <target state="needs-translation">Ondersteunde talen met opmaakregels</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1461,7 +1461,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Naast het vertalen van de interface is deze instelling ook verantwoordelijk voor de tijd-, datum- en valutanotaties.</target>
+        <target state="needs-translation">Naast het vertalen van de interface is deze instelling ook verantwoordelijk voor de tijd-, datum- en valutanotaties.</target>
       </trans-unit>
       <trans-unit id="NOEx3FF" resname="invoice_date.help">
         <source>invoice_date.help</source>

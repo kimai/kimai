@@ -16,8 +16,15 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 final class TagArrayToStringTransformer implements DataTransformerInterface
 {
+    private bool $create = true;
+
     public function __construct(private TagRepository $tagRepository)
     {
+    }
+
+    public function setCreate(bool $create): void
+    {
+        $this->create = $create;
     }
 
     /**
@@ -55,15 +62,17 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
 
         // get the current tags and find the new ones that should be created
         $tags = $this->tagRepository->findBy(['name' => $names]);
-        // works, because of the implicit case: (string) $tag
-        $newNames = array_diff($names, $tags);
+        if ($this->create) {
+            // works, because of the implicit case: (string) $tag
+            $newNames = array_diff($names, $tags);
 
-        foreach ($newNames as $name) {
-            $tag = new Tag();
-            $tag->setName(mb_substr($name, 0, 100));
-            $tags[] = $tag;
+            foreach ($newNames as $name) {
+                $tag = new Tag();
+                $tag->setName(mb_substr($name, 0, 100));
+                $tags[] = $tag;
 
-            // new tags persist automatically thanks to the cascade={"persist"}
+                // new tags persist automatically thanks to the cascade={"persist"}
+            }
         }
 
         return $tags;

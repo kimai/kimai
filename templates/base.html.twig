@@ -10,11 +10,13 @@
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
+        {% block modal_effects %}{% endblock %}
     {% endembed %}
     {% embed '@theme/embeds/modal.html.twig' %}
         {% block modal_id %}remote_modal{% endblock %}
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
+        {% block modal_effects %}{% endblock %}
         {% block modal_footer %}
             <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
         {% endblock %}
@@ -112,16 +114,18 @@
 {% block page_pretitle %}{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('app') }}
+    {% if tabler_bundle.isRightToLeft() %}
+        {{ encore_entry_link_tags('app-rtl') }}
+    {% else %}
+        {{ encore_entry_link_tags('app') }}
+    {% endif %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
     {{ event.content|raw }}
 {% endblock %}
 
 {% block head %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('app') }}
     {% include 'partials/head.html.twig' %}
+    {{ encore_entry_script_tags('app') }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::HTML_HEAD')) %}
     {{ event.content|raw }}
 {% endblock %}

@@ -83,7 +83,7 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
         $user = $this->security->getUser();
 
         if ($user !== null) {
-            $locale = $user->getLocale();
+            $locale = $user->getLanguage();
         }
 
         if (null !== $error->getPlural()) {

@@ -9,9 +9,21 @@
 
 namespace App\Configuration;
 
+use App\Entity\User;
+
 final class LocaleService
 {
-    public function __construct(private array $languageSettings)
+    public const DEFAULT_SETTINGS = [
+        'date' => 'dd.MM.y',
+        'time' => 'HH:mm',
+        'rtl' => false,
+        'translation' => false,
+    ];
+
+    /**
+     * @param array<string, array{'date': string, 'time': string, 'translation': bool}> $languageSettings
+     */
+    public function __construct(private readonly array $languageSettings)
     {
     }
 
@@ -23,6 +35,18 @@ final class LocaleService
     public function getAllLocales(): array
     {
         return array_keys($this->languageSettings);
+    }
+
+    /**
+     * Returns an array with all language codes that have translations.
+     *
+     * @return string[]
+     */
+    public function getTranslatedLocales(): array
+    {
+        return array_keys(array_filter($this->languageSettings, function (array $setting) {
+            return $setting['translation'];
+        }));
     }
 
     public function isKnownLocale(string $language): bool
@@ -38,7 +62,7 @@ final class LocaleService
      */
     public function getDateFormat(string $locale): string
     {
-        return $this->getConfig('date', $locale);
+        return (string) $this->getConfig('date', $locale);
     }
 
     /**
@@ -49,7 +73,7 @@ final class LocaleService
      */
     public function getTimeFormat(string $locale): string
     {
-        return $this->getConfig('time', $locale);
+        return (string) $this->getConfig('time', $locale);
     }
 
     /**
@@ -76,7 +100,34 @@ final class LocaleService
 
     public function isRightToLeft(string $locale): bool
     {
-        return $this->getConfig('rtl', $locale);
+        return (bool) $this->getConfig('rtl', $locale);
+    }
+
+    public function isTranslated(string $locale): bool
+    {
+        return (bool) $this->getConfig('translation', $locale);
+    }
+
+    public function getNearestTranslationLocale(string $locale): string
+    {
+        if (!$this->isKnownLocale($locale)) {
+            $parts = explode('_', $locale);
+            if (\count($parts) !== 2 || \strlen($parts[0]) !== 2 || !$this->isKnownLocale($parts[0])) {
+                return User::DEFAULT_LANGUAGE;
+            }
+            $locale = $parts[0];
+        }
+
+        if (!$this->isTranslated($locale)) {
+            $base = explode('_', $locale)[0];
+            if (!$this->isTranslated($base)) {
+                return User::DEFAULT_LANGUAGE;
+            }
+
+            return $base;
+        }
+
+        return $locale;
     }
 
     public function is24Hour(string $locale): bool

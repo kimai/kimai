@@ -422,7 +422,8 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $data = [
             UserPreference::TIMEZONE => ['value' => 'America/Creston'],
-            UserPreference::LOCALE => ['value' => 'ar'],
+            UserPreference::LANGUAGE => ['value' => 'ar'],
+            UserPreference::LOCALE => ['value' => 'ru'],
             UserPreference::FIRST_WEEKDAY => ['value' => 'sunday'],
             UserPreference::SKIN => ['value' => 'dark'],
         ];
@@ -453,9 +454,10 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertEquals('America/Creston', $user->getPreferenceValue(UserPreference::TIMEZONE));
         $this->assertEquals('America/Creston', $user->getTimezone());
-        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LOCALE));
+        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LANGUAGE));
+        $this->assertEquals('ru', $user->getPreferenceValue(UserPreference::LOCALE));
+        $this->assertEquals('ru', $user->getLocale());
         $this->assertEquals('ar', $user->getLanguage());
-        $this->assertEquals('ar', $user->getLocale());
         $this->assertEquals('dark', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
         $this->assertEquals('sunday', $user->getFirstDayOfWeek());

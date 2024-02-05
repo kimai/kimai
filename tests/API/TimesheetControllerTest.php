@@ -36,15 +36,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
      */
     protected function importFixtureForUser(string $role, int $amount = 10): array
     {
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount($amount)
-            ->setUser($this->getUserByRole($role))
-            ->setAllowEmptyDescriptions(false)
-            ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole($role), $amount);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setAllowEmptyDescriptions(false);
+        $fixture->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1));
 
         return $this->importFixture($fixture);
     }
@@ -91,14 +87,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
         $query = ['user' => 2];
@@ -131,14 +123,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
         $query = ['user' => 'all'];
@@ -262,14 +250,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setExported(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate(new \DateTime('first day of this month'))
-            ->setAllowEmptyDescriptions(false)
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 7);
+        $fixture->setExported(true);
+        $fixture->setStartDate(new \DateTime('first day of this month'));
+        $fixture->setAllowEmptyDescriptions(false);
         $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
@@ -864,15 +848,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(0)
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate($start)
-            ->setAmountRunning(3)
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER));
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate($start);
+        $fixture->setAmountRunning(3);
         $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/active');
@@ -989,7 +969,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate(new \DateTime('-10 days'))
             ->setAllowEmptyDescriptions(false)
-            ->setUseTags(true)
             ->setTags(['Test', 'Administration']);
         $this->importFixture($fixture);
 

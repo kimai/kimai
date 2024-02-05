@@ -1437,7 +1437,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">支持的语言与格式化规则</target>
+        <target state="needs-translation">支持的语言与格式化规则</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1449,7 +1449,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">除了翻译界面外，该设置还负责时间、日期和货币格式。</target>
+        <target state="needs-translation">除了翻译界面外，该设置还负责时间、日期和货币格式。</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>

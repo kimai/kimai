@@ -47,16 +47,20 @@
         <target state="final">Nuovo congedo | %absence_user% | %absence_type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
-        <source>absence_created_supervisor_message</source>
-        <target state="final">
-È stata creato un nuovo congedo per %absence_user%.
+        <source>A new absence was created for %absence_user%.
 
 %absence_type% - %absence_comment%
 
 %absence_list%
 
-Controllali qui: %approval_url%
-        </target>
+Please review them at: %approval_url%</source>
+        <target state="final">È stato creato un nuovo congedo per %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Controllali qui: %approval_url%</target>
       </trans-unit>
     </body>
   </file>

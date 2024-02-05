@@ -1427,11 +1427,11 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">I tillegg til å oversette grensesnittet avgjør denne innstillingen tid-, dato- og valutaformater.</target>
+        <target state="needs-translation">I tillegg til å oversette grensesnittet avgjør denne innstillingen tid-, dato- og valutaformater.</target>
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Støttede språk med formateringsregler</target>
+        <target state="needs-translation">Støttede språk med formateringsregler</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>

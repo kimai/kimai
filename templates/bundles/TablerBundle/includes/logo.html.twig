@@ -1,4 +1,4 @@
-<a href="{{ path('tabler_welcome'|tabler_route) }}">
+<a href="{{ path('tabler_welcome'|tabler_route) }}" title="{{ 'dashboard.title'|trans }}">
     {% set logo = config('theme.branding.logo') %}
     {% set company = config('theme.branding.company') %}
     {% if company is not empty %}
@@ -6,7 +6,7 @@
     {% elseif logo is not empty %}
         <img src="{{ logo }}" class="navbar-brand-image" style="max-height:32px" alt="{{ company }}">
     {% elseif tabler_bundle.getLogoUrl() is not empty %}
-        <img class="navbar-brand-image" alt="{{ company }}" width="110" height="32"
+        <img class="navbar-brand-image" alt="{{ company|default(constant('\\App\\Constants::SOFTWARE') ~ ' ' ~ constant('\\App\\Constants::VERSION')) }}" width="110" height="32"
                 src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}">
     {% else %}
         <span>{{ get_title()|raw }}</span>

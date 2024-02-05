@@ -26,9 +26,10 @@ class ProjectHelperTest extends TestCase
     {
         $config = SystemConfigurationFactory::createStub(['project.choice_pattern' => $format]);
 
-        $localeService = new LocaleService(['en_US' => ['date' => 'dd.MM.y']]);
+        $localeService = new LocaleService(['en_US' => LocaleService::DEFAULT_SETTINGS]);
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->method('trans')->willReturn('dating');
+
         $helper = new ProjectHelper($config, $localeService, $translator);
         $helper->setLocale('en_US');
 

@@ -6,6 +6,10 @@
         <source>Time tracking</source>
         <target state="translated">Pelacakan waktu</target>
       </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target state="translated">Tema</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

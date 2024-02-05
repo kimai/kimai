@@ -12,10 +12,9 @@ namespace App\Form\Helper;
 use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Project;
-use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class ProjectHelper implements LocaleAwareInterface
+final class ProjectHelper
 {
     public const PATTERN_NAME = '{name}';
     public const PATTERN_COMMENT = '{comment}';
@@ -33,7 +32,11 @@ final class ProjectHelper implements LocaleAwareInterface
     private bool $showEnd = false;
     private ?string $locale = null;
 
-    public function __construct(private SystemConfiguration $configuration, private LocaleService $localeService, private TranslatorInterface $translator)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        private readonly LocaleService $localeService,
+        private readonly TranslatorInterface $translator
+    )
     {
     }
 
@@ -42,7 +45,7 @@ final class ProjectHelper implements LocaleAwareInterface
         return $this->locale ?? \Locale::getDefault();
     }
 
-    public function setLocale(string $locale): void
+    public function setLocale(?string $locale): void
     {
         $this->locale = $locale;
     }

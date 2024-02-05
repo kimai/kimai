@@ -30,7 +30,6 @@ abstract class AbstractMigration extends BaseAbstractMigration
     }
 
     /**
-     * @param Schema $schema
      * @throws Exception
      */
     public function preUp(Schema $schema): void
@@ -39,7 +38,6 @@ abstract class AbstractMigration extends BaseAbstractMigration
     }
 
     /**
-     * @param Schema $schema
      * @throws Exception
      */
     public function preDown(Schema $schema): void
@@ -52,7 +50,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
      *
      * @throws Exception
      */
-    protected function abortIfPlatformNotSupported(): void
+    private function abortIfPlatformNotSupported(): void
     {
         $platform = $this->connection->getDatabasePlatform();
         if (!($platform instanceof MySQLPlatform)) {

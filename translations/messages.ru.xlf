@@ -22,9 +22,9 @@
         <source>This is a mandatory field</source>
         <target>Обязательное поле</target>
       </trans-unit>
-      <trans-unit id="_ohHsMM" resname="create">
+      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve">
         <source>create</source>
-        <target state="translated">Добавить</target>
+        <target state="translated">Создать</target>
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
@@ -785,9 +785,9 @@
         <source>delete.not_in_use</source>
         <target>Этот элемент можно безопасно удалить.</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
         <source>admin_entity.delete_confirm</source>
-        <target>Эти данные будут удалены! Вы можете выбрать запись, в которую будут перенесены все данные:</target>
+        <target state="translated">Эти данные будут удалены! Вы можете выбрать аккаунт, на который будут перенесены все данные:</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
@@ -1560,6 +1560,10 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Генератор номеров счета</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Поисковый фильтр</target>
       </trans-unit>
     </body>
   </file>

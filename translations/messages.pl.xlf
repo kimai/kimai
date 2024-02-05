@@ -1393,11 +1393,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Obsługiwane języki z zasadami formatowania</target>
+        <target state="needs-translation">Obsługiwane języki z zasadami formatowania</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Poza tłumaczeniem interfejsu, ustawienie to odpowiada także za format czasu, daty oraz waluty.</target>
+        <target state="needs-translation">Poza tłumaczeniem interfejsu, ustawienie to odpowiada także za format czasu, daty oraz waluty.</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

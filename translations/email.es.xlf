@@ -47,8 +47,14 @@
         <target state="translated">Nueva ausencia | %absence_user% | %absence_type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>absence_created_supervisor_message</source>
-        <target state="translated">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="needs-translation">
 Se ha creado una nueva ausencia para %absence_user%.
 
 Tipo_ausencia% - Comentario_ausencia%.

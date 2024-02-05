@@ -29,15 +29,22 @@ use Symfony\Component\Intl\Locales;
 #[AsCommand(name: 'kimai:reset:locales')]
 final class RegenerateLocalesCommand extends Command
 {
-    private string $defaultDate = 'dd.MM.y';
-    private string $defaultTime = 'HH:mm';
-    private array $rtlLocales = [
-        'ar' => true,
-        'fa' => true,
-        'he' => true,
-    ];
+    /**
+     * @var string[]
+     */
+    private array $rtlLocales = ['ar', 'fa', 'he'];
+    /**
+     * new locales were added here, to shrink the list a little bit
+     * this can be removed in the future, if there will ever be the need for it
+     *
+     * @var string[]
+     */
+    private array $noRegionCode = ['ar', 'id', 'pa', 'sl'];
 
-    public function __construct(private LocaleService $localeService, private string $projectDirectory, private string $kernelEnvironment)
+    public function __construct(
+        private readonly string $projectDirectory,
+        private readonly string $kernelEnvironment
+    )
     {
         parent::__construct();
     }
@@ -55,32 +62,44 @@ final class RegenerateLocalesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $locales = $this->localeService->getAllLocales();
 
-        // detect all registered locales and allow to choose them as well, so people get to
-        // choose the language for translation with the correct format of their location
-        /*
+        // find all available locales from the translation filenames
+        $translationFilenames = glob($this->projectDirectory . DIRECTORY_SEPARATOR . 'translations/*.xlf');
+        if ($translationFilenames === false) {
+            $io->error('Failed reading translation files');
+
+            return Command::FAILURE;
+        }
+        $firstLevelLocales = [];
+        foreach ($translationFilenames as $file) {
+            $firstLevelLocales[] = explode('.', basename($file))[1];
+        }
+        $firstLevelLocales = array_unique($firstLevelLocales);
+        $io->title('Locales found from translation files');
+        $io->writeln(implode('|', $firstLevelLocales));
+
         $secondLevel = [];
-        foreach (Locales::getLocales() as $locale) {
-            if (substr_count($locale, '_') === 1) {
-                $baseLocale = substr($locale, 0, strpos($locale, '_'));
-                if (in_array($baseLocale, $locales)) {
-                    $subLocale = substr($locale, strpos($locale, '_') + 1);
-                    if (!is_numeric($subLocale)) {
-                        $secondLevel[] = $locale;
+        foreach (Locales::getLocales() as $localeCode) {
+            $locale = explode('_', $localeCode);
+            if (\count($locale) === 2 && !\in_array($locale[0], $this->noRegionCode, true)) {
+                $baseLocale = $locale[0];
+                if (\in_array($baseLocale, $firstLevelLocales)) {
+                    $regionCode = $locale[1];
+                    if (!is_numeric($regionCode)) {
+                        $secondLevel[] = $localeCode;
                     }
                 }
             }
         }
-        $locales = array_merge($locales, $secondLevel);
-        */
+
+        sort($firstLevelLocales);
+        sort($secondLevel);
+
+        // keep the locales that have translation filesat the begin
+        // the config is than easier to read and the locales will be sorted in the UI anyway
+        $locales = array_merge($firstLevelLocales, $secondLevel);
 
         $appLocales = [];
-        $defaults = [
-            'date' => $this->defaultDate,
-            'time' => $this->defaultTime,
-            'rtl' => false,
-        ];
 
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
@@ -88,11 +107,13 @@ final class RegenerateLocalesCommand extends Command
                 continue;
             }
 
-            $appLocales[$locale] = $defaults;
+            $appLocales[$locale] = LocaleService::DEFAULT_SETTINGS;
         }
 
         // make sure all keys are registered for every locale
         foreach ($appLocales as $locale => $settings) {
+            $settings['translation'] = \in_array($locale, $firstLevelLocales, true);
+
             // these are completely new since v2
             // calculate everything with IntlFormatter
             $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
@@ -115,13 +136,49 @@ final class RegenerateLocalesCommand extends Command
                 $rtlLocale = substr($rtlLocale, 0, strpos($rtlLocale, '_'));
             }
 
-            if (\array_key_exists($rtlLocale, $this->rtlLocales)) {
-                $settings['rtl'] = $this->rtlLocales[$rtlLocale];
-            }
+            $settings['rtl'] = \in_array($rtlLocale, $this->rtlLocales, true);
 
             // pre-fill all formats with the default locale settings
             $appLocales[$locale] = $settings;
         }
+
+        $removableDuplicates = [];
+        foreach ($appLocales as $locale => $setting) {
+            $localeParts = explode('_', $locale);
+            if (\count($localeParts) === 1) {
+                continue;
+            }
+            // e.g. norwegian just exists with region code
+            if (!\array_key_exists($localeParts[0], $appLocales)) {
+                continue;
+            }
+            $baseLocaleSettings = $appLocales[$localeParts[0]];
+            if ($baseLocaleSettings['time'] !== $setting['time']) {
+                continue;
+            }
+            if ($baseLocaleSettings['date'] !== $setting['date']) {
+                continue;
+            }
+            if ($setting['translation'] === true) {
+                continue;
+            }
+            if ($baseLocaleSettings['rtl'] !== $setting['rtl']) {
+                continue;
+            }
+            $removableDuplicates[] = $locale;
+        }
+
+        $io->title('Redundant locales that will be skipped');
+        $io->writeln(implode('|', $removableDuplicates));
+
+        foreach ($removableDuplicates as $duplicate) {
+            unset($appLocales[$duplicate]);
+        }
+
+        // in the future this list should be reduced to the list of available translations, but for a long time users
+        // could choose from the entire list of all locales, so we likely have to keep that forever ...
+        $io->title('List of app_locales for services.yaml');
+        $io->writeln(implode('|', $locales));
 
         ksort($appLocales);
 
