@@ -1062,9 +1062,9 @@
         <source>stats.revenue</source>
         <target state="final">Entrate</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="yes">
-        <source>stats.workingTime</source>
-        <target state="final">Ore lavorative</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="no" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">Ore lavorative</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries" approved="yes">
         <source>error.too_many_entries</source>

@@ -389,9 +389,9 @@
       <!--
               Statistics data for Dashboard & Users profile
             -->
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>Arbeidstid</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">Arbeidstid</target>
       </trans-unit>
       <trans-unit id="t5eIWp8" resname="stats.userTotal">
         <source>stats.userTotal</source>
