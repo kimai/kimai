@@ -1288,9 +1288,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $group === null ? $group : (string) $group;
     }
 
-    public function getHolidaysPerYear(): int
+    public function getHolidaysPerYear(): float
     {
-        return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        return (float) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
     }
 
     public function setWorkHoursMonday(int $seconds): void
@@ -1333,8 +1333,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(?int $holidays): void
+    public function setHolidaysPerYear(?float $holidays): void
     {
+        if ($holidays !== null) {
+            // makes sure that the number is a multiple of 0.5
+            $holidays = number_format((round($holidays * 2) / 2), 1);
+        }
+
         $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
     }
 
