@@ -1087,9 +1087,9 @@
         <source>export.warn_result_amount</source>
         <target state="translated">Uw zoekopdracht geeft %count% resultaten. Als de export faalt, dan moet u de zoekopdracht verder verfijnen.</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>Werktijd</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target state="needs-translation">Werktijd</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
