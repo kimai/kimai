@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StringHelperTest extends TestCase
 {
-    public function testEnsureMaxLength()
+    public function testEnsureMaxLength(): void
     {
         self::assertNull(StringHelper::ensureMaxLength(null, 10));
         self::assertEquals('', StringHelper::ensureMaxLength('', 10));
@@ -51,7 +51,7 @@ class StringHelperTest extends TestCase
     /**
      * @dataProvider getDdeAttackStrings
      */
-    public function testSanitizeDde(string $input)
+    public function testSanitizeDde(string $input): void
     {
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
     }
@@ -65,7 +65,7 @@ class StringHelperTest extends TestCase
     /**
      * @dataProvider getNonDdeAttackStrings
      */
-    public function testSanitizeDdeWithCorrectStrings(string $input)
+    public function testSanitizeDdeWithCorrectStrings(string $input): void
     {
         self::assertEquals($input, StringHelper::sanitizeDDE($input));
     }

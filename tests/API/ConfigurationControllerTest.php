@@ -16,12 +16,12 @@ use App\Entity\User;
  */
 class ConfigurationControllerTest extends APIControllerBaseTest
 {
-    public function testIsTimesheetSecure()
+    public function testIsTimesheetSecure(): void
     {
         $this->assertUrlIsSecured('/api/config/timesheet');
     }
 
-    public function testGetTimesheet()
+    public function testGetTimesheet(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/config/timesheet', 'GET');

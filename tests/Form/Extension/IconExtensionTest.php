@@ -20,12 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class IconExtensionTest extends TestCase
 {
-    public function testExtendedTypes()
+    public function testExtendedTypes(): void
     {
         self::assertEquals([TextType::class], IconExtension::getExtendedTypes());
     }
 
-    public function testConfigureOptions()
+    public function testConfigureOptions(): void
     {
         $resolver = new OptionsResolver();
         $sut = new IconExtension();

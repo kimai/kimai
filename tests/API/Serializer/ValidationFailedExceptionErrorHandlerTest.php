@@ -27,7 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ValidationFailedExceptionErrorHandlerTest extends TestCase
 {
-    public function testSubscribingMethods()
+    public function testSubscribingMethods(): void
     {
         self::assertEquals([[
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
@@ -44,7 +44,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         ]], ValidationFailedExceptionErrorHandler::getSubscribingMethods());
     }
 
-    public function testWithEmptyConstraintsList()
+    public function testWithEmptyConstraintsList(): void
     {
         $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
@@ -64,7 +64,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         self::assertEquals($expected, $sut->serializeValidationExceptionToJson(new JsonSerializationVisitor(), $validations, [], new SerializationContext()));
     }
 
-    public function testWithUnsupportedException()
+    public function testWithUnsupportedException(): void
     {
         $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
@@ -81,7 +81,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         self::assertEquals('foooo', $actual);
     }
 
-    public function testWithConstraintsList()
+    public function testWithConstraintsList(): void
     {
         $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);
@@ -125,7 +125,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         ));
     }
 
-    public function testWithConstraintsListAndWrongException()
+    public function testWithConstraintsListAndWrongException(): void
     {
         $security = $this->createMock(Security::class);
         $translator = $this->createMock(TranslatorInterface::class);

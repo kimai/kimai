@@ -26,7 +26,7 @@ class ConfigurationTest extends TestCase
         ];
     }
 
-    protected function assertConfig($inputConfig, $expectedConfig)
+    public function assertConfig($inputConfig, $expectedConfig): void
     {
         $finalizedConfig = $this->getCompiledConfig($inputConfig);
 
@@ -43,7 +43,7 @@ class ConfigurationTest extends TestCase
         return $node->finalize($normalizedConfig);
     }
 
-    public function testValidateDataDir()
+    public function testValidateDataDir(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.data_dir": Data directory does not exist');
@@ -51,7 +51,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
-    public function testValidateLdapConfigUserBaseDn()
+    public function testValidateLdapConfigUserBaseDn(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap": The "ldap.user.baseDn" config must be set if LDAP is activated.');
@@ -67,7 +67,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapConfig()
+    public function testValidateLdapConfig(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection": The ldap.connection.useSsl and ldap.connection.useStartTls options are mutually exclusive.');
@@ -83,7 +83,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapFilterIncludingReplacer()
+    public function testValidateLdapFilterIncludingReplacer(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
@@ -98,7 +98,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapFilterMissingStartingParenthesis()
+    public function testValidateLdapFilterMissingStartingParenthesis(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
@@ -113,7 +113,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateCalendarDragDropMaxEntries()
+    public function testValidateCalendarDragDropMaxEntries(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.calendar.dragdrop_amount": The dragdrop_amount must be between 0 and 20');
@@ -126,7 +126,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapFilterInvalidParenthesisCounter()
+    public function testValidateLdapFilterInvalidParenthesisCounter(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.user.filter": The ldap.user.filter must be enclosed by a matching number of parentheses "()" and must NOT contain a "%s" replacer');
@@ -141,7 +141,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapAccountFilterFormatMissingUserAttributeReplacer()
+    public function testValidateLdapAccountFilterFormatMissingUserAttributeReplacer(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
@@ -156,7 +156,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapAccountFilterFormatMissingStartingParenthesis()
+    public function testValidateLdapAccountFilterFormatMissingStartingParenthesis(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
@@ -171,7 +171,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateLdapAccountFilterFormatInvalidParenthesisCounter()
+    public function testValidateLdapAccountFilterFormatInvalidParenthesisCounter(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.ldap.connection.accountFilterFormat": The accountFilterFormat must be enclosed by a matching number of parentheses "()" and contain one "%s" replacer for the username');
@@ -186,7 +186,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateSamlIsMissingMappingForEmail()
+    public function testValidateSamlIsMissingMappingForEmail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "kimai.saml": You need to configure a SAML mapping for the email attribute.');
@@ -200,7 +200,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public function testValidateSamlDoesNotTriggerOnDeactivatedSaml()
+    public function testValidateSamlDoesNotTriggerOnDeactivatedSaml(): void
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
         $config = $this->getMinConfig();
@@ -212,7 +212,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, $finalizedConfig);
     }
 
-    public function testValidateSamlDoesNotTriggerWhenEmailMappingExists()
+    public function testValidateSamlDoesNotTriggerWhenEmailMappingExists(): void
     {
         $config = $this->getMinConfig();
         $config['saml'] = [
@@ -226,7 +226,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, $finalizedConfig);
     }
 
-    public function testDefaultLdapSettings()
+    public function testDefaultLdapSettings(): void
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
         $expected = [
@@ -257,7 +257,7 @@ class ConfigurationTest extends TestCase
         self::assertEquals($expected, $finalizedConfig['ldap']);
     }
 
-    public function testFullDefaultConfig()
+    public function testFullDefaultConfig(): void
     {
         $fullDefaultConfig = [
             'data_dir' => '/tmp/',

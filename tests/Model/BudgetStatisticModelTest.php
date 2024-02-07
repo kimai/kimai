@@ -30,22 +30,22 @@ class BudgetStatisticModelTest extends TestCase
         return new Customer('foo');
     }
 
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $this->assertDefaults();
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter();
     }
 
-    public function testCalculation()
+    public function testCalculation(): void
     {
         $this->assertCalculation();
     }
 
-    protected function assertCalculation()
+    protected function assertCalculation(): void
     {
         $entity = $this->getEntity();
         $entity->setBudget(100.0);
@@ -112,7 +112,7 @@ class BudgetStatisticModelTest extends TestCase
         self::assertSame(213.00, $sut->getBudgetSpent());
     }
 
-    protected function assertSetter()
+    protected function assertSetter(): void
     {
         $entity = $this->getEntity();
         $entity->setBudget(10.0);
@@ -143,7 +143,7 @@ class BudgetStatisticModelTest extends TestCase
         self::assertNull($sut->getStatistic());
     }
 
-    protected function assertDefaults()
+    protected function assertDefaults(): void
     {
         $entity = $this->getEntity();
         $sut = $this->getSut($entity);

@@ -36,21 +36,21 @@ class QuickEntryTimesheetValidatorTest extends ConstraintValidatorTestCase
         return new QuickEntryTimesheetValidator([new TimesheetBasic()]);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Activity(), $this->createConstraint());
     }
 
-    public function testNotTriggersOnEmptyDurationAndNewTimesheet()
+    public function testNotTriggersOnEmptyDurationAndNewTimesheet(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setDuration(null);

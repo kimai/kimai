@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TagTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Tag();
         $this->assertNull($sut->getId());
@@ -25,7 +25,7 @@ class TagTest extends TestCase
         $this->assertNull($sut->getColor());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Tag();
 

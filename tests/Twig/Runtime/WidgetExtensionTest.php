@@ -62,7 +62,7 @@ class WidgetExtensionTest extends TestCase
         return $env;
     }
 
-    public function testRenderWidgetForInvalidValue()
+    public function testRenderWidgetForInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Widget must be either a WidgetInterface or a string');
@@ -72,7 +72,7 @@ class WidgetExtensionTest extends TestCase
         $sut->renderWidget($this->getEnvironment(), true);
     }
 
-    public function testRenderWidgetForUnknownWidget()
+    public function testRenderWidgetForUnknownWidget(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown widget "test" requested');
@@ -81,7 +81,7 @@ class WidgetExtensionTest extends TestCase
         $sut->renderWidget($this->getEnvironment(), 'test');
     }
 
-    public function testRenderWidgetByString()
+    public function testRenderWidgetByString(): void
     {
         $widget = new More();
         $widget->setId('test');
@@ -92,7 +92,7 @@ class WidgetExtensionTest extends TestCase
         $this->assertEquals($options, $data);
     }
 
-    public function testRenderWidgetObject()
+    public function testRenderWidgetObject(): void
     {
         $widget = new More();
         $sut = $this->getSut(null, null);

@@ -1044,7 +1044,7 @@
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
-        <target state="needs-translation">Pracovná doba</target>
+        <target>Pracovná doba</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>

@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class MinuteIncrementTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $data = ['increment' => 4];
         $model = new TypeTestModel(['increment' => 5]);
@@ -37,7 +37,7 @@ class MinuteIncrementTypeTest extends TypeTestCase
         $this->assertEquals($expected, $model);
     }
 
-    public function testPresetPopulatesView()
+    public function testPresetPopulatesView(): void
     {
         $view = $this->factory->create(MinuteIncrementType::class, 3600, [])->createView();
         self::assertArrayHasKey('choices', $view->vars);

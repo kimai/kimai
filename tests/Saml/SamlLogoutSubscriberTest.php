@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
  */
 class SamlLogoutSubscriberTest extends TestCase
 {
-    public function testLogout()
+    public function testLogout(): void
     {
         $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
@@ -41,7 +41,7 @@ class SamlLogoutSubscriberTest extends TestCase
         $sut->logout(new LogoutEvent($request, $token));
     }
 
-    public function testLogoutWithWrongTokenWillNotCallMethods()
+    public function testLogoutWithWrongTokenWillNotCallMethods(): void
     {
         $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->never())->method('processSLO');
@@ -57,7 +57,7 @@ class SamlLogoutSubscriberTest extends TestCase
         $sut->logout(new LogoutEvent($request, $token));
     }
 
-    public function testLogoutWithLogoutUrl()
+    public function testLogoutWithLogoutUrl(): void
     {
         $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));

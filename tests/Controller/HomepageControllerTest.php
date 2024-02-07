@@ -18,19 +18,19 @@ use App\Form\Type\InitialViewType;
  */
 class HomepageControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/homepage');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/homepage');
         $this->assertIsRedirect($client, '/en/timesheet/');
     }
 
-    public function testIndexActionWithChangedPreferences()
+    public function testIndexActionWithChangedPreferences(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 

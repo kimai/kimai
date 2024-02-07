@@ -30,7 +30,7 @@ class InvoiceMetaTest extends AbstractMetaEntityTest
         return new InvoiceMeta();
     }
 
-    public function testSetEntityThrowsException()
+    public function testSetEntityThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected instanceof Invoice, received "App\Entity\Customer"');

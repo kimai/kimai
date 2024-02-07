@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractEntityTest extends TestCase
 {
-    protected function assertBudget(EntityWithBudget $entityWithBudget)
+    public function assertBudget(EntityWithBudget $entityWithBudget): void
     {
         $this->assertEquals(0.0, $entityWithBudget->getBudget());
         $this->assertEquals(0, $entityWithBudget->getTimeBudget());

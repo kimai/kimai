@@ -21,7 +21,7 @@ class DefaultRoundingTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate($roundBegin, $roundEnd, $roundDuration, \DateTime $start, \DateTime $end, \DateTime $expectedStart, \DateTime $expectedEnd, $expectedDuration)
+    public function testCalculate($roundBegin, $roundEnd, $roundDuration, \DateTime $start, \DateTime $end, \DateTime $expectedStart, \DateTime $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);

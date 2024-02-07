@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExportFilenameTest extends TestCase
 {
-    public function testExportFilename()
+    public function testExportFilename(): void
     {
         $datePrefix = date('Ymd');
 

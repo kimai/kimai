@@ -17,13 +17,13 @@ use PHPUnit\Framework\TestCase;
  */
 class MailConfigurationTest extends TestCase
 {
-    public function testGetFromAddress()
+    public function testGetFromAddress(): void
     {
         $sut = new MailConfiguration('foo-bar123@example.com');
         self::assertEquals('foo-bar123@example.com', $sut->getFromAddress());
     }
 
-    public function testGetFromAddressWithEmptyAddressReturnsNull()
+    public function testGetFromAddressWithEmptyAddressReturnsNull(): void
     {
         $sut = new MailConfiguration('');
         self::assertNull($sut->getFromAddress());

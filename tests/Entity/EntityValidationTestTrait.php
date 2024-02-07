@@ -21,7 +21,7 @@ trait EntityValidationTestTrait
      * @param object $entity
      * @param array|string $fieldNames
      */
-    protected function assertHasViolationForField(object $entity, $fieldNames, $groups = null)
+    public function assertHasViolationForField(object $entity, $fieldNames, $groups = null): void
     {
         self::bootKernel();
         /** @var ValidatorInterface $validator */
@@ -56,7 +56,7 @@ trait EntityValidationTestTrait
         $this->assertEquals($expected, $countViolations, sprintf('Expected %s violations, found %s in %s.', $expected, $actual, implode(', ', array_keys($violatedFields))));
     }
 
-    protected function assertHasNoViolations($entity, $groups = null)
+    public function assertHasNoViolations($entity, $groups = null): void
     {
         self::bootKernel();
         /** @var ValidatorInterface $validator */

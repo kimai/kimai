@@ -27,7 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EntityWithMetaFieldsExporterTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects(self::once())->method('dispatch')->willReturnCallback(function (ProjectMetaDisplayEvent $event) {

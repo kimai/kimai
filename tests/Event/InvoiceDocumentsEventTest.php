@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceDocumentsEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new InvoiceDocumentsEvent([]);
 

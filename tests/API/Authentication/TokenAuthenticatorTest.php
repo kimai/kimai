@@ -38,7 +38,7 @@ class TokenAuthenticatorTest extends TestCase
         return new TokenAuthenticator($userProvider, $passwordHasherFactory);
     }
 
-    public function testSupports()
+    public function testSupports(): void
     {
         $sut = $this->getSut();
 
@@ -62,7 +62,7 @@ class TokenAuthenticatorTest extends TestCase
         self::assertTrue($sut->supports($request));
     }
 
-    public function testAuthenticateWithMissingAuthHeader()
+    public function testAuthenticateWithMissingAuthHeader(): void
     {
         $this->expectException(CustomUserMessageAuthenticationException::class);
         $this->expectExceptionMessage('Authentication required, missing user header: X-AUTH-USER');
@@ -73,7 +73,7 @@ class TokenAuthenticatorTest extends TestCase
         $sut->authenticate($request);
     }
 
-    public function testAuthenticateWithMissingToken()
+    public function testAuthenticateWithMissingToken(): void
     {
         $this->expectException(CustomUserMessageAuthenticationException::class);
         $this->expectExceptionMessage('Authentication required, missing token header: X-AUTH-TOKEN');
@@ -84,7 +84,7 @@ class TokenAuthenticatorTest extends TestCase
         $sut->authenticate($request);
     }
 
-    public function testAuthenticateWithEmptyToken()
+    public function testAuthenticateWithEmptyToken(): void
     {
         $this->expectException(CustomUserMessageAuthenticationException::class);
         $this->expectExceptionMessage('Authentication required, missing token header: X-AUTH-TOKEN');
@@ -95,7 +95,7 @@ class TokenAuthenticatorTest extends TestCase
         $sut->authenticate($request);
     }
 
-    public function testAuthenticateWithMissingUser()
+    public function testAuthenticateWithMissingUser(): void
     {
         $this->expectException(CustomUserMessageAuthenticationException::class);
         $this->expectExceptionMessage('Authentication required, missing user header: X-AUTH-USER');
@@ -106,7 +106,7 @@ class TokenAuthenticatorTest extends TestCase
         $sut->authenticate($request);
     }
 
-    public function testAuthenticateWithEmptyUser()
+    public function testAuthenticateWithEmptyUser(): void
     {
         $this->expectException(CustomUserMessageAuthenticationException::class);
         $this->expectExceptionMessage('Authentication required, missing user header: X-AUTH-USER');
@@ -117,7 +117,7 @@ class TokenAuthenticatorTest extends TestCase
         $sut->authenticate($request);
     }
 
-    public function testAuthenticate()
+    public function testAuthenticate(): void
     {
         $sut = $this->getSut();
 
@@ -138,7 +138,7 @@ class TokenAuthenticatorTest extends TestCase
         self::assertTrue($badge->isResolved());
     }
 
-    public function testAuthenticateFailsOnMissingApiTokenForUser()
+    public function testAuthenticateFailsOnMissingApiTokenForUser(): void
     {
         $this->expectException(BadCredentialsException::class);
         $this->expectExceptionMessage('The user has no activated API account.');
@@ -155,7 +155,7 @@ class TokenAuthenticatorTest extends TestCase
         $badge->executeCustomChecker($user);
     }
 
-    public function testAuthenticateFailsOnWrongPassword()
+    public function testAuthenticateFailsOnWrongPassword(): void
     {
         $this->expectException(BadCredentialsException::class);
         $this->expectExceptionMessage('The presented password is invalid.');

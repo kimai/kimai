@@ -54,7 +54,7 @@ class ActivityServiceTest extends TestCase
         return $service;
     }
 
-    public function testCannotSavePersistedProjectAsNew()
+    public function testCannotSavePersistedProjectAsNew(): void
     {
         $project = $this->createMock(Activity::class);
         $project->expects($this->once())->method('getId')->willReturn(1);
@@ -67,7 +67,7 @@ class ActivityServiceTest extends TestCase
         $sut->saveNewActivity($project);
     }
 
-    public function testsaveNewActivityHasValidationError()
+    public function testsaveNewActivityHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
         $constraints->add(new ConstraintViolation('toooo many tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
@@ -83,7 +83,7 @@ class ActivityServiceTest extends TestCase
         $sut->saveNewActivity(new Activity());
     }
 
-    public function testUpdateDispatchesEvents()
+    public function testUpdateDispatchesEvents(): void
     {
         $project = $this->createMock(Activity::class);
         $project->method('getId')->willReturn(1);
@@ -106,7 +106,7 @@ class ActivityServiceTest extends TestCase
         $sut->updateActivity($project);
     }
 
-    public function testcreateNewActivityDispatchesEvents()
+    public function testcreateNewActivityDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
@@ -129,7 +129,7 @@ class ActivityServiceTest extends TestCase
         self::assertSame($project, $activity->getProject());
     }
 
-    public function testsaveNewActivityDispatchesEvents()
+    public function testsaveNewActivityDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
@@ -150,7 +150,7 @@ class ActivityServiceTest extends TestCase
         $sut->saveNewActivity($activity);
     }
 
-    public function testcreateNewActivityWithoutCustomer()
+    public function testcreateNewActivityWithoutCustomer(): void
     {
         $sut = $this->getSut();
 

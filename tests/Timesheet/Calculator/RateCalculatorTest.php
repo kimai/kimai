@@ -38,7 +38,7 @@ class RateCalculatorTest extends TestCase
         return $mock;
     }
 
-    public function testCalculateWithTimesheetHourlyRate()
+    public function testCalculateWithTimesheetHourlyRate(): void
     {
         $record = new Timesheet();
         $record->setEnd(new \DateTime());
@@ -52,7 +52,7 @@ class RateCalculatorTest extends TestCase
         $this->assertEquals(50, $record->getRate());
     }
 
-    public function testCalculateWithTimesheetFixedRate()
+    public function testCalculateWithTimesheetFixedRate(): void
     {
         $record = new Timesheet();
         $record->setEnd(new \DateTime());
@@ -192,7 +192,7 @@ class RateCalculatorTest extends TestCase
         return $user;
     }
 
-    public function testCalculateWithEmptyEnd()
+    public function testCalculateWithEmptyEnd(): void
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
@@ -213,7 +213,7 @@ class RateCalculatorTest extends TestCase
      *
      * @dataProvider getRuleDefinitions
      */
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate)
+    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
     {
         $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $start = clone $end;

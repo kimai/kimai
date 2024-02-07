@@ -16,17 +16,17 @@ use App\Entity\User;
  */
 class DoctorControllerTest extends ControllerBaseTest
 {
-    public function testDoctorIsSecure()
+    public function testDoctorIsSecure(): void
     {
         $this->assertUrlIsSecured('/doctor');
     }
 
-    public function testDoctorIsSecureForRole()
+    public function testDoctorIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/doctor');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/doctor');
@@ -37,7 +37,7 @@ class DoctorControllerTest extends ControllerBaseTest
         self::assertTrue($counter === 6 || $counter === 5);
     }
 
-    public function testFlushLogWithInvalidCsrf()
+    public function testFlushLogWithInvalidCsrf(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 

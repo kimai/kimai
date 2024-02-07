@@ -19,14 +19,14 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
 {
     public const COUNTER = 17;
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new ThemeJavascriptTranslationsEvent();
 
         $this->assertCount(self::COUNTER, $sut->getTranslations());
     }
 
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $sut = new ThemeJavascriptTranslationsEvent();
         $sut->setTranslation('foo', 'bar');

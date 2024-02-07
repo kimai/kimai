@@ -16,13 +16,13 @@ use App\Model\Statistic\Timesheet;
  */
 class TimesheetTest extends AbstractTimesheetTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Timesheet();
         $this->assertDefaultValues($sut);
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = new Timesheet();
         $this->assertSetter($sut);

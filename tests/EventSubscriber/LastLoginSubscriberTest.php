@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
  */
 class LastLoginSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = LastLoginSubscriber::getSubscribedEvents();
 
@@ -38,7 +38,7 @@ class LastLoginSubscriberTest extends TestCase
         $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
-    public function testOnImplicitLogin()
+    public function testOnImplicitLogin(): void
     {
         $repository = $this->createMock(UserRepository::class);
         $repository->expects($this->once())->method('saveUser');
@@ -53,7 +53,7 @@ class LastLoginSubscriberTest extends TestCase
         self::assertNotNull($user->getLastLogin());
     }
 
-    public function testOnLoginSuccessWithUser()
+    public function testOnLoginSuccessWithUser(): void
     {
         $repository = $this->createMock(UserRepository::class);
         $repository->expects($this->once())->method('saveUser');

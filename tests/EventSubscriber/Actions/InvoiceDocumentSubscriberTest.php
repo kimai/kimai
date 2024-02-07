@@ -19,12 +19,12 @@ use App\Model\InvoiceDocument;
  */
 class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(InvoiceDocumentSubscriber::class, 'invoice_document');
     }
 
-    public function testActions()
+    public function testActions(): void
     {
         $sut = $this->createSubscriber(InvoiceDocumentSubscriber::class, true);
 

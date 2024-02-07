@@ -24,12 +24,12 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
 {
-    public function testReportIsSecure()
+    public function testReportIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting/customer/monthly_projects/view');
     }
 
-    public function testExportReportIsSecure()
+    public function testExportReportIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting/customer/monthly_projects/export');
     }
@@ -73,7 +73,7 @@ class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
         return $client;
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $client = $this->prepareReport();
 
@@ -83,7 +83,7 @@ class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
         self::assertGreaterThan(0, $rows->count());
     }
 
-    public function testExport()
+    public function testExport(): void
     {
         $client = $this->prepareReport();
 

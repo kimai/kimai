@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FormFormatConverterTest extends TestCase
 {
-    public function testConvert()
+    public function testConvert(): void
     {
         $sut = new FormFormatConverter();
 
@@ -33,7 +33,7 @@ class FormFormatConverterTest extends TestCase
     /**
      * @dataProvider getProblemPattern
      */
-    public function testProblemPattern($format, $example)
+    public function testProblemPattern($format, $example): void
     {
         $sut = new FormFormatConverter();
         $format = $sut->convert($format);
@@ -41,7 +41,7 @@ class FormFormatConverterTest extends TestCase
         $this->assertMatchesRegularExpression($pattern, $example);
     }
 
-    public function testDayPattern()
+    public function testDayPattern(): void
     {
         for ($i = 1; $i < 32; $i++) {
             if ($i < 10) {
@@ -51,7 +51,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function testHourPattern()
+    public function testHourPattern(): void
     {
         for ($i = 0; $i < 24; $i++) {
             if ($i < 10) {
@@ -61,7 +61,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function testMinutePattern()
+    public function testMinutePattern(): void
     {
         for ($i = 0; $i < 60; $i++) {
             if ($i < 10) {
@@ -71,7 +71,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function testMonthPattern()
+    public function testMonthPattern(): void
     {
         for ($i = 1; $i < 13; $i++) {
             if ($i < 10) {
@@ -81,7 +81,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function testYearPattern()
+    public function testYearPattern(): void
     {
         for ($i = 0; $i < 200; $i++) {
             $this->assertMatchesRegularExpression('/^' . FormFormatConverter::PATTERN_YEAR . '$/', (string) (1900 + $i));
@@ -93,7 +93,7 @@ class FormFormatConverterTest extends TestCase
         yield ["yy-MM-dd HH 'h' mm", '2009-08-06 17 h 45'];
     }
 
-    public function testPattern()
+    public function testPattern(): void
     {
         $sut = new FormFormatConverter();
         foreach ($this->getPossibleDateTimePattern() as $format => $example) {

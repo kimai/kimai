@@ -20,12 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EnhancedChoiceTypeExtensionTest extends TestCase
 {
-    public function testExtendedTypes()
+    public function testExtendedTypes(): void
     {
         self::assertEquals([EntityType::class, ChoiceType::class], EnhancedChoiceTypeExtension::getExtendedTypes());
     }
 
-    public function testConfigureOptions()
+    public function testConfigureOptions(): void
     {
         $resolver = new OptionsResolver();
         $sut = new EnhancedChoiceTypeExtension();

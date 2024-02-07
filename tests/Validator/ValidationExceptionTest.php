@@ -17,14 +17,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidationExceptionTest extends TestCase
 {
-    public function testException()
+    public function testException(): void
     {
         $sut = new ValidationException();
         self::assertEquals(400, $sut->getCode());
         self::assertEquals('Validation failed', $sut->getMessage());
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new ValidationException('Something went wrong');
         self::assertEquals(400, $sut->getCode());

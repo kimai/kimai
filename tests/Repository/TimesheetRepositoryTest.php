@@ -26,7 +26,7 @@ use App\Utils\Pagination;
  */
 class TimesheetRepositoryTest extends AbstractRepositoryTest
 {
-    public function testResultTypeForQueryState()
+    public function testResultTypeForQueryState(): void
     {
         $em = $this->getEntityManager();
         /** @var TimesheetRepository $repository */
@@ -41,7 +41,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $this->assertIsArray($result);
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $em = $this->getEntityManager();
         /** @var ActivityRepository $activityRepository */
@@ -68,7 +68,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $this->assertNotNull($timesheet->getId());
     }
 
-    public function testSaveWithTags()
+    public function testSaveWithTags(): void
     {
         $em = $this->getEntityManager();
         /** @var ActivityRepository $activityRepository */

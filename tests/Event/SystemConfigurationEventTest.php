@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SystemConfigurationEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new SystemConfigurationEvent([]);
         self::assertIsArray($sut->getConfigurations());

@@ -18,17 +18,17 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 class UserControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/admin/user/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/');
@@ -43,7 +43,7 @@ class UserControllerTest extends ControllerBaseTest
         ]);
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -64,19 +64,19 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 1);
     }
 
-    public function testExportIsSecureForRole()
+    public function testExportIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/user/export');
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/export');
         $this->assertExcelExportResponse($client, 'kimai-users_');
     }
 
-    public function testExportActionWithSearchTermQuery()
+    public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -96,7 +96,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertExcelExportResponse($client, 'kimai-users_');
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $username = '亚历山德拉' . uniqid();
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -119,7 +119,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -138,7 +138,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
-    public function testDeleteActionWithTimesheetEntries()
+    public function testDeleteActionWithTimesheetEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -172,7 +172,7 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
-    public function testDeleteActionWithUserReplacementAndTimesheetEntries()
+    public function testDeleteActionWithUserReplacementAndTimesheetEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -222,7 +222,7 @@ class UserControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getValidationTestData
      */
-    public function testValidationForCreateAction(array $formData, array $validationFields)
+    public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,

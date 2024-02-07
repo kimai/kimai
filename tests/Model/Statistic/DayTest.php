@@ -17,21 +17,21 @@ use DateTime;
  */
 class DayTest extends AbstractTimesheetTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 0, 0.0);
         $this->assertDefaultValues($sut);
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 12340, 197.25956);
         $this->assertSetter($sut);
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 12340, 197.25956);
@@ -43,7 +43,7 @@ class DayTest extends AbstractTimesheetTest
         self::assertSame(0, $sut->getTotalDurationBillable());
     }
 
-    public function testAllowedMonths()
+    public function testAllowedMonths(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new Day($date, 12340, 197.25956);
@@ -57,7 +57,7 @@ class DayTest extends AbstractTimesheetTest
         self::assertSame(12345, $sut->getTotalDurationBillable());
     }
 
-    public function testSetDetails()
+    public function testSetDetails(): void
     {
         $sut = new Day(new DateTime(), 12340, 197.25956);
 

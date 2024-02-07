@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BookmarkTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Bookmark();
         $this->assertNull($sut->getId());
@@ -29,7 +29,7 @@ class BookmarkTest extends TestCase
         $this->assertNull($sut->getUser());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Bookmark();
         $sut->setName('foo-bar');

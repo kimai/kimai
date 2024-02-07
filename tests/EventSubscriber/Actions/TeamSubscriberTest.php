@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\TeamSubscriber;
  */
 class TeamSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(TeamSubscriber::class, 'team');
     }

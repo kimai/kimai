@@ -209,8 +209,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
+     * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
-    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'totp_secret', type: 'string', length: 255, nullable: true)]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
@@ -1287,9 +1288,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $group === null ? $group : (string) $group;
     }
 
-    public function getHolidaysPerYear(): int
+    public function getHolidaysPerYear(): float
     {
-        return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
+
+        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
     public function setWorkHoursMonday(int $seconds): void
@@ -1332,14 +1335,28 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(?int $holidays): void
+    public function setHolidaysPerYear(?float $holidays): void
     {
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
+        if ($holidays !== null) {
+            // makes sure that the number is a multiple of 0.5
+            $holidays = $this->getFormattedHoliday($holidays);
+        }
+
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0.0);
+    }
+
+    private function getFormattedHoliday(int|float|string|null $holidays): float
+    {
+        if (!is_numeric($holidays)) {
+            $holidays = 0.0;
+        }
+
+        return (float) number_format((round($holidays * 2) / 2), 1);
     }
 
     public function hasContractSettings(): bool
     {
-        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0;
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
     }
 
     public function hasWorkHourConfiguration(): bool

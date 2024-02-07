@@ -391,7 +391,7 @@
             -->
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
-        <target state="needs-translation">Arbeidstid</target>
+        <target>Arbeidstid</target>
       </trans-unit>
       <trans-unit id="t5eIWp8" resname="stats.userTotal">
         <source>stats.userTotal</source>

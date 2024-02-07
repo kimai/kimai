@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SanitizingExceptionTest extends TestCase
 {
-    public function testMessagesAreSanitized()
+    public function testMessagesAreSanitized(): void
     {
         $ex = new \Exception('Could not find user foo with password bar in your LDAP');
         $sut = new SanitizingException($ex, 'bar');

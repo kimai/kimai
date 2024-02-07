@@ -35,7 +35,7 @@ class DailyWorkingTimeChartTest extends TestCase
         return $sut;
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->createSut();
         self::assertInstanceOf(WidgetInterface::class, $sut);
@@ -47,7 +47,7 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertEquals('', $options['color']);
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = $this->createSut();
 
@@ -56,7 +56,7 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertEquals('trääääää', $sut->getOptions()['föööö']);
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
         $sut = $this->createSut();
 
@@ -66,7 +66,7 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertEquals('xxx', $options['type']);
     }
 
-    public function testGetData()
+    public function testGetData(): void
     {
         $activity = $this->createMock(Activity::class);
         $activity->method('getId')->willReturn(42);

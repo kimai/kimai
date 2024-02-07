@@ -1097,7 +1097,7 @@
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
-        <target state="needs-translation">Temps de travail</target>
+        <target>Temps de travail</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

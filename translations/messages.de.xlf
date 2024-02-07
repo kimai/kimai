@@ -1744,6 +1744,10 @@
         <source>invoice_number_generator</source>
         <target>Rechnungsnummern-Generator</target>
       </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory">
+        <source>absence_comment_mandatory</source>
+        <target>Abwesenheit: Kommentar ist Pflichtfeld</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MenuItemModelTest extends TestCase
 {
-    public function testChildRoutes()
+    public function testChildRoutes(): void
     {
         $sut = new MenuItemModel('test', 'foo', 'bar');
 

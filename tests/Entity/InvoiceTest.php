@@ -35,7 +35,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Invoice();
         self::assertNull($sut->getCreatedAt());
@@ -58,7 +58,7 @@ class InvoiceTest extends TestCase
         self::assertNull($sut->getComment());
     }
 
-    public function testSetInvalidStatus()
+    public function testSetInvalidStatus(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown invoice status');
@@ -67,7 +67,7 @@ class InvoiceTest extends TestCase
         $sut->setStatus('foo');
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $date = new \DateTime('-2 months');
         $sut = new Invoice();
@@ -219,7 +219,7 @@ class InvoiceTest extends TestCase
         return new DateNumberGenerator($repository);
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $sut = new Invoice();
         $sut->setComment('foo kajsdhgf aksjdhfg');
@@ -242,7 +242,7 @@ class InvoiceTest extends TestCase
         self::assertEquals('foo kajsdhgf aksjdhfg', $clone->getComment());
     }
 
-    public function testMetaFields()
+    public function testMetaFields(): void
     {
         $sut = new Invoice();
 

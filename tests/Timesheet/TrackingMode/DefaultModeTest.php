@@ -18,7 +18,7 @@ use App\Timesheet\TrackingMode\DefaultMode;
  */
 class DefaultModeTest extends AbstractTrackingModeTest
 {
-    protected function assertDefaultBegin(Timesheet $timesheet)
+    public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNotNull($timesheet->getBegin());
         self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
@@ -32,7 +32,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
         return new DefaultMode((new RoundingServiceFactory($this))->create());
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->createSut();
 

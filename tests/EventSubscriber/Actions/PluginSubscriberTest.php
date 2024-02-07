@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\PluginSubscriber;
  */
 class PluginSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(PluginSubscriber::class, 'plugin');
     }
