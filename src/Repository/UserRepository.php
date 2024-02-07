@@ -53,7 +53,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveUser(User $user)
+    public function saveUser(User $user): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($user);
@@ -397,7 +397,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * @param UserQuery $query
      * @return User[]
      */
-    public function getUsersForQuery(UserQuery $query): iterable
+    public function getUsersForQuery(UserQuery $query): array
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
@@ -408,8 +408,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * @param QueryBuilder $qb
      * @return User[]
      */
-    protected function getHydratedResultsByQuery(QueryBuilder $qb): iterable
+    protected function getHydratedResultsByQuery(QueryBuilder $qb): array
     {
+        /** @var array<User> $results */
         $results = $qb->getQuery()->getResult();
 
         $loader = new UserLoader($qb->getEntityManager());

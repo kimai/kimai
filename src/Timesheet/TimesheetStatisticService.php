@@ -12,8 +12,8 @@ namespace App\Timesheet;
 use App\Entity\User;
 use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TimesheetRepository;
-use DateTime;
 use DateTimeInterface;
 
 final class TimesheetStatisticService
@@ -23,13 +23,15 @@ final class TimesheetStatisticService
     }
 
     /**
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
-     * @param User[] $users
      * @return DailyStatistic[]
      */
-    public function getDailyStatistics(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getDailyStatistics(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+        $project = $query->getProject();
+
         /** @var DailyStatistic[] $stats */
         $stats = [];
 
@@ -62,6 +64,13 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        if ($project !== null) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+        }
 
         $results = $qb->getQuery()->getResult();
 
@@ -241,7 +250,7 @@ final class TimesheetStatisticService
         return $stats;
     }
 
-    public function findFirstRecordDate(User $user): ?DateTime
+    public function findFirstRecordDate(User $user): ?\DateTimeImmutable
     {
         $result = $this->repository->createQueryBuilder('t')
             ->select('MIN(t.begin)')
@@ -254,19 +263,19 @@ final class TimesheetStatisticService
             return null;
         }
 
-        return new DateTime((string) $result, new \DateTimeZone($user->getTimezone()));
+        return new \DateTimeImmutable((string) $result, new \DateTimeZone($user->getTimezone()));
     }
 
     /**
-     * Returns an array of Year statistics.
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @param User[] $users
      * @return MonthlyStatistic[]
      */
-    public function getMonthlyStats(DateTime $begin, DateTime $end, array $users): array
+    public function getMonthlyStats(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+        $project = $query->getProject();
+
         /** @var MonthlyStatistic[] $stats */
         $stats = [];
 
@@ -296,6 +305,13 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        if ($project !== null) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+        }
 
         $results = $qb->getQuery()->getResult();
 

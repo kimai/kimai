@@ -15,6 +15,7 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\DailyStatistic;
 use App\Reporting\MonthlyUserList\MonthlyUserList;
 use App\Reporting\MonthlyUserList\MonthlyUserListForm;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
@@ -106,7 +107,9 @@ final class ReportUsersMonthController extends AbstractController
         $hasData = true;
 
         if (!empty($allUsers)) {
-            $dayStats = $statisticService->getDailyStatistics($start, $end, $allUsers);
+            $statsQuery = new TimesheetStatisticQuery($start, $end, $allUsers);
+            $statsQuery->setProject($values->getProject());
+            $dayStats = $statisticService->getDailyStatistics($statsQuery);
         }
 
         if (empty($dayStats)) {
