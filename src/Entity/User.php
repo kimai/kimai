@@ -1290,7 +1290,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getHolidaysPerYear(): float
     {
-        return (float) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
+
+        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
     public function setWorkHoursMonday(int $seconds): void
@@ -1337,15 +1339,24 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         if ($holidays !== null) {
             // makes sure that the number is a multiple of 0.5
-            $holidays = number_format((round($holidays * 2) / 2), 1);
+            $holidays = $this->getFormattedHoliday($holidays);
         }
 
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0.0);
+    }
+
+    private function getFormattedHoliday(int|float|string|null $holidays): float
+    {
+        if (!is_numeric($holidays)) {
+            $holidays = 0.0;
+        }
+
+        return (float) number_format((round($holidays * 2) / 2), 1);
     }
 
     public function hasContractSettings(): bool
     {
-        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0;
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
     }
 
     public function hasWorkHourConfiguration(): bool
