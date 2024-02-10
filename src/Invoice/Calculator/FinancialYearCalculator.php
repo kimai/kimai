@@ -33,12 +33,12 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
         if (!$this->financialYearStart){
-            throw new FinancialYearNotSetException('Financial year not set!');
+            throw new \InvalidArgumentException('Financial year not set');
         }
 
         $financialYearStart = clone $this->financialYearStart;
@@ -53,7 +53,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     public function getLongFinancialYear(\DateTimeInterface $dateTime): string
     {
@@ -65,7 +65,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     public function getShortFinancialYear(\DateTimeInterface $dateTime): string
     {
@@ -77,7 +77,7 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     public function getFinancialYear(\DateTimeInterface $dateTime): string
     {
@@ -89,24 +89,24 @@ class FinancialYearCalculator
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     public function getFinancialYearStart(): \DateTimeInterface|bool
     {
         if (!$this->financialYearStart) {
-            throw new FinancialYearNotSetException('Financial year not set!');
+            throw new \InvalidArgumentException('Financial year not set');
         };
 
         return $this->financialYearStart;
     }
 
     /**
-     * @throws FinancialYearNotSetException
+     * @throws \InvalidArgumentException
      */
     public function getFinancialYearEnd(): \DateTimeInterface|bool
     {
         if (!$this->financialYearEnd) {
-            throw new FinancialYearNotSetException('Financial year not set!');
+            throw new \InvalidArgumentException('Financial year not set');
         };
 
         return $this->financialYearEnd;
