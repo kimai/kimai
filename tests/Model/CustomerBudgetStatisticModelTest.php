@@ -36,7 +36,7 @@ class CustomerBudgetStatisticModelTest extends TestCase
         return new Customer('foo');
     }
 
-    public function testAdditionals()
+    public function testAdditionals(): void
     {
         $entity = $this->getEntity();
         $sut = $this->getSut($entity);

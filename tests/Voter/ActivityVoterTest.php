@@ -26,12 +26,12 @@ class ActivityVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $this->assertVote($user, $subject, $attribute, $result);
     }
 
-    protected function assertVote(User $user, $subject, $attribute, $result)
+    public function assertVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ActivityVoter::class);
@@ -85,7 +85,7 @@ class ActivityVoterTest extends AbstractVoterTest
         }
     }
 
-    public function testTeamlead()
+    public function testTeamlead(): void
     {
         $team = new Team('foo');
         $user = new User();
@@ -124,7 +124,7 @@ class ActivityVoterTest extends AbstractVoterTest
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_DENIED);
     }
 
-    public function testTeamMember()
+    public function testTeamMember(): void
     {
         $team = new Team('foo');
         $user = new User();

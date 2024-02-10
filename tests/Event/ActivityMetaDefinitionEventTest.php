@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ActivityMetaDefinitionEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $activity = new Activity();
         $sut = new ActivityMetaDefinitionEvent($activity);

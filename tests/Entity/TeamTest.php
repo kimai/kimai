@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TeamTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Team('foo');
         self::assertNull($sut->getId());
@@ -40,7 +40,7 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getActivities()->count());
     }
 
-    public function testColor()
+    public function testColor(): void
     {
         $sut = new Team('foo');
         self::assertNull($sut->getColor());
@@ -55,7 +55,7 @@ class TeamTest extends TestCase
         self::assertTrue($sut->hasColor());
     }
 
-    public function testTeamMemberships()
+    public function testTeamMemberships(): void
     {
         $user = new User();
         $user2 = new User();
@@ -115,7 +115,7 @@ class TeamTest extends TestCase
         self::assertCount(2, $sut->getMembers());
     }
 
-    public function testTeamMembershipsException()
+    public function testTeamMembershipsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $sut = new Team('foo');
@@ -124,7 +124,7 @@ class TeamTest extends TestCase
         $sut->addMember($member);
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Team('foo-bar');
         self::assertEquals('foo-bar', $sut->getName());
@@ -156,7 +156,7 @@ class TeamTest extends TestCase
         self::assertCount(2, $sut->getTeamleads());
     }
 
-    public function testCustomer()
+    public function testCustomer(): void
     {
         $customer = new Customer('foo');
         self::assertEmpty($customer->getTeams());
@@ -175,7 +175,7 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getCustomers()->count());
     }
 
-    public function testProject()
+    public function testProject(): void
     {
         $project = new Project();
         $project->setName('foo');
@@ -195,7 +195,7 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getProjects()->count());
     }
 
-    public function testActivities()
+    public function testActivities(): void
     {
         $activity = new Activity();
         $activity->setName('foo');
@@ -215,7 +215,7 @@ class TeamTest extends TestCase
         self::assertEquals(0, $sut->getActivities()->count());
     }
 
-    public function testUsers()
+    public function testUsers(): void
     {
         $user = new User();
         $user->setAlias('foo');
@@ -241,7 +241,7 @@ class TeamTest extends TestCase
         self::assertCount(1, $sut->getUsers());
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $c = new Customer('Foo');
         $p = new Project();

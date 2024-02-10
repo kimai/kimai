@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $sut = new Duration();
 
@@ -28,7 +28,7 @@ class DurationTest extends TestCase
     /**
      * @dataProvider getParseDurationTestData
      */
-    public function testParseDurationString($expected, $duration, $mode)
+    public function testParseDurationString($expected, $duration, $mode): void
     {
         $sut = new Duration();
         $this->assertEquals($expected, $sut->parseDurationString($duration));
@@ -37,7 +37,7 @@ class DurationTest extends TestCase
     /**
      * @dataProvider getParseDurationTestData
      */
-    public function testParseDuration($expected, $duration, $mode)
+    public function testParseDuration($expected, $duration, $mode): void
     {
         $sut = new Duration();
         $this->assertEquals($expected, $sut->parseDuration($duration, $mode));
@@ -105,7 +105,7 @@ class DurationTest extends TestCase
     /**
      * @dataProvider getParseDurationInvalidData
      */
-    public function testParseDurationThrowsInvalidArgumentException($duration, $mode)
+    public function testParseDurationThrowsInvalidArgumentException($duration, $mode): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

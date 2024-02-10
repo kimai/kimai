@@ -38,14 +38,14 @@ class PaginatedWorkingTimeChartTest extends TestCase
         return $sut;
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->createSut();
         self::assertEquals('PaginatedWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = $this->createSut();
 
@@ -54,7 +54,7 @@ class PaginatedWorkingTimeChartTest extends TestCase
         self::assertEquals('trääääää', $sut->getOptions()['föööö']);
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
         $sut = $this->createSut();
 
@@ -62,7 +62,7 @@ class PaginatedWorkingTimeChartTest extends TestCase
         self::assertEquals('bar', $options['type']);
     }
 
-    public function testGetData()
+    public function testGetData(): void
     {
         $activity = $this->createMock(Activity::class);
         $activity->method('getId')->willReturn(42);
@@ -90,7 +90,7 @@ class PaginatedWorkingTimeChartTest extends TestCase
         self::assertNull($data['financialBegin']);
     }
 
-    public function testGetDataWithFinancialYear()
+    public function testGetDataWithFinancialYear(): void
     {
         $activity = $this->createMock(Activity::class);
         $activity->method('getId')->willReturn(42);

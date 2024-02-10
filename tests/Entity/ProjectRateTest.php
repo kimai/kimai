@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectRateTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new ProjectRate();
         self::assertNull($sut->getId());
@@ -32,7 +32,7 @@ class ProjectRateTest extends TestCase
         self::assertFalse($sut->isFixed());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new ProjectRate();
 

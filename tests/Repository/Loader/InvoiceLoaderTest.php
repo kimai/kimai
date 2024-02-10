@@ -17,7 +17,7 @@ use App\Repository\Loader\InvoiceLoader;
  */
 class InvoiceLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $em = $this->getEntityManagerMock(3);
 

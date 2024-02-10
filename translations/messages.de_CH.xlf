@@ -1034,8 +1034,8 @@
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Arbeitszeit</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">

@@ -1063,8 +1063,8 @@
         <source>stats.workingTimeToday</source>
         <target>Idag, %day%</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Arbetstid</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">

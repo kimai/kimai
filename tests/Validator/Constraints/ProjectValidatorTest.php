@@ -28,14 +28,14 @@ class ProjectValidatorTest extends ConstraintValidatorTestCase
         return new ProjectValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank());
     }
 
-    public function testEndBeforeStartIsInvalid()
+    public function testEndBeforeStartIsInvalid(): void
     {
         $begin = new \DateTime();
         $end = new \DateTime('-1 hour');
@@ -51,7 +51,7 @@ class ProjectValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testGetTargets()
+    public function testGetTargets(): void
     {
         $constraint = new ProjectConstraint();
         self::assertEquals('class', $constraint->getTargets());

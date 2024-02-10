@@ -62,7 +62,7 @@ class SamlProviderTest extends TestCase
         return $provider;
     }
 
-    public function testFindUserHydratesUser()
+    public function testFindUserHydratesUser(): void
     {
         $user = new User();
         $user->setAuth(User::AUTH_INTERNAL);
@@ -86,7 +86,7 @@ class SamlProviderTest extends TestCase
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
 
-    public function testFindUserCreatesNewUser()
+    public function testFindUserCreatesNewUser(): void
     {
         $token = new SamlLoginAttributes();
         $token->setUserIdentifier('foo2@example.com');
@@ -104,7 +104,7 @@ class SamlProviderTest extends TestCase
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
 
-    public function testAuthenticateThrowsAuthenticationException()
+    public function testAuthenticateThrowsAuthenticationException(): void
     {
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Failed creating or hydrating user "foo1@example.com": Missing user attribute: Email');

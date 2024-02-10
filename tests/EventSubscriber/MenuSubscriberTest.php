@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MenuSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = MenuSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(ConfigureMainMenuEvent::class, $events);

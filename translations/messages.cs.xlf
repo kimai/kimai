@@ -1031,8 +1031,8 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Finanční rok</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Pracovní doba</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">

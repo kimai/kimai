@@ -31,14 +31,14 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetMultiUpdateValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank());
     }
 
-    public function testProjectMismatch()
+    public function testProjectMismatch(): void
     {
         $activity = new Activity();
         $project1 = new Project();
@@ -57,7 +57,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testProjectWithoutActivity()
+    public function testProjectWithoutActivity(): void
     {
         $timesheet = new TimesheetMultiUpdateDTO();
         $timesheet
@@ -72,7 +72,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testActivityWithoutProject()
+    public function testActivityWithoutProject(): void
     {
         $timesheet = new TimesheetMultiUpdateDTO();
         $timesheet
@@ -87,7 +87,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testHourlyRateAndFixedRateInParallelAreNotAllowed()
+    public function testHourlyRateAndFixedRateInParallelAreNotAllowed(): void
     {
         $timesheet = new TimesheetMultiUpdateDTO();
         $timesheet->setHourlyRate(10.12);
@@ -104,7 +104,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testDisabledValues()
+    public function testDisabledValues(): void
     {
         $customer = new Customer('foo');
         $customer->setVisible(false);

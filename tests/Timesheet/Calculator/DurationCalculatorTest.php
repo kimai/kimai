@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationCalculatorTest extends TestCase
 {
-    public function testCalculateWithEmptyEnd()
+    public function testCalculateWithEmptyEnd(): void
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
@@ -34,7 +34,7 @@ class DurationCalculatorTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate($rules, $start, $end, $expectedDuration)
+    public function testCalculate($rules, $start, $end, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetResultStatisticTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new TimesheetResultStatistic(13, 7705);
         self::assertSame(13, $sut->getCount());

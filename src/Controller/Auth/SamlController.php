@@ -15,12 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 #[Route(path: '/saml')]
 final class SamlController extends AbstractController
 {
-    public function __construct(private SamlAuthFactory $authFactory, private SamlConfigurationInterface $samlConfiguration)
+    public function __construct(
+        private readonly SamlAuthFactory $authFactory,
+        private readonly SamlConfigurationInterface $samlConfiguration
+    )
     {
     }
 
@@ -51,7 +55,12 @@ final class SamlController extends AbstractController
         }
 
         // this does set headers and exit as $stay is not set to true
-        $url = $this->authFactory->create()->login($session->get('_security.main.target_path'));
+        $redirectTarget = $session->get('_security.main.target_path');
+        if ($redirectTarget === null || $redirectTarget === '') {
+            $redirectTarget = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        $url = $this->authFactory->create()->login($redirectTarget);
 
         if ($url === null) {
             throw new \RuntimeException('SAML login failed');

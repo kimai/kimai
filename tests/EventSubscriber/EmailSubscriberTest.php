@@ -22,7 +22,7 @@ use Symfony\Component\Mime\Email;
  */
 class EmailSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = EmailSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(EmailEvent::class, $events);
@@ -30,7 +30,7 @@ class EmailSubscriberTest extends TestCase
         $this->assertTrue(method_exists(EmailSubscriber::class, $methodName));
     }
 
-    public function testSendIsTriggered()
+    public function testSendIsTriggered(): void
     {
         $mailer = $this->createMock(MailerInterface::class);
         $mailer->expects($this->once())->method('send');

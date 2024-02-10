@@ -1075,8 +1075,8 @@
         <source>stats.revenue</source>
         <target>Kazançlar</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Açık kalma süresi</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">

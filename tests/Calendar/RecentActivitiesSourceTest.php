@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RecentActivitiesSourceTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $entries = [new TimesheetEntry(new Timesheet(), '#cccccc')];
 

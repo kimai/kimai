@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  */
 class SelfRegistrationControllerTest extends ControllerBaseTest
 {
-    private function testRegisterActionWithDeactivatedFeature(string $route)
+    private function assertRegisterActionWithDeactivatedFeature(string $route): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', false);
@@ -26,27 +26,27 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertRouteNotFound($client);
     }
 
-    public function testRegisterWithDeactivatedFeature()
+    public function testRegisterWithDeactivatedFeature(): void
     {
-        $this->testRegisterActionWithDeactivatedFeature('/register/');
+        $this->assertRegisterActionWithDeactivatedFeature('/register/');
     }
 
-    public function testCheckEmailWithDeactivatedFeature()
+    public function testCheckEmailWithDeactivatedFeature(): void
     {
-        $this->testRegisterActionWithDeactivatedFeature('/register/check-email');
+        $this->assertRegisterActionWithDeactivatedFeature('/register/check-email');
     }
 
-    public function testConfirmWithDeactivatedFeature()
+    public function testConfirmWithDeactivatedFeature(): void
     {
-        $this->testRegisterActionWithDeactivatedFeature('/register/confirm/123123');
+        $this->assertRegisterActionWithDeactivatedFeature('/register/confirm/123123');
     }
 
-    public function testConfirmedWithDeactivatedFeature()
+    public function testConfirmedWithDeactivatedFeature(): void
     {
-        $this->testRegisterActionWithDeactivatedFeature('/register/confirmed');
+        $this->assertRegisterActionWithDeactivatedFeature('/register/confirmed');
     }
 
-    public function testRegisterAccountPageIsRendered()
+    public function testRegisterAccountPageIsRendered(): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
@@ -98,7 +98,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         return $this->loadUserFromDatabase($username);
     }
 
-    public function testCheckEmailWithoutEmail()
+    public function testCheckEmailWithoutEmail(): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
@@ -109,7 +109,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testRegisterAccount()
+    public function testRegisterAccount(): void
     {
         $client = self::createClient();
         $this->createUser($client, 'example', 'register@example.com', 'test1234');
@@ -120,7 +120,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<a href="/en/login">', $content);
     }
 
-    public function testConfirmWithInvalidToken()
+    public function testConfirmWithInvalidToken(): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
@@ -131,7 +131,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testConfirmAccount()
+    public function testConfirmAccount(): void
     {
         $client = self::createClient();
         $user = $this->createUser($client, 'example', 'register@example.com', 'test1234');
@@ -151,7 +151,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         self::assertTrue($user->isEnabled());
     }
 
-    public function testConfirmedAnonymousRedirectsToLogin()
+    public function testConfirmedAnonymousRedirectsToLogin(): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
@@ -166,7 +166,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getValidationTestData
      */
-    public function testRegisterActionWithValidationProblems(array $formData, array $validationFields)
+    public function testRegisterActionWithValidationProblems(array $formData, array $validationFields): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
@@ -174,7 +174,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertHasValidationError($client, '/register/', 'form[name=user_registration_form]', $formData, $validationFields);
     }
 
-    public function getValidationTestData()
+    public function getValidationTestData(): array // @phpstan-ignore-line
     {
         return [
             [

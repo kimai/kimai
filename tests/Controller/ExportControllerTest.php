@@ -20,17 +20,17 @@ use Doctrine\ORM\EntityManager;
  */
 class ExportControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/export/');
     }
 
-    public function testIsSecureForrole()
+    public function testIsSecureForrole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
 
-    public function testIndexActionHasErrorMessageOnEmptyQuery()
+    public function testIndexActionHasErrorMessageOnEmptyQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -40,7 +40,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
     }
 
-    public function testIndexActionWithEntriesAndTeams()
+    public function testIndexActionWithEntriesAndTeams(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $em = $this->getEntityManager();
@@ -109,7 +109,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEmpty($expected);
     }
 
-    public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam()
+    public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -168,7 +168,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEmpty($expected);
     }
 
-    public function testExportActionWithMissingRenderer()
+    public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/export/data', 'POST');
@@ -177,7 +177,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assert404($response, 'Missing export renderer');
     }
 
-    public function testExportActionWithInvalidRenderer()
+    public function testExportActionWithInvalidRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -197,7 +197,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assert404($response, 'Unknown export renderer');
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */

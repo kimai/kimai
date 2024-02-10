@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkdownExtensionTest extends TestCase
 {
-    public function testMarkdownToHtml()
+    public function testMarkdownToHtml(): void
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
@@ -33,7 +33,7 @@ class MarkdownExtensionTest extends TestCase
         );
     }
 
-    public function testTimesheetContent()
+    public function testTimesheetContent(): void
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => false]]);
@@ -60,7 +60,7 @@ class MarkdownExtensionTest extends TestCase
         );
     }
 
-    public function testCommentContent()
+    public function testCommentContent(): void
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => false]]);
@@ -100,7 +100,7 @@ class MarkdownExtensionTest extends TestCase
         );
     }
 
-    public function testCommentOneLiner()
+    public function testCommentOneLiner(): void
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, []);

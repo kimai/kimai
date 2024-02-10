@@ -21,7 +21,7 @@ abstract class AbstractDateByUserTest extends TestCase
 {
     abstract protected function createSut(): DateByUser;
 
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $sut = $this->createSut();
         self::assertNull($sut->getDate());
@@ -30,7 +30,7 @@ abstract class AbstractDateByUserTest extends TestCase
         self::assertFalse($sut->isDecimal());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $date = new \DateTime('2019-05-27');
         $user = new User();
@@ -59,7 +59,7 @@ abstract class AbstractDateByUserTest extends TestCase
         self::assertFalse($sut->isDecimal());
     }
 
-    public function testInvalidSumType()
+    public function testInvalidSumType(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $sut = $this->createSut();

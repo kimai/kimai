@@ -915,9 +915,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Geschäftsjahr</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>Arbeitszeit</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
+        <source>Working hours</source>
+        <target state="final">Arbeitszeit</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1680,9 +1680,9 @@
         <source>Categories</source>
         <target>Kategorien</target>
       </trans-unit>
-      <trans-unit id="7Sycs4M" resname="Importer">
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve" approved="yes">
         <source>Importer</source>
-        <target>Importer</target>
+        <target state="final">Importer</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields">
         <source>Meta fields</source>
@@ -1743,6 +1743,10 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Rechnungsnummern-Generator</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory">
+        <source>absence_comment_mandatory</source>
+        <target>Abwesenheit: Kommentar ist Pflichtfeld</target>
       </trans-unit>
     </body>
   </file>

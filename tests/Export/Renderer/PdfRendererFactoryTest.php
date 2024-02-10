@@ -21,7 +21,7 @@ use Twig\Environment;
  */
 class PdfRendererFactoryTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $sut = new PdfRendererFactory(
             $this->createMock(Environment::class),

@@ -17,17 +17,17 @@ use App\Tests\Model\AbstractTimesheetCountedStatisticTest;
  */
 class BudgetStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertDefaultValues(new BudgetStatistic());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter(new BudgetStatistic());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertJsonSerialize(new BudgetStatistic());
     }

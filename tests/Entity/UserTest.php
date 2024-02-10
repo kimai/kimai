@@ -116,7 +116,7 @@ class UserTest extends TestCase
         $user->setWorkHoursFriday(7600);
         $user->setWorkHoursSaturday(7700);
         $user->setWorkHoursSunday(7800);
-        $user->setHolidaysPerYear(10);
+        $user->setHolidaysPerYear(10.7);
         self::assertTrue($user->hasWorkHourConfiguration());
 
         self::assertEquals(7200, $user->getWorkHoursMonday());
@@ -126,7 +126,7 @@ class UserTest extends TestCase
         self::assertEquals(7600, $user->getWorkHoursFriday());
         self::assertEquals(7700, $user->getWorkHoursSaturday());
         self::assertEquals(7800, $user->getWorkHoursSunday());
-        self::assertEquals(10, $user->getHolidaysPerYear());
+        self::assertEquals(10.5, $user->getHolidaysPerYear());
 
         self::assertEquals(7200, $user->getWorkHoursForDay($monday));
         self::assertEquals(7300, $user->getWorkHoursForDay($tuesday));

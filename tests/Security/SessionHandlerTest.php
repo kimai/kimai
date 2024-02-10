@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SessionHandlerTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new SessionHandler($this->createMock(Connection::class));
 

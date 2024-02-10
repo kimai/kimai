@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserCreatePreEventTest extends TestCase
 {
-    public function testGetter()
+    public function testGetter(): void
     {
         $user = new User();
         $user->setAlias('foo');

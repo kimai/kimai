@@ -30,7 +30,7 @@ class CustomerMetaTest extends AbstractMetaEntityTest
         return new CustomerMeta();
     }
 
-    public function testSetEntityThrowsException()
+    public function testSetEntityThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected instanceof Customer, received "App\Entity\Activity"');

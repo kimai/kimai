@@ -27,7 +27,7 @@ class DatatableExtensionsTest extends TestCase
         return new DatatableExtensions($repository, new ProfileManager());
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $functions = ['initialize_datatable', 'datatable_column_class'];
         $sut = $this->getSut('de');

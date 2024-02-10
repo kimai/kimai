@@ -695,8 +695,8 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Fiskalna godina</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Radno vrijeme</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">

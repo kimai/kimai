@@ -1,17 +1,5 @@
 name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
-categories:
-    - title: 'Enhancements'
-      labels:
-          - 'feature request'
-          - 'technical debt'
-          - 'translation'
-    - title: 'Fixed bugs'
-      labels:
-          - 'bug'
-    - title: 'Infrastructure'
-      labels:
-          - 'infrastructure'
 exclude-labels:
     - 'duplicate'
     - 'invalid'

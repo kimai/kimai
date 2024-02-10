@@ -17,7 +17,7 @@ abstract class AbstractCommentEntityTest extends TestCase
 {
     abstract protected function getEntity(): CommentInterface;
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->getEntity();
 
@@ -29,7 +29,7 @@ abstract class AbstractCommentEntityTest extends TestCase
         self::assertFalse($sut->isPinned());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = $this->getEntity();
 

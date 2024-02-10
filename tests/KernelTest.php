@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class KernelTest extends TestCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
         $sut = new Kernel('test', false);
         self::assertStringEndsWith('var/cache/test', $sut->getCacheDir());

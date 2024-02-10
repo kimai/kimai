@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PunchInOutModeTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new PunchInOutMode();
 
@@ -32,7 +32,7 @@ class PunchInOutModeTest extends TestCase
         self::assertEquals('punch', $sut->getId());
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $startingTime = new \DateTime('22:54');
         $timesheet = new Timesheet();
@@ -44,7 +44,7 @@ class PunchInOutModeTest extends TestCase
         self::assertEquals($timesheet->getBegin(), $startingTime);
     }
 
-    public function testCreateWithoutBegin()
+    public function testCreateWithoutBegin(): void
     {
         $timesheet = (new Timesheet())->setUser(new User());
         $request = new Request();

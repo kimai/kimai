@@ -1059,8 +1059,8 @@
         <source>resetting.check_email</source>
         <target>E-mail üzenet elküldve. Ebben az üzenetben található a jelszó visszaállító link, amivel visszaállíthatod a jelszavadat. Megjegyzés: új jelszó csak egyszer kérhető minden %tokenLifetime% órában. Ha nem érkezett meg az e-mail, ellenőrizze a spam mappában is.</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Munkaidő</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">

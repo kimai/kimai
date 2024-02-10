@@ -24,7 +24,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class UserPreferenceExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects(self::once())->method('dispatch')->willReturnCallback(function (UserPreferenceDisplayEvent $event) {
@@ -54,7 +54,7 @@ class UserPreferenceExtractorTest extends TestCase
         self::assertEquals('tralalalala', \call_user_func($definition->getAccessor(), (new User())->addPreference((new UserPreference('bar', 'tralalalala')))));
     }
 
-    public function testCheckType()
+    public function testCheckType(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $sut = new UserPreferenceExtractor($dispatcher);

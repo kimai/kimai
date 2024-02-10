@@ -33,7 +33,7 @@ class ArrayFormatterTest extends AbstractFormatterTest
         return 'test;foo;bar';
     }
 
-    public function testFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only array is supported');

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetStatisticTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new TimesheetStatistic();
         $this->assertEquals(0, $sut->getRecordsTotal());
@@ -27,7 +27,7 @@ class TimesheetStatisticTest extends TestCase
         $this->assertEquals(0, $sut->getDurationThisMonth());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = new TimesheetStatistic();
         $sut->setRecordsTotal(2);

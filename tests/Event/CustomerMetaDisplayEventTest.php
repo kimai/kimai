@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomerMetaDisplayEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $query = new CustomerQuery();
         $sut = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT);

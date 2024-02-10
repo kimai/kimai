@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserPreferenceDisplayEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $sut = new UserPreferenceDisplayEvent('blub');
         self::assertEquals('blub', $sut->getLocation());

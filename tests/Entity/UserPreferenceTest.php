@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
  */
 class UserPreferenceTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new UserPreference('foo');
         self::assertTrue($sut->isEnabled());
@@ -38,7 +38,7 @@ class UserPreferenceTest extends TestCase
         self::assertNull($sut->getUser());
     }
 
-    public function testGetValueChangesReturnTypeOnOtherType()
+    public function testGetValueChangesReturnTypeOnOtherType(): void
     {
         $sut = new UserPreference('foo');
         $sut->setValue('1');
@@ -52,7 +52,7 @@ class UserPreferenceTest extends TestCase
         self::assertFalse($sut->getValue());
     }
 
-    public function testGetLabelWithLabelOption()
+    public function testGetLabelWithLabelOption(): void
     {
         $sut = new UserPreference('foo');
         self::assertEquals('foo', $sut->getLabel());

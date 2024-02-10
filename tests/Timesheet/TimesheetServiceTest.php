@@ -65,7 +65,7 @@ class TimesheetServiceTest extends TestCase
         return $service;
     }
 
-    public function testCannotSavePersistedTimesheetAsNew()
+    public function testCannotSavePersistedTimesheetAsNew(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
         $timesheet->expects($this->once())->method('getId')->willReturn(1);
@@ -78,7 +78,7 @@ class TimesheetServiceTest extends TestCase
         $sut->saveNewTimesheet($timesheet);
     }
 
-    public function testCannotStartTimesheet()
+    public function testCannotStartTimesheet(): void
     {
         $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(false);
@@ -91,7 +91,7 @@ class TimesheetServiceTest extends TestCase
         $sut->saveNewTimesheet(new Timesheet());
     }
 
-    public function testSaveNewTimesheetHasValidationError()
+    public function testSaveNewTimesheetHasValidationError(): void
     {
         $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
@@ -110,7 +110,7 @@ class TimesheetServiceTest extends TestCase
         $sut->saveNewTimesheet(new Timesheet());
     }
 
-    public function testSaveNewTimesheetStopsActiveRecords()
+    public function testSaveNewTimesheetStopsActiveRecords(): void
     {
         $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
@@ -137,7 +137,7 @@ class TimesheetServiceTest extends TestCase
         $sut->saveNewTimesheet($newTimesheet);
     }
 
-    public function testSaveNewTimesheetFixesTimezone()
+    public function testSaveNewTimesheetFixesTimezone(): void
     {
         $user = new User();
         $user->setTimezone('Europe/Paris');
@@ -160,7 +160,7 @@ class TimesheetServiceTest extends TestCase
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
-    public function testUpdateTimesheetFixesTimezone()
+    public function testUpdateTimesheetFixesTimezone(): void
     {
         $user = new User();
         $user->setTimezone('Europe/Paris');
@@ -181,7 +181,7 @@ class TimesheetServiceTest extends TestCase
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
-    public function testCannotRestartedPersistedTimesheet()
+    public function testCannotRestartedPersistedTimesheet(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
         $timesheet->expects($this->once())->method('getId')->willReturn(1);
@@ -201,7 +201,7 @@ class TimesheetServiceTest extends TestCase
         $sut->restartTimesheet($timesheet, new Timesheet());
     }
 
-    public function testRestartTimesheetDispatchesTwoEvents()
+    public function testRestartTimesheetDispatchesTwoEvents(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
         $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
@@ -233,7 +233,7 @@ class TimesheetServiceTest extends TestCase
         $sut->restartTimesheet($timesheet, new Timesheet());
     }
 
-    public function testPreparePersistedTimesheetAsNew()
+    public function testPreparePersistedTimesheetAsNew(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
         $timesheet->expects($this->once())->method('getId')->willReturn(1);
@@ -246,7 +246,7 @@ class TimesheetServiceTest extends TestCase
         $sut->prepareNewTimesheet($timesheet);
     }
 
-    public function testStoppedEntriesCannotBeStoppedAgain()
+    public function testStoppedEntriesCannotBeStoppedAgain(): void
     {
         $dateTime = new \DateTime('-2 hours');
         $timesheet = new Timesheet();
@@ -259,7 +259,7 @@ class TimesheetServiceTest extends TestCase
         self::assertSame($dateTime->getTimestamp(), $timesheet->getEnd()->getTimestamp());
     }
 
-    public function testStopSetsEnd()
+    public function testStopSetsEnd(): void
     {
         $dateTime = new \DateTime('-2 hours');
         $timesheet = new Timesheet();
@@ -273,7 +273,7 @@ class TimesheetServiceTest extends TestCase
         self::assertNotNull($timesheet->getEnd());
     }
 
-    public function testDeleteDispatchesEvent()
+    public function testDeleteDispatchesEvent(): void
     {
         $timesheet = new Timesheet();
 
@@ -291,7 +291,7 @@ class TimesheetServiceTest extends TestCase
         $sut->deleteTimesheet($timesheet);
     }
 
-    public function testDeleteMultipleDispatchesEvent()
+    public function testDeleteMultipleDispatchesEvent(): void
     {
         $timesheets = [new Timesheet(), new Timesheet()];
 

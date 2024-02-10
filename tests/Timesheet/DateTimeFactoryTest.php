@@ -30,19 +30,19 @@ class DateTimeFactoryTest extends TestCase
         return new DateTimeFactory(new DateTimeZone($timezone), $sunday);
     }
 
-    public function testGetTimezone()
+    public function testGetTimezone(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $this->assertEquals(self::TEST_TIMEZONE, $sut->getTimezone()->getName());
     }
 
-    public function testGetTimezoneWithFallbackTimezone()
+    public function testGetTimezoneWithFallbackTimezone(): void
     {
         $sut = $this->createDateTimeFactory();
         $this->assertEquals(date_default_timezone_get(), $sut->getTimezone()->getName());
     }
 
-    public function testGetStartOfMonth()
+    public function testGetStartOfMonth(): void
     {
         $expected = new DateTime('now', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -57,7 +57,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function testGetEndOfMonth()
+    public function testGetEndOfMonth(): void
     {
         $expected = new DateTime('last day of this month', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -82,7 +82,7 @@ class DateTimeFactoryTest extends TestCase
     /**
      * @dataProvider getStartOfWeekData
      */
-    public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day)
+    public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -119,7 +119,7 @@ class DateTimeFactoryTest extends TestCase
     /**
      * @dataProvider getEndOfWeekData
      */
-    public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day)
+    public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -146,7 +146,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function testCreateDateTime()
+    public function testCreateDateTime(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->createDateTime('2015-07-24 13:45:21');
@@ -159,7 +159,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function testCreateDateTimeWithDefaultValue()
+    public function testCreateDateTimeWithDefaultValue(): void
     {
         $expected = new DateTime('now', new DateTimeZone(self::TEST_TIMEZONE));
 
@@ -170,7 +170,7 @@ class DateTimeFactoryTest extends TestCase
         $this->assertTrue(2 >= $difference);
     }
 
-    public function testCreateStartOfFinancialYearWithoutConfig()
+    public function testCreateStartOfFinancialYearWithoutConfig(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->createStartOfFinancialYear();
@@ -179,7 +179,7 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals($expected, $dateTime);
     }
 
-    public function testCreateStartOfFinancialYearWithConfig()
+    public function testCreateStartOfFinancialYearWithConfig(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
 
@@ -199,7 +199,7 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals($past, $financial);
     }
 
-    public function testCreateEndOfFinancialYearWithConfig()
+    public function testCreateEndOfFinancialYearWithConfig(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
 
@@ -218,7 +218,7 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals($expected, $end);
     }
 
-    public function testCreateStartOfYear()
+    public function testCreateStartOfYear(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
 
@@ -239,7 +239,7 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals('00:00:00', $year->format('H:i:s'));
     }
 
-    public function testCreateEndOfYear()
+    public function testCreateEndOfYear(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
 

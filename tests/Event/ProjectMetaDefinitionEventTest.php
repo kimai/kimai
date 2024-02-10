@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectMetaDefinitionEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $project = new Project();
         $sut = new ProjectMetaDefinitionEvent($project);

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PageActionsEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $user = new User();
         $user->setAlias('foo');
@@ -41,7 +41,7 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(['hello' => 'world', 'actions' => [], 'view' => 'bar'], $sut->getPayload());
     }
 
-    public function testSetActions()
+    public function testSetActions(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
         $sut->addAction('foo', ['url' => 'bar']);
@@ -75,7 +75,7 @@ class PageActionsEventTest extends TestCase
         $this->assertNull($sut->getLocale());
     }
 
-    public function testSubmenu()
+    public function testSubmenu(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
         $this->assertFalse($sut->hasSubmenu('test'));
@@ -86,7 +86,7 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(2, $sut->countActions('test'));
     }
 
-    public function testAddHelper()
+    public function testAddHelper(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
 
@@ -111,7 +111,7 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals($expected, $sut->getActions());
     }
 
-    public function testAddOthers()
+    public function testAddOthers(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
 

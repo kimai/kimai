@@ -17,7 +17,7 @@ use App\Repository\Loader\TeamLoader;
  */
 class TeamLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $em = $this->getEntityManagerMock(2);
 

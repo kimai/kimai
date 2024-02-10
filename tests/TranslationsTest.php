@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TranslationsTest extends TestCase
 {
-    public function testForWrongFileExtension()
+    public function testForWrongFileExtension(): void
     {
         $files = glob(__DIR__ . '/../translations/*.*');
         foreach ($files as $file) {
@@ -24,7 +24,7 @@ class TranslationsTest extends TestCase
         }
     }
 
-    public function testForEmptyStrings()
+    public function testForEmptyStrings(): void
     {
         $files = glob(__DIR__ . '/../translations/*.xlf');
         foreach ($files as $file) {
@@ -47,7 +47,7 @@ class TranslationsTest extends TestCase
         }
     }
 
-    public function testReplacerWereNotTranslated()
+    public function testReplacerWereNotTranslated(): void
     {
         $englishFiles = glob(__DIR__ . '/../translations/*.en.xlf');
         foreach ($englishFiles as $englishFile) {

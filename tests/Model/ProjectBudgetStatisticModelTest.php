@@ -36,7 +36,7 @@ class ProjectBudgetStatisticModelTest extends TestCase
         return new Project();
     }
 
-    public function testAdditionals()
+    public function testAdditionals(): void
     {
         $entity = $this->getEntity();
         $sut = $this->getSut($entity);

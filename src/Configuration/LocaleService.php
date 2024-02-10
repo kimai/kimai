@@ -51,7 +51,7 @@ final class LocaleService
 
     public function isKnownLocale(string $language): bool
     {
-        return \in_array($language, $this->getAllLocales());
+        return \in_array($language, $this->getAllLocales(), true);
     }
 
     /**
