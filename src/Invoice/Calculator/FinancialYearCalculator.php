@@ -20,17 +20,18 @@ class FinancialYearCalculator
     /**
      * @throws \InvalidArgumentException
      */
-    private function isYearPrevious(\DateTimeInterface $dateTime): bool
+    private function isYearPrevious(\DateTimeInterface $date): bool
     {
         $financialYearStart = $this->getFinancialYearStart();
 
-        $financialYearStart->setDate(
-            $dateTime->format('Y'),
-            $financialYearStart->format('m'),
-            $financialYearStart->format('d')
-        );
+        $financialYearStartForDate = \DateTimeImmutable::createFromInterface($financialYearStart)
+            ->setDate(
+                $date->format('Y'),
+                $financialYearStart->format('m'),
+                $financialYearStart->format('d')
+            );
 
-        return $dateTime->getTimestamp() < $financialYearStart->getTimestamp();
+        return $financialYearStartForDate->getTimestamp() < $financialYearStart->getTimestamp();
     }
 
     /**
