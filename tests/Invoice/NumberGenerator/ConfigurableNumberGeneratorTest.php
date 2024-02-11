@@ -165,6 +165,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $invoiceDateSameYear = (clone $now)->setDate($now->format('Y'), 4, 1);
         // year different as financial year | Last date of the test FY date
         $invoiceDateDifferentYear = (clone $now)->setDate(($now->format('Y') + 1), 3, 31);
+
         return [
             // simple tests for single calls with invoice year same as financial year
             ['{FY}', $invoiceDateSameYear->format('Y'), $invoiceDateSameYear],
@@ -175,11 +176,11 @@ class ConfigurableNumberGeneratorTest extends TestCase
                 $invoiceDateSameYear
             ],
             // simple tests for single calls with invoice year different as financial year
-            ['{FY}',$invoiceDateDifferentYear->format('Y'), $invoiceDateDifferentYear],
+            ['{FY}', $invoiceDateDifferentYear->format('Y'), $invoiceDateDifferentYear],
             ['{fy}', $invoiceDateDifferentYear->format('y'), $invoiceDateDifferentYear],
             [
                 '{fiscal}',
-                $invoiceDateDifferentYear->format('Y'). '-' . ($invoiceDateDifferentYear->format('y') + 1),
+                $invoiceDateDifferentYear->format('Y') . '-' . ($invoiceDateDifferentYear->format('y') + 1),
                 $invoiceDateDifferentYear
             ],
         ];
