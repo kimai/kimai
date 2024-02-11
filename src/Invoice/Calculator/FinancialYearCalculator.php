@@ -86,7 +86,7 @@ class FinancialYearCalculator
      */
     public function getFinancialYearEnd(): \DateTimeInterface
     {
-        return $this->$this->getFinancialYearStart()
+        return $this->getFinancialYearStart()
             ->add(\DateInterval::createFromDateString('1 year'))
             ->sub(\DateInterval::createFromDateString('1 day'));
     }
