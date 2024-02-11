@@ -21,9 +21,9 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
     private ?InvoiceModel $model = null;
 
     public function __construct(
-        private InvoiceRepository $repository,
-        private SystemConfiguration $configuration,
-        private FinancialYearCalculator $calculator
+        private readonly InvoiceRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly FinancialYearCalculator $calculator
     )
     {
     }
