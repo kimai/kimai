@@ -13,23 +13,8 @@ use App\Configuration\SystemConfiguration;
 
 class FinancialYearCalculator
 {
-    private \DateTimeInterface|null $financialYearStart = null;
-    private \DateTimeInterface|null $financialYearEnd = null;
-
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly SystemConfiguration $systemConfiguration)
     {
-        if (!$financialYearStart = $this->systemConfiguration->getFinancialYearStart()){
-            return;
-        }
-        $this->financialYearStart = \DateTime::createFromFormat('Y-m-d', $financialYearStart);
-        $this->setFinancialYearEndFromStartDate($this->financialYearStart);
-    }
-
-    private function setFinancialYearEndFromStartDate(\DateTimeInterface $financialYearStart): void
-    {
-        $this->financialYearEnd = $financialYearStart
-            ->add(\DateInterval::createFromDateString('1 year'))
-            ->sub(\DateInterval::createFromDateString('1 day'));
     }
 
     /**
@@ -37,11 +22,7 @@ class FinancialYearCalculator
      */
     private function isYearPrevious(\DateTimeInterface $dateTime): bool
     {
-        if (!$this->financialYearStart){
-            throw new \InvalidArgumentException('Financial year not set');
-        }
-
-        $financialYearStart = clone $this->financialYearStart;
+        $financialYearStart = $this->getFinancialYearStart();
 
         $financialYearStart->setDate(
             $dateTime->format('Y'),
@@ -91,24 +72,22 @@ class FinancialYearCalculator
     /**
      * @throws \InvalidArgumentException
      */
-    public function getFinancialYearStart(): \DateTimeInterface|bool
+    public function getFinancialYearStart(): \DateTimeInterface
     {
-        if (!$this->financialYearStart) {
+        if (($financialYearStart = $this->systemConfiguration->getFinancialYearStart()) === null){
             throw new \InvalidArgumentException('Financial year not set');
-        };
+        }
 
-        return $this->financialYearStart;
+        return \DateTimeImmutable::createFromFormat('Y-m-d', $financialYearStart);
     }
 
     /**
      * @throws \InvalidArgumentException
      */
-    public function getFinancialYearEnd(): \DateTimeInterface|bool
+    public function getFinancialYearEnd(): \DateTimeInterface
     {
-        if (!$this->financialYearEnd) {
-            throw new \InvalidArgumentException('Financial year not set');
-        };
-
-        return $this->financialYearEnd;
+        return $this->$this->getFinancialYearStart()
+            ->add(\DateInterval::createFromDateString('1 year'))
+            ->sub(\DateInterval::createFromDateString('1 day'));
     }
 }
