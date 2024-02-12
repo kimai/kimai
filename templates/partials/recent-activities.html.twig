@@ -1,6 +1,6 @@
 {% if is_granted('start_own_timesheet') %}
     <div class="nav-item d-flex me-1 recent-activities">
-        <a href="{{ path('favorites_timesheets') }}" class="nav-link px-0 remote-modal-load recent-activities-btn" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" title="{{ 'recent.activities'|trans }}">
+        <a href="{{ path('favorites_timesheets') }}" class="btn btn-icon px-0 remote-modal-load recent-activities-btn" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" title="{{ 'recent.activities'|trans }}">
             {{ icon('repeat', true) }}
         </a>
     </div>
