@@ -126,15 +126,14 @@
     {% set format = locale_format('date') %}
     {% set jsFormat = format|js_format %}
     {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-datepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
-    <div class="input-group input-group-flat">
-        <span class="input-group-text">
+    <div class="input-group">
+        <div class="input-group-text">
             <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </span>
+        </div>
         {{- block('form_widget_simple') -}}
-        <div class="form-control"></div>
         {% if not required %}
         <span class="input-group-text">
-            <a href="#" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
                 {{ icon('cancel') }}
             </a>
         </span>
@@ -147,10 +146,10 @@
     {%- set format = locale_format('time') -%}
     {%- set jsFormat = format|js_format -%}
     {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
-    <div class="input-group input-group-flat">
-        <span class="input-group-text">
+    <div class="input-group">
+        <div class="input-group-text">
             <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </span>
+        </div>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
         {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
@@ -176,27 +175,27 @@
 {% block daterange_widget %}
     {% set format = locale_format('date')|js_format %}
     {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
-    <div class="input-group input-group-flat">
+    <div class="input-group">
+        {{ block('form_widget_simple') }}
         {% if ranges is defined %}
-        <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
                 <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
             {% endfor %}
         </div>
         {% endif %}
-        {{ block('form_widget_simple') }}
     </div>
 {% endblock daterange_widget %}
 
 {% block duration_widget %}
     <div class="duration-widget">
         {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
-            <div class="input-group input-group-flat">
+            <div class="input-group">
                 {% if form.vars.icon is defined and form.vars.icon is not null %}
-                <span class="input-group-text">
+                <div class="input-group-text">
                     {{ icon(form.vars.icon) }}
-                </span>
+                </div>
                 {% endif %}
                 {{ block('form_widget_simple') }}
                 {% if form.vars.toggle is defined and form.vars.toggle %}
@@ -221,10 +220,10 @@
             </div>
         {% else %}
             {% if icon is defined and icon is not empty %}
-                <div class="input-group input-group-flat">
-                    <span class="input-group-text">
+                <div class="input-group">
+                    <div class="input-group-text">
                         <i class="{{ icon|icon(false, icon) }}"></i>
-                    </span>
+                    </div>
                     {{ block('form_widget_simple') }}
                 </div>
             {% else %}
@@ -251,10 +250,10 @@
 
 {% block text_widget -%}
     {% if icon is not empty %}
-        <div class="input-group input-group-flat">
-            <span class="input-group-text">
+        <div class="input-group">
+            <div class="input-group-text">
                 <i class="{{ icon|icon(false, icon) }}"></i>
-            </span>
+            </div>
             {{ block('form_widget_simple') }}
         </div>
     {% else %}
@@ -263,20 +262,20 @@
 {%- endblock text_widget %}
 
 {% block mail_widget -%}
-    <div class="input-group input-group-flat">
-        <span class="input-group-text">
+    <div class="input-group">
+        <div class="input-group-text">
             {{ icon('mail') }}
-        </span>
+        </div>
         {{ block('email_widget') }}
     </div>
 {%- endblock mail_widget %}
 
 {# user password fields, search for "secret" block_prefix #}
 {% block secret_widget -%}
-    <div class="input-group input-group-flat">
-        <span class="input-group-text">
+    <div class="input-group">
+        <div class="input-group-text">
             {{ icon('password') }}
-        </span>
+        </div>
         {{ block('password_widget') }}
     </div>
 {%- endblock secret_widget %}
@@ -370,10 +369,10 @@
 
 {# customer phone/fax, search for "phone" block_prefix #}
 {% block phone_widget -%}
-    <div class="input-group input-group-flat">
-        <span class="input-group-text">
+    <div class="input-group">
+        <div class="input-group-text">
             {{ icon(attr.icon ?? 'phone') }}
-        </span>
+        </div>
         {{ block('tel_widget') }}
     </div>
 {%- endblock phone_widget %}
@@ -382,13 +381,13 @@
     {%- set prepend = not (money_pattern starts with '{{') -%}
     {%- set append = not (money_pattern ends with '}}') -%}
     {%- if prepend or append -%}
-        <div class="input-group input-group-flat">
+        <div class="input-group">
             {%- if prepend -%}
-                <span class="input-group-text">{{ money_pattern|form_encode_currency }}</span>
+                <div class="input-group-text">{{ money_pattern|form_encode_currency }}</div>
             {%- endif -%}
             {{- block('form_widget_simple') -}}
             {%- if append -%}
-                <span class="input-group-text">{{ money_pattern|form_encode_currency }}</span>
+                <div class="input-group-text">{{ money_pattern|form_encode_currency }}</div>
             {%- endif -%}
         </div>
     {%- else -%}
@@ -398,9 +397,9 @@
 
 {# customer homepage, search for "homepage" block_prefix #}
 {% block homepage_widget -%}
-    <div class="input-group input-group-flat">
+    <div class="input-group">
         {% if '://' not in value  %}
-            <span class="input-group-text">https://</span>
+            <div class="input-group-text">https://</div>
         {% endif %}
         {{ block('url_widget') }}
     </div>
