@@ -81,16 +81,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
     {
         $this->request($client, $url, $method);
-        $this->assertResponseIsSecured($client->getResponse(), $url);
-    }
+        $response = $client->getResponse();
 
-    /**
-     * @param Response $response
-     * @param string $url
-     */
-    protected function assertResponseIsSecured(Response $response, string $url): void
-    {
-        $data = ['message' => 'Authentication required, missing user header: X-AUTH-USER'];
+        $data = [
+            'message' => 'Unauthorized',
+            'code' => 401
+        ];
 
         self::assertEquals(
             $data,
@@ -99,17 +95,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
 
         self::assertEquals(
-            Response::HTTP_FORBIDDEN,
+            Response::HTTP_UNAUTHORIZED,
             $response->getStatusCode(),
             sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param string $method
-     */
     protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
     {
         $client = $this->getClientForAuthenticatedUser($role);

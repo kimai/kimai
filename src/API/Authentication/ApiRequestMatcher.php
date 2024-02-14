@@ -16,14 +16,22 @@ final class ApiRequestMatcher implements RequestMatcherInterface
 {
     public function matches(Request $request): bool
     {
+        // we do not want to handle URLs that
+        if (!str_starts_with($request->getRequestUri(), '/api/')) {
+            return false;
+        }
+
+        // API documentation is only available to registered users
         if (str_starts_with($request->getRequestUri(), '/api/doc')) {
             return false;
         }
 
+        // let's use this firewall if a Bearer token is set in the header
         if ($request->headers->has('Authorization')) {
             return true;
         }
 
+        // let's use this firewall if the deprecated username & token combination is available
         if ($request->headers->has(TokenAuthenticator::HEADER_USERNAME) &&
             $request->headers->has(TokenAuthenticator::HEADER_TOKEN)) {
             return true;
