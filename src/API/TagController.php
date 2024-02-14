@@ -16,7 +16,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,8 +40,6 @@ final class TagController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
     #[Route(methods: ['GET'], name: 'get_tags')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
@@ -62,8 +59,6 @@ final class TagController extends BaseApiController
     #[OA\Post(description: 'Creates a new tag and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created tag', content: new OA\JsonContent(ref: '#/components/schemas/TagEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TagEditForm'))]
     #[Route(methods: ['POST'], name: 'post_tag')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('manage_tag') && !$this->isGranted('create_tag')) {
@@ -97,8 +92,6 @@ final class TagController extends BaseApiController
     #[IsGranted('delete_tag')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'HTTP code 204 for a successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Tag ID to delete', required: true)]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Route(methods: ['DELETE'], path: '/{id}', name: 'delete_tag')]
     public function deleteAction(Tag $tag): Response
     {
