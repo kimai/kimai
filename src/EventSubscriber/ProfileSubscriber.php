@@ -31,6 +31,11 @@ final class ProfileSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
+        // make sure that we do NOT access the session, if the request is stateless
+        if ($request->attributes->getBoolean('_stateless')) {
+            return;
+        }
+
         $profile = $this->profileManager->getProfileFromCookie($request);
         if ($this->profileManager->isValidProfile($profile)) {
             $this->profileManager->setProfile($request->getSession(), $profile);
