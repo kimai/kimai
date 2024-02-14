@@ -16,16 +16,21 @@ final class ApiRequestMatcher implements RequestMatcherInterface
 {
     public function matches(Request $request): bool
     {
-        if (str_contains($request->getRequestUri(), '/api/doc')) {
+        if (str_starts_with($request->getRequestUri(), '/api/doc')) {
             return false;
         }
 
-        if (str_contains($request->getRequestUri(), '/api/')) {
-            return false;
+        if ($request->headers->has('Authorization')) {
+            return true;
         }
 
-        return !$request->headers->has(SessionAuthenticator::HEADER_JAVASCRIPT) &&
-                $request->headers->has(TokenAuthenticator::HEADER_USERNAME) &&
-                $request->headers->has(TokenAuthenticator::HEADER_TOKEN);
+        if ($request->headers->has(TokenAuthenticator::HEADER_USERNAME) &&
+            $request->headers->has(TokenAuthenticator::HEADER_TOKEN)) {
+            return true;
+        }
+
+        // checking for a previous session allows us to skip the API firewall and token access handler
+        // we simply re-use the existing session when doing API calls from the frontend
+        return !$request->hasPreviousSession();
     }
 }
