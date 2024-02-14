@@ -103,7 +103,7 @@ class ApiDocControllerTest extends ControllerBaseTest
         $this->assertEquals('3.0.0', $json['openapi']);
         $this->assertArrayHasKey('info', $json);
         $this->assertEquals('Kimai - API Docs', $json['info']['title']);
-        $this->assertEquals('0.7', $json['info']['version']);
+        $this->assertEquals('1.0', $json['info']['version']);
 
         $this->assertArrayHasKey('paths', $json);
         $this->assertEquals($paths, array_keys($json['paths']));
