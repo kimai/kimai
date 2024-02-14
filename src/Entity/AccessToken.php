@@ -101,7 +101,6 @@ class AccessToken
     {
         if ($this->id) {
             $this->id = null;
-            $this->token = null;
         }
     }
 }
