@@ -29,7 +29,10 @@ final class TokenAuthenticator extends AbstractAuthenticator
     public const HEADER_USERNAME = 'X-AUTH-USER';
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
 
-    public function __construct(private ApiUserRepository $userProvider, private PasswordHasherFactoryInterface $passwordHasherFactory)
+    public function __construct(
+        private readonly ApiUserRepository $userProvider,
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory
+    )
     {
     }
 
