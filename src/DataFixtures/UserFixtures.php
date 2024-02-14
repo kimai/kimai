@@ -9,6 +9,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -86,6 +87,10 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
             */
             $manager->persist($prefs[0]);
             $manager->persist($prefs[1]);
+
+            $accessToken = new AccessToken($user, $userData[9]);
+            $accessToken->setName('Test fixture');
+            $manager->persist($accessToken);
         }
 
         $manager->flush();
