@@ -24,8 +24,21 @@ final class Version20240214061246 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE TABLE kimai2_access_token (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, token VARCHAR(100) NOT NULL, name VARCHAR(50) NOT NULL, last_usage DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_6FB0DB1EA76ED395 (user_id), UNIQUE INDEX UNIQ_6FB0DB1E5F37A13B (token), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE kimai2_access_token ADD CONSTRAINT FK_6FB0DB1EA76ED395 FOREIGN KEY (user_id) REFERENCES kimai2_users (id) ON DELETE CASCADE');
+        $accessTokens = $schema->createTable('kimai2_access_token');
+
+        $accessTokens->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
+        $accessTokens->addColumn('user_id', 'integer', ['notnull' => true]);
+        $accessTokens->addColumn('token', 'string', ['notnull' => true, 'length' => 100]);
+        $accessTokens->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
+        $accessTokens->addColumn('last_usage', 'datetime_immutable', ['notnull' => false, 'default' => null]);
+        $accessTokens->addColumn('expires_at', 'datetime_immutable', ['notnull' => false, 'default' => null]);
+
+        $accessTokens->setPrimaryKey(['id']);
+
+        $accessTokens->addIndex(['user_id'], 'IDX_6FB0DB1EA76ED395');
+        $accessTokens->addUniqueIndex(['token'], 'UNIQ_6FB0DB1E5F37A13B');
+
+        $accessTokens->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_6FB0DB1EA76ED395');
     }
 
     public function down(Schema $schema): void
