@@ -295,11 +295,10 @@ final class ResetTestCommand extends AbstractResetCommand
             if ($userConf[17] !== null) {
                 $user->setApiToken($userConf[17]);
             }
-            if ($userConf[18] !== null) {
-                $accessToken = new AccessToken($user, $userConf[18]);
-                $accessToken->setName('Test fixture');
-                $this->entityManager->persist($accessToken);
-            }
+
+            $accessToken = new AccessToken($user, $userConf[18]);
+            $accessToken->setName('Test fixture');
+            $this->entityManager->persist($accessToken);
 
             $this->entityManager->persist($user);
             $userEntities[] = $user;

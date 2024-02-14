@@ -22,6 +22,9 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 abstract class APIControllerBaseTest extends ControllerBaseTest
 {
+    /**
+     * @return array<string, string>
+     */
     private function getAuthHeader(string $username, string $password): array
     {
         return [

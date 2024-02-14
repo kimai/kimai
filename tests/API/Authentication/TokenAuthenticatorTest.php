@@ -24,6 +24,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * @covers \App\API\Authentication\TokenAuthenticator
+ * @group legacy
  */
 class TokenAuthenticatorTest extends TestCase
 {
