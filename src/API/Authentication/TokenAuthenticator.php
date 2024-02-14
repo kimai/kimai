@@ -39,7 +39,15 @@ final class TokenAuthenticator extends AbstractAuthenticator
     public function supports(Request $request): bool
     {
         if (str_contains($request->getRequestUri(), '/api/')) {
-            return !str_contains($request->getRequestUri(), '/api/doc');
+            if (str_contains($request->getRequestUri(), '/api/doc')) {
+                return false;
+            }
+
+            if ($request->headers->has(self::HEADER_USERNAME) && $request->headers->has(self::HEADER_TOKEN)) {
+                @trigger_error('You are using deprecated API access, please upgrade your APP to use API tokens instead.', E_USER_DEPRECATED);
+
+                return true;
+            }
         }
 
         return false;
