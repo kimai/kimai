@@ -22,42 +22,22 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 abstract class APIControllerBaseTest extends ControllerBaseTest
 {
+    private function getAuthHeader(string $username, string $password): array
+    {
+        return [
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $password,
+        ];
+    }
+
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
-        switch ($role) {
-            case User::ROLE_SUPER_ADMIN:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_SUPER_ADMIN,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_ADMIN:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_ADMIN,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_TEAMLEAD:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_TEAMLEAD,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_USER:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_USER,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            default:
-                throw new \Exception(sprintf('Unknown role "%s"', $role));
-        }
-
-        return $client;
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_SUPER_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_super')),
+            User::ROLE_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_admin')),
+            User::ROLE_TEAMLEAD => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_TEAMLEAD, UserFixtures::DEFAULT_API_TOKEN . '_teamlead')),
+            User::ROLE_USER => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_USER, UserFixtures::DEFAULT_API_TOKEN . '_user')),
+            default => throw new \Exception(sprintf('Unknown role "%s"', $role)),
+        };
     }
 
     protected function createUrl(string $url): string
