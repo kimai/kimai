@@ -30,8 +30,10 @@ final class Version20240214061246 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE kimai2_access_token DROP FOREIGN KEY FK_6FB0DB1EA76ED395');
-        $this->addSql('DROP TABLE kimai2_access_token');
+        $table = $schema->getTable('kimai2_access_token');
+        $table->removeForeignKey('FK_6FB0DB1EA76ED395');
+
+        $schema->dropTable('kimai2_access_token');
     }
 
     public function isTransactional(): bool
