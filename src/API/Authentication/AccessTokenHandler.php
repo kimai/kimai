@@ -26,8 +26,12 @@ final class AccessTokenHandler implements AccessTokenHandlerInterface
     {
         $accessToken = $this->accessTokenRepository->findByToken($accessToken);
 
-        if (null === $accessToken || !$accessToken->isValid()) {
+        if (null === $accessToken) {
             throw new BadCredentialsException('Invalid credentials.');
+        }
+
+        if (!$accessToken->isValid()) {
+            throw new BadCredentialsException('Invalid token.');
         }
 
         $accessToken->setLastUsage(new \DateTimeImmutable());
