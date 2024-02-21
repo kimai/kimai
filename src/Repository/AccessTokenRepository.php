@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\AccessToken;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -20,6 +21,14 @@ class AccessTokenRepository extends EntityRepository
     public function findByToken(string $token): ?AccessToken
     {
         return $this->findOneBy(['token' => $token]);
+    }
+
+    /**
+     * @return array<AccessToken>
+     */
+    public function findForUser(User $user): array
+    {
+        return $this->findBy(['user' => $user]);
     }
 
     public function saveAccessToken(AccessToken $accessToken): void
