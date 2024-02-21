@@ -9,6 +9,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -86,6 +87,10 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
             */
             $manager->persist($prefs[0]);
             $manager->persist($prefs[1]);
+
+            $accessToken = new AccessToken($user, $userData[10]);
+            $accessToken->setName('Test fixture');
+            $manager->persist($accessToken);
         }
 
         $manager->flush();
@@ -168,7 +173,8 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         // enabled = $userData[6]
         // timezone = $userData[7]
         // password = $userData[8]
-        // api = $userData[9]
+        // api old = $userData[9]
+        // api new = $userData[10]
 
         return [
             [
@@ -182,6 +188,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'America/Vancouver',
                 self::DEFAULT_PASSWORD,
                 self::DEFAULT_API_TOKEN,
+                self::DEFAULT_API_TOKEN . '_john',
             ],
             [
                 'John Doe',
@@ -194,6 +201,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'America/Vancouver',
                 'password',
                 'password',
+                self::DEFAULT_API_TOKEN . '_user',
             ],
             // inactive user to test login
             [
@@ -207,6 +215,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Australia/Sydney',
                 self::DEFAULT_PASSWORD,
                 self::DEFAULT_API_TOKEN,
+                self::DEFAULT_API_TOKEN . '_inactive',
             ],
             [
                 'Tony Maier',
@@ -219,6 +228,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Asia/Bangkok',
                 self::DEFAULT_PASSWORD,
                 self::DEFAULT_API_TOKEN,
+                self::DEFAULT_API_TOKEN . '_teamlead',
             ],
             [
                 'Tony Maier',
@@ -231,6 +241,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Asia/Bangkok',
                 'password',
                 'password',
+                self::DEFAULT_API_TOKEN . '_tony',
             ],
             // no avatar to test default image macro
             [
@@ -244,6 +255,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Europe/London',
                 self::DEFAULT_PASSWORD,
                 self::DEFAULT_API_TOKEN,
+                self::DEFAULT_API_TOKEN . '_anna',
             ],
             [
                 'Anna Smith',
@@ -256,6 +268,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Europe/London',
                 'password',
                 'password',
+                self::DEFAULT_API_TOKEN . '_admin',
             ],
             // no alias to test twig username macro
             [
@@ -269,6 +282,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Europe/Berlin',
                 self::DEFAULT_PASSWORD,
                 self::DEFAULT_API_TOKEN,
+                self::DEFAULT_API_TOKEN . '_susan',
             ],
             [
                 null,
@@ -281,6 +295,7 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
                 'Europe/Berlin',
                 'password',
                 'password',
+                self::DEFAULT_API_TOKEN . '_super',
             ],
         ];
     }

@@ -9,6 +9,8 @@
 
 namespace App\Command;
 
+use App\DataFixtures\UserFixtures;
+use App\Entity\AccessToken;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -34,7 +36,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:reset:test', description: 'Resets the "test" environment')]
 final class ResetTestCommand extends AbstractResetCommand
 {
-    public function __construct(private EntityManagerInterface $entityManager, string $kernelEnvironment)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        string $kernelEnvironment
+    )
     {
         parent::__construct($kernelEnvironment);
     }
@@ -95,7 +100,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_customer',
             ],
             [
                 2,
@@ -115,7 +121,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_user',
             ],
             [
                 3,
@@ -135,7 +142,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_inactive',
             ],
             [
                 4,
@@ -155,7 +163,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_teamlead',
             ],
             [
                 5,
@@ -175,7 +184,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_admin',
             ],
             [
                 6,
@@ -195,7 +205,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 '2020-04-14 09:50:38',
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_super',
             ],
             [
                 7,
@@ -215,7 +226,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_qa1',
             ],
             [
                 8,
@@ -235,7 +247,8 @@ final class ResetTestCommand extends AbstractResetCommand
                 null,
                 null,
                 null,
-                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO'
+                '$2y$13$X8/msijlFUgvRaiGLCJP/ep2hRyjpd.TSNz3cuutZLp05FpuBsYfO',
+                UserFixtures::DEFAULT_API_TOKEN . '_qa2',
             ],
         ];
 
@@ -282,6 +295,10 @@ final class ResetTestCommand extends AbstractResetCommand
             if ($userConf[17] !== null) {
                 $user->setApiToken($userConf[17]);
             }
+
+            $accessToken = new AccessToken($user, $userConf[18]);
+            $accessToken->setName('Test fixture');
+            $this->entityManager->persist($accessToken);
 
             $this->entityManager->persist($user);
             $userEntities[] = $user;

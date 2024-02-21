@@ -18,6 +18,8 @@ security:
             security: false
 
         api:
+            access_token:
+                token_handler: App\API\Authentication\AccessTokenHandler
             request_matcher: App\API\Authentication\ApiRequestMatcher
             user_checker: App\Security\UserChecker
             stateless: true
@@ -35,7 +37,6 @@ security:
             entry_point: form_login
 
             custom_authenticators:
-                - App\API\Authentication\SessionAuthenticator
                 - App\Saml\SamlAuthenticator
 
             remember_me:

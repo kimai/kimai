@@ -15,7 +15,6 @@ use App\Plugin\PluginManager;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -34,8 +33,6 @@ final class StatusController extends BaseApiController
      */
     #[OA\Response(response: 200, description: "A simple route that returns a 'pong', which you can use for testing the API", content: new OA\JsonContent(example: "{'message': 'pong'}"))]
     #[Route(methods: ['GET'], path: '/ping')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function pingAction(): Response
     {
         $view = new View(['message' => 'pong'], 200);
@@ -48,8 +45,6 @@ final class StatusController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns version information about the current release', content: new OA\JsonContent(ref: new Model(type: Version::class)))]
     #[Route(methods: ['GET'], path: '/version')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function versionAction(): Response
     {
         return $this->viewHandler->handle(new View(new Version(), 200));
@@ -60,8 +55,6 @@ final class StatusController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns a list of plugin names and versions', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: new Model(type: Plugin::class))))]
     #[Route(methods: ['GET'], path: '/plugins')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function pluginAction(PluginManager $pluginManager): Response
     {
         $plugins = [];
