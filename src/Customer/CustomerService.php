@@ -28,10 +28,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class CustomerService
 {
     public function __construct(
-        private CustomerRepository $repository,
-        private SystemConfiguration $configuration,
-        private ValidatorInterface $validator,
-        private EventDispatcherInterface $dispatcher
+        private readonly CustomerRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly ValidatorInterface $validator,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
     }
 
@@ -74,7 +74,6 @@ final class CustomerService
     }
 
     /**
-     * @param Customer $customer
      * @param string[] $groups
      * @throws ValidationFailedException
      */
