@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target>Sobald der Monat abgeschlossen ist, kann der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder bearbeiten.</target>
+        <target>Dies wird alle Tage des Jahres vor dem gewählten Datum abschliessen. Der Benutzer wird für den abgeschlossenen Zeitraum keine Zeiten mehr anlegen oder bearbeiten können.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

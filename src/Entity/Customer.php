@@ -146,6 +146,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Timezone]
     #[Assert\Length(max: 64)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]

@@ -80,6 +80,9 @@ abstract class AbstractSpreadsheetRenderer
             'label' => 'name'
         ],
         'username' => [],
+        'accountNumber' => [
+            'label' => 'account_number'
+        ],
         'customer' => [],
         'project' => [],
         'activity' => [],
@@ -311,6 +314,18 @@ abstract class AbstractSpreadsheetRenderer
                         $username = $entity->getUser()->getUserIdentifier();
                     }
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $username);
+                };
+            }
+        }
+
+        if (isset($columns['accountNumber'])) {
+            if (!isset($columns['accountNumber']['render'])) {
+                $columns['accountNumber']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
+                    $accountNumber = '';
+                    if (null !== $entity->getUser()) {
+                        $accountNumber = $entity->getUser()->getAccountNumber();
+                    }
+                    $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $accountNumber);
                 };
             }
         }
