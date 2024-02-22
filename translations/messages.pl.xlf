@@ -1487,9 +1487,9 @@
         <source>completed_month_pdf_note</source>
         <target state="translated">Dokument ten służy jako dowód przepracowanych godzin.</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Cały miesiąc</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Cały miesiąc</target>
       </trans-unit>
       <trans-unit id="EX27Gdt" resname="created_by">
         <source>created_by</source>
@@ -1531,9 +1531,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">Miesiąc skończony PDF</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Po skończeniu miesiąca, użytkownik nie będzie już w stanie tworzyć lub zmieniać czasów na ten okres.</target>
+        <target state="needs-translation">Po skończeniu miesiąca, użytkownik nie będzie już w stanie tworzyć lub zmieniać czasów na ten okres.</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>

@@ -1475,9 +1475,9 @@
         <source>created_by</source>
         <target state="translated">Criado por</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Mês completo</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Mês completo</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1535,9 +1535,9 @@
         <source>evaluation</source>
         <target state="translated">Avaliação</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Após completar o mês, o usuário não poderá mais criar ou editar horários para aquele período.</target>
+        <target state="needs-translation">Após completar o mês, o usuário não poderá mais criar ou editar horários para aquele período.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1778,6 +1778,10 @@
       <trans-unit id="d9m85KE" resname="locale">
         <source>locale</source>
         <target state="translated">Formato de hora, data e moeda</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="no">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Ausência: O comentário é um campo obrigatório</target>
       </trans-unit>
     </body>
   </file>

@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Gjøremålsbeskrivelse</target>
+        <target state="needs-translation">Gjøremålsbeskrivelse</target>
       </trans-unit>
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>

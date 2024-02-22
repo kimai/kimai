@@ -1317,9 +1317,9 @@
         <source>evaluation</source>
         <target state="translated">Оценка</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">По завершении месяца пользователь больше не сможет создавать или редактировать время для этого периода.</target>
+        <target state="needs-translation">По завершении месяца пользователь больше не сможет создавать или редактировать время для этого периода.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

@@ -1439,9 +1439,9 @@
         <source>Activated</source>
         <target state="translated">Activado</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="needs-translation">Idiomas admitidos con reglas de formato</target>
+        <target state="translated">A continuación se muestran ejemplos de reglas de formato para los idiomas admitidos.</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
@@ -1451,9 +1451,9 @@
         <source>hour_24</source>
         <target state="translated">24 horas</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">Además de traducir la interfaz, esta configuración también es responsable de los formatos de hora, fecha y moneda.</target>
+        <target state="translated">Esta configuración es responsable de la traducción del software.</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1487,9 +1487,9 @@
         <source>created_at</source>
         <target state="translated">Creado en</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">El mes completo</target>
+        <target state="needs-translation">El mes completo</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
         <source>evaluation</source>
@@ -1511,9 +1511,9 @@
         <source>work_contract</source>
         <target state="translated">Contrato laboral</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Una vez finalizado el mes, el usuario ya no podrás crear ni editar los horarios para ese periodo.</target>
+        <target state="needs-translation">Una vez finalizado el mes, el usuario ya no podrás crear ni editar los horarios para ese periodo.</target>
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>Review</source>
@@ -1774,6 +1774,14 @@
       <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
         <source>batch_table_checkbox_all</source>
         <target state="translated">Seleccionar todas las entradas para la lista de actualización por lotes</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>locale</source>
+        <target state="translated">Formato de hora, fecha y moneda.</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">El comentario es obligatorio</target>
       </trans-unit>
     </body>
   </file>
