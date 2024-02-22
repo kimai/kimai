@@ -153,3 +153,10 @@ table.table-hover {
         }
     }
 }
+
+/* For the context menu */
+.action-dropdown,
+.actions .dropdown .dropdown-menu {
+    // stay on top of sticky elements (like table header)
+    z-index: 1021;
+}

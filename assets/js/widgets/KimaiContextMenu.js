@@ -70,7 +70,10 @@ export default class KimaiContextMenu {
     {
         const dropdownElement = this.getContextMenuElement();
 
-        dropdownElement.style.zIndex = '1021'; // stay on top of sticky elements (like table header)
+        if (!dropdownElement.classList.contains('action-dropdown')) {
+            dropdownElement.classList.add('action-dropdown');
+        }
+
         dropdownElement.innerHTML = html;
         dropdownElement.style.position = 'fixed';
         dropdownElement.style.top = (event.clientY) + 'px';
