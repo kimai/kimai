@@ -1,0 +1,81 @@
+version: '3.5'
+services:
+
+  sqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=kimai
+      - MYSQL_USER=kimaiuser
+      - MYSQL_PASSWORD=kimaipassword
+      - MYSQL_ROOT_PASSWORD=changemeplease
+    #ports:
+    #  - 3336:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    command: --default-storage-engine innodb
+    restart: unless-stopped
+    healthcheck:
+      test: mysqladmin -p$$MYSQL_ROOT_PASSWORD ping -h localhost
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx
+    ports:
+      - 8001:80
+    volumes:
+      - ./.docker/nginx_default.conf:/etc/nginx/conf.d/default.conf
+      - public:/opt/kimai/public:ro
+    restart: unless-stopped
+    depends_on:
+      - kimai
+    healthcheck:
+      test:  wget --spider http://nginx/health || exit 1
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+
+  kimai: # This is the latest FPM image of kimai
+    image: kimai/kimai2:fpm-dev
+    environment:
+      - ADMINMAIL=admin@kimai.local
+      - ADMINPASS=changemeplease
+      - DATABASE_URL=mysql://kimaiuser:kimaipassword@sqldb/kimai?charset=utf8&serverVersion=5.7
+      - TRUSTED_HOSTS=nginx,localhost,127.0.0.1
+      - MAILER_URL=smtp://mailer:1025
+      - MAILER_FROM=kimai@example.com
+    volumes:
+      - public:/opt/kimai/public
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 8080:8080
+    volumes:
+      - ./swagger.json:/swagger.json
+    environment:
+      - SWAGGER_JSON=/swagger.json
+
+  mail_catcher:
+    image: schickling/mailcatcher
+    ports:
+      - "${MAILER_SMTP_PORT:-1025}:1025"
+      - "${MAILER_ADMIN_PORT:-1080}:1080"
+
+
+volumes:
+    var:
+    public:
+    mysql:

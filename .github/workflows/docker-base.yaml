@@ -3,6 +3,8 @@ name: 'Docker Build'
 
 on:
     workflow_dispatch:
+    schedule:
+      - cron: "* * 5 * *" # build on the 5th of every month
 
 jobs:
     build:
