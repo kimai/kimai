@@ -1491,9 +1491,9 @@
         <source>evaluation</source>
         <target state="translated">Hodnocení</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Celý měsíc</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Celý měsíc</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1523,9 +1523,9 @@
         <source>created_at</source>
         <target state="translated">Vytvořeno v</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Po dokončení měsíce již uživatel nebude moci vytvářet ani upravovat časy pro toto období.</target>
+        <target state="needs-translation">Po dokončení měsíce již uživatel nebude moci vytvářet ani upravovat časy pro toto období.</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>

@@ -974,9 +974,9 @@
         <source>status.planned</source>
         <target state="translated">已計劃</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">已核定月份</target>
+        <target state="needs-translation">已核定月份</target>
       </trans-unit>
       <trans-unit id="4PMHpIp" resname="time_off">
         <source>time_off</source>
@@ -1318,9 +1318,9 @@
         <source>help.globalActivities</source>
         <target state="translated">如果設定未開啟，則只能記錄針對特定專案的活動的時間。</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">核定該月後，使用者將無法再建立或編輯該月份的時間。</target>
+        <target state="needs-translation">核定該月後，使用者將無法再建立或編輯該月份的時間。</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>

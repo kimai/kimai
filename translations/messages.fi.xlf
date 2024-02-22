@@ -1295,9 +1295,9 @@
         <source>stats.userDurationToday</source>
         <target state="translated">Työtuntini tänään</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">Vahvista kuukausi</target>
+        <target state="needs-translation">Vahvista kuukausi</target>
       </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
@@ -1431,9 +1431,9 @@
         <source>public_holiday</source>
         <target state="translated">Kansallinen vapaapäivä</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Kuukauden vahvistamisen jälkeen käyttäjä ei enää pysty lisäämään tai muokkaamaan kyseisen jakson aikoja.</target>
+        <target state="needs-translation">Kuukauden vahvistamisen jälkeen käyttäjä ei enää pysty lisäämään tai muokkaamaan kyseisen jakson aikoja.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>

@@ -618,9 +618,9 @@
         <source>evaluation</source>
         <target>Auswertung</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target>Monat abschliessen</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve" approved="yes">
+        <source>Complete month</source>
+        <target state="final">Monat abschliessen</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>

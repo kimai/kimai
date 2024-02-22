@@ -1374,13 +1374,13 @@
         <source>Activated</source>
         <target state="translated">פעיל</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="needs-translation">שפות נתמכות עם כללי עיצוב</target>
+        <target state="translated">הנה דוגמאות של כללי עיצוב לשפות הנתמכות</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">בנוסף לתרגום המנשק, הגדרה זו אחראית גם על תבניות השעה, התאריך והמטבע.</target>
+        <target state="translated">ההגדרה הזאת אחראית על תרגום התוכנה</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1426,9 +1426,9 @@
         <source>evaluation</source>
         <target state="translated">הערכה</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">חודש שלם</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">נעילת חודש</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1474,9 +1474,9 @@
         <source>pto_year_holiday</source>
         <target state="translated">ימי חופשה שנתיים</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">לאחר השלמת החודש, המשתמש לא יוכל עוד ליצור או לערוך תיעוד שעות לפרק הזמן הזה.</target>
+        <target state="translated">הפעולה הזאת תנעל את כל הימים של השנה לפני התאריך הנבחר. לאחר השלמת החודש, המשתמש לא יוכל עוד ליצור או לערוך תיעוד שעות לפרק הזמן הזה.</target>
       </trans-unit>
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
@@ -1713,6 +1713,14 @@
       <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
         <source>batch_table_checkbox_all</source>
         <target state="translated">בחירת כל הרשומות לרשימת עדכון מרוכז</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">העדרות: הערה היא שדה חובה</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>locale</source>
+        <target state="translated">עיצוב לשעה, תאריך ומטבע</target>
       </trans-unit>
     </body>
   </file>
