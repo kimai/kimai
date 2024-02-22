@@ -24,7 +24,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 final class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private TokenStorageInterface $storage, private ContextHelper $helper, private LocaleService $localeService)
+    public function __construct(
+        private readonly TokenStorageInterface $storage,
+        private readonly ContextHelper $helper,
+        private readonly LocaleService $localeService
+    )
     {
     }
 
@@ -44,7 +48,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
 
         $this->helper->setAssetVersion((string) Constants::VERSION_ID);
 
-        if ($this->localeService->isRightToLeft(\Locale::getDefault())) {
+        if ($this->localeService->isRightToLeft($event->getRequest()->getLocale())) {
             $this->helper->setIsRightToLeft(true);
         }
 

@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectViewQueryTest extends TestCase
 {
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $user = new User();
         $date = new \DateTime();
@@ -33,7 +33,7 @@ class ProjectViewQueryTest extends TestCase
         self::assertFalse($sut->isIncludeNoWork());
     }
 
-    public function testSetterGetter()
+    public function testSetterGetter(): void
     {
         $user = new User();
         $date = new \DateTime();

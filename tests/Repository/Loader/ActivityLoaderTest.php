@@ -17,7 +17,7 @@ use App\Repository\Loader\ActivityLoader;
  */
 class ActivityLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $em = $this->getEntityManagerMock(3);
 

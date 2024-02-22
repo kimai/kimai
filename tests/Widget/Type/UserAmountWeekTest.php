@@ -50,7 +50,7 @@ class UserAmountWeekTest extends AbstractWidgetTest
         ];
     }
 
-    public function testSettings()
+    public function testSettings(): void
     {
         $sut = $this->createSut();
 

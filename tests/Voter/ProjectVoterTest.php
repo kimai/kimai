@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class ProjectVoterTest extends AbstractVoterTest
 {
-    protected function assertVote(User $user, $subject, $attribute, $result)
+    public function assertVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ProjectVoter::class);
@@ -35,7 +35,7 @@ class ProjectVoterTest extends AbstractVoterTest
         $this->assertEquals($result, $actual, sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
-    public function testVote()
+    public function testVote(): void
     {
         $userNoRole = $this->getUser(0, 'foo');
         $userStandard = $this->getUser(1, User::ROLE_USER);
@@ -90,7 +90,7 @@ class ProjectVoterTest extends AbstractVoterTest
         }
     }
 
-    public function testTeamlead()
+    public function testTeamlead(): void
     {
         $team = new Team('foo');
         $user = new User();
@@ -112,7 +112,7 @@ class ProjectVoterTest extends AbstractVoterTest
         $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
     }
 
-    public function testTeamMember()
+    public function testTeamMember(): void
     {
         $team = new Team('foo');
         $user = new User();

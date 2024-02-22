@@ -915,9 +915,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Geschäftsjahr</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target>Arbeitszeit</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
+        <source>Working hours</source>
+        <target state="final">Arbeitszeit</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1554,11 +1554,15 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target>Unterstützte Sprachen mit Formatierungsregeln</target>
+        <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale">
+        <source>locale</source>
+        <target state="translated">Format für Zeit, Datum und Geld</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Diese Einstellung ist neben der Übersetzung der Oberfläche ebenso zuständig für die Zeit-, Datums-, und Währungsformate.</target>
+        <target state="translated">Diese Einstellung ist für die Übersetzung der Software zuständig</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1676,9 +1680,9 @@
         <source>Categories</source>
         <target>Kategorien</target>
       </trans-unit>
-      <trans-unit id="7Sycs4M" resname="Importer">
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve" approved="yes">
         <source>Importer</source>
-        <target>Importer</target>
+        <target state="final">Importer</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields">
         <source>Meta fields</source>
@@ -1739,6 +1743,10 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Rechnungsnummern-Generator</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory">
+        <source>absence_comment_mandatory</source>
+        <target>Abwesenheit: Kommentar ist Pflichtfeld</target>
       </trans-unit>
     </body>
   </file>

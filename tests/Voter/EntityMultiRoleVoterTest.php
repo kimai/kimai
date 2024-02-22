@@ -25,7 +25,7 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'foo', $user->getRoles());
         $sut = $this->getVoter(EntityMultiRoleVoter::class);

@@ -454,7 +454,7 @@ final class SystemConfiguration
 
     public function getQuickEntriesRecentAmount(): int
     {
-        return $this->getIncrement('quick_entry.recent_activities', 5, 5);
+        return $this->getIncrement('quick_entry.recent_activities', 5, 0);
     }
 
     // ========== Company configurations ==========

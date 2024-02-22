@@ -18,7 +18,7 @@ abstract class AbstractActivityEventTest extends TestCase
 {
     abstract protected function createActivityEvent(Activity $activity): AbstractActivityEvent;
 
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $activity = new Activity();
         $sut = $this->createActivityEvent($activity);

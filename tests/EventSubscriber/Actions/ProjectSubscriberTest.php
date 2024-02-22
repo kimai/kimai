@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\ProjectSubscriber;
  */
 class ProjectSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(ProjectSubscriber::class, 'project');
     }

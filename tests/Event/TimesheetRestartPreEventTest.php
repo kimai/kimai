@@ -23,7 +23,7 @@ class TimesheetRestartPreEventTest extends AbstractTimesheetEventTest
         return new TimesheetRestartPreEvent($timesheet, new Timesheet());
     }
 
-    public function testGetOriginalTimesheet()
+    public function testGetOriginalTimesheet(): void
     {
         $newTimesheet = new Timesheet();
         $originalTimesheet = new Timesheet();

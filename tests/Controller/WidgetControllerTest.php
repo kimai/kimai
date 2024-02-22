@@ -16,12 +16,12 @@ use App\Entity\User;
  */
 class WidgetControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/widgets/working-time/2020/1');
     }
 
-    public function testWorkingtimechartAction()
+    public function testWorkingtimechartAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/widgets/working-time/2020/1');

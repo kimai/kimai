@@ -33,12 +33,12 @@ abstract class AbstractTrackingModeTest extends TestCase
         return $timesheet;
     }
 
-    protected function assertDefaultBegin(Timesheet $timesheet)
+    public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNull($timesheet->getBegin());
     }
 
-    public function testCreateDoesNotChangeAnythingOnEmptyRequest()
+    public function testCreateDoesNotChangeAnythingOnEmptyRequest(): void
     {
         $sut = $this->createSut();
 
@@ -53,7 +53,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertNull($timesheet->getEnd());
     }
 
-    public function testCreateUseBeginWithoutEndDateFromRequest()
+    public function testCreateUseBeginWithoutEndDateFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -70,7 +70,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(0, $timesheet->getDuration());
     }
 
-    public function testCreateUseBeginEndDateFromRequest()
+    public function testCreateUseBeginEndDateFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -90,7 +90,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(28800, $timesheet->getDuration());
     }
 
-    public function testCreateIgnoresValidEndOnInvalidBeginDateFromRequest()
+    public function testCreateIgnoresValidEndOnInvalidBeginDateFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -107,7 +107,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(0, $timesheet->getDuration());
     }
 
-    public function testCreateUsesBeginAndIgnoresInvalidEndDateFromRequest()
+    public function testCreateUsesBeginAndIgnoresInvalidEndDateFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -125,7 +125,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(0, $timesheet->getDuration());
     }
 
-    public function testCreateUseFromWithoutToDatetimeFromRequest()
+    public function testCreateUseFromWithoutToDatetimeFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -141,7 +141,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(0, $timesheet->getDuration());
     }
 
-    public function testCreateUseFromToDatetimeFromRequest()
+    public function testCreateUseFromToDatetimeFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -161,7 +161,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(12196, $timesheet->getDuration());
     }
 
-    public function testCreateUseFromToDatetimeOverwritesBeginEndTatesFromRequest()
+    public function testCreateUseFromToDatetimeOverwritesBeginEndTatesFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -183,7 +183,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(12196, $timesheet->getDuration());
     }
 
-    public function testCreateIgnoresValidToOnInvalidFromDatetimeFromRequest()
+    public function testCreateIgnoresValidToOnInvalidFromDatetimeFromRequest(): void
     {
         $sut = $this->createSut();
 
@@ -200,7 +200,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(0, $timesheet->getDuration());
     }
 
-    public function testCreateUsesFromAndIgnoresInvalidToDatetimeFromRequest()
+    public function testCreateUsesFromAndIgnoresInvalidToDatetimeFromRequest(): void
     {
         $sut = $this->createSut();
 

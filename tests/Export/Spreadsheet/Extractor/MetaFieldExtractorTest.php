@@ -25,7 +25,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class MetaFieldExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects(self::once())->method('dispatch')->willReturnCallback(function (ProjectMetaDisplayEvent $event) {
@@ -55,7 +55,7 @@ class MetaFieldExtractorTest extends TestCase
         self::assertEquals('tralalalala', \call_user_func($definition->getAccessor(), (new Project())->setMetaField((new ProjectMeta())->setName('bar')->setValue('tralalalala'))));
     }
 
-    public function testCheckType()
+    public function testCheckType(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $sut = new MetaFieldExtractor($dispatcher);

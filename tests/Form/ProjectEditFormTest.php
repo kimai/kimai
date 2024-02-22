@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class ProjectEditFormTest extends TypeTestCase
 {
-    public function testWithNewProject()
+    public function testWithNewProject(): void
     {
         $model = new Project();
         $form = $this->factory->createBuilder(ProjectEditForm::class, $model);
@@ -38,7 +38,7 @@ class ProjectEditFormTest extends TypeTestCase
         self::assertFalse($form->has('budgetType'));
     }
 
-    public function testWithBudget()
+    public function testWithBudget(): void
     {
         $model = new Project();
         $form = $this->factory->createBuilder(ProjectEditForm::class, $model, [
@@ -49,7 +49,7 @@ class ProjectEditFormTest extends TypeTestCase
         self::assertTrue($form->has('budgetType'));
     }
 
-    public function testWithTimeBudget()
+    public function testWithTimeBudget(): void
     {
         $model = new Project();
         $form = $this->factory->createBuilder(ProjectEditForm::class, $model, [
@@ -60,7 +60,7 @@ class ProjectEditFormTest extends TypeTestCase
         self::assertTrue($form->has('budgetType'));
     }
 
-    public function testWithBudgetAndTimeBudget()
+    public function testWithBudgetAndTimeBudget(): void
     {
         $model = new Project();
         $form = $this->factory->createBuilder(ProjectEditForm::class, $model, [

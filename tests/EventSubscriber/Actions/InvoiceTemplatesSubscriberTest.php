@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\InvoiceTemplatesSubscriber;
  */
 class InvoiceTemplatesSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(InvoiceTemplatesSubscriber::class, 'invoice_templates');
     }

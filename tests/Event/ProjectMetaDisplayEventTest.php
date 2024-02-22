@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectMetaDisplayEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $query = new ProjectQuery();
         $sut = new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT);

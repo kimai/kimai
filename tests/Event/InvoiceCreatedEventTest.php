@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceCreatedEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $invoice = new Invoice();
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());

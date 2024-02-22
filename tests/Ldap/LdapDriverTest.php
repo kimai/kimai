@@ -41,7 +41,7 @@ class LdapDriverTest extends TestCase
         return new TestLdapDriver(new LdapConfiguration($config), $ldap);
     }
 
-    public function testBindSuccess()
+    public function testBindSuccess(): void
     {
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willReturnSelf();
@@ -53,7 +53,7 @@ class LdapDriverTest extends TestCase
         self::assertTrue($result);
     }
 
-    public function testBindException()
+    public function testBindException(): void
     {
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $zendLdap->expects($this->once())->method('bind')->willThrowException(new LdapException());
@@ -65,7 +65,7 @@ class LdapDriverTest extends TestCase
         self::assertFalse($result);
     }
 
-    public function testSearchSuccess()
+    public function testSearchSuccess(): void
     {
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind', 'searchEntries'])->getMock();
         $zendLdap->expects($this->once())->method('bind');

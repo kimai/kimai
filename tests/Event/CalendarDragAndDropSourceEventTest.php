@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CalendarDragAndDropSourceEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $user = new User();
         $user->setAlias('foo');

@@ -32,7 +32,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
 
     abstract protected function getBoxId(): string;
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured($this->getReportUrl());
     }
@@ -49,7 +49,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTestData
      */
-    public function testUserPeriodReport(int $user, string $dataType, string $title)
+    public function testUserPeriodReport(int $user, string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
@@ -61,7 +61,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         self::assertEquals($title, $cell->text());
     }
 
-    public function testUserPeriodReportAsTeamlead()
+    public function testUserPeriodReportAsTeamlead(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importReportingFixture(User::ROLE_USER);

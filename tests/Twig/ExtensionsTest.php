@@ -41,7 +41,7 @@ class ExtensionsTest extends TestCase
         throw new \Exception('Unknown twig test: ' . $name);
     }
 
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
         $filters = ['report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
@@ -62,7 +62,7 @@ class ExtensionsTest extends TestCase
         self::assertEquals(['html'], $twigFilters[$id]->getSafe(new Node()));
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $functions = ['class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
@@ -76,7 +76,7 @@ class ExtensionsTest extends TestCase
         }
     }
 
-    public function testGetTests()
+    public function testGetTests(): void
     {
         $tests = ['number'];
         $i = 0;
@@ -92,7 +92,7 @@ class ExtensionsTest extends TestCase
         }
     }
 
-    public function testDocuLink()
+    public function testDocuLink(): void
     {
         $data = [
             'timesheet.html' => 'https://www.kimai.org/documentation/timesheet.html',
@@ -108,7 +108,7 @@ class ExtensionsTest extends TestCase
         }
     }
 
-    public function testGetClassName()
+    public function testGetClassName(): void
     {
         $sut = $this->getSut();
         $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
@@ -152,7 +152,7 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * @dataProvider getMultilineTestData
      */
-    public function testMultilineIndent($indent, $string, $expected)
+    public function testMultilineIndent($indent, $string, $expected): void
     {
         $sut = $this->getSut();
         self::assertEquals(implode("\n", $expected), $sut->multilineIndent($string, $indent));
@@ -161,7 +161,7 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * Just a very short test, as this delegates to Utils/Color
      */
-    public function testColor()
+    public function testColor(): void
     {
         $sut = $this->getSut();
 
@@ -177,14 +177,14 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * Just a very short test, as this delegates to Utils/Color
      */
-    public function testFontContrast()
+    public function testFontContrast(): void
     {
         $sut = $this->getSut();
 
         self::assertEquals('#000000', $sut->calculateFontContrastColor('#ccc'));
     }
 
-    public function testIsoDayByName()
+    public function testIsoDayByName(): void
     {
         $sut = $this->getSut();
 
@@ -214,14 +214,14 @@ sdfsdf' . PHP_EOL . "\n" .
     /**
      * @dataProvider getTestDataReplaceNewline
      */
-    public function testReplaceNewline(string $replacer, $input, $expected)
+    public function testReplaceNewline(string $replacer, $input, $expected): void
     {
         $sut = $this->getSut();
 
         self::assertEquals($expected, $sut->replaceNewline($input, $replacer));
     }
 
-    public function testGetRandomColor()
+    public function testGetRandomColor(): void
     {
         $sut = $this->getSut();
 
@@ -232,7 +232,7 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals($fooColor, $sut->randomColor('foo-bar'));
     }
 
-    public function testGetDefaultColor()
+    public function testGetDefaultColor(): void
     {
         $sut = $this->getSut();
 
@@ -242,7 +242,7 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals('', $sut->defaultColor(''));
     }
 
-    public function testIsNumeric()
+    public function testIsNumeric(): void
     {
         $test = $this->getTest('number');
         self::assertFalse(\call_user_func($test->getCallable(), null));

@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\TagSubscriber;
  */
 class TagSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(TagSubscriber::class, 'tag');
     }

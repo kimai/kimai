@@ -27,7 +27,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
  */
 class ProfileSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = ProfileSubscriber::getSubscribedEvents();
 
@@ -36,7 +36,7 @@ class ProfileSubscriberTest extends TestCase
         $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
-    public function testOnLoginSuccessWithoutProfileSetsDesktop()
+    public function testOnLoginSuccessWithoutProfileSetsDesktop(): void
     {
         $manager = new ProfileManager();
         $sut = new ProfileSubscriber($manager);
@@ -58,7 +58,7 @@ class ProfileSubscriberTest extends TestCase
         self::assertEquals(ProfileManager::PROFILE_DESKTOP, $manager->getProfileFromSession($session));
     }
 
-    public function testOnLoginSuccessWithProfile()
+    public function testOnLoginSuccessWithProfile(): void
     {
         $manager = new ProfileManager();
         $sut = new ProfileSubscriber($manager);
@@ -104,7 +104,7 @@ class ProfileSubscriberTest extends TestCase
     /**
      * @dataProvider getInvalidCookies
      */
-    public function testOnLoginSuccessWithInvalidProfile(string $cookieValue)
+    public function testOnLoginSuccessWithInvalidProfile(string $cookieValue): void
     {
         $manager = new ProfileManager();
         $sut = new ProfileSubscriber($manager);

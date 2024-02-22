@@ -29,7 +29,7 @@ class DurationTypeTest extends TypeTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testSubmitValidData($value, $expected)
+    public function testSubmitValidData($value, $expected): void
     {
         $data = ['duration' => $value];
         $model = new TypeTestModel(['duration' => 3600]);
@@ -48,7 +48,7 @@ class DurationTypeTest extends TypeTestCase
         $this->assertEquals($expected, $model);
     }
 
-    public function testPresetPopulatesView()
+    public function testPresetPopulatesView(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'preset_minutes' => 15,
@@ -61,7 +61,7 @@ class DurationTypeTest extends TypeTestCase
         self::assertEquals('4:45', $view->vars['duration_presets'][18]);
     }
 
-    public function testPresetsAreNotGeneratedOnMissingHours()
+    public function testPresetsAreNotGeneratedOnMissingHours(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'preset_minutes' => 5,
@@ -70,7 +70,7 @@ class DurationTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $view->vars);
     }
 
-    public function testPresetsAreNotGeneratedOnMissingMinutes()
+    public function testPresetsAreNotGeneratedOnMissingMinutes(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'preset_hours' => 5,
@@ -79,7 +79,7 @@ class DurationTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $view->vars);
     }
 
-    public function testPresetsAreNotGeneratedOnNegativeMinutes()
+    public function testPresetsAreNotGeneratedOnNegativeMinutes(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'preset_minutes' => -1,
@@ -89,7 +89,7 @@ class DurationTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $view->vars);
     }
 
-    public function testPresetsAreNotGeneratedOnNegativeHours()
+    public function testPresetsAreNotGeneratedOnNegativeHours(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'preset_minutes' => 5,
@@ -99,7 +99,7 @@ class DurationTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $view->vars);
     }
 
-    public function testHasDurationInputClass()
+    public function testHasDurationInputClass(): void
     {
         $view = $this->factory->create(DurationType::class, 3600, [
             'attr' => ['class' => 'testing']

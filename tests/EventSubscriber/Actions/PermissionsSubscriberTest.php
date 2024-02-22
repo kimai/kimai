@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\PermissionsSubscriber;
  */
 class PermissionsSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(PermissionsSubscriber::class, 'user_permissions');
     }

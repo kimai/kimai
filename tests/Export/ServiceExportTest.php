@@ -37,7 +37,7 @@ class ServiceExportTest extends TestCase
         );
     }
 
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $sut = $this->createSut();
 
@@ -48,7 +48,7 @@ class ServiceExportTest extends TestCase
         self::assertNull($sut->getTimesheetExporterById('default'));
     }
 
-    public function testAddRenderer()
+    public function testAddRenderer(): void
     {
         $sut = $this->createSut();
 
@@ -64,7 +64,7 @@ class ServiceExportTest extends TestCase
         self::assertSame($renderer, $sut->getRendererById('html'));
     }
 
-    public function testAddTimesheetExporter()
+    public function testAddTimesheetExporter(): void
     {
         $sut = $this->createSut();
 
@@ -75,7 +75,7 @@ class ServiceExportTest extends TestCase
         self::assertSame($exporter, $sut->getTimesheetExporterById('print'));
     }
 
-    public function testAddExportRepository()
+    public function testAddExportRepository(): void
     {
         $sut = $this->createSut();
 

@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class AnnotatedObjectExporterTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
         $annotationExtractor = new AnnotationExtractor();

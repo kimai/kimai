@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      </body>
+      <trans-unit id="MviRJeB" resname="invoice_calculator">
+        <source>invoice_calculator</source>
+        <target state="translated">Pengelompokan baris faktur</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

@@ -24,27 +24,27 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $this->assertRouteNotFound($client);
     }
 
-    public function testResetRequestWithDeactivatedFeature()
+    public function testResetRequestWithDeactivatedFeature(): void
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/request');
     }
 
-    public function testSendEmailRequestWithDeactivatedFeature()
+    public function testSendEmailRequestWithDeactivatedFeature(): void
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/send-email', 'POST');
     }
 
-    public function testCheckEmailWithDeactivatedFeature()
+    public function testCheckEmailWithDeactivatedFeature(): void
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/check-email');
     }
 
-    public function testResetWithDeactivatedFeature()
+    public function testResetWithDeactivatedFeature(): void
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/reset/1234567890');
     }
 
-    public function testResetRequestPageIsRendered()
+    public function testResetRequestPageIsRendered(): void
     {
         $client = self::createClient();
 

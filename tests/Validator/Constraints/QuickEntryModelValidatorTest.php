@@ -31,21 +31,21 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
         return new QuickEntryModelValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new QuickEntryModel());
     }
 
-    public function testTriggersOnMissingProjectAndActivity()
+    public function testTriggersOnMissingProjectAndActivity(): void
     {
         $model = new QuickEntryModelEntity();
         $timesheet = new Timesheet();
@@ -64,7 +64,7 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testTriggersOnMissingActivity()
+    public function testTriggersOnMissingActivity(): void
     {
         $model = new QuickEntryModelEntity();
         $model->setProject(new Project());
@@ -81,7 +81,7 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testTriggersOnMissingProject()
+    public function testTriggersOnMissingProject(): void
     {
         $model = new QuickEntryModelEntity();
         $model->setActivity(new Activity());
@@ -98,7 +98,7 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testDoesNotTriggerOnPrototype()
+    public function testDoesNotTriggerOnPrototype(): void
     {
         $model = new QuickEntryModelEntity();
 
@@ -107,7 +107,7 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testDoesNotTriggerOnProperlyFilled()
+    public function testDoesNotTriggerOnProperlyFilled(): void
     {
         $model = new QuickEntryModelEntity();
         $model->setActivity(new Activity());

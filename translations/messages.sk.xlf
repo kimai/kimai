@@ -1042,9 +1042,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="translated">Finančný rok</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target state="translated">Pracovná doba</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target>Pracovná doba</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
@@ -1276,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Okrem prekladov tohoto rozhrania, toto nastavenie ovplyvňuje tiež formát čas, dátumu a meny.</target>
+        <target state="needs-translation">Okrem prekladov tohoto rozhrania, toto nastavenie ovplyvňuje tiež formát čas, dátumu a meny.</target>
       </trans-unit>
       <trans-unit id="o0hsx2H" resname="mark_as_open">
         <source>mark_as_open</source>
@@ -1440,7 +1440,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Podporované jazyky s formátovaním</target>
+        <target state="needs-translation">Podporované jazyky s formátovaním</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>

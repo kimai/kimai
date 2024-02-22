@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SamlBadgeTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $attributes = new SamlLoginAttributes();
         $sut = new SamlBadge($attributes);

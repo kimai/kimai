@@ -79,7 +79,7 @@
     },
     "require-dev": {
         "ext-simplexml": "*",
-        "dama/doctrine-test-bundle": "^7.0",
+        "dama/doctrine-test-bundle": "^8.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.15",
         "friendsofphp/php-cs-fixer": "^3.3",

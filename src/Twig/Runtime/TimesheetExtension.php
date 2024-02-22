@@ -18,23 +18,22 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class TimesheetExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private TimesheetRepository $repository, private FavoriteRecordService $favoriteRecordService)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly FavoriteRecordService $favoriteRecordService
+    )
     {
     }
 
     /**
-     * @param User $user
-     * @param bool $ticktac
      * @return array<Timesheet>
      */
-    public function activeEntries(User $user, bool $ticktac = true): array
+    public function activeEntries(User $user, bool $ticktack = true): array
     {
-        return $this->repository->getActiveEntries($user, $ticktac);
+        return $this->repository->getActiveEntries($user, $ticktack);
     }
 
     /**
-     * @param User $user
-     * @param int $limit
      * @return array<FavoriteTimesheet>
      */
     public function favoriteEntries(User $user, int $limit = 5): array

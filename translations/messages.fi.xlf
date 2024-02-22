@@ -1043,8 +1043,8 @@
         <source>stats.revenue</source>
         <target>Tulot</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Työaika</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
@@ -1269,7 +1269,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
+        <target state="needs-translation">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>

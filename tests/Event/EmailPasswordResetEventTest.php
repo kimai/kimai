@@ -21,7 +21,7 @@ use Symfony\Component\Mime\Email;
  */
 class EmailPasswordResetEventTest extends TestCase
 {
-    public function testGetter()
+    public function testGetter(): void
     {
         $user = new User();
         $user->setAlias('foo');

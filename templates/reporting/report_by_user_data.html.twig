@@ -72,7 +72,7 @@
                 {% for column in project.data.data %}
                     {% set dateKey = column.date|report_date %}
                     <td class="text-nowrap text-center day-total {% block column_classes_project %}{% endblock %}">
-                        {% if column.duration > 0 or column.rate > 0 or column.internalRate > 0 %}
+                        {% if column.duration != 0 or column.rate != 0 or column.internalRate != 0 %}
                             {% if dataType == 'rate' %}
                                 {% set totalsRate = totalsRate|merge({(dateKey): (totalsRate[dateKey] + column.rate)}) %}
                                 <strong>{{ column.rate|money(currency) }}</strong>
@@ -103,7 +103,7 @@
                     </td>
                     {% for column in activity.data.data %}
                         <td class="text-nowrap text-center day-total {% block column_classes_activity %}{% endblock %}">
-                            {% if column.duration > 0 or column.rate > 0 or column.internalRate > 0 %}
+                            {% if column.duration != 0 or column.rate != 0 or column.internalRate != 0 %}
                                 {% if dataType == 'rate' %}
                                     {{ column.rate|money(currency) }}
                                 {% elseif dataType == 'internalRate' %}

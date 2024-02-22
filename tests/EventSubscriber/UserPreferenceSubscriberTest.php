@@ -28,6 +28,7 @@ class UserPreferenceSubscriberTest extends TestCase
         'internal_rate',
         'timezone',
         'language',
+        'locale',
         'first_weekday',
         'skin',
         'update_browser_title',

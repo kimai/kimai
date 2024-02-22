@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * @version 2.5.0
@@ -34,10 +34,6 @@ final class Version20231130000719 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-    }
-
-    public function isTransactional(): bool
-    {
-        return false;
+        $this->preventEmptyMigrationWarning();
     }
 }

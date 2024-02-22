@@ -13,6 +13,7 @@ use App\Configuration\LocaleService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Intl\Locales;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,21 +21,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class LanguageType extends AbstractType
 {
-    public function __construct(private LocaleService $localeService)
+    public function __construct(private readonly LocaleService $localeService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $choices = [];
-        foreach ($this->localeService->getAllLocales() as $key) {
-            $name = ucfirst(Locales::getName($key, $key));
-            $choices[$name] = $key;
-        }
+        $resolver->setDefault('choices', function (Options $options) {
+            $choices = [];
+
+            if ($options['translated_only'] === true) {
+                $locales = $this->localeService->getTranslatedLocales();
+            } else {
+                $locales = $this->localeService->getAllLocales();
+            }
+
+            foreach ($locales as $key) {
+                $name = ucfirst(Locales::getName($key, $key));
+                $choices[$name] = $key;
+            }
+
+            return $choices;
+        });
 
         $resolver->setDefaults([
-            'choices' => $choices,
             'label' => 'language',
+            'translated_only' => false,
             'choice_translation_domain' => false,
         ]);
     }

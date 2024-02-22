@@ -64,7 +64,7 @@ final class TranslationCommand extends Command
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            //'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
+            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
             'theme' => $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf',
         ];
 

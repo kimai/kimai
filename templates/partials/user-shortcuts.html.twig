@@ -1,7 +1,7 @@
 {% set user_shortcuts = user_shortcuts(app.user) %}
 {% if user_shortcuts|length > 0 %}
     <div class="nav-item dropdown d-flex me-1 user-shortcuts">
-        <a class="nav-link px-0 user-shortcuts-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true" title="{{ 'favorite_routes'|trans }}">
+        <a class="btn btn-icon px-0 user-shortcuts-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true" title="{{ 'favorite_routes'|trans }}">
             {{ icon('far fa-bookmark', true) }}
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow dropdown-menu-card" data-bs-popper="static">

@@ -32,17 +32,17 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class ProjectControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/admin/project/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/project/');
@@ -53,7 +53,7 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
     }
 
-    public function testIndexActionAsSuperAdmin()
+    public function testIndexActionAsSuperAdmin(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/');
@@ -65,7 +65,7 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -100,19 +100,19 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
     }
 
-    public function testExportIsSecureForRole()
+    public function testExportIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/export');
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/project/export');
         $this->assertExcelExportResponse($client, 'kimai-projects_');
     }
 
-    public function testExportActionWithSearchTermQuery()
+    public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -141,7 +141,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertExcelExportResponse($client, 'kimai-projects_');
     }
 
-    public function testDetailsAction()
+    public function testDetailsAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -187,13 +187,13 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
     }
 
-    public function testAddRateAction()
+    public function testAddRateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAddRate($client, 123.45, 1);
     }
 
-    protected function assertAddRate(HttpKernelBrowser $client, $rate, $projectId)
+    public function assertAddRate(HttpKernelBrowser $client, $rate, $projectId): void
     {
         $this->assertAccessIsGranted($client, '/admin/project/' . $projectId . '/rate');
         $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
@@ -211,7 +211,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString($rate, $node->text(null, true));
     }
 
-    public function testDuplicateAction()
+    public function testDuplicateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -251,7 +251,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
-    public function testDuplicateActionWithInvalidCsrf()
+    public function testDuplicateActionWithInvalidCsrf(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         /** @var EntityManager $em */
@@ -270,7 +270,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
     }
 
-    public function testAddCommentAction()
+    public function testAddCommentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
@@ -291,7 +291,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
-    public function testDeleteCommentAction()
+    public function testDeleteCommentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
@@ -314,7 +314,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
-    public function testPinCommentAction()
+    public function testPinCommentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
@@ -342,7 +342,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString('/comment_pin/', $node->attr('href'));
     }
 
-    public function testCreateDefaultTeamAction()
+    public function testCreateDefaultTeamAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
@@ -358,7 +358,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
     }
 
-    public function testActivitiesAction()
+    public function testActivitiesAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
@@ -384,7 +384,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(5, $node->count());
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/create');
@@ -403,7 +403,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
     }
 
-    public function testCreateActionShowsMetaFields()
+    public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
@@ -416,7 +416,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('project_edit_form[metaFields][0][value]'));
     }
 
-    public function testEditAction()
+    public function testEditAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/edit');
@@ -432,7 +432,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());
     }
 
-    public function testTeamPermissionAction()
+    public function testTeamPermissionAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $em = $this->getEntityManager();
@@ -463,7 +463,7 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertEquals(2, $project->getTeams()->count());
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -490,7 +490,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
-    public function testDeleteActionWithTimesheetEntries()
+    public function testDeleteActionWithTimesheetEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -528,7 +528,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
 
-    public function testDeleteActionWithTimesheetEntriesAndReplacement()
+    public function testDeleteActionWithTimesheetEntriesAndReplacement(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -581,7 +581,7 @@ class ProjectControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getValidationTestData
      */
-    public function testValidationForCreateAction(array $formData, array $validationFields)
+    public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
             User::ROLE_ADMIN,

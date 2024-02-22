@@ -25,22 +25,22 @@ class UserStatisticTest extends AbstractTimesheetCountedStatisticTest
         return new UserStatistic($user);
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertDefaultValues($this->getSut());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter($this->getSut());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertJsonSerialize($this->getSut());
     }
 
-    public function testAdditionalValues()
+    public function testAdditionalValues(): void
     {
         $user = new User();
         $sut = new UserStatistic($user);

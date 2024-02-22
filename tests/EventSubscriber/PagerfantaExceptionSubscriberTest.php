@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class PagerfantaExceptionSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = PagerfantaExceptionSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(KernelEvents::EXCEPTION, $events);
@@ -32,7 +32,7 @@ class PagerfantaExceptionSubscriberTest extends TestCase
         $this->assertTrue(method_exists(PagerfantaExceptionSubscriber::class, $methodName));
     }
 
-    public function testWithExceptions()
+    public function testWithExceptions(): void
     {
         $sut = new PagerfantaExceptionSubscriber();
 

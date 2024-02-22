@@ -50,7 +50,7 @@ class SamlConfigurationTest extends TestCase
         ];
     }
 
-    public function testDefault()
+    public function testDefault(): void
     {
         $sut = $this->getSut([]);
         $this->assertFalse($sut->isActivated());
@@ -62,7 +62,7 @@ class SamlConfigurationTest extends TestCase
         $this->assertFalse($sut->isRolesResetOnLogin());
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
         $this->assertTrue($sut->isActivated());

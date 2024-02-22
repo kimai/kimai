@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class CustomerTest extends AbstractEntityTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Customer('foo');
         self::assertNull($sut->getId());
@@ -54,12 +54,12 @@ class CustomerTest extends AbstractEntityTest
         self::assertEquals(0, $sut->getTeams()->count());
     }
 
-    public function testBudgets()
+    public function testBudgets(): void
     {
         $this->assertBudget(new Customer('foo'));
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Customer('foo-bar');
         self::assertEquals('foo-bar', $sut->getName());
@@ -119,7 +119,7 @@ class CustomerTest extends AbstractEntityTest
         self::assertNull($sut->getCurrency());
     }
 
-    public function testMetaFields()
+    public function testMetaFields(): void
     {
         $sut = new Customer('foo');
         $meta = new CustomerMeta();
@@ -147,7 +147,7 @@ class CustomerTest extends AbstractEntityTest
         self::assertCount(2, $sut->getVisibleMetaFields());
     }
 
-    public function testTeams()
+    public function testTeams(): void
     {
         $sut = new Customer('foo');
         $team = new Team('foo');
@@ -171,7 +171,7 @@ class CustomerTest extends AbstractEntityTest
         self::assertCount(0, $team->getCustomers());
     }
 
-    public function testExportAnnotations()
+    public function testExportAnnotations(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -219,7 +219,7 @@ class CustomerTest extends AbstractEntityTest
         }
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $sut = new Customer('mycustomer');
         $sut->setVatId('DE-0123456789');

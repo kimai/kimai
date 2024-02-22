@@ -9,6 +9,7 @@
 
 namespace App\DependencyInjection;
 
+use App\Configuration\LocaleService;
 use App\Kernel;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -112,12 +113,6 @@ final class AppExtension extends Extension
         $settings = include $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
 
         $appLocales = [];
-        $defaults = [
-            'date' => 'dd.MM.y',
-            'time' => 'HH:mm',
-            'rtl' => false,
-        ];
-
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
             // unlikely that a locale disappears, but in case that a new symfony update comes with changed locales
@@ -125,7 +120,7 @@ final class AppExtension extends Extension
                 continue;
             }
 
-            $appLocales[$locale] = $defaults;
+            $appLocales[$locale] = LocaleService::DEFAULT_SETTINGS;
 
             if (\array_key_exists($locale, $settings)) {
                 $appLocales[$locale] = array_merge($appLocales[$locale], $settings[$locale]);

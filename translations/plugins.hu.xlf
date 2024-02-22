@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>Egy bővítmény sincs telepítve még.</target>
       </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>Available plugins</source>
+        <target state="translated">Rendelkezésre álló bővítmények</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy">
+        <source>Buy now</source>
+        <target state="translated">Vásárlás most</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop">
+        <source>Plugin Shop</source>
+        <target state="translated">További bővítmények</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

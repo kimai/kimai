@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SpreadsheetExporterTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $sut = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
         $sut->registerCellFormatter('foo', new class() implements CellFormatterInterface {

@@ -63,7 +63,7 @@ class LdapManagerTest extends TestCase
         return new LdapManager($driver, $config, (new RoleServiceFactory($this))->create($roles));
     }
 
-    public function testFindUserByUsernameOnZeroResults()
+    public function testFindUserByUsernameOnZeroResults(): void
     {
         $expected = [
             'count' => 0
@@ -82,7 +82,7 @@ class LdapManagerTest extends TestCase
         self::assertNull($actual);
     }
 
-    public function testFindUserByUsernameOnMultiResults()
+    public function testFindUserByUsernameOnMultiResults(): void
     {
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('This search must only return a single user');
@@ -103,7 +103,7 @@ class LdapManagerTest extends TestCase
         $sut->findUserByUsername('foo');
     }
 
-    public function testFindUserByUsernameOnValidResult()
+    public function testFindUserByUsernameOnValidResult(): void
     {
         $expected = [
             0 => ['dn' => 'foo', 'uid' => ['foo']],
@@ -123,7 +123,7 @@ class LdapManagerTest extends TestCase
         self::assertInstanceOf(User::class, $actual);
     }
 
-    public function testFindUserByOnZeroResults()
+    public function testFindUserByOnZeroResults(): void
     {
         $expected = [
             'count' => 0
@@ -142,7 +142,7 @@ class LdapManagerTest extends TestCase
         self::assertNull($actual);
     }
 
-    public function testFindUserByOnMultiResults()
+    public function testFindUserByOnMultiResults(): void
     {
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('This search must only return a single user');
@@ -163,7 +163,7 @@ class LdapManagerTest extends TestCase
         $sut->findUserByUsername('foo');
     }
 
-    public function testFindUserByOnValidResult()
+    public function testFindUserByOnValidResult(): void
     {
         $expected = [
             0 => ['dn' => 'foo', 'uid' => ['foo']],
@@ -183,7 +183,7 @@ class LdapManagerTest extends TestCase
         self::assertInstanceOf(User::class, $actual);
     }
 
-    public function testBind()
+    public function testBind(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
@@ -201,7 +201,7 @@ class LdapManagerTest extends TestCase
         self::assertTrue($actual);
     }
 
-    public function testUpdateUserOnZeroResults()
+    public function testUpdateUserOnZeroResults(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
@@ -238,7 +238,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals($userOrig, $user);
     }
 
-    public function testUpdateUserOnMultiResults()
+    public function testUpdateUserOnMultiResults(): void
     {
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('This search must only return a single user');
@@ -276,7 +276,7 @@ class LdapManagerTest extends TestCase
         $sut->updateUser($user);
     }
 
-    public function testUpdateUserOnValidResultWithEmptyRoleBaseDn()
+    public function testUpdateUserOnValidResultWithEmptyRoleBaseDn(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
@@ -391,7 +391,7 @@ class LdapManagerTest extends TestCase
     /**
      * @dataProvider getValidConfigsTestData
      */
-    public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery)
+    public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery): void
     {
         $expected = [
             0 => ['dn' => 'blub', 'uid' => ['blub']],
@@ -461,7 +461,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testEmptyHydrate()
+    public function testEmptyHydrate(): void
     {
         $ldapConfig = [
             'activate' => true,
@@ -486,7 +486,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals('blub', $user->getEmail());
     }
 
-    public function testEmptyHydrateThrowsException()
+    public function testEmptyHydrateThrowsException(): void
     {
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('Missing username in LDAP hydration');
@@ -511,7 +511,7 @@ class LdapManagerTest extends TestCase
         self::assertInstanceOf(User::class, $user);
     }
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $ldapConfig = [
             'connection' => [
@@ -586,7 +586,7 @@ class LdapManagerTest extends TestCase
     /**
      * @group legacy
      */
-    public function testHydrateWithDepercatedSetter()
+    public function testHydrateWithDepercatedSetter(): void
     {
         $ldapConfig = [
             'connection' => [
@@ -631,7 +631,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals('Karl-Heinz', $user->getEmail());
     }
 
-    public function testHydrateUser()
+    public function testHydrateUser(): void
     {
         $ldapConfig = [
             'connection' => [
@@ -680,7 +680,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals($pwdCheck, $user);
     }
 
-    public function testHydrateRoles()
+    public function testHydrateRoles(): void
     {
         $ldapConfig = [
             'user' => [

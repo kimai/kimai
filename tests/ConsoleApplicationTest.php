@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class ConsoleApplicationTest extends TestCase
 {
-    public function testVersion()
+    public function testVersion(): void
     {
         $kernel = $this->createMock(KernelInterface::class);
         $sut = new ConsoleApplication($kernel);

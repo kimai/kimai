@@ -18,7 +18,7 @@ use Symfony\Component\Mime\Email;
  */
 class EmailEventTest extends TestCase
 {
-    public function testGetter()
+    public function testGetter(): void
     {
         $email = new Email();
         $email->text('sdfsdfsdfsdf');

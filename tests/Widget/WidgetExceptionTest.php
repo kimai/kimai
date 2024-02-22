@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WidgetExceptionTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $ex = new WidgetException();
         self::assertInstanceOf(\Exception::class, $ex);

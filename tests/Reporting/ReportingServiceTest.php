@@ -36,7 +36,7 @@ class ReportingServiceTest extends TestCase
         return new ReportingService($dispatcher, $security);
     }
 
-    public function testGetAvailableReports()
+    public function testGetAvailableReports(): void
     {
         $sut = $this->getSut();
         $reports = $sut->getAvailableReports(new User());
@@ -44,7 +44,7 @@ class ReportingServiceTest extends TestCase
         self::assertEmpty($reports);
     }
 
-    public function testGetAvailableReportsWithPermission()
+    public function testGetAvailableReportsWithPermission(): void
     {
         $sut = $this->getSut(true);
         $reports = $sut->getAvailableReports(new User());

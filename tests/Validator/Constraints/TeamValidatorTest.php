@@ -30,14 +30,14 @@ class TeamValidatorTest extends ConstraintValidatorTestCase
         return new TeamValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
     }
 
-    public function testMissingTeamlead()
+    public function testMissingTeamlead(): void
     {
         $member = new TeamMember();
         $member->setTeamlead(false);

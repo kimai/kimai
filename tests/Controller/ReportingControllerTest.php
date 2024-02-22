@@ -16,12 +16,12 @@ use App\Entity\User;
  */
 class ReportingControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting');
     }
 
-    public function testOverviewPage()
+    public function testOverviewPage(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/reporting/');
@@ -29,7 +29,7 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertCount(11, $nodes);
     }
 
-    public function testOverviewPageAsUser()
+    public function testOverviewPageAsUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');

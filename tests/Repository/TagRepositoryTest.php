@@ -28,7 +28,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $this->importFixture($data);
     }
 
-    public function testFindAllTagNames()
+    public function testFindAllTagNames(): void
     {
         $em = $this->getEntityManager();
         /** @var TagRepository $repository */
@@ -46,7 +46,7 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $this->assertEquals('#2018-012', $result[5]);
     }
 
-    public function testFindNoTagNames()
+    public function testFindNoTagNames(): void
     {
         $em = $this->getEntityManager();
         /** @var TagRepository $repository */

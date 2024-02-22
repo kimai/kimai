@@ -1,0 +1,45 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+$modal-backdrop-opacity: 0.6 !default;
+
+/*
+    THIS DOES NOT WORK AS EXPECTED, AS TABLER IS NOT REGENERATED HERE.
+    SO WE CANNOT CHANGE VARIABLES, LIKE THE ABOVE...
+*/
+@import '~@tabler/core/dist/css/tabler.rtl.css';
+@import '~@tabler/core/dist/css/tabler-vendors.rtl.css';
+
+/**
+ * Everyone needs icons
+ */
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+/**
+ * We need that, to compile the rest of the file
+ */
+@import "bootstrap/scss/functions";
+
+@import "@tabler/core/src/scss/variables";
+@import "@tabler/core/src/scss/variables-dark";
+@import "@tabler/core/src/scss/mixins";
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+/**
+ * Kimai related stuff
+ */
+@import "kimai";
+@import "rtl";

@@ -30,7 +30,7 @@ class DurationFixedBeginModeTest extends TestCase
         return new DurationFixedBeginMode($configuration);
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->createSut();
 
@@ -42,7 +42,7 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertEquals('duration_fixed_begin', $sut->getId());
     }
 
-    public function testNow()
+    public function testNow(): void
     {
         $seconds = (new \DateTime())->getTimestamp();
         $timesheet = new Timesheet();
@@ -54,7 +54,7 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertLessThanOrEqual(2, $diff);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime('22:54'));
@@ -66,7 +66,7 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertEquals('13:47', $timesheet->getBegin()->format('H:i'));
     }
 
-    public function testCreateWithoutBeginInjectsBegin()
+    public function testCreateWithoutBeginInjectsBegin(): void
     {
         $timesheet = (new Timesheet())->setUser(new User());
         $request = new Request();

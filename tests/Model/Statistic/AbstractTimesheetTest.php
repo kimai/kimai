@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTimesheetTest extends TestCase
 {
-    protected function assertDefaultValues(Timesheet $sut)
+    public function assertDefaultValues(Timesheet $sut): void
     {
         self::assertSame(0.0, $sut->getRate());
         self::assertSame(0, $sut->getDuration());
@@ -25,7 +25,7 @@ abstract class AbstractTimesheetTest extends TestCase
         self::assertSame(0.0, $sut->getTotalInternalRate());
     }
 
-    protected function assertSetter(Timesheet $sut)
+    public function assertSetter(Timesheet $sut): void
     {
         $sut->setTotalInternalRate(5485.84);
         $sut->setTotalRate(1234.23);

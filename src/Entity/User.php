@@ -209,8 +209,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
+     * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
-    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'totp_secret', type: 'string', length: 255, nullable: true)]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
@@ -318,7 +319,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * Read-only list of of all visible user preferences.
+     * Read-only list of all visible user preferences.
      *
      * @internal only for API usage
      * @return UserPreference[]
@@ -334,6 +335,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $skip = [
             UserPreference::TIMEZONE,
             UserPreference::LOCALE,
+            UserPreference::LANGUAGE,
             UserPreference::SKIN,
             'calendar_initial_view',
             'login_initial_view',
@@ -406,13 +408,22 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return null;
     }
 
+    /**
+     * The locale used for formatting number, money, dates and times
+     */
     #[Serializer\VirtualProperty]
-    #[Serializer\SerializedName('language')]
+    #[Serializer\SerializedName('locale')]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
-        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
+        // uses language as fallback, because the language was here before
+        return (string) $this->getPreferenceValue(UserPreference::LOCALE, $this->getLanguage(), false);
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->setPreferenceValue(UserPreference::LOCALE, $locale ?? User::DEFAULT_LANGUAGE);
     }
 
     #[Serializer\VirtualProperty]
@@ -424,17 +435,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
+    /**
+     * The locale used for translations
+     */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('language')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getLanguage(): string
     {
-        return $this->getLocale();
+        return (string) $this->getPreferenceValue(UserPreference::LANGUAGE, User::DEFAULT_LANGUAGE, false);
     }
 
     public function setLanguage(?string $language): void
     {
-        if ($language === null) {
-            $language = User::DEFAULT_LANGUAGE;
-        }
-        $this->setPreferenceValue(UserPreference::LOCALE, $language);
+        $this->setPreferenceValue(UserPreference::LANGUAGE, $language ?? User::DEFAULT_LANGUAGE);
     }
 
     public function isFirstDayOfWeekSunday(): bool
@@ -1273,9 +1288,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $group === null ? $group : (string) $group;
     }
 
-    public function getHolidaysPerYear(): int
+    public function getHolidaysPerYear(): float
     {
-        return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
+
+        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
     public function setWorkHoursMonday(int $seconds): void
@@ -1318,14 +1335,28 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(?int $holidays): void
+    public function setHolidaysPerYear(?float $holidays): void
     {
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
+        if ($holidays !== null) {
+            // makes sure that the number is a multiple of 0.5
+            $holidays = $this->getFormattedHoliday($holidays);
+        }
+
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0.0);
+    }
+
+    private function getFormattedHoliday(int|float|string|null $holidays): float
+    {
+        if (!is_numeric($holidays)) {
+            $holidays = 0.0;
+        }
+
+        return (float) number_format((round($holidays * 2) / 2), 1);
     }
 
     public function hasContractSettings(): bool
     {
-        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0;
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
     }
 
     public function hasWorkHourConfiguration(): bool

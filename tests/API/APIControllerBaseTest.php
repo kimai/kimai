@@ -364,6 +364,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'initials' => 'string',
                     'language' => 'string',
+                    'locale' => 'string',
                     'timezone' => 'string',
                     'accountNumber' => '@string',
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],

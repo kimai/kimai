@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LdapDriverExceptionTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new LdapDriverException('Whooops');
 

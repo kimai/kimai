@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DefaultLoaderTest extends TestCase
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $sut = new DefaultLoader();
 

@@ -46,14 +46,14 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetRestartValidator($auth, $service);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -63,7 +63,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testRestartDisallowed(bool $allowed, ?string $property, string $trackingMode)
+    public function testRestartDisallowed(bool $allowed, ?string $property, string $trackingMode): void
     {
         $this->validator = $this->createMyValidator($allowed, $trackingMode);
         $this->validator->initialize($this->context);

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserRevenueStatisticEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $user = new User();
         $sut = new UserRevenueStatisticEvent($user, null, null);

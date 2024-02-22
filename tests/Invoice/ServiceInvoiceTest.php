@@ -38,11 +38,7 @@ class ServiceInvoiceTest extends TestCase
     private function getSut(array $paths): ServiceInvoice
     {
         $languages = [
-            'en' => [
-                'date' => 'Y.m.d',
-                'duration' => '%h:%m',
-                'time' => 'H:i',
-            ]
+            'en' => LocaleService::DEFAULT_SETTINGS
         ];
 
         $formattings = new LocaleService($languages);

@@ -10,6 +10,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
@@ -49,11 +50,17 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->addTagNameToCreate('bar');
+        $this->importFixture($fixture);
+
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setAmountRunning(2);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
+        $fixture->setTags(['foo']);
         $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/');
@@ -69,6 +76,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'customers' => [1],
             'projects' => [1],
             'activities' => [1],
+            'tags' => 'foo',
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -85,20 +93,27 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
 
+        $fixture = new TagFixtures();
+        $fixture->addTagNameToCreate('bar');
+        $fixture->addTagNameToCreate('foo');
+        /** @var array<Tag> $tags */
+        $tags = $this->importFixture($fixture);
+        $id = $tags[1]->getId();
+
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet) use ($tags) {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
+            $timesheet->addTag($tags[1]);
         });
         $this->importFixture($fixture);
-        $fixture = new TimesheetFixtures();
-        $fixture->setAmount(5);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 5);
         $fixture->setAmountRunning(5);
-        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
         $this->importFixture($fixture);
 
@@ -108,6 +123,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
+            'tags' => [$id],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -516,6 +532,7 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $fixture = new TagFixtures();
         $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->addTagNameToCreate('two');
         $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
@@ -548,7 +565,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $expected = new \DateTime('2018-08-02T18:00:00');
         $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
 
-        $this->assertEquals(['one', 'two', 'three'], $timesheet->getTagsAsArray());
+        $this->assertEquals(['two'], $timesheet->getTagsAsArray());
     }
 
     public function testCreateActionWithDescription(): void

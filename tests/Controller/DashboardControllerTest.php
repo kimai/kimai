@@ -14,12 +14,12 @@ namespace App\Tests\Controller;
  */
 class DashboardControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/dashboard/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/dashboard/');

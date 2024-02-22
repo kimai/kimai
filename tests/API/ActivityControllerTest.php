@@ -86,7 +86,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         return [$rate1, $rate2];
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/activities');
     }
@@ -201,7 +201,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         yield ['/api/activities', 1, ['projects' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN], [[true, 2], [false]]];
     }
 
-    public function testGetCollectionWithQuery()
+    public function testGetCollectionWithQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $imports = $this->loadActivityTestData();
@@ -219,7 +219,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEquals($imports[1]->getId(), $result[2]['project']);
     }
 
-    public function testGetEntity()
+    public function testGetEntity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/activities/1');
@@ -229,12 +229,12 @@ class ActivityControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Activity object not found by the @ParamConverter annotation.');
     }
 
-    public function testPostAction()
+    public function testPostAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -253,7 +253,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPostActionWithLeastFields()
+    public function testPostActionWithLeastFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -268,7 +268,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPostActionWithInvalidUser()
+    public function testPostActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $data = [
@@ -281,7 +281,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot create activities');
     }
 
-    public function testPostActionWithInvalidData()
+    public function testPostActionWithInvalidData(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -295,7 +295,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['project'], true);
     }
 
-    public function testPatchAction()
+    public function testPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -314,7 +314,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPatchActionWithNonGlobalActivity()
+    public function testPatchActionWithNonGlobalActivity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $imports = $this->loadActivityTestData();
@@ -337,7 +337,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEquals($imports[1]->getId(), $result['project']);
     }
 
-    public function testPatchActionWithInvalidUser()
+    public function testPatchActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -352,12 +352,12 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot update activity');
     }
 
-    public function testPatchActionWithUnknownActivity()
+    public function testPatchActionWithUnknownActivity(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/activities/255', []);
     }
 
-    public function testInvalidPatchAction()
+    public function testInvalidPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -371,12 +371,12 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['name']);
     }
 
-    public function testMetaActionThrowsNotFound()
+    public function testMetaActionThrowsNotFound(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/activities/42/meta', []);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingName()
+    public function testMetaActionThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['value' => 'X'], [
             'code' => 400,
@@ -384,7 +384,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingValue()
+    public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X'], [
             'code' => 400,
@@ -392,7 +392,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingMetafield()
+    public function testMetaActionThrowsExceptionOnMissingMetafield(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/activities/1/meta', ['name' => 'X', 'value' => 'Y'], [
             'code' => 404,
@@ -400,7 +400,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaAction()
+    public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         static::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());

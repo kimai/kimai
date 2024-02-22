@@ -20,7 +20,7 @@ class UtilTest extends TestCase
     /**
      * @dataProvider getRateCalculationData
      */
-    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate)
+    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate): void
     {
         $this->assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
     }
@@ -39,7 +39,7 @@ class UtilTest extends TestCase
         yield [7360.99, 1234, 2523.1838];
     }
 
-    public function testCalculateRateWithRounding()
+    public function testCalculateRateWithRounding(): void
     {
         $total = 0.00;
         $seconds = 0;

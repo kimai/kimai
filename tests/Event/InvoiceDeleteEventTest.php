@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceDeleteEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $invoice = new Invoice();
 

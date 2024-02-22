@@ -31,12 +31,12 @@ class EncoreExtensionTest extends TestCase
         return new EncoreExtension($container, __DIR__ . '/../');
     }
 
-    public function testGetSubscribedServices()
+    public function testGetSubscribedServices(): void
     {
         self::assertEquals([EntrypointLookupInterface::class], EncoreExtension::getSubscribedServices());
     }
 
-    public function testGetEncoreEntryCssSource()
+    public function testGetEncoreEntryCssSource(): void
     {
         $sut = $this->getSut(['test.css', 'test1.css']);
         $css = 'body { margin: 0; }p

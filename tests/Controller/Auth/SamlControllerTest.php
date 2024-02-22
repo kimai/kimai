@@ -60,7 +60,7 @@ class SamlControllerTest extends TestCase
         return new SamlConfiguration($this->getSystemConfigurationMock($this->getDefaultSettings($activated), []));
     }
 
-    public function testAssertionConsumerServiceAction()
+    public function testAssertionConsumerServiceAction(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the check path in your firewall.');
@@ -71,7 +71,7 @@ class SamlControllerTest extends TestCase
         $sut->assertionConsumerServiceAction();
     }
 
-    public function testMetadataAction()
+    public function testMetadataAction(): void
     {
         $expectedXmlString = <<<EOD
             <?xml version="1.0"?>
@@ -120,7 +120,7 @@ class SamlControllerTest extends TestCase
         self::assertEquals($expected->firstChild->firstChild, $actual->firstChild->firstChild);
     }
 
-    public function testLoginActionThrowsErrorOnSecurityErrorAttribute()
+    public function testLoginActionThrowsErrorOnSecurityErrorAttribute(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('My test error');
@@ -135,7 +135,7 @@ class SamlControllerTest extends TestCase
         $sut->loginAction($request);
     }
 
-    public function testLoginActionThrowsExceptionOnDisabledSaml()
+    public function testLoginActionThrowsExceptionOnDisabledSaml(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
@@ -146,7 +146,7 @@ class SamlControllerTest extends TestCase
         $sut->loginAction(new Request());
     }
 
-    public function testMetadataActionThrowsExceptionOnDisabledSaml()
+    public function testMetadataActionThrowsExceptionOnDisabledSaml(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
@@ -157,7 +157,7 @@ class SamlControllerTest extends TestCase
         $sut->metadataAction();
     }
 
-    public function testLogoutActionThrowsExceptionOnDisabledSaml()
+    public function testLogoutActionThrowsExceptionOnDisabledSaml(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');
@@ -168,7 +168,7 @@ class SamlControllerTest extends TestCase
         $sut->logoutAction();
     }
 
-    public function testAcsActionThrowsExceptionOnDisabledSaml()
+    public function testAcsActionThrowsExceptionOnDisabledSaml(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('SAML deactivated');

@@ -23,7 +23,7 @@ abstract class AbstractMetaEntityTest extends TestCase
 
     abstract protected function getMetaEntity(): MetaTableTypeInterface;
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = $this->getMetaEntity();
         self::assertNull($sut->getLabel());
@@ -40,7 +40,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertEquals(0, $sut->getOrder());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = $this->getMetaEntity();
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setName('foo-bar'));
@@ -85,7 +85,7 @@ abstract class AbstractMetaEntityTest extends TestCase
         self::assertSame($entity, $sut->getEntity());
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         $entity1 = $this->getEntity();
         $entity2 = $this->getEntity();
