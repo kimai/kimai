@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">תיאור המשימה</target>
+        <target state="translated">משימה</target>
       </trans-unit>
     </body>
   </file>

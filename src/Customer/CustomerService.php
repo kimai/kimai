@@ -28,10 +28,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class CustomerService
 {
     public function __construct(
-        private CustomerRepository $repository,
-        private SystemConfiguration $configuration,
-        private ValidatorInterface $validator,
-        private EventDispatcherInterface $dispatcher
+        private readonly CustomerRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly ValidatorInterface $validator,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
     }
 
@@ -74,7 +74,6 @@ final class CustomerService
     }
 
     /**
-     * @param Customer $customer
      * @param string[] $groups
      * @throws ValidationFailedException
      */
@@ -123,14 +122,27 @@ final class CustomerService
 
     public function calculateNextCustomerNumber(): string
     {
+        // we cannot use max(number) because a varchar column returns unexpected results
+        $start = $this->repository->countCustomer();
+
+        do {
+            $number = $this->getNextNumber($start++);
+            $customer = $this->findCustomerByNumber($number);
+        } while ($customer !== null);
+
+        return $number;
+    }
+
+    private function getNextNumber(int $counter): string
+    {
         $format = $this->configuration->find('customer.number_format');
         if (empty($format) || !\is_string($format)) {
             $format = '{cc,4}';
         }
 
-        $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy): string|int {
+        $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($counter): string|int {
             return match ($format) {
-                'cc' => $this->repository->count([]) + $increaseBy,
+                'cc' => $counter + $increaseBy,
                 default => $originalFormat,
             };
         });

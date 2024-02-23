@@ -1535,9 +1535,9 @@
         <source>work_contract</source>
         <target state="translated">Contrato de trabalho</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Depois de completar um mês, o usuário não vai poder criar ou editar tempos por este período.</target>
+        <target state="needs-translation">Depois de completar um mês, o usuário não vai poder criar ou editar tempos por este período.</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1711,9 +1711,9 @@
         <source>confirmed_by_at</source>
         <target state="translated">Confirmado por %user% em %date%</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">Mês completo</target>
+        <target state="needs-translation">Mês completo</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
