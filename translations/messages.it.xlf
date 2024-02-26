@@ -1062,9 +1062,9 @@
         <source>stats.revenue</source>
         <target state="final">Entrate</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="no" xml:space="preserve">
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="yes" xml:space="preserve">
         <source>Working hours</source>
-        <target>Ore lavorative</target>
+        <target state="final">Ore lavorative</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries" approved="yes">
         <source>error.too_many_entries</source>
@@ -1466,9 +1466,9 @@
         <source>evaluation</source>
         <target state="final">Valutazione</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month" approved="yes">
+      <trans-unit id="4lrfIsZ" resname="complete_month" approved="no" xml:space="preserve">
         <source>Complete month</source>
-        <target state="final">Mese completo</target>
+        <target state="needs-translation">Mese completo</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf" approved="yes">
         <source>completed_month_pdf</source>
@@ -1478,9 +1478,9 @@
         <source>Review</source>
         <target state="final">Revisione</target>
       </trans-unit>
-      <trans-unit id="mS4SSmt" resname="work_times" approved="yes">
-        <source>work_times</source>
-        <target state="final">Ore lavorative</target>
+      <trans-unit id="mS4SSmt" resname="work_times" approved="yes" xml:space="preserve">
+        <source>Working times</source>
+        <target state="final">Ore lavorate</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account" approved="yes">
         <source>Account working times</source>
@@ -1510,9 +1510,9 @@
         <source>deleted</source>
         <target state="final">Eliminato</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="yes">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="no" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="final">Dopo aver completato il mese, l'utente non sarà più in grado di creare o modificare gli orari per quel periodo.</target>
+        <target state="needs-translation">Dopo aver completato il mese, l'utente non sarà più in grado di creare o modificare gli orari per quel periodo.</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at" approved="yes">
         <source>created_at</source>
@@ -1757,6 +1757,10 @@
       <trans-unit id="d9m85KE" resname="locale" approved="yes">
         <source>locale</source>
         <target state="final">Formato per ora, data e valuta</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
+        <source>absence_comment_mandatory</source>
+        <target state="final">Congedo: il commento è un campo obbligatorio</target>
       </trans-unit>
     </body>
   </file>

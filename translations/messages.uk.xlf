@@ -658,9 +658,9 @@
         <source>recent.activities</source>
         <target state="translated">Перезапустіть одну з Ваших останніх дій</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="needs-translation">Створити новий запис</target>
+        <target state="translated">Почати облік часу</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -1374,17 +1374,17 @@
         <source>help.globalActivity</source>
         <target state="translated">Якщо проєкт Вами не обраний, ця діяльність буде глобальною і може використовуватися різними проєктами. Якщо обираєте проєкт, діяльність може використовуватися лише з цим проєктом. Це налаштування можна змінити пізніше.</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="needs-translation">Підтримувані мови з правилами форматування</target>
+        <target state="translated">Ось приклади правил форматування для підтримуваних мов</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
         <target state="translated">Час</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">Окрім перекладу інтерфейсу, цей параметр також відповідає за формати часу, дати та валюти.</target>
+        <target state="translated">Цей параметр відповідає за переклад програмного забезпечення</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1438,9 +1438,9 @@
         <source>default</source>
         <target state="translated">Типово</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Після завершення місяця користувач більше не зможе створювати або редагувати час для цього періоду.</target>
+        <target state="needs-translation">Після завершення місяця користувач більше не зможе створювати або редагувати час для цього періоду.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>work_times_should</source>
@@ -1462,9 +1462,9 @@
         <source>created_at</source>
         <target state="translated">Створено о</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Повний місяць</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Повний місяць</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1697,6 +1697,30 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target state="translated">Генератор номерів рахунків</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Зупинити облік часу</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Пошуковий фільтр</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Додати запис до списку пакетного оновлення</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Вибрати всі записи для списку пакетного оновлення</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Відсутність: Коментар є обов'язковим полем</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>locale</source>
+        <target state="translated">Формат часу, дати та валюти</target>
       </trans-unit>
     </body>
   </file>

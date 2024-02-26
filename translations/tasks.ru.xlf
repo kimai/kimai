@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Описание</target>
+        <target state="needs-translation">Описание</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>

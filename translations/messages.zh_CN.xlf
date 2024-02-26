@@ -804,9 +804,9 @@
         <source>recent.activities</source>
         <target>重启一项您的最后活动</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="needs-translation">创建新的时间记录</target>
+        <target state="translated">开始时间跟踪</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1435,9 +1435,9 @@
         <source>Activated</source>
         <target state="translated">激活的</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="needs-translation">支持的语言与格式化规则</target>
+        <target state="translated">以下是受支持语言的格式规则示例</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1447,9 +1447,9 @@
         <source>time</source>
         <target state="translated">时间</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">除了翻译界面外，该设置还负责时间、日期和货币格式。</target>
+        <target state="translated">此设置负责软件的翻译</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1499,9 +1499,9 @@
         <source>work_times_should.help</source>
         <target state="translated">这里配置的数值用于计算每小时的账户。</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">完成该月后，用户将无法再创建或编辑该时间段的时间。</target>
+        <target state="needs-translation">完成该月后，用户将无法再创建或编辑该时间段的时间。</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1511,9 +1511,9 @@
         <source>work_contract</source>
         <target state="translated">劳动合同</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">完整的月份</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">完整的月份</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
@@ -1758,6 +1758,30 @@
       <trans-unit id="uqv2Lrv" resname="user_identifier.help">
         <source>user_identifier.help</source>
         <target state="translated">唯一的用户标识符用于身份验证和导出</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">搜索过滤器</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">将条目添加到批量更新列表</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">选择批量更新列表的所有条目</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">缺席：注释为必填字段</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>locale</source>
+        <target state="translated">时间、日期和货币的格式</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">停止时间跟踪</target>
       </trans-unit>
     </body>
   </file>

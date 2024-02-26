@@ -1579,9 +1579,9 @@
         <source>created_at</source>
         <target state="translated">Skapad</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Efter att månaden är färdigställd så kan inte användaren längre registrera eller redigera tid för den perioden.</target>
+        <target state="needs-translation">Efter att månaden är färdigställd så kan inte användaren längre registrera eller redigera tid för den perioden.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

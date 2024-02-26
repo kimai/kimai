@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo">
         <source>task_todo</source>
-        <target>Aufgabenbeschreibung</target>
+        <target>Aufgabe</target>
       </trans-unit>
     </body>
   </file>
