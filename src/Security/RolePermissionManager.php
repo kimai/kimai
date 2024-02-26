@@ -29,11 +29,14 @@ final class RolePermissionManager
     private bool $isInitialized = false;
 
     /**
-     * @param PermissionService $service
      * @param array<string, array<string, bool>> $permissions as defined in kimai.yaml
      * @param array<string, bool> $permissionNames as defined in kimai.yaml
      */
-    public function __construct(private PermissionService $service, private array $permissions, private array $permissionNames)
+    public function __construct(
+        private readonly PermissionService $service,
+        private array $permissions,
+        private readonly array $permissionNames
+    )
     {
     }
 
@@ -68,9 +71,6 @@ final class RolePermissionManager
 
     /**
      * Only permissions which were registered through the Symfony configuration stack will be acknowledged here.
-     *
-     * @param string $permission
-     * @return bool
      */
     public function isRegisteredPermission(string $permission): bool
     {
@@ -89,7 +89,7 @@ final class RolePermissionManager
             return false;
         }
 
-        return \array_key_exists($permission, $this->permissions[$role]) ? $this->permissions[$role][$permission] : false;
+        return \array_key_exists($permission, $this->permissions[$role]) && $this->permissions[$role][$permission];
     }
 
     public function hasRolePermission(User $user, string $permission): bool

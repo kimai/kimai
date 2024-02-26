@@ -18,7 +18,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class MenuSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private Security $security, private ContextHelper $helper)
+    public function __construct(
+        private readonly Security $security,
+        private readonly ContextHelper $helper
+    )
     {
     }
 
