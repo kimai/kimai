@@ -42,7 +42,7 @@ final class RolePermissionVoter extends Voter
             return false;
         }
 
-        return $this->permissionManager->isRegisteredPermission($attribute);
+        return $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

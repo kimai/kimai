@@ -49,7 +49,7 @@ final class EntityMultiRoleVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES, true)) {
+        if (!$this->supportsAttribute($attribute)) {
             return false;
         }
 

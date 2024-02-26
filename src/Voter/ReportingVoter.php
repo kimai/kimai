@@ -42,7 +42,7 @@ final class ReportingVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject === null && \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+        return $subject === null && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

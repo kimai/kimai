@@ -74,7 +74,7 @@ final class TimesheetVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject instanceof Timesheet && \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+        return $subject instanceof Timesheet && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
