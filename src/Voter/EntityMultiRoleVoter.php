@@ -38,13 +38,18 @@ final class EntityMultiRoleVoter extends Voter
         'activity',
     ];
 
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES, true)) {
             return false;
         }
 

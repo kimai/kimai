@@ -55,21 +55,26 @@ final class TimesheetVoter extends Voter
     private ?bool $editExported = null;
     private ?\DateTime $now = null;
 
-    public function __construct(private RolePermissionManager $permissionManager, private LockdownService $lockdownService)
+    public function __construct(
+        private readonly RolePermissionManager $permissionManager,
+        private readonly LockdownService $lockdownService
+    )
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === Timesheet::class;
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!($subject instanceof Timesheet)) {
-            return false;
-        }
-
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
-            return false;
-        }
-
-        return true;
+        return $subject instanceof Timesheet && \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
