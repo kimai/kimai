@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 final class SamlLogoutSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private SamlAuthFactory $samlAuth)
+    public function __construct(private readonly SamlAuthFactory $samlAuth)
     {
     }
 
@@ -26,7 +26,7 @@ final class SamlLogoutSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function logout(LogoutEvent $event)
+    public function logout(LogoutEvent $event): void
     {
         $token = $event->getToken();
 

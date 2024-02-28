@@ -4808,22 +4808,12 @@ parameters:
             path: src/Saml/SamlLoginAttributes.php
 
         -
-            message: "#^Method App\\\\Saml\\\\SamlLogoutSubscriber\\:\\:logout\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Saml/SamlLogoutSubscriber.php
-
-        -
             message: "#^Parameter \\#4 \\$sessionIndex of method OneLogin\\\\Saml2\\\\Auth\\:\\:logout\\(\\) expects string\\|null, mixed given\\.$#"
             count: 1
             path: src/Saml/SamlLogoutSubscriber.php
 
         -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Saml/SamlProvider.php
-
-        -
-            message: "#^Method App\\\\Saml\\\\SamlProvider\\:\\:getPropertyValue\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Saml/SamlProvider.php
 
