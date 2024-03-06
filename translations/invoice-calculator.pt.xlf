@@ -6,9 +6,9 @@
         <source>invoice_calculator</source>
         <target state="translated">Cálculo da soma</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Padrão (uma linha por entrada)</target>
+        <target state="translated">Predefinição (uma linha por entrada)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -26,9 +26,9 @@
         <source>project</source>
         <target state="translated">Projeto</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Data: uma entrada por dia (utiliza a data de início)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>

@@ -1466,9 +1466,9 @@
         <source>evaluation</source>
         <target state="final">Valutazione</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month" approved="no" xml:space="preserve">
+      <trans-unit id="4lrfIsZ" resname="complete_month" approved="yes" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Mese completo</target>
+        <target state="final">Blocca mese</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf" approved="yes">
         <source>completed_month_pdf</source>
@@ -1510,9 +1510,9 @@
         <source>deleted</source>
         <target state="final">Eliminato</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="no" xml:space="preserve">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="yes" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Dopo aver completato il mese, l'utente non sarà più in grado di creare o modificare gli orari per quel periodo.</target>
+        <target state="final">Questo bloccherà tutti i giorni dell'anno prima della data scelta. L'utente non potrà più creare o modificare gli orari per il periodo bloccato.</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at" approved="yes">
         <source>created_at</source>
