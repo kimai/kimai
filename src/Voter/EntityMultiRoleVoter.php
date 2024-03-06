@@ -53,7 +53,7 @@ final class EntityMultiRoleVoter extends Voter
             return false;
         }
 
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS)) {
+        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
             return true;
         }
 
@@ -74,7 +74,7 @@ final class EntityMultiRoleVoter extends Voter
 
         $suffix = null;
 
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS)) {
+        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
             $suffix = $subject;
         } elseif ($subject instanceof Activity) {
             $suffix = 'activity';

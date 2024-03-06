@@ -48,7 +48,7 @@ final class ProjectVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return $subjectType === Project::class;
+        return str_contains($subjectType, Project::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool

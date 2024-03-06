@@ -49,7 +49,7 @@ final class UserVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return $subjectType === User::class;
+        return str_contains($subjectType, User::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool

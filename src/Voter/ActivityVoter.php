@@ -46,7 +46,7 @@ final class ActivityVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return $subjectType === Activity::class;
+        return str_contains($subjectType, Activity::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool

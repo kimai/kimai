@@ -69,7 +69,7 @@ final class TimesheetVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return $subjectType === Timesheet::class;
+        return str_contains($subjectType, Timesheet::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool

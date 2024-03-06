@@ -40,7 +40,7 @@ final class TeamVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return $subjectType === Team::class;
+        return str_contains($subjectType, Team::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
