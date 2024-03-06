@@ -539,7 +539,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerComment $comment
      * @return FormInterface<CustomerComment>
      */
     private function getCommentForm(CustomerComment $comment): FormInterface
@@ -555,7 +554,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param Customer $customer
      * @return FormInterface<Customer>
      */
     private function createEditForm(Customer $customer): FormInterface
