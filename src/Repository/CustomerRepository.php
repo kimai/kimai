@@ -55,10 +55,6 @@ class CustomerRepository extends EntityRepository
         return $customers;
     }
 
-    /**
-     * @param Customer $customer
-     * @throws ORMException
-     */
     public function saveCustomer(Customer $customer): void
     {
         $entityManager = $this->getEntityManager();
@@ -75,7 +71,7 @@ class CustomerRepository extends EntityRepository
         return $this->count([]);
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams);
         if ($permissions->count() > 0) {
@@ -124,9 +120,6 @@ class CustomerRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
-     *
-     * @param CustomerFormTypeQuery $query
-     * @return QueryBuilder
      */
     public function getQueryBuilderForFormType(CustomerFormTypeQuery $query): QueryBuilder
     {
@@ -176,6 +169,13 @@ class CustomerRepository extends EntityRepository
             ->select('c')
             ->from(Customer::class, 'c')
         ;
+
+        if ($query->getCountry() !== null) {
+            $qb
+                ->andWhere($qb->expr()->eq('c.country', ':country'))
+                ->setParameter('country', $query->getCountry())
+            ;
+        }
 
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {

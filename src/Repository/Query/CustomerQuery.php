@@ -18,11 +18,24 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
         'phone', 'currency', 'address', 'contact', 'company', 'vat_id', 'budget', 'timeBudget', 'visible'
     ];
 
+    private ?string $country = null;
+
     public function __construct()
     {
         $this->setDefaults([
             'orderBy' => 'name',
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
+            'country' => null,
         ]);
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): void
+    {
+        $this->country = $country;
     }
 }
