@@ -11,6 +11,7 @@ namespace App\Voter;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\Model\MultiUserTimesheet;
 use App\Security\RolePermissionManager;
 use App\Timesheet\LockdownService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -69,7 +70,7 @@ final class TimesheetVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
-        return str_contains($subjectType, Timesheet::class);
+        return str_contains($subjectType, Timesheet::class) || str_contains($subjectType, MultiUserTimesheet::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
