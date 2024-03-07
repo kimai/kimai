@@ -10,42 +10,38 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetZeroDurationValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetZeroDuration)) {
             throw new UnexpectedTypeException($constraint, TimesheetZeroDuration::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         if ($this->configuration->isTimesheetAllowZeroDuration()) {
             return;
         }
 
-        if ($timesheet->isRunning()) {
+        if ($value->isRunning()) {
             return;
         }
 
         $duration = 0;
-        if ($timesheet->getEnd() !== null && $timesheet->getBegin() !== null) {
-            $duration = $timesheet->getCalculatedDuration();
+        if ($value->getEnd() !== null && $value->getBegin() !== null) {
+            $duration = $value->getCalculatedDuration();
         }
 
         if ($duration <= 0) {

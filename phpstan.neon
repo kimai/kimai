@@ -5543,11 +5543,6 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Parameter \\#4 \\$duration of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
             count: 3
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
@@ -5556,11 +5551,6 @@ parameters:
             message: "#^Strict comparison using \\!\\=\\= between null and App\\\\Entity\\\\Project will always evaluate to true\\.$#"
             count: 2
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetExportedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetExportedValidator.php
 
         -
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
@@ -5573,16 +5563,6 @@ parameters:
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLockdownValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
-
-        -
             message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetLongRunningValidator.php
@@ -5591,26 +5571,6 @@ parameters:
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetMultiUpdateValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetOverlappingValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetRestartValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetRestartValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetZeroDurationValidator.php
 
         -
             message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\User\\) of method App\\\\Validator\\\\Constraints\\\\UserValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"

@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use App\Timesheet\LockdownService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraint;
@@ -18,29 +18,28 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLockdownValidator extends ConstraintValidator
 {
-    public function __construct(private Security $security, private LockdownService $lockdownService)
+    public function __construct(
+        private readonly Security $security,
+        private readonly LockdownService $lockdownService
+    )
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetLockdown)) {
             throw new UnexpectedTypeException($constraint, TimesheetLockdown::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         if (!$this->lockdownService->isLockdownActive()) {
             return;
         }
 
-        if (null === ($timesheetStart = $timesheet->getBegin())) {
+        if (null === ($timesheetStart = $value->getBegin())) {
             return;
         }
 
@@ -67,7 +66,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             $allowEditInGracePeriod = true;
         }
 
-        if ($this->lockdownService->isEditable($timesheet, $now, $allowEditInGracePeriod)) {
+        if ($this->lockdownService->isEditable($value, $now, $allowEditInGracePeriod)) {
             return;
         }
 

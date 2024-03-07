@@ -9,8 +9,8 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet as TimesheetEntity;
-use App\Validator\Constraints\Timesheet as TimesheetEntityConstraint;
+use App\Entity\Timesheet;
+use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -28,18 +28,14 @@ final class TimesheetValidator extends ConstraintValidator
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!($constraint instanceof TimesheetEntityConstraint)) {
-            throw new UnexpectedTypeException($constraint, TimesheetEntityConstraint::class);
+        if (!($constraint instanceof TimesheetConstraint)) {
+            throw new UnexpectedTypeException($constraint, TimesheetConstraint::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         $groups = [Constraint::DEFAULT_GROUP];
@@ -51,7 +47,7 @@ final class TimesheetValidator extends ConstraintValidator
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $innerConstraint, $groups);
+                ->validate($value, $innerConstraint, $groups);
         }
     }
 }

@@ -10,7 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -18,26 +18,25 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetOverlappingValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        private readonly TimesheetRepository $repository
+    )
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetOverlapping)) {
             throw new UnexpectedTypeException($constraint, TimesheetOverlapping::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
-        $begin = $timesheet->getBegin();
-        $end = $timesheet->getEnd();
+        $begin = $value->getBegin();
+        $end = $value->getEnd();
 
         // this case is handled in TimesheetValidator and should not raise a second validation
         if ($begin !== null && $end !== null && $begin > $end) {
@@ -48,7 +47,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->repository->hasRecordForTime($timesheet)) {
+        if (!$this->repository->hasRecordForTime($value)) {
             return;
         }
 

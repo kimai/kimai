@@ -10,37 +10,33 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLongRunningValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly SystemConfiguration $systemConfiguration)
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetLongRunning)) {
             throw new UnexpectedTypeException($constraint, TimesheetLongRunning::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
-        if ($timesheet->isRunning()) {
+        if ($value->isRunning()) {
             return;
         }
 
         /** @var int $duration */
-        $duration = $timesheet->getCalculatedDuration();
+        $duration = $value->getCalculatedDuration();
 
         // one year is currently the maximum that can be logged (which is already not logically)
         // the database column could hold more data, but let's limit it here
