@@ -19,7 +19,10 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 {
     private ?InvoiceModel $model = null;
 
-    public function __construct(private InvoiceRepository $repository, private SystemConfiguration $configuration)
+    public function __construct(
+        private readonly InvoiceRepository $repository,
+        private readonly SystemConfiguration $configuration
+    )
     {
     }
 
@@ -33,9 +36,6 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
         $this->model = $model;
     }
 
-    /**
-     * @return string
-     */
     public function getInvoiceNumber(): string
     {
         $format = $this->configuration->find('invoice.number_format');
@@ -68,6 +68,10 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 'm' => $invoiceDate->format('n'),
                 'D' => $invoiceDate->format('d'),
                 'd' => $invoiceDate->format('j'),
+                'YY' => (int) $invoiceDate->format('Y') + $increaseBy,
+                'yy' => (int) $invoiceDate->format('y') + $increaseBy,
+                'MM' => (int) $invoiceDate->format('m') + $increaseBy,
+                'DD' => (int) $invoiceDate->format('d') + $increaseBy,
                 'date' => $invoiceDate->format('ymd'),
                 'cc' => $this->repository->getCounterForCustomerAllTime($this->model->getCustomer()) + $increaseBy,
                 'ccy' => $this->repository->getCounterForYear($invoiceDate, $this->model->getCustomer()) + $increaseBy,
@@ -92,7 +96,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
         do {
             $result = $numberGenerator->getNumber($increaseBy);
             $increaseBy++;
-        } while ($this->repository->hasInvoice($result) && $loops++ < 99);
+        } while ((int) $result < 0 || ($this->repository->hasInvoice($result) && $loops++ < 99));
 
         return $result;
     }
