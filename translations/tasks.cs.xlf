@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Popis úkolu</target>
+        <target state="needs-translation">Popis úkolu</target>
       </trans-unit>
       <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>

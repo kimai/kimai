@@ -4248,22 +4248,7 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:deleteComment\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 
@@ -4274,11 +4259,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:saveComment\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 

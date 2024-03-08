@@ -168,12 +168,14 @@ final class RegenerateLocalesCommand extends Command
             $removableDuplicates[] = $locale;
         }
 
-        $io->title('Redundant locales that will be skipped');
+        /*
+        $io->title('Redundant locales that could be skipped');
         $io->writeln(implode('|', $removableDuplicates));
 
         foreach ($removableDuplicates as $duplicate) {
             unset($appLocales[$duplicate]);
         }
+        */
 
         // in the future this list should be reduced to the list of available translations, but for a long time users
         // could choose from the entire list of all locales, so we likely have to keep that forever ...

@@ -1547,13 +1547,13 @@
         <source>manual_bookings.duration_help</source>
         <target state="translated">Trajanje može biti pozitivno (povećanje utrošenog vremena) i negativno (smanjenje utrošenog vremena).</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Završi mjesec</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Završi mjesec</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Nakon završavanja mjeseca, korisnik više neće moći stvoriti niti uređivati vremena za to razdoblje.</target>
+        <target state="needs-translation">Nakon završavanja mjeseca, korisnik više neće moći stvoriti niti uređivati vremena za to razdoblje.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1778,6 +1778,10 @@
       <trans-unit id="d9m85KE" resname="locale">
         <source>locale</source>
         <target state="translated">Format za vrijeme, datum i valutu</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Odsutnost: Komentar je obavezno polje</target>
       </trans-unit>
     </body>
   </file>

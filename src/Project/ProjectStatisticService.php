@@ -45,11 +45,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 class ProjectStatisticService
 {
     public function __construct(
-        private ProjectRepository $projectRepository,
-        private ActivityRepository $activityRepository,
-        private TimesheetRepository $timesheetRepository,
-        private EventDispatcherInterface $dispatcher,
-        private UserRepository $userRepository
+        private readonly ProjectRepository $projectRepository,
+        private readonly ActivityRepository $activityRepository,
+        private readonly TimesheetRepository $timesheetRepository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly UserRepository $userRepository
     )
     {
     }
@@ -729,7 +729,7 @@ class ProjectStatisticService
             ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($tplQb->expr()->in('t.project', ':project'))
             ->groupBy('t.project')
-            ->setParameter('project', array_values($projectIds))
+            ->setParameter('project', $projectIds)
         ;
 
         // find the most recent timesheet for each project

@@ -1511,13 +1511,13 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">Aucune heure cible n'a été configurée pour cet utilisateur dans les paramètres du contrat de travail.</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Mois complet</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Mois complet</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Après avoir terminé le mois, l'utilisateur ne pourra plus créer ou modifier des heures pour cette période.</target>
+        <target state="needs-translation">Après avoir terminé le mois, l'utilisateur ne pourra plus créer ou modifier des heures pour cette période.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

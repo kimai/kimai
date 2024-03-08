@@ -620,11 +620,11 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month">
         <source>Complete month</source>
-        <target state="translated">Complete month</target>
+        <target state="translated">Lock month</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target>After completing the month, the user will no longer be able to create or edit times for that period.</target>
+        <target>This will lock all days of the year before the chosen date. The user will no longer be able to create or edit times for the locked period.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
