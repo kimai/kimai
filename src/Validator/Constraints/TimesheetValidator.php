@@ -22,7 +22,7 @@ final class TimesheetValidator extends ConstraintValidator
      * @param TimesheetConstraint[] $constraints
      */
     public function __construct(
-        #[TaggedIterator(TimesheetEntityConstraint::class)]
+        #[TaggedIterator(TimesheetConstraint::class)]
         private iterable $constraints
     )
     {
