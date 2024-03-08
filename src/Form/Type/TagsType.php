@@ -19,8 +19,8 @@ final class TagsType extends AbstractType
     private ?int $count = null;
 
     public function __construct(
-        private AuthorizationCheckerInterface $auth,
-        private TagRepository $repository
+        private readonly AuthorizationCheckerInterface $auth,
+        private readonly TagRepository $repository
     ) {
     }
 
