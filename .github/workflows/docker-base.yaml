@@ -41,13 +41,3 @@ jobs:
                   push: true
 
 
-            - name: Build
-              uses: docker/build-push-action@v4
-              with:
-                  context: .docker
-                  file: .docker/Dockerfile.nginx
-                  platforms: linux/amd64,linux/arm64 #,linux/arm/v8,linux/arm/v7,linux/arm/v6
-                  tags: |
-                    kimai/kimai-nginx
-                  push: true
-
