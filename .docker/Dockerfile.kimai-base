@@ -138,7 +138,6 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 ###########################
 
 FROM php:${PHP_VER}-apache-bookworm AS apache-base
-ARG KIMAI
 ARG TIMEZONE
 RUN apt-get update && \
     apt-get install -y \
