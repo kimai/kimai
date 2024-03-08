@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -26,14 +26,14 @@ final class TimesheetDeactivatedValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetDeactivated::class);
         }
 
-        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($value, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         $this->validateActivityAndProject($value, $this->context);
     }
 
-    private function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
+    private function validateActivityAndProject(Timesheet $timesheet, ExecutionContextInterface $context): void
     {
         $newOrStarted = $timesheet->isRunning() || $timesheet->getId() === null;
 

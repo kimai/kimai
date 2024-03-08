@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use App\Validator\Constraints\QuickEntryTimesheet as QuickEntryTimesheetConstraint;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Validator\Constraint;
@@ -34,8 +34,8 @@ final class QuickEntryTimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, QuickEntryTimesheetConstraint::class);
         }
 
-        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($value, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         $timesheet = $value;

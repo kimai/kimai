@@ -10,7 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet as TimesheetEntity;
+use App\Entity\Timesheet;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBasicValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -28,19 +28,15 @@ final class TimesheetBasicValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetBasic::class);
         }
 
-        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($value, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         $this->validateBeginAndEnd($value, $this->context);
         $this->validateActivityAndProject($value, $this->context);
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
-    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
+    protected function validateBeginAndEnd(Timesheet $timesheet, ExecutionContextInterface $context): void
     {
         $begin = $timesheet->getBegin();
         $end = $timesheet->getEnd();
@@ -64,11 +60,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
-    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
+    protected function validateActivityAndProject(Timesheet $timesheet, ExecutionContextInterface $context): void
     {
         $activity = $timesheet->getActivity();
 

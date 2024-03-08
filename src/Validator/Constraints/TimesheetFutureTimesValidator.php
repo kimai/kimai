@@ -17,22 +17,18 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetFutureTimesValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
-    /**
-     * @param TimesheetEntity $value
-     * @param Constraint $constraint
-     */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetFutureTimes)) {
             throw new UnexpectedTypeException($constraint, TimesheetFutureTimes::class);
         }
 
-        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($value, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof Timesheet)) {
+            throw new UnexpectedTypeException($value, Timesheet::class);
         }
 
         if ($this->configuration->isTimesheetAllowFutureTimes()) {
