@@ -34,7 +34,6 @@ final class TimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetEntityConstraint::class);
         }
 
-
         if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
             throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }

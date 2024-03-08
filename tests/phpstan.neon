@@ -1658,17 +1658,7 @@ parameters:
             path: Entity/TimesheetValidationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Entity/TimesheetValidationTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$groups with no type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:getEntity\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/TimesheetValidationTest.php
 
@@ -1689,11 +1679,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:assertHasNoViolations\\(\\) has parameter \\$groups with no type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
             count: 1
             path: Entity/UserValidationTest.php
 

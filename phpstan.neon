@@ -5558,11 +5558,6 @@ parameters:
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
             message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetLongRunningValidator.php
