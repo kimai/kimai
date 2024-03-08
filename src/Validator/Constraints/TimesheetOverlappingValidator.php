@@ -10,7 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet;
+use App\Entity\Timesheet as TimesheetEntity;
 use App\Repository\TimesheetRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -31,8 +31,8 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetOverlapping::class);
         }
 
-        if (!\is_object($value) || !($value instanceof Timesheet)) {
-            throw new UnexpectedTypeException($value, Timesheet::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         $begin = $value->getBegin();

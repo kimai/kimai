@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\Timesheet;
+use App\Entity\Timesheet as TimesheetEntity;
 use App\Timesheet\TrackingModeService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraint;
@@ -31,8 +31,8 @@ final class TimesheetRestartValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetRestart::class);
         }
 
-        if (!\is_object($value) || !($value instanceof Timesheet)) {
-            throw new UnexpectedTypeException($value, Timesheet::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         // special case that would otherwise need to be validated in several controllers:

@@ -10,7 +10,7 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Timesheet;
+use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -27,8 +27,8 @@ final class TimesheetZeroDurationValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetZeroDuration::class);
         }
 
-        if (!\is_object($value) || !($value instanceof Timesheet)) {
-            throw new UnexpectedTypeException($value, Timesheet::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         if ($this->configuration->isTimesheetAllowZeroDuration()) {

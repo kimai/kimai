@@ -13,7 +13,7 @@ use App\Activity\ActivityStatisticService;
 use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerStatisticService;
-use App\Entity\Timesheet;
+use App\Entity\Timesheet as TimesheetEntity;
 use App\Model\BudgetStatisticModel;
 use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
@@ -46,8 +46,8 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TimesheetBudgetUsed::class);
         }
 
-        if (!\is_object($value) || !($value instanceof Timesheet)) {
-            throw new UnexpectedTypeException($value, Timesheet::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         if ($this->configuration->isTimesheetAllowOverbookingBudget()) {
@@ -178,7 +178,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         }
     }
 
-    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, Timesheet $timesheet, int $duration, float $rate, string $field): bool
+    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $duration, float $rate, string $field): bool
     {
         $fullRate = ($stat->getBudgetSpent() + $rate);
 
@@ -199,7 +199,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate): void
+    private function addBudgetViolation(TimesheetBudgetUsed $constraint, TimesheetEntity $timesheet, string $field, float $budget, float $rate): void
     {
         // using the locale of the assigned user is not the best solution, but allows to be independent of the request stack
         $helper = new LocaleFormatter($this->localeService, $timesheet->getUser()?->getLocale() ?? 'en');
