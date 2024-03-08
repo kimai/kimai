@@ -50,11 +50,6 @@ final class RolePermissionManager
             $perm = (string) $item['permission'];
             $role = (string) $item['role'];
 
-            // these permissions may not be revoked at any time, because super admin would lose the ability to reactivate any permission
-            if ($role === User::ROLE_SUPER_ADMIN && \array_key_exists($perm, self::SUPER_ADMIN_PERMISSIONS)) {
-                continue;
-            }
-
             if (!\array_key_exists($role, $this->permissions)) {
                 $this->permissions[$role] = [];
             }
@@ -62,6 +57,7 @@ final class RolePermissionManager
             $this->permissions[$role][$perm] = (bool) $item['allowed'];
         }
 
+        // these permissions may not be revoked at any time, because super admin would lose the ability to reactivate any permission
         foreach (self::SUPER_ADMIN_PERMISSIONS as $perm => $value) {
             $this->permissions[User::ROLE_SUPER_ADMIN][$perm] = $value;
         }
