@@ -192,6 +192,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     public function getJavascriptConfiguration(User $user): array
     {
         return [
+            'locale' => $this->locale,
+            'language' => $user->getLanguage(),
             'formatDuration' => $this->localeService->getDurationFormat($this->locale),
             'formatDate' => $this->localeService->getDateFormat($this->locale),
             'defaultColor' => Constants::DEFAULT_COLOR,
