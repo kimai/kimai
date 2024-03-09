@@ -176,7 +176,6 @@
     {% set format = locale_format('date')|js_format %}
     {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
     <div class="input-group">
-        {{ block('form_widget_simple') }}
         {% if ranges is defined %}
         <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
@@ -185,6 +184,7 @@
             {% endfor %}
         </div>
         {% endif %}
+        {{ block('form_widget_simple') }}
     </div>
 {% endblock daterange_widget %}
 
