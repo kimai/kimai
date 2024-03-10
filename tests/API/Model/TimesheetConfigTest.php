@@ -10,6 +10,7 @@
 namespace App\Tests\API\Model;
 
 use App\API\Model\TimesheetConfig;
+use App\Timesheet\FutureTimesEnum;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,7 +21,7 @@ class TimesheetConfigTest extends TestCase
     public function testSetter(): void
     {
         $sut = new TimesheetConfig();
-        $sut->setIsAllowFutureTimes(false);
+        $sut->setIsAllowFutureTimes(FutureTimesEnum::DENY);
         $sut->setIsAllowOverlapping(false);
         $sut->setDefaultBeginTime('08:00');
         $sut->setTrackingMode('punch');

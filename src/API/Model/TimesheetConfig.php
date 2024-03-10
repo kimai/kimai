@@ -9,6 +9,7 @@
 
 namespace App\API\Model;
 
+use App\Timesheet\FutureTimesEnum;
 use JMS\Serializer\Annotation as Serializer;
 
 #[Serializer\ExclusionPolicy('none')]
@@ -36,7 +37,7 @@ final class TimesheetConfig
     #[Serializer\Type(name: 'integer')]
     public int $activeEntriesHardLimit = 1;
     /**
-     * Whether entries for future times are allowed
+     * Whether entries for future times are allowed (end time maybe limited)
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -65,9 +66,9 @@ final class TimesheetConfig
         $this->activeEntriesHardLimit = $activeEntriesHardLimit;
     }
 
-    public function setIsAllowFutureTimes(bool $isAllowFutureTimes): void
+    public function setIsAllowFutureTimes(FutureTimesEnum $futureTimesEnum): void
     {
-        $this->isAllowFutureTimes = $isAllowFutureTimes;
+        $this->isAllowFutureTimes = ($futureTimesEnum !== FutureTimesEnum::DENY);
     }
 
     public function setIsAllowOverlapping(bool $isAllowOverlapping): void
