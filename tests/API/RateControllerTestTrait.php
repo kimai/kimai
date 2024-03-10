@@ -20,20 +20,14 @@ use App\Entity\User;
  */
 trait RateControllerTestTrait
 {
-    /**
-     * @param string|int $id
-     * @param string|int|null $rateId
-     * @return string
-     */
-    abstract protected function getRateUrl($id = '1', $rateId = null): string;
+    abstract protected function getRateUrl(string|int $id = '1', string|int|null $rateId = null): string;
 
     abstract protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string;
 
     /**
-     * @param string|int $id
      * @return RateInterface[]
      */
-    abstract protected function importTestRates($id): array;
+    abstract protected function importTestRates(string|int $id): array;
 
     public function testAddRateMissingEntityAction(): void
     {
@@ -89,7 +83,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertRateStructure($result, null);
         $this->assertNotEmpty($result['id']);
@@ -110,7 +107,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertRateStructure($result, 1);
         $this->assertNotEmpty($result['id']);
@@ -125,7 +125,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(1));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertEmpty($result);
     }
@@ -138,7 +141,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(1));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(\count($expectedRates), \count($result));
@@ -171,7 +177,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrlByRate($expectedRates[0], true));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertEquals(\count($expectedRates) - 1, \count($result));
     }

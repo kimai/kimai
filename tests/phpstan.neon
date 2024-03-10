@@ -203,11 +203,6 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 12
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/ActivityControllerTest.php
@@ -298,11 +293,6 @@ parameters:
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 12
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
@@ -380,11 +370,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Team\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
             count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 14
             path: API/ProjectControllerTest.php
 
         -

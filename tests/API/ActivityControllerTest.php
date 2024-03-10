@@ -168,7 +168,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         }
 
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -208,7 +211,10 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $query = ['order' => 'ASC', 'orderBy' => 'project'];
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -228,7 +234,10 @@ class ActivityControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/api/activities/1');
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
@@ -252,7 +261,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -267,7 +279,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -313,7 +328,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -335,7 +353,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/activities/' . $imports[2]->getId(), 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
