@@ -41,9 +41,8 @@ class PaginationTest extends TestCase
         $query = new TimesheetQuery();
         $query->setPage(3);
         $query->setPageSize(1);
-        $query->setIsApiCall(true);
         $sut = new Pagination(new ArrayAdapter([1, 2, 3, 4, 5]), $query);
-        $this->assertFalse($sut->getNormalizeOutOfRangePages());
+        $this->assertTrue($sut->getNormalizeOutOfRangePages());
         $this->assertEquals(1, $sut->getMaxPerPage());
         $this->assertEquals(3, $sut->getCurrentPage());
     }

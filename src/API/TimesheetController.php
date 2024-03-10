@@ -54,11 +54,11 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private TimesheetRepository $repository,
-        private TagRepository $tagRepository,
-        private EventDispatcherInterface $dispatcher,
-        private TimesheetService $service
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly TimesheetRepository $repository,
+        private readonly TagRepository $tagRepository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly TimesheetService $service
     ) {
     }
 
@@ -94,11 +94,13 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', nullable: true, description: 'Free search term')]
     #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
+        $this->prepareBaseQuery($query, $paramFetcher);
+
         $seeAll = false;
 
         if ($this->isGranted('view_other_timesheet')) {
@@ -168,16 +170,6 @@ final class TimesheetController extends BaseApiController
                 throw $this->createNotFoundException('Unknown activity: ' . $activity);
             }
             $query->addActivity($activity);
-        }
-
-        $page = $paramFetcher->get('page');
-        if (\is_string($page) && $page !== '') {
-            $query->setPage((int) $page);
-        }
-
-        $size = $paramFetcher->get('size');
-        if (\is_string($size) && $size !== '') {
-            $query->setPageSize((int) $size);
         }
 
         /** @var array<string> $tags */
@@ -250,12 +242,8 @@ final class TimesheetController extends BaseApiController
             $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getPagerfantaForQuery($query);
-        $results = (array) $data->getCurrentPageResults();
-
-        $view = new View($results, 200);
-        $this->addPagination($view, $data);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createViewForPagination($pagination);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {

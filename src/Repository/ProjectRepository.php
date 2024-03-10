@@ -58,29 +58,11 @@ class ProjectRepository extends EntityRepository
         return $projects;
     }
 
-    /**
-     * @param Project $project
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveProject(Project $project)
+    public function saveProject(Project $project): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($project);
         $entityManager->flush();
-    }
-
-    /**
-     * @param null|bool $visible
-     * @return int
-     */
-    public function countProject($visible = null): int
-    {
-        if (null !== $visible) {
-            return $this->count(['visible' => (bool) $visible]);
-        }
-
-        return $this->count([]);
     }
 
     public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
@@ -139,9 +121,6 @@ class ProjectRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
-     *
-     * @param ProjectFormTypeQuery $query
-     * @return QueryBuilder
      */
     public function getQueryBuilderForFormType(ProjectFormTypeQuery $query): QueryBuilder
     {
@@ -359,7 +338,6 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @param ProjectQuery $query
      * @return Project[]
      */
     public function getProjectsForQuery(ProjectQuery $query): iterable
@@ -372,12 +350,7 @@ class ProjectRepository extends EntityRepository
         return $results;
     }
 
-    /**
-     * @param Project $delete
-     * @param Project|null $replace
-     * @throws \Doctrine\ORM\Exception\ORMException
-     */
-    public function deleteProject(Project $delete, ?Project $replace = null)
+    public function deleteProject(Project $delete, ?Project $replace = null): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -429,14 +402,14 @@ class ProjectRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function saveComment(ProjectComment $comment)
+    public function saveComment(ProjectComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($comment);
         $entityManager->flush();
     }
 
-    public function deleteComment(ProjectComment $comment)
+    public function deleteComment(ProjectComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($comment);

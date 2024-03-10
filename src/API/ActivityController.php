@@ -44,10 +44,10 @@ final class ActivityController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ActivityRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ActivityRateRepository $activityRateRepository
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ActivityRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ActivityRateRepository $activityRateRepository
     ) {
     }
 
@@ -64,14 +64,13 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'globals', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', nullable: true, description: 'Free search term')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ActivityQuery();
-        $query->setCurrentUser($user);
+        $this->prepareBaseQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {
@@ -112,9 +111,9 @@ final class ActivityController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getActivitiesForQuery($query);
-        $view = new View($data, 200);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createViewForPagination($pagination);
+
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);

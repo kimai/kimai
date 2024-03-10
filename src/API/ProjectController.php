@@ -46,11 +46,11 @@ final class ProjectController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ProjectRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ProjectRateRepository $projectRateRepository,
-        private ProjectService $projectService
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ProjectRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectRateRepository $projectRateRepository,
+        private readonly ProjectService $projectService
     ) {
     }
 
@@ -70,14 +70,13 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'globalActivities', requirements: '0|1', strict: true, nullable: true, description: "If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', nullable: true, description: 'Free search term')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ProjectQuery();
-        $query->setCurrentUser($user);
+        $this->prepareBaseQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {
@@ -144,9 +143,9 @@ final class ProjectController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getProjectsForQuery($query);
-        $view = new View($data, 200);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createViewForPagination($pagination);
+
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);

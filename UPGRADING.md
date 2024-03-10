@@ -8,6 +8,18 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.14.0](https://github.com/kimai/kimai/releases/tag/2.13.0)
+
+**DEVELOPERS ONLY**
+
+The API now uses pagination globally for all collection endpoints. This might break current implementations
+
+All collections are limited to 50 entries by default (changes in Customer, Project, Activity, User).
+
+The parameters to influence pagination, page size and page number are `size` (and `pageSize`) and `page`.
+
+Read the [API pagination docs](https://www.kimai.org/documentation/api-pagination.html) for more infos.
+
 ## [2.0.30](https://github.com/kimai/kimai/releases/tag/2.0.30)
 
 The `DATABASE_URL` in your environment settings ([.env](https://github.com/kimai/kimai/issues/4246) or in your [Docker](https://github.com/tobybatch/kimai2/issues/531) or webserver config)
