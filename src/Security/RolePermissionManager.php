@@ -70,8 +70,6 @@ final class RolePermissionManager
      */
     public function isRegisteredPermission(string $permission): bool
     {
-        $this->init();
-
         return \array_key_exists($permission, $this->permissionNames);
     }
 
@@ -108,8 +106,6 @@ final class RolePermissionManager
      */
     public function getPermissions(): array
     {
-        $this->init();
-
         return array_keys($this->permissionNames);
     }
 }
