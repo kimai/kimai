@@ -1,7 +1,6 @@
 {% macro init_frontend_loader() %}
     {% set configurations = javascript_configurations(app.user)|merge({
         login: path('login'),
-        locale: app.request.locale,
         direction: tabler_bundle.rightToLeft ? 'rtl' : 'ltr',
         first_dow_iso: iso_day_by_name(app.user.firstDayOfWeek),
     }) %}

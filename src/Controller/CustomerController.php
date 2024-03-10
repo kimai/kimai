@@ -67,7 +67,7 @@ final class CustomerController extends AbstractController
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
-        $form = $this->getToolbarForm($query);
+        $form = $this->getToolbarForm($query, $request);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('admin_customer');
         }
@@ -473,7 +473,7 @@ final class CustomerController extends AbstractController
         $query = new CustomerQuery();
         $query->setCurrentUser($this->getUser());
 
-        $form = $this->getToolbarForm($query);
+        $form = $this->getToolbarForm($query, $request);
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
@@ -526,12 +526,12 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerQuery $query
      * @return FormInterface<CustomerQuery>
      */
-    private function getToolbarForm(CustomerQuery $query): FormInterface
+    private function getToolbarForm(CustomerQuery $query, Request $request): FormInterface
     {
         return $this->createSearchForm(CustomerToolbarForm::class, $query, [
+            'locale' => $request->getLocale(),
             'action' => $this->generateUrl('admin_customer', [
                 'page' => $query->getPage(),
             ])
@@ -539,7 +539,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerComment $comment
      * @return FormInterface<CustomerComment>
      */
     private function getCommentForm(CustomerComment $comment): FormInterface
@@ -555,7 +554,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param Customer $customer
      * @return FormInterface<Customer>
      */
     private function createEditForm(Customer $customer): FormInterface

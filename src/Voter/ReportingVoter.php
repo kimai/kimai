@@ -26,13 +26,23 @@ final class ReportingVoter extends Voter
         'report:user',
     ];
 
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === 'null';
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject === null && \in_array($attribute, self::ALLOWED_ATTRIBUTES);
+        return $subject === null && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

@@ -22,9 +22,9 @@ final class SamlProvider
      * @param UserProviderInterface<User> $userProvider
      */
     public function __construct(
-        private UserRepository $repository,
-        private UserProviderInterface $userProvider,
-        private SamlConfigurationInterface $configuration
+        private readonly UserRepository $repository,
+        private readonly UserProviderInterface $userProvider,
+        private readonly SamlConfigurationInterface $configuration
     ) {
     }
 
@@ -123,7 +123,7 @@ final class SamlProvider
         $user->setAuth(User::AUTH_SAML);
     }
 
-    private function getPropertyValue(SamlLoginAttributes $token, $attribute)
+    private function getPropertyValue(SamlLoginAttributes $token, $attribute): string
     {
         $results = [];
         $attributes = $token->getAttributes();

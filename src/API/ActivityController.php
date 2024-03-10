@@ -44,10 +44,10 @@ final class ActivityController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ActivityRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ActivityRateRepository $activityRateRepository
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ActivityRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ActivityRateRepository $activityRateRepository
     ) {
     }
 
@@ -128,6 +128,7 @@ final class ActivityController extends BaseApiController
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_activity', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
+    #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
         $view = new View($activity, 200);

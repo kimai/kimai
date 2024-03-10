@@ -46,11 +46,11 @@ final class ProjectController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ProjectRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ProjectRateRepository $projectRateRepository,
-        private ProjectService $projectService
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ProjectRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectRateRepository $projectRateRepository,
+        private readonly ProjectService $projectService
     ) {
     }
 
@@ -159,6 +159,7 @@ final class ProjectController extends BaseApiController
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
+    #[IsGranted('view', 'project')]
     public function getAction(Project $project): Response
     {
         $view = new View($project, 200);

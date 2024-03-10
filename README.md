@@ -47,8 +47,8 @@ Support for PHP 8.2 and 8.3.
 
 ## Installation
 
-- [Recommended setup](https://www.kimai.org/documentation/installation.html#recommended-setup) — with Git and Composer
-- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by [@tobybatch](https://github.com/tobybatch/kimai2)
+- [Native setup](https://www.kimai.org/documentation/installation.html) — with Git and Composer
+- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by @tobybatch
 
 There are also documentations for:
 - [developer setups](https://www.kimai.org/documentation/developers.html) — on your local machine

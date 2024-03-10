@@ -19,9 +19,9 @@ trait EntityValidationTestTrait
 {
     /**
      * @param object $entity
-     * @param array|string $fieldNames
+     * @param array<string>|string $fieldNames
      */
-    public function assertHasViolationForField(object $entity, $fieldNames, $groups = null): void
+    public function assertHasViolationForField(object $entity, array|string $fieldNames, $groups = null): void
     {
         self::bootKernel();
         /** @var ValidatorInterface $validator */

@@ -55,7 +55,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
     }
 
     private function prepareTimesheet()

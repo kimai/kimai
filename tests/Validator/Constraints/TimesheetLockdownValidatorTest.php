@@ -75,7 +75,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage']));
     }
 
     public function testValidatorWithoutNowConstraint(): void

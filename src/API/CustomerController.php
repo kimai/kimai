@@ -44,10 +44,10 @@ final class CustomerController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private CustomerRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private CustomerRateRepository $customerRateRepository
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly CustomerRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly CustomerRateRepository $customerRateRepository
     ) {
     }
 
@@ -105,6 +105,7 @@ final class CustomerController extends BaseApiController
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
+    #[IsGranted('view', 'customer')]
     public function getAction(Customer $customer): Response
     {
         $view = new View($customer, 200);

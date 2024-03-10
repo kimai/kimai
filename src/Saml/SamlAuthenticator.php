@@ -35,12 +35,12 @@ class SamlAuthenticator extends AbstractAuthenticator
     ];
 
     public function __construct(
-        private HttpUtils $httpUtils,
-        private SamlAuthenticationSuccessHandler $successHandler,
-        private SamlAuthenticationFailureHandler $failureHandler,
-        private SamlAuthFactory $samlAuthFactory,
-        private SamlProvider $samlProvider,
-        private SamlConfigurationInterface $configuration
+        private readonly HttpUtils $httpUtils,
+        private readonly SamlAuthenticationSuccessHandler $successHandler,
+        private readonly SamlAuthenticationFailureHandler $failureHandler,
+        private readonly SamlAuthFactory $samlAuthFactory,
+        private readonly SamlProvider $samlProvider,
+        private readonly SamlConfigurationInterface $configuration
     ) {
     }
 

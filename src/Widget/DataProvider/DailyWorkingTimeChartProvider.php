@@ -25,7 +25,7 @@ use DateTimeInterface;
  */
 class DailyWorkingTimeChartProvider
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
@@ -33,9 +33,6 @@ class DailyWorkingTimeChartProvider
      * In case this method is called with one timezone and the results are from another timezone,
      * it might return rows outside the time-range.
      *
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
-     * @param User|null $user
      * @return array<mixed>
      */
     protected function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, ?User $user = null): array

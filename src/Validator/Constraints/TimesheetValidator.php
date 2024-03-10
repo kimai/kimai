@@ -28,18 +28,14 @@ final class TimesheetValidator extends ConstraintValidator
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetEntityConstraint)) {
             throw new UnexpectedTypeException($constraint, TimesheetEntityConstraint::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         $groups = [Constraint::DEFAULT_GROUP];
@@ -51,7 +47,7 @@ final class TimesheetValidator extends ConstraintValidator
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $innerConstraint, $groups);
+                ->validate($value, $innerConstraint, $groups);
         }
     }
 }

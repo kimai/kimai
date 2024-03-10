@@ -17,29 +17,25 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetExportedValidator extends ConstraintValidator
 {
-    public function __construct(private Security $security)
+    public function __construct(private readonly Security $security)
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetExported)) {
             throw new UnexpectedTypeException($constraint, TimesheetExported::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        if ($timesheet->getId() === null) {
+        if ($value->getId() === null) {
             return;
         }
 
-        if (!$timesheet->isExported()) {
+        if (!$value->isExported()) {
             return;
         }
 
@@ -47,7 +43,7 @@ final class TimesheetExportedValidator extends ConstraintValidator
         // can trigger is right when the "export" flag ist set from the "edit form".
         // most teamleads should not have "edit_exported_timesheet" but only "edit_export_other_timesheet"
 
-        if (null !== $this->security->getUser() && $this->security->isGranted('edit_export', $timesheet)) {
+        if (null !== $this->security->getUser() && $this->security->isGranted('edit_export', $value)) {
             return;
         }
 

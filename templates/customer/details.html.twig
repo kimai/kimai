@@ -8,7 +8,7 @@
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="customer_details_box"{% endblock %}
         {% block box_title %}
-            {{ widgets.label_customer(customer) }}
+            {{ widgets.label_dot(customer.name, customer.color) }}
             {% if customer.company is not empty %} &ndash; {{ customer.company }}{% endif %}
         {% endblock %}
         {% block box_tools %}

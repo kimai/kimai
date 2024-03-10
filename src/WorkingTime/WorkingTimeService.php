@@ -144,10 +144,10 @@ final class WorkingTimeService
             ->select('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('DATE(t.date) as day')
             ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->eq('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $user->getId())
             ->addGroupBy('day')
         ;

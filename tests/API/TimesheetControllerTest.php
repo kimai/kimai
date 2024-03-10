@@ -118,12 +118,59 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
-    public function testGetCollectionForAllUser(): void
+    public function testGetCollectionForAllUserIsSecure(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
         $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertEmpty($result);
+        self::assertEquals(0, \count($result));
+    }
+
+    public function testGetCollectionForAllUserIsSecureForUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(10, \count($result));
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+    }
+
+    public function testGetCollectionForAllUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_SUPER_ADMIN), 7);
         $fixture->setFixedRate(true);
         $fixture->setHourlyRate(true);
         $fixture->setStartDate(new \DateTime('-10 days'));

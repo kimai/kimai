@@ -130,7 +130,7 @@ final class MPdfConverter implements HtmlToPdfConverter
 
         // lowercase all font names, otherwise they cannot be loaded
         // see https://github.com/kimai/www.kimai.org/issues/280
-        if (\array_key_exists('fonts', $options)) {
+        if (\array_key_exists('fonts', $options) && \is_array($options['fonts'])) {
             $fonts = [];
             foreach ($options['fonts'] as $name => $values) {
                 $fonts[strtolower($name)] = $values;
