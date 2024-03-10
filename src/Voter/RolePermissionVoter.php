@@ -32,17 +32,13 @@ final class RolePermissionVoter extends Voter
 
     public function supportsType(string $subjectType): bool
     {
+        // we only work on single strings that have no subject
         return $subjectType === 'null';
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // we only work on single strings that have no subject
-        if (null !== $subject) {
-            return false;
-        }
-
-        return $this->supportsAttribute($attribute);
+        return $subject === null && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
