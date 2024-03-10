@@ -219,9 +219,14 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertEquals($imports[1]->getId(), $result[2]['project']);
     }
 
+    public function testGetEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/activities/1');
+    }
+
     public function testGetEntity(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/api/activities/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 

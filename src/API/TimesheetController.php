@@ -54,11 +54,11 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private TimesheetRepository $repository,
-        private TagRepository $tagRepository,
-        private EventDispatcherInterface $dispatcher,
-        private TimesheetService $service
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly TimesheetRepository $repository,
+        private readonly TagRepository $tagRepository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly TimesheetService $service
     ) {
     }
 

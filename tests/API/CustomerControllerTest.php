@@ -117,9 +117,14 @@ class CustomerControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
+    public function testGetEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/customers/1');
+    }
+
     public function testGetEntity(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/api/customers/1');
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -129,7 +134,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     public function testGetEntityWithFullResponse(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $em = $this->getEntityManager();
 
