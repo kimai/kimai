@@ -1549,11 +1549,11 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Završi mjesec</target>
+        <target state="translated">Zaključi mjesec</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Nakon završavanja mjeseca, korisnik više neće moći stvoriti niti uređivati vremena za to razdoblje.</target>
+        <target state="translated">Ovime će se zaključiti svi dani u godini prije odabranog datuma. Korisnik više neće moći stvarati ili uređivati vremena za zaključeno razdoblje.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

@@ -1501,11 +1501,11 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Tam ay</target>
+        <target state="translated">Ayı kilitle</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Ay tamamlandıktan sonra, kullanıcı artık o dönem için zaman oluşturamayacak veya düzenleyemeyecek.</target>
+        <target state="translated">Bu, yılın seçilen tarihten önceki tüm günlerini kilitleyecektir. Kullanıcı artık kilitli dönem için zaman oluşturamayacak veya düzenleyemeyecektir.</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>

@@ -138,9 +138,9 @@
       <!--
               General labels
             -->
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Data</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -712,9 +712,9 @@
         <source>recent.activities</source>
         <target>Reiniciar uma das suas últimas atividades</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="needs-translation">Criar novo registo de tempo</target>
+        <target state="translated">Iniciar registo de tempo</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -1451,13 +1451,13 @@
         <source>time</source>
         <target state="translated">Hora</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">Além de traduzir a interface, esta configuração também é responsável pelos formatos de hora, data e moeda.</target>
+        <target state="translated">Esta definição é responsável pela tradução do software</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="needs-translation">Idiomas compatíveis com as regras de formatação</target>
+        <target state="translated">Eis alguns exemplos de regras de formatação para as línguas suportadas</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1479,9 +1479,9 @@
         <source>status.closed</source>
         <target state="translated">Concluído</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Predefinido</target>
+        <target state="translated">Predefinição</target>
       </trans-unit>
       <trans-unit id="_WlU8Fp" resname="sickness">
         <source>sickness</source>
@@ -1537,7 +1537,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Depois de completar um mês, o usuário não vai poder criar ou editar tempos por este período.</target>
+        <target state="translated">Esta ação bloqueia todos os dias do ano anteriores à data escolhida. O utilizador deixará de poder criar ou editar horas para o período bloqueado.</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1713,7 +1713,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Mês completo</target>
+        <target state="translated">Bloquear mês</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
@@ -1746,6 +1746,42 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target state="translated">Gerador de números de faturas</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Filtro de pesquisa</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Parar registo de tempo</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Adicionar entrada à lista de atualização de lotes</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Selecionar todas as entradas para a lista de atualização em lote</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">ID do utilizador</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">O identificador único do utilizador é utilizado para autenticação e nas exportações</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">Férias não remuneradas</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Ausência: O comentário é um campo obrigatório</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>locale</source>
+        <target state="translated">Formato para hora, data e moeda</target>
       </trans-unit>
     </body>
   </file>

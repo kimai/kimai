@@ -106,9 +106,9 @@
         <source>task.help.tags</source>
         <target state="final">Questi tag verranno copiati in ogni registrazione del foglio di presenza</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
         <source>task_todo</source>
-        <target state="needs-translation">Descrizione compito</target>
+        <target state="final">Compito</target>
       </trans-unit>
     </body>
   </file>

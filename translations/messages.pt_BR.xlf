@@ -1477,7 +1477,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Mês completo</target>
+        <target state="translated">Mês bloqueado</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1537,7 +1537,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Após completar o mês, o usuário não poderá mais criar ou editar horários para aquele período.</target>
+        <target state="translated">Isso bloqueará todos os dias do ano anteriores à data escolhida. O usuário não poderá mais criar ou editar os horários para o período bloqueado.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
