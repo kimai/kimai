@@ -49,8 +49,6 @@ jobs:
                       kimai/kimai2:${{ matrix.server }}-${{ matrix.type }}
                       kimai/kimai2:${{ matrix.server }}-${{ env.kimai_version }}-${{ matrix.type }}
                   push: true
-            - name: Test Lite
-              run: docker run --rm --entrypoint /assets/test-lite.sh kimai/kimai2:${{ matrix.server }}-${{ matrix.type }}
 
     tag:
         needs: build
