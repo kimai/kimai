@@ -11,6 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
+use App\Timesheet\FutureTimesEnum;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -31,9 +32,13 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        if ($this->configuration->isTimesheetAllowFutureTimes()) {
+        $rule = $this->configuration->getTimesheetAllowFutureRule();
+
+        if ($rule === FutureTimesEnum::ALLOW) {
             return;
         }
+
+        // TODO apply configured future times validation rule
 
         $now = new \DateTime('now', $value->getBegin()->getTimezone());
 
