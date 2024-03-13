@@ -63,44 +63,30 @@ jobs:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-            - name: Pull images
-              run: |
-                  docker pull kimai/kimai2:fpm-prod
-                  docker pull kimai/kimai2:fpm-dev
-                  docker pull kimai/kimai2:apache-prod
-                  docker pull kimai/kimai2:apache-dev
-
             - name: Tag fpm
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:fpm
-                  docker push kimai/kimai2:fpm
+                  skopeo copy --all docker://kimai/kimai2:fpm-prod docker://kimai/kimai2:fpm
 
             - name: Tag fpm latest
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:fpm-latest
-                  docker push kimai/kimai2:fpm-latest
+                  skopeo copy --all docker://kimai/kimai2:fpm-prod docker://kimai/kimai2:fpm-latest
 
             - name: Tag latest
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:latest
-                  docker push kimai/kimai2:latest
+                  skopeo copy --all docker://kimai/kimai2:fpm-prod docker://kimai/kimai2:latest
 
             - name: Tag prod
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:prod
-                  docker push kimai/kimai2:prod
+                  skopeo copy --all docker://kimai/kimai2:fpm-prod docker://kimai/kimai2:prod
 
             - name: Tag apache
               run: |
-                  docker tag kimai/kimai2:apache-prod kimai/kimai2:apache
-                  docker push kimai/kimai2:apache
+                  skopeo copy --all docker://kimai/kimai2:apache-prod docker://kimai/kimai2:apache
 
             - name: Tag apache latest
               run: |
-                  docker tag kimai/kimai2:apache-prod kimai/kimai2:apache-latest
-                  docker push kimai/kimai2:apache-latest
+                  skopeo copy --all docker://kimai/kimai2:apache-prod docker://kimai/kimai2:apache-latest
 
             - name: Tag dev
               run: |
-                  docker tag kimai/kimai2:apache-dev kimai/kimai2:dev
-                  docker push kimai/kimai2:dev
+                  skopeo copy --all docker://kimai/kimai2:apache-dev docker://kimai/kimai2:dev
