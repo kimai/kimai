@@ -149,9 +149,9 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         if ($min !== null && $max !== null) {
             $values = array_merge($values, [
                 'invoice.first' => $formatter->getFormattedDateTime($min->getBegin()),
-                'invoice.first_process' => $min->getBegin()->format(self::DATE_PROCESS_FORMAT), // since 2.14
+                'invoice.first_process' => $min->getBegin()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
                 'invoice.last' => $formatter->getFormattedDateTime($max->getEnd()),
-                'invoice.last_process' => $max->getEnd()->format(self::DATE_PROCESS_FORMAT), // since 2.14
+                'invoice.last_process' => $max->getEnd()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
             ]);
         }
 
