@@ -81,7 +81,7 @@
             </td>
             {% for period in attribute(userPeriod, period_attribute) %}
                 <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}"{% block period_cell_attribute %}{% endblock %}>
-                    {% if period.totalDuration != 0 or period.totalRate > 0 or period.totalInternalRate > 0 %}
+                    {% if period.totalDuration != 0 or period.totalRate != 0 or period.totalInternalRate != 0 %}
                         {% if dataType == 'rate' %}
                             {% block rate %}{% endblock %}
                         {% elseif dataType == 'internalRate' %}
