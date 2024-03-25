@@ -42,7 +42,7 @@ final class CustomerToolbarForm extends AbstractType
         $countries = $qb->getQuery()->getSingleColumnResult();
         $choices = [];
         foreach ($countries as $country) {
-            if (\is_string($country) && \is_string($options['locale'])) {
+            if (\is_string($country) && $country !== '' && \is_string($options['locale'])) {
                 $choices[$country] = Countries::getName($country, $options['locale']);
             }
         }
