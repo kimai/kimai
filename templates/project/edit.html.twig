@@ -18,7 +18,14 @@
                 </div>
             </div>
             {{ form_row(form.comment) }}
-            {{ form_row(form.customer) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.customer) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.number) }}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(form.orderNumber) }}

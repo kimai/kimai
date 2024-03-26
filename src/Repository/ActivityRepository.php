@@ -353,7 +353,7 @@ class ActivityRepository extends EntityRepository
      */
     private function getSearchableFields(): array
     {
-        return ['a.name', 'a.comment'];
+        return ['a.name', 'a.comment', 'a.number'];
     }
 
     public function countActivitiesForQuery(ActivityQuery $query): int

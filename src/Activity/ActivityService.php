@@ -9,6 +9,7 @@
 
 namespace App\Activity;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Event\ActivityCreateEvent;
@@ -18,6 +19,7 @@ use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityUpdatePostEvent;
 use App\Event\ActivityUpdatePreEvent;
 use App\Repository\ActivityRepository;
+use App\Utils\NumberGenerator;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -28,13 +30,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ActivityService
 {
-    public function __construct(private ActivityRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
+    public function __construct(
+        private readonly ActivityRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ValidatorInterface $validator
+    )
     {
     }
 
     public function createNewActivity(?Project $project = null): Activity
     {
         $activity = new Activity();
+        $activity->setNumber($this->calculateNextActivityNumber());
 
         if ($project !== null) {
             $activity->setProject($project);
@@ -89,5 +97,42 @@ class ActivityService
     public function findActivityByName(string $name, ?Project $project = null): ?Activity
     {
         return $this->repository->findOneBy(['project' => $project?->getId(), 'name' => $name]);
+    }
+
+    public function findActivityByNumber(string $number): ?Activity
+    {
+        return $this->repository->findOneBy(['number' => $number]);
+    }
+
+    private function calculateNextActivityNumber(): ?string
+    {
+        $format = $this->configuration->find('activity.number_format');
+        if (empty($format) || !\is_string($format)) {
+            return null;
+        }
+
+        // we cannot use max(number) because a varchar column returns unexpected results
+        $start = $this->repository->countActivity();
+        $i = 0;
+
+        do {
+            $start++;
+
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+                return match ($format) {
+                    'ac' => $start + $increaseBy,
+                    default => $originalFormat,
+                };
+            });
+
+            $number = $numberGenerator->getNumber();
+            $activity = $this->findActivityByNumber($number);
+        } while ($activity !== null && $i++ < 100);
+
+        if ($activity !== null) {
+            return null;
+        }
+
+        return $number;
     }
 }

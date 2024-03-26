@@ -117,6 +117,12 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('copy_teams_on_create')
                     ->defaultValue(false)
                 ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{pc,4}')
+                ->end()
+                ->booleanNode('allow_duplicate_number')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 
@@ -134,6 +140,12 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('allow_inline_create')
                     ->defaultValue(false)
+                ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{ac,4}')
+                ->end()
+                ->booleanNode('allow_duplicate_number')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;

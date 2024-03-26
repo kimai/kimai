@@ -469,7 +469,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('customer.rules.allow_duplicate_number'))
-                        ->setLabel('customer.allow_duplicate_number')
+                        ->setLabel('allow_duplicate_number')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
@@ -482,12 +482,32 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('copy_teams_on_create')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('project.number_format'))
+                        ->setLabel('project.number_format')
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}']])
+                        ->setRequired(false)
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('project.allow_duplicate_number'))
+                        ->setLabel('allow_duplicate_number')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('activity'))
                 ->setConfiguration([
                     (new Configuration('activity.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(ActivityTypePatternType::class),
+                    (new Configuration('activity.number_format'))
+                        ->setLabel('activity.number_format')
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}']])
+                        ->setRequired(false)
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('activity.allow_duplicate_number'))
+                        ->setLabel('allow_duplicate_number')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                     // TODO see DependencyInjection/Configuration::getActivityNode()
                     /*
                     (new Configuration('activity.allow_inline_create'))
