@@ -9,7 +9,10 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Project;
+use App\Repository\ProjectRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Project as ProjectConstraint;
 use App\Validator\Constraints\ProjectValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -25,7 +28,11 @@ class ProjectValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ProjectValidator
     {
-        return new ProjectValidator();
+        $loader = $this->createMock(ConfigLoaderInterface::class);
+        $config = SystemConfigurationFactory::create($loader, []);
+        $repository = $this->createMock(ProjectRepository::class);
+
+        return new ProjectValidator($config, $repository);
     }
 
     public function testConstraintIsInvalid(): void
