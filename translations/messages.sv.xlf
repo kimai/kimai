@@ -1581,7 +1581,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Efter att månaden är färdigställd så kan inte användaren längre registrera eller redigera tid för den perioden.</target>
+        <target state="translated">Detta låser alla årets dagar innan det valda datumet. Användaren kan inte längre skapa eller redigera tider för den låsta perioden.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1634,6 +1634,22 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target state="translated">Generera fakturanummer</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>work_times_should</source>
+        <target state="translated">Timmål</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Sökfilter</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">Arbetstider</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Lås månad</target>
       </trans-unit>
     </body>
   </file>
