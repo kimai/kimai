@@ -132,6 +132,8 @@ final class PasswordResetController extends AbstractController
         }
 
         if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetTokenLifetime())) {
+            $this->flashWarning('This link has already expired');
+
             return $this->redirectToRoute('resetting_request');
         }
 

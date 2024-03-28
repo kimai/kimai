@@ -69,7 +69,7 @@ final class ProjectVoter extends Voter
         }
 
         // those cannot be assigned to teams
-        if (\in_array($attribute, ['create', 'delete'])) {
+        if (\in_array($attribute, ['create', 'delete'], true)) {
             return false;
         }
 
