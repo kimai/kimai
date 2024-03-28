@@ -10,42 +10,42 @@
 namespace App\Validator\Constraints;
 
 use App\Configuration\SystemConfiguration;
-use App\Entity\Customer as CustomerEntity;
-use App\Repository\CustomerRepository;
+use App\Entity\Activity as ActivityEntity;
+use App\Repository\ActivityRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class CustomerValidator extends ConstraintValidator
+final class ActivityValidator extends ConstraintValidator
 {
     public function __construct(
         private readonly SystemConfiguration $systemConfiguration,
-        private readonly CustomerRepository $customerRepository
+        private readonly ActivityRepository $activityRepository
     )
     {
     }
 
     /**
-     * @param CustomerEntity|mixed $value
+     * @param ActivityEntity|mixed $value
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!($constraint instanceof Customer)) {
-            throw new UnexpectedTypeException($constraint, Customer::class);
+        if (!($constraint instanceof Activity)) {
+            throw new UnexpectedTypeException($constraint, Activity::class);
         }
 
-        if (!($value instanceof CustomerEntity)) {
-            throw new UnexpectedTypeException($value, CustomerEntity::class);
+        if (!($value instanceof ActivityEntity)) {
+            throw new UnexpectedTypeException($value, ActivityEntity::class);
         }
 
-        if ((bool) $this->systemConfiguration->find('customer.rules.allow_duplicate_number') === false && (($number = $value->getNumber()) !== null)) {
-            foreach ($this->customerRepository->findBy(['number' => $number]) as $tmp) {
+        if ((bool) $this->systemConfiguration->find('activity.allow_duplicate_number') === false && (($number = $value->getNumber()) !== null)) {
+            foreach ($this->activityRepository->findBy(['number' => $number]) as $tmp) {
                 if ($tmp->getId() !== $value->getId()) {
-                    $this->context->buildViolation(Customer::getErrorName(Customer::CUSTOMER_NUMBER_EXISTING))
+                    $this->context->buildViolation(Activity::getErrorName(Activity::ACTIVITY_NUMBER_EXISTING))
                         ->setParameter('%number%', $number)
                         ->atPath('number')
                         ->setTranslationDomain('validators')
-                        ->setCode(Customer::CUSTOMER_NUMBER_EXISTING)
+                        ->setCode(Activity::ACTIVITY_NUMBER_EXISTING)
                         ->addViolation();
                     break;
                 }

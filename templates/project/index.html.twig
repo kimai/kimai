@@ -13,6 +13,8 @@
         {{ entry.comment|comment1line }}
     {% elseif column == 'orderNumber' %}
         {{ entry.orderNumber }}
+    {% elseif column == 'number' %}
+        {{ entry.number }}
     {% elseif column == 'orderDate' %}
         {% if entry.orderDate is not null %}{{ entry.orderDate|date_short }}{% endif %}
     {% elseif column == 'project_start' %}

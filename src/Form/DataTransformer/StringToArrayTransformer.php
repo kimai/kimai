@@ -40,7 +40,7 @@ final class StringToArrayTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms a string to an array of tags.
+     * Transforms a string to an array of strings.
      *
      * @param string|null $value
      * @return array<string>

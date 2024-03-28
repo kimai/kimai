@@ -152,6 +152,7 @@ class ActivityTest extends AbstractEntityTest
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['activity_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);

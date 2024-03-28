@@ -25,7 +25,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @covers \App\Export\Spreadsheet\EntityWithMetaFieldsExporter
  */
-class EntityWithMetaFieldsExporterTest extends TestCase
+class ProjectExporterTest extends TestCase
 {
     public function testExport(): void
     {

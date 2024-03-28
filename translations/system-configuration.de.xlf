@@ -214,6 +214,18 @@
         <source>customer.allow_duplicate_number</source>
         <target>Erlaube Kundennummer mehrfach zu verwenden</target>
       </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format">
+        <source>project.number_format</source>
+        <target>Projektnummer Format</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format">
+        <source>activity.number_format</source>
+        <target>Tätigkeitsnummer Format</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number">
+        <source>allow_duplicate_number</source>
+        <target>Erlaube Mehrfach-Nutzung derselben Nummer</target>
+      </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>
         <target>Erlaubte Ersetzer: %replacer%</target>

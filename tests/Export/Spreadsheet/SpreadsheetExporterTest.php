@@ -28,13 +28,13 @@ class SpreadsheetExporterTest extends TestCase
         $sut->registerCellFormatter('foo', new class() implements CellFormatterInterface {
             public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
             {
-                $sheet->setCellValueByColumnAndRow($column, $row, '##' . $value . '##');
+                $sheet->setCellValue([$column, $row], '##' . $value . '##');
             }
         });
         $sut->registerCellFormatter('bar', new class() implements CellFormatterInterface {
             public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
             {
-                $sheet->setCellValueByColumnAndRow($column, $row, '~' . $value . '~');
+                $sheet->setCellValue([$column, $row], '~' . $value . '~');
             }
         });
 
@@ -62,8 +62,8 @@ class SpreadsheetExporterTest extends TestCase
 
         $worksheet = $spreadsheet->getActiveSheet();
 
-        self::assertEquals('##test project##', $worksheet->getCellByColumnAndRow(1, 2)->getValue());
-        self::assertEquals('~test project~', $worksheet->getCellByColumnAndRow(2, 2)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(3, 2)->getValue());
+        self::assertEquals('##test project##', $worksheet->getCell([1, 2])->getValue());
+        self::assertEquals('~test project~', $worksheet->getCell([2, 2])->getValue());
+        self::assertFalse($worksheet->getCell([3, 2])->getValue());
     }
 }

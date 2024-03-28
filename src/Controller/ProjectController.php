@@ -88,6 +88,7 @@ final class ProjectController extends AbstractController
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('customer', ['class' => 'd-none']);
         $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+        $table->addColumn('number', ['class' => 'd-none w-min', 'title' => 'project_number']);
         $table->addColumn('orderNumber', ['class' => 'd-none']);
         $table->addColumn('orderDate', ['class' => 'd-none']);
         $table->addColumn('project_start', ['class' => 'd-none']);

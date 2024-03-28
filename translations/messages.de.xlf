@@ -766,6 +766,14 @@
         <source>project_end</source>
         <target>Projekt Ende</target>
       </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number">
+        <source>Project number</source>
+        <target>Projektnummer</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number">
+        <source>Activity number</source>
+        <target>Tätigkeitsnummer</target>
+      </trans-unit>
       <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>

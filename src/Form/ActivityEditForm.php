@@ -55,6 +55,13 @@ class ActivityEditForm extends AbstractType
                     'autofocus' => 'autofocus'
                 ],
             ])
+            ->add('number', TextType::class, [
+                'label' => 'activity_number',
+                'required' => false,
+                'attr' => [
+                    'maxlength' => 10,
+                ],
+            ])
             ->add('comment', TextareaType::class, [
                 'label' => 'description',
                 'required' => false,

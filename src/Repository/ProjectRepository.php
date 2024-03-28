@@ -290,7 +290,7 @@ class ProjectRepository extends EntityRepository
      */
     private function getSearchableFields(): array
     {
-        return ['p.name', 'p.comment', 'p.orderNumber'];
+        return ['p.name', 'p.comment', 'p.orderNumber', 'p.number'];
     }
 
     private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end): Andx

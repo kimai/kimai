@@ -85,6 +85,14 @@
                         </td>
                     </tr>
                     {% endif %}
+                    {% if project.number is not empty %}
+                    <tr>
+                        <th>{{ 'project_number'|trans }}</th>
+                        <td colspan="3">
+                            {{ project.number }}
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endif %}
                 {% if project.hasBudget() and is_granted('budget', project) %}
                     <tr>

@@ -20,6 +20,8 @@
         {% endif %}
     {% elseif column == 'comment' %}
         {{ entry.comment|comment1line }}
+    {% elseif column == 'number' %}
+        {{ entry.number }}
     {% elseif column == 'budget' %}
         {% if entry.hasBudget() and is_granted('budget', entry) %}
             {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}

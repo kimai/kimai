@@ -71,6 +71,14 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if activity.number is not empty %}
+                    <tr>
+                        <th>{{ 'activity_number'|trans }}</th>
+                        <td colspan="3">
+                            {{ activity.number }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% for metaField in activity.visibleMetaFields|filter(field => field.defined)|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
