@@ -45,7 +45,9 @@ class TagArrayToStringTransformerTest extends TestCase
             (new Tag())->setName('bar'),
         ];
 
-        $repository = $this->getMockBuilder(TagRepository::class)->onlyMethods(['findBy'])->disableOriginalConstructor()->getMock();
+        $repository = $this->getMockBuilder(TagRepository::class)
+            ->onlyMethods(['findBy', 'saveTag'])
+            ->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())->method('findBy')->willReturn($results);
 
         $sut = new TagArrayToStringTransformer($repository, true);
