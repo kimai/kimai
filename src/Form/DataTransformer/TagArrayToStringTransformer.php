@@ -14,32 +14,30 @@ use App\Repository\TagRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+/**
+ * @implements DataTransformerInterface<array<Tag>, string>
+ */
 final class TagArrayToStringTransformer implements DataTransformerInterface
 {
-    private bool $create = true;
-
-    public function __construct(private TagRepository $tagRepository)
+    public function __construct(
+        private readonly TagRepository $tagRepository,
+        private readonly bool $create
+    )
     {
-    }
-
-    public function setCreate(bool $create): void
-    {
-        $this->create = $create;
     }
 
     /**
      * Transforms an array of tags to a string.
      *
-     * @param Tag[]|null $tags
-     * @return string
+     * @param Tag[]|null $value
      */
-    public function transform(mixed $tags): mixed
+    public function transform(mixed $value): string
     {
-        if (empty($tags)) {
+        if (empty($value)) {
             return '';
         }
 
-        return implode(', ', $tags);
+        return implode(', ', $value);
     }
 
     /**
@@ -47,18 +45,17 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
      *
      * @see \Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
      *
-     * @param string|null $stringOfTags
+     * @param string|null $value
      * @return Tag[]
      * @throws TransformationFailedException
      */
-    public function reverseTransform(mixed $stringOfTags): mixed
+    public function reverseTransform(mixed $value): mixed
     {
         // check for empty tag list
-        if ('' === $stringOfTags || null === $stringOfTags) {
+        if ('' === $value || null === $value) {
             return [];
         }
-
-        $names = array_filter(array_unique(array_map('trim', explode(',', $stringOfTags))));
+        $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
 
         // get the current tags and find the new ones that should be created
         $tags = $this->tagRepository->findBy(['name' => $names]);
@@ -69,9 +66,9 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
             foreach ($newNames as $name) {
                 $tag = new Tag();
                 $tag->setName(mb_substr($name, 0, 100));
-                $tags[] = $tag;
+                $this->tagRepository->saveTag($tag);
 
-                // new tags persist automatically thanks to the cascade={"persist"}
+                $tags[] = $tag;
             }
         }
 

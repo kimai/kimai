@@ -28,7 +28,7 @@ class TagArrayToStringTransformerTest extends TestCase
 
         $repository = $this->getMockBuilder(TagRepository::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new TagArrayToStringTransformer($repository);
+        $sut = new TagArrayToStringTransformer($repository, true);
 
         $this->assertEquals('', $sut->transform([]));
         $this->assertEquals('', $sut->transform(null));
@@ -48,7 +48,7 @@ class TagArrayToStringTransformerTest extends TestCase
         $repository = $this->getMockBuilder(TagRepository::class)->onlyMethods(['findBy'])->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())->method('findBy')->willReturn($results);
 
-        $sut = new TagArrayToStringTransformer($repository);
+        $sut = new TagArrayToStringTransformer($repository, true);
 
         $this->assertEquals([], $sut->reverseTransform(''));
         $this->assertEquals([], $sut->reverseTransform(null));
