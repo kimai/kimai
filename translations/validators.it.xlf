@@ -106,9 +106,9 @@
         <source>The given code is not the correct TOTP token.</source>
         <target state="final">Il codice fornito non è il token TOTP corretto.</target>
       </trans-unit>
-      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." approved="yes">
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." approved="yes" xml:space="preserve">
         <source>This is a public holiday, booking not allowed.</source>
-        <target state="final">Questa è una festività pubblica, la prenotazione non è consentita.</target>
+        <target state="final">Questa è una festività nazionale, la prenotazione non è consentita.</target>
       </trans-unit>
       <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." approved="yes">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
