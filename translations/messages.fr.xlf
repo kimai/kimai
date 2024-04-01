@@ -1431,9 +1431,9 @@
         <source>notifications</source>
         <target state="translated">Notifications</target>
       </trans-unit>
-      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve">
         <source>notifications.welcome</source>
-        <target state="translated">Merci d'avoir accepté les notifications !</target>
+        <target state="translated">Merci d'avoir accepté les notifications !</target>
       </trans-unit>
       <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
@@ -1459,9 +1459,9 @@
         <source>help_locales</source>
         <target state="needs-translation">Langues prises en charge avec règles de formatage</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="needs-translation">Outre la traduction de l'interface, ce paramètre est également responsable des formats d'heure, de date et de devise.</target>
+        <target state="translated">Ce paramètre est responsable de la traduction du logiciel</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1531,17 +1531,17 @@
         <source>review</source>
         <target state="translated">Révision</target>
       </trans-unit>
-      <trans-unit id="mS4SSmt" resname="work_times">
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
         <source>Working times</source>
-        <target state="new">Horaire de travail</target>
+        <target state="translated">Heures de travail</target>
       </trans-unit>
       <trans-unit id="PE2iiaW" resname="work_times_should.help">
         <source>work_times_should.help</source>
         <target state="translated">Les valeurs configurées ici sont utilisées pour calculer le compte horaire.</target>
       </trans-unit>
-      <trans-unit id="YPO294a" resname="absence_other.intro">
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="needs-translation">Family events, moving house, weather chaos etc.</target>
+        <target state="translated">Evènements familiaux, déménagement, catastrophes climatiques, etc.</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -1563,7 +1563,7 @@
         <source>holiday</source>
         <target state="translated">Vacances</target>
       </trans-unit>
-      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
         <source>manual_bookings.work_contract_intro</source>
         <target state="translated">Les réservations manuelles ne peuvent être ni modifiées ni supprimées !</target>
       </trans-unit>
@@ -1667,9 +1667,9 @@
         <source>button.report</source>
         <target state="translated">Rapport</target>
       </trans-unit>
-      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
         <source>unpaid_vacation</source>
-        <target state="translated">Vacances non payés</target>
+        <target state="translated">Vacances non payées</target>
       </trans-unit>
       <trans-unit id="XE01Ar1" resname="parental">
         <source>parental</source>
@@ -1683,9 +1683,9 @@
         <source>sickness_child</source>
         <target state="translated">Maladie d'un enfant</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Défaut</target>
+        <target state="translated">Par défaut</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
         <source>manual_bookings.duration_help</source>
@@ -1694,6 +1694,86 @@
       <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
         <source>batch_table_checkbox_all</source>
         <target state="translated">Sélectionner tous les éléments pour la liste de mise à jour en masse</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">Catégories</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">Import</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>sickness.intro</source>
+        <target state="translated">Maladie, visite chez le médecin, soins aux proches, etc.</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
+        <source>day_half</source>
+        <target state="translated">1/2 journée</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
+        <source>force_password_change_help</source>
+        <target state="translated">A la prochaine connexion l’utilisateur devra saisir un nouveau mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">Synthèse</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">Dépenses</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">Traductions</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">Traduction</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
+        <source>day_full</source>
+        <target state="translated">Journée</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">Jours</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
+        <source>supervisor</source>
+        <target state="translated">Superviseur</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">Catégorie</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
+        <source>force_password_change</source>
+        <target state="translated">Nouveau mot de passe requis</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
+        <source>Custom content</source>
+        <target state="translated">Contenu personnalisé</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">Journaux d’audit</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">Identifiant unique utilisé pour la connexion et les envois</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">Votre compte temps de travail a un solde de %hours% heures.</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>holiday.intro</source>
+        <target state="translated">Jusqu’à présent, vous avez pris %used% de vos %days% jours de vacances disponibles.</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">Identifiant utilisateur</target>
       </trans-unit>
     </body>
   </file>

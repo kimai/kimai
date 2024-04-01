@@ -1550,9 +1550,9 @@
         <source>holiday</source>
         <target state="final">Vacanza</target>
       </trans-unit>
-      <trans-unit id="zlmddHB" resname="public_holidays" approved="yes">
+      <trans-unit id="zlmddHB" resname="public_holidays" approved="yes" xml:space="preserve">
         <source>public_holidays</source>
-        <target state="final">Festività pubbliche</target>
+        <target state="final">Festività nazionali</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
@@ -1578,9 +1578,9 @@
         <source>receive_from</source>
         <target state="final">Ricevi da %name%</target>
       </trans-unit>
-      <trans-unit id="fWuGTog" resname="public_holiday" approved="yes">
+      <trans-unit id="fWuGTog" resname="public_holiday" approved="yes" xml:space="preserve">
         <source>public_holiday</source>
-        <target state="final">Giorno festivo</target>
+        <target state="final">Festività nazionale</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group" approved="yes">
         <source>public_holiday.group</source>
