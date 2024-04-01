@@ -1531,10 +1531,6 @@
         <source>work_times_result</source>
         <target state="translated">Odpracované hodiny</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Zde nakonfigurované hodnoty se používají k výpočtu hodinového účtu.</target>
-      </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
         <target state="translated">Pro tohoto uživatele nebyly v nastavení pracovní smlouvy nakonfigurovány žádné cílové hodiny.</target>
@@ -1548,7 +1544,7 @@
         <target state="translated">Je-hodin</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Cílové hodiny</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">

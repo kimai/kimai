@@ -1516,7 +1516,7 @@
         <target state="translated">İnceleme</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Hedef saat</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
@@ -1530,10 +1530,6 @@
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target state="translated">Elle rezervasyonlar</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Burada yapılandırılan değerler saatlik hesabı hesaplamak için kullanılır.</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>

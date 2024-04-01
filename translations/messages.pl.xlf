@@ -1512,7 +1512,7 @@
         <target state="translated">Czas pracy</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Godziny docelowe</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">

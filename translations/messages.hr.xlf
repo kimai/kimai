@@ -1500,12 +1500,8 @@
         <target state="translated">Ovaj dokument služi kao dokaz o odrađenim satima.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Ciljani sati</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Ovdje konfigurirane vrijednosti se koriste za računanje računa po satu.</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>

@@ -1329,10 +1329,6 @@
         <source>work_times</source>
         <target state="translated">Время работы</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Настроенные здесь значения используются для расчета почасового счета.</target>
-      </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
         <target state="needs-translation">Ис-часы</target>
@@ -1406,7 +1402,7 @@
         <target state="translated">Создано</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Целевые часы</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
