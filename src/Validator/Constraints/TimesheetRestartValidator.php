@@ -18,28 +18,27 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetRestartValidator extends ConstraintValidator
 {
-    public function __construct(private Security $security, private TrackingModeService $trackingModeService)
+    public function __construct(
+        private readonly Security $security,
+        private readonly TrackingModeService $trackingModeService
+    )
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetRestart)) {
             throw new UnexpectedTypeException($constraint, TimesheetRestart::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         // special case that would otherwise need to be validated in several controllers:
         // an entry is edited and the end date is removed (or duration deleted) would restart the record,
         // which might be disallowed for the current user
-        if (null !== $timesheet->getEnd()) {
+        if (null !== $value->getEnd()) {
             return;
         }
 
@@ -47,7 +46,7 @@ final class TimesheetRestartValidator extends ConstraintValidator
             return;
         }
 
-        if (null !== $this->security->getUser() && $this->security->isGranted('start', $timesheet)) {
+        if (null !== $this->security->getUser() && $this->security->isGranted('start', $value)) {
             return;
         }
 

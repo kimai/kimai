@@ -18,7 +18,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class MenuSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private Security $security, private ContextHelper $helper)
+    public function __construct(
+        private readonly Security $security,
+        private readonly ContextHelper $helper
+    )
     {
     }
 
@@ -134,19 +137,19 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getAdminMenu();
 
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
-            $customers = new MenuItemModel('customer_admin', 'customers', 'admin_customer', [], 'customer');
+            $customers = new MenuItemModel('customers', 'customers', 'admin_customer', [], 'customer');
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
             $menu->addChild($customers);
         }
 
         if ($auth->isGranted('view_project') || $auth->isGranted('view_teamlead_project') || $auth->isGranted('view_team_project')) {
-            $projects = new MenuItemModel('project_admin', 'projects', 'admin_project', [], 'project');
+            $projects = new MenuItemModel('projects', 'projects', 'admin_project', [], 'project');
             $projects->setChildRoutes(['admin_project_permissions', 'admin_project_create', 'project_details', 'admin_project_edit', 'admin_project_delete']);
             $menu->addChild($projects);
         }
 
         if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
-            $activities = new MenuItemModel('activity_admin', 'activities', 'admin_activity', [], 'activity');
+            $activities = new MenuItemModel('activities', 'activities', 'admin_activity', [], 'activity');
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);
         }
@@ -163,18 +166,18 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getSystemMenu();
 
         if ($auth->isGranted('view_user')) {
-            $users = new MenuItemModel('user_admin', 'users', 'admin_user', [], 'users');
+            $users = new MenuItemModel('users', 'users', 'admin_user', [], 'users');
             $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences', 'user_profile_2fa']);
             $menu->addChild($users);
         }
 
         if ($auth->isGranted('role_permissions')) {
-            $users = new MenuItemModel('admin_user_permissions', 'profile.roles', 'admin_user_permissions', [], 'permissions');
+            $users = new MenuItemModel('roles', 'profile.roles', 'admin_user_permissions', [], 'permissions');
             $menu->addChild($users);
         }
 
         if ($auth->isGranted('view_team')) {
-            $teams = new MenuItemModel('user_team', 'teams', 'admin_team', [], 'team');
+            $teams = new MenuItemModel('teams', 'teams', 'admin_team', [], 'team');
             $teams->setChildRoutes(['admin_team_create', 'admin_team_edit']);
             $menu->addChild($teams);
         }
@@ -190,7 +193,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('system_configuration')) {
-            $systemConfig = new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'configuration');
+            $systemConfig = new MenuItemModel('configurations', 'menu.system_configuration', 'system_configuration', [], 'configuration');
             $systemConfig->setChildRoutes(['system_configuration_update', 'system_configuration_section']);
             $menu->addChild($systemConfig);
         }

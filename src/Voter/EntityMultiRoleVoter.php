@@ -38,17 +38,22 @@ final class EntityMultiRoleVoter extends Voter
         'activity',
     ];
 
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
+        if (!$this->supportsAttribute($attribute)) {
             return false;
         }
 
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS)) {
+        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
             return true;
         }
 
@@ -69,7 +74,7 @@ final class EntityMultiRoleVoter extends Voter
 
         $suffix = null;
 
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS)) {
+        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
             $suffix = $subject;
         } elseif ($subject instanceof Activity) {
             $suffix = 'activity';

@@ -463,6 +463,8 @@ class LocaleFormatExtensionsTest extends TestCase
             'twentyFourHours' => false,
             'updateBrowserTitle' => false,
             'timezone' => 'America/Edmonton',
+            'locale' => 'en',
+            'language' => 'de',
             'user' => [
                 'id' => 1,
                 'name' => null,
@@ -473,6 +475,7 @@ class LocaleFormatExtensionsTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(1);
         $user->method('getName')->willReturn('Testing');
+        $user->method('getLanguage')->willReturn('de');
         $user->method('isAdmin')->willReturn(false);
         $user->method('isSuperAdmin')->willReturn(false);
         $user->method('getTimezone')->willReturn('America/Edmonton');

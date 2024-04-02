@@ -29,11 +29,14 @@ final class RolePermissionManager
     private bool $isInitialized = false;
 
     /**
-     * @param PermissionService $service
      * @param array<string, array<string, bool>> $permissions as defined in kimai.yaml
      * @param array<string, bool> $permissionNames as defined in kimai.yaml
      */
-    public function __construct(private PermissionService $service, private array $permissions, private array $permissionNames)
+    public function __construct(
+        private readonly PermissionService $service,
+        private array $permissions,
+        private readonly array $permissionNames
+    )
     {
     }
 
@@ -47,11 +50,6 @@ final class RolePermissionManager
             $perm = (string) $item['permission'];
             $role = (string) $item['role'];
 
-            // these permissions may not be revoked at any time, because super admin would lose the ability to reactivate any permission
-            if ($role === User::ROLE_SUPER_ADMIN && \array_key_exists($perm, self::SUPER_ADMIN_PERMISSIONS)) {
-                continue;
-            }
-
             if (!\array_key_exists($role, $this->permissions)) {
                 $this->permissions[$role] = [];
             }
@@ -59,6 +57,7 @@ final class RolePermissionManager
             $this->permissions[$role][$perm] = (bool) $item['allowed'];
         }
 
+        // these permissions may not be revoked at any time, because super admin would lose the ability to reactivate any permission
         foreach (self::SUPER_ADMIN_PERMISSIONS as $perm => $value) {
             $this->permissions[User::ROLE_SUPER_ADMIN][$perm] = $value;
         }
@@ -68,14 +67,9 @@ final class RolePermissionManager
 
     /**
      * Only permissions which were registered through the Symfony configuration stack will be acknowledged here.
-     *
-     * @param string $permission
-     * @return bool
      */
     public function isRegisteredPermission(string $permission): bool
     {
-        $this->init();
-
         return \array_key_exists($permission, $this->permissionNames);
     }
 
@@ -89,7 +83,7 @@ final class RolePermissionManager
             return false;
         }
 
-        return \array_key_exists($permission, $this->permissions[$role]) ? $this->permissions[$role][$permission] : false;
+        return \array_key_exists($permission, $this->permissions[$role]) && $this->permissions[$role][$permission];
     }
 
     public function hasRolePermission(User $user, string $permission): bool
@@ -112,8 +106,6 @@ final class RolePermissionManager
      */
     public function getPermissions(): array
     {
-        $this->init();
-
         return array_keys($this->permissionNames);
     }
 }

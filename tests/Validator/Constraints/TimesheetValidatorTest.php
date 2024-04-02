@@ -44,6 +44,6 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetConstraint(['message' => 'myMessage']));
     }
 }

@@ -42,6 +42,26 @@
         <source>registration.intro</source>
         <target state="translated">您在 Kimai 时间跟踪器上注册了电子邮件 %email%。请在接下来的几个小时内激活您的账户，直到链接过期。</target>
       </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">新缺席 | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">已为 %absence_user% 创建了新的缺勤。
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+请在以下位置查看：%approval_url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

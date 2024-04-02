@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class SamlAuthFactory
 {
     public function __construct(
-        private RequestStack $request,
-        private SamlConfigurationInterface $configuration
+        private readonly RequestStack $request,
+        private readonly SamlConfigurationInterface $configuration
     ) {
     }
 

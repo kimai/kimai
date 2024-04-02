@@ -1215,6 +1215,42 @@
         <source>invoice_number_generator</source>
         <target>Tạo mã số hóa đơn</target>
       </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
+        <source>help.teams</source>
+        <target state="translated">Giới hạn truy cập chỉ cho những trong đã chọn.</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
+        <source>security.unlock.title</source>
+        <target state="translated">Mở khóa tài khoản</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
+        <source>security.unlock.intro</source>
+        <target state="translated">Nhập mật khẩu để truy cập toàn bộ</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
+        <source>security.unlock.button</source>
+        <target state="translated">Mở khóa</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve">
+        <source>Apps</source>
+        <target state="translated">Ứng dụng</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve">
+        <source>created_by</source>
+        <target state="translated">Tạo bởi</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">Tạo lúc</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
+        <source>help.invoiceText</source>
+        <target state="translated">Dòng này được sử dụng trong hóa đơn và v.d. như ghi chú điều kiện giao hàng.</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve">
+        <source>deleted</source>
+        <target state="translated">Đã xóa</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

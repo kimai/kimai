@@ -121,7 +121,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new TimesheetBudgetUsed()); // @phpstan-ignore-line
+        $this->validator->validate('foo', new TimesheetBudgetUsed());
     }
 
     public function testWithMissingEnd(): void

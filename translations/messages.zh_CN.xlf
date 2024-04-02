@@ -1501,7 +1501,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">完成该月后，用户将无法再创建或编辑该时间段的时间。</target>
+        <target state="translated">这将锁定所选日期之前一年中的所有日期。 用户将无法再创建或编辑锁定期间的时间。</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1513,7 +1513,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">完整的月份</target>
+        <target state="translated">锁定月份</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>

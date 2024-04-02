@@ -34,13 +34,33 @@
         <source>reset.subject</source>
         <target>Redefinir a palavra-passe</target>
       </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Inscreveu-se no rastreador de tempo Kimai com o email %email%. Agora tem que ativar a sua conta nas próximas horas, antes da hiperligação expirar.</target>
+      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Inscreveu-se no rastreador de tempo Kimai com o email %email%. Por favor, ative a sua conta nas próximas horas, antes da hiperligação expirar.</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Isto é um email gerado automaticamente. Por favor não responda para este endereço, pois não será lido.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nova ausência | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Foi criada uma nova ausência para %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Por favor, reveja-os em: %approval_url%</target>
       </trans-unit>
     </body>
   </file>

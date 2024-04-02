@@ -76,7 +76,7 @@ final class PaginationExtension extends AbstractExtension
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $propertyAccessor->setValue($routeParams, $pagePropertyPath, $page);
 
-            return $router->generate($routeName, $routeParams);
+            return $router->generate($routeName, $routeParams); // @phpstan-ignore-line
         };
     }
 }

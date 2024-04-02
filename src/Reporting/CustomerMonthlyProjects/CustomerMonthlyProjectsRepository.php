@@ -20,15 +20,15 @@ use Doctrine\ORM\Query\Expr\Join;
 
 final class CustomerMonthlyProjectsRepository
 {
-    public function __construct(private TimesheetRepository $repository, private EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly EntityManagerInterface $entityManager
+    )
     {
     }
 
     /**
-     * @param DateTime $begin
-     * @param DateTime $end
      * @param User[] $users
-     * @param Customer|null $customer
      * @return array
      * @internal
      */

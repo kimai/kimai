@@ -203,11 +203,6 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 12
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/ActivityControllerTest.php
@@ -298,11 +293,6 @@ parameters:
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 12
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
@@ -380,11 +370,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Team\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
             count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 14
             path: API/ProjectControllerTest.php
 
         -
@@ -1658,17 +1643,7 @@ parameters:
             path: Entity/TimesheetValidationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Entity/TimesheetValidationTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$groups with no type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:getEntity\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/TimesheetValidationTest.php
 
@@ -1689,11 +1664,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:assertHasNoViolations\\(\\) has parameter \\$groups with no type specified\\.$#"
-            count: 1
-            path: Entity/UserValidationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\UserValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$fieldNames with no value type specified in iterable type array\\.$#"
             count: 1
             path: Entity/UserValidationTest.php
 
