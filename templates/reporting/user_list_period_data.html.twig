@@ -39,24 +39,18 @@
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
         {% for period in attribute(userPeriod, period_attribute) %}
-            {% if period.totalDuration > 0 %}
-                {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
-                {% set absoluteDuration = absoluteDuration + period.totalDuration %}
-            {% endif %}
-            {% if period.totalInternalRate > 0 %}
-                {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
-                {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
-            {% endif %}
-            {% if period.totalRate > 0 %}
-                {% set usersTotalRate = usersTotalRate + period.totalRate %}
-                {% set absoluteRate = absoluteRate + period.totalRate %}
-            {% endif %}
+            {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
+            {% set absoluteDuration = absoluteDuration + period.totalDuration %}
+            {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
+            {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
+            {% set usersTotalRate = usersTotalRate + period.totalRate %}
+            {% set absoluteRate = absoluteRate + period.totalRate %}
             {% set reportDateKey = period.date|report_date %}
             {% set totalsDuration = totalsDuration|merge({(reportDateKey): (totalsDuration[reportDateKey] + period.totalDuration)}) %}
             {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
             {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
         {% endfor %}
-        {% if userPeriod.user.enabled or usersTotalDuration > 0 %}
+        {% if userPeriod.user.enabled or usersTotalDuration != 0 %}
         <tr class="user">
             {% if with_avatar %}
                 <td class="w-avatar">
@@ -81,7 +75,7 @@
             </td>
             {% for period in attribute(userPeriod, period_attribute) %}
                 <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}"{% block period_cell_attribute %}{% endblock %}>
-                    {% if period.totalDuration > 0 or period.totalRate > 0 or period.totalInternalRate > 0 %}
+                    {% if period.totalDuration != 0 or period.totalRate != 0 or period.totalInternalRate != 0 %}
                         {% if dataType == 'rate' %}
                             {% block rate %}{% endblock %}
                         {% elseif dataType == 'internalRate' %}
