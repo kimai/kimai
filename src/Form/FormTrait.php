@@ -73,14 +73,13 @@ trait FormTrait
                         if ($isNew && \is_int($project)) {
                             /** @var Project $project */
                             $project = $repo->find($project);
-                            if ($project === null) {
-                                throw new \Exception('Unknown project');
-                            }
-                            if (!$project->getCustomer()->isVisible()) {
-                                $customer = null;
-                                $project = null;
-                            } elseif (!$project->isVisible()) {
-                                $project = null;
+                            if ($project !== null) {
+                                if (!$project->getCustomer()->isVisible()) {
+                                    $customer = null;
+                                    $project = null;
+                                } elseif (!$project->isVisible()) {
+                                    $project = null;
+                                }
                             }
                         }
 
