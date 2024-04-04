@@ -294,9 +294,9 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Dozvoli stvaranje aktivnosti u obrascu za evidentiranje vremena</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Format broja kupca</target>
+        <target state="needs-translation">Format broja kupca</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

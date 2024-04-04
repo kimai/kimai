@@ -282,9 +282,9 @@
         <source>timesheet.rules.long_running_duration</source>
         <target state="translated">Maximální doba trvání pracovního výkazu v minutách před odmítnutím uložení (0 = deaktivováno)</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Formát čísla zákazníka</target>
+        <target state="needs-translation">Formát čísla zákazníka</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

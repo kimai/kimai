@@ -1776,8 +1776,8 @@
         <target state="translated">Seleccionar todas las entradas para la lista de actualización por lotes</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>locale</source>
-        <target state="translated">Formato de hora, fecha y moneda.</target>
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Formato de hora, fecha y moneda.</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>

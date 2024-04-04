@@ -286,9 +286,9 @@
         <source>copy_teams_on_create</source>
         <target state="translated">Reprendre les équipes de l'utilisateur connecté lors de la création de nouvelles entrées</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Format du numéro de client</target>
+        <target state="needs-translation">Format du numéro de client</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

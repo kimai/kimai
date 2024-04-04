@@ -1775,8 +1775,8 @@
         <source>user_identifier.help</source>
         <target state="translated">Benzersiz kullanıcı tanımlayıcısı kimlik doğrulama için ve dışa aktarmalarda kullanılır</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="no">
-        <source>locale</source>
+      <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
         <target state="translated">Saat, tarih ve para birimi için biçim</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">

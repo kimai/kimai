@@ -298,9 +298,9 @@
         <source>copy_teams_on_create</source>
         <target state="final">Prendi in carico i team dall'utente connesso quando crei nuove voci</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format" approved="yes">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" approved="no" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="final">Formato numero cliente</target>
+        <target state="needs-translation">Formato numero cliente</target>
       </trans-unit>
     </body>
   </file>

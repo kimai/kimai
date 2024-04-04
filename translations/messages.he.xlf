@@ -1719,8 +1719,8 @@
         <target state="translated">העדרות: הערה היא שדה חובה</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>locale</source>
-        <target state="translated">עיצוב לשעה, תאריך ומטבע</target>
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">עיצוב לשעה, תאריך ומטבע</target>
       </trans-unit>
     </body>
   </file>

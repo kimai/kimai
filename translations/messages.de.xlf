@@ -1564,9 +1564,9 @@
         <source>help_locales</source>
         <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
-        <target state="translated">Format für Zeit, Datum und Geld</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Format für Zeit, Datum und Geld</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
