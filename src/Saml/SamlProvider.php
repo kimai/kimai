@@ -12,6 +12,7 @@ namespace App\Saml;
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -24,7 +25,8 @@ final class SamlProvider
     public function __construct(
         private readonly UserRepository $repository,
         private readonly UserProviderInterface $userProvider,
-        private readonly SamlConfigurationInterface $configuration
+        private readonly SamlConfigurationInterface $configuration,
+        private readonly LoggerInterface $logger
     ) {
     }
 
@@ -37,7 +39,8 @@ final class SamlProvider
                 /** @var User $user */
                 $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
             }
-        } catch (UserNotFoundException $e) {
+        } catch (UserNotFoundException $ex) {
+            $this->logger->error($ex->getMessage());
         }
 
         try {
@@ -49,6 +52,7 @@ final class SamlProvider
 
             $this->repository->saveUser($user);
         } catch (\Exception $ex) {
+            $this->logger->error($ex->getMessage());
             throw new AuthenticationException(
                 sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
             );
@@ -110,7 +114,8 @@ final class SamlProvider
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
             } else {
-                throw new \RuntimeException('Invalid mapping field given: ' . $field);
+                // this should never happen, because it is validated when the container is built
+                throw new \RuntimeException('Invalid SAML mapping field: ' . $field);
             }
         }
 
@@ -136,7 +141,7 @@ final class SamlProvider
             if ($part[0] === '$') {
                 $key = substr($part, 1);
                 if (!\array_key_exists($key, $attributes)) {
-                    throw new \RuntimeException('Missing user attribute: ' . $key);
+                    throw new \RuntimeException('Missing SAML attribute in response: ' . $key);
                 }
 
                 if (\is_array($attributes[$key]) && isset($attributes[$key][0])) {
