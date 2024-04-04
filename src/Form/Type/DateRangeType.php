@@ -65,7 +65,6 @@ final class DateRangeType extends AbstractType
 
             return ['pattern' => $pattern . self::DATE_SPACER . $pattern];
         });
-
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
