@@ -178,9 +178,9 @@
         <source>company.financial_year</source>
         <target state="translated">Účtovný rok</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Formát čísla zákazníka</target>
+        <target state="needs-translation">Formát čísla zákazníka</target>
       </trans-unit>
       <trans-unit id="C26_mL7" resname="user_auth_registration">
         <source>user_auth_registration</source>

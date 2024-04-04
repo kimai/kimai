@@ -1754,8 +1754,8 @@
         <source>batch_table_checkbox</source>
         <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="yes">
-        <source>locale</source>
+      <trans-unit id="d9m85KE" resname="locale" approved="yes" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
         <target state="final">Formato per ora, data e valuta</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">

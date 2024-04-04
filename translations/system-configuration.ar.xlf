@@ -282,9 +282,9 @@
         <source>calendar.title_pattern</source>
         <target state="translated">عرض عناوين إدخالات التقويم</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">شكل رقم الزبون</target>
+        <target state="needs-translation">شكل رقم الزبون</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

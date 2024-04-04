@@ -1780,8 +1780,8 @@
         <target state="translated">Ausência: O comentário é um campo obrigatório</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>locale</source>
-        <target state="translated">Formato para hora, data e moeda</target>
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Formato para hora, data e moeda</target>
       </trans-unit>
     </body>
   </file>

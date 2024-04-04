@@ -294,9 +294,9 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Permitir a criação de atividades no formulário de controlo de tempo</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Formato do número do cliente</target>
+        <target state="needs-translation">Formato do número do cliente</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="email.en.xlf">
     <body>
@@ -6,9 +6,9 @@
         <source>button_copy_url_to_browser</source>
         <target state="translated">Om knappen inte fungerar, vänligen kopiera &amp; klistra in följande URL i din webbläsare: %url%</target>
       </trans-unit>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Detta är ett auto genererat medelande. Var vänlig och svara inte, då det inte kommar att bli läst.</target>
+        <target state="translated">Detta är ett automatiskt meddelande som ej går att svara på.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
@@ -22,9 +22,9 @@
         <source>registration.button</source>
         <target state="translated">Aktivera ditt konto</target>
       </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target state="translated">Du har registrerat dig hos Kimai tidrapportering med e-postadressen %email%. Var god aktivera ditt konto inom de närmaste timmarna, innan länken går ut och blir ogiltig.</target>
+      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Du har registrerat dig hos Kimai tidrapportering med e-postadressen %email%. Vänligen aktivera ditt konto inom de närmaste timmarna, innan länken går ut och blir ogiltig.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
@@ -41,6 +41,26 @@
       <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
         <target state="translated">… så du glömde ditt lösenord? Oroa dig inte: Kimai hjälper dig att skapa ett nytt:</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Ny frånvaro | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Ny frånvaro skapades för %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Vänligen kontrollera den här: %approval_url%</target>
       </trans-unit>
     </body>
   </file>
