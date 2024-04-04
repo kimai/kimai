@@ -762,6 +762,14 @@
         <source>project_end</source>
         <target>Projekt Ende</target>
       </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number">
+        <source>Project number</source>
+        <target>Projektnummer</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number">
+        <source>Activity number</source>
+        <target>Tätigkeitsnummer</target>
+      </trans-unit>
       <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
@@ -1552,9 +1560,9 @@
         <source>help_locales</source>
         <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
-        <target state="translated">Format für Zeit, Datum und Geld</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Format für Zeit, Datum und Geld</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>

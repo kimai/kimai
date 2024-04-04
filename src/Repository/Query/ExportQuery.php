@@ -12,7 +12,7 @@ namespace App\Repository\Query;
 class ExportQuery extends TimesheetQuery
 {
     private ?string $renderer = null;
-    private bool $markAsExported = true;
+    private bool $markAsExported = false;
 
     public function __construct()
     {

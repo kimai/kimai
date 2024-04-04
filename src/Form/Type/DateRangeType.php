@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,30 +33,39 @@ final class DateRangeType extends AbstractType
 {
     public const DATE_SPACER = ' - ';
 
-    public function __construct(private LocaleService $localeService)
+    public function __construct(private readonly LocaleService $localeService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $format = $this->localeService->getDateFormat(\Locale::getDefault());
-        $converter = new FormFormatConverter();
-        $formFormat = $converter->convert($format);
-        $pattern = $converter->convertToPattern($formFormat);
-
         $resolver->setDefaults([
             'timezone' => date_default_timezone_get(),
             'label' => 'daterange',
-            'format' => $formFormat,
             'separator' => self::DATE_SPACER,
             'allow_empty' => true,
             'with_presets' => true,
             'min_day' => null,
             'max_day' => null,
-            'attr' => [
-                'pattern' => $pattern . self::DATE_SPACER . $pattern
-            ],
+            'locale' => \Locale::getDefault(),
         ]);
+
+        $resolver->setDefault('format', function (Options $options): string {
+            $format = $this->localeService->getDateFormat($options['locale']);
+            $converter = new FormFormatConverter();
+
+            return $converter->convert($format);
+        });
+
+        $resolver->setDefault('attr', function (Options $options): array {
+            $format = $this->localeService->getDateFormat($options['locale']);
+            $converter = new FormFormatConverter();
+            $formFormat = $converter->convert($format);
+            $pattern = $converter->convertToPattern($formFormat);
+
+            return ['pattern' => $pattern . self::DATE_SPACER . $pattern];
+        });
+
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

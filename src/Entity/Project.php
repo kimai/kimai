@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('CustomerName', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Project'])])]
 #[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
-#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Constraints\Project]
 class Project implements EntityWithMetaFields, EntityWithBudget
@@ -167,6 +167,12 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $globalActivities = true;
+    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[Assert\Length(max: 10)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'project_number')]
+    private ?string $number = null;
 
     public function __construct()
     {
@@ -447,6 +453,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         $this->invoiceText = $invoiceText;
     }
 
+    public function setNumber(?string $number): void
+    {
+        $this->number = $number;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
     public function __toString(): string
     {
         return $this->getName();
@@ -454,7 +470,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
 
     public function __clone()
     {
-        if ($this->id) {
+        if ($this->id !== null) {
             $this->id = null;
         }
 

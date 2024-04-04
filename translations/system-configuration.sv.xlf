@@ -278,9 +278,9 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Visning av kalenderradernas rubriker</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Kundnummer Format</target>
+        <target state="needs-translation">Kundnummer Format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

@@ -290,9 +290,9 @@
         <source>customer.allow_duplicate_number</source>
         <target state="translated">Разрешить дублирование номера счёта</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Формат номера клиента</target>
+        <target state="needs-translation">Формат номера клиента</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

@@ -56,7 +56,7 @@ class ProjectServiceTest extends TestCase
 
         $configuration = SystemConfigurationFactory::createStub(['project' => ['copy_teams_on_create' => $copyTeamsOnCreate]]);
 
-        return new ProjectService($configuration, $repository, $dispatcher, $validator);
+        return new ProjectService($repository, $configuration, $dispatcher, $validator);
     }
 
     public function testCannotSavePersistedProjectAsNew(): void
