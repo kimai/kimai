@@ -425,15 +425,22 @@ class ConfigurationTest extends TestCase
             ],
             'project' => [
                 'copy_teams_on_create' => false,
+                'number_format' => '{pc,4}',
+                'allow_duplicate_number' => false,
+                'choice_pattern' => '{name}',
             ],
             'activity' => [
                 'allow_inline_create' => false,
+                'number_format' => '{ac,4}',
+                'allow_duplicate_number' => false,
+                'choice_pattern' => '{name}',
             ],
             'customer' => [
                 'number_format' => '{cc,4}',
                 'rules' => [
                     'allow_duplicate_number' => false,
                 ],
+                'choice_pattern' => '{name}',
             ],
             'features' => [
                 'user_registration' => false,

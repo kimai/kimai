@@ -120,33 +120,35 @@ final class CustomerService
         return $this->repository->countCustomer($visible);
     }
 
-    public function calculateNextCustomerNumber(): string
-    {
-        // we cannot use max(number) because a varchar column returns unexpected results
-        $start = $this->repository->countCustomer();
-
-        do {
-            $number = $this->getNextNumber($start++);
-            $customer = $this->findCustomerByNumber($number);
-        } while ($customer !== null);
-
-        return $number;
-    }
-
-    private function getNextNumber(int $counter): string
+    private function calculateNextCustomerNumber(): ?string
     {
         $format = $this->configuration->find('customer.number_format');
         if (empty($format) || !\is_string($format)) {
-            $format = '{cc,4}';
+            return null;
         }
 
-        $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($counter): string|int {
-            return match ($format) {
-                'cc' => $counter + $increaseBy,
-                default => $originalFormat,
-            };
-        });
+        // we cannot use max(number) because a varchar column returns unexpected results
+        $start = $this->repository->countCustomer();
+        $i = 0;
 
-        return $numberGenerator->getNumber();
+        do {
+            $start++;
+
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+                return match ($format) {
+                    'cc' => $start + $increaseBy,
+                    default => $originalFormat,
+                };
+            });
+
+            $number = $numberGenerator->getNumber();
+            $customer = $this->findCustomerByNumber($number);
+        } while ($customer !== null && $i++ < 100);
+
+        if ($customer !== null) {
+            return null;
+        }
+
+        return $number;
     }
 }

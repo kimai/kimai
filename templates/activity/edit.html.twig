@@ -24,6 +24,7 @@
             {% if form.project is defined %}
                 {{ form_row(form.project) }}
             {% endif %}
+            {{ form_row(form.number) }}
             {% if form.budgetType is defined %}
                 <div class="row">
                     {% if form.budget is defined %}

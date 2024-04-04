@@ -19,6 +19,7 @@ use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityUpdatePostEvent;
 use App\Event\ActivityUpdatePreEvent;
 use App\Repository\ActivityRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -49,7 +50,9 @@ class ActivityServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $service = new ActivityService($repository, $dispatcher, $validator);
+        $configuration = SystemConfigurationFactory::createStub(['activity' => []]);
+
+        $service = new ActivityService($repository, $configuration, $dispatcher, $validator);
 
         return $service;
     }

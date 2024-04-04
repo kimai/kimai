@@ -184,6 +184,7 @@ class ProjectTest extends AbstractEntityTest
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['project_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);

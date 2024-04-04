@@ -14,6 +14,7 @@ use App\Entity\Activity;
 
 final class ActivityHelper
 {
+    public const PATTERN_NUMBER = '{number}';
     public const PATTERN_NAME = '{name}';
     public const PATTERN_COMMENT = '{comment}';
     public const PATTERN_SPACER = '{spacer}';
@@ -21,7 +22,7 @@ final class ActivityHelper
 
     private ?string $pattern = null;
 
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
@@ -44,6 +45,7 @@ final class ActivityHelper
     {
         $name = $this->getChoicePattern();
         $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
+        $name = str_replace(self::PATTERN_NUMBER, $activity->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $activity->getComment() ?? '', $name);
 
         while (str_starts_with($name, self::SPACER)) {
