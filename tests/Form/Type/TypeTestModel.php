@@ -9,30 +9,15 @@
 
 namespace App\Tests\Form\Type;
 
-class TypeTestModel
+class TypeTestModel extends \ArrayObject
 {
-    private $fields = [];
-
-    public function __construct(array $fields = [])
-    {
-        $this->fields = $fields;
-    }
-
     public function __set($name, $value)
     {
-        if (!isset($this->fields[$name])) {
-            throw new \InvalidArgumentException('Unknown field: ' . $name);
-        }
-
-        $this->fields[$name] = $value;
+        $this->offsetSet($name, $value);
     }
 
     public function __get($name)
     {
-        if (!isset($this->fields[$name])) {
-            throw new \InvalidArgumentException('Unknown field: ' . $name);
-        }
-
-        return $this->fields[$name];
+        return $this->offsetGet($name);
     }
 }
