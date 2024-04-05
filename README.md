@@ -47,8 +47,8 @@ Support for PHP 8.2 and 8.3.
 
 ## Installation
 
-- [Recommended setup](https://www.kimai.org/documentation/installation.html#recommended-setup) — with Git and Composer
-- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by [@tobybatch](https://github.com/tobybatch/kimai2)
+- [Native setup](https://www.kimai.org/documentation/installation.html) — with Git and Composer
+- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by @tobybatch
 
 There are also documentations for:
 - [developer setups](https://www.kimai.org/documentation/developers.html) — on your local machine
@@ -83,7 +83,7 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
-- Spread the word: More user means more people testing and contributing to Kimai, which in turn means better stability and more and better features. Please vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit or any of your favorite social media platforms. Every bit helps!
+- Spread the word: Please [write a testimonial for our Wall of love]{https://love.kimai.org}, vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit and any other social media platform!
 - Answer questions: You know the answer to another user's problem? Share your knowledge.
 - Something can be done better? An essential feature is missing? Create a feature request.
 - Report bugs makes Kimai better for everyone.

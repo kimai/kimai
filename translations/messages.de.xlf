@@ -618,13 +618,13 @@
         <source>evaluation</source>
         <target>Auswertung</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target>Monat abschliessen</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve" approved="yes">
+        <source>Complete month</source>
+        <target state="final">Monat abschliessen</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target>Sobald der Monat abgeschlossen ist, kann der Benutzer für diesen Zeitraum keine Zeiten mehr anlegen oder bearbeiten.</target>
+        <target>Dies wird alle Tage des Jahres vor dem gewählten Datum abschliessen. Der Benutzer wird für den abgeschlossenen Zeitraum keine Zeiten mehr anlegen oder bearbeiten können.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -647,12 +647,8 @@
         <target>Arbeitszeitkonto</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target>Soll-Stunden</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target>Die hier konfigurierten Werte werden zur Berechnung des Stundenkontos verwendet.</target>
+        <source>Expected number of hours</source>
+        <target>Erwartete Stundenzahl</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -765,6 +761,14 @@
       <trans-unit id="TBWoUYf" resname="project_end">
         <source>project_end</source>
         <target>Projekt Ende</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number">
+        <source>Project number</source>
+        <target>Projektnummer</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number">
+        <source>Activity number</source>
+        <target>Tätigkeitsnummer</target>
       </trans-unit>
       <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
@@ -1556,9 +1560,9 @@
         <source>help_locales</source>
         <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
-        <target state="translated">Format für Zeit, Datum und Geld</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Format für Zeit, Datum und Geld</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>

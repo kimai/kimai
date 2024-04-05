@@ -10,6 +10,7 @@
 namespace App\Form\Type;
 
 use App\Form\DataTransformer\TagArrayToStringTransformer;
+use App\Repository\TagRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,18 +25,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class TagsInputType extends AbstractType
 {
-    public function __construct(private TagArrayToStringTransformer $transformer, private UrlGeneratorInterface $router)
+    public function __construct(
+        private readonly TagRepository $tagRepository,
+        private readonly UrlGeneratorInterface $router
+    )
     {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($options['allow_create'] === false) {
-            $this->transformer->setCreate(false);
-        }
-
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true);
-        $builder->addModelTransformer($this->transformer, true);
+        $builder->addModelTransformer(new TagArrayToStringTransformer($this->tagRepository, (bool) $options['allow_create']), true);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -48,6 +48,7 @@ final class TagsInputType extends AbstractType
             'allow_create' => false,
             'label' => 'tag',
         ]);
+        $resolver->setAllowedTypes('allow_create', 'bool');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

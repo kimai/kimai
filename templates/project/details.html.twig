@@ -14,7 +14,7 @@
             {% endif %}
         {% endblock %}
         {% block box_title %}
-            {{ widgets.label_name(project.name, project.color) }}
+            {{ widgets.label_dot(project.name, project.color) }}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
@@ -82,6 +82,14 @@
                         <th>{{ 'project_end'|trans }}</th>
                         <td colspan="3">
                             {{ project.end|date_short }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if project.number is not empty %}
+                    <tr>
+                        <th>{{ 'project_number'|trans }}</th>
+                        <td colspan="3">
+                            {{ project.number }}
                         </td>
                     </tr>
                     {% endif %}

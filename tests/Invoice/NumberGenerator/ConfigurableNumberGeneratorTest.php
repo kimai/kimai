@@ -61,6 +61,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
     public function getTestData(): array
     {
         $invoiceDate = new \DateTime();
+        $invoiceDateFixed = new \DateTime('2021-03-07');
+        $invoiceDateFixed1 = new \DateTime('2021-03-27');
 
         return [
             // simple tests for single calls
@@ -109,6 +111,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{c+13,3}', '014', $invoiceDate],
             ['{c+13,2}', '14', $invoiceDate],
             ['{c+13}', '14', $invoiceDate],
+            ['{c-20}', '0', $invoiceDate],
             ['{cd+111}', '112', $invoiceDate],
             ['{cd+111,5}', '00112', $invoiceDate],
             ['{cd+111,2}', '113', $invoiceDate, 2],
@@ -128,7 +131,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{Y,5}/{cy,5}', '0' . $invoiceDate->format('Y') . '/00002', $invoiceDate],
             // with decrementing counter
             ['{c-1,2}', '00', $invoiceDate],
-            ['{c-2,2}', '-1', $invoiceDate],
+            ['{c-2,2}', '00', $invoiceDate],
             // with incrementing and decrementing counter
             ['{c-5+13,1}', '9', $invoiceDate],
             ['{c+13-5,2}', '09', $invoiceDate],
@@ -142,6 +145,43 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{cm+22+2+2-1-13-4}', '9', $invoiceDate],
             ['{cm+22+2-2-22}', '6', $invoiceDate, 5],
             ['{cm-21+22+2-2}', '6', $invoiceDate, 5],
+            // increment dates
+            ['{YY}', '2022', $invoiceDateFixed],
+            ['{YY+1}', '2022', $invoiceDateFixed],
+            ['{YY+2}', '2023', $invoiceDateFixed],
+            ['{YY+3}', '2024', $invoiceDateFixed],
+            ['{YY-1}', '2020', $invoiceDateFixed],
+            ['{YY-2}', '2019', $invoiceDateFixed],
+            ['{YY-3}', '2018', $invoiceDateFixed],
+            ['{yy}', '22', $invoiceDateFixed],
+            ['{yy+1}', '22', $invoiceDateFixed],
+            ['{yy+2}', '23', $invoiceDateFixed],
+            ['{yy+3}', '24', $invoiceDateFixed],
+            ['{yy-1}', '20', $invoiceDateFixed],
+            ['{yy-2}', '19', $invoiceDateFixed],
+            ['{yy-3}', '18', $invoiceDateFixed],
+            ['{MM}', '4', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM+1}', '4', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM+2}', '5', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM+3}', '6', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM-1}', '2', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM-2}', '1', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM-3}', '0', $invoiceDateFixed], // cast to int removes leading zero
+            ['{MM-4}', '0', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD}', '8', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD+1}', '8', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD+2}', '9', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD+3}', '10', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD-1}', '6', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD-2}', '5', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD-3}', '4', $invoiceDateFixed], // cast to int removes leading zero
+            ['{DD}', '28', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD+1}', '28', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD+2}', '29', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD+3}', '30', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD-1}', '26', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD-2}', '25', $invoiceDateFixed1], // cast to int removes leading zero
+            ['{DD-3}', '24', $invoiceDateFixed1], // cast to int removes leading zero
         ];
     }
 

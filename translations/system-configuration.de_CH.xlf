@@ -46,9 +46,9 @@
         <source>timesheet.default_begin</source>
         <target state="translated">Standardstartzeit (wird nicht in allen Zeiterfassungsmodi verwendet)</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Format der Kundennummern</target>
+        <target state="needs-translation">Format der Kundennummern</target>
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>

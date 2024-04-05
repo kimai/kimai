@@ -24,7 +24,7 @@ class TimesheetValidationTest extends KernelTestCase
 {
     use EntityValidationTestTrait;
 
-    protected function getEntity()
+    protected function getEntity(): Timesheet
     {
         $customer = new Customer('Test Customer');
 

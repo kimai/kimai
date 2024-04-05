@@ -100,7 +100,7 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
-    public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approver): void
+    public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
             $workingTime = $day->getWorkingTime();
@@ -116,7 +116,7 @@ final class WorkingTimeService
                 continue;
             }
 
-            $workingTime->setApprovedBy($approver);
+            $workingTime->setApprovedBy($approvedBy);
             // FIXME see calling method
             $workingTime->setApprovedAt(\DateTimeImmutable::createFromInterface($approvalDate));
             $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
@@ -124,7 +124,7 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
-        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approver));
+        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
     }
 
     /**
@@ -144,10 +144,10 @@ final class WorkingTimeService
             ->select('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('DATE(t.date) as day')
             ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->eq('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $user->getId())
             ->addGroupBy('day')
         ;

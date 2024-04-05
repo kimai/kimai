@@ -17,6 +17,7 @@ use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -57,7 +58,7 @@ class SamlProviderTest extends TestCase
             $userProvider->method('loadUserByIdentifier')->willReturn(new User());
         }
 
-        $provider = new SamlProvider($repository, $userProvider, $samlConfig);
+        $provider = new SamlProvider($repository, $userProvider, $samlConfig, $this->createMock(LoggerInterface::class));
 
         return $provider;
     }
@@ -107,7 +108,7 @@ class SamlProviderTest extends TestCase
     public function testAuthenticateThrowsAuthenticationException(): void
     {
         $this->expectException(AuthenticationException::class);
-        $this->expectExceptionMessage('Failed creating or hydrating user "foo1@example.com": Missing user attribute: Email');
+        $this->expectExceptionMessage('Failed creating or hydrating user "foo1@example.com": Missing SAML attribute in response: Email');
 
         $user = new User();
         $user->setAuth(User::AUTH_SAML);

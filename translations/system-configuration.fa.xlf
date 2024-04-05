@@ -290,9 +290,9 @@
         <source>allowed_replacer</source>
         <target state="translated">جایگزین مجاز: %replacer%</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">فرمت شماره مشتری</target>
+        <target state="needs-translation">فرمت شماره مشتری</target>
       </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
         <source>activity.allow_inline_create</source>

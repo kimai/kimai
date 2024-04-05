@@ -14,6 +14,8 @@ use App\Invoice\InvoiceModelHydrator;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
+    private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+
     public function hydrate(InvoiceModel $model): array
     {
         $currency = $model->getCurrency();
@@ -24,7 +26,9 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
+            'invoice.due_date_process' => $model->getDueDate()->format(self::DATE_PROCESS_FORMAT), // since 2.14
             'invoice.date' => $formatter->getFormattedDateTime($model->getInvoiceDate()),
+            'invoice.date_process' => $model->getInvoiceDate()->format(self::DATE_PROCESS_FORMAT), // since 2.14
             'invoice.number' => $model->getInvoiceNumber(),
             'invoice.currency' => $currency,
             'invoice.language' => $model->getTemplate()->getLanguage(), // since 1.9
@@ -55,11 +59,13 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
             'query.begin' => '',
             'query.begin_day' => '',
+            'query.begin_process' => null,         // since 2.14
             'query.begin_month' => '',
             'query.begin_month_number' => '',
             'query.begin_year' => '',
             'query.end' => '',                  // since 1.9
             'query.end_day' => '',              // since 1.9
+            'query.end_process' => null,           // since 2.14
             'query.end_month' => '',            // since 1.9
             'query.end_month_number' => '',     // since 1.9
             'query.end_year' => '',             // since 1.9
@@ -82,6 +88,7 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
                     'query.year' => $begin->format('Y'),
                     // @deprecated - but impossible to delete
                     'query.begin' => $formatter->getFormattedDateTime($begin),
+                    'query.begin_process' => $begin->format(self::DATE_PROCESS_FORMAT), // since 2.14
                     'query.begin_day' => $begin->format('d'),
                     'query.begin_month' => $formatter->getFormattedMonthName($begin),
                     'query.begin_month_number' => $begin->format('m'),
@@ -93,13 +100,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             if ($end !== null) {
                 $values = array_merge($values, [
                     'query.end' => $formatter->getFormattedDateTime($end),
-                    // since 1.9
+                    'query.end_process' => $end->format(self::DATE_PROCESS_FORMAT), // since 2.14
                     'query.end_day' => $end->format('d'),
-                    // since 1.9
                     'query.end_month' => $formatter->getFormattedMonthName($end),
-                    // since 1.9
                     'query.end_month_number' => $end->format('m'),
-                    // since 1.9
                     'query.end_year' => $end->format('Y'),
                 ]);
             }
@@ -145,7 +149,9 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         if ($min !== null && $max !== null) {
             $values = array_merge($values, [
                 'invoice.first' => $formatter->getFormattedDateTime($min->getBegin()),
+                'invoice.first_process' => $min->getBegin()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
                 'invoice.last' => $formatter->getFormattedDateTime($max->getEnd()),
+                'invoice.last_process' => $max->getEnd()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
             ]);
         }
 

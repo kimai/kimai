@@ -1062,9 +1062,9 @@
         <source>stats.revenue</source>
         <target state="final">Entrate</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="no" xml:space="preserve">
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="yes" xml:space="preserve">
         <source>Working hours</source>
-        <target>Ore lavorative</target>
+        <target state="final">Ore lavorative</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries" approved="yes">
         <source>error.too_many_entries</source>
@@ -1466,9 +1466,9 @@
         <source>evaluation</source>
         <target state="final">Valutazione</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month" approved="yes">
+      <trans-unit id="4lrfIsZ" resname="complete_month" approved="yes" xml:space="preserve">
         <source>Complete month</source>
-        <target state="final">Mese completo</target>
+        <target state="final">Blocca mese</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf" approved="yes">
         <source>completed_month_pdf</source>
@@ -1478,9 +1478,9 @@
         <source>Review</source>
         <target state="final">Revisione</target>
       </trans-unit>
-      <trans-unit id="mS4SSmt" resname="work_times" approved="yes">
-        <source>work_times</source>
-        <target state="final">Ore lavorative</target>
+      <trans-unit id="mS4SSmt" resname="work_times" approved="yes" xml:space="preserve">
+        <source>Working times</source>
+        <target state="final">Ore lavorate</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account" approved="yes">
         <source>Account working times</source>
@@ -1491,7 +1491,7 @@
         <target state="final">Nessun obiettivo di ore è stato configurato per questo utente nelle impostazioni del contratto di lavoro.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" approved="yes">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="final">Obiettivo di ore</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" approved="yes">
@@ -1510,9 +1510,9 @@
         <source>deleted</source>
         <target state="final">Eliminato</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="yes">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" approved="yes" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="final">Dopo aver completato il mese, l'utente non sarà più in grado di creare o modificare gli orari per quel periodo.</target>
+        <target state="final">Questo bloccherà tutti i giorni dell'anno prima della data scelta. L'utente non potrà più creare o modificare gli orari per il periodo bloccato.</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at" approved="yes">
         <source>created_at</source>
@@ -1521,10 +1521,6 @@
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" approved="yes">
         <source>completed_month_pdf_note</source>
         <target state="final">Questo documento serve come prova delle ore lavorate.</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help" approved="yes">
-        <source>work_times_should.help</source>
-        <target state="final">I valori configurati qui vengono usati per calcolare il conto orario.</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" approved="yes">
         <source>confirmed_by_at</source>
@@ -1550,9 +1546,9 @@
         <source>holiday</source>
         <target state="final">Vacanza</target>
       </trans-unit>
-      <trans-unit id="zlmddHB" resname="public_holidays" approved="yes">
+      <trans-unit id="zlmddHB" resname="public_holidays" approved="yes" xml:space="preserve">
         <source>public_holidays</source>
-        <target state="final">Festività pubbliche</target>
+        <target state="final">Festività nazionali</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" approved="yes">
         <source>default</source>
@@ -1578,9 +1574,9 @@
         <source>receive_from</source>
         <target state="final">Ricevi da %name%</target>
       </trans-unit>
-      <trans-unit id="fWuGTog" resname="public_holiday" approved="yes">
+      <trans-unit id="fWuGTog" resname="public_holiday" approved="yes" xml:space="preserve">
         <source>public_holiday</source>
-        <target state="final">Giorno festivo</target>
+        <target state="final">Festività nazionale</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group" approved="yes">
         <source>public_holiday.group</source>
@@ -1754,9 +1750,13 @@
         <source>batch_table_checkbox</source>
         <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="yes">
-        <source>locale</source>
+      <trans-unit id="d9m85KE" resname="locale" approved="yes" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
         <target state="final">Formato per ora, data e valuta</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
+        <source>absence_comment_mandatory</source>
+        <target state="final">Congedo: il commento è un campo obbligatorio</target>
       </trans-unit>
     </body>
   </file>

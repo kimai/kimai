@@ -28,9 +28,9 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 final class UserLoginLinkCommand extends Command
 {
     public function __construct(
-        private LoginLinkHandlerInterface $loginLink,
-        private UserRepository $userRepository,
-        private RequestStack $requestStack
+        private readonly LoginLinkHandlerInterface $loginLink,
+        private readonly UserRepository $userRepository,
+        private readonly RequestStack $requestStack
     )
     {
         parent::__construct();

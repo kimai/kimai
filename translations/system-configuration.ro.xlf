@@ -286,9 +286,9 @@
         <source>copy_teams_on_create</source>
         <target state="translated">Preia echipele de la utilizatorul logat la crearea de noi intrări</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Număr de client Format</target>
+        <target state="needs-translation">Număr de client Format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

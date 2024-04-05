@@ -32,9 +32,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class PasswordResetController extends AbstractController
 {
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private UserService $userService,
-        private SystemConfiguration $configuration
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly UserService $userService,
+        private readonly SystemConfiguration $configuration
     ) {
     }
 
@@ -62,6 +62,10 @@ final class PasswordResetController extends AbstractController
         }
 
         $username = $request->request->get('username');
+        if (!\is_string($username) || trim($username) === '') {
+            throw $this->createAccessDeniedException('Username cannot be empty');
+        }
+
         $user = $this->userService->findUserByUsernameOrEmail($username);
 
         if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
@@ -128,6 +132,8 @@ final class PasswordResetController extends AbstractController
         }
 
         if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetTokenLifetime())) {
+            $this->flashWarning('This link has already expired');
+
             return $this->redirectToRoute('resetting_request');
         }
 

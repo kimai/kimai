@@ -109,9 +109,9 @@
         <source>task_overdue</source>
         <target>Périmée</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo">
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target>Description de la tâche</target>
+        <target state="needs-translation">Description de la tâche</target>
       </trans-unit>
     </body>
   </file>

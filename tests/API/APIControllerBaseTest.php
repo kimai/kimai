@@ -446,6 +446,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => 'int',
+                    'number' => '@int',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -459,6 +460,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'number' => '@int',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -471,6 +473,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'customer' => 'int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
@@ -489,6 +492,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'customer' => 'int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
@@ -512,6 +516,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'comment' => '@string',
                 ];
@@ -523,6 +528,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
+                    'number' => '@int',
                     'color' => '@string',
                     'comment' => '@string',
                 ];
@@ -535,6 +541,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
@@ -550,6 +557,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',

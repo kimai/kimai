@@ -1499,13 +1499,13 @@
         <source>evaluation</source>
         <target state="translated">Değerlendirme</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Tam ay</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Ayı kilitle</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Ay tamamlandıktan sonra, kullanıcı artık o dönem için zaman oluşturamayacak veya düzenleyemeyecek.</target>
+        <target state="translated">Bu, yılın seçilen tarihten önceki tüm günlerini kilitleyecektir. Kullanıcı artık kilitli dönem için zaman oluşturamayacak veya düzenleyemeyecektir.</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1516,7 +1516,7 @@
         <target state="translated">İnceleme</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Hedef saat</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
@@ -1530,10 +1530,6 @@
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target state="translated">Elle rezervasyonlar</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Burada yapılandırılan değerler saatlik hesabı hesaplamak için kullanılır.</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1775,9 +1771,13 @@
         <source>user_identifier.help</source>
         <target state="translated">Benzersiz kullanıcı tanımlayıcısı kimlik doğrulama için ve dışa aktarmalarda kullanılır</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="no">
-        <source>locale</source>
+      <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
         <target state="translated">Saat, tarih ve para birimi için biçim</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Devamsızlık: Yorum zorunlu bir alandır</target>
       </trans-unit>
     </body>
   </file>

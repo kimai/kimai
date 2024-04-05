@@ -1484,7 +1484,7 @@
         <target state="translated">Arbeidsovereenkomst</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Streefuren</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
@@ -1507,10 +1507,6 @@
         <source>manual_bookings.work_contract_intro</source>
         <target state="translated">Handmatige boeken kunnen niet achtereenvolgens worden gewijzigd of verwijderd!</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">De hier geconfigureerde waarden worden gebruikt om de rekening per uur te berekenen.</target>
-      </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
         <target state="translated">Voor deze gebruiker zijn geen streefuren geconfigureerd in de instellingen van de arbeidsovereenkomst.</target>
@@ -1519,9 +1515,9 @@
         <source>created_by</source>
         <target state="translated">Gemaakt door</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Na het voltooien van de maand kan de gebruiker geen tijden meer maken of bewerken voor die periode.</target>
+        <target state="needs-translation">Na het voltooien van de maand kan de gebruiker geen tijden meer maken of bewerken voor die periode.</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
@@ -1531,9 +1527,9 @@
         <source>evaluation</source>
         <target state="translated">Evaluatie</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Volledige maand</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Volledige maand</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>

@@ -17,6 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ProjectHelper
 {
     public const PATTERN_NAME = '{name}';
+    public const PATTERN_NUMBER = '{number}';
     public const PATTERN_COMMENT = '{comment}';
     public const PATTERN_ORDERNUMBER = '{ordernumber}';
     public const PATTERN_DATERANGE = '{daterange}';
@@ -70,6 +71,7 @@ final class ProjectHelper
     {
         $name = $this->getChoicePattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
+        $name = str_replace(self::PATTERN_NUMBER, $project->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()?->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);

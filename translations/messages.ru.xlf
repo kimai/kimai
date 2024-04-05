@@ -1317,9 +1317,9 @@
         <source>evaluation</source>
         <target state="translated">Оценка</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">По завершении месяца пользователь больше не сможет создавать или редактировать время для этого периода.</target>
+        <target state="needs-translation">По завершении месяца пользователь больше не сможет создавать или редактировать время для этого периода.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1328,10 +1328,6 @@
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
         <target state="translated">Время работы</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Настроенные здесь значения используются для расчета почасового счета.</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
@@ -1406,7 +1402,7 @@
         <target state="translated">Создано</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Целевые часы</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">

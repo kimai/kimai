@@ -18,13 +18,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class CustomerValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $systemConfiguration, private CustomerRepository $customerRepository)
+    public function __construct(
+        private readonly SystemConfiguration $systemConfiguration,
+        private readonly CustomerRepository $customerRepository
+    )
     {
     }
 
     /**
      * @param CustomerEntity|mixed $value
-     * @param Constraint $constraint
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -37,14 +39,16 @@ final class CustomerValidator extends ConstraintValidator
         }
 
         if ((bool) $this->systemConfiguration->find('customer.rules.allow_duplicate_number') === false && (($number = $value->getNumber()) !== null)) {
-            $tmp = $this->customerRepository->findOneBy(['number' => $number]);
-            if ($tmp !== null && $tmp->getId() !== $value->getId()) {
-                $this->context->buildViolation(Customer::getErrorName(Customer::CUSTOMER_NUMBER_EXISTING))
-                    ->setParameter('%number%', $number)
-                    ->atPath('number')
-                    ->setTranslationDomain('validators')
-                    ->setCode(Customer::CUSTOMER_NUMBER_EXISTING)
-                    ->addViolation();
+            foreach ($this->customerRepository->findBy(['number' => $number]) as $tmp) {
+                if ($tmp->getId() !== $value->getId()) {
+                    $this->context->buildViolation(Customer::getErrorName(Customer::CUSTOMER_NUMBER_EXISTING))
+                        ->setParameter('%number%', $number)
+                        ->atPath('number')
+                        ->setTranslationDomain('validators')
+                        ->setCode(Customer::CUSTOMER_NUMBER_EXISTING)
+                        ->addViolation();
+                    break;
+                }
             }
         }
     }

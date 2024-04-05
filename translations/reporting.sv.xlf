@@ -2,21 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="reporting.en.xlf">
     <body>
-      <trans-unit id="XV3FBpu" resname="report_user_week">
+      <trans-unit id="XV3FBpu" resname="report_user_week" xml:space="preserve">
         <source>report_user_week</source>
-        <target>Veckovy för enskild användare</target>
+        <target state="translated">Veckovy för en användare</target>
       </trans-unit>
-      <trans-unit id="Ng47B75" resname="report_user_month">
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
         <source>report_user_month</source>
-        <target>Månadsvy för enskild användare</target>
+        <target state="translated">Månadsvy för en användare</target>
       </trans-unit>
-      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+      <trans-unit id="q_A4AHD" resname="report_weekly_users" xml:space="preserve">
         <source>report_weekly_users</source>
-        <target>Veckovy för samtliga användare</target>
+        <target state="translated">Veckovy för alla användare</target>
       </trans-unit>
-      <trans-unit id="zk30bmP" resname="report_monthly_users">
+      <trans-unit id="zk30bmP" resname="report_monthly_users" xml:space="preserve">
         <source>report_monthly_users</source>
-        <target>Månadsvy för samtliga användare</target>
+        <target state="translated">Månadsvy för alla användare</target>
       </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view">
         <source>report_project_view</source>
@@ -45,6 +45,10 @@
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
         <source>report_customer_monthly_projects</source>
         <target state="translated">Projekt per månad, händelser och användare</target>
+      </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Kundöversikt</target>
       </trans-unit>
     </body>
   </file>

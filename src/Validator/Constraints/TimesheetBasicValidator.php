@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBasicValidator extends ConstraintValidator
 {
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -36,10 +36,6 @@ final class TimesheetBasicValidator extends ConstraintValidator
         $this->validateActivityAndProject($value, $this->context);
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
     protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $begin = $timesheet->getBegin();
@@ -64,10 +60,6 @@ final class TimesheetBasicValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param ExecutionContextInterface $context
-     */
     protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $activity = $timesheet->getActivity();

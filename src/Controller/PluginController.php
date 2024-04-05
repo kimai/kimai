@@ -45,21 +45,28 @@ final class PluginController extends AbstractController
     private function getPluginInformation(HttpClientInterface $client, CacheInterface $cache): array
     {
         return $cache->get('kimai.marketplace_extensions', function (ItemInterface $item) use ($client) {
-            $response = $client->request('GET', 'https://www.kimai.org/plugins.json');
+            try {
+                $response = $client->request('GET', 'https://www.kimai.org/plugins.json');
 
-            if ($response->getStatusCode() !== 200) {
-                return [];
+                if ($response->getStatusCode() !== 200) {
+                    return [];
+                }
+
+                $json = json_decode($response->getContent(), true);
+
+                if ($json === null) {
+                    return [];
+                }
+
+                $item->expiresAfter(86400); // one day
+
+                return $response->toArray();
+            } catch (\Exception $exception) {
+                $this->logException($exception);
+                $this->flashError('Could not download plugin information');
             }
 
-            $json = json_decode($response->getContent(), true);
-
-            if ($json === null) {
-                return [];
-            }
-
-            $item->expiresAfter(86400); // one day
-
-            return $response->toArray();
+            return [];
         });
     }
 }

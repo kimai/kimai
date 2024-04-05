@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">De viktigaste inställningarna är nu klara. Det finns många fler som du kan anpassa senare i din användarprofil.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Ditt lösenord</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Vänligen ange ditt nya lösenord som skall användas för att logga in framöver.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

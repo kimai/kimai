@@ -1500,12 +1500,8 @@
         <target state="translated">Ovaj dokument služi kao dokaz o odrađenim satima.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Ciljani sati</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Ovdje konfigurirane vrijednosti se koriste za računanje računa po satu.</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1547,13 +1543,13 @@
         <source>manual_bookings.duration_help</source>
         <target state="translated">Trajanje može biti pozitivno (povećanje utrošenog vremena) i negativno (smanjenje utrošenog vremena).</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Završi mjesec</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Zaključi mjesec</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Nakon završavanja mjeseca, korisnik više neće moći stvoriti niti uređivati vremena za to razdoblje.</target>
+        <target state="translated">Ovime će se zaključiti svi dani u godini prije odabranog datuma. Korisnik više neće moći stvarati ili uređivati vremena za zaključeno razdoblje.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1775,9 +1771,13 @@
         <source>Search filter</source>
         <target state="translated">Filtar pretrage</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
-        <target state="translated">Format za vrijeme, datum i valutu</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
+        <target state="needs-translation">Format za vrijeme, datum i valutu</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Odsutnost: Komentar je obavezno polje</target>
       </trans-unit>
     </body>
   </file>

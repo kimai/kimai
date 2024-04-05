@@ -1475,9 +1475,9 @@
         <source>created_by</source>
         <target state="translated">Criado por</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Mês completo</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Mês bloqueado</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1496,12 +1496,8 @@
         <target state="translated">Horários de trabalho da conta</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Horas-alvo</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Os valores configurados aqui são usados para calcular a hora da conta.</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
@@ -1535,9 +1531,9 @@
         <source>evaluation</source>
         <target state="translated">Avaliação</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Após completar o mês, o usuário não poderá mais criar ou editar horários para aquele período.</target>
+        <target state="translated">Isso bloqueará todos os dias do ano anteriores à data escolhida. O usuário não poderá mais criar ou editar os horários para o período bloqueado.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1775,9 +1771,13 @@
         <source>batch_table_checkbox_all</source>
         <target state="translated">Selecionar todas as entradas para a lista de atualização em lote</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
         <target state="translated">Formato de hora, data e moeda</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="no">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Ausência: O comentário é um campo obrigatório</target>
       </trans-unit>
     </body>
   </file>

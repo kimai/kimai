@@ -1108,11 +1108,6 @@ parameters:
             path: src/Controller/Security/PasswordResetController.php
 
         -
-            message: "#^Parameter \\#1 \\$usernameOrEmail of method App\\\\User\\\\UserService\\:\\:findUserByUsernameOrEmail\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Security/PasswordResetController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Security\\\\SelfRegistrationController\\:\\:getTargetUrlFromSession\\(\\) should return string\\|null but returns mixed\\.$#"
             count: 1
             path: src/Controller/Security/SelfRegistrationController.php
@@ -2206,21 +2201,6 @@ parameters:
             message: "#^Parameter \\#1 \\$value \\(array\\<string\\>\\) of method App\\\\Form\\\\DataTransformer\\\\StringToArrayTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(array\\|null\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<array,string\\>\\:\\:transform\\(\\)$#"
             count: 1
             path: src/Form/DataTransformer/StringToArrayTransformer.php
-
-        -
-            message: "#^Class App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$stringOfTags \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$tags \\(array\\<App\\\\Entity\\\\Tag\\>\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
 
         -
             message: "#^Method App\\\\Form\\\\Extension\\\\DocumentationLinkExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -4248,22 +4228,7 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:deleteComment\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 
@@ -4274,11 +4239,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:saveComment\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 
@@ -4833,22 +4793,12 @@ parameters:
             path: src/Saml/SamlLoginAttributes.php
 
         -
-            message: "#^Method App\\\\Saml\\\\SamlLogoutSubscriber\\:\\:logout\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Saml/SamlLogoutSubscriber.php
-
-        -
             message: "#^Parameter \\#4 \\$sessionIndex of method OneLogin\\\\Saml2\\\\Auth\\:\\:logout\\(\\) expects string\\|null, mixed given\\.$#"
             count: 1
             path: src/Saml/SamlLogoutSubscriber.php
 
         -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Saml/SamlProvider.php
-
-        -
-            message: "#^Method App\\\\Saml\\\\SamlProvider\\:\\:getPropertyValue\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Saml/SamlProvider.php
 
@@ -5578,11 +5528,6 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
             message: "#^Parameter \\#4 \\$duration of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
             count: 3
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
@@ -5593,29 +5538,9 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetExportedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetExportedValidator.php
-
-        -
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLockdownValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
             message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
@@ -5626,26 +5551,6 @@ parameters:
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetMultiUpdateValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetOverlappingValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetRestartValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetRestartValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetZeroDurationValidator.php
 
         -
             message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\User\\) of method App\\\\Validator\\\\Constraints\\\\UserValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"

@@ -290,9 +290,9 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Дозволити створення дій (діяльностей) у формі обліку часу</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Формат номера клієнта</target>
+        <target state="needs-translation">Формат номера клієнта</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

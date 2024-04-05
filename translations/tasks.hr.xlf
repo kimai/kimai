@@ -84,19 +84,19 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Opis zadatka</target>
+        <target state="translated">Zadatak</target>
       </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
-        <target state="translated">Obavljanje zadatka je započeto</target>
+        <target state="translated">Zadatak je započet</target>
       </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
-        <target state="translated">Obavljanje zadatka nije započeto</target>
+        <target state="translated">Zadatak nije započet</target>
       </trans-unit>
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>
-        <target state="translated">Rok za obavljanje zadatka je prekoračen</target>
+        <target state="translated">Prekoračen rok zadatka</target>
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>

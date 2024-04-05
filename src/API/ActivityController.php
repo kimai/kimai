@@ -43,10 +43,10 @@ final class ActivityController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ActivityRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ActivityRateRepository $activityRateRepository
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ActivityRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ActivityRateRepository $activityRateRepository
     ) {
     }
 
@@ -123,6 +123,7 @@ final class ActivityController extends BaseApiController
     #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_activity', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
         $view = new View($activity, 200);

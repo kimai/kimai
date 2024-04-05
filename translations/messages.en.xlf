@@ -620,11 +620,11 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month">
         <source>Complete month</source>
-        <target state="translated">Complete month</target>
+        <target state="translated">Lock month</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help">
         <source>complete_month.help</source>
-        <target>After completing the month, the user will no longer be able to create or edit times for that period.</target>
+        <target>This will lock all days of the year before the chosen date. The user will no longer be able to create or edit times for the locked period.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -647,12 +647,8 @@
         <target state="translated">Account working times</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target>Target-hours</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target>The values configured here are used to calculate the hourly account.</target>
+        <source>Expected number of hours</source>
+        <target>Expected number of hours</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -765,6 +761,14 @@
       <trans-unit id="TBWoUYf" resname="project_end">
         <source>project_end</source>
         <target>Project end</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number">
+        <source>Project number</source>
+        <target>Project number</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number">
+        <source>Activity number</source>
+        <target>Activity number</target>
       </trans-unit>
       <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
@@ -1556,9 +1560,9 @@
         <source>help_locales</source>
         <target>Here are examples of formatting rules for the supported languages</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale">
-        <source>locale</source>
-        <target state="translated">Format for time, date and currency</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Format for time, date, and currency</source>
+        <target state="translated">Format for time, date, and currency</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
