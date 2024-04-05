@@ -39,7 +39,7 @@ final class PromoteUserCommand extends AbstractRoleCommand
         if ($super) {
             if (!$user->isSuperAdmin()) {
                 $user->setSuperAdmin(true);
-                $manipulator->updateUser($user);
+                $manipulator->saveUser($user);
                 $output->success(sprintf('User "%s" has been promoted as a super administrator.', $username));
             } else {
                 $output->warning(sprintf('User "%s" does already have the super administrator role.', $username));
@@ -47,7 +47,7 @@ final class PromoteUserCommand extends AbstractRoleCommand
         } else {
             if (!$user->hasRole($role)) {
                 $user->addRole($role);
-                $manipulator->updateUser($user);
+                $manipulator->saveUser($user);
                 $output->success(sprintf('Role "%s" has been added to user "%s".', $role, $username));
             } else {
                 $output->warning(sprintf('User "%s" did already have "%s" role.', $username, $role));

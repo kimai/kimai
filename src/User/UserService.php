@@ -37,11 +37,11 @@ class UserService
     private array $cache = [];
 
     public function __construct(
-        private UserRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ValidatorInterface $validator,
-        private SystemConfiguration $configuration,
-        private UserPasswordHasherInterface $passwordHasher
+        private readonly UserRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ValidatorInterface $validator,
+        private readonly SystemConfiguration $configuration,
+        private readonly UserPasswordHasherInterface $passwordHasher
     ) {
     }
 
@@ -70,6 +70,18 @@ class UserService
         return $user;
     }
 
+    public function saveUser(User $user): User
+    {
+        if ($user->getId() === null) {
+            return $this->saveNewUser($user);
+        } else {
+            return $this->updateUser($user);
+        }
+    }
+
+    /**
+     * @internal will be made private soon
+     */
     public function saveNewUser(User $user): User
     {
         if (null !== $user->getId()) {

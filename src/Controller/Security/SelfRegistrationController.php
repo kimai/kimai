@@ -69,7 +69,7 @@ final class SelfRegistrationController extends AbstractController
 
             $request->getSession()->set('confirmation_email_address', $user->getEmail());
 
-            $this->userService->saveNewUser($user);
+            $this->userService->saveUser($user);
 
             return $this->redirectToRoute('user_registration_check_email');
         }
@@ -126,7 +126,7 @@ final class SelfRegistrationController extends AbstractController
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
 
-        $this->userService->updateUser($user);
+        $this->userService->saveUser($user);
 
         $response = $this->redirectToRoute('registration_confirmed');
         $loginManager->logInUser($user, $response);

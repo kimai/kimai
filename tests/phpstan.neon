@@ -2238,36 +2238,6 @@ parameters:
             path: Form/Type/QuickEntryTimesheetTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__construct\\(\\) has parameter \\$fields with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__get\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__get\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has parameter \\$value with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTest\\:\\:assertDescription\\(\\) has parameter \\$addActivity with no type specified\\.$#"
             count: 1
             path: Invoice/Calculator/AbstractCalculatorTest.php

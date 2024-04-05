@@ -87,7 +87,7 @@ final class PasswordResetController extends AbstractController
             $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
 
             $user->markPasswordRequested();
-            $this->userService->updateUser($user);
+            $this->userService->saveUser($user);
         }
 
         return $this->redirectToRoute('resetting_check_email', ['username' => $username]);
@@ -146,7 +146,7 @@ final class PasswordResetController extends AbstractController
             $user->markPasswordResetted();
             $user->setEnabled(true);
 
-            $this->userService->updateUser($user);
+            $this->userService->saveUser($user);
 
             $response = $this->redirectToRoute('my_profile');
             $loginManager->logInUser($user, $response);

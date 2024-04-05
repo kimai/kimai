@@ -11,7 +11,7 @@ namespace App\Saml;
 
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\User\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -23,7 +23,7 @@ final class SamlProvider
      * @param UserProviderInterface<User> $userProvider
      */
     public function __construct(
-        private readonly UserRepository $repository,
+        private readonly UserService $userService,
         private readonly UserProviderInterface $userProvider,
         private readonly SamlConfigurationInterface $configuration,
         private readonly LoggerInterface $logger
@@ -40,36 +40,23 @@ final class SamlProvider
                 $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
             }
         } catch (UserNotFoundException $ex) {
-            $this->logger->error($ex->getMessage());
+            // this is expected for new users
+            $this->logger->debug('User is not existing: ' . $token->getUserIdentifier());
         }
 
         try {
             if (null === $user) {
-                $user = $this->createUser($token);
-            } else {
-                $this->hydrateUser($user, $token);
+                $user = $this->userService->createNewUser();
+                $user->setUserIdentifier($token->getUserIdentifier());
             }
-
-            $this->repository->saveUser($user);
+            $this->hydrateUser($user, $token);
+            $this->userService->saveUser($user);
         } catch (\Exception $ex) {
             $this->logger->error($ex->getMessage());
             throw new AuthenticationException(
                 sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
             );
         }
-
-        return $user;
-    }
-
-    private function createUser(SamlLoginAttributes $token): User
-    {
-        // Not using UserService: user settings should be set via SAML attributes
-        $user = new User();
-        $user->setEnabled(true);
-        $user->setUserIdentifier($token->getUserIdentifier());
-        $user->setPassword('');
-
-        $this->hydrateUser($user, $token);
 
         return $user;
     }
@@ -119,11 +106,13 @@ final class SamlProvider
             }
         }
 
-        // fill them after hydrating account, so they can't be overwritten
-        // by the mapping attributes
+        // change after hydrating account, so it can't be overwritten by mapping attributes
         if ($user->getId() === null) {
+            // set a plain password to satisfy the validator
+            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
             $user->setPassword('');
         }
+
         $user->setUserIdentifier($token->getUserIdentifier());
         $user->setAuth(User::AUTH_SAML);
     }
