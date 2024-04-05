@@ -171,7 +171,7 @@ final class ProfileController extends AbstractController
             $accessTokenRepository->saveAccessToken($accessToken);
 
             $this->flashSuccess('action.update.success');
-            $request->getSession()->set('_show_access_token', $accessToken->getToken());
+            $request->getSession()->set('_show_access_token', $accessToken->getId());
 
             return new Response();
         }
@@ -206,8 +206,17 @@ final class ProfileController extends AbstractController
 
         $accessTokens = $accessTokenRepository->findForUser($profile);
 
-        $createdToken = $request->getSession()->get('_show_access_token');
+        $createdToken = null;
+        $createdId = $request->getSession()->get('_show_access_token');
         $request->getSession()->remove('_show_access_token');
+
+        if ($createdId !== null) {
+            foreach ($accessTokens as $accessToken) {
+                if ($accessToken->getId() === $createdId) {
+                    $createdToken = $accessToken;
+                }
+            }
+        }
 
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',

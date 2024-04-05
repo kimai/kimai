@@ -23,16 +23,16 @@
 
         {% if created_token is not null %}
             <div class="card mb-4">
-                <div class="ribbon bg-red">NEW</div>
+                <div class="ribbon bg-red">{{ 'status.new'|trans }}</div>
                 <div class="card-body">
-                    <h3 class="card-title">Your new API key</h3>
+                    <h3 class="card-title">{{ created_token.name }}</h3>
                     <p class="text-secondary"></p>
                     <p>{{ 'api_token_hidden'|trans }}</p>
                     <div class="codeblock">
                         <div class="codeblock-copy" style="position: absolute; right: 30px; padding-top: 5px">
-                            <button class="btn btn-icon btn-dark" onclick="navigator.clipboard.writeText('{{ created_token }}');"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg></button>
+                            <button class="btn btn-icon btn-dark" onclick="navigator.clipboard.writeText('{{ created_token.token }}');"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg></button>
                         </div>
-                        <pre><code>{{ created_token }}</code></pre>
+                        <pre><code>{{ created_token.token }}</code></pre>
                     </div>
                 </div>
             </div>
