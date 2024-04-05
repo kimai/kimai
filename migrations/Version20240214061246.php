@@ -13,7 +13,7 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * @version 2.12
+ * @version 2.14
  */
 final class Version20240214061246 extends AbstractMigration
 {
