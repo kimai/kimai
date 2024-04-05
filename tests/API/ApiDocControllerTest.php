@@ -97,6 +97,7 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/users',
             '/api/users/{id}',
             '/api/users/me',
+            '/api/users/api-token/{id}',
         ];
 
         $this->assertArrayHasKey('openapi', $json);
