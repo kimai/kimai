@@ -1514,7 +1514,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
-        <target state="translated">Das API Passwort dient zur Kommunikation zwischen Kimai und von Ihnen genutzten Apps</target>
+        <target state="translated">Hier verwalten Sie Ihre API-Tokens, welche zur Authentifizierung Ihrer Anwendung gegenüber Kimai dienen.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1766,7 +1766,7 @@
       </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
-        <target>API Passwörter sind veraltet: bitte nutzen Sie API Tokens stattdessen, der Weg über "Benutzername" und "Passwort" wird in Kürze entfernt.</target>
+        <target>API Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
       </trans-unit>
     </body>
   </file>
