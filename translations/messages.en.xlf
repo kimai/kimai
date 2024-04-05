@@ -1752,6 +1752,22 @@
         <source>absence_comment_mandatory</source>
         <target>Absence: Comment is a mandatory field</target>
       </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires">
+        <source>Expiry date</source>
+        <target>Expiry date</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage">
+        <source>Last usage</source>
+        <target>Last usage</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden">
+        <source>api_token_hidden</source>
+        <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
+        <source>api_password_deprecated</source>
+        <target>API passwords are outdated: please use API tokens instead, the way via "username" and "password" will be removed soon.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

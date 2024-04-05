@@ -10,10 +10,12 @@
 namespace App\API;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
+use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Utils\SearchTerm;
@@ -41,10 +43,10 @@ final class UserController extends BaseApiController
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private UserRepository $repository,
-        private UserPasswordHasherInterface $passwordHasher,
-        private SystemConfiguration $configuration
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly UserRepository $repository,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly SystemConfiguration $configuration
     ) {
     }
 
@@ -212,6 +214,31 @@ final class UserController extends BaseApiController
         $this->repository->saveUser($profile);
 
         $view = new View($profile, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete an API token for the current user
+     */
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]
+    #[Route(methods: ['DELETE'], path: '/api-token/{id}', name: 'delete_api_token', requirements: ['id' => '\d+'])]
+    public function deleteApiToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
+    {
+        $user = $this->getUser();
+        if (!$this->isGranted('api-token', $user)) {
+            throw $this->createAccessDeniedException('User has no access to API tokens');
+        }
+
+        if ($accessToken->getUser() !== $user) {
+            throw $this->createAccessDeniedException('You are not allowed to delete this access token');
+        }
+
+        $accessTokenRepository->deleteAccessToken($accessToken);
+
+        $view = new View(null, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);

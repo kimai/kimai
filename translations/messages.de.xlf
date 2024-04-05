@@ -1752,6 +1752,22 @@
         <source>absence_comment_mandatory</source>
         <target>Abwesenheit: Kommentar ist Pflichtfeld</target>
       </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires">
+        <source>Expiry date</source>
+        <target>Ablaufdatum</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage">
+        <source>Last usage</source>
+        <target>Letzte Nutzung</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden">
+        <source>api_token_hidden</source>
+        <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
+        <source>api_password_deprecated</source>
+        <target>API Passwörter sind veraltet: bitte nutzen Sie API Tokens stattdessen, der Weg über "Benutzername" und "Passwort" wird in Kürze entfernt.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
