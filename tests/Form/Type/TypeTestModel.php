@@ -9,14 +9,17 @@
 
 namespace App\Tests\Form\Type;
 
+/**
+ * @extends \ArrayObject<string, mixed>
+ */
 class TypeTestModel extends \ArrayObject
 {
-    public function __set($name, $value)
+    public function __set(string $name, string|int|null $value)
     {
         $this->offsetSet($name, $value);
     }
 
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return $this->offsetGet($name);
     }
