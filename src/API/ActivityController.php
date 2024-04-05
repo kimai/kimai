@@ -24,7 +24,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -56,8 +55,6 @@ final class ActivityController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_activities')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter activities')]
     #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of project IDs to filter activities, e.g.: projects[]=1&projects[]=2')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter activities: 1=visible, 2=hidden, 3=all')]
@@ -126,8 +123,6 @@ final class ActivityController extends BaseApiController
     #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_activity', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
@@ -143,8 +138,6 @@ final class ActivityController extends BaseApiController
     #[OA\Post(description: 'Creates a new activity and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
     #[Route(methods: ['POST'], path: '', name: 'post_activity')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_activity')) {
@@ -186,8 +179,6 @@ final class ActivityController extends BaseApiController
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to update', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, Activity $activity): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -223,8 +214,6 @@ final class ActivityController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity record ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
@@ -256,8 +245,6 @@ final class ActivityController extends BaseApiController
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rates will be returned', required: true)]
     #[Route(methods: ['GET'], path: '/{id}/rates', name: 'get_activity_rates', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function getRatesAction(Activity $activity): Response
     {
         $rates = $this->activityRateRepository->getRatesForActivity($activity);
@@ -275,8 +262,6 @@ final class ActivityController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_activity_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Activity $activity, #[MapEntity(mapping: ['rateId' => 'id'])] ActivityRate $rate): Response
     {
@@ -299,8 +284,6 @@ final class ActivityController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityRateForm'))]
     #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_activity_rate', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function postRateAction(Activity $activity, Request $request): Response
     {
         $rate = new ActivityRate();

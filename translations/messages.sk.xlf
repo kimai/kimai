@@ -1194,10 +1194,6 @@
         <source>api_password.missing_title</source>
         <target state="translated">API sa nedá použiť</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Nezadali ste API heslo. Kvôli bezpečnostným dôvodom nemôžete používať API kým nenastavíte heslo.</target>
-      </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
         <target state="translated">Poslať %name%</target>

@@ -197,6 +197,11 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\WorkingTime']
 
+    App\Repository\AccessTokenRepository:
+        class:     App\Repository\AccessTokenRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\AccessToken']
+
     monolog.formatter.kimai:
         class: Monolog\Formatter\LineFormatter
         arguments:

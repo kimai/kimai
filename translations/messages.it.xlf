@@ -1422,10 +1422,6 @@
         <source>api_password.missing_title</source>
         <target state="final">Non è possibile usare l'API</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description" approved="yes">
-        <source>api_password.missing_description</source>
-        <target state="final">Non hai ancora inserito una password API. Per motivi di sicurezza, non puoi usare l'API finché non hai salvato una password.</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" approved="yes">
         <source>please_choose</source>
         <target state="final">Fai la tua scelta</target>

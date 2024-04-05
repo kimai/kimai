@@ -1415,10 +1415,6 @@
         <source>api_password.intro</source>
         <target state="translated">Het API-wachtwoord wordt gebruikt voor communicatie tussen Kimai en uw applicaties</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">U heeft nog geen API-wachtwoord ingevoerd. Vanwege veiligheidsredenen kunt u de API niet gebruiken tot u een wachtwoord heeft opgeslagen.</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Geen resultaten gevonden voor "%input%"</target>

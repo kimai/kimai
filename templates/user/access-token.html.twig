@@ -1,0 +1,19 @@
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
+        'title': (access_token.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
+        'form': form,
+        'back': path('user_profile_access_token', {'username': user.userIdentifier})
+    } %}
+    {% embed formEditTemplate with formOptions %}
+        {% form_theme form 'form/horizontal.html.twig' %}
+        {% block form_body %}
+            {{ form_row(form.name) }}
+            {{ form_row(form.expiresAt) }}
+            {{ form_rest(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,31 +1,103 @@
 {% extends 'user/form.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block form_pre_content %}
+{% block form_body %}
+    <div class="card-body">
 
-    {% if user.apiToken is empty %}
         <div class="row mb-3">
-            <div class="">
-                {{ widgets.alert('warning', 'api_password.missing_description'|trans, 'api_password.missing_title'|trans, 'warning', false) }}
-            </div>
-        </div>
-    {% endif %}
+                <div class="col-12 col-md-6">
+                    <p>
+                        {{ 'api_password.intro'|trans }}
+                    </p>
+                    <p>
+                        <strong>URL</strong>: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}</li>
+                    </p>
+                </div>
 
-    <div class="row mb-3">
-        <div class="d-flex">
-            <div class="me-auto">
-                <p>{{ 'api_password.intro'|trans }}</p>
-                <ul>
-                    <li>{{ 'username'|trans }}: {{ user.userIdentifier }}</li>
-                    <li>URL: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}</li>
-                </ul>
-            </div>
-
-            <div class="ms-auto">
-                <a class="btn btn-icon" target="_blank" href="{{ path('api.swagger_ui') }}" data-toggle="tooltip" title="Swagger API Docs">{{ icon('documentation', true) }}</a>
-                <a class="btn btn-icon" target="_blank" href="{{ 'rest-api.html'|docu_link }}" data-toggle="tooltip" title="{{ 'help'|trans }}">{{ icon('help', true) }}</a>
-            </div>
+                <div class="col-12 col-md-6 text-md-end">
+                    <a class="btn action-create modal-ajax-form" href="{{ path('user_profile_access_token', {'username': user.userIdentifier}) }}">{{ icon('create', true) }} {{ 'create'|trans }}</a>
+                    <a class="btn" target="_blank" href="{{ path('api.swagger_ui') }}" data-toggle="tooltip" title="Swagger API Docs">{{ icon('documentation', true) }} Swagger Docs</a>
+                    <a class="btn" target="_blank" href="{{ 'rest-api.html'|docu_link }}" data-toggle="tooltip" title="{{ 'help'|trans }}">{{ icon('help', true) }} {{ 'help'|trans }}</a>
+                </div>
         </div>
+
+        {% if created_token is not null %}
+            <div class="card mb-4">
+                <div class="ribbon bg-red">{{ 'status.new'|trans }}</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ created_token.name }}</h3>
+                    <p class="text-secondary"></p>
+                    <p>{{ 'api_token_hidden'|trans }}</p>
+                    <div class="codeblock">
+                        <div class="codeblock-copy" style="position: absolute; right: 30px; padding-top: 5px">
+                            <button class="btn btn-icon btn-dark" onclick="navigator.clipboard.writeText('{{ created_token.token }}');"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg></button>
+                        </div>
+                        <pre><code>{{ created_token.token }}</code></pre>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if access_tokens|length > 0 %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'name'|trans }}</th>
+                    <th>{{ 'last_usage'|trans }}</th>
+                    <th>{{ 'expires'|trans }}</th>
+                    <th class="w-min actions"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for token in access_tokens %}
+                    <tr>
+                        <td>{{ token.name }}</td>
+                        <td>
+                            {% if token.lastUsage is not null %}
+                                {{ token.lastUsage|date }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if token.expiresAt is not null %}
+                                {{ token.expiresAt|date }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ widgets.action_button('trash', {'url': path('delete_api_token', {id: token.id}), class: 'api-link', 'attr': {
+                                'data-question': 'confirm.delete',
+                                'data-event': 'kimai.accessToken',
+                                'data-method': 'DELETE',
+                                'data-question': 'confirm.delete',
+                                'data-msg-error': 'action.delete.error',
+                                'data-msg-success': 'action.delete.success'
+                            }}) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'activity_invoice_settings'} %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% block title %}{{ 'password'|trans }}{% endblock %}
+            {% block body %}
+            {{ widgets.alert('danger', 'api_password_deprecated'|trans) }}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            {{ form_end(form) }}
+            {% endblock %}
+        {% endembed %}
+
     </div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.accessToken');
+        });
+    </script>
 {% endblock %}

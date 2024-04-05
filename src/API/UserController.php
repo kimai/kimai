@@ -10,10 +10,12 @@
 namespace App\API;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
+use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
 use App\Utils\SearchTerm;
@@ -21,7 +23,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,10 +43,10 @@ final class UserController extends BaseApiController
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private UserRepository $repository,
-        private UserPasswordHasherInterface $passwordHasher,
-        private SystemConfiguration $configuration
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly UserRepository $repository,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly SystemConfiguration $configuration
     ) {
     }
 
@@ -55,8 +56,6 @@ final class UserController extends BaseApiController
     #[IsGranted('view_user')]
     #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_users')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter users: 1=visible, 2=hidden, 3=all')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
@@ -108,8 +107,6 @@ final class UserController extends BaseApiController
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to fetch', required: true)]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function getAction(User $profile, EventDispatcherInterface $dispatcher): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
@@ -127,8 +124,6 @@ final class UserController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function meAction(): Response
     {
         $view = new View($this->getUser(), 200);
@@ -144,8 +139,6 @@ final class UserController extends BaseApiController
     #[OA\Post(description: 'Creates a new user and returns it afterwards')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
     #[Route(methods: ['POST'], path: '', name: 'post_user')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         $user = new User();
@@ -198,8 +191,6 @@ final class UserController extends BaseApiController
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, User $profile): Response
     {
         $form = $this->createForm(UserApiEditForm::class, $profile, [
@@ -223,6 +214,31 @@ final class UserController extends BaseApiController
         $this->repository->saveUser($profile);
 
         $view = new View($profile, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete an API token for the current user
+     */
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]
+    #[Route(methods: ['DELETE'], path: '/api-token/{id}', name: 'delete_api_token', requirements: ['id' => '\d+'])]
+    public function deleteApiToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
+    {
+        $user = $this->getUser();
+        if (!$this->isGranted('api-token', $user)) {
+            throw $this->createAccessDeniedException('User has no access to API tokens');
+        }
+
+        if ($accessToken->getUser() !== $user) {
+            throw $this->createAccessDeniedException('You are not allowed to delete this access token');
+        }
+
+        $accessTokenRepository->deleteAccessToken($accessToken);
+
+        $view = new View(null, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);

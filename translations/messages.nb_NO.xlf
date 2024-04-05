@@ -1393,10 +1393,6 @@
         <source>Activated</source>
         <target state="translated">Aktivert</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Du har ikke skrevet inn et API-passord enda. Av sikkerhetshensyn kan du ikke bruke API-et til du har lagret et passord.</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Fant ingen resultater for «%input%»</target>

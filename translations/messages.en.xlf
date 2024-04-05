@@ -1514,15 +1514,11 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
-        <target>The API password is used for communication between Kimai and your apps</target>
+        <target>Here you can manage your API tokens, which are used to authenticate your application to Kimai.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target>API cannot be used</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target>You have not yet entered an API password. For security reasons, you cannot use the API until you have saved a password.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1751,6 +1747,22 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory">
         <source>absence_comment_mandatory</source>
         <target>Absence: Comment is a mandatory field</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires">
+        <source>Expiry date</source>
+        <target>Expiry date</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage">
+        <source>Last usage</source>
+        <target>Last usage</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden">
+        <source>api_token_hidden</source>
+        <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
+        <source>api_password_deprecated</source>
+        <target>API passwords are outdated: please use API tokens instead.</target>
       </trans-unit>
     </body>
   </file>

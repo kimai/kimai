@@ -1255,10 +1255,6 @@
         <source>help.globalActivity</source>
         <target state="translated">Om du inte väljer ett projekt blir denna aktivitet global och den kan kombineras med vilket projekt som helst. Om du väljer ett projekt kan aktiviteten endast användas med det projektet. Inställningen kan inte ändras senare.</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Du har ännu inte angett ett API-lösenord. Av säkerhetsskäl kan du inte använda API förrän du har sparat ett lösenord.</target>
-      </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
         <source>stats.userDurationWeek</source>
         <target state="translated">Mina arbetstider denna vecka</target>

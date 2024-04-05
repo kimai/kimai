@@ -9,11 +9,13 @@
 
 namespace App\Controller;
 
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
+use App\Form\AccessTokenForm;
 use App\Form\Model\TotpActivation;
-use App\Form\UserApiTokenType;
+use App\Form\UserApiPasswordType;
 use App\Form\UserContractType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
@@ -21,6 +23,7 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Form\UserTwoFactorType;
+use App\Repository\AccessTokenRepository;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
@@ -151,24 +154,74 @@ final class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]
+    #[Route(path: '/{username}/create-access-token', name: 'user_profile_access_token', methods: ['GET', 'POST'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('api-token', 'profile')]
-    public function apiTokenAction(User $profile, Request $request, UserService $userService): Response
+    public function createAccessToken(User $profile, Request $request, AccessTokenRepository $accessTokenRepository): Response
     {
-        $form = $this->createApiTokenForm($profile);
+        $accessToken = new AccessToken($profile, substr(bin2hex(random_bytes(100)), 0, 25));
+
+        $form = $this->createForm(AccessTokenForm::class, $accessToken, [
+            'action' => $this->generateUrl('user_profile_access_token', ['username' => $profile->getUserIdentifier()]),
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userService->updateUser($profile);
+            $accessTokenRepository->saveAccessToken($accessToken);
+
+            $this->flashSuccess('action.update.success');
+            $request->getSession()->set('_show_access_token', $accessToken->getId());
+
+            return new Response();
+        }
+
+        return $this->render('user/access-token.html.twig', [
+            'access_token' => $accessToken,
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('api-token', 'profile')]
+    public function apiTokenAction(User $profile, Request $request, UserService $userService, AccessTokenRepository $accessTokenRepository): Response
+    {
+        $form = $this->createForm(UserApiPasswordType::class, $profile, [
+            'action' => $this->generateUrl('user_profile_api_token', ['username' => $profile->getUserIdentifier()]),
+            'method' => 'POST'
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            @trigger_error('User ' . $profile->getUsername() . ' created deprecated API password.', E_USER_DEPRECATED);
+
+            $userService->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 
             return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
         }
 
+        $accessTokens = $accessTokenRepository->findForUser($profile);
+
+        $createdToken = null;
+        $createdId = $request->getSession()->get('_show_access_token');
+        $request->getSession()->remove('_show_access_token');
+
+        if ($createdId !== null) {
+            foreach ($accessTokens as $accessToken) {
+                if ($accessToken->getId() === $createdId) {
+                    $createdToken = $accessToken;
+                }
+            }
+        }
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
+            'created_token' => $createdToken,
+            'access_tokens' => $accessTokens,
             'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
             'form' => $form->createView(),
@@ -385,18 +438,6 @@ final class ProfileController extends AbstractController
             $user,
             [
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUserIdentifier()]),
-                'method' => 'POST'
-            ]
-        );
-    }
-
-    private function createApiTokenForm(User $user): FormInterface
-    {
-        return $this->createForm(
-            UserApiTokenType::class,
-            $user,
-            [
-                'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST'
             ]
         );
