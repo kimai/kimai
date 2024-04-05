@@ -49,18 +49,12 @@ nelmio_api_doc:
             description: |
                 JSON API for the Kimai time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
             version: '1.0'
-        servers:
-            - url: https://{host}:{port}
-              variables:
-                  host:
-                      default: '%router.request_context.host%'
-                  port:
-                      default: '443'
         components:
             securitySchemes:
                 bearer:
                     type: http
                     scheme: bearer
                     bearerFormat: KIMAI
+                    description: API Token
         security:
             - bearer: []
