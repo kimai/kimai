@@ -139,7 +139,7 @@ final class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userService->updateUser($profile);
+            $userService->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -441,7 +441,7 @@ final class ProfileController extends AbstractController
     {
         if (!$profile->hasTotpSecret()) {
             $profile->setTotpSecret($totpAuthenticator->generateSecret());
-            $userService->updateUser($profile);
+            $userService->saveUser($profile);
         }
 
         $data = new TotpActivation($profile);
@@ -455,7 +455,7 @@ final class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $profile->enableTotpAuthentication();
-            $userService->updateUser($profile);
+            $userService->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -505,7 +505,7 @@ final class ProfileController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $profile->disableTotpAuthentication();
-                $userService->updateUser($profile);
+                $userService->saveUser($profile);
 
                 $this->flashSuccess('action.update.success');
             }
