@@ -34,8 +34,12 @@ final class AccessTokenHandler implements AccessTokenHandlerInterface
             throw new BadCredentialsException('Invalid token.');
         }
 
-        $accessToken->setLastUsage(new \DateTimeImmutable());
-        $this->accessTokenRepository->saveAccessToken($accessToken);
+        $now = new \DateTimeImmutable();
+        // record last usage only if this is the first time OR once every minute
+        if ($accessToken->getLastUsage() === null || $now->getTimestamp() > $accessToken->getLastUsage()->getTimestamp() + 60) {
+            $accessToken->setLastUsage($now);
+            $this->accessTokenRepository->saveAccessToken($accessToken);
+        }
 
         return new UserBadge($accessToken->getUser()->getUserIdentifier(), fn (string $userIdentifier) => $accessToken->getUser());
     }
