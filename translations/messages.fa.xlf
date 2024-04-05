@@ -1184,10 +1184,6 @@
         <source>help.globalActivity</source>
         <target state="translated">اگر پروژه ای را انتخاب نکنید، این فعالیت جهانی می شود و می توان آن را با هر پروژه ای ترکیب کرد. اگر پروژه ای را انتخاب کنید، فعالیت فقط با آن پروژه قابل استفاده است. تنظیم را نمی توان بعداً تغییر داد.</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">شما هنوز رمز عبور API را وارد نکرده اید. به دلایل امنیتی، تا زمانی که رمز عبور را ذخیره نکرده باشید، نمی توانید از API استفاده کنید.</target>
-      </trans-unit>
       <trans-unit id="1MfS6X5" resname="remove_filter">
         <source>remove_filter</source>
         <target state="translated">فیلتر جستجو را بازنشانی کنید</target>

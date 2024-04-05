@@ -1447,10 +1447,6 @@
         <source>help.globalActivities</source>
         <target state="translated">W przypadku wyłączenia tego ustawienia, czas może być rejestrowany jedynie przy działaniach specyficznych dla projektu.</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Nie wprowadzono jeszcze hasła do API. Ze względów bezpieczeństwa nie będziesz mógł korzystać z API, dopóki nie wprowadzisz hasła.</target>
-      </trans-unit>
       <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
         <source>help.invoiceLabel</source>
         <target state="translated">Ten tekst zastępuje nazwę przedmiotu, umożliwiając bardziej szczegółowe oznaczenie dla przedmiotów faktury.</target>

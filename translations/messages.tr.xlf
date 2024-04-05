@@ -1423,10 +1423,6 @@
         <source>extended_settings</source>
         <target state="translated">Genişletilmiş ayarlar</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Henüz bir API parolası girmediniz. Güvenlik nedeniyle, bir parola kaydedinceye kadar API'yi kullanamazsınız.</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
         <target state="translated">Lütfen seçin</target>

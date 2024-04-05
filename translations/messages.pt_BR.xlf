@@ -1403,10 +1403,6 @@
         <source>api_password.missing_title</source>
         <target state="translated">A API não pode ser usada</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Você ainda não inseriu uma senha para a API. Por questões de segurança, você não pode usar a API até que uma senha seja salva.</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Nenhum resultado foi encontrado para "%input%"</target>

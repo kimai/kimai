@@ -1362,10 +1362,6 @@
         <source>Activated</source>
         <target state="translated">Активовано</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Ви ще не внесли пароль API. З огляду на безпеку, користуватися API без збереженого пароля Ви не можете.</target>
-      </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target state="translated">Про Kimai</target>

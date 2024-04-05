@@ -1407,10 +1407,6 @@
         <source>api_password.missing_title</source>
         <target state="translated">No se puede usar la aplicación</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Aún no ha ingresado una contraseña para la aplicación. Por razones de seguridad, no puede usar la aplicación hasta que haya guardado una contraseña.</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">No se han encontrado resultados para "%input%"</target>

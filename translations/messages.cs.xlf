@@ -1459,10 +1459,6 @@
         <source>Deactivated</source>
         <target state="translated">Deaktivováno</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Dosud jste nezadali heslo API. Z bezpečnostních důvodů nemůžete rozhraní API používat, dokud heslo neuložíte.</target>
-      </trans-unit>
       <trans-unit id="3WHV.yf" resname="activated">
         <source>Activated</source>
         <target state="translated">Aktivováno</target>

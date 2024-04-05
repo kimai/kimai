@@ -83,17 +83,6 @@
             {% block title %}{{ 'password'|trans }}{% endblock %}
             {% block body %}
             {{ widgets.alert('danger', 'api_password_deprecated'|trans) }}
-
-            {#
-            {% if access_tokens|length == 0 and not user.hasApiToken() %}
-                <div class="row mb-3">
-                    <div class="">
-                        {{ widgets.alert('warning', 'api_password.missing_description'|trans, 'api_password.missing_title'|trans, 'warning', false) }}
-                    </div>
-                </div>
-            {% endif %}
-            #}
-
             {{ form_start(form) }}
                 {{ form_widget(form) }}
                 <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />

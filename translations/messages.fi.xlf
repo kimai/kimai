@@ -1355,10 +1355,6 @@
         <source>skin</source>
         <target state="translated">Design</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Et ole vielä syöttänyt API salasanaa. Turvallisuussyistä et voi käyttää API:a ennen salasanan tallentamista.</target>
-      </trans-unit>
       <trans-unit id="WOAx9yz" resname="modal.columns.profile">
         <source>modal.columns.profile</source>
         <target state="translated">Profiili</target>

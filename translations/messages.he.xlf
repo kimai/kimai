@@ -1298,10 +1298,6 @@
         <source>skin.dark</source>
         <target state="translated">כהה</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">טרם מילאת סיסמה ל־API. מטעמי אבטחה, אי אפשר להשתמש ב־API עד לשמירת סיסמה.</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
         <target state="translated">נא לבחור</target>

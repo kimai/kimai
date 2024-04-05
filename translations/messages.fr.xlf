@@ -1371,10 +1371,6 @@
         <source>api_password.missing_title</source>
         <target state="translated">L'API ne peut pas être utilisée</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Vous n'avez pas encore saisi de mot de passe pour l'API. Pour des raisons de sécurité, vous ne pouvez pas utiliser l'API tant que vous n'avez pas enregistré un mot de passe.</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Aucun résultat trouvé pour "%input%"</target>

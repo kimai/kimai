@@ -1130,10 +1130,6 @@
         <source>skin</source>
         <target state="translated">設計</target>
       </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">您尚未輸入 API 密碼。基於安全考量，您必須先儲存密碼才能使用 API。</target>
-      </trans-unit>
       <trans-unit id="WOAx9yz" resname="modal.columns.profile">
         <source>modal.columns.profile</source>
         <target state="translated">資料</target>
