@@ -325,7 +325,7 @@ final class CustomerController extends AbstractController
             $rates = $rateRepository->getRatesForCustomer($customer);
         }
 
-        if (null !== $customer->getTimezone()) {
+        if ($customer->getTimezone() !== null && $customer->getTimezone() !== '') {
             $timezone = new \DateTimeZone($customer->getTimezone());
         }
 

@@ -503,11 +503,6 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 14
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot access offset 'enabled' on mixed\\.$#"
             count: 1
             path: API/UserControllerTest.php

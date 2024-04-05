@@ -1495,10 +1495,6 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">在雇佣合同设置中未为此用户配置目标工时。</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">这里配置的数值用于计算每小时的账户。</target>
-      </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
         <target state="translated">这将锁定所选日期之前一年中的所有日期。 用户将无法再创建或编辑锁定期间的时间。</target>
@@ -1528,7 +1524,7 @@
         <target state="translated">工作时间</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">目标小时数</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">

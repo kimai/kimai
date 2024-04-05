@@ -28,78 +28,47 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class TagsSelectType extends AbstractType
 {
-    public function __construct(private TagRepository $tagRepository)
+    public function __construct(
+        private readonly TagRepository $tagRepository
+    )
     {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
-            if (!$options['allow_create']) {
-                return;
-            }
+        if (!$options['allow_create']) {
+            return;
+        }
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            /** @var array<string> $tagIds */
             $tagIds = $event->getData();
             if (!\is_array($tagIds)) {
                 return;
             }
-            $ids = array_filter($tagIds, function ($tagId) {
+
+            $tags = [];
+            foreach ($tagIds as $tagId) {
+                $tag = null;
+
                 if (is_numeric($tagId)) {
-                    return true;
+                    $tag = $this->tagRepository->find($tagId);
                 }
 
-                return false;
-            });
-
-            // get the current tags and find the new ones that should be created
-            $tags = $this->tagRepository->findBy(['id' => $ids]);
-
-            $foundIds = [];
-            foreach ($tags as $tag) {
-                $foundIds[] = (string) $tag->getId();
-            }
-
-            $newData = [];
-            /** @var array<string> $newNames */
-            $newNames = [];
-            foreach ($tagIds as $tag) {
-                if (!\in_array($tag, $foundIds, true)) {
-                    $newNames[] = $tag;
-                } else {
-                    $newData[] = $tag;
-                }
-            }
-
-            // 1. in case someone is using tags like "1234" this can interfere with the ID
-            // 2. if we would load only visible tags, we would try to create new ones below
-            //    and that would trigger the unique constraint
-            $tags = $this->tagRepository->findTagsByName($newNames, null);
-            $foundTagNames = [];
-            foreach ($tags as $tag) {
-                $newData[] = (string) $tag->getId();
-                $foundTagNames[] = $tag->getName();
-            }
-
-            /** @var array<string> $newNamesCreate */
-            $newNamesCreate = array_udiff($newNames, $foundTagNames, function (mixed $userTag, mixed $existingTag) {
-                if (!\is_string($userTag) || !\is_string($existingTag)) {
-                    return -1;
+                if ($tag === null) {
+                    $tag = $this->tagRepository->findTagByName($tagId);
                 }
 
-                if (mb_strtolower($userTag) === mb_strtolower($existingTag)) {
-                    return 0;
+                if ($tag === null) {
+                    $tag = new Tag();
+                    $tag->setName(mb_substr($tagId, 0, 100));
+                    $this->tagRepository->saveTag($tag);
                 }
 
-                return strcmp($userTag, $existingTag);
-            });
-
-            foreach ($newNamesCreate as $name) {
-                $tag = new Tag();
-                $tag->setName(mb_substr($name, 0, 100));
-                $this->tagRepository->saveTag($tag);
-                $newData[] = $tag->getId();
+                $tags[] = $tag->getId();
             }
 
-            $event->setData($newData);
+            $event->setData($tags);
         }, 1000);
     }
 
@@ -132,6 +101,8 @@ final class TagsSelectType extends AbstractType
                 return $repo->getQueryBuilderForFormType($query);
             };
         });
+
+        $resolver->setAllowedTypes('allow_create', 'bool');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

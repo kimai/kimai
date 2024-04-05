@@ -1504,7 +1504,7 @@
         <target state="translated">Évaluation</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Heures cibles</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
@@ -1534,10 +1534,6 @@
       <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
         <source>Working times</source>
         <target state="translated">Heures de travail</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Les valeurs configurées ici sont utilisées pour calculer le compte horaire.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>

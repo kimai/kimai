@@ -1491,7 +1491,7 @@
         <target state="final">Nessun obiettivo di ore è stato configurato per questo utente nelle impostazioni del contratto di lavoro.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" approved="yes">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="final">Obiettivo di ore</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" approved="yes">
@@ -1521,10 +1521,6 @@
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" approved="yes">
         <source>completed_month_pdf_note</source>
         <target state="final">Questo documento serve come prova delle ore lavorate.</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help" approved="yes">
-        <source>work_times_should.help</source>
-        <target state="final">I valori configurati qui vengono usati per calcolare il conto orario.</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" approved="yes">
         <source>confirmed_by_at</source>

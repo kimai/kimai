@@ -1466,7 +1466,7 @@
         <target state="translated">مرَض</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">الساعات المستهدَفة</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">

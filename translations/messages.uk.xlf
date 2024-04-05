@@ -1426,10 +1426,6 @@
         <source>work_times</source>
         <target state="translated">Робочі години</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Налаштовані тут значення використовуються для погодинного розрахунку облікового запису.</target>
-      </trans-unit>
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
         <target state="translated">Видалено</target>
@@ -1443,7 +1439,7 @@
         <target state="needs-translation">Після завершення місяця користувач більше не зможе створювати або редагувати час для цього періоду.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Цільові години</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">

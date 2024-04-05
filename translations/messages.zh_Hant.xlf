@@ -1047,7 +1047,7 @@
         <target state="translated">病假</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">目標時數</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
@@ -1077,10 +1077,6 @@
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target state="translated">無法使用 API</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">這裡所設定的數值會用於計算鐘點。</target>
       </trans-unit>
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
         <source>profile.2fa_confirmation</source>

@@ -1355,12 +1355,8 @@
         <target state="translated">Táto faktúra je generovaná s touto šablónou.</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
+        <source>Expected number of hours</source>
         <target state="translated">Cieľové hodiny</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Nakonfigurované hodnoty se používajú k výpočtu hodinového účtu.</target>
       </trans-unit>
       <trans-unit id="gcFtM3o" resname="holiday">
         <source>holiday</source>
