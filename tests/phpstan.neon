@@ -5,6 +5,7 @@ includes:
     - %rootDir%/../phpstan-doctrine/rules.neon
     - %rootDir%/../phpstan-phpunit/extension.neon
     - %rootDir%/../phpstan-phpunit/rules.neon
+    - %rootDir%/../phpstan-deprecation-rules/rules.neon
 
 parameters:
     level: 9

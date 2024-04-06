@@ -4,6 +4,7 @@ includes:
     - %rootDir%/../phpstan-doctrine/extension.neon
     - %rootDir%/../phpstan-doctrine/rules.neon
     - %rootDir%/../phpstan-strict-rules/rules.neon
+    - %rootDir%/../phpstan-deprecation-rules/rules.neon
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
