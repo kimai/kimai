@@ -50,4 +50,4 @@ jobs:
                   pr-comment: ''
                   pr-lock-reason: ''
                   process-only: ''
-                  log-output: false
+                  log-output: true
