@@ -5,20 +5,20 @@
     <div class="card-body">
 
         <div class="row mb-3">
-                <div class="col-12 col-md-6">
-                    <p>
-                        {{ 'api_password.intro'|trans }}
-                    </p>
-                    <p>
-                        <strong>URL</strong>: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}</li>
-                    </p>
-                </div>
+            <div class="col-12 col-md-6">
+                <p>
+                    {{ 'api_password.intro'|trans }}
+                </p>
+                <p>
+                    <strong>URL</strong>: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}
+                </p>
+            </div>
 
-                <div class="col-12 col-md-6 text-md-end">
-                    <a class="btn action-create modal-ajax-form" href="{{ path('user_profile_access_token', {'username': user.userIdentifier}) }}">{{ icon('create', true) }} {{ 'create'|trans }}</a>
-                    <a class="btn" target="_blank" href="{{ path('api.swagger_ui') }}" data-toggle="tooltip" title="Swagger API Docs">{{ icon('documentation', true) }} Swagger Docs</a>
-                    <a class="btn" target="_blank" href="{{ 'rest-api.html'|docu_link }}" data-toggle="tooltip" title="{{ 'help'|trans }}">{{ icon('help', true) }} {{ 'help'|trans }}</a>
-                </div>
+            <div class="col-12 col-md-6 text-md-end">
+                <a class="btn action-create modal-ajax-form" href="{{ path('user_profile_access_token', {'username': user.userIdentifier}) }}">{{ icon('create', true) }} {{ 'create'|trans }}</a>
+                <a class="btn" target="_blank" href="{{ path('api.swagger_ui') }}">{{ icon('documentation', true) }} Swagger Docs</a>
+                <a class="btn" target="_blank" href="{{ 'rest-api.html'|docu_link }}">{{ icon('help', true) }} {{ 'help'|trans }}</a>
+            </div>
         </div>
 
         {% if created_token is not null %}
@@ -39,7 +39,7 @@
         {% endif %}
 
         {% if access_tokens|length > 0 %}
-            <table class="table">
+            <table class="table table-vcenter">
                 <thead>
                 <tr>
                     <th>{{ 'name'|trans }}</th>
@@ -81,6 +81,7 @@
         {% embed '@theme/embeds/collapsible.html.twig' with {id: 'activity_invoice_settings'} %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block title %}{{ 'password'|trans }}{% endblock %}
+            {% block box_class %}mt-3{% endblock %}
             {% block body %}
             {{ widgets.alert('danger', 'api_password_deprecated'|trans) }}
             {{ form_start(form) }}
