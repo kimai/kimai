@@ -47,7 +47,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     @return array<string, string|bool|int|null|array<string, mixed>>
+     * @return array<string, string|bool|int|null|array<string, mixed>>
      */
     public function getOptions(array $options = []): array
     {

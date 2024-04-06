@@ -12,6 +12,7 @@ namespace App\Doctrine;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\Types;
 
 final class UTCDateTimeType extends DateTimeType
 {
@@ -67,7 +68,7 @@ final class UTCDateTimeType extends DateTimeType
         if (!$converted) {
             throw ConversionException::conversionFailedFormat(
                 $value,
-                $this->getName(),
+                Types::DATETIME_MUTABLE,
                 $platform->getDateTimeFormatString()
             );
         }
