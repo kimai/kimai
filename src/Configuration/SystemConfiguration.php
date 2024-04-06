@@ -127,6 +127,8 @@ final class SystemConfiguration
      */
     public function offsetExists($offset): bool
     {
+        @trigger_error('The method "SystemConfiguration::offsetExists()" is deprecated, use "has()" instead', E_USER_DEPRECATED);
+
         return $this->has($offset);
     }
 
@@ -135,6 +137,8 @@ final class SystemConfiguration
      */
     public function offsetGet($offset): mixed
     {
+        @trigger_error('The method "SystemConfiguration::offsetGet()" is deprecated, use "find()" instead', E_USER_DEPRECATED);
+
         return $this->find($offset);
     }
 
@@ -143,16 +147,9 @@ final class SystemConfiguration
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->set($offset, $value);
-    }
+        @trigger_error('The method "SystemConfiguration::offsetSet()" is deprecated, use "set()" instead', E_USER_DEPRECATED);
 
-    /**
-     * @deprecated since 2.0.35
-     * @throws \BadMethodCallException
-     */
-    public function offsetUnset(mixed $offset): void
-    {
-        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+        $this->set($offset, $value);
     }
 
     // ========== Authentication configurations ==========

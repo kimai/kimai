@@ -11,6 +11,7 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +43,7 @@ abstract class AbstractFormatterTest extends TestCase
         $sut->setFormattedValue($worksheet, 1, 1, $this->getActualValue());
         $cell = $worksheet->getCell([1, 1]);
         $this->assertCellValue($cell);
-        $this->assertCellStyle($worksheet->getStyleByColumnAndRow(1, 1));
+        $this->assertCellStyle($worksheet->getStyle(CellAddress::fromColumnAndRow(1, 1)));
     }
 
     public function testSetNull(): void

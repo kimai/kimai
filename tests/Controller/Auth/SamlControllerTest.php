@@ -18,11 +18,11 @@ use App\Tests\Mocks\Saml\SamlAuthFactoryFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 /**
  * @group integration
@@ -127,7 +127,7 @@ class SamlControllerTest extends TestCase
 
         $request = new Request();
         $request->setSession($this->createMock(SessionInterface::class));
-        $request->attributes->set(Security::AUTHENTICATION_ERROR, new \Exception('My test error'));
+        $request->attributes->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, new \Exception('My test error'));
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
