@@ -16,8 +16,9 @@ jobs:
     action:
         runs-on: ubuntu-latest
         steps:
-            - uses: dessant/lock-threads@v4
+            - uses: dessant/lock-threads@v5
               with:
+                  process-only: 'issues, prs'
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   issue-inactive-days: '90'
                   issue-comment: >
