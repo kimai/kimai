@@ -46,7 +46,8 @@ final class UserBillableMonth extends AbstractBillablePercent
         try {
             $Billable = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), true);
             $NonBillable = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser());
-            $BillablePercent = strval(round($Billable / $NonBillable *100)) . "%";
+            $BillablePercent = \strval(round($Billable / $NonBillable * 100)) . '%';
+
             return $BillablePercent;
         } catch (\Exception $ex) {
             throw new WidgetException(

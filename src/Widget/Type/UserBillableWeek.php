@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Widget\Type;
 
@@ -19,7 +25,7 @@ final class UserBillableWeek extends AbstractBillablePercent
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge(['color' => WidgetInterface::COLOR_WEEK,], parent::getOptions($options));
+        return array_merge(['color' => WidgetInterface::COLOR_WEEK], parent::getOptions($options));
     }
 
     public function getPermissions(): array
@@ -39,8 +45,9 @@ final class UserBillableWeek extends AbstractBillablePercent
     {
         try {
             $NonBillable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
-            $Billable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), True); 
-            $BillablePerc = strval(round($Billable / $NonBillable * 100)) ."%";
+            $Billable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), true);
+            $BillablePerc = \strval(round($Billable / $NonBillable * 100)) . '%';
+
             return $BillablePerc;
         } catch (\Exception $ex) {
             throw new WidgetException(
