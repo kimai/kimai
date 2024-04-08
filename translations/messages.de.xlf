@@ -975,6 +975,14 @@
         <source>stats.yourWorkingHours</source>
         <target>Meine Arbeitszeiten</target>
       </trans-unit>
+      <trans-unit resname="stats.userBillableWeek" id="eOz4S86">
+        <source>stats.userBillableWeek</source>
+        <target>Meine abrechenbaren Stunden diese Woche in Prozent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableMonth" id="q6b7sbE">
+        <source>stats.userBillableMonth</source>
+        <target>Meine abrechenbaren Stunden diesen Monat in Prozent</target>
+      </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
         <target>Umsatz heute</target>
