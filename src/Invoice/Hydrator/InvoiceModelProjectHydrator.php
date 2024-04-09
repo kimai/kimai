@@ -79,6 +79,7 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'budget_time' => $project->getTimeBudget(),
             $prefix . 'budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
             $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
+            $prefix . 'number' => $project->getNumber() ?? '',
         ];
 
         if ($model->getQuery()?->getEnd() !== null) {

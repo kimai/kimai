@@ -66,6 +66,7 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
             $prefix . 'id' => $activity->getId(),
             $prefix . 'name' => $activity->getName() ?? '',
             $prefix . 'comment' => $activity->getComment() ?? '',
+            $prefix . 'number' => $activity->getNumber() ?? '',
         ];
 
         if ($model->getQuery()?->getEnd() !== null) {
