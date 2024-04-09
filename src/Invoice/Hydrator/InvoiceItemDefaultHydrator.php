@@ -15,6 +15,8 @@ use App\Invoice\InvoiceModel;
 
 final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
+    private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+
     private InvoiceModel $model;
 
     public function setInvoiceModel(InvoiceModel $model): void
@@ -82,6 +84,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.end_time' => $formatter->getFormattedTime($end),
             'entry.end_timestamp' => $end->getTimestamp(),
             'entry.date' => $formatter->getFormattedDateTime($begin),
+            'entry.date_process' => $begin->format(self::DATE_PROCESS_FORMAT), // since 2.14
             'entry.week' => \intval($begin->format('W')),
             'entry.weekyear' => $begin->format('o'),
         ];
