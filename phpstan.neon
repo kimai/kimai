@@ -3449,11 +3449,6 @@ parameters:
             path: src/Invoice/Calculator/AbstractMergedCalculator.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
@@ -3464,23 +3459,8 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 3
-            path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
-
-        -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 2
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -

@@ -77,17 +77,23 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.duration_format' => $formatter->getFormattedDuration($item->getDuration()),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
             'entry.duration_minutes' => (int) ($item->getDuration() / 60),
-            'entry.begin' => $formatter->getFormattedDateTime($begin),
-            'entry.begin_time' => $formatter->getFormattedTime($begin),
-            'entry.begin_timestamp' => $begin->getTimestamp(),
-            'entry.end' => $formatter->getFormattedDateTime($end),
-            'entry.end_time' => $formatter->getFormattedTime($end),
-            'entry.end_timestamp' => $end->getTimestamp(),
-            'entry.date' => $formatter->getFormattedDateTime($begin),
-            'entry.date_process' => $begin->format(self::DATE_PROCESS_FORMAT), // since 2.14
-            'entry.week' => \intval($begin->format('W')),
-            'entry.weekyear' => $begin->format('o'),
         ];
+
+        if ($begin !== null) {
+            $values['entry.begin'] = $formatter->getFormattedDateTime($begin);
+            $values['entry.begin_time'] = $formatter->getFormattedTime($begin);
+            $values['entry.begin_timestamp'] = $begin->getTimestamp();
+            $values['entry.date'] = $formatter->getFormattedDateTime($begin);
+            $values['entry.date_process'] = $begin->format(self::DATE_PROCESS_FORMAT); // since 2.14
+            $values['entry.week'] = \intval($begin->format('W'));
+            $values['entry.weekyear'] = $begin->format('o');
+        }
+
+        if ($end !== null) {
+            $values['entry.end'] = $formatter->getFormattedDateTime($end);
+            $values['entry.end_time'] = $formatter->getFormattedTime($end);
+            $values['entry.end_timestamp'] = $end->getTimestamp();
+        }
 
         if (null !== $user) {
             $values = array_merge($values, [
