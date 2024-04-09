@@ -44,9 +44,10 @@ final class UserBillableTotal extends AbstractBillablePercent
     public function getData(array $options = []): string
     {
         try {
-            $Billable = $this->repository->getDurationForTimeRange(null, null, $this->getUser(), True);
+            $Billable = $this->repository->getDurationForTimeRange(null, null, $this->getUser(), true);
             $AllEntries = $this->repository->getDurationForTimeRange(null, null, $this->getUser());
             $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
+
             return $BillablePercent;
         } catch (\Exception $ex) {
             throw new WidgetException(

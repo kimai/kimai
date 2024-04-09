@@ -49,9 +49,10 @@ final class UserBillableYear extends AbstractCounterYear
     protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
     {
         try {
-            $Billable = $this->repository->getDurationForTimeRange($begin, $end, $this->getUser(), True);
+            $Billable = $this->repository->getDurationForTimeRange($begin, $end, $this->getUser(), true);
             $AllEntries = $this->repository->getDurationForTimeRange($begin, $end, $this->getUser());
             $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
+
             return $BillablePercent;
         } catch (\Exception $ex) {
             throw new WidgetException(

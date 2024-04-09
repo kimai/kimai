@@ -44,7 +44,7 @@ final class UserDurationBillableTotal extends AbstractCounterDuration
     public function getData(array $options = []): mixed
     {
         try {
-            return $this->repository->getDurationForTimeRange(null, null, $this->getUser(), True);
+            return $this->repository->getDurationForTimeRange(null, null, $this->getUser(), true);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()
