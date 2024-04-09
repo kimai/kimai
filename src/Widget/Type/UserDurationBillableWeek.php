@@ -13,7 +13,7 @@ use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class UserBillableMonth extends AbstractBillablePercent
+final class UserDurationBillableWeek extends AbstractCounterDuration
 {
     public function __construct(private TimesheetRepository $repository)
     {
@@ -25,7 +25,7 @@ final class UserBillableMonth extends AbstractBillablePercent
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge(['color' => WidgetInterface::COLOR_MONTH], parent::getOptions($options));
+        return array_merge(['color' => WidgetInterface::COLOR_WEEK], parent::getOptions($options));
     }
 
     public function getPermissions(): array
@@ -35,19 +35,16 @@ final class UserBillableMonth extends AbstractBillablePercent
 
     public function getId(): string
     {
-        return 'userBillableMonth';
+        return 'userDurationBillableWeek';
     }
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): string
+    public function getData(array $options = []): mixed
     {
         try {
-            $Billable = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), True);
-            $AllEntries = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser());
-            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
-            return $BillablePercent;
+            return $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), True);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

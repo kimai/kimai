@@ -15,7 +15,7 @@
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="0" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=10.5.8-MariaDB"/>
+        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=8.0.36-0ubuntu0.22.04.1"/>
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
         <env name="MAILER_URL" value="null://null"/>
         <env name="MAILER_FROM" value="kimai@example.com"/>

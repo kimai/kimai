@@ -44,10 +44,9 @@ final class UserBillableWeek extends AbstractBillablePercent
     public function getData(array $options = []): string
     {
         try {
-            $NonBillable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
-            $Billable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), true);
-            $BillablePerc = \strval(round($Billable / $NonBillable * 100)) . '%';
-
+            $Billable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), True);
+            $AllEntries = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
+            $BillablePerc = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
             return $BillablePerc;
         } catch (\Exception $ex) {
             throw new WidgetException(

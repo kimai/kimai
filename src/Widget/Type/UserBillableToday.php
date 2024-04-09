@@ -13,7 +13,7 @@ use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class UserBillableMonth extends AbstractBillablePercent
+final class UserBillableToday extends AbstractBillablePercent
 {
     public function __construct(private TimesheetRepository $repository)
     {
@@ -25,7 +25,7 @@ final class UserBillableMonth extends AbstractBillablePercent
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge(['color' => WidgetInterface::COLOR_MONTH], parent::getOptions($options));
+        return array_merge(['color' => WidgetInterface::COLOR_TODAY], parent::getOptions($options));
     }
 
     public function getPermissions(): array
@@ -35,7 +35,7 @@ final class UserBillableMonth extends AbstractBillablePercent
 
     public function getId(): string
     {
-        return 'userBillableMonth';
+        return 'userBillableToday';
     }
 
     /**
@@ -44,8 +44,8 @@ final class UserBillableMonth extends AbstractBillablePercent
     public function getData(array $options = []): string
     {
         try {
-            $Billable = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), True);
-            $AllEntries = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser());
+            $Billable = $this->repository->getDurationForTimeRange($this->createTodayStartDate(), $this->createTodayEndDate(), $this->getUser(), True);
+            $AllEntries = $this->repository->getDurationForTimeRange($this->createTodayStartDate(), $this->createTodayEndDate(), $this->getUser());
             $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
             return $BillablePercent;
         } catch (\Exception $ex) {
