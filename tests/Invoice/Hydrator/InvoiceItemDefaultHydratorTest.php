@@ -63,6 +63,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.end_time',
             'entry.end_timestamp',
             'entry.date',
+            'entry.date_process',
             'entry.week',
             'entry.weekyear',
             'entry.user_id',
