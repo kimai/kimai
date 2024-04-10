@@ -543,6 +543,11 @@ parameters:
             path: src/Command/ResetTestCommand.php
 
         -
+            message: "#^Parameter \\#1 \\$value of function floatval expects array|bool|float|int|resource|string|null, mixed given\\.$#"
+            count: 1
+            path: src/Command/TimesheetStopTimeExceeding.php
+
+        -
             message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php
