@@ -153,6 +153,7 @@ class DebugRendererTest extends TestCase
             'activity.name',
             'activity.comment',
             'activity.number',
+            'activity.invoice_text',
             'activity.meta.foo-activity',
             'activity.budget_open',
             'activity.budget_open_plain',
@@ -186,6 +187,7 @@ class DebugRendererTest extends TestCase
                 'activity.1.name',
                 'activity.1.comment',
                 'activity.1.number',
+                'activity.1.invoice_text',
                 'activity.1.meta.foo-activity',
             ]);
         }
@@ -204,6 +206,7 @@ class DebugRendererTest extends TestCase
                 'project.name',
                 'project.comment',
                 'project.number',
+                'project.invoice_text',
                 'project.order_date',
                 'project.order_number',
                 'project.meta.foo-project',
@@ -227,6 +230,7 @@ class DebugRendererTest extends TestCase
                     'project.1.name',
                     'project.1.comment',
                     'project.1.number',
+                    'project.1.invoice_text',
                     'project.1.order_date',
                     'project.1.order_number',
                     'project.1.meta.foo-project',
