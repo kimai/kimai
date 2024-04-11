@@ -1544,9 +1544,17 @@
         <source>Deactivated</source>
         <target>Deaktiviert</target>
       </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate">
+        <source>Deactivate</source>
+        <target>Deaktivieren</target>
+      </trans-unit>
       <trans-unit id="3WHV.yf" resname="activated">
         <source>Activated</source>
         <target>Aktiviert</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate">
+        <source>Activate</source>
+        <target>Aktivieren</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
