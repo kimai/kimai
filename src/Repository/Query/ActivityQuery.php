@@ -17,7 +17,14 @@ use App\Entity\Project;
 class ActivityQuery extends ProjectQuery
 {
     public const ACTIVITY_ORDER_ALLOWED = [
-        'name', 'description' => 'comment', 'customer', 'project', 'budget', 'timeBudget', 'visible'
+        'name',
+        'description' => 'comment',
+        'activity_number' => 'number',
+        'customer',
+        'project',
+        'budget',
+        'timeBudget',
+        'visible'
     ];
 
     /**
