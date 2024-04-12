@@ -31,4 +31,23 @@ abstract class AbstractBillablePercent extends AbstractWidgetType
     {
         return 'widget/widget-user-billable-percent.html.twig';
     }
+
+    /**
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     */
+    public function getData(array $options = []): mixed
+    {
+        try {
+            if($options[1] === 0) {
+                return "0%";
+            }
+            $billablePerc = \strval(round($options[0] / $options[1] * 100, 2)) . "%";
+
+            return $billablePerc;
+        } catch (\Exception $ex) {
+            throw new WidgetException(
+                'Failed loading widget data: ' . $ex->getMessage()
+            );
+        }
+    }
 }

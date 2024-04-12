@@ -43,16 +43,6 @@ final class UserBillableMonth extends AbstractBillablePercent
      */
     public function getData(array $options = []): string
     {
-        try {
-            $Billable = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), true);
-            $AllEntries = $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser());
-            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
-
-            return $BillablePercent;
-        } catch (\Exception $ex) {
-            throw new WidgetException(
-                'Failed loading widget data: ' . $ex->getMessage()
-            );
-        }
+        return parent::getData(array_merge([$this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), true), $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser())], $options));
     }
 }

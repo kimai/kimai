@@ -43,16 +43,6 @@ final class UserBillableTotal extends AbstractBillablePercent
      */
     public function getData(array $options = []): string
     {
-        try {
-            $Billable = $this->repository->getDurationForTimeRange(null, null, $this->getUser(), true);
-            $AllEntries = $this->repository->getDurationForTimeRange(null, null, $this->getUser());
-            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
-
-            return $BillablePercent;
-        } catch (\Exception $ex) {
-            throw new WidgetException(
-                'Failed loading widget data: ' . $ex->getMessage()
-            );
-        }
+        return parent::getData(array_merge([$this->repository->getDurationForTimeRange(null, null, $this->getUser(), true), $this->repository->getDurationForTimeRange(null, null, $this->getUser())], $options));
     }
 }

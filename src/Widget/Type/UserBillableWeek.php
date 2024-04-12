@@ -39,20 +39,10 @@ final class UserBillableWeek extends AbstractBillablePercent
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     */
-    public function getData(array $options = []): string
+ * @param array<string, string|bool|int|null|array<string, mixed>> $options
+ */
+    public function getData(array $options = []): mixed
     {
-        try {
-            $Billable = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), true);
-            $AllEntries = $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser());
-            $BillablePerc = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
-
-            return $BillablePerc;
-        } catch (\Exception $ex) {
-            throw new WidgetException(
-                'Failed loading widget data: ' . $ex->getMessage()
-            );
-        }
+        return parent::getData(array_merge([$this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser(), true), $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), $this->getUser())], $options));
     }
 }

@@ -51,7 +51,10 @@ final class UserBillableYear extends AbstractCounterYear
         try {
             $Billable = $this->repository->getDurationForTimeRange($begin, $end, $this->getUser(), true);
             $AllEntries = $this->repository->getDurationForTimeRange($begin, $end, $this->getUser());
-            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . '%';
+            if($AllEntries === 0) {
+                return 0;
+            }
+            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2));
 
             return $BillablePercent;
         } catch (\Exception $ex) {
