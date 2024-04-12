@@ -1315,9 +1315,9 @@
         <source>select.add_new</source>
         <target state="translated">Utwórz nowy o nazwie "%input%"</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">Hasło interfejsu API jest używane do komunikacji pomiędzy Kimai a Twoimi aplikacjami</target>
+        <target state="needs-translation">Hasło interfejsu API jest używane do komunikacji pomiędzy Kimai a Twoimi aplikacjami</target>
       </trans-unit>
       <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
         <source>profile.2fa_intro</source>
@@ -1507,9 +1507,9 @@
         <source>work_times</source>
         <target state="translated">Czas pracy</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Godziny docelowe</target>
+        <target state="needs-translation">Godziny docelowe</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1574,6 +1574,10 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Generator numeru faktury</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Filtr wyszukiwania</target>
       </trans-unit>
     </body>
   </file>

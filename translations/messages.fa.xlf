@@ -1340,9 +1340,9 @@
         <source>skin.dark</source>
         <target state="translated">تاریک</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">رمز عبور API برای ارتباط بین Kimai و برنامه های شما استفاده می شود</target>
+        <target state="needs-translation">رمز عبور API برای ارتباط بین Kimai و برنامه های شما استفاده می شود</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>

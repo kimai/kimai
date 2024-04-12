@@ -298,9 +298,21 @@
         <source>copy_teams_on_create</source>
         <target state="final">Prendi in carico i team dall'utente connesso quando crei nuove voci</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format" approved="no" xml:space="preserve">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" approved="yes" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="needs-translation">Formato numero cliente</target>
+        <target state="final">Formato numero cliente</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve" approved="yes">
+        <source>project.number_format</source>
+        <target state="final">Formato numero progetto</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve" approved="yes">
+        <source>activity.number_format</source>
+        <target state="final">Formato numero attività</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve" approved="yes">
+        <source>allow_duplicate_number</source>
+        <target state="final">Consenti più utilizzi dello stesso numero</target>
       </trans-unit>
     </body>
   </file>

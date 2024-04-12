@@ -1399,9 +1399,9 @@
         <source>api_password.missing_title</source>
         <target state="translated">API kullanılamıyor</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API parolası Kimai ve uygulamalarınız arasındaki iletişim için kullanılır</target>
+        <target state="translated">Burada, uygulamanız ile Kimai arasında kimlik doğrulaması yapmak için kullanılan API belirteçlerinizi yönetebilirsiniz.</target>
       </trans-unit>
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
@@ -1511,9 +1511,9 @@
         <source>review</source>
         <target state="translated">İnceleme</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Hedef saat</target>
+        <target state="translated">Beklenen saat sayısı</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
@@ -1774,6 +1774,30 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">Devamsızlık: Yorum zorunlu bir alandır</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve" approved="no">
+        <source>Project number</source>
+        <target state="translated">Proje numarası</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve" approved="no">
+        <source>Activity number</source>
+        <target state="translated">Etkinlik numarası</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Geçerlilik tarihi</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Son kullanım</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Bu anahtarı bundan sonra görüntüleyemeyeceksiniz! Bu yüzden onu güvende tutun ve bu pencereyi kapatmadan önce kopyaladığınızdan emin olun.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API parolaları artık kullanılmıyor: lütfen bunun yerine API belirteçlerini kullanın.</target>
       </trans-unit>
     </body>
   </file>

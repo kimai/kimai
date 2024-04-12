@@ -1414,9 +1414,9 @@
         <source>skin.dark</source>
         <target state="final">Scuro</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro" approved="yes">
+      <trans-unit id="JSBReoa" resname="api_password.intro" approved="yes" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="final">La password API viene usata per la comunicazione tra Kimai e le tue app</target>
+        <target state="final">Qui puoi gestire i tuoi token API, che vengono usati per autenticare la tua applicazione su Kimai.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title" approved="yes">
         <source>api_password.missing_title</source>
@@ -1486,9 +1486,9 @@
         <source>work_times_should.none_configured</source>
         <target state="final">Nessun obiettivo di ore è stato configurato per questo utente nelle impostazioni del contratto di lavoro.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should" approved="yes">
+      <trans-unit id="1btzNDa" resname="work_times_should" approved="yes" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="final">Obiettivo di ore</target>
+        <target state="final">Numero di ore previsto</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" approved="yes">
         <source>manual_bookings.duration_help</source>
@@ -1753,6 +1753,30 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>
         <target state="final">Congedo: il commento è un campo obbligatorio</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve" approved="yes">
+        <source>Activity number</source>
+        <target state="final">Numero attività</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve" approved="yes">
+        <source>Project number</source>
+        <target state="final">Numero progetto</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
+        <source>api_password_deprecated</source>
+        <target state="final">Le password API sono obsolete: usa invece i token API.</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve" approved="yes">
+        <source>Expiry date</source>
+        <target state="final">Data di scadenza</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve" approved="yes">
+        <source>Last usage</source>
+        <target state="final">Ultimo utilizzo</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve" approved="yes">
+        <source>api_token_hidden</source>
+        <target state="final">Questa è l'unica volta in cui questa chiave verrà visualizzata! Tienila al sicuro e assicurati di averla copiata prima di chiudere questa finestra.</target>
       </trans-unit>
     </body>
   </file>

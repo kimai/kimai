@@ -1301,9 +1301,9 @@
         <source>skin.dark</source>
         <target state="translated">داكن</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك</target>
+        <target state="needs-translation">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1461,9 +1461,9 @@
         <source>sickness</source>
         <target state="translated">مرَض</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">الساعات المستهدَفة</target>
+        <target state="needs-translation">الساعات المستهدَفة</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>

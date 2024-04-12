@@ -1399,9 +1399,9 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">选定/突出显示的用户是团队负责人。</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API 密码用于 Kimai 和您的应用程序之间的通信</target>
+        <target state="needs-translation">API 密码用于 Kimai 和您的应用程序之间的通信</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1519,9 +1519,9 @@
         <source>work_times</source>
         <target state="translated">工作时间</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">目标小时数</target>
+        <target state="needs-translation">目标小时数</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>

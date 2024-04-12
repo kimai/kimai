@@ -1266,9 +1266,9 @@
         <source>team.add_user.help</source>
         <target state="translated">Výberom zo zoznamu pridajte do tímu nového používateľa. Potom môžete rozhodnúť, či se má používateľ stať vedúcim tímu.</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API heslo sa používa pre komunikáciu medzi Kimai a vašimi aplikáciami</target>
+        <target state="needs-translation">API heslo sa používa pre komunikáciu medzi Kimai a vašimi aplikáciami</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
@@ -1350,9 +1350,9 @@
         <source>help.invoiceTemplate</source>
         <target state="translated">Táto faktúra je generovaná s touto šablónou.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Cieľové hodiny</target>
+        <target state="needs-translation">Cieľové hodiny</target>
       </trans-unit>
       <trans-unit id="gcFtM3o" resname="holiday">
         <source>holiday</source>

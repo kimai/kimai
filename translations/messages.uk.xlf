@@ -1142,9 +1142,9 @@
         <source>remove_filter</source>
         <target state="translated">Скинути пошуковий фільтр</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">Пароль API використовується для зв'язку між Kimai та Вашими застосунками</target>
+        <target state="translated">Тут ви можете керувати токенами API, які використовуються для автентифікації вашого додатку в Kimai.</target>
       </trans-unit>
       <trans-unit id="Eq2E_Rd" resname="menu.apps">
         <source>Apps</source>
@@ -1432,11 +1432,11 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Після завершення місяця користувач більше не зможе створювати або редагувати час для цього періоду.</target>
+        <target state="translated">Це заблокує всі дні року до обраної дати. Користувач більше не зможе створювати або редагувати час для заблокованого періоду.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Цільові години</target>
+        <target state="translated">Очікувана кількість годин</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1456,7 +1456,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Повний місяць</target>
+        <target state="translated">Заблокований місяць</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1712,7 +1712,27 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Format for time, date, and currency</source>
-        <target state="needs-translation">Формат часу, дати та валюти</target>
+        <target state="translated">Формат часу, дати та валюти</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Це єдиний раз, коли цей ключ буде показано! Тому зберігайте його в безпеці і переконайтеся, що ви скопіювали його, перш ніж закрити це вікно.</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Номер проєкту</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Термін придатності</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Останнє використання</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">Паролі API застаріли: будь ласка, використовуйте токени API.</target>
       </trans-unit>
     </body>
   </file>

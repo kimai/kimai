@@ -1443,9 +1443,9 @@
         <source>pagination</source>
         <target state="translated">Zobrazit položky %start% až %end% z %total%.</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">Heslo API se používá pro komunikaci mezi Kimai a vašemi aplikacemi</target>
+        <target state="needs-translation">Heslo API se používá pro komunikaci mezi Kimai a vašemi aplikacemi</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1539,9 +1539,9 @@
         <source>work_times_is</source>
         <target state="translated">Je-hodin</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Cílové hodiny</target>
+        <target state="needs-translation">Cílové hodiny</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>

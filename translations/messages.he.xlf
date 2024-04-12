@@ -1286,9 +1286,9 @@
         <source>skin.light</source>
         <target state="translated">בהיר</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">סיסמת ה־API משמשת לתקשורת בין Kimai לבין היישומים שלך</target>
+        <target state="translated">כאן אפשר לנהל את אסימוני ה־API שלך, שמשמשים לאימות היישום שלך מול Kimai.</target>
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination">
         <source>pagination</source>
@@ -1478,9 +1478,9 @@
         <source>review</source>
         <target state="translated">סקירה</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">שעות יעד</target>
+        <target state="translated">מספר השעות הצפוי</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1712,7 +1712,31 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Format for time, date, and currency</source>
-        <target state="needs-translation">עיצוב לשעה, תאריך ומטבע</target>
+        <target state="translated">תבנית לשעה, תאריך ומטבע</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">מספר מיזם</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">מספר פעילות</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">תאריך תפוגה</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">שימוש אחרון</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">השימוש בסיסמאות API הופסק: נא להשתמש באסימוני API במקום.</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">זאת הפעם היחידה שהמפתח הזה יוצג אי־פעם! לכן כדאי לוודא שהוא שמור בבטחה ושהוא הועתק כראוי בטרם סגירת החלון הזה.</target>
       </trans-unit>
     </body>
   </file>

@@ -1411,9 +1411,9 @@
         <source>skin.dark</source>
         <target state="translated">Donker</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">Het API-wachtwoord wordt gebruikt voor communicatie tussen Kimai en uw applicaties</target>
+        <target state="needs-translation">Het API-wachtwoord wordt gebruikt voor communicatie tussen Kimai en uw applicaties</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1479,9 +1479,9 @@
         <source>work_contract</source>
         <target state="translated">Arbeidsovereenkomst</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Streefuren</target>
+        <target state="needs-translation">Streefuren</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>

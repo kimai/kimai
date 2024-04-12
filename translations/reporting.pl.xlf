@@ -46,6 +46,10 @@
         <source>report_customer_monthly_projects</source>
         <target state="translated">Projekty według miesiąca, aktywności i użytkownika</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Przegląd klienta</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

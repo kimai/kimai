@@ -70,9 +70,9 @@
         <source>create-timesheet</source>
         <target state="translated">Skapa tidrapport</target>
       </trans-unit>
-      <trans-unit id="T_PN1AT" resname="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve">
         <source>permissions</source>
-        <target>Lagrättigheter</target>
+        <target state="translated">Gruppbehörigheter</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>

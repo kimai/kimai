@@ -1335,9 +1335,9 @@
         <source>skin.light</source>
         <target state="translated">Svijetlo</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API lozinka se koristi za komunikaciju između Kimaija i tvojih programa</target>
+        <target state="needs-translation">API lozinka se koristi za komunikaciju između Kimaija i tvojih programa</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
@@ -1495,9 +1495,9 @@
         <source>completed_month_pdf_note</source>
         <target state="translated">Ovaj dokument služi kao dokaz o odrađenim satima.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Ciljani sati</target>
+        <target state="needs-translation">Ciljani sati</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
