@@ -88,12 +88,12 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($canSeeRate) {
             $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
-            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none d-md-table-cell']);
+            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none d-xxl-table-cell']);
             $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
         }
 
         $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);
-        $table->addColumn('project', ['class' => 'd-none d-lg-table-cell']);
+        $table->addColumn('project', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('activity', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('description', ['class' => 'd-none']);
         $table->addColumn('tags', ['class' => 'd-none badges', 'orderBy' => false]);
@@ -103,7 +103,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($canSeeUsername) {
-            $table->addColumn('username', ['class' => 'd-none d-sm-table-cell', 'orderBy' => false]);
+            $table->addColumn('username', ['class' => 'd-none d-md-table-cell', 'orderBy' => false]);
         }
 
         $table->addColumn('billable', ['class' => 'text-center d-none w-min', 'orderBy' => false]);

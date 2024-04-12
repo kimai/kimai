@@ -85,8 +85,6 @@
     {{- get_title() -}}
 {% endblock %}
 
-{% block page_actions_class %}col-auto ms-auto d-print-none{% endblock %}
-
 {% block footer %}
     {% if 'dashboard' in app.request.attributes.get('_route') %}
         {{ parent() }}
