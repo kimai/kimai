@@ -133,27 +133,21 @@ final class DailyWorkingTimeChart extends AbstractWidget
     /**
      * @return list<array{'duration': int, 'billable': int, 'month': numeric-string, 'year': numeric-string, 'day': numeric-string, 'details': array<int|string, array<mixed>>}>
      */
-    private function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, ?User $user = null): array
+    private function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
         $qb = $this->repository->createQueryBuilder('t');
 
         $qb->select('t, p, a, c')
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
-            ->orderBy('t.begin', 'DESC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
+            ->setParameter('user', $user)
             ->leftJoin('t.activity', 'a')
             ->leftJoin('t.project', 'p')
             ->leftJoin('p.customer', 'c')
         ;
-
-        if (null !== $user) {
-            $qb
-                ->andWhere($qb->expr()->eq('t.user', ':user'))
-                ->setParameter('user', $user)
-            ;
-        }
 
         $timesheets = $qb->getQuery()->getResult();
 
