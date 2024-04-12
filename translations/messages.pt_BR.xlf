@@ -1395,9 +1395,9 @@
         <source>skin.dark</source>
         <target state="translated">Escuro</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">A senha da API é utilizada para a comunicação entre o Kimai e os seus aplicativos</target>
+        <target state="translated">Aqui você pode gerenciar os seus tokens API, que são usados para autenticar o seu aplicativo no Kimai.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1491,9 +1491,9 @@
         <source>Account working times</source>
         <target state="translated">Horários de trabalho da conta</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Horas-alvo</target>
+        <target state="translated">Quantidade esperada de horas</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
@@ -1774,6 +1774,30 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="no">
         <source>absence_comment_mandatory</source>
         <target state="translated">Ausência: O comentário é um campo obrigatório</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve" approved="no">
+        <source>Project number</source>
+        <target state="translated">Numeração do projeto</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve" approved="no">
+        <source>Activity number</source>
+        <target state="translated">Numeração da atividade</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">As senhas de API estão desatualizadas: em vez disso, use tokens de API.</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Data de vencimento</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Última utilização</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Esta é a única vez que esta chave será exibida! Portanto, mantenha-a em segurança e certifique-se de tê-la copiado antes de fechar esta janela.</target>
       </trans-unit>
     </body>
   </file>

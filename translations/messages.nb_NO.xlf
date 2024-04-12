@@ -1365,9 +1365,9 @@
         <source>skin.dark</source>
         <target state="translated">Mørk</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API-passord brukes for kommunikasjon mellom Kimai og dine programmer</target>
+        <target state="needs-translation">API-passord brukes for kommunikasjon mellom Kimai og dine programmer</target>
       </trans-unit>
       <trans-unit id="5NugIxO" resname="includeWithBudget">
         <source>includeWithBudget</source>

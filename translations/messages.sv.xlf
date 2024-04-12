@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>time_tracking</source>
-        <target state="translated">Tidsredovisning</target>
+        <target state="translated">Tidrapportering</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -76,9 +76,9 @@
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="UoOv6mx" resname="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
-        <target>Dashboard</target>
+        <target state="translated">Överblick</target>
       </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
@@ -92,13 +92,13 @@
         <source>menu.logout</source>
         <target state="translated">Logga ut</target>
       </trans-unit>
-      <trans-unit id="ebTjBb9" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times" xml:space="preserve">
         <source>my_times</source>
-        <target state="translated">Min tidsredovisning</target>
+        <target state="translated">Min tidrapport</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
         <source>all_times</source>
-        <target state="translated">Tidsschema</target>
+        <target state="translated">Sammanställning</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -116,9 +116,9 @@
         <source>users</source>
         <target state="translated">Användare</target>
       </trans-unit>
-      <trans-unit id="hOZxcaK" resname="menu.plugin">
+      <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
-        <target>Plugins</target>
+        <target state="translated">Tillägg</target>
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
@@ -142,13 +142,13 @@
         <source>starttime</source>
         <target state="translated">Början</target>
       </trans-unit>
-      <trans-unit id="eI_tMbq" resname="endtime">
+      <trans-unit id="eI_tMbq" resname="endtime" xml:space="preserve">
         <source>endtime</source>
-        <target state="translated">Slutet</target>
+        <target state="translated">Till</target>
       </trans-unit>
-      <trans-unit id="yqea9Nt" resname="duration">
+      <trans-unit id="yqea9Nt" resname="duration" xml:space="preserve">
         <source>duration</source>
-        <target state="translated">Varaktighet</target>
+        <target state="translated">Längd</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
@@ -194,13 +194,13 @@
         <source>project</source>
         <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="KhBzpuZ" resname="tag">
+      <trans-unit id="KhBzpuZ" resname="tag" xml:space="preserve">
         <source>tag</source>
-        <target state="translated">Taggar</target>
+        <target state="translated">Etiketter</target>
       </trans-unit>
-      <trans-unit id="l4wviUE" resname="tags">
+      <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
-        <target state="translated">Taggar</target>
+        <target state="translated">Etiketter</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
@@ -252,9 +252,9 @@
       <!--
               Dashboard
             -->
-      <trans-unit id="3bqLM8Q" resname="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title" xml:space="preserve">
         <source>dashboard.title</source>
-        <target>Dashboard</target>
+        <target state="translated">Överblick</target>
       </trans-unit>
       <!--
               Widgets
@@ -266,9 +266,9 @@
       <!--
               Timesheet
             -->
-      <trans-unit id="VXj0Y3h" resname="timesheet.title">
+      <trans-unit id="VXj0Y3h" resname="timesheet.title" xml:space="preserve">
         <source>timesheet.title</source>
-        <target state="translated">Mina tidsredovisningar</target>
+        <target state="translated">Min tidrapport</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
@@ -407,9 +407,9 @@
         <source>homepage</source>
         <target state="translated">Hemsida</target>
       </trans-unit>
-      <trans-unit id="OWLt7pw" resname="timezone">
+      <trans-unit id="OWLt7pw" resname="timezone" xml:space="preserve">
         <source>timezone</source>
-        <target state="translated">Timezon</target>
+        <target state="translated">Tidszon</target>
       </trans-unit>
       <trans-unit id="Rm5bnNV" resname="currency">
         <source>currency</source>
@@ -456,9 +456,9 @@
         <source>ROLE_ADMIN</source>
         <target state="translated">Administratör</target>
       </trans-unit>
-      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve">
         <source>ROLE_TEAMLEAD</source>
-        <target state="translated">Teamledare</target>
+        <target state="translated">Gruppledare</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -706,7 +706,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="translated">Påbörja tidrapport</target>
+        <target state="translated">Påbörja tidtagning</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -755,13 +755,13 @@
         <source>globalsOnly</source>
         <target state="translated">Endast globalt</target>
       </trans-unit>
-      <trans-unit id="evFI7nW" resname="teamlead">
+      <trans-unit id="evFI7nW" resname="teamlead" xml:space="preserve">
         <source>teamlead</source>
-        <target>Lagledare</target>
+        <target state="translated">Gruppledare</target>
       </trans-unit>
-      <trans-unit id="yosi0Nu" resname="team">
+      <trans-unit id="yosi0Nu" resname="team" xml:space="preserve">
         <source>team</source>
-        <target>Lag</target>
+        <target state="translated">Grupp</target>
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
@@ -787,13 +787,13 @@
         <source>error.no_comments_found</source>
         <target>Det finns inga kommentarer uppladdade ännu.</target>
       </trans-unit>
-      <trans-unit id="JGaf9IK" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
-        <target>Doktor</target>
+        <target state="translated">Status</target>
       </trans-unit>
-      <trans-unit id="_t.2z4V" resname="teams">
+      <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve">
         <source>teams</source>
-        <target>Lag</target>
+        <target state="translated">Grupper</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
@@ -831,9 +831,9 @@
         <source>upload</source>
         <target>Ladda upp</target>
       </trans-unit>
-      <trans-unit id="L05Qw2x" resname="my_teams">
+      <trans-unit id="L05Qw2x" resname="my_teams" xml:space="preserve">
         <source>my_teams</source>
-        <target>Mina teams</target>
+        <target state="translated">Mina grupper</target>
       </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
@@ -915,9 +915,9 @@
         <source>tax_rate</source>
         <target>Momssats</target>
       </trans-unit>
-      <trans-unit id="EJDS9HY" resname="vat_id">
+      <trans-unit id="EJDS9HY" resname="vat_id" xml:space="preserve">
         <source>vat_id</source>
-        <target>VAD-ID</target>
+        <target state="translated">VAT-ID / orgnr</target>
       </trans-unit>
       <trans-unit id="TBWoUYf" resname="project_end">
         <source>project_end</source>
@@ -1095,9 +1095,9 @@
         <source>profile.registration_date</source>
         <target>Registrerad</target>
       </trans-unit>
-      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+      <trans-unit id="tp.gIrE" resname="team.add_user.help" xml:space="preserve">
         <source>team.add_user.help</source>
-        <target>Lägg till en ny användare i teamet genom att välja den från listan. Efteråt kan du bestämma om användaren ska bli en teamledare.</target>
+        <target state="translated">Lägg till en ny användare i gruppen genom att välja den från listan. Efteråt kan du bestämma om användaren ska bli en gruppledare.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
@@ -1175,9 +1175,9 @@
         <source>budgetType_full</source>
         <target>Livscykel</target>
       </trans-unit>
-      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+      <trans-unit id="f8oNzSP" resname="quick_entry.title" xml:space="preserve">
         <source>quick_entry.title</source>
-        <target>Arbetstimmar under veckan</target>
+        <target state="translated">Arbetsvecka</target>
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
@@ -1219,9 +1219,9 @@
         <source>Apps</source>
         <target state="translated">Applikationer</target>
       </trans-unit>
-      <trans-unit id="3rJ5QDP" resname="help.teams">
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
         <source>help.teams</source>
-        <target state="translated">Begränsar synligheten till de valda lagen.</target>
+        <target state="translated">Begränsar synligheten till de valda grupperna.</target>
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText">
         <source>help.invoiceText</source>
@@ -1247,9 +1247,9 @@
         <source>help.globalActivities</source>
         <target state="translated">Om inställningen är avstängd kan tider endast registreras med projektspecifika aktiviteter.</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API-lösenordet används för kommunikation mellan Kimai och dina appar</target>
+        <target state="translated">API-lösenordet används för integrationer med Kimai.</target>
       </trans-unit>
       <trans-unit id="FxwWVFI" resname="help.globalActivity">
         <source>help.globalActivity</source>
@@ -1275,9 +1275,9 @@
         <source>help.billable</source>
         <target state="translated">Om inställningen är avstängd kommer alla tidsposter som registreras i framtiden att markeras som "ej fakturerbara".</target>
       </trans-unit>
-      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
         <source>dashboard.edit_mode</source>
-        <target state="translated">Du kan ordna om dina widgets genom att dra &amp; släppa. Om du lägger till widgets sparas väntande ändringar.</target>
+        <target state="translated">Du kan ordna om dina widgets genom att dra &amp; släppa dem. Om du lägger till widgets sparas väntande ändringar.</target>
       </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
@@ -1331,9 +1331,9 @@
         <source>system_account.help</source>
         <target state="translated">Kommer att döljas i rapporter och rullgardinsmenyer</target>
       </trans-unit>
-      <trans-unit id="On18MKP" resname="plugin.installed">
+      <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
         <source>plugin.installed</source>
-        <target state="translated">Installerade plugins</target>
+        <target state="translated">Installerade tillägg</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>
@@ -1391,9 +1391,9 @@
         <source>pagination</source>
         <target state="translated">Visa poster %start% - %end% av %total%.</target>
       </trans-unit>
-      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help" xml:space="preserve">
         <source>team.configure_teamlead.help</source>
-        <target state="translated">De utvalda/markerade användarna är teamledare.</target>
+        <target state="translated">De utvalda/markerade användarna är gruppledare.</target>
       </trans-unit>
       <trans-unit id="5NugIxO" resname="includeWithBudget">
         <source>includeWithBudget</source>
@@ -1479,9 +1479,9 @@
         <source>deleted</source>
         <target state="translated">Raderad</target>
       </trans-unit>
-      <trans-unit id="eCEGRzN" resname="work_contract">
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve">
         <source>work_contract</source>
-        <target state="translated">Anställningsavtal</target>
+        <target state="translated">Schema</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
         <source>evaluation</source>
@@ -1632,8 +1632,8 @@
         <target state="translated">Generera fakturanummer</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
-        <source>work_times_should</source>
-        <target state="translated">Timmål</target>
+        <source>Expected number of hours</source>
+        <target state="translated">Måltimmar</target>
       </trans-unit>
       <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
         <source>Search filter</source>
@@ -1681,7 +1681,7 @@
       </trans-unit>
       <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
         <source>timesheet.stop</source>
-        <target state="translated">Avsluta tidrapport</target>
+        <target state="translated">Avsluta tidtagning</target>
       </trans-unit>
       <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
         <source>batch_table_checkbox</source>
@@ -1709,7 +1709,7 @@
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
-        <target state="translated">Inga måltimmar har konfigureras för den här användaren i inställningarna för anställningsavtalet.</target>
+        <target state="translated">Inga måltimmar har konfigureras för den här användaren i inställningarna för schemat.</target>
       </trans-unit>
       <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
         <source>force_password_change_help</source>
@@ -1725,11 +1725,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Format for time, date, and currency</source>
-        <target state="needs-translation">Format för tid, datum och valuta</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help" xml:space="preserve">
-        <source>work_times_should.help</source>
-        <target state="translated">Värden som konfigureras här används för att beräkna timkontot.</target>
+        <target state="translated">Landsformat</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
@@ -1770,6 +1766,34 @@
       <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
         <source>unpaid_vacation</source>
         <target state="translated">Obetald ledighet</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">Längden kan vara positiv (lägg till) eller negativ (dra bort).</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Projektreferens</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Aktivitetsreferens</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Slutdatum</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Senast använt</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Detta är den enda gången nyckeln visas, så kopiera undan den till en säker plats innan du stänger fönstret.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API-lösenord är förlegade, använd API-nycklar istället.</target>
       </trans-unit>
     </body>
   </file>
