@@ -20,6 +20,7 @@ security:
         api:
             access_token:
                 token_handler: App\API\Authentication\AccessTokenHandler
+                remember_me: false
             request_matcher: App\API\Authentication\ApiRequestMatcher
             user_checker: App\Security\UserChecker
             stateless: true
@@ -92,7 +93,7 @@ security:
         - { path: '^/(%app_locales%)/register', role: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)/resetting', role: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)/', roles: ROLE_USER }
-        - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: '^/api', roles: IS_AUTHENTICATED }
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism

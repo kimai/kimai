@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/tags')]
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('IS_AUTHENTICATED')]
 #[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {

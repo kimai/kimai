@@ -26,7 +26,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/actions')]
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('IS_AUTHENTICATED')]
 #[OA\Tag(name: 'Actions')]
 final class ActionsController extends BaseApiController
 {
