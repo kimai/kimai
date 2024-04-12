@@ -4134,16 +4134,6 @@ parameters:
             path: Widget/Type/AmountYearTest.php
 
         -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
-            path: Widget/Type/DailyWorkingTimeChartTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 1
-            path: Widget/Type/DailyWorkingTimeChartTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\DurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/DurationYearTest.php

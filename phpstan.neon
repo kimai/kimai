@@ -5554,94 +5554,14 @@ parameters:
             path: src/Voter/TimesheetVoter.php
 
         -
-            message: "#^Cannot access offset 'billable' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'day' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'details' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'month' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot access offset 'year' on mixed\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
+            path: src/Widget/Type/DailyWorkingTimeChart.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot cast mixed to float\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Parameter \\#1 \\$details of method App\\\\Model\\\\Statistic\\\\Day\\:\\:setDetails\\(\\) expects array, mixed given\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Parameter \\#1 \\$seconds of method App\\\\Model\\\\Statistic\\\\Day\\:\\:setTotalDurationBillable\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Parameter \\#1 \\$year of method DateTime\\:\\:setDate\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Parameter \\#2 \\$month of method DateTime\\:\\:setDate\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
-
-        -
-            message: "#^Parameter \\#3 \\$day of method DateTime\\:\\:setDate\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
+            path: src/Widget/Type/DailyWorkingTimeChart.php
 
         -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractWidget\\:\\:getUser\\(\\) should return App\\\\Entity\\\\User but returns App\\\\Entity\\\\User\\|null\\.$#"
