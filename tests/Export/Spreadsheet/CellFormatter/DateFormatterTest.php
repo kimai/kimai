@@ -52,6 +52,6 @@ class DateFormatterTest extends AbstractFormatterTest
 
     public function assertCellStyle(Style $style): void
     {
-        self::assertEquals(NumberFormat::FORMAT_DATE_YYYYMMDD2, $style->getNumberFormat()->getFormatCode());
+        self::assertEquals(NumberFormat::FORMAT_DATE_YYYYMMDD, $style->getNumberFormat()->getFormatCode());
     }
 }

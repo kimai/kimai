@@ -61,7 +61,7 @@ final class PluginController extends AbstractController
                 $item->expiresAfter(86400); // one day
 
                 return $response->toArray();
-            } catch (\Exception $exception) {
+            } catch (\Throwable $exception) {
                 $this->logException($exception);
                 $this->flashError('Could not download plugin information');
             }

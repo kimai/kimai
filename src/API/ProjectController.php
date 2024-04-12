@@ -35,7 +35,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/projects')]
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('IS_AUTHENTICATED')]
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {

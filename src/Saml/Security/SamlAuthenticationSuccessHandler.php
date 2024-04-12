@@ -29,7 +29,9 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
         }
 
         $relayState = $request->get('RelayState');
-        if (null !== $relayState && $relayState !== $this->httpUtils->generateUri($request, $this->options['login_path'])) {
+        $loginUrl = $this->httpUtils->generateUri($request, $this->options['login_path']);
+
+        if ($relayState !== null && $relayState !== '' && $relayState !== $loginUrl) {
             return $relayState;
         }
 

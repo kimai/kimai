@@ -62,7 +62,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        if (!($user instanceof User)) {
+        if (!($user instanceof User) || !$user->isInternalUser()) {
+            return;
+        }
+
+        if ($user->getPassword() === $newHashedPassword) {
             return;
         }
 

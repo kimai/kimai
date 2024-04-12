@@ -265,6 +265,7 @@ final class DoctorController extends AbstractController
             'sys_temp_dir',
             'date.timezone',
             'session.gc_maxlifetime',
+            'disable_functions'
         ];
 
         $settings = [];

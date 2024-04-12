@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('IS_AUTHENTICATED')]
 #[OA\Tag(name: 'Default')]
 final class StatusController extends BaseApiController
 {

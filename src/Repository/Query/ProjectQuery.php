@@ -16,8 +16,17 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     use VisibilityTrait;
 
     public const PROJECT_ORDER_ALLOWED = [
-        'name', 'description' => 'comment', 'customer', 'orderNumber', 'orderDate',
-        'project_start', 'project_end', 'budget', 'timeBudget', 'visible'
+        'name',
+        'description' => 'comment',
+        'project_number' => 'number',
+        'customer',
+        'orderNumber',
+        'orderDate',
+        'project_start',
+        'project_end',
+        'budget',
+        'timeBudget',
+        'visible'
     ];
 
     /**
