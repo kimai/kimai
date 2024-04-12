@@ -23,6 +23,8 @@ doctrine:
         types:
             datetime: App\Doctrine\UTCDateTimeType
     orm:
+        controller_resolver:
+            auto_mapping: true
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default
         enable_lazy_ghost_objects: true
