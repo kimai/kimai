@@ -34,7 +34,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 132);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 133);
         $this->assertPageActions($client, [
             'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
         ]);
