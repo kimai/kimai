@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /**
  * A voter to check permissions on API.
  *
- * @extends Voter<string>
+ * @extends Voter<string, null>
  */
 final class ApiVoter extends Voter
 {
