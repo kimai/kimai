@@ -33,7 +33,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/customers')]
-#[IsGranted('IS_AUTHENTICATED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Customer')]
 final class CustomerController extends BaseApiController
 {

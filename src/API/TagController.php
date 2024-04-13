@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/tags')]
-#[IsGranted('IS_AUTHENTICATED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
@@ -31,7 +31,10 @@ final class TagController extends BaseApiController
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
-    public function __construct(private ViewHandlerInterface $viewHandler, private TagRepository $repository)
+    public function __construct(
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly TagRepository $repository
+    )
     {
     }
 
