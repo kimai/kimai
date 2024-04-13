@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/teams')]
-#[IsGranted('IS_AUTHENTICATED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Team')]
 final class TeamController extends BaseApiController
 {
@@ -38,7 +38,10 @@ final class TeamController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Team'];
 
-    public function __construct(private ViewHandlerInterface $viewHandler, private TeamRepository $repository)
+    public function __construct(
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly TeamRepository $repository
+    )
     {
     }
 

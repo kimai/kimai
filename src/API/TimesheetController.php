@@ -42,7 +42,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/timesheets')]
-#[IsGranted('IS_AUTHENTICATED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Timesheet')]
 final class TimesheetController extends BaseApiController
 {

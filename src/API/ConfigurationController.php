@@ -19,11 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('IS_AUTHENTICATED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Default')]
 final class ConfigurationController extends BaseApiController
 {
-    public function __construct(private ViewHandlerInterface $viewHandler)
+    public function __construct(private readonly ViewHandlerInterface $viewHandler)
     {
     }
 
