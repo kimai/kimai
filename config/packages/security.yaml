@@ -20,6 +20,7 @@ security:
         api:
             access_token:
                 token_handler: App\API\Authentication\AccessTokenHandler
+                success_handler: App\API\Authentication\AccessTokenSuccessHandler
                 remember_me: false
             request_matcher: App\API\Authentication\ApiRequestMatcher
             user_checker: App\Security\UserChecker
