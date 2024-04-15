@@ -54,7 +54,7 @@ final class UserBillableYear extends AbstractCounterYear
             if($AllEntries === 0) {
                 return 0;
             }
-            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2));
+            $BillablePercent = \strval(round($Billable / $AllEntries * 100, 2)) . "%";
 
             return $BillablePercent;
         } catch (\Exception $ex) {
