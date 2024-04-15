@@ -42,6 +42,9 @@ class UserBillableYearTest extends AbstractWidgetTypeTest
         self::assertEquals(0, $sut->getData());
     }
 
+    /**
+     @return array<mixed>
+     */
     public function getDefaultOptions(): array
     {
         return [

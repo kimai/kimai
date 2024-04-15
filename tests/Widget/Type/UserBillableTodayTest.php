@@ -32,7 +32,7 @@ class UserBillableTodayTest extends AbstractWidgetTypeTest
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new UserBillableToday($repository, $configuration);
+        $sut = new UserBillableToday($repository);
         $sut->setUser(new User());
 
         return $sut;
@@ -43,6 +43,9 @@ class UserBillableTodayTest extends AbstractWidgetTypeTest
         self::assertEquals(0, $sut->getData());
     }
 
+    /**
+     @return array<mixed>
+     */
     public function getDefaultOptions(): array
     {
         return [

@@ -9,6 +9,8 @@
 
 namespace App\Widget\Type;
 
+use App\Widget\WidgetException;
+
 abstract class AbstractBillablePercent extends AbstractWidgetType
 {
     /**
@@ -33,15 +35,25 @@ abstract class AbstractBillablePercent extends AbstractWidgetType
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<int|string, string|bool|int|null|array<string, mixed>> $options
      */
     public function getData(array $options = []): mixed
     {
         try {
-            if($options[1] === 0) {
-                return "0%";
+            if(\is_int($options[1]) === false) {
+                throw new WidgetException(
+                    'Failed loading widget data: Wrong type given'
+                );
             }
-            $billablePerc = \strval(round($options[0] / $options[1] * 100, 2)) . "%";
+            if($options[1] === 0) {
+                return 0;
+            }
+            if(\is_int($options[0]) === false) {
+                throw new WidgetException(
+                    'Failed loading widget data: Wrong type given'
+                );
+            }
+            $billablePerc = \strval(round($options[0] / $options[1] * 100, 2)) . '%';
 
             return $billablePerc;
         } catch (\Exception $ex) {

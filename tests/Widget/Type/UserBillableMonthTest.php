@@ -32,7 +32,7 @@ class UserBillableMonthTest extends AbstractWidgetTypeTest
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new UserBillableMonth($repository, $configuration);
+        $sut = new UserBillableMonth($repository);
         $sut->setUser(new User());
 
         return $sut;
@@ -43,6 +43,9 @@ class UserBillableMonthTest extends AbstractWidgetTypeTest
         self::assertEquals(0, $sut->getData());
     }
 
+    /**
+     @return array<mixed>
+     */
     public function getDefaultOptions(): array
     {
         return [

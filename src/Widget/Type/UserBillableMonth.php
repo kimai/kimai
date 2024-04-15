@@ -10,7 +10,6 @@
 namespace App\Widget\Type;
 
 use App\Repository\TimesheetRepository;
-use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class UserBillableMonth extends AbstractBillablePercent
@@ -39,9 +38,9 @@ final class UserBillableMonth extends AbstractBillablePercent
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<int|string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): string
+    public function getData(array $options = []): mixed
     {
         return parent::getData(array_merge([$this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser(), true), $this->repository->getDurationForTimeRange($this->createMonthStartDate(), $this->createMonthEndDate(), $this->getUser())], $options));
     }
