@@ -48,19 +48,13 @@ nelmio_api_doc:
             title: Kimai - API Docs
             description: |
                 JSON API for the Kimai time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
-            version: '0.7'
+            version: '1.0'
         components:
             securitySchemes:
-                apiUser:
-                    type: apiKey
-                    description: 'Value: {Username}'
-                    name: X-AUTH-USER
-                    in: header
-                apiToken:
-                    type: apiKey
-                    description: 'Value: {API Token}'
-                    name: X-AUTH-TOKEN
-                    in: header
+                bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: KIMAI
+                    description: API Token
         security:
-            - X-AUTH-USER: []
-              X-AUTH-TOKEN: []
+            - bearer: []

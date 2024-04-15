@@ -35,7 +35,7 @@ final class WizardController extends AbstractController
 
         if ($wizard === 'intro') {
             $user->setWizardAsSeen('intro');
-            $userService->updateUser($user);
+            $userService->saveUser($user);
 
             return $this->render('wizard/intro.html.twig', [
                 'percent' => 0,
@@ -77,7 +77,7 @@ final class WizardController extends AbstractController
                 $user->setTimezone($data[UserPreference::TIMEZONE]);
                 $user->setPreferenceValue(UserPreference::SKIN, $data[UserPreference::SKIN]);
                 $user->setWizardAsSeen('profile');
-                $userService->updateUser($user);
+                $userService->saveUser($user);
 
                 if ($data['reload'] === '1') {
                     return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $user->getLanguage()]);
@@ -104,7 +104,7 @@ final class WizardController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setRequiresPasswordReset(false);
-                $userService->updateUser($user);
+                $userService->saveUser($user);
 
                 return $this->redirectToRoute('wizard', ['wizard' => 'done']);
             }

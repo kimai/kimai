@@ -116,9 +116,9 @@ class PdfRendererTest extends KernelTestCase
 
         $dirs = [
             __DIR__ . '/../../../templates/invoice/renderer/',
-            __DIR__ . '/../../../var/invoices/',
-            __DIR__ . '/../../../var/invoices_customer/',
-            __DIR__ . '/../../../var/invoices_old/',
+            //__DIR__ . '/../../../var/invoices/',
+            //__DIR__ . '/../../../var/invoices_customer/',
+            //__DIR__ . '/../../../var/invoices_old/',
         ];
 
         $files = [];

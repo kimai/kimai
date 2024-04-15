@@ -14,17 +14,16 @@ use App\Configuration\SystemConfiguration;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Default')]
 final class ConfigurationController extends BaseApiController
 {
-    public function __construct(private ViewHandlerInterface $viewHandler)
+    public function __construct(private readonly ViewHandlerInterface $viewHandler)
     {
     }
 
@@ -33,8 +32,6 @@ final class ConfigurationController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns the instance specific timesheet configuration', content: new OA\JsonContent(ref: new Model(type: TimesheetConfig::class)))]
     #[Route(methods: ['GET'], path: '/config/timesheet')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
     public function timesheetConfigAction(SystemConfiguration $configuration): Response
     {
         $model = new TimesheetConfig();

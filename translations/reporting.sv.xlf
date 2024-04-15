@@ -30,17 +30,17 @@
         <source>report_project_details</source>
         <target>Projektdetaljer</target>
       </trans-unit>
-      <trans-unit id="VD98UBN" resname="report_yearly_users">
+      <trans-unit id="VD98UBN" resname="report_yearly_users" xml:space="preserve">
         <source>report_yearly_users</source>
-        <target>Årlig vy för alla användare</target>
+        <target state="translated">Årsvy för alla användare</target>
       </trans-unit>
       <trans-unit id="BQAsynV" resname="report_project_daterange">
         <source>report_project_daterange</source>
         <target>Månadsrapport</target>
       </trans-unit>
-      <trans-unit id="3JLmvfB" resname="report_user_year">
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
         <source>report_user_year</source>
-        <target state="translated">Årlig vy för en användare</target>
+        <target state="translated">Årsvy för en användare</target>
       </trans-unit>
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
         <source>report_customer_monthly_projects</source>

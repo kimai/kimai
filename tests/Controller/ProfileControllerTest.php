@@ -265,9 +265,9 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
-        $form = $client->getCrawler()->filter('form[name=user_api_token]')->form();
+        $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
         $client->submit($form, [
-            'user_api_token' => [
+            'user_api_password' => [
                 'plainApiToken' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
@@ -292,16 +292,16 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_USER,
             '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
-            'form[name=user_api_token]',
+            'form[name=user_api_password]',
             [
-                'user_api_token' => [
+                'user_api_password' => [
                     'plainApiToken' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
                     ]
                 ]
             ],
-            ['#user_api_token_plainApiToken_first']
+            ['#user_api_password_plainApiToken_first']
         );
     }
 

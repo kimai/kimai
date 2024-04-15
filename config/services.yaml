@@ -100,7 +100,9 @@ services:
     # SAML Services
     # ================================================================================
     App\Saml\SamlProvider:
-        arguments: ['@App\Repository\UserRepository', '@security.user.provider.concrete.kimai_internal', '@App\Configuration\SamlConfigurationInterface']
+        arguments:
+            $userProvider: '@security.user.provider.concrete.kimai_internal'
+            $configuration: '@App\Configuration\SamlConfigurationInterface'
 
     # ================================================================================
     # REPOSITORIES
@@ -194,6 +196,11 @@ services:
         class:     App\Repository\WorkingTimeRepository
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\WorkingTime']
+
+    App\Repository\AccessTokenRepository:
+        class:     App\Repository\AccessTokenRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\AccessToken']
 
     monolog.formatter.kimai:
         class: Monolog\Formatter\LineFormatter

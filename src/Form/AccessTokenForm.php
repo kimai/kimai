@@ -9,26 +9,24 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\AccessToken;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Defines the form used to set the users API token.
- * @extends AbstractType<User>
- */
-final class UserApiTokenType extends AbstractType
+final class AccessTokenForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('plainApiToken', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'api_token'],
-                'second_options' => ['label' => 'api_token_repeat'],
+            ->add('name', TextType::class, [
+                'required' => true,
+            ])
+            ->add('expiresAt', DatePickerType::class, [
+                'label' => 'expires',
+                'required' => false,
             ])
         ;
     }
@@ -36,11 +34,13 @@ final class UserApiTokenType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => ['ApiTokenUpdate'],
-            'data_class' => User::class,
+            'data_class' => AccessToken::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'edit_user_api_token',
+            'csrf_token_id' => 'access_token_form',
+            'attr' => [
+                'data-form-event' => 'kimai.accessToken'
+            ],
         ]);
     }
 }

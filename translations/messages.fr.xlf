@@ -1363,17 +1363,13 @@
         <source>skin.dark</source>
         <target state="translated">Foncé</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">Le mot de passe de l’API est utilisé pour la communication entre Kimai et vos applications</target>
+        <target state="needs-translation">Le mot de passe de l’API est utilisé pour la communication entre Kimai et vos applications</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target state="translated">L'API ne peut pas être utilisée</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Vous n'avez pas encore saisi de mot de passe pour l'API. Pour des raisons de sécurité, vous ne pouvez pas utiliser l'API tant que vous n'avez pas enregistré un mot de passe.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1503,9 +1499,9 @@
         <source>evaluation</source>
         <target state="translated">Évaluation</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Heures cibles</target>
+        <target state="needs-translation">Heures cibles</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>

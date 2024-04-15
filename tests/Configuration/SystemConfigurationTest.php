@@ -163,15 +163,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
-    public function testOffsetUnsetThrowsException(): void
-    {
-        $this->expectException(\BadMethodCallException::class);
-        $this->expectExceptionMessage('SystemBundleConfiguration does not support offsetUnset()');
-
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $sut->offsetUnset('dfsdf');
-    }
-
     public function testUnknownConfigs(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), [

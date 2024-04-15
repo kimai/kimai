@@ -5,6 +5,7 @@ includes:
     - %rootDir%/../phpstan-doctrine/rules.neon
     - %rootDir%/../phpstan-phpunit/extension.neon
     - %rootDir%/../phpstan-phpunit/rules.neon
+    - %rootDir%/../phpstan-deprecation-rules/rules.neon
 
 parameters:
     level: 9
@@ -2238,36 +2239,6 @@ parameters:
             path: Form/Type/QuickEntryTimesheetTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__construct\\(\\) has parameter \\$fields with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__get\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__get\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:__set\\(\\) has parameter \\$value with no type specified\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Form\\\\Type\\\\TypeTestModel\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Form/Type/TypeTestModel.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Calculator\\\\AbstractCalculatorTest\\:\\:assertDescription\\(\\) has parameter \\$addActivity with no type specified\\.$#"
             count: 1
             path: Invoice/Calculator/AbstractCalculatorTest.php
@@ -4161,16 +4132,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/AmountYearTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
-            path: Widget/Type/DailyWorkingTimeChartTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 1
-            path: Widget/Type/DailyWorkingTimeChartTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\DurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"

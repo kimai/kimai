@@ -1401,9 +1401,9 @@
         <source>created_by</source>
         <target state="translated">Создано</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Целевые часы</target>
+        <target state="needs-translation">Целевые часы</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>

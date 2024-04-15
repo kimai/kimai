@@ -34,7 +34,7 @@ jobs:
           fi
 
       - name: Emit repository_dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
           repository: kimai/www.kimai.org

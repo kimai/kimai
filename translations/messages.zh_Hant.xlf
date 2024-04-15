@@ -1046,17 +1046,17 @@
         <source>sickness</source>
         <target state="translated">病假</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">目標時數</target>
+        <target state="needs-translation">目標時數</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
         <target state="translated">總持續時間</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API 密碼用於 Kimai 和您的應用程式之間的通訊</target>
+        <target state="needs-translation">API 密碼用於 Kimai 和您的應用程式之間的通訊</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
@@ -1129,10 +1129,6 @@
       <trans-unit id="KgBw0BS" resname="skin">
         <source>skin</source>
         <target state="translated">設計</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">您尚未輸入 API 密碼。基於安全考量，您必須先儲存密碼才能使用 API。</target>
       </trans-unit>
       <trans-unit id="WOAx9yz" resname="modal.columns.profile">
         <source>modal.columns.profile</source>

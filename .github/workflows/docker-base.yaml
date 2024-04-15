@@ -1,4 +1,4 @@
-name: 'Docker Build'
+name: 'Docker base image'
 # act -j build -W ./.github/workflows/docker-base.yaml --secret-file  .dockerhub.secrets
 
 on:

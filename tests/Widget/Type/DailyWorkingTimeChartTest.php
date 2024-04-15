@@ -9,11 +9,8 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Entity\Activity;
-use App\Entity\Project;
 use App\Entity\User;
-use App\Model\Statistic\Day;
-use App\Widget\DataProvider\DailyWorkingTimeChartProvider;
+use App\Repository\TimesheetRepository;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\WidgetInterface;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +24,7 @@ class DailyWorkingTimeChartTest extends TestCase
 {
     public function createSut(): DailyWorkingTimeChart
     {
-        $repository = $this->createMock(DailyWorkingTimeChartProvider::class);
+        $repository = $this->createMock(TimesheetRepository::class);
 
         $sut = new DailyWorkingTimeChart($repository);
         $sut->setUser(new User());
@@ -64,55 +61,5 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertIsString($options['id']);
         self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
         self::assertEquals('xxx', $options['type']);
-    }
-
-    public function testGetData(): void
-    {
-        $activity = $this->createMock(Activity::class);
-        $activity->method('getId')->willReturn(42);
-
-        $project = $this->createMock(Project::class);
-        $project->method('getId')->willReturn(4711);
-
-        $repository = $this->getMockBuilder(DailyWorkingTimeChartProvider::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
-        $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) use ($activity, $project) {
-            return [
-                [
-                    'year' => $begin->format('Y'),
-                    'month' => $begin->format('n'),
-                    'day' => $begin->format('j'),
-                    'rate' => 13.75,
-                    'duration' => 1234,
-                    'billable' => 1234,
-                    'details' => [
-                        [
-                            'activity' => $activity,
-                            'project' => $project,
-                            'billable' => 1234,
-                        ]
-                    ]
-                ]
-            ];
-        });
-
-        $sut = new DailyWorkingTimeChart($repository);
-        $sut->setUser(new User());
-        $data = $sut->getData($sut->getOptions());
-        self::assertCount(2, $data);
-        self::assertArrayHasKey('activities', $data);
-        self::assertArrayHasKey('data', $data);
-
-        self::assertCount(1, $data['activities']);
-        self::assertArrayHasKey('4711_42', $data['activities']);
-        self::assertCount(2, $data['activities']['4711_42']);
-        self::assertArrayHasKey('activity', $data['activities']['4711_42']);
-        self::assertArrayHasKey('project', $data['activities']['4711_42']);
-        self::assertSame($activity, $data['activities']['4711_42']['activity']);
-        self::assertSame($project, $data['activities']['4711_42']['project']);
-
-        self::assertCount(7, $data['data']);
-        foreach ($data['data'] as $statObj) {
-            self::assertInstanceOf(Day::class, $statObj);
-        }
     }
 }
