@@ -6,7 +6,7 @@
         {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::DURATION_DECIMAL') ~ '"' %}
     {% endif %}
     {% block user_column %}
-        {{ userPeriod.user.displayName }}
+        {{ userPeriod.user.displayName|sanitize_dde }}
     {% endblock %}
     {% block duration -%}
         {{ period.totalDuration / 3600 }}
