@@ -16,15 +16,11 @@ interface MetaDisplayEventInterface
 {
     /**
      * If you want to filter where your meta-field will be displayed, use the query settings.
-     *
-     * @return BaseQuery
      */
     public function getQuery(): BaseQuery;
 
     /**
      * If you want to filter where your meta-field will be displayed, check the current location.
-     *
-     * @return string
      */
     public function getLocation(): string;
 
@@ -35,9 +31,6 @@ interface MetaDisplayEventInterface
 
     /**
      * Adds a field that should be displayed.
-     *
-     * @param MetaTableTypeInterface $meta
-     * @return void
      */
-    public function addField(MetaTableTypeInterface $meta) /* : void */;
+    public function addField(MetaTableTypeInterface $meta): void;
 }
