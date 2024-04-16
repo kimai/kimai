@@ -1254,11 +1254,6 @@ parameters:
             path: src/Doctrine/TimesheetSubscriber.php
 
         -
-            message: "#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Doctrine/UTCDateTimeType.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/Activity.php

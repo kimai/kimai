@@ -23,7 +23,6 @@ final class UTCDateTimeImmutableType extends DateTimeImmutableType
 
     /**
      * @param T $value
-     * @param AbstractPlatform $platform
      * @return (T is null ? null : string)
      * @template T<\DateTimeImmutable>
      * @throws ConversionException
@@ -32,7 +31,7 @@ final class UTCDateTimeImmutableType extends DateTimeImmutableType
     {
         if ($value instanceof \DateTimeImmutable) {
             $value = clone $value;
-            $value->setTimezone(self::getUtc());
+            $value = $value->setTimezone(self::getUtc());
         }
 
         return parent::convertToDatabaseValue($value, $platform);
@@ -57,20 +56,22 @@ final class UTCDateTimeImmutableType extends DateTimeImmutableType
             return $value;
         }
 
-        $converted = \DateTimeImmutable::createFromFormat(
-            $platform->getDateTimeFormatString(),
-            $value,
-            self::getUtc()
-        );
-
-        if (!$converted) {
-            throw ConversionException::conversionFailedFormat(
+        if (\is_string($value)) {
+            $converted = \DateTimeImmutable::createFromFormat(
+                $platform->getDateTimeFormatString(),
                 $value,
-                Types::DATETIME_IMMUTABLE,
-                $platform->getDateTimeFormatString()
+                self::getUtc()
             );
+
+            if ($converted !== false) {
+                return $converted;
+            }
         }
 
-        return $converted;
+        throw ConversionException::conversionFailedFormat(
+            $value,
+            Types::DATETIME_IMMUTABLE,
+            $platform->getDateTimeFormatString()
+        );
     }
 }
