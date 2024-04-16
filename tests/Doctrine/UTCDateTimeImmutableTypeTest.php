@@ -53,7 +53,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
 
         $expected = clone $date;
-        $expected->setTimezone($type::getUtc());
+        $expected = $expected->setTimezone($type::getUtc());
         $bla = $expected->format($platform->getDateTimeFormatString());
 
         /** @var \DateTime $result */
