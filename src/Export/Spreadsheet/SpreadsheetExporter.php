@@ -15,6 +15,7 @@ use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\DateFormatter;
 use App\Export\Spreadsheet\CellFormatter\DateTimeFormatter;
 use App\Export\Spreadsheet\CellFormatter\DurationFormatter;
+use App\Export\Spreadsheet\CellFormatter\StringFormatter;
 use App\Export\Spreadsheet\CellFormatter\TimeFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -30,7 +31,7 @@ class SpreadsheetExporter
      */
     private array $formatter = [];
 
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
         $this->registerCellFormatter('datetime', new DateTimeFormatter());
         $this->registerCellFormatter('date', new DateFormatter());
@@ -38,6 +39,7 @@ class SpreadsheetExporter
         $this->registerCellFormatter('duration', new DurationFormatter());
         $this->registerCellFormatter('boolean', new BooleanFormatter());
         $this->registerCellFormatter('array', new ArrayFormatter());
+        $this->registerCellFormatter('string', new StringFormatter());
     }
 
     public function registerCellFormatter(string $type, CellFormatterInterface $formatter): void
