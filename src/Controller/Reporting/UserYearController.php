@@ -122,6 +122,8 @@ final class UserYearController extends AbstractUserReportController
             'current' => $start,
             'next' => $next,
             'previous' => $previous,
+            'begin' => $start,
+            'end' => $end,
             'export_route' => 'report_user_year_export',
         ];
     }

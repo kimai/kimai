@@ -113,6 +113,8 @@ final class UserMonthController extends AbstractUserReportController
             'current' => $start,
             'next' => $nextMonth,
             'previous' => $previousMonth,
+            'begin' => $start,
+            'end' => $end,
             'export_route' => 'report_user_month_export',
         ];
     }
