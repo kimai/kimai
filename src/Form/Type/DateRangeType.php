@@ -160,6 +160,18 @@ final class DateRangeType extends AbstractType
                     $formatDate
                 );
 
+                $fallbackFormat = 'yyyy-MM-dd';
+                $fallbackPattern = (new FormFormatConverter())->convertToPattern($fallbackFormat . $separator . $fallbackFormat, false);
+
+                $fallbackTransformer = new DateTimeToLocalizedStringTransformer(
+                    $timezone,
+                    $timezone,
+                    IntlDateFormatter::MEDIUM,
+                    IntlDateFormatter::MEDIUM,
+                    IntlDateFormatter::GREGORIAN,
+                    $fallbackFormat
+                );
+
                 $range = new DateRange();
 
                 if (empty($dates) && $allowEmpty) {
@@ -170,7 +182,7 @@ final class DateRangeType extends AbstractType
                     throw new TransformationFailedException('Date range missing');
                 }
 
-                if (preg_match($pattern, $dates) !== 1) {
+                if (preg_match($pattern, $dates) !== 1 && preg_match($fallbackPattern, $dates) !== 1) {
                     throw new TransformationFailedException('Invalid date range given');
                 }
                 $values = explode($separator, $dates);
@@ -179,13 +191,23 @@ final class DateRangeType extends AbstractType
                     throw new TransformationFailedException('Invalid date range given');
                 }
 
-                $begin = $transformer->reverseTransform($values[0]);
+                try {
+                    $begin = $transformer->reverseTransform($values[0]);
+                } catch (TransformationFailedException $e) {
+                    // we always allow english format to simplify cross-linking
+                    $begin = $fallbackTransformer->reverseTransform($values[0]);
+                }
                 if ($begin === null) {
                     throw new TransformationFailedException('Invalid begin date given');
                 }
                 $range->setBegin($begin);
 
-                $end = $transformer->reverseTransform($values[1]);
+                try {
+                    $end = $transformer->reverseTransform($values[1]);
+                } catch (TransformationFailedException $e) {
+                    // we always allow english format to simplify cross-linking
+                    $end = $fallbackTransformer->reverseTransform($values[1]);
+                }
                 if ($end === null) {
                     throw new TransformationFailedException('Invalid end date given');
                 }
