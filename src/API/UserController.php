@@ -232,7 +232,7 @@ final class UserController extends BaseApiController
             throw $this->createAccessDeniedException('User has no access to API tokens');
         }
 
-        if ($accessToken->getUser() !== $user) {
+        if (!$this->isGranted('api-token', $accessToken->getUser())) {
             throw $this->createAccessDeniedException('You are not allowed to delete this access token');
         }
 
