@@ -8,7 +8,7 @@
  */
 
 require __DIR__ . '/../vendor/autoload.php';
-dd((bool) $_ENV['BOOTSTRAP_RESET_DATABASE']);
+
 if (isset($_ENV['BOOTSTRAP_RESET_DATABASE']) && (bool) $_ENV['BOOTSTRAP_RESET_DATABASE'] === true) {
     echo 'Re-Installing test database ...' . PHP_EOL;
 
