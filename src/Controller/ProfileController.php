@@ -173,7 +173,7 @@ final class ProfileController extends AbstractController
             $this->flashSuccess('action.update.success');
             $request->getSession()->set('_show_access_token', $accessToken->getId());
 
-            return new Response();
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/access-token.html.twig', [
