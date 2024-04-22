@@ -47,7 +47,7 @@ final class AccessTokenForm extends AbstractType
             'attr' => [
                 'data-form-event' => 'kimai.accessToken'
             ],
-            'min_date' => new \DateTimeImmutable(),
+            'min_date' => new \DateTimeImmutable('today 00:00:00'),
         ]);
         $resolver->setAllowedTypes('min_date', [\DateTimeInterface::class]);
     }
