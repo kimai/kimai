@@ -49,6 +49,7 @@ final class DateRangeType extends AbstractType
             'max_day' => null,
             'locale' => \Locale::getDefault(),
         ]);
+        $resolver->addAllowedTypes('timezone', ['string']);
         $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
         $resolver->addAllowedTypes('max_day', ['null', 'string', \DateTimeInterface::class]);
 
@@ -103,13 +104,13 @@ final class DateRangeType extends AbstractType
 
         if ($options['min_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'min' => (\is_string($options['min_day']) ? $options['min_day'] : $options['min_day']->format('Y-m-d')),
+                'min' => (\is_string($options['min_day']) ? $options['min_day'] : $options['min_day']->format('Y-m-d')), // @phpstan-ignore-line
             ]);
         }
 
         if ($options['max_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'max' => (\is_string($options['max_day']) ? $options['max_day'] : $options['max_day']->format('Y-m-d')),
+                'max' => (\is_string($options['max_day']) ? $options['max_day'] : $options['max_day']->format('Y-m-d')), // @phpstan-ignore-line
             ]);
         }
     }
