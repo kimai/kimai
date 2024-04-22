@@ -242,6 +242,9 @@ class ProfileControllerTest extends ControllerBaseTest
         );
     }
 
+    /**
+     * @legacy
+     */
     public function testApiTokenAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
