@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Time Tracking</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Time Tracking</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -159,9 +159,9 @@
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="translated">An e-mail has been sent to %email%. It contains a link you must click to activate your account.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="final">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="translated">An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -1564,9 +1564,9 @@
         <source>help_locales</source>
         <target>Here are examples of formatting rules for the supported languages</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="translated">Format for time, date, and currency</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="yes">
+        <source>Time, date and currency format</source>
+        <target state="final">Time, date and currency format</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>

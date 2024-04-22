@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>تتبع الوقت</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">تتبع الوقت</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -1129,9 +1129,9 @@
         <source>invoice_document.max_reached</source>
         <target state="translated">لقد وصلت الحد الأقصى ل %max% مستند فاتورة. تستطيع إضافة مستندات أكثر بعد إزالة واحد.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target state="translated">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>

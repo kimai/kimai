@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="wizard.en.xlf">
     <body>
-      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
         <source>wizard.intro.title</source>
-        <target state="needs-translation">Ласкаво просимо до Kimai</target>
+        <target state="translated">Ласкаво просимо до Kimai</target>
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>

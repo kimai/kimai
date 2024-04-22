@@ -206,9 +206,9 @@
         <source>invoice.number_format</source>
         <target>Rechnungsnummer Format</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve" approved="yes">
         <source>customer.number_format</source>
-        <target state="needs-translation">Kundennummer Format</target>
+        <target state="final">Kundennummer Format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>

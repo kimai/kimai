@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>时间追踪</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">时间追踪</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -1051,9 +1051,9 @@
         <source>error.too_many_entries</source>
         <target>无法处理请求，找到太多结果。</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>一封电子邮件已经发送。它包含一个您必须单击才能重置密码的链接。注意:您只能在%tokenLifetime%小时内请求一次新密码。如果没有收到电子邮件，请检查垃圾邮件文件夹或重试。</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">一封电子邮件已经发送。它包含一个您必须单击才能重置密码的链接。注意:您只能在%tokenLifetime%小时内请求一次新密码。如果没有收到电子邮件，请检查垃圾邮件文件夹或重试。</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

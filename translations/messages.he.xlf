@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>שעות עבודה</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="needs-translation">שעות עבודה</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -994,9 +994,9 @@
         <source>includeNoWork</source>
         <target>הצגת רשומות בלי הזמנות</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>נשלחה הודעה בדוא״ל. היא מכילה קישור שיש ללחוץ עליו כדי לאפס את הסיסמה שלך. לתשומת לבך: ניתן לבקש סיסמה חדשה אחת לכל %tokenLifetime% שעות. אם לא קיבלת הודעה בדוא״ל מוטב לבדוק בתיקיית הספאם שלך או לנסות שוב.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">נשלחה הודעה בדוא״ל. היא מכילה קישור שיש ללחוץ עליו כדי לאפס את הסיסמה שלך. לתשומת לבך: ניתן לבקש סיסמה חדשה אחת לכל %tokenLifetime% שעות. אם לא קיבלת הודעה בדוא״ל מוטב לבדוק בתיקיית הספאם שלך או לנסות שוב.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
@@ -1711,8 +1711,8 @@
         <target state="translated">העדרות: הערה היא שדה חובה</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="translated">תבנית לשעה, תאריך ומטבע</target>
+        <source>Time, date and currency format</source>
+        <target state="needs-translation">תבנית לשעה, תאריך ומטבע</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
         <source>Project number</source>

@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking" approved="yes">
-        <source>time_tracking</source>
-        <target state="final">Monitoraggio del tempo</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" approved="no" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes" approved="yes">
         <source>yes</source>
@@ -1046,9 +1046,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="final">Anno finanziario</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="final">È stata inviata un'e-mail. Contiene un collegamento su cui devi fare clic per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la cartella della posta indesiderata o riprova.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">È stata inviata un'e-mail. Contiene un collegamento su cui devi fare clic per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la cartella della posta indesiderata o riprova.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
@@ -1746,9 +1746,9 @@
         <source>batch_table_checkbox</source>
         <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="yes" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="final">Formato per ora, data e valuta</target>
+      <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
+        <source>Time, date and currency format</source>
+        <target state="needs-translation">Formato per ora, data e valuta</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>
@@ -1777,6 +1777,14 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve" approved="yes">
         <source>api_token_hidden</source>
         <target state="final">Questa è l'unica volta in cui questa chiave verrà visualizzata! Tienila al sicuro e assicurati di averla copiata prima di chiudere questa finestra.</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="yes">
+        <source>Deactivate</source>
+        <target state="final">Disattiva</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve" approved="yes">
+        <source>Activate</source>
+        <target state="final">Attiva</target>
       </trans-unit>
     </body>
   </file>

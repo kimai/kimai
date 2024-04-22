@@ -10,8 +10,8 @@
         <source>Contact</source>
         <target state="needs-translation">Contact</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">ਸਮਾਂ ਟਰੈਕਿੰਗ</target>
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both" approved="no">

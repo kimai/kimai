@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Sledování času</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Sledování času</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -1135,9 +1135,9 @@
         <source>registration.check_email</source>
         <target>Aktivační email byl odeslán na %email%. Email obsahuje aktivační odkaz, na který musíte kliknout pro aktivaci účtu.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Email s odkazem pro obnovení hesla byl odeslán. Poznámka: O nové heslo si můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud email neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Email s odkazem pro obnovení hesla byl odeslán. Poznámka: O nové heslo si můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud email neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>

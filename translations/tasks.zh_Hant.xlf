@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="needs-translation">任務敘述</target>
+        <target state="translated">任務</target>
       </trans-unit>
       <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
         <source>tasks.my</source>
@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
-        <target state="translated">這些標籤將複製到每個時間表紀錄中</target>
+        <target state="translated">這些標籤將複製到每個工時單的紀錄中</target>
       </trans-unit>
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>

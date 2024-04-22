@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Παρακολούθηση Χρόνου</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Παρακολούθηση Χρόνου</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -1090,9 +1090,9 @@
         <source>error.too_many_entries</source>
         <target>Το αίτημα δεν μπορεί να επεξεργαστεί, βρέθηκαν πάρα πολλά αποτελέσματα.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Ένα ηλεκτρονικό μήνυμα έχει αποσταλεί. Περιέχει το σύνδεσμο που πρέπει να ακολουθήσετε για να επαναφέρετε τον κωδικό σας. Σημείωση: Μπορείτε να ζητήσετε νέο κωδικό μία φορά εντός %tokenLifetime% ωρών. Εάν δεν λάβετε το ηλεκτρονικό μήνυμα ελέγξετε τον φάκελο με τα ανεπιθύμητα μηνύματα η προσπαθήστε ξανά.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Ένα ηλεκτρονικό μήνυμα έχει αποσταλεί. Περιέχει το σύνδεσμο που πρέπει να ακολουθήσετε για να επαναφέρετε τον κωδικό σας. Σημείωση: Μπορείτε να ζητήσετε νέο κωδικό μία φορά εντός %tokenLifetime% ωρών. Εάν δεν λάβετε το ηλεκτρονικό μήνυμα ελέγξετε τον φάκελο με τα ανεπιθύμητα μηνύματα η προσπαθήστε ξανά.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
