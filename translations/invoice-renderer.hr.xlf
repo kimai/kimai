@@ -28,9 +28,9 @@
         <source>text</source>
         <target>Tekst</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target>Vremenska tablica</target>
+        <target state="translated">Evidentiranje vremena</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>

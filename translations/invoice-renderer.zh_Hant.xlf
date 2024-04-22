@@ -2,25 +2,25 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target state="translated">時間表</target>
+        <target state="translated">工時單</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">發票</target>
+        <target state="translated">收支單</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">用於進一步處理</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
         <source>invoice</source>
-        <target state="translated">發票</target>
+        <target state="translated">收支單</target>
       </trans-unit>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
         <source>invoice_renderer</source>
-        <target state="translated">發票模板</target>
+        <target state="translated">收支單模板</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>

@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Theo dõi thời gian</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Theo dõi thời gian</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -931,9 +931,9 @@
         <source>menu.reporting</source>
         <target>Báo cáo</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Một thư tín đã được gửi. Thư chứa một đường dẫn bạn cần phải nhấn để đặt lại mật khẩu. Ghi chú: Bạn chỉ có thể yêu cầu một mật khẩu mới trong vòng %tokenLifetime% giờ. Nếu bạn không thấy thư hãy kiểm tra mục thư rác hoặc thử lại một lần nữa.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Một thư tín đã được gửi. Thư chứa một đường dẫn bạn cần phải nhấn để đặt lại mật khẩu. Ghi chú: Bạn chỉ có thể yêu cầu một mật khẩu mới trong vòng %tokenLifetime% giờ. Nếu bạn không thấy thư hãy kiểm tra mục thư rác hoặc thử lại một lần nữa.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

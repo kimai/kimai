@@ -938,9 +938,9 @@
         <source>yes</source>
         <target>Ja</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Zeiterfassung</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -1026,9 +1026,9 @@
         <source>registration.check_email</source>
         <target>Eine E-Mail wurde an %email% gesendet. Diese enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

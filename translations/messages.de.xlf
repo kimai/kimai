@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Zeiterfassung</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -159,9 +159,9 @@
         <source>registration.check_email</source>
         <target>Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Eine E-Mail wurde verschickt. Sie beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="final">Eine E-Mail mit einem Link zum Zurücksetzen des Passworts wurde an Sie gesendet. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden angefordert werden. Wenn Sie die E-Mail nicht erhalten haben, überprüfen Sie bitte Ihren Spam-Ordner oder versuchen Sie es erneut.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -1564,9 +1564,9 @@
         <source>help_locales</source>
         <target>Hier finden Sie Beispiele für die Formatierungsregeln der unterstützten Sprachen</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="needs-translation">Format für Zeit, Datum und Geld</target>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="yes">
+        <source>Time, date and currency format</source>
+        <target state="final">Zeit-, Datums- und Währungsformat</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>

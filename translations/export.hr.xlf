@@ -14,9 +14,9 @@
         <source>With internal rates</source>
         <target state="translated">S internim cijenama</target>
       </trans-unit>
-      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve">
         <source>Timesheet</source>
-        <target>Vremenska tablica</target>
+        <target state="translated">Evidentiranje vremena</target>
       </trans-unit>
     </body>
   </file>

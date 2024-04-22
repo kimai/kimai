@@ -94,9 +94,9 @@
         <source>Cannot stop running timesheet</source>
         <target>You have an active time record which cannot be stopped automatically.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format." xml:space="preserve">
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format." xml:space="preserve" approved="yes">
         <source>The given value is not a valid day-time format.</source>
-        <target state="needs-translation">The given value is not a valid day-time format.</target>
+        <target state="final">The given value is not a valid day-time format.</target>
       </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>

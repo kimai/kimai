@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ko" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">타임 트래킹</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -1071,9 +1071,9 @@
         <source>stats.amountFinancialYear</source>
         <target>올해 회계연도 수익</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>비밀번호를 재설정 안내 이메일을 보내 드렸습니다.이메일에 나와있는 링크를 클릭하세요.알림:%tokenLifetime% 시간 내에 한번만 새 비밀번호를 요청할 수 있습니다. 이메일을 받지 못했다면 스팸메일함을 확인하시거나 재시도하시기 바랍니다.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">비밀번호를 재설정 안내 이메일을 보내 드렸습니다.이메일에 나와있는 링크를 클릭하세요.알림:%tokenLifetime% 시간 내에 한번만 새 비밀번호를 요청할 수 있습니다. 이메일을 받지 못했다면 스팸메일함을 확인하시거나 재시도하시기 바랍니다.</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>

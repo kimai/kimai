@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">Süre Takibi</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -1063,9 +1063,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Mali yıl</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Parolanızı sıfırlamak için tıklamanız gereken bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, spam klasörünüze bakın veya tekrar deneyin.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Parolanızı sıfırlamak için tıklamanız gereken bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, spam klasörünüze bakın veya tekrar deneyin.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
@@ -1768,8 +1768,8 @@
         <target state="translated">Benzersiz kullanıcı tanımlayıcısı kimlik doğrulama için ve dışa aktarmalarda kullanılır</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="translated">Saat, tarih ve para birimi için biçim</target>
+        <source>Time, date and currency format</source>
+        <target state="needs-translation">Saat, tarih ve para birimi için biçim</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
@@ -1798,6 +1798,14 @@
       <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
         <source>api_password_deprecated</source>
         <target state="translated">API parolaları artık kullanılmıyor: lütfen bunun yerine API belirteçlerini kullanın.</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="no">
+        <source>Deactivate</source>
+        <target state="translated">Devre dışı bırak</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve" approved="no">
+        <source>Activate</source>
+        <target state="translated">Etkinleştir</target>
       </trans-unit>
     </body>
   </file>

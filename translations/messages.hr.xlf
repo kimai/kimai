@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hr" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Evidentiranje vremena</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Evidentiranje vremena</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -145,9 +145,9 @@
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="translated">Poslan je e-mail na %email%. Sadrži poveznicu koju moraš pritisnuti za aktiviranje računa.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% sata. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% sata. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -1337,7 +1337,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="needs-translation">API lozinka se koristi za komunikaciju između Kimaija i tvojih programa</target>
+        <target state="translated">Ovdje možeš upravljati svojim API tokenima koji se koriste za autentifikaciju tvoje aplikacije u Kimaiju.</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
@@ -1497,7 +1497,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Ciljani sati</target>
+        <target state="translated">Očekivani broj sati</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1768,12 +1768,44 @@
         <target state="translated">Filtar pretrage</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
+        <source>Time, date and currency format</source>
         <target state="needs-translation">Format za vrijeme, datum i valutu</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">Odsutnost: Komentar je obavezno polje</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktiviraj</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Datum isteka</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API lozinke su zastarjele: umjesto njih koristi API tokene.</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Broj aktivnosti</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Broj projekta</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Deaktiviraj</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Zadnja upotreba</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Ovo je jedini put prikazivanje ključa! Stoga ga spremi na sigurno mjesto i osiguraj da ga kopiraš prije zatvaranja ovog prozora.</target>
       </trans-unit>
     </body>
   </file>

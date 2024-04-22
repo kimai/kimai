@@ -449,9 +449,9 @@
         <source>menu.homepage</source>
         <target state="translated">Dashbord</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Tidsregistrering</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tidsregistrering</target>
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
@@ -461,9 +461,9 @@
         <source>admin_entity.delete_confirm</source>
         <target state="translated">Denne dataen vil også bli slettet! Alternativt kan du velge en oppføring hvor all data vil bli overført til:</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>En e-post har blitt sendt. Den inneholder en lenke du må klikke for å tilbakestille passordet ditt. Merk: Du kan kun forespørre nytt passord én gang i løpet av %tokenLifetime% timer. Hvis du ikke får en e-post kan du sjekke søppelposten eller prøve igjen.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">En e-post har blitt sendt. Den inneholder en lenke du må klikke for å tilbakestille passordet ditt. Merk: Du kan kun forespørre nytt passord én gang i løpet av %tokenLifetime% timer. Hvis du ikke får en e-post kan du sjekke søppelposten eller prøve igjen.</target>
       </trans-unit>
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>

@@ -10,9 +10,9 @@
         <source>With internal rates</source>
         <target state="translated">列出內部利率</target>
       </trans-unit>
-      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve">
         <source>Timesheet</source>
-        <target state="translated">時間表</target>
+        <target state="translated">工時單</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>With remaining budget</source>
