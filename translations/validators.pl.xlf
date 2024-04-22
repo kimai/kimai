@@ -90,10 +90,6 @@
         <source>Validation Failed</source>
         <target state="translated">Wystąpił problem z zapisem.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">Podana wartość nie jest prawidłowym formatem czasu dziennego.</target>
-      </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">Podany kod nie jest prawidłowym tokenem TOTP.</target>
