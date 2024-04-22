@@ -49,6 +49,8 @@ final class DateRangeType extends AbstractType
             'max_day' => null,
             'locale' => \Locale::getDefault(),
         ]);
+        $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
+        $resolver->addAllowedTypes('max_day', ['null', 'string', \DateTimeInterface::class]);
 
         $resolver->setDefault('format', function (Options $options): string {
             $format = $this->localeService->getDateFormat($options['locale']);
@@ -101,13 +103,13 @@ final class DateRangeType extends AbstractType
 
         if ($options['min_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'min' => $options['min_day'],
+                'min' => (is_string($options['min_day']) ? $options['min_day'] : $options['min_day']->format('Y-m-d')),
             ]);
         }
 
         if ($options['max_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'max' => $options['max_day'],
+                'max' => (is_string($options['max_day']) ? $options['max_day'] : $options['max_day']->format('Y-m-d')),
             ]);
         }
     }
