@@ -3774,11 +3774,6 @@ parameters:
             path: src/Kernel.php
 
         -
-            message: "#^Method App\\\\Kernel\\:\\:configureContainer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Kernel.php
-
-        -
             message: "#^Method App\\\\Kernel\\:\\:getBundleClasses\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Kernel.php

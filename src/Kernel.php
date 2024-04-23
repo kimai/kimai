@@ -121,7 +121,7 @@ class Kernel extends BaseKernel
         return $plugins;
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->registerExtension(new AppExtension());
 
@@ -130,11 +130,12 @@ class Kernel extends BaseKernel
         $confDir = $this->getProjectDir() . '/config';
 
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
-        // to get rid of the local.yaml from the list, we load it afterward explicit
+        // to get rid of the local.yaml from the list: we load it afterward explicit
         $finder = (new Finder())
             ->files()
             ->in([$confDir . '/packages/'])
             ->name('*' . self::CONFIG_EXTS)
+            ->notName('local.yaml')
             ->sortByName()
             ->followLinks()
         ;
