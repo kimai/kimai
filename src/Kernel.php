@@ -146,7 +146,7 @@ class Kernel extends BaseKernel
         }
 
         if (is_file($confDir . '/packages/local.yaml')) {
-            $loader->load($confDir . '/packages/local.yaml', 'glob');
+            $loader->load($confDir . '/packages/local.yaml');
         }
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
