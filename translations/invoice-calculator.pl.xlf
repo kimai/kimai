@@ -18,17 +18,17 @@
         <source>user</source>
         <target state="translated">Użytkownik: jedna pozycja na użytkownika</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Aktywność: jedna pozycja na aktywność</target>
+        <target state="translated">Aktywność</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
         <target state="translated">Projekt: jedna pozycja na projekt</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Domyślnie: jeden wpis na dzień (używa daty rozpoczęcia)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>

@@ -1057,7 +1057,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Foi enviado um e-mail. Ele contém um link que você deve clicar para redefinir a sua senha. Nota: Você só pode solicitar uma nova senha uma vez dentro do limite de %tokenLifetime% horas. Caso não receba um e-mail, verifique a sua pasta de spam ou tente novamente.</target>
+        <target state="translated">Um e-mail foi enviado com um link para redefinir sua senha. Observação: você só pode solicitar uma nova senha uma vez a cada %tokenLifetime% horas. Caso não receba o e-mail, verifique sua pasta de spam ou tente novamente.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
