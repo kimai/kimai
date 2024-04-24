@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking" approved="no" xml:space="preserve">
+      <trans-unit id="N7mikjJ" resname="time_tracking" approved="yes" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Monitoraggio del tempo</target>
+        <target state="final">Monitoraggio del tempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes" approved="yes">
         <source>yes</source>
@@ -1046,9 +1046,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="final">Anno finanziario</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">È stata inviata un'e-mail. Contiene un collegamento su cui devi fare clic per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta entro %tokenLifetime% ore. Se non ricevi un'e-mail, controlla la cartella della posta indesiderata o riprova.</target>
+        <target state="final">È stata inviata un'e-mail con un collegamento per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta ogni %tokenLifetime% ore. Se non ricevi l'e-mail, controlla la cartella spam o riprova.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
@@ -1746,9 +1746,9 @@
         <source>batch_table_checkbox</source>
         <target state="final">Aggiungi voce all'elenco degli aggiornamenti in blocco</target>
       </trans-unit>
-      <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
+      <trans-unit id="d9m85KE" resname="locale" approved="yes" xml:space="preserve">
         <source>Time, date and currency format</source>
-        <target state="needs-translation">Formato per ora, data e valuta</target>
+        <target state="final">Formato ora, data e valuta</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>

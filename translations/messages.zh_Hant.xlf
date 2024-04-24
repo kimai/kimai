@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve">
         <source>asc</source>
-        <target state="needs-translation">由小至大</target>
+        <target state="translated">由小至大</target>
       </trans-unit>
       <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve">
         <source>desc</source>

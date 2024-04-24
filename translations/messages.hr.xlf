@@ -147,7 +147,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% sata. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
+        <target state="translated">Poslan je e-mail s poveznicom za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom svakih %tokenLifetime% sata(i). Ako ne primiš e-mail, provjeri mapu nepoželjene pošte ili pokušaj ponovo.</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -1769,7 +1769,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Time, date and currency format</source>
-        <target state="needs-translation">Format za vrijeme, datum i valutu</target>
+        <target state="translated">Format za vrijeme, datum i valutu</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
