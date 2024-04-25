@@ -1688,6 +1688,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@kurkle/color@npm:0.3.2"
+  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
+  languageName: node
+  linkType: hard
+
 "@leichtgewicht/ip-codec@npm:^2.0.1":
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
@@ -3015,10 +3022,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^3.9":
-  version: 3.9.1
-  resolution: "chart.js@npm:3.9.1"
-  checksum: 9ab0c0ac01215af0b3f020f2e313030fd6e347b48ed17d5484ee9c4e8ead45e78ae71bea16c397621c386b409ce0b14bf17f9f6c2492cd15b56c0f433efdfff6
+"chart.js@npm:^4.0":
+  version: 4.4.2
+  resolution: "chart.js@npm:4.4.2"
+  dependencies:
+    "@kurkle/color": ^0.3.0
+  checksum: 72506af9abd33dd99484322dd26e854693323959fe2d6e750bf670e3959737bc195807e91a4d939bc04124c05c7a2f3c435e52d1a668e0e945869f37fcba90a8
   languageName: node
   linkType: hard
 
@@ -5017,7 +5026,7 @@ __metadata:
     "@fullcalendar/timegrid": ^5.11
     "@symfony/webpack-encore": ^4.0
     "@tabler/core": 1.0.0-beta19
-    chart.js: ^3.9
+    chart.js: ^4.0
     core-js: ^3.6
     eslint: ^8.0
     eslint-webpack-plugin: ^3.0

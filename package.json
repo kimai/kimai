@@ -37,7 +37,7 @@
     "@fullcalendar/timegrid": "^5.11",
     "@symfony/webpack-encore": "^4.0",
     "@tabler/core": "1.0.0-beta19",
-    "chart.js": "^3.9",
+    "chart.js": "^4.0",
     "core-js": "^3.6",
     "eslint": "^8.0",
     "eslint-webpack-plugin": "^3.0",
