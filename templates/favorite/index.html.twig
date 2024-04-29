@@ -31,7 +31,7 @@
                             </a>
                             {% else %}
                             <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions remote-modal-reload">
-                                <i class="{{ 'bookmark'|icon }}"></i>
+                                {{ icon('bookmark') }}
                             </a>
                             {% endif %}
                         </div>
