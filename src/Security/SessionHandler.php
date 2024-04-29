@@ -10,11 +10,18 @@
 namespace App\Security;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 final class SessionHandler extends PdoSessionHandler
 {
-    public function __construct(Connection $connection)
+    public function __construct(
+        Connection $connection,
+        private readonly RateLimiterFactory $sessionPredictionLimiter,
+        private readonly RequestStack $requestStack
+    )
     {
         parent::__construct($connection->getNativeConnection(), [
             'db_table' => 'kimai2_sessions',
@@ -33,5 +40,21 @@ final class SessionHandler extends PdoSessionHandler
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(':time', time(), \PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    public function validateId(#[\SensitiveParameter] string $sessionId): bool
+    {
+        $result = parent::validateId($sessionId);
+
+        if ($result === false) {
+            $limiter = $this->sessionPredictionLimiter->create($this->requestStack->getMainRequest()?->getClientIp());
+            $limit = $limiter->consume();
+
+            if (false === $limit->isAccepted()) {
+                throw new BadRequestHttpException('Too many requests with invalid Session ID. Prediction attack?');
+            }
+        }
+
+        return $result;
     }
 }
