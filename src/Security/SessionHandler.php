@@ -25,4 +25,13 @@ final class SessionHandler extends PdoSessionHandler
             'lock_mode' => PdoSessionHandler::LOCK_ADVISORY,
         ]);
     }
+
+    public function garbageCollection(): void
+    {
+        $connection = $this->getConnection();
+        $sql = 'DELETE FROM kimai2_sessions WHERE lifetime < :time';
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(':time', time(), \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }
