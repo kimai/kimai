@@ -19,7 +19,6 @@ final class LogoutSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly SessionHandler $sessionHandler,
         private readonly LoggerInterface $logger
-
     )
     {
     }
@@ -36,7 +35,7 @@ final class LogoutSubscriber implements EventSubscriberInterface
         try {
             $this->sessionHandler->garbageCollection();
         } catch (\Exception $exception) {
-            $this->logger->error('Failed removing expired session: '. $exception->getMessage());
+            $this->logger->error('Failed removing expired session: ' . $exception->getMessage());
         }
     }
 }
