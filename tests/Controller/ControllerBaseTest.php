@@ -120,18 +120,33 @@ abstract class ControllerBaseTest extends WebTestCase
             default => null,
         };
 
+        if ($username === null) {
+            throw new \Exception('Unknown username: ' . $username);
+        }
+
+        return $this->loginByUsername($username);
+    }
+
+    protected function loginByUsername(string $username): HttpKernelBrowser
+    {
         $client = static::createClient();
 
-        if ($username !== null) {
-            /** @var UserRepository $userRepository */
-            $userRepository = $this->getPrivateService(UserRepository::class);
-            $user = $userRepository->findByUsername($username);
-            if ($user === null) {
-                throw new \Exception('Unknown user: ' . $username);
-            }
-
-            $client->loginUser($user, 'secured_area');
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getPrivateService(UserRepository::class);
+        $user = $userRepository->findByUsername($username);
+        if ($user === null) {
+            throw new \Exception('Unknown user: ' . $username);
         }
+
+        $client->loginUser($user, 'secured_area');
+
+        return $client;
+    }
+
+    protected function loginUser(User $user): HttpKernelBrowser
+    {
+        $client = static::createClient();
+        $client->loginUser($user, 'secured_area');
 
         return $client;
     }

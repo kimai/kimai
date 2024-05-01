@@ -16,6 +16,7 @@ use App\Twig\Runtime\QrCodeExtension;
 use App\Twig\Runtime\ThemeExtension;
 use App\Twig\Runtime\TimesheetExtension;
 use App\Twig\Runtime\WidgetExtension;
+use App\Utils\StringHelper;
 use KevinPapst\TablerBundle\Twig\RuntimeExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -51,6 +52,7 @@ final class RuntimeExtensions extends AbstractExtension
             new TwigFilter('comment1line', [MarkdownExtension::class, 'commentOneLiner'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
             new TwigFilter('colorize', [ThemeExtension::class, 'colorize']),
             new TwigFilter('icon', [RuntimeExtension::class, 'icon']),
+            new TwigFilter('sanitize_dde', StringHelper::sanitizeDDE(...)),
         ];
     }
 }

@@ -82,10 +82,6 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">عذرا ، الميزانية استنفدت.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">القيمة المحددة ليست تنسيقًا صالحًا للوقت واليوم.</target>
-      </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed">
         <source>Validation Failed</source>
         <target state="translated">وقعت هناك مشكلة في الحفظ.</target>

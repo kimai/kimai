@@ -198,9 +198,6 @@
         "symfony/symfony": "*"
     },
     "extra": {
-        "branch-alias": {
-            "dev-main": "2.0.x-dev"
-        },
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,

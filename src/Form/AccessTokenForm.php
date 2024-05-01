@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 
 final class AccessTokenForm extends AbstractType
 {
@@ -27,6 +28,11 @@ final class AccessTokenForm extends AbstractType
             ->add('expiresAt', DatePickerType::class, [
                 'label' => 'expires',
                 'required' => false,
+                'force_time' => 'end',
+                'min_day' => $options['min_date'],
+                'constraints' => [
+                    new GreaterThan($options['min_date'])
+                ],
             ])
         ;
     }
@@ -41,6 +47,8 @@ final class AccessTokenForm extends AbstractType
             'attr' => [
                 'data-form-event' => 'kimai.accessToken'
             ],
+            'min_date' => new \DateTimeImmutable('today 00:00:00'),
         ]);
+        $resolver->setAllowedTypes('min_date', [\DateTimeInterface::class]);
     }
 }

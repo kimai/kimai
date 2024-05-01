@@ -38,7 +38,7 @@ class LayoutControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
         $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
-        $this->assertStringContainsString('href="/en/logout?_csrf_token=', $content);
+        $this->assertStringContainsString('href="/en/logout', $content);
     }
 
     protected function assertHasNavigation(HttpKernelBrowser $client): void

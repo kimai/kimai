@@ -190,7 +190,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Assert\NotNull]
     private ?string $category = self::WORK;
     #[ORM\Column(name: 'modified_at', type: 'datetime_immutable', nullable: true)]
-    private \DateTimeImmutable $modifiedAt; // @phpstan-ignore-line - create migration and update all null values and then make it not null
+    private \DateTimeImmutable $modifiedAt;
     /**
      * Tags
      *

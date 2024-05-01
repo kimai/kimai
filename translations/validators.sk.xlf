@@ -54,10 +54,6 @@
         <source>Cannot stop running timesheet</source>
         <target state="translated">Máte aktívny časový záznam, ktorý sa nemôže automaticky zastaviť.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">Zadaná hodnota nie je platný formát denného času.</target>
-      </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">Zadaný kód nie je správny TOTP token.</target>

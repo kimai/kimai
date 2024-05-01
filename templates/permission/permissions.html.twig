@@ -123,7 +123,7 @@
                     }
 
                     let linkElement = target;
-                    linkElement.innerHTML = '{{ icon('spinner') }}';
+                    linkElement.innerHTML = '<i class="{{ 'spinner'|icon }} fa-pulse"></i>';
 
                     const isActive = linkElement.classList.contains('permOn');
                     let url = linkElement.dataset['href'].replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, getPermissionToken());

@@ -122,7 +122,7 @@ tabler:
         search: fas fa-search
         settings: fas fa-cog
         shop: fas fa-shopping-cart
-        spinner: fas fa-spinner fa-pulse
+        spinner: fas fa-spinner
         start: fas fa-play
         start-small: far fa-play-circle
         stop: fas fa-stop

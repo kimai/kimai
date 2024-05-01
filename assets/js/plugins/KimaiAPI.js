@@ -19,7 +19,6 @@ export default class KimaiAPI extends KimaiPlugin {
 
     _headers() {
         const headers = new Headers();
-        headers.append('X-AUTH-SESSION', '1');
         headers.append('Content-Type', 'application/json');
 
         return headers;

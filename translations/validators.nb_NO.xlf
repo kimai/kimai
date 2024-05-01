@@ -86,10 +86,6 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Budsjettet er oppbrukt.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">Angitt verdi er ikke et gyldig dag-tid -format.</target>
-      </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">Angitt kode er ikke riktig TOTP-symbol.</target>

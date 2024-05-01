@@ -1,0 +1,7 @@
+framework:
+    rate_limiter:
+        session_prediction:
+            policy: 'fixed_window'
+            limit: 250
+            interval: '1 hour'
+            lock_factory: null

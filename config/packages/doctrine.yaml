@@ -22,6 +22,7 @@ doctrine:
 
         types:
             datetime: App\Doctrine\UTCDateTimeType
+            datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
         controller_resolver:
             auto_mapping: true

@@ -27,7 +27,8 @@ final class ApiRequestMatcher implements RequestMatcherInterface
         }
 
         // let's use this firewall if a Bearer token is set in the header
-        if ($request->headers->has('Authorization')) {
+        // other cases like "bearer" are rejected earlier
+        if (($auth = $request->headers->get('Authorization')) !== null && str_starts_with($auth, 'Bearer ')) {
             return true;
         }
 

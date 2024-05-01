@@ -9,7 +9,7 @@
             <div class="col-auto">
                 {% if not url is empty %}<a href="{{ url }}">{% endif %}
                 <span class="bg-{{ options.color|default('green') }} text-white avatar">
-                    <i class="{{ options.icon|icon(true, options.icon) }}"></i>
+                    {{ icon(options.icon, true) }}
                 </span>
                 {% if not url is empty %}</a>{% endif %}
             </div>

@@ -23,6 +23,7 @@ import {
     Legend,
     Title,
     Tooltip,
+    Colors,
 //    SubTitle
 } from 'chart.js';
 
@@ -50,6 +51,7 @@ Chart.register(
     Legend,
     Title,
     Tooltip,
+    Colors
 //    SubTitle
 );
 

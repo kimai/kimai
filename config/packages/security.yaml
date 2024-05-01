@@ -63,7 +63,7 @@ security:
             logout:
                 path: logout
                 target: homepage
-                enable_csrf: true
+                enable_csrf: false
 
             login_throttling:
                 max_attempts: 5
@@ -76,6 +76,7 @@ security:
                 max_uses: 1
 
     access_decision_manager:
+        # only grants access if there is no voter denying access
         strategy: unanimous
         allow_if_all_abstain: false
 

@@ -59,7 +59,7 @@
                 </td>
             {% endif %}
             <td class="text-nowrap"{% block user_column_cell_attribute %}{% endblock %}>
-                {{ userPeriod.user.displayName }}
+                {{ userPeriod.user.displayName|sanitize_dde }}
             </td>
             {% if showAccountNumber %}
                 <td>{{ userPeriod.user.accountNumber }}</td>

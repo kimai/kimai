@@ -40,6 +40,12 @@ final class RegenerateLocalesCommand extends Command
      * @var string[]
      */
     private array $noRegionCode = ['ar', 'id', 'pa', 'sl'];
+    /**
+     * A list of locales that will be activated, not matter if translation files exist for them.
+     *
+     * @var string[]
+     */
+    private array $addLocaleToList = ['zh_Hant_TW'];
 
     public function __construct(
         private readonly string $projectDirectory,
@@ -74,8 +80,8 @@ final class RegenerateLocalesCommand extends Command
         foreach ($translationFilenames as $file) {
             $firstLevelLocales[] = explode('.', basename($file))[1];
         }
-        $firstLevelLocales = array_unique($firstLevelLocales);
-        $io->title('Locales found from translation files');
+        $firstLevelLocales = array_unique(array_merge($firstLevelLocales, $this->addLocaleToList));
+        $io->title('First level locales found');
         $io->writeln(implode('|', $firstLevelLocales));
 
         $secondLevel = [];
@@ -95,7 +101,7 @@ final class RegenerateLocalesCommand extends Command
         sort($firstLevelLocales);
         sort($secondLevel);
 
-        // keep the locales that have translation filesat the begin
+        // keep the locales that have translation files at the beginning
         // the config is than easier to read and the locales will be sorted in the UI anyway
         $locales = array_merge($firstLevelLocales, $secondLevel);
 

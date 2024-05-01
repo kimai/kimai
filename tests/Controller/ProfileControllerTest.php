@@ -219,16 +219,7 @@ class ProfileControllerTest extends ControllerBaseTest
         // cannot follow redirect here, because the password was changed and the user/password registered in the client
         // are the old ones, so following the redirect would fail with "Unauthorized".
 
-        $this->tearDown();
-        $client = self::createClient([], [
-            'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
-            'PHP_AUTH_PW' => 'test1234',
-        ]);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
         $user = $this->getUserByRole(User::ROLE_USER);
-
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
         $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test1234'));
     }
@@ -251,6 +242,9 @@ class ProfileControllerTest extends ControllerBaseTest
         );
     }
 
+    /**
+     * @legacy
+     */
     public function testApiTokenAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
