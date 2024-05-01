@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eo" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Temporegistrado</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Temporegistrado</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -1074,9 +1074,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Financjaro</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Retpoŝta mesaĝo estis sendita al email. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por restarigi vian pasvorton. Noto: Vi povas peti novan pasvorton nur unufoje en %tokenLifetime% horoj. Se vi ne ricevas retpoŝtan mesaĝon, kontrolu vian trudmesaĝujon aŭ reprovu.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Retpoŝta mesaĝo estis sendita al email. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por restarigi vian pasvorton. Noto: Vi povas peti novan pasvorton nur unufoje en %tokenLifetime% horoj. Se vi ne ricevas retpoŝtan mesaĝon, kontrolu vian trudmesaĝujon aŭ reprovu.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

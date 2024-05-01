@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>タイムトラッキング</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">タイムトラッキング</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -851,9 +851,9 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">選択リストのエントリーを表示</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">メールアドレスが送られました。パスワードをリセットするにはメール中のリンクをクリックしてください。注意：%tokenLifetime%時間の間に新しいパスワードを設定し直すことができます。もしメールが届かない場合は迷惑フォルダーをチェックしてください。</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">メールアドレスが送られました。パスワードをリセットするにはメール中のリンクをクリックしてください。注意：%tokenLifetime%時間の間に新しいパスワードを設定し直すことができます。もしメールが届かない場合は迷惑フォルダーをチェックしてください。</target>
       </trans-unit>
       <trans-unit id="nqEYrfk" resname="security.unlock.intro">
         <source>security.unlock.intro</source>

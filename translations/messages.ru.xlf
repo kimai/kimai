@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">Учёт времени</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -1029,9 +1029,9 @@
         <source>registration.check_email</source>
         <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% ч. Если вы не получили письмо - проверьте папку СПАМА или попробуйте позже.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% ч. Если вы не получили письмо - проверьте папку СПАМА или попробуйте позже.</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>

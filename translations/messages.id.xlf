@@ -34,9 +34,9 @@
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">Minggu %week%</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Sebuah email telah dikirimkan. Ini berisi tautan yang harus Anda klik untuk mengatur ulang kata sandi Anda. Catatan: Anda hanya dapat meminta kata sandi baru satu kali saja %tokenLifetime% per jam. Jika Anda tidak menerima email, periksa folder spam Anda atau coba lagi.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Sebuah email telah dikirimkan. Ini berisi tautan yang harus Anda klik untuk mengatur ulang kata sandi Anda. Catatan: Anda hanya dapat meminta kata sandi baru satu kali saja %tokenLifetime% per jam. Jika Anda tidak menerima email, periksa folder spam Anda atau coba lagi.</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -94,8 +94,8 @@
         <source>description</source>
         <target state="translated">Deskripsi</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">Pencatatan Waktu</target>
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both" approved="no">

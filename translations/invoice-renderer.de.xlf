@@ -22,9 +22,9 @@
         <source>invoice</source>
         <target>Rechnung</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target>Rechnung</target>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
+        <source>Invoice</source>
+        <target state="final">Rechnung</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>

@@ -3,7 +3,7 @@
   <file source-language="en" target-language="sv" datatype="plaintext" original="messages.en.xlf">
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
-        <source>time_tracking</source>
+        <source>Time Tracking</source>
         <target state="translated">Tidrapportering</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -467,25 +467,25 @@
       <!--
               Statistics data for Dashboard & Users profile
             -->
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">Arbetstimmar idag</target>
+        <target state="translated">Tid idag</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="translated">Arbetstimmar denna veckan</target>
+        <target state="translated">Tid denna vecka</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="translated">Arbetstimmar denna månaden</target>
+        <target state="translated">Tid denna månad</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="translated">Arbetstimmar detta året</target>
+        <target state="translated">Tid innevarande år</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="translated">Arbetstimmar totalt</target>
+        <target state="translated">Tid, summa</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
@@ -979,9 +979,9 @@
         <source>stats.percentUsed</source>
         <target>%percent%% använt</target>
       </trans-unit>
-      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve">
         <source>stats.yourWorkingHours</source>
-        <target>Mina arbetstimmar</target>
+        <target state="translated">Min tid</target>
       </trans-unit>
       <trans-unit id="tCNBGKG" resname="orderDate">
         <source>orderDate</source>
@@ -999,9 +999,9 @@
         <source>my_team_projects</source>
         <target>Mina projekt</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Ett mejl har skickats. Det innehåller en länk som du måste klicka på för att återställa ditt lösenord. Obs: Du kan endast begära ett nytt lösenord en gång inom %tokenLifetime% timmar. Om du inte har fått mejlet kontrollera din spamkorg eller försök igen.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Ett mejl har skickats. Det innehåller en länk som du måste klicka på för att återställa ditt lösenord. Obs: Du kan endast begära ett nytt lösenord en gång inom %tokenLifetime% timmar. Om du inte har fått mejlet kontrollera din spamkorg eller försök igen.</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -1067,9 +1067,9 @@
         <source>Working hours</source>
         <target>Arbetstid</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Arbetade timmar detta budgetåret</target>
+        <target state="translated">Tid innevarande budgetår</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
@@ -1255,13 +1255,13 @@
         <source>help.globalActivity</source>
         <target state="translated">Om du inte väljer ett projekt blir denna aktivitet global och den kan kombineras med vilket projekt som helst. Om du väljer ett projekt kan aktiviteten endast användas med det projektet. Inställningen kan inte ändras senare.</target>
       </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve">
         <source>stats.userDurationWeek</source>
-        <target state="translated">Mina arbetstider denna vecka</target>
+        <target state="translated">Tid denna vecka</target>
       </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve">
         <source>stats.userDurationTotal</source>
-        <target state="translated">Mina arbetstimmar totalt</target>
+        <target state="translated">Tid, summering</target>
       </trans-unit>
       <trans-unit id="BrOQ92O" resname="notifications.denied">
         <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
@@ -1335,17 +1335,17 @@
         <source>plugin.installed</source>
         <target state="translated">Installerade tillägg</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
         <source>stats.userDurationToday</source>
-        <target state="translated">Mina arbetstider idag</target>
+        <target state="translated">Tid idag</target>
       </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve">
         <source>stats.userDurationMonth</source>
-        <target state="translated">Mina arbetstider denna månad</target>
+        <target state="translated">Tid denna månad</target>
       </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve">
         <source>stats.userDurationYear</source>
-        <target state="translated">Mina arbetstider i år</target>
+        <target state="translated">Tid innevarande år</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>
@@ -1724,8 +1724,8 @@
         <target state="translated">Spårningsloggar</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="translated">Landsformat</target>
+        <source>Time, date and currency format</source>
+        <target state="needs-translation">Landsformat</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
@@ -1794,6 +1794,14 @@
       <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
         <source>api_password_deprecated</source>
         <target state="translated">API-lösenord är förlegade, använd API-nycklar istället.</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Inaktivera</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktivera</target>
       </trans-unit>
     </body>
   </file>
