@@ -1119,9 +1119,9 @@
         <source>budgetType</source>
         <target>Typ budżetu</target>
       </trans-unit>
-      <trans-unit id="KH2hgil" resname="account_number">
+      <trans-unit id="KH2hgil" resname="account_number" xml:space="preserve">
         <source>account_number</source>
-        <target>Numer personelu</target>
+        <target state="translated">Numer pracownika</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
@@ -1531,9 +1531,9 @@
         <source>complete_month.help</source>
         <target state="translated">Spowoduje to zablokowanie wszystkich dni w roku poprzedzających wybraną datę. Użytkownik nie będzie już mógł tworzyć ani edytować czasów w zablokowanym okresie.</target>
       </trans-unit>
-      <trans-unit id="CDTC1gc" resname="supervisor">
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
         <source>supervisor</source>
-        <target state="translated">Kierowca</target>
+        <target state="translated">Przełożony</target>
       </trans-unit>
       <trans-unit id="0xFBb6O" resname="Expenses">
         <source>Expenses</source>

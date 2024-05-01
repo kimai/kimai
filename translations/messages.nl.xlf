@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Tijdregistratie</target>
+        <target state="translated">Tijdsregistratie</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -18,9 +18,9 @@
         <source>both</source>
         <target>Beiden</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
         <source>This is a mandatory field</source>
-        <target>Dit is een verplicht veld</target>
+        <target state="translated">Verplicht veld</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>

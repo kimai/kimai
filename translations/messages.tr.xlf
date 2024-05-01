@@ -1065,7 +1065,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Parolanızı sıfırlamak için tıklamanız gereken bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, spam klasörünüze bakın veya tekrar deneyin.</target>
+        <target state="translated">Parolanızı sıfırlamak için bir bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, lütfen spam klasörünüze bakın veya tekrar deneyin.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
@@ -1769,7 +1769,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" approved="no" xml:space="preserve">
         <source>Time, date and currency format</source>
-        <target state="needs-translation">Saat, tarih ve para birimi için biçim</target>
+        <target state="translated">Saat, tarih ve para birimi biçimi</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>

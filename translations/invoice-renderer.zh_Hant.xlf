@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>timesheet</source>
-        <target state="translated">工時單</target>
+        <target state="final">工時單</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
-        <source>default</source>
-        <target state="translated">收支單</target>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
+        <source>Invoice</source>
+        <target state="final">收支單</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic">
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve" approved="yes">
         <source>programmatic</source>
-        <target state="translated">用於進一步處理</target>
+        <target state="final">適合用於進一步處理</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve" approved="yes">
         <source>invoice</source>
-        <target state="translated">收支單</target>
+        <target state="final">收支單</target>
       </trans-unit>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve" approved="yes">
         <source>invoice_renderer</source>
-        <target state="translated">收支單模板</target>
+        <target state="final">收支單模版</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve" approved="yes">
         <source>help.upload</source>
-        <target state="translated">注意：現有檔案將被覆寫。允許的檔案類型為：%extensions%。</target>
+        <target state="final">注意：現有檔案將被覆寫。允許的檔案類型為：%extensions%。</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text">
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve" approved="yes">
         <source>text</source>
-        <target state="translated">文字</target>
+        <target state="final">文字</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
+      <trans-unit id="m1UyfD9" resname="service-date" approved="yes" xml:space="preserve">
         <source>Single service date</source>
-        <target state="translated">服務日期</target>
+        <target state="final">服務日期</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve" approved="yes">
         <source>download_invoice_renderer</source>
-        <target state="translated">您可以在此處下載更多模板</target>
+        <target state="final">您可以在此處下載更多模版</target>
       </trans-unit>
     </body>
   </file>

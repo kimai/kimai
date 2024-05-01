@@ -1803,6 +1803,10 @@
         <source>api_password_deprecated</source>
         <target state="translated">API 密码已过期：请改用 API 令牌。</target>
       </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">活跃次数</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
