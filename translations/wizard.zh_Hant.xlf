@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="wizard.en.xlf">
     <body>
-      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve" approved="yes">
         <source>wizard.intro.title</source>
-        <target state="translated">歡迎來到 Kimai</target>
+        <target state="final">歡迎來到 Kimai</target>
       </trans-unit>
-      <trans-unit id="Mo1506M" resname="wizard.profile.description">
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve" approved="yes">
         <source>wizard.profile.description</source>
-        <target state="translated">一些基本設定可讓您更容易使用 Kimai。</target>
+        <target state="final">一些基本設定可讓您更容易使用 Kimai。</target>
       </trans-unit>
-      <trans-unit id="8_e6ApF" resname="wizard.profile.title">
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve" approved="yes">
         <source>wizard.profile.title</source>
-        <target state="translated">您的個人資料</target>
+        <target state="final">您的個人資料</target>
       </trans-unit>
-      <trans-unit id="k1SzMuI" resname="wizard.done.description">
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve" approved="yes">
         <source>wizard.done.description</source>
-        <target state="translated">最重要的設定已完成。之後您可以在使用者資料中調整更多設定。</target>
+        <target state="final">最重要的設定已完成。之後您可以在使用者資料中調整更多設定。</target>
       </trans-unit>
-      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve" approved="yes">
         <source>wizard.password.description</source>
-        <target state="translated">請輸入您的密碼，之後可用該密碼登入。</target>
+        <target state="final">請輸入您的密碼，之後可用該密碼登入。</target>
       </trans-unit>
-      <trans-unit id="FCMK0ph" resname="wizard.separator">
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve" approved="yes">
         <source>wizard.separator</source>
-        <target state="translated">您的設定</target>
+        <target state="final">您的設定</target>
       </trans-unit>
-      <trans-unit id="8p.2pXa" resname="wizard.done.title">
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve" approved="yes">
         <source>wizard.done.title</source>
-        <target state="translated">恭喜</target>
+        <target state="final">恭喜</target>
       </trans-unit>
-      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve" approved="yes">
         <source>wizard.password.title</source>
-        <target state="translated">您的密碼</target>
+        <target state="final">您的密碼</target>
       </trans-unit>
-      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve" approved="yes">
         <source>wizard.intro.description</source>
-        <target state="translated">此精靈將協助您根據需求自訂 Kimai。</target>
+        <target state="final">此設定精靈將協助您根據需求自訂 Kimai。</target>
       </trans-unit>
     </body>
   </file>

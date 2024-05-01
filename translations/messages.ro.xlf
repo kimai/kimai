@@ -1040,7 +1040,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">A fost trimis un e-mail. Acesta conține un link pe care trebuie să faceți clic pentru a vă reseta parola. Notă: Puteți solicita o singură dată o nouă parolă în decurs de %tokenLifetime% ore. Dacă nu primiți un e-mail, verificați dosarul de spam sau încercați din nou.</target>
+        <target state="translated">Un email a fost trimis cu un link pentru resetarea parolei tale. Notă: Poți solicita o nouă parolă doar o dată la fiecare %tokenLifetime% ore. Dacă nu primești email-ul, te rugăm să verifici folderul de spam sau să încerci din nou.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1524,7 +1524,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Time, date and currency format</source>
-        <target state="needs-translation">Format pentru oră, dată și monedă</target>
+        <target state="translated">Ora, data și formatul monedei</target>
       </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
         <source>status.approved</source>
@@ -1696,7 +1696,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Mod implicit</target>
+        <target state="translated">Implicit</target>
       </trans-unit>
       <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
         <source>button.request</source>

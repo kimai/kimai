@@ -2,45 +2,45 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="daterangepicker.en.xlf">
     <body>
-      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve" approved="yes">
         <source>This year — until today</source>
-        <target state="translated">今年 — 直到今天</target>
+        <target state="final">今年 —— 直到今天</target>
       </trans-unit>
-      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve" approved="yes">
         <source>daterangepicker.lastYear</source>
-        <target state="translated">去年</target>
+        <target state="final">去年</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
         <source>daterangepicker.lastMonth</source>
-        <target state="translated">上個月</target>
+        <target state="final">上個月</target>
       </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
         <source>daterangepicker.thisMonth</source>
-        <target state="translated">本月</target>
+        <target state="final">本月</target>
       </trans-unit>
-      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve" approved="yes">
         <source>daterangepicker.thisYear</source>
-        <target state="translated">今年</target>
+        <target state="final">今年</target>
       </trans-unit>
-      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday" xml:space="preserve" approved="yes">
         <source>daterangepicker.yesterday</source>
-        <target state="translated">昨天</target>
+        <target state="final">昨天</target>
       </trans-unit>
-      <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve" approved="yes">
         <source>daterangepicker.allTime</source>
-        <target state="translated">總期間</target>
+        <target state="final">總期間</target>
       </trans-unit>
-      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve" approved="yes">
         <source>daterangepicker.thisWeek</source>
-        <target state="translated">本周</target>
+        <target state="final">本週</target>
       </trans-unit>
-      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve" approved="yes">
         <source>daterangepicker.lastWeek</source>
-        <target state="translated">上周</target>
+        <target state="final">上週</target>
       </trans-unit>
-      <trans-unit id="s9Hdo7E" resname="daterangepicker.today">
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today" xml:space="preserve" approved="yes">
         <source>daterangepicker.today</source>
-        <target state="translated">今天</target>
+        <target state="final">今天</target>
       </trans-unit>
     </body>
   </file>
