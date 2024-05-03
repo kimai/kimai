@@ -154,10 +154,6 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target state="final">缺勤期間不能超出年底。</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format." xml:space="preserve" approved="yes">
-        <source>The given value is not a valid day-time format.</source>
-        <target state="final">指定的值不是有效的日期格式。</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
