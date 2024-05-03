@@ -605,6 +605,10 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
+        // this needs to be done, otherwise doctrine will not see the item as changed
+        // and the calculators will not run
+        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+
         if (null === ($current = $this->getMetaField($meta->getName()))) {
             $meta->setEntity($this);
             $this->meta->add($meta);
