@@ -157,7 +157,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    private ?float $rate = 0.00;
+    private float $rate = 0.00;
     #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -372,7 +372,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this->description;
     }
 
-    public function setRate(?float $rate): Timesheet
+    public function setRate(float $rate): Timesheet
     {
         $this->rate = $rate;
 
