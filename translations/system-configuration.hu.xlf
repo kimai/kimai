@@ -6,6 +6,10 @@
         <source>Time tracking</source>
         <target>Rögzített órák</target>
       </trans-unit>
+      <trans-unit id="Aaal234" resname="timesheet.rules.descriptionmandatory">
+        <source>timesheet.rules.descriptionmandatory</source>
+        <target>Leírás mező kötelezően kitöltendő</target>
+      </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
         <target>Jövőbeli rögzítések engedélyezése</target>

@@ -379,6 +379,12 @@ final class SystemConfiguration
         return (bool) $this->find('timesheet.rules.allow_future_times');
     }
 
+    public function isTimesheetDescriptionMandatory(): bool
+    {
+        return (bool) $this->find('timesheet.rules.descriptionmandatory');
+    }
+    
+
     public function isTimesheetAllowZeroDuration(): bool
     {
         return (bool) $this->find('timesheet.rules.allow_zero_duration');

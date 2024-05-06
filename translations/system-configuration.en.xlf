@@ -34,6 +34,10 @@
         <source>timesheet.mode_punch</source>
         <target>[Time-clock] user can start and stop records, but not edit the times or duration</target>
       </trans-unit>
+      <trans-unit id="Aaal234" resname="timesheet.rules.descriptionmandatory">
+        <source>timesheet.rules.descriptionmandatory</source>
+        <target>Description field is mandatory</target>
+      </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
         <target>Allow time entries in the future</target>

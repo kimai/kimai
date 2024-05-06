@@ -302,7 +302,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(DateTimeTextType::class)
                         ->setConstraints([new DateTimeFormat(), new NotNull()])
                         ->setTranslationDomain('system-configuration'),
-                    (new Configuration('timesheet.rules.allow_future_times'))
+                    (new Configuration('timesheet.rules.descriptionmandatory'))
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
+                        (new Configuration('timesheet.rules.allow_future_times'))
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.allow_zero_duration'))
