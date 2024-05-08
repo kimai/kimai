@@ -34,6 +34,14 @@
         <source>weekly</source>
         <target>Hetente: heti egy bejegyzés (a kezdési dátumot használja)</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Válassza ki, hogy a számlatételek mely mezők szerint legyenek csoportosítva</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Tevékenység és felhasználó</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
