@@ -26,6 +26,13 @@ final class ApiRequestMatcher implements RequestMatcherInterface
             return false;
         }
 
+        // checking for a previous session allows us to skip the API firewall and token access handler
+        // we simply re-use the existing session when doing API calls from the frontend.
+        // checked before other options, as sometimes "Authorization" headers might be injected by third parties
+        if ($request->hasPreviousSession()) {
+            return true;
+        }
+
         // let's use this firewall if a Bearer token is set in the header
         // other cases like "bearer" are rejected earlier
         if (($auth = $request->headers->get('Authorization')) !== null && str_starts_with($auth, 'Bearer ')) {
@@ -38,8 +45,6 @@ final class ApiRequestMatcher implements RequestMatcherInterface
             return true;
         }
 
-        // checking for a previous session allows us to skip the API firewall and token access handler
-        // we simply re-use the existing session when doing API calls from the frontend
-        return !$request->hasPreviousSession();
+        return false;
     }
 }
