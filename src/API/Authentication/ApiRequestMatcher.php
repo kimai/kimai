@@ -30,7 +30,7 @@ final class ApiRequestMatcher implements RequestMatcherInterface
         // we simply re-use the existing session when doing API calls from the frontend.
         // checked before other options, as sometimes "Authorization" headers might be injected by third parties
         if ($request->hasPreviousSession()) {
-            return true;
+            return false;
         }
 
         // let's use this firewall if a Bearer token is set in the header
