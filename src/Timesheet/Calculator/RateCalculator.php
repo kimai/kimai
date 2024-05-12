@@ -11,14 +11,14 @@ namespace App\Timesheet\Calculator;
 
 use App\Entity\Timesheet;
 use App\Timesheet\CalculatorInterface;
-use App\Timesheet\RateService;
+use App\Timesheet\RateServiceInterface;
 
 /**
  * Implementation to calculate the rate for a timesheet record.
  */
 final class RateCalculator implements CalculatorInterface
 {
-    public function __construct(private RateService $service)
+    public function __construct(private RateServiceInterface $service)
     {
     }
 
