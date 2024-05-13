@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve" approved="yes">
         <source>timesheet.mode_default</source>
-        <target state="final">[預設] 可編輯開始和結束時間</target>
+        <target state="final">[預設] 可編輯開始與結束時間</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times" xml:space="preserve" approved="yes">
         <source>timesheet.rules.allow_future_times</source>
@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve" approved="yes">
         <source>theme.markdown_content</source>
-        <target state="final">允許在描述和註解中使用 markdown 格式</target>
+        <target state="final">允許在敘述與註解中使用 Markdown 格式化文字</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve" approved="yes">
         <source>theme.avatar_url</source>
@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve" approved="yes">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
-        <target state="final">以逗號分隔的 HTML 顏色代碼清單。顏色名稱可以透過在顏色代碼前加上名稱和「|」分隔符號來設定，例如：「白|#ffffff,黑|#000000」。</target>
+        <target state="final">以逗號分隔的 HTML 顏色代碼清單。顏色名稱可以透過在顏色代碼前加上名稱與「|」分隔符號來設定，例如：「白|#ffffff,黑|#000000」。</target>
       </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="yes" xml:space="preserve">
         <source>copy_teams_on_create</source>

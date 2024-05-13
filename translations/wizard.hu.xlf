@@ -2,6 +2,34 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="wizard.en.xlf">
     <body>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
+        <source>wizard.intro.description</source>
+        <target state="translated">Varázsló segít igényeidnek megfelelően a Kimai testreszabásában.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Az Ön beállításai</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">Ön profilja</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Néhány alap beállítás, amely megkönnyíti a Kimai-val végzett munkát.</target>
+      </trans-unit>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
+        <source>wizard.intro.title</source>
+        <target state="translated">Üdvözöljük a Kimai-ban</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Ön jelszava</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Kérjük adja meg új jelszavát, amit ezentúl a bejelentkezéshez használunk.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

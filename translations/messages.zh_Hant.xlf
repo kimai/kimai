@@ -320,7 +320,7 @@
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve" approved="yes">
         <source>hourlyRate</source>
-        <target state="final">每小時費率</target>
+        <target state="final">每小時費用</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve" approved="yes">
         <source>layout</source>
@@ -1700,7 +1700,7 @@
       </trans-unit>
       <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve" approved="yes">
         <source>user_identifier.help</source>
-        <target state="final">用於驗證和匯出的獨特的使用者 ID</target>
+        <target state="final">用於驗證與匯出的獨特的使用者 ID</target>
       </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve" approved="yes">
         <source>Expiry date</source>
