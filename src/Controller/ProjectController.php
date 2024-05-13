@@ -491,6 +491,7 @@ final class ProjectController extends AbstractController
 
             return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
         } catch (\Exception $ex) {
+            $this->logException($ex);
             $this->flashError('action.update.error', 'Failed to copy project: ' . $ex->getMessage());
         }
 
