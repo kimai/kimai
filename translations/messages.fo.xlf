@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Tíðarfylgjan</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tíðarfylgjan</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -916,9 +916,9 @@
         <source>type</source>
         <target>Slag</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>

@@ -222,7 +222,7 @@
             {% if icon is defined and icon is not empty %}
                 <div class="input-group">
                     <div class="input-group-text">
-                        <i class="{{ icon|icon(false, icon) }}"></i>
+                        {{ icon(icon) }}
                     </div>
                     {{ block('form_widget_simple') }}
                 </div>
@@ -252,7 +252,7 @@
     {% if icon is not empty %}
         <div class="input-group">
             <div class="input-group-text">
-                <i class="{{ icon|icon(false, icon) }}"></i>
+                {{ icon(icon) }}
             </div>
             {{ block('form_widget_simple') }}
         </div>

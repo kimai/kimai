@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">ردیابی زمان</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -476,9 +476,9 @@
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="translated">ایمیلی شامل لینک فعالسازی به %email% ارسال شد. جهت فعال کردن حساب کاربری خود باید بر روی آن کلیک کنید.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target state="translated">‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه هرزنامه را بررسی کنید یا دوباره تلاش کنید.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه هرزنامه را بررسی کنید یا دوباره تلاش کنید.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

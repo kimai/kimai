@@ -94,10 +94,6 @@
         <source>Cannot stop running timesheet</source>
         <target state="translated">Tiene una entrada de tiempo activa que no se puede detener automáticamente.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">El valor ingresado no es un formato para las horas o los días válido.</target>
-      </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
         <source>This value is not a valid role name.</source>
         <target state="translated">Este no es un nombre válido para un rol de usuario.</target>

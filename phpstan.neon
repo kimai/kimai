@@ -1254,11 +1254,6 @@ parameters:
             path: src/Doctrine/TimesheetSubscriber.php
 
         -
-            message: "#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Doctrine/UTCDateTimeType.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Activity\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/Activity.php
@@ -3280,7 +3275,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$inputTimezone of class Symfony\\\\Component\\\\Form\\\\Extension\\\\Core\\\\DataTransformer\\\\DateTimeToLocalizedStringTransformer constructor expects string\\|null, mixed given\\.$#"
-            count: 1
+            count: 2
             path: src/Form/Type/DateRangeType.php
 
         -
@@ -3290,7 +3285,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$outputTimezone of class Symfony\\\\Component\\\\Form\\\\Extension\\\\Core\\\\DataTransformer\\\\DateTimeToLocalizedStringTransformer constructor expects string\\|null, mixed given\\.$#"
-            count: 1
+            count: 2
             path: src/Form/Type/DateRangeType.php
 
         -
@@ -3776,11 +3771,6 @@ parameters:
         -
             message: "#^Generator expects value type Symfony\\\\Component\\\\HttpKernel\\\\Bundle\\\\BundleInterface, object given\\.$#"
             count: 2
-            path: src/Kernel.php
-
-        -
-            message: "#^Method App\\\\Kernel\\:\\:configureContainer\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Kernel.php
 
         -

@@ -43,7 +43,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -173,7 +173,7 @@ final class ProfileController extends AbstractController
             $this->flashSuccess('action.update.success');
             $request->getSession()->set('_show_access_token', $accessToken->getId());
 
-            return new Response();
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier(), 'hide-token' => '1']);
         }
 
         return $this->render('user/access-token.html.twig', [
@@ -207,13 +207,15 @@ final class ProfileController extends AbstractController
         $accessTokens = $accessTokenRepository->findForUser($profile);
 
         $createdToken = null;
-        $createdId = $request->getSession()->get('_show_access_token');
-        $request->getSession()->remove('_show_access_token');
 
-        if ($createdId !== null) {
-            foreach ($accessTokens as $accessToken) {
-                if ($accessToken->getId() === $createdId) {
-                    $createdToken = $accessToken;
+        if (!$request->query->has('hide-token')) {
+            $createdId = $request->getSession()->get('_show_access_token');
+            $request->getSession()->remove('_show_access_token');
+            if ($createdId !== null) {
+                foreach ($accessTokens as $accessToken) {
+                    if ($accessToken->getId() === $createdId) {
+                        $createdToken = $accessToken;
+                    }
                 }
             }
         }

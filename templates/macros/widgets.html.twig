@@ -1,3 +1,26 @@
+{%- macro search_filter(route, options) -%}
+    {% set opts = {'performSearch': 1} %}
+    {% if options.begin is defined and options.end is defined %}
+        {% set opts = opts|merge({'daterange': (options.begin|report_date ~ ' - ' ~ options.end|report_date)}) %}
+    {% endif %}
+    {% if options.customer is defined %}
+        {% set opts = opts|merge({'customers[]': options.customer}) %}
+    {% endif %}
+    {% if options.project is defined %}
+        {% set opts = opts|merge({'projects[]': options.project}) %}
+    {% endif %}
+    {% if options.activity is defined %}
+        {% set opts = opts|merge({'activities[]': options.activity}) %}
+    {% endif %}
+    {% if options.user is defined %}
+        {% set opts = opts|merge({'users[]': options.user}) %}
+    {% endif %}
+    {% if options.preview is defined %}
+        {% set opts = opts|merge({'preview': options.preview}) %}
+    {% endif %}
+    {{- path(route, opts) -}}
+{% endmacro %}
+
 {%- macro page_actions(actions) -%}
     {% set btnClasses = 'btn-primary' %}
     {% set helpClasses = '' %}

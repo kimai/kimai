@@ -54,12 +54,12 @@
                         <td>{{ token.name }}</td>
                         <td>
                             {% if token.lastUsage is not null %}
-                                {{ token.lastUsage|date }}
+                                {{ token.lastUsage|date_time }}
                             {% endif %}
                         </td>
                         <td>
                             {% if token.expiresAt is not null %}
-                                {{ token.expiresAt|date }}
+                                {{ token.expiresAt|date_short }}
                             {% endif %}
                         </td>
                         <td>

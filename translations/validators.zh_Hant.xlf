@@ -4,4 +4,156 @@
     <body>
     </body>
   </file>
+  <file original="validators.en.xlf" source-language="en" target-language="zh-Hant" datatype="plaintext">
+    <body>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve" approved="yes">
+        <source>This absence type is not known.</source>
+        <target state="final">指定的值不是已知的缺勤類型。</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve" approved="yes">
+        <source>The chosen date is not a working day.</source>
+        <target state="final">選擇的日期不是工作日。</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve" approved="yes">
+        <source>The chosen date is already locked.</source>
+        <target state="final">選擇的日期已被鎖定。</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve" approved="yes">
+        <source>An absence must have a date.</source>
+        <target state="final">缺勤必須指定日期。</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="final">不能在您的第一個工作日之前預定缺勤時間。</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve" approved="yes">
+        <source>Not enough holidays left.</source>
+        <target state="final">剩餘假期不足。</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve" approved="yes">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="final">此日期是法定假日，不允許預定。</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="final">至少必須指派一名團隊領導給團隊。</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve" approved="yes">
+        <source>The entered passwords don't match.</source>
+        <target state="final">輸入的密碼不相符。</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve" approved="yes">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="final">此電子郵件地址或使用者名稱已被使用。</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve" approved="yes">
+        <source>This value is not a valid role.</source>
+        <target state="final">指定的值不是有效的角色。</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve" approved="yes">
+        <source>The begin date cannot be in the future.</source>
+        <target state="final">開始日期不能設在未來。</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve" approved="yes">
+        <source>The username is already used.</source>
+        <target state="final">此使用者名稱已被使用。</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve" approved="yes">
+        <source>An equal username is already used.</source>
+        <target state="final">此使用者名稱或電子郵件地址已被使用。</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve" approved="yes">
+        <source>You must select at least one user or team.</source>
+        <target state="final">您必須選擇至少一位使用者或一組團隊。</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." xml:space="preserve" approved="yes">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="final">此期間已鎖定。請選擇更晚的日期。</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time." xml:space="preserve" approved="yes">
+        <source>You already have an entry for this time.</source>
+        <target state="final">此時段已有項目。</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected." xml:space="preserve" approved="yes">
+        <source>A project needs to be selected.</source>
+        <target state="final">需要選擇一項專案。</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported." xml:space="preserve" approved="yes">
+        <source>This timesheet is already exported.</source>
+        <target state="final">此工時單已經匯出過了。</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve" approved="yes">
+        <source>Validation Failed</source>
+        <target state="final">儲存時出現問題。</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve" approved="yes">
+        <source>This value is not a valid role name.</source>
+        <target state="final">指定的值不是有效的使用者角色名稱。</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve" approved="yes">
+        <source>An absence must be assigned to a user.</source>
+        <target state="final">缺勤必須指派給一位使用者。</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve" approved="yes">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="final">加班時數不足，剩餘的時數為 {{ value }}。</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve" approved="yes">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="final">一天不能有兩次以上的這種類型的缺勤。</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve" approved="yes">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="final">您一次最多可以預定 {{ value }} 天，您目前選擇了 {{ selected }} 天。</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve" approved="yes">
+        <source>This e-mail address is already in use.</source>
+        <target state="final">此電子郵件地址已被使用。</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
+        <source>End date must not be earlier then start date.</source>
+        <target state="final">結束日期不能早於開始日期。</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve" approved="yes">
+        <source>Duration cannot be zero.</source>
+        <target state="final">持續時長不能為零。</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time." xml:space="preserve" approved="yes">
+        <source>The given value is not a valid time.</source>
+        <target state="final">指定的值不是有效的時間。</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve" approved="yes">
+        <source>The budget is completely used.</source>
+        <target state="final">預算已用盡。在可用的%budget%中，到目前為止已預支了 %used%，仍可使用 %free%。</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve" approved="yes">
+        <source>Sorry, the budget is used up.</source>
+        <target state="final">抱歉，預算已用盡。</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected." xml:space="preserve" approved="yes">
+        <source>An activity needs to be selected.</source>
+        <target state="final">需要選擇一項活動。</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve" approved="yes">
+        <source>Cannot stop running timesheet</source>
+        <target state="final">您有一條活動時間紀錄無法自動停止。</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve" approved="yes">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="final">此驗證碼不是有效的 TOTP token.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve" approved="yes">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="final">超過最大時長限制，最大時長為 {{ value }} 個小時。</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve" approved="yes">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="final">此收支單文件檔無法使用。請重新命名此檔案並再次上傳。</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve" approved="yes">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="final">缺勤期間不能超出年底。</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

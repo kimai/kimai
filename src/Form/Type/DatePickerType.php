@@ -61,12 +61,12 @@ class DatePickerType extends AbstractType
     {
         if ($options['min_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'min' => $options['min_day'],
+                'min' => (\is_string($options['min_day']) ? $options['min_day'] : $options['min_day']->format('Y-m-d')), // @phpstan-ignore-line
             ]);
         }
         if ($options['max_day'] !== null) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'max' => $options['max_day'],
+                'max' => (\is_string($options['max_day']) ? $options['max_day'] : $options['max_day']->format('Y-m-d')), // @phpstan-ignore-line
             ]);
         }
     }
@@ -84,10 +84,13 @@ class DatePickerType extends AbstractType
             'format' => $formFormat,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
-            'force_time' => null, // one of: string (start, end) or a string to as argument for DateTime->modify() or null
+            'force_time' => null, // one of: null, string (start, end) or a string working as argument for DateTime->modify() or null
             'min_day' => null,
             'max_day' => null,
         ]);
+
+        $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
+        $resolver->addAllowedTypes('max_day', ['null', 'string', \DateTimeInterface::class]);
     }
 
     public function getParent(): string

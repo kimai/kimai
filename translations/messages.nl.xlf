@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nl" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Tijdregistratie</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tijdsregistratie</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -18,9 +18,9 @@
         <source>both</source>
         <target>Beiden</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
         <source>This is a mandatory field</source>
-        <target>Dit is een verplicht veld</target>
+        <target state="translated">Verplicht veld</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
@@ -1075,9 +1075,9 @@
         <source>status.canceled</source>
         <target>Geannuleerd</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Een email is verzonden. Deze bevat een link die je moet gebruiken op je wachtwoord opnieuw in te stellen. Je kan enkel een nieuw wachtwoord aanvragen elke %tokenLifetime% uur. Kijk je spammap na als je geen email hebt ontvangen of probeer opnieuw.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Een email is verzonden. Deze bevat een link die je moet gebruiken op je wachtwoord opnieuw in te stellen. Je kan enkel een nieuw wachtwoord aanvragen elke %tokenLifetime% uur. Kijk je spammap na als je geen email hebt ontvangen of probeer opnieuw.</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>

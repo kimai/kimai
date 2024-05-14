@@ -8,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-auto">
                 <span class="bg-{{ options.color|default('green') }} text-white avatar">
-                    <i class="{{ options.icon|icon(true, options.icon) }}"></i>
+                    {{ icon(options.icon, true) }}
                 </span>
             </div>
             <div class="col">

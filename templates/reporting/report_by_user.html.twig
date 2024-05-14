@@ -1,7 +1,7 @@
 {% extends 'reporting/report_by_user_layout.html.twig' %}
 
 {% block report_content %}
-    {% embed 'reporting/report_by_user_data.html.twig' %}
+    {% embed 'reporting/report_by_user_data.html.twig' with {with_links: true} %}
         {% block period_name %}
             <th class="text-center text-nowrap{% if column is weekend(user) %} weekend{% endif %}{% if column is today %} today{% endif %}">
                 {{ column|date_weekday }}

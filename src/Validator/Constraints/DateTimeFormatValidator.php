@@ -62,7 +62,7 @@ final class DateTimeFormatValidator extends ConstraintValidator
         }
 
         if (false === $valid) {
-            $this->context->buildViolation('The given value is not a valid datetime format.')
+            $this->context->buildViolation(DateTimeFormat::getErrorName(DateTimeFormat::INVALID_FORMAT))
                 ->setTranslationDomain('validators')
                 ->setCode(DateTimeFormat::INVALID_FORMAT)
                 ->addViolation();

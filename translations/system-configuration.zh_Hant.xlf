@@ -2,6 +2,318 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
+        <source>Time tracking</source>
+        <target state="final">工時追蹤</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period" xml:space="preserve" approved="yes">
+        <source>lockdown_period</source>
+        <target state="final">鎖定期間</target>
+      </trans-unit>
+      <trans-unit id="ihORk9W" resname="ldap_activate" xml:space="preserve" approved="yes">
+        <source>ldap_activate</source>
+        <target state="final">LDAP 登入</target>
+      </trans-unit>
+      <trans-unit id="0noFWbL" resname="saml_activate" xml:space="preserve" approved="yes">
+        <source>saml_activate</source>
+        <target state="final">SAML 登入</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme" xml:space="preserve" approved="yes">
+        <source>theme</source>
+        <target state="final">配色主題</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding" xml:space="preserve" approved="yes">
+        <source>rounding</source>
+        <target state="final">時間的取整數模式</target>
+      </trans-unit>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve" approved="yes">
+        <source>timesheet.mode_default</source>
+        <target state="final">[預設] 可編輯開始與結束時間</target>
+      </trans-unit>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.allow_future_times</source>
+        <target state="final">允許未來的工時紀錄</target>
+      </trans-unit>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.allow_overlapping_records</source>
+        <target state="final">允許持續期間重疊的工時紀錄</target>
+      </trans-unit>
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.lockdown_period_timezone</source>
+        <target state="final">時區（如果為空，則使用個別使用者的時區）</target>
+      </trans-unit>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.lockdown_period_start</source>
+        <target state="final">鎖定期間開始（相對於現在的 PHP 相對時間）</target>
+      </trans-unit>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit" xml:space="preserve" approved="yes">
+        <source>timesheet.active_entries.hard_limit</source>
+        <target state="final">同時進行的工時項目數的上限</target>
+      </trans-unit>
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities" xml:space="preserve" approved="yes">
+        <source>quick_entry.recent_activities</source>
+        <target state="final">要從過去的項目中選擇多少項</target>
+      </trans-unit>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows" xml:space="preserve" approved="yes">
+        <source>quick_entry.minimum_rows</source>
+        <target state="final">最少行數</target>
+      </trans-unit>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks" xml:space="preserve" approved="yes">
+        <source>quick_entry.recent_activity_weeks</source>
+        <target state="final">要從多少週前開始的項目中選擇（空白或 0 表示不限制時間）</target>
+      </trans-unit>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends" xml:space="preserve" approved="yes">
+        <source>calendar.weekends</source>
+        <target state="final">顯示週末</target>
+      </trans-unit>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin" xml:space="preserve" approved="yes">
+        <source>calendar.visibleHours.begin</source>
+        <target state="final">可見時間範圍的開始時間</target>
+      </trans-unit>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end" xml:space="preserve" approved="yes">
+        <source>calendar.visibleHours.end</source>
+        <target state="final">可見時間範圍的結束時間</target>
+      </trans-unit>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve" approved="yes">
+        <source>calendar.slot_duration</source>
+        <target state="final">週份與日份報表的每時段時長（格式：時:分:秒）</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding" xml:space="preserve" approved="yes">
+        <source>branding</source>
+        <target state="final">我的公司</target>
+      </trans-unit>
+      <trans-unit id="o9mON14" resname="theme.branding.logo" xml:space="preserve" approved="yes">
+        <source>theme.branding.logo</source>
+        <target state="final">Logo 網址（會取代登入畫面中的公司名稱）</target>
+      </trans-unit>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company" xml:space="preserve" approved="yes">
+        <source>theme.branding.company</source>
+        <target state="final">公司名稱</target>
+      </trans-unit>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin" xml:space="preserve" approved="yes">
+        <source>timesheet.rounding.default.begin</source>
+        <target state="final">開始時間取整至分鐘（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode" xml:space="preserve" approved="yes">
+        <source>timesheet.rounding.default.mode</source>
+        <target state="final">取整數模式</target>
+      </trans-unit>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days" xml:space="preserve" approved="yes">
+        <source>timesheet.rounding.default.days</source>
+        <target state="final">星期幾要啟用取整數模式</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday" xml:space="preserve" approved="yes">
+        <source>Tuesday</source>
+        <target state="final">星期二</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday" xml:space="preserve" approved="yes">
+        <source>Friday</source>
+        <target state="final">星期五</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday" xml:space="preserve" approved="yes">
+        <source>Saturday</source>
+        <target state="final">星期六</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday" xml:space="preserve" approved="yes">
+        <source>Sunday</source>
+        <target state="final">星期日</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve" approved="yes">
+        <source>Ceil</source>
+        <target state="final">無條件進位：開始、結束時間與持續時長將無條件進位</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="yes">
+        <source>Closest</source>
+        <target state="final">四捨五入：取最近整數</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="yes">
+        <source>Default</source>
+        <target state="final">標準：開始時間將無條件捨去，結束時間與持續時長則將無條件進位</target>
+      </trans-unit>
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve" approved="yes">
+        <source>invoice.number_format</source>
+        <target state="final">收支單編號格式</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve" approved="yes">
+        <source>Floor</source>
+        <target state="final">無條件捨去：開始、結束時間與持續時長將無條件捨去</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve" approved="yes">
+        <source>first_weekday</source>
+        <target state="final">每週的第一天</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off" xml:space="preserve" approved="yes">
+        <source>off</source>
+        <target state="final">停用</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication" xml:space="preserve" approved="yes">
+        <source>authentication</source>
+        <target state="final">驗證</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="final">工時紀錄的持續時長達到指定分鐘數時，拒絕儲存該紀錄（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve" approved="yes">
+        <source>theme.markdown_content</source>
+        <target state="final">允許在敘述與註解中使用 Markdown 格式化文字</target>
+      </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve" approved="yes">
+        <source>theme.avatar_url</source>
+        <target state="final">允許使用 URL 設定頭像圖片</target>
+      </trans-unit>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve" approved="yes">
+        <source>timesheet.mode</source>
+        <target state="final">工時追蹤模式</target>
+      </trans-unit>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" approved="yes" xml:space="preserve">
+        <source>[Duration] configurable fixed start-time, only duration can be changed</source>
+        <target state="final">[持續時長] 可預先設定固定的開始時間，僅能更改持續時長</target>
+      </trans-unit>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve" approved="yes">
+        <source>timesheet.mode_punch</source>
+        <target state="final">[打卡鐘] 使用者可以在開始與結束時間打卡，但之後不能編輯時間及持續時長</target>
+      </trans-unit>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.allow_zero_duration</source>
+        <target state="final">允許持續時長為零的工時紀錄</target>
+      </trans-unit>
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.allow_overbooking_budget</source>
+        <target state="final">允許超額預算</target>
+      </trans-unit>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.lockdown_period_end</source>
+        <target state="final">鎖定期間結束（相對於現在的 PHP 相對時間）</target>
+      </trans-unit>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.lockdown_grace_period</source>
+        <target state="final">鎖定寬限期間結束（相對於現在的 PHP 相對時間）</target>
+      </trans-unit>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin" xml:space="preserve" approved="yes">
+        <source>calendar.businessHours.begin</source>
+        <target state="final">正常營業開始時間（將會突出顯示）</target>
+      </trans-unit>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end" xml:space="preserve" approved="yes">
+        <source>calendar.businessHours.end</source>
+        <target state="final">正常營業結束時間（將會突出顯示）</target>
+      </trans-unit>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers" xml:space="preserve" approved="yes">
+        <source>calendar.week_numbers</source>
+        <target state="final">顯示週數</target>
+      </trans-unit>
+      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve" approved="yes">
+        <source>company.financial_year</source>
+        <target state="final">會計年度</target>
+      </trans-unit>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end" xml:space="preserve" approved="yes">
+        <source>timesheet.rounding.default.end</source>
+        <target state="final">結束時間取整至分鐘（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration" xml:space="preserve" approved="yes">
+        <source>timesheet.rounding.default.duration</source>
+        <target state="final">持續時長取整至分鐘數（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday" xml:space="preserve" approved="yes">
+        <source>Monday</source>
+        <target state="final">星期一</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday" xml:space="preserve" approved="yes">
+        <source>Wednesday</source>
+        <target state="final">星期三</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday" xml:space="preserve" approved="yes">
+        <source>Thursday</source>
+        <target state="final">星期四</target>
+      </trans-unit>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve" approved="yes">
+        <source>timesheet.default_begin</source>
+        <target state="final">預設開始時間（並非所有工時追蹤模式都會用到）</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve" approved="yes">
+        <source>customer.allow_duplicate_number</source>
+        <target state="final">允許重複的銀行帳戶編號</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve" approved="yes">
+        <source>allow_duplicate_number</source>
+        <target state="final">允許重覆使用同一編號</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve" approved="yes">
+        <source>allowed_replacer</source>
+        <target state="final">允許的取代代號：%replacer%</target>
+      </trans-unit>
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset" xml:space="preserve" approved="yes">
+        <source>user_auth_password_reset</source>
+        <target state="final">忘記密碼</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration" xml:space="preserve" approved="yes">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="final">工時紀錄的持續時長達到指定分鐘數時，顯示「休息警告」（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount" xml:space="preserve" approved="yes">
+        <source>calendar.dragdrop_amount</source>
+        <target state="final">一次可拖放的項目數量（0 = 停用）</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve" approved="yes">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="final">以逗號分隔的 HTML 顏色代碼清單。顏色名稱可以透過在顏色代碼前加上名稱與「|」分隔符號來設定，例如：「白|#ffffff,黑|#000000」。</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="yes" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="final">建立新項目時，預設指派給目前登入的使用者的所處團隊</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve" approved="yes">
+        <source>customer.number_format</source>
+        <target state="final">客戶編號格式</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve" approved="yes">
+        <source>project.number_format</source>
+        <target state="final">專案編號格式</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve" approved="yes">
+        <source>activity.number_format</source>
+        <target state="final">活動編號格式</target>
+      </trans-unit>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment" xml:space="preserve" approved="yes">
+        <source>timesheet.duration_increment</source>
+        <target state="final">對持續時長取整數的分鐘精度（0 = 不取整）</target>
+      </trans-unit>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment" xml:space="preserve" approved="yes">
+        <source>timesheet.time_increment</source>
+        <target state="final">對開始與結束時間取整數的分鐘精度（0 = 不取整）</target>
+      </trans-unit>
+      <trans-unit id="EFY6GmX" resname="theme.color_choices" xml:space="preserve" approved="yes">
+        <source>theme.color_choices</source>
+        <target state="final">允許的顏色</target>
+      </trans-unit>
+      <trans-unit id="BGHQ8YO" resname="user_auth_login" xml:space="preserve" approved="yes">
+        <source>user_auth_login</source>
+        <target state="final">登入表單</target>
+      </trans-unit>
+      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve" approved="yes">
+        <source>user_auth_registration</source>
+        <target state="final">使用者註冊</target>
+      </trans-unit>
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl" xml:space="preserve" approved="yes">
+        <source>user_auth_password_reset_retry_ttl</source>
+        <target state="final">忘記密碼 —— 使用者可以再次請求寄送電子郵件前的等待秒數</target>
+      </trans-unit>
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl" xml:space="preserve" approved="yes">
+        <source>user_auth_password_reset_token_ttl</source>
+        <target state="final">忘記密碼 —— 密碼重設鏈結失效前的有效秒數</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve" approved="yes">
+        <source>calendar.title_pattern</source>
+        <target state="final">顯示行事曆項目的標題</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve" approved="yes">
+        <source>activity.allow_inline_create</source>
+        <target state="final">允許在工時追蹤表單中建立活動</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve" approved="yes">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="final">透過拖放新增項目時複製原項目資料</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

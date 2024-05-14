@@ -386,8 +386,8 @@
   ],
   'en_ID' => 
   [
-    'date' => 'M/d/yy',
-    'time' => 'HH:mm',
+    'date' => 'dd/MM/y',
+    'time' => 'HH.mm',
     'rtl' => false,
     'translation' => false,
   ],
@@ -603,7 +603,7 @@
   ],
   'en_NZ' => 
   [
-    'date' => 'd/MM/yy',
+    'date' => 'dd/MM/y',
     'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
@@ -870,14 +870,14 @@
   'es_AR' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_BO' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -898,7 +898,7 @@
   'es_CL' => 
   [
     'date' => 'dd-MM-yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -912,14 +912,14 @@
   'es_CR' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_CU' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -933,7 +933,7 @@
   'es_EC' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -954,28 +954,28 @@
   'es_GT' => 
   [
     'date' => 'd/MM/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_HN' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_MX' => 
   [
     'date' => 'dd/MM/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_NI' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -989,7 +989,7 @@
   'es_PE' => 
   [
     'date' => 'd/MM/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -1010,14 +1010,14 @@
   'es_PY' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
   'es_SV' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -1031,7 +1031,7 @@
   'es_UY' => 
   [
     'date' => 'd/M/yy',
-    'time' => 'HH:mm',
+    'time' => 'h:mm a',
     'rtl' => false,
     'translation' => false,
   ],
@@ -1835,7 +1835,7 @@
   ],
   'sl' => 
   [
-    'date' => 'd. MM. yy',
+    'date' => 'd. M. yy',
     'time' => 'HH:mm',
     'rtl' => false,
     'translation' => true,
@@ -1905,14 +1905,14 @@
   ],
   'vi' => 
   [
-    'date' => 'dd/MM/y',
+    'date' => 'd/M/yy',
     'time' => 'HH:mm',
     'rtl' => false,
     'translation' => true,
   ],
   'vi_VN' => 
   [
-    'date' => 'dd/MM/y',
+    'date' => 'd/M/yy',
     'time' => 'HH:mm',
     'rtl' => false,
     'translation' => false,
@@ -1925,6 +1925,13 @@
     'translation' => true,
   ],
   'zh_Hant' => 
+  [
+    'date' => 'y/M/d',
+    'time' => 'Bh:mm',
+    'rtl' => false,
+    'translation' => true,
+  ],
+  'zh_Hant_TW' => 
   [
     'date' => 'y/M/d',
     'time' => 'Bh:mm',

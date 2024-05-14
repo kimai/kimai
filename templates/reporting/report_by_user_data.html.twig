@@ -5,6 +5,7 @@
 {%- set totalsDuration = {} -%}
 {%- set totalsInternalRate = {} -%}
 {%- set totalsRate = {} -%}
+{%- set with_links = with_links is defined ? with_links : false -%}
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
@@ -14,10 +15,16 @@
 {% endif %}
 {% set columns = 0 %}
 {% set totalCurrency = false %}
+{% set filter_options = {'begin': begin, 'end': end} %}
+{% set filter_route = 'timesheet' %}
+{% if is_granted('view_other_timesheet') %}
+    {% set filter_route = 'admin_timesheet' %}
+    {% set filter_options = filter_options|merge({'user': user.id}) %}
+{% endif %}
 <table class="table table-hover dataTable">
     <thead>
         <tr>
-            <th>{% block upper_left %}{{ user.displayName }}{% endblock %}</th>
+            <th>{% block upper_left %}{{ user.displayName|sanitize_dde }}{% endblock %}</th>
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in period.dateTimes %}
                 {% block period_name %}
@@ -42,6 +49,7 @@
         <tr class="summary">
             <td>{{ widgets.label_customer(data.customer) }}</td>
             <td class="text-center total">
+                {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'customer': data.customer.id})) }}">{% endif %}
                 {% if dataType == 'rate' %}
                     {{ data.rate|money(currency) }}
                 {% elseif dataType == 'internalRate' %}
@@ -49,6 +57,7 @@
                 {% else %}
                     {{ data.duration|duration(decimal) }}
                 {% endif %}
+                {% if with_links %}</a>{% endif %}
             </td>
             <td colspan="{{ columns }}"></td>
         </tr>
@@ -61,13 +70,15 @@
                     <strong>{{ widgets.label_project(project.project) }}</strong>
                 </td>
                 <td class="text-nowrap text-center total">
-                    {% if dataType == 'rate' %}
+                    {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'project': project.project.id})) }}">{% endif %}
+                    {%- if dataType == 'rate' -%}
                         {{ project.rate|money(currency) }}
-                    {% elseif dataType == 'internalRate' %}
+                    {%- elseif dataType == 'internalRate' -%}
                         {{ project.internalRate|money(currency) }}
-                    {% else %}
+                    {%- else -%}
                         {{ project.duration|duration(decimal) }}
-                    {% endif %}
+                    {%- endif -%}
+                    {% if with_links %}</a>{% endif %}
                 </td>
                 {% for column in project.data.data %}
                     {% set dateKey = column.date|report_date %}
@@ -93,6 +104,7 @@
                         {{ widgets.label_activity(activity.activity) }}
                     </td>
                     <td class="text-nowrap text-center">
+                        {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'activity': activity.activity.id})) }}">{% endif %}
                         {% if dataType == 'rate' %}
                             {{ activity.rate|money(currency) }}
                         {% elseif dataType == 'internalRate' %}
@@ -100,6 +112,7 @@
                         {% else %}
                             {{ activity.duration|duration(decimal) }}
                         {% endif %}
+                        {% if with_links %}</a>{% endif %}
                     </td>
                     {% for column in activity.data.data %}
                         <td class="text-nowrap text-center day-total {% block column_classes_activity %}{% endblock %}">

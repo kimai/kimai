@@ -12,7 +12,7 @@ namespace App\Controller;
 use App\Entity\Timesheet;
 use App\Timesheet\FavoriteRecordService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/favorite')]

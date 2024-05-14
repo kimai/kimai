@@ -102,6 +102,10 @@
         <source>invoice.cancel</source>
         <target>Törölje a számlát</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">Újratöltés</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

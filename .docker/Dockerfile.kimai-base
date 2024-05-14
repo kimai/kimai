@@ -144,6 +144,7 @@ RUN apt-get update && \
         bash \
         haveged \
         libicu72 \
+        libldap-common \
         libpng16-16 \
         libzip4 \
         libxslt1.1 \

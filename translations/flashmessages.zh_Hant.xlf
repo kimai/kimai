@@ -2,6 +2,58 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
+      <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve" approved="yes">
+        <source>warning</source>
+        <target state="final">警告</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve" approved="yes">
+        <source>action.csrf.error</source>
+        <target state="final">無法執行此操作：無效的安全 token。</target>
+      </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve" approved="yes">
+        <source>timesheet.stop.success</source>
+        <target state="final">時間記錄已停止</target>
+      </trans-unit>
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve" approved="yes">
+        <source>timesheet.stop.error</source>
+        <target state="final">無法停止時間記錄</target>
+      </trans-unit>
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve" approved="yes">
+        <source>timesheet.start.success</source>
+        <target state="final">時間記錄已開始</target>
+      </trans-unit>
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve" approved="yes">
+        <source>timesheet.start.error</source>
+        <target state="final">無法開始時間記錄</target>
+      </trans-unit>
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve" approved="yes">
+        <source>timesheet.locked.warning</source>
+        <target state="final">您正在編輯已匯出的紀錄</target>
+      </trans-unit>
+      <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve" approved="yes">
+        <source>action.update.success</source>
+        <target state="final">已儲存更改</target>
+      </trans-unit>
+      <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve" approved="yes">
+        <source>action.update.error</source>
+        <target state="final">無法儲存更改：%reason%</target>
+      </trans-unit>
+      <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve" approved="yes">
+        <source>action.delete.success</source>
+        <target state="final">已刪除此條項目</target>
+      </trans-unit>
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve" approved="yes">
+        <source>action.delete.error</source>
+        <target state="final">無法刪除此條項目：%reason%</target>
+      </trans-unit>
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve" approved="yes">
+        <source>invoice.first_template</source>
+        <target state="final">請先建立收支單模版</target>
+      </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve" approved="yes">
+        <source>action.upload.error</source>
+        <target state="final">無法上傳或儲存檔案：%reason%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

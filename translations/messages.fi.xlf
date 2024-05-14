@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">Työajanseuranta</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -1063,9 +1063,9 @@
         <source>error.too_many_entries</source>
         <target>Pyyntöä ei voitu toteuttaa. Liikaa tuloksia.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Sähköposti lähetetty. Palauta salasanasi klikkaamalla linkkiä. Huom: Voit pyytää salasanan palauttamista vain %tokenLifetime% tunnin välein. Jos sähköposti ei saavu perille, tarkista roskapostikansio tai yritä uudelleen.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Sähköposti lähetetty. Palauta salasanasi klikkaamalla linkkiä. Huom: Voit pyytää salasanan palauttamista vain %tokenLifetime% tunnin välein. Jos sähköposti ei saavu perille, tarkista roskapostikansio tai yritä uudelleen.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
