@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceDisplayEvent;
@@ -29,7 +28,6 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -41,7 +39,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('view_user')]
 final class UserController extends AbstractController
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher, private UserRepository $repository, private EventDispatcherInterface $dispatcher)
+    public function __construct(
+        private readonly UserRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher
+    )
     {
     }
 
@@ -100,37 +101,23 @@ final class UserController extends AbstractController
         ]);
     }
 
-    private function createNewDefaultUser(SystemConfiguration $config): User
-    {
-        $user = new User();
-        $user->setEnabled(true);
-        $user->setRoles([User::DEFAULT_ROLE]);
-        $user->setTimezone($config->getUserDefaultTimezone());
-        $user->setLanguage($config->getUserDefaultLanguage());
-
-        return $user;
-    }
-
     #[Route(path: '/create', name: 'admin_user_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_user')]
-    public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository, EventDispatcherInterface $dispatcher): Response
+    public function createAction(Request $request, UserService $userService, EventDispatcherInterface $dispatcher): Response
     {
-        $user = $this->createNewDefaultUser($config);
+        $user = $userService->createNewUser();
         $editForm = $this->getCreateUserForm($user);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $password = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
-            $userRepository->saveUser($user);
+            $userService->saveUser($user);
             $this->flashSuccess('action.update.success');
 
             try {
                 $event = new PrepareUserEvent($user, false);
                 $dispatcher->dispatch($event);
-                $userRepository->saveUser($user);
+                $this->repository->saveUser($user);
             } catch (\Exception $ex) {
                 // it should be no problem, if creating default user preferences fails
             }
