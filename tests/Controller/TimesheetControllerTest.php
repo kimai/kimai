@@ -71,7 +71,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
-            'pageSize' => 25,
+            'size' => 25,
             'daterange' => $dateRange,
             'customers' => [1],
             'projects' => [1],

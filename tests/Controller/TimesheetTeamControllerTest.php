@@ -72,7 +72,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'state' => 1,
             'users' => [$user->getId()],
-            'pageSize' => 25,
+            'size' => 25,
             'daterange' => $dateRange,
             'customers' => [],
         ]);
