@@ -32,7 +32,20 @@ class ContractControllerTest extends ControllerBaseTest
         self::assertEquals(0, $node->count());
     }
 
-    public function testAdminCanChangeUser(): void
+    public function testTeamleadCanChangeUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/contract');
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+        self::assertStringContainsString('No target hours have been configured', $content);
+        $node = $client->getCrawler()->filter('select#user');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('a.alert-link');
+        self::assertEquals(0, $node->count());
+    }
+
+    public function testAdminCanConfigureUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/contract');
@@ -40,6 +53,8 @@ class ContractControllerTest extends ControllerBaseTest
         self::assertNotFalse($content);
         self::assertStringContainsString('No target hours have been configured', $content);
         $node = $client->getCrawler()->filter('select#user');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('a.alert-link');
         self::assertEquals(1, $node->count());
     }
 }
