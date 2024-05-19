@@ -30,23 +30,23 @@
         <source>reset.subject</source>
         <target state="translated">איפוס הסיסמה שלך</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>זה עלול לקרות …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
+        <source>Forgot your password?</source>
+        <target state="final">שכחת את הסיסמה שלך?</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="yes">
         <source>reset.button</source>
-        <target>אפס את הסיסמה שלך</target>
+        <target state="final">איפוס הסיסמה שלך</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… אז שכחת את הסיסמה שלך? אל דאגה, נעזור לך ליצור סיסמה חדשה:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="final">אל דאגה, Kimai יעזור לך ליצור סיסמה חדשה!</target>
       </trans-unit>
-      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">היעדרות חדשה | %absence_user% | %absence_type%</target>
+        <target state="final">היעדרות חדשה | %absence_user% | %absence_type%</target>
       </trans-unit>
-      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
         <source>A new absence was created for %absence_user%.
 
 %absence_type% - %absence_comment%
@@ -54,7 +54,7 @@
 %absence_list%
 
 Please review them at: %approval_url%</source>
-        <target state="translated">נוצרה היעדרות חדשה עבור %absence_user%.
+        <target state="final">נוצרה היעדרות חדשה עבור %absence_user%.
 
 %absence_type% - %absence_comment%
 

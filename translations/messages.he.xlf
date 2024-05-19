@@ -1282,9 +1282,9 @@
         <source>help.invoiceTemplate_customer</source>
         <target state="translated">חשבוניות ללקוח הזה נוצרו כברירת מחדל עם התבנית הזאת. אפשר לערוך אותן במהלך הפקת החשבוניות אם נדרש.</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
-        <target state="translated">בהיר</target>
+        <target state="translated">בוהק</target>
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>

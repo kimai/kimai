@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="yes">
         <source>task.help.title</source>
-        <target state="final">任務的簡短敘述</target>
+        <target state="final">任務的簡短說明</target>
       </trans-unit>
       <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="yes">
         <source>task.create</source>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="yes">
         <source>task.help.description</source>
-        <target state="final">此敘述將複製到工時單的每條紀錄中</target>
+        <target state="final">此說明將複製到工時單的每條紀錄中</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="yes">
         <source>task.help.end</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="yes">
         <source>report_tasks_assigned</source>
-        <target state="final">各別使用者的任務</target>
+        <target state="final">個別使用者的任務</target>
       </trans-unit>
       <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="yes">
         <source>Tasks</source>

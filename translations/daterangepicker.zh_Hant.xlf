@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve" approved="yes">
         <source>This year — until today</source>
-        <target state="final">今年 —— 直到今天</target>
+        <target state="final">今年——直到今天</target>
       </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve" approved="yes">
         <source>daterangepicker.lastYear</source>

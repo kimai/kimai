@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve">
         <source>Timesheet</source>
-        <target state="translated">Evidentiranje vremena</target>
+        <target state="translated">Vremenska tablica</target>
       </trans-unit>
     </body>
   </file>

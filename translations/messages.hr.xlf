@@ -1331,17 +1331,17 @@
         <source>pagination</source>
         <target state="translated">Pokaži unose %start% do %end% od %total%.</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
-        <target state="translated">Svijetlo</target>
+        <target state="translated">Svijetla</target>
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
         <target state="translated">Ovdje možeš upravljati svojim API tokenima koji se koriste za autentifikaciju tvoje aplikacije u Kimaiju.</target>
       </trans-unit>
-      <trans-unit id="WOFPb2i" resname="skin.dark">
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve">
         <source>skin.dark</source>
-        <target state="translated">Tamno</target>
+        <target state="translated">Tamna</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>

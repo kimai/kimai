@@ -30,17 +30,17 @@
         <source>reset.subject</source>
         <target state="final">Reimposta password</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title" approved="yes">
-        <source>reset.title</source>
-        <target state="final">Può succedere…</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" approved="yes" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="final">Hai dimenticato la password?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" approved="yes">
         <source>reset.button</source>
         <target state="final">Reimposta password</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro" approved="yes">
-        <source>reset.intro</source>
-        <target state="final">...così hai dimenticato la password? Non preoccuparti, Kimai ti aiuterà a crearne una nuova:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" approved="yes" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="final">Non preoccuparti, Kimai ti aiuterà a crearne una nuova!</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" approved="yes">
         <source>absence_created_supervisor_subject</source>
