@@ -30,17 +30,17 @@
         <source>reset.subject</source>
         <target>پسورد خود را ریست کنید</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>آن می تواند اتفاق بیفتد …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">آن می تواند اتفاق بیفتد …</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>پسورد خود را ریست کنید</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
       </trans-unit>
     </body>
   </file>

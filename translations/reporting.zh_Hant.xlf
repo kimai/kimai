@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects" xml:space="preserve" approved="yes">
         <source>report_customer_monthly_projects</source>
-        <target state="final">按月份、活動與使用者分類的專案報表</target>
+        <target state="final">按月份、活動、與使用者分類的專案報表</target>
       </trans-unit>
       <trans-unit id="q_A4AHD" resname="report_weekly_users" xml:space="preserve" approved="yes">
         <source>report_weekly_users</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view" xml:space="preserve" approved="yes">
         <source>report_project_view</source>
-        <target state="final">專案概覽</target>
+        <target state="final">專案總覽</target>
       </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users" xml:space="preserve" approved="yes">
         <source>report_yearly_users</source>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve" approved="yes">
         <source>report_customer_view</source>
-        <target state="final">客戶概覽</target>
+        <target state="final">客戶總覽</target>
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details" xml:space="preserve" approved="yes">
         <source>report_project_details</source>

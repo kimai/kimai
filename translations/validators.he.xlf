@@ -102,25 +102,25 @@
         <source>This value is not a valid role name.</source>
         <target state="translated">זה אינו שם תקף לתפקיד משתמש.</target>
       </trans-unit>
-      <trans-unit id="ZObikpA" resname="This absence type is not known.">
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve" approved="yes">
         <source>This absence type is not known.</source>
-        <target state="translated">סוגי ההעדרות הזה לא ידוע.</target>
+        <target state="final">סוג ההיעדרות הזה לא ידוע.</target>
       </trans-unit>
       <trans-unit id="N21br.P" resname="The chosen date is already locked.">
         <source>The chosen date is already locked.</source>
         <target state="translated">התאריך הנבחר כבר נעול.</target>
       </trans-unit>
-      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user.">
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve" approved="yes">
         <source>An absence must be assigned to a user.</source>
-        <target state="translated">יש להקצות העדרות למשתמש.</target>
+        <target state="final">יש להקצות היעדרות למשתמש.</target>
       </trans-unit>
-      <trans-unit id="nLcihCc" resname="An absence must have a date.">
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve" approved="yes">
         <source>An absence must have a date.</source>
-        <target state="translated">להעדרות חייב להיות תאריך.</target>
+        <target state="final">להיעדרות חייב להיות תאריך.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">אי אפשר להזמין העדרות לפני יום העבודה הראשון שלך.</target>
+        <target state="final">אי אפשר להזמין היעדרות לפני יום העבודה הראשון שלך.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -146,9 +146,9 @@
         <source>The chosen date is not a working day.</source>
         <target state="translated">התאריך הנבחר אינו יום עבודה.</target>
       </trans-unit>
-      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve" approved="yes">
         <source>The period of absence must not extend beyond the turn of the year.</source>
-        <target state="translated">פרק זמן ההעדרות לא יכול להתארך מעבר לסוף השנה האזרחית.</target>
+        <target state="final">פרק זמן ההיעדרות לא יכול להתארך מעבר לסוף השנה האזרחית.</target>
       </trans-unit>
     </body>
   </file>

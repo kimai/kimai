@@ -20,9 +20,9 @@
         <source>invoice</source>
         <target>Račun</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target>Račun</target>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>Invoice</source>
+        <target state="translated">Račun</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
@@ -30,7 +30,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target state="translated">Evidentiranje vremena</target>
+        <target state="translated">Vremenska tablica</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>

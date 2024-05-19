@@ -30,21 +30,21 @@
         <source>reset.subject</source>
         <target>Passwort zurücksetzen</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>Das kann passieren …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
+        <source>Forgot your password?</source>
+        <target state="final">Passwort vergessen?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>Passwort zurücksetzen</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… Du hast also dein Passwort vergessen? Keine Sorge: Kimai wird dir dabei helfen, ein neues zu erstellen:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="final">Keine Sorge: Kimai hilft dir, ein neues zu erstellen!</target>
       </trans-unit>
-      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target>Neue Abwesenheit | %absence_user% | %absence_type%</target>
+        <target state="translated">Neue Abwesenheit | %absence_user% | %absence_type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
         <source>A new absence was created for %absence_user%.

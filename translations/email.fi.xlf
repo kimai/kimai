@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="email.en.xlf">
     <body>
@@ -30,17 +30,17 @@
         <source>reset.subject</source>
         <target state="translated">Resetoi salasanasi</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target state="translated">Näin voi käydä …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Näin voi käydä …</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target state="translated">Resetoi salasanasi</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target state="translated">… eli unohdit salasanasi? Ei hätää: Kimai auttaa sinua tekemään uuden:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… eli unohdit salasanasi? Ei hätää: Kimai auttaa sinua tekemään uuden:</target>
       </trans-unit>
     </body>
   </file>
