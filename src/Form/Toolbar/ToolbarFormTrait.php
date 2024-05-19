@@ -139,7 +139,7 @@ trait ToolbarFormTrait
 
     protected function addPageSizeChoice(FormBuilderInterface $builder): void
     {
-        $builder->add('pageSize', PageSizeType::class);
+        $builder->add('size', PageSizeType::class);
     }
 
     protected function addUserRoleChoice(FormBuilderInterface $builder): void

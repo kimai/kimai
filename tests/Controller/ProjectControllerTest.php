@@ -91,7 +91,7 @@ class ProjectControllerTest extends ControllerBaseTest
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
             'customers' => [1],
-            'pageSize' => 50,
+            'size' => 50,
             'page' => 1,
         ]);
 
@@ -134,7 +134,7 @@ class ProjectControllerTest extends ControllerBaseTest
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
             'customers' => [1],
-            'pageSize' => 50,
+            'size' => 50,
             'page' => 1,
         ]);
 

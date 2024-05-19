@@ -45,29 +45,47 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
      *
      * @see \Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
      *
-     * @param string|null $value
+     * @param array<string>|string|null $value
      * @return Tag[]
      * @throws TransformationFailedException
      */
-    public function reverseTransform(mixed $value): mixed
+    public function reverseTransform(mixed $value): array
     {
         // check for empty tag list
         if ('' === $value || null === $value) {
             return [];
         }
-        $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
+        if (!\is_array($value)) {
+            $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
+        } else {
+            $names = $value;
+        }
 
-        // get the current tags and find the new ones that should be created
-        $tags = $this->tagRepository->findBy(['name' => $names]);
-        if ($this->create) {
-            // works, because of the implicit case: (string) $tag
-            $newNames = array_diff($names, $tags);
+        $tags = [];
+        foreach ($names as $tagName) {
+            if ($tagName === null || $tagName === '') {
+                continue;
+            }
 
-            foreach ($newNames as $name) {
+            $tagName = trim($tagName);
+            $tag = null;
+
+            if (is_numeric($tagName)) {
+                $tag = $this->tagRepository->find($tagName);
+            }
+
+            if ($tag === null) {
+                $tag = $this->tagRepository->findTagByName($tagName);
+            }
+
+            // get the current tags and find the new ones that should be created
+            if ($this->create && $tag === null) {
                 $tag = new Tag();
-                $tag->setName(mb_substr($name, 0, 100));
+                $tag->setName(mb_substr($tagName, 0, 100));
                 $this->tagRepository->saveTag($tag);
+            }
 
+            if ($tag !== null) {
                 $tags[] = $tag;
             }
         }

@@ -122,7 +122,7 @@ trait FormTrait
                     return;
                 }
 
-                $options['projects'] = $data['project'];
+                $options['projects'] = \is_string($data['project']) ? (int) $data['project'] : $data['project'];
 
                 $event->getForm()->add('activity', ActivityType::class, $options);
             }

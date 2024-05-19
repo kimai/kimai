@@ -55,7 +55,7 @@ class UserControllerTest extends ControllerBaseTest
             'searchTerm' => 'hourly_rate:35 tony',
             'role' => 'ROLE_TEAMLEAD',
             'visibility' => 1,
-            'pageSize' => 50,
+            'size' => 50,
             'page' => 1,
         ]);
 
@@ -89,7 +89,7 @@ class UserControllerTest extends ControllerBaseTest
             'searchTerm' => 'hourly_rate:35 tony',
             'role' => 'ROLE_TEAMLEAD',
             'visibility' => 1,
-            'pageSize' => 50,
+            'size' => 50,
             'page' => 1,
         ]);
 

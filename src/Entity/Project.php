@@ -481,6 +481,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ProjectMeta $meta */

@@ -112,7 +112,7 @@ final class ProjectService
         return $this->repository->findOneBy(['number' => $number]);
     }
 
-    private function calculateNextProjectNumber(): ?string
+    public function calculateNextProjectNumber(): ?string
     {
         $format = $this->configuration->find('project.number_format');
         if (empty($format) || !\is_string($format)) {
