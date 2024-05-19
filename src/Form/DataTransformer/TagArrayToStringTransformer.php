@@ -45,7 +45,7 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
      *
      * @see \Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
      *
-     * @param array|string|null $value
+     * @param array<string>|string|null $value
      * @return Tag[]
      * @throws TransformationFailedException
      */
@@ -55,7 +55,7 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
         if ('' === $value || null === $value) {
             return [];
         }
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
         } else {
             $names = $value;

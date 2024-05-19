@@ -37,11 +37,11 @@ final class TagsSelectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
-            /** @var array<string|int> $tagIds */
+            /** @var array<string> $tagIds */
             $tagIds = $event->getData();
 
             // this is mainly here, because the link from tags index page uses the non-array syntax
-            if (is_string($tagIds) || is_int($tagIds)) {
+            if (\is_string($tagIds) || \is_int($tagIds)) {
                 $tagIds = array_filter(array_unique(array_map('trim', explode(',', $tagIds))));
             }
 
