@@ -1159,11 +1159,6 @@ parameters:
             path: src/Controller/TimesheetTeamController.php
 
         -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\Hasher\\\\UserPasswordHasherInterface\\:\\:hashPassword\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/UserController.php
-
-        -
             message: "#^Parameter \\#2 \\$replace of method App\\\\User\\\\UserService\\:\\:deleteUser\\(\\) expects App\\\\Entity\\\\User\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/UserController.php

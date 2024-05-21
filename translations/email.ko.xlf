@@ -30,17 +30,17 @@
         <source>reset.subject</source>
         <target>사용자 비밀번호 재설정</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>그럴 수 있습니다…</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">그럴 수 있습니다…</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>사용자 비밀번호 재설정</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… 비밀번호를 잊어버렸나요? 걱정하지 마세요: Kimai가 새 계정을 만드는 데 도움을 줄 것입니다:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… 비밀번호를 잊어버렸나요? 걱정하지 마세요: Kimai가 새 계정을 만드는 데 도움을 줄 것입니다:</target>
       </trans-unit>
     </body>
   </file>

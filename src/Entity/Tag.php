@@ -71,7 +71,7 @@ class Tag
 
     public function setName(?string $tagName): Tag
     {
-        $this->name = $tagName;
+        $this->name = $tagName !== null ? trim($tagName) : $tagName;
 
         return $this;
     }

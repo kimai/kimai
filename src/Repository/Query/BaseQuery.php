@@ -30,7 +30,7 @@ class BaseQuery
     /** @var array<string, string|int|null|bool|array<mixed>|DateRange> */
     private array $defaults = [
         'page' => 1,
-        'pageSize' => self::DEFAULT_PAGESIZE,
+        'size' => self::DEFAULT_PAGESIZE,
         'orderBy' => 'id',
         'order' => self::ORDER_ASC,
         'searchTerm' => null,
@@ -135,6 +135,16 @@ class BaseQuery
         }
 
         return $this;
+    }
+
+    public function getSize(): int
+    {
+        return $this->getPageSize();
+    }
+
+    public function setSize(?int $size): void
+    {
+        $this->setPageSize($size);
     }
 
     public function getOrderBy(): string

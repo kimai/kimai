@@ -154,6 +154,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private ?string $description = null;
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;
@@ -224,8 +225,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     /**
      * Get entry id, returns null for new entities which were not persisted.
-     *
-     * @return int|null
      */
     public function getId(): ?int
     {
@@ -282,10 +281,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this->end === null;
     }
 
-    /**
-     * @param DateTime $end
-     * @return Timesheet
-     */
     public function setEnd(?DateTime $end): Timesheet
     {
         $this->end = $end;
@@ -300,10 +295,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    /**
-     * @param int|null $duration
-     * @return Timesheet
-     */
     public function setDuration(?int $duration): Timesheet
     {
         $this->duration = $duration;
@@ -313,9 +304,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     /**
      * Do not rely on the results of this method for running records.
-     *
-     * @param bool $calculate
-     * @return int|null
      */
     public function getDuration(bool $calculate = true): ?int
     {
@@ -384,11 +372,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this->description;
     }
 
-    /**
-     * @param float $rate
-     * @return Timesheet
-     */
-    public function setRate($rate): Timesheet
+    public function setRate(float $rate): Timesheet
     {
         $this->rate = $rate;
 
@@ -454,18 +438,11 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         );
     }
 
-    /**
-     * @return bool
-     */
     public function isExported(): bool
     {
         return $this->exported;
     }
 
-    /**
-     * @param bool $exported
-     * @return Timesheet
-     */
     public function setExported(bool $exported): Timesheet
     {
         $this->exported = $exported;
@@ -473,9 +450,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getTimezone(): ?string
     {
         return $this->timezone;
@@ -486,8 +460,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      * It is reserved for some very rare use-cases.
      *
      * @internal
-     * @param string $timezone
-     * @return Timesheet
      */
     public function setTimezone(string $timezone): Timesheet
     {
@@ -498,8 +470,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     /**
      * This method returns ALWAYS: "timesheet"
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -635,6 +605,10 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
+        // this needs to be done, otherwise doctrine will not see the item as changed
+        // and the calculators will not run
+        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+
         if (null === ($current = $this->getMetaField($meta->getName()))) {
             $meta->setEntity($this);
             $this->meta->add($meta);

@@ -30,17 +30,17 @@
         <source>reset.subject</source>
         <target>Сбросить пароль</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>Это может произойти …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Это может произойти …</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>Сбросить пароль</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… вы забыли пароль? Не беспокойтесь: Kimai поможет Вам создать новый:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… вы забыли пароль? Не беспокойтесь: Kimai поможет Вам создать новый:</target>
       </trans-unit>
     </body>
   </file>

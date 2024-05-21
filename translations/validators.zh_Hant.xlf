@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve" approved="yes">
         <source>This is a public holiday, booking not allowed.</source>
-        <target state="final">此日期是法定假日，不允許預定。</target>
+        <target state="final">此日是法定假日，不允許排假。</target>
       </trans-unit>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
         <source>At least one team leader must be assigned to the team.</source>
@@ -136,11 +136,11 @@
       </trans-unit>
       <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve" approved="yes">
         <source>Cannot stop running timesheet</source>
-        <target state="final">您有一條活動時間紀錄無法自動停止。</target>
+        <target state="final">您有一條進行中的時間紀錄無法自動停止。</target>
       </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve" approved="yes">
         <source>The given code is not the correct TOTP token.</source>
-        <target state="final">此驗證碼不是有效的 TOTP token.</target>
+        <target state="final">此驗證碼不是有效的 TOTP token。</target>
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve" approved="yes">
         <source>Maximum duration of {{ value }} hours exceeded.</source>

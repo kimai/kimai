@@ -72,8 +72,8 @@ security:
             login_link:
                 check_route: link_login_check
                 signature_properties: ['id']
-                lifetime: 300
-                max_uses: 1
+                lifetime: 900
+                max_uses: 3
 
     access_decision_manager:
         # only grants access if there is no voter denying access
@@ -108,7 +108,3 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
-
-        firewalls:
-            secured_area:
-                http_basic: ~

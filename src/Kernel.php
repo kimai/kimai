@@ -60,7 +60,7 @@ class Kernel extends BaseKernel
             }
         }
 
-        if ($this->environment === 'test' && getenv('TEST_WITH_BUNDLES') === false) {
+        if ($this->environment === 'test') {
             return;
         }
 
@@ -145,7 +145,7 @@ class Kernel extends BaseKernel
             $loader->load($file->getPathname());
         }
 
-        if (is_file($confDir . '/packages/local.yaml')) {
+        if ($this->environment !== 'test' && is_file($confDir . '/packages/local.yaml')) {
             $loader->load($confDir . '/packages/local.yaml');
         }
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');

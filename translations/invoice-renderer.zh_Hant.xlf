@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve" approved="yes">
         <source>help.upload</source>
-        <target state="final">注意：現有檔案將被覆寫。允許的檔案類型為：%extensions%。</target>
+        <target state="final">注意：現有檔案將被覆寫。可接受的檔案類型為：%extensions%。</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text" xml:space="preserve" approved="yes">
         <source>text</source>

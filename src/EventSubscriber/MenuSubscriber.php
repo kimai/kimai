@@ -94,7 +94,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         $contract = new MenuItemModel('contract', 'work_contract', null, [], 'contract');
-        if ($user->hasContractSettings() || $auth->isGranted('contract_other_profile')) {
+        if ($user->hasContractSettings() || $auth->isGranted('hours_other_profile')) {
             $contract->addChild(new MenuItemModel('contract_status', 'work_times', 'user_contract', [], 'work_times'));
         }
 

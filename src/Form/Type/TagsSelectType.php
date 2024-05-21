@@ -36,13 +36,15 @@ final class TagsSelectType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$options['allow_create']) {
-            return;
-        }
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
             /** @var array<string> $tagIds */
             $tagIds = $event->getData();
+
+            // this is mainly here, because the link from tags index page uses the non-array syntax
+            if (\is_string($tagIds) || \is_int($tagIds)) {
+                $tagIds = array_filter(array_unique(array_map('trim', explode(',', $tagIds))));
+            }
+
             if (!\is_array($tagIds)) {
                 return;
             }
@@ -59,13 +61,15 @@ final class TagsSelectType extends AbstractType
                     $tag = $this->tagRepository->findTagByName($tagId);
                 }
 
-                if ($tag === null) {
+                if ($options['allow_create'] && $tag === null) {
                     $tag = new Tag();
-                    $tag->setName(mb_substr($tagId, 0, 100));
+                    $tag->setName($tagId);
                     $this->tagRepository->saveTag($tag);
                 }
 
-                $tags[] = $tag->getId();
+                if ($tag !== null) {
+                    $tags[] = $tag->getId();
+                }
             }
 
             $event->setData($tags);
@@ -79,6 +83,9 @@ final class TagsSelectType extends AbstractType
             'class' => Tag::class,
             'label' => 'tag',
             'allow_create' => false,
+            'choice_value' => function (Tag $tag) {
+                return $tag->getId();
+            },
             'choice_attr' => function (Tag $tag) {
                 $color = $tag->getColor();
                 if ($color === null) {

@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="yQRveje" resname="description" xml:space="preserve" approved="yes">
         <source>Description</source>
-        <target state="final">描述</target>
+        <target state="final">說明</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve" approved="yes">
         <source>invoiceText</source>
@@ -532,7 +532,7 @@
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar" xml:space="preserve" approved="yes">
         <source>avatar</source>
-        <target state="final">個人資料圖檔 (URL)</target>
+        <target state="final">個人資料相片（網址）</target>
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles" xml:space="preserve" approved="yes">
         <source>roles</source>
@@ -728,7 +728,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _" xml:space="preserve" approved="yes">
         <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
-        <target state="final">允許的字元：A~Z 以及 _（需至少 5 個大寫字元）</target>
+        <target state="final">可接受的字元：A~Z 以及 _（需至少 5 個大寫字元）</target>
       </trans-unit>
       <trans-unit id="XKTzhQz" resname="version" xml:space="preserve" approved="yes">
         <source>version</source>
@@ -1440,7 +1440,7 @@
       </trans-unit>
       <trans-unit id="vURcRit" resname="overview" xml:space="preserve" approved="yes">
         <source>Overview</source>
-        <target state="final">概覽</target>
+        <target state="final">總覽</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
         <source>holiday.intro</source>
@@ -1732,7 +1732,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="yes">
         <source>Time, date and currency format</source>
-        <target state="final">時間、日期與貨幣格式</target>
+        <target state="final">時間、日期、與貨幣格式</target>
       </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="yes">
         <source>Deactivate</source>

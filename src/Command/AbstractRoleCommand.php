@@ -56,5 +56,5 @@ abstract class AbstractRoleCommand extends Command
         return Command::SUCCESS;
     }
 
-    abstract protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role): void;
+    abstract protected function executeRoleCommand(UserService $userService, SymfonyStyle $output, User $user, bool $super, $role): void;
 }
