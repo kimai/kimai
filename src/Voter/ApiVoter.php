@@ -48,6 +48,10 @@ final class ApiVoter extends Voter
             return false;
         }
 
-        return $this->permissionManager->hasRolePermission($user, 'api_access');
+        if ($token->hasAttribute('api-token')) {
+            return $this->permissionManager->hasRolePermission($user, 'api_access');
+        }
+
+        return true;
     }
 }
