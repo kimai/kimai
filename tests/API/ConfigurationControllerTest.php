@@ -25,7 +25,9 @@ class ConfigurationControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/config/timesheet', 'GET');
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -47,7 +49,9 @@ class ConfigurationControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/config/colors', 'GET');
-        $actual = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $actual = json_decode($content, true);
 
         $this->assertIsArray($actual);
         $this->assertNotEmpty($actual);

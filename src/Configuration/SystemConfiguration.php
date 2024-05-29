@@ -482,8 +482,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @internal do ot access this method directly, but through getThemeColors()
-     * @deprecated this will be made private soon after 2.18.0
+     * @internal will be made private soon after 2.18.0 - do ot access this method directly, but through getThemeColors()
      */
     public function getThemeColorChoices(): string
     {
@@ -495,6 +494,9 @@ final class SystemConfiguration
         return 'Silver|#c0c0c0';
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getThemeColors(): array
     {
         $config = explode(',', $this->getThemeColorChoices());
