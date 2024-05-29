@@ -28,9 +28,9 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         $sut->setInvoiceModel($model);
 
         $expected = [
-            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => '== jhg ljhg '],
-            ['meta_fields' => ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], 'description' => ''],
-            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => ''],
+            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => '== jhg ljhg ', 'description_safe' => '== jhg ljhg '],
+            ['meta_fields' => ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], 'description' => '', 'description_safe' => 'activity description'],
+            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => '', 'description_safe' => 'activity description'],
             ['meta_fields' => ['entry.meta.foo-timesheet3']],
             ['meta_fields' => []],
         ];
@@ -40,11 +40,13 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             $result = $sut->hydrate($entry);
             $exp = $expected[$i++];
             $this->assertEntryStructure($result, $exp['meta_fields']);
-            if (array_key_exists('description', $exp)) {
+            if (\array_key_exists('description', $exp)) {
                 $this->assertEquals($exp['description'], $result['entry.description']);
             }
+            if (\array_key_exists('description_safe', $exp)) {
+                $this->assertEquals($exp['description_safe'], $result['entry.description_safe']);
+            }
         }
-
     }
 
     public function assertEntryStructure(array $model, array $metaFields): void
@@ -52,6 +54,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         $keys = [
             'entry.row',
             'entry.description',
+            'entry.description_safe',
             'entry.amount',
             'entry.rate',
             'entry.rate_nc',
@@ -98,7 +101,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.tags',
         ];
 
-        if (count($metaFields) > 0) {
+        if (\count($metaFields) > 0) {
             $keys = array_merge($keys, $metaFields);
         }
 

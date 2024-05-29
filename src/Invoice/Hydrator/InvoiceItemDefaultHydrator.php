@@ -55,6 +55,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $values = [
             'entry.row' => '',
             'entry.description' => $description ?? '',
+            'entry.description_safe' => ($description === null || $description === '' ? ($activity?->getName() ?? $project?->getName() ?? '') : $description),
             'entry.amount' => $amount,
             'entry.type' => $item->getType(),
             'entry.tags' => implode(', ', $item->getTags()),
