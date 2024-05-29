@@ -9,7 +9,6 @@
 
 namespace App\API;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
@@ -18,6 +17,7 @@ use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
+use App\User\UserService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -27,8 +27,6 @@ use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -45,8 +43,6 @@ final class UserController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly UserRepository $repository,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly SystemConfiguration $configuration
     ) {
     }
 
@@ -139,13 +135,9 @@ final class UserController extends BaseApiController
     #[OA\Post(description: 'Creates a new user and returns it afterwards')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
     #[Route(methods: ['POST'], path: '', name: 'post_user')]
-    public function postAction(Request $request): Response
+    public function postAction(Request $request, UserService $userService): Response
     {
-        $user = new User();
-        $user->setEnabled(true);
-        $user->setRoles([User::DEFAULT_ROLE]);
-        $user->setTimezone($this->configuration->getUserDefaultTimezone());
-        $user->setLanguage($this->configuration->getUserDefaultLanguage());
+        $user = $userService->createNewUser();
 
         $form = $this->createForm(UserApiCreateForm::class, $user, [
             'include_roles' => $this->isGranted('roles', $user),
@@ -156,23 +148,10 @@ final class UserController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $plainPassword = $user->getPlainPassword();
-            if ($plainPassword === null) {
-                throw new BadRequestHttpException('Password cannot be empty');
-            }
-            $password = $this->passwordHasher->hashPassword($user, $plainPassword);
-            $user->setPassword($password);
-
-            if ($user->getPlainApiToken() !== null) {
-                $user->setApiToken($this->passwordHasher->hashPassword($user, $user->getPlainApiToken()));
-            }
-
-            $this->repository->saveUser($user);
+            $user = $userService->saveNewUser($user);
 
             $view = new View($user, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            $user->eraseCredentials();
 
             return $this->viewHandler->handle($view);
         }
