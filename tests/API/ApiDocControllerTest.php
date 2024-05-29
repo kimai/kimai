@@ -64,6 +64,7 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/activities/{id}/rates',
             '/api/activities/{id}/rates/{rateId}',
             '/api/config/timesheet',
+            '/api/config/colors',
             '/api/customers',
             '/api/customers/{id}',
             '/api/customers/{id}/meta',
