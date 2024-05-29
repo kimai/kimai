@@ -47,10 +47,6 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $begin = $item->getBegin();
         $end = $item->getEnd();
 
-        if (empty($description) && null !== $activity) {
-            $description = $activity->getName();
-        }
-
         // this should never happen!
         if (empty($appliedRate)) {
             $appliedRate = 0;
