@@ -111,7 +111,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $result = $entries[0];
 
         $this->assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('activity description', $result->getDescription());
+        $this->assertEquals('', $result->getDescription());
         $this->assertEquals(293.27, $result->getHourlyRate());
         $this->assertNull($result->getFixedRate());
         $this->assertEquals(472.5, $result->getRate());
@@ -190,7 +190,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertEquals('activity description', $result->getDescription());
+        $this->assertNull($result->getDescription());
         $this->assertEquals(488.38, $result->getHourlyRate());
         $this->assertEquals(488.38, $result->getFixedRate());
         $this->assertEquals(488.38, $result->getRate());
@@ -266,7 +266,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertEquals('activity description', $result->getDescription());
+        $this->assertNull($result->getDescription());
         $this->assertEquals(488.38, $result->getHourlyRate());
         $this->assertEquals(488.38, $result->getRate());
         $this->assertEquals(5800, $result->getDuration());

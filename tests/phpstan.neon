@@ -2250,7 +2250,7 @@ parameters:
 
         -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
+            count: 1
             path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
 
         -
