@@ -456,19 +456,22 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @param Activity $activity
      * @return FormInterface<ActivityEditForm>
      */
     private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
         $url = $this->generateUrl('admin_activity_create');
+        if ($activity->getProject()?->getId() !== null) {
+            $url = $this->generateUrl('admin_activity_create_with_project', ['project' => $activity->getProject()->getId()]);
+        }
 
         if ($activity->getId() !== null) {
             $url = $this->generateUrl('admin_activity_edit', ['id' => $activity->getId()]);
-            if (null !== $activity->getProject()) {
-                $currency = $activity->getProject()->getCustomer()->getCurrency();
-            }
+        }
+
+        if (null !== $activity->getProject()) {
+            $currency = $activity->getProject()->getCustomer()->getCurrency();
         }
 
         return $this->createForm(ActivityEditForm::class, $activity, [
