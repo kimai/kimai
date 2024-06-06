@@ -178,6 +178,12 @@ class ProjectStatisticService
                     $qb->expr()->eq('p.budgetType', ':typeMonth')
                 );
                 $qb->setParameter('typeMonth', 'month');
+            } else if ($query->isBudgetTypeQuarterly()) {
+                $qb->andWhere(
+                    $qb->expr()->eq('p.budgetType', ':typeQuarter')
+                );
+                $qb->setParameter('typeQuarter', 'quarter');
+
             } else {
                 $qb->andWhere(
                     $qb->expr()->isNull('p.budgetType')
@@ -216,6 +222,12 @@ class ProjectStatisticService
             $end = $dateFactory->getEndOfMonth($today);
         }
 
+        if ($project->isQuarterlyBudget()) {
+            $dateFactory = new DateTimeFactory($today->getTimezone());
+            $begin = $dateFactory->getStartOfQuarter($today);
+            $end = $dateFactory->getEndOfQuarter($today);
+        }
+
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
 
         return $stats;
@@ -229,12 +241,15 @@ class ProjectStatisticService
     {
         $models = [];
         $monthly = [];
+        $quarterly = [];
         $allTime = [];
 
         foreach ($projects as $project) {
             $models[$project->getId()] = new ProjectBudgetStatisticModel($project);
             if ($project->isMonthlyBudget()) {
                 $monthly[] = $project;
+            } else if ($project->isQuarterlyBudget()) {
+                $quarterly[] = $project;
             } else {
                 $allTime[] = $project;
             }
@@ -254,6 +269,15 @@ class ProjectStatisticService
             $begin = $dateFactory->getStartOfMonth($today);
             $end = $dateFactory->getEndOfMonth($today);
             $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        if (\count($quarterly) > 0) {
+            $begin = $dateFactory->getStartOfQuarter($today);
+            $end = $dateFactory->getEndOfQuarter($today);
+            $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
                 $models[$id]->setStatistic($statistic);
             }

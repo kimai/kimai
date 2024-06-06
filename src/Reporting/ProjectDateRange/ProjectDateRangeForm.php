@@ -51,6 +51,7 @@ final class ProjectDateRangeForm extends AbstractType
                 'includeNoBudget' => 'none',
                 'includeBudgetType_full' => 'full',
                 'includeBudgetType_month' => 'month',
+                'includeBudgetType_quarter' => 'quarter',
             ],
         ]);
     }

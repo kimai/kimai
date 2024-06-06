@@ -1058,6 +1058,15 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% verwendet (noch %left% diesen Monat offen)</target>
       </trans-unit>
+      <trans-unit resname="stats.percentUsed_quarter" id="xKIKKwi">
+        <source>stats.percentUsed_quarter</source>
+        <target>%percent%% verwendet dieses Quartal</target>
+      </trans-unit>
+      <trans-unit resname="stats.percentUsedLeft_quarter" id="6v7rv_S">
+        <source>stats.percentUsedLeft_quarter</source>
+        <target>%percent%% verwendet (noch %left% dieses Quartal offen)</target>
+      </trans-unit>
+      <!-- Invoice -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Vorlagen</target>
@@ -1406,6 +1415,10 @@
         <source>includeBudgetType_month</source>
         <target>Einträge mit „Monats-Budget“ anzeigen</target>
       </trans-unit>
+      <trans-unit resname="includeBudgetType_quarter" id="IbsFFgv">
+        <source>includeBudgetType_quarter</source>
+        <target>Einträge mit „Quartals-Budget“ anzeigen</target>
+      </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
         <target>Einträge mit „Lebenszyklus“-Budget anzeigen</target>
@@ -1433,6 +1446,10 @@
       <trans-unit id="4Ndj7Xo" resname="budgetType">
         <source>budgetType</source>
         <target>Budget-Typ</target>
+      </trans-unit>
+      <trans-unit resname="budgetType_quarter" id="nUfWd_m">
+        <source>budgetType_quarter</source>
+        <target>Quartalsweise</target>
       </trans-unit>
       <trans-unit id="wYqyL6A" resname="budgetType_month">
         <source>budgetType_month</source>

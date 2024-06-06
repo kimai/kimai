@@ -100,6 +100,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $customerDuration = $duration ?? 0;
         $customerRate = $rate;
         $monthWasChanged = false;
+        $quarterWasChanged = false;
 
         if ($id !== null) {
             $rawData = $this->timesheetRepository->getRawData($id);
@@ -144,6 +145,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             }
 
             $monthWasChanged = $begin->format('Y.m') !== $rawData['begin']->format('Y.m');
+            $quarterWasChanged = $begin->format('Y') !== $rawData['begin']->format('Y') || intval($begin->format('n') / 4) !== intval($rawData['begin']->format('n') / 4);
         }
 
         $now = new DateTime('now', $begin->getTimezone());
@@ -152,6 +154,10 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         if (null !== ($activity = $value->getActivity()) && $activity->hasBudgets()) {
             $dateTime = $activity->isMonthlyBudget() ? $recordDate : $now;
             if ($activity->isMonthlyBudget() && $monthWasChanged) {
+                $activityDuration = $duration;
+            }
+            $dateTime = $activity->isQuarterlyBudget() ? $recordDate : $now;
+            if ($activity->isQuarterlyBudget() && $quarterWasChanged) {
                 $activityDuration = $duration;
             }
             $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $dateTime);
@@ -164,12 +170,20 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 if ($project->isMonthlyBudget() && $monthWasChanged) {
                     $projectDuration = $duration;
                 }
+                $dateTime = $project->isQuarterlyBudget() ? $recordDate : $now;
+                if ($project->isQuarterlyBudget() && $quarterWasChanged) {
+                    $projectDuration = $duration;
+                }
                 $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $dateTime);
                 $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project');
             }
             if (null !== ($customer = $project->getCustomer()) && $customer->hasBudgets()) {
                 $dateTime = $customer->isMonthlyBudget() ? $recordDate : $now;
                 if ($customer->isMonthlyBudget() && $monthWasChanged) {
+                    $customerDuration = $duration;
+                }
+                $dateTime = $customer->isQuarterlyBudget() ? $recordDate : $now;
+                if ($customer->isQuarterlyBudget() && $quarterWasChanged) {
                     $customerDuration = $duration;
                 }
                 $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $dateTime);

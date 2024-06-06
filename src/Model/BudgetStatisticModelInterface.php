@@ -16,6 +16,8 @@ interface BudgetStatisticModelInterface
 {
     public function isMonthlyBudget(): bool;
 
+    public function isQuarterlyBudget(): bool;
+
     public function hasTimeBudget(): bool;
 
     public function getTimeBudget(): int;

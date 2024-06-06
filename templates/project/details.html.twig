@@ -101,6 +101,9 @@
                             {% if project.isMonthlyBudget() %}
                                 ({{ 'budgetType_month'|trans }})
                             {% endif %}
+                            {% if project.isQuarterlyBudget() %}
+                                ({{ 'budgetType_quarter'|trans }})
+                            {% endif %}
                         </th>
                         <td colspan="3">
                             {{ project.getBudget()|money(project.customer.currency) }}
@@ -113,6 +116,9 @@
                             {{ 'timeBudget'|trans }}
                             {% if project.isMonthlyBudget() %}
                                 ({{ 'budgetType_month'|trans }})
+                            {% endif %}
+                            {% if project.isQuarterlyBudget() %}
+                                ({{ 'budgetType_quarter'|trans }})
                             {% endif %}
                         </th>
                         <td colspan="3">

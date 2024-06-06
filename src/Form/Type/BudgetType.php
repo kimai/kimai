@@ -19,6 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class BudgetType extends AbstractType
 {
     public const TYPE_MONTH = 'month';
+    public const TYPE_QUARTER = 'quarter';
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -30,6 +31,7 @@ final class BudgetType extends AbstractType
             'search' => false,
             'choices' => [
                 'budgetType_month' => self::TYPE_MONTH,
+                'budgetType_quarter' => self::TYPE_QUARTER,
             ],
         ]);
     }

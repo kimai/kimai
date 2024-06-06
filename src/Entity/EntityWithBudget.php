@@ -28,6 +28,8 @@ interface EntityWithBudget
 
     public function isMonthlyBudget(): bool;
 
+    public function isQuarterlyBudget(): bool;
+
     public function getBudgetType(): ?string;
 
     public function setBudgetType(?string $budgetType = null): void;

@@ -421,6 +421,9 @@
                                             {% if budgetStats.isMonthlyBudget() %}
                                                 ({{ 'budgetType_month'|trans }})
                                             {% endif %}
+                                            {% if budgetStats.isQuarterlyBudget() %}
+                                                ({{ 'budgetType_quarter'|trans }})
+                                            {% endif %}
                                         </th>
                                         <td>
                                             {{ progress.progressbar_timebudget(budgetStats) }}
@@ -433,6 +436,9 @@
                                             {{ 'budget'|trans }}
                                             {% if budgetStats.isMonthlyBudget() %}
                                                 ({{ 'budgetType_month'|trans }})
+                                            {% endif %}
+                                            {% if budgetStats.isQuarterlyBudget() %}
+                                                ({{ 'budgetType_quarter'|trans }})
                                             {% endif %}
                                         </th>
                                         <td>

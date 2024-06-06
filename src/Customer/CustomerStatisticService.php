@@ -59,6 +59,12 @@ class CustomerStatisticService
             $end = $dateFactory->getEndOfMonth($today);
         }
 
+        if ($customer->isQuarterlyBudget()) {
+            $dateFactory = new DateTimeFactory($today->getTimezone());
+            $begin = $dateFactory->getStartOfQuarter($today);
+            $end = $dateFactory->getEndOfQuarter($today);
+        }
+
         $stats->setStatistic($this->getCustomerStatistics($customer, $begin, $end));
 
         return $stats;
