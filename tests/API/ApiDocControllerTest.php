@@ -79,6 +79,7 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/version',
             '/api/plugins',
             '/api/tags',
+            '/api/tags/find',
             '/api/tags/{id}',
             '/api/teams',
             '/api/teams/{id}',
