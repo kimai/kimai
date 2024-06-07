@@ -19,15 +19,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Tag>
+ * @extends EntityRepository<Tag>
  */
 class TagRepository extends EntityRepository
 {
-    /**
-     * See KimaiFormSelect.js (maxOptions) as well.
-     */
-    public const MAX_AMOUNT_SELECT = 500;
-
     public function saveTag(Tag $tag): void
     {
         $entityManager = $this->getEntityManager();
