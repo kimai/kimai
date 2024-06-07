@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use App\Entity\Tag;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
-use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -87,17 +86,11 @@ final class TagsSelectType extends AbstractType
                 return $tag->getId();
             },
             'choice_attr' => function (Tag $tag) {
-                $color = $tag->getColor();
-                if ($color === null) {
-                    $color = (new Color())->getRandom($tag->getName());
-                }
-
-                return ['data-color' => $color];
+                return ['data-color' => $tag->getColorSafe()];
             },
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();
             },
-            'attr' => ['data-renderer' => 'color'],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -119,6 +112,10 @@ final class TagsSelectType extends AbstractType
                 'data-create' => 'post_tag',
             ]);
         }
+
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-renderer' => 'color',
+        ]);
     }
 
     public function getParent(): string
