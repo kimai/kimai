@@ -1400,6 +1400,18 @@
         <source>invoice_number_generator</source>
         <target state="translated">مولد شماره فاکتور</target>
       </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">فیلتر جستجو</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">آخرین استفاده</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">تاریخ انقضا</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

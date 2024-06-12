@@ -1301,9 +1301,9 @@
         <source>login.2fa_intro</source>
         <target state="translated">Skriv inn bekreftelseskode for å fullføre innloggingsprosessen.</target>
       </trans-unit>
-      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve">
         <source>notifications.welcome</source>
-        <target state="translated">Takk for at du samtykker til merknader.</target>
+        <target state="translated">Takk for at du samtykker til merknader!</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>

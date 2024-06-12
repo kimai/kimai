@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve" approved="yes">
         <source>wizard.password.description</source>
-        <target state="final">請輸入您的密碼，之後可用該密碼登入。</target>
+        <target state="final">請輸入您的密碼，之後可使用此密碼登入。</target>
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve" approved="yes">
         <source>wizard.separator</source>
