@@ -9,6 +9,8 @@
 
 namespace App\Configuration;
 
+use App\Timesheet\FutureTimesEnum;
+
 final class SystemConfiguration
 {
     private bool $initialized = false;
@@ -374,9 +376,35 @@ final class SystemConfiguration
         return (string) $this->find('timesheet.default_begin');
     }
 
+    /**
+     * @deprecated since 2.4
+     */
     public function isTimesheetAllowFutureTimes(): bool
     {
-        return (bool) $this->find('timesheet.rules.allow_future_times');
+        @trigger_error('isTimesheetAllowFutureTimes() is deprecated and will be removed with 2.2.0, use getTimesheetAllowFutureRule() instead', E_USER_DEPRECATED);
+
+        $rule = $this->getTimesheetAllowFutureRule();
+
+        if ($rule === FutureTimesEnum::DENY) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getTimesheetAllowFutureRule(): FutureTimesEnum
+    {
+        $value = $this->getString('timesheet.rules.allow_future_times', 'allow');
+
+        if (($rule = FutureTimesEnum::tryFrom($value)) === null) {
+            if ((bool) $value === false) {
+                return FutureTimesEnum::DENY;
+            }
+
+            return FutureTimesEnum::ALLOW;
+        }
+
+        return $rule;
     }
 
     public function isTimesheetAllowZeroDuration(): bool
