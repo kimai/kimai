@@ -16,6 +16,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TagsType extends AbstractType
 {
+    /**
+     * See KimaiFormSelect.js (maxOptions) as well.
+     */
+    public const MAX_AMOUNT_SELECT = 500;
+
     private ?int $count = null;
 
     public function __construct(
@@ -37,7 +42,7 @@ final class TagsType extends AbstractType
             $this->count = $this->repository->count([]);
         }
 
-        if ($this->count > TagRepository::MAX_AMOUNT_SELECT) {
+        if ($this->count > self::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;
         }
 

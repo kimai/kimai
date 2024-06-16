@@ -21,10 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
-#[AsCommand(name: 'kimai:user:login-link', description: 'Create a URL that can be used to login as that user', hidden: true)]
 /**
  * @CloudRequired
  */
+#[AsCommand(name: 'kimai:user:login-link', description: 'Create a URL that can be used to login as that user', hidden: true)]
 final class UserLoginLinkCommand extends Command
 {
     public function __construct(

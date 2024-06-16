@@ -244,11 +244,6 @@ parameters:
             path: API/ApiDocControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: API/ConfigurationControllerTest.php
-
-        -
             message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
             count: 1
             path: API/CustomerControllerTest.php
@@ -1472,11 +1467,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TestFixture\\:\\:load\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: DataFixtures/TestFixture.php
-
-        -
-            message: "#^Argument of an invalid type array\\|null supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
 
         -
             message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) has parameter \\$tagArray with no value type specified in iterable type array\\.$#"

@@ -6,13 +6,12 @@
  */
 
 import TomSelect from 'tom-select';
-import KimaiFormPlugin from "./KimaiFormPlugin";
+import KimaiFormTomselectPlugin from "./KimaiFormTomselectPlugin";
 
 /**
  * Supporting auto-complete fields via API.
- * Used for timesheet tagging in toolbar and edit dialogs.
  */
-export default class KimaiAutocomplete extends KimaiFormPlugin {
+export default class KimaiAutocomplete extends KimaiFormTomselectPlugin {
 
     init()
     {
@@ -28,11 +27,23 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
         return true;
     }
 
-    activateForm(form)
-    {
+    loadData(apiUrl, query, callback) {
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
+        API.get(apiUrl, {'name': query}, (data) => {
+            let results = [];
+            for (let item of data) {
+                results.push({text: item.name, value: item.name});
+            }
+            callback(results);
+        }, () => {
+            callback();
+        });
+    }
+
+    activateForm(form)
+    {
         [].slice.call(form.querySelectorAll(this.selector)).map((node) => {
             const apiUrl = node.dataset['autocompleteUrl'];
             let minChars = 3;
@@ -40,7 +51,7 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
                 minChars = parseInt(node.dataset['minimumCharacter']);
             }
 
-            new TomSelect(node, {
+            let options = {
                 // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
                 onItemAdd: function(){
                     // remove remaining characters from input after selecting an item
@@ -58,36 +69,21 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
                     return query.length >= minChars;
                 },
                 load: (query, callback) => {
-                    API.get(apiUrl, {'name': query}, (data) => {
-                        const results = [].slice.call(data).map((result) => {
-                            return {text: result, value: result};
-                        });
-                        callback(results);
-                    }, () => {
-                        callback();
-                    });
+                    this.loadData(apiUrl, query, callback);
                 },
-                render: {
-                    // eslint-disable-next-line
-                    not_loading: (data, escape) => {
-                        // no default content
-                    },
-                    option_create: (data, escape) => {
-                        const name = escape(data.input);
-                        if (name.length < 3) {
-                            return null;
-                        }
-                        const tpl = this.translate('select.search.create');
-                        const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>')
-                        return '<div class="create">' + tplReplaced + '</div>';
-                    },
-                    no_results: (data, escape) => {
-                        const tpl = this.translate('select.search.notfound');
-                        const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
-                        return '<div class="no-results">' + tplReplaced + '</div>';
-                    },
+            };
+
+            let render = {
+                // eslint-disable-next-line
+                not_loading: (data, escape) => {
+                    // no default content
                 },
-            });
+            };
+
+            const rendererType = (node.dataset['renderer'] !== undefined) ? node.dataset['renderer'] : 'default';
+            options.render = {...render, ...this.getRenderer(rendererType)};
+
+            new TomSelect(node, options);
         });
     }
 

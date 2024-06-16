@@ -298,6 +298,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @deprecated since 2.15
+     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('apiToken')]
     #[Serializer\Groups(['Default'])]
