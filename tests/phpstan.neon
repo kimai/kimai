@@ -1469,11 +1469,6 @@ parameters:
             path: DataFixtures/TestFixture.php
 
         -
-            message: "#^Argument of an invalid type array\\|null supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) has parameter \\$tagArray with no value type specified in iterable type array\\.$#"
             count: 1
             path: DataFixtures/TimesheetFixtures.php
