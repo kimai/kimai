@@ -37,7 +37,22 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
             return '';
         }
 
-        return implode(', ', $value);
+        if (!\is_array($value)) {
+            return '';
+        }
+
+        $result = [];
+        foreach ($value as $item) {
+            if ($item instanceof Tag) {
+                $result[] = $item->getName();
+            } elseif (\is_string($item)) {
+                $result[] = $item;
+            } else {
+                throw new TransformationFailedException('Tags must only contain a Tag or a string.');
+            }
+        }
+
+        return implode(',', $result);
     }
 
     /**
@@ -55,6 +70,7 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
         if ('' === $value || null === $value) {
             return [];
         }
+
         if (!\is_array($value)) {
             $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
         } else {
@@ -68,18 +84,12 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
             }
 
             $tagName = trim($tagName);
-            $tag = null;
 
-            if (is_numeric($tagName)) {
-                $tag = $this->tagRepository->find($tagName);
-            }
-
-            if ($tag === null) {
-                $tag = $this->tagRepository->findTagByName($tagName);
-            }
+            // do not check for numeric values as ID, this form type only submits tag names
+            $tag = $this->tagRepository->findTagByName($tagName);
 
             // get the current tags and find the new ones that should be created
-            if ($this->create && $tag === null) {
+            if ($tag === null && $this->create) {
                 $tag = new Tag();
                 $tag->setName(mb_substr($tagName, 0, 100));
                 $this->tagRepository->saveTag($tag);
