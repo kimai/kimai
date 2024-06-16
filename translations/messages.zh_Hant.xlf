@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
-        <target state="final">%action% %count% 條項目？</target>
+        <target state="final">是否要%action% %count% 條項目？</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
         <source>attachments</source>
@@ -237,7 +237,7 @@
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries" xml:space="preserve" approved="yes">
         <source>error.too_many_entries</source>
-        <target state="final">符合的項目太多，無法處理該請求。</target>
+        <target state="final">符合的項目太多，無法處理此請求。</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve" approved="yes">
         <source>The directory “%dir%” does not exist and could not be created.</source>
@@ -496,7 +496,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact" xml:space="preserve" approved="yes">
         <source>Contact</source>
-        <target state="final">聯絡人</target>
+        <target state="final">聯繫</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address" xml:space="preserve" approved="yes">
         <source>address</source>
@@ -820,7 +820,7 @@
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields" xml:space="preserve" approved="yes">
         <source>help.batch_meta_fields</source>
-        <target state="final">更新欄位前必須先點選啟用該欄位的核取方塊。</target>
+        <target state="final">更新欄位前必須先點選欲更新欄位的啟用核取方塊。</target>
       </trans-unit>
       <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve" approved="yes">
         <source>status.closed</source>
@@ -952,7 +952,7 @@
       </trans-unit>
       <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve" approved="yes">
         <source>help.invoiceLabel</source>
-        <target state="final">這段文字取代該目標的名稱，可為收支單項目增加更詳細的標籤。</target>
+        <target state="final">這段文字取代此目標的名稱，可為收支單項目增加更詳細的標籤。</target>
       </trans-unit>
       <trans-unit id="8BPmHPa" resname="batch_meta_fields" xml:space="preserve" approved="yes">
         <source>batch_meta_fields</source>
@@ -1080,7 +1080,7 @@
       </trans-unit>
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve" approved="yes">
         <source>profile.2fa_confirmation</source>
-        <target state="final">請確認驗證碼，以啟用該帳號的雙重要素驗證。</target>
+        <target state="final">請確認驗證碼，以啟用此帳號的雙重要素驗證。</target>
       </trans-unit>
       <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve" approved="yes">
         <source>help.invoiceTemplate_customer</source>
@@ -1100,11 +1100,11 @@
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve" approved="yes">
         <source>completed_month_pdf_note</source>
-        <target state="final">該文件用於工作時數的證明。</target>
+        <target state="final">此文件用於工作時數的證明。</target>
       </trans-unit>
       <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve" approved="yes">
         <source>Audit logs</source>
-        <target state="final">審查紀錄</target>
+        <target state="final">稽核紀錄</target>
       </trans-unit>
       <trans-unit id="b712axp" resname="Translation" xml:space="preserve" approved="yes">
         <source>Translation</source>
@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve" approved="yes">
         <source>help.globalActivity</source>
-        <target state="final">如果不選擇專案，將建立全域活動，可以與任何專案組合。如果您選擇專案，則將建立只能用於該專案的活動。稍後便無法再修改此設定。</target>
+        <target state="final">如果不選擇任何專案，將建立全域活動，可以與任何專案組合。如果您選擇任一專案，則將建立只能用於此專案的活動。稍後便無法再修改此設定。</target>
       </trans-unit>
       <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve" approved="yes">
         <source>plugin.installed</source>
@@ -1240,7 +1240,7 @@
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all" xml:space="preserve" approved="yes">
         <source>export.clear_all</source>
-        <target state="final">請問是否要將所有紀錄標示為未處理？</target>
+        <target state="final">是否要將所有紀錄標示為未處理？</target>
       </trans-unit>
       <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve" approved="yes">
         <source>button.request</source>
@@ -1264,7 +1264,7 @@
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help" xml:space="preserve" approved="yes">
         <source>team.add_user.help</source>
-        <target state="final">從清單中選擇一位新使用者加入團隊。之後您可以決定該使用者是否為團隊組長。</target>
+        <target state="final">從清單中選擇一位新使用者加入團隊。之後您可以決定此使用者是否為團隊組長。</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve" approved="yes">
         <source>skin.dark</source>
@@ -1312,7 +1312,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve" approved="yes">
         <source>complete_month.help</source>
-        <target state="final">鎖定該月後，將無法為再該時段建立或修改工時紀錄。</target>
+        <target state="final">鎖定此月後，將無法再為此時段建立或修改工時紀錄。</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize" xml:space="preserve" approved="yes">
         <source>pageSize</source>
@@ -1604,7 +1604,7 @@
       </trans-unit>
       <trans-unit id="qtjPKUT" resname="export.mark_all" xml:space="preserve" approved="yes">
         <source>export.mark_all</source>
-        <target state="final">請問是否要將所有紀錄標示為已處理？</target>
+        <target state="final">是否要將所有紀錄標示為已處理？</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time" xml:space="preserve" approved="yes">
         <source>time</source>

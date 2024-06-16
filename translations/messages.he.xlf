@@ -74,9 +74,9 @@
         <source>rates.title</source>
         <target>עמלות</target>
       </trans-unit>
-      <trans-unit id="XohImNo" resname="password">
-        <source>password</source>
-        <target>סיסמה</target>
+      <trans-unit id="XohImNo" resname="password" xml:space="preserve" approved="yes">
+        <source>Password</source>
+        <target state="final">סיסמה</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
