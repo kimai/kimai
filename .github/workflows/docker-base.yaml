@@ -28,7 +28,7 @@ jobs:
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
 
             - name: Build
-              uses: docker/build-push-action@v4
+              uses: docker/build-push-action@v5
               with:
                   context: .docker
                   file: .docker/Dockerfile.kimai-base
