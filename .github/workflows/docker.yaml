@@ -61,6 +61,9 @@ jobs:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
 
+            - name: Install buildx
+              uses: docker/setup-buildx-action@v2
+
             - name: Pull images
               run: |
                   docker pull kimai/kimai2:fpm-prod
@@ -70,35 +73,28 @@ jobs:
 
             - name: Tag fpm
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:fpm
-                  docker push kimai/kimai2:fpm
+                  docker buildx imagetools create -t kimai/kimai2:fpm kimai/kimai2:fpm-prod
 
             - name: Tag fpm latest
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:fpm-latest
-                  docker push kimai/kimai2:fpm-latest
+                  docker buildx imagetools create -t kimai/kimai2:fpm-latest kimai/kimai2:fpm-prod
 
             - name: Tag latest
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:latest
-                  docker push kimai/kimai2:latest
+                  docker buildx imagetools create -t kimai/kimai2:latest kimai/kimai2:fpm-prod
 
             - name: Tag prod
               run: |
-                  docker tag kimai/kimai2:fpm-prod kimai/kimai2:prod
-                  docker push kimai/kimai2:prod
+                  docker buildx imagetools create -t kimai/kimai2:prod kimai/kimai2:fpm-prod
 
             - name: Tag apache
               run: |
-                  docker tag kimai/kimai2:apache-prod kimai/kimai2:apache
-                  docker push kimai/kimai2:apache
+                  docker buildx imagetools create -t kimai/kimai2:apache kimai/kimai2:apache-prod
 
             - name: Tag apache latest
               run: |
-                  docker tag kimai/kimai2:apache-prod kimai/kimai2:apache-latest
-                  docker push kimai/kimai2:apache-latest
+                  docker buildx imagetools create -t kimai/kimai2:apache-latest kimai/kimai2:apache-prod
 
             - name: Tag dev
               run: |
-                  docker tag kimai/kimai2:apache-dev kimai/kimai2:dev
-                  docker push kimai/kimai2:dev
+                  docker buildx imagetools create -t kimai/kimai2:dev kimai/kimai2:apache-dev
