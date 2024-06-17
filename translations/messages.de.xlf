@@ -1756,6 +1756,10 @@
         <source>absence_comment_mandatory</source>
         <target>Abwesenheit: Kommentar ist Pflichtfeld</target>
       </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days">
+        <source>booking_allow_only_work_days</source>
+        <target>Erlaube Zeiteinträge nur an Tagen, für die im Arbeitsvertrag Sollstunden hinterlegt sind</target>
+      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires">
         <source>Expiry date</source>
         <target>Ablaufdatum</target>

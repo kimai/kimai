@@ -15,8 +15,8 @@
         <target state="final">重設您的密碼</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
-        <source>reset.title</source>
-        <target state="final">這種事難免會發生……</target>
+        <source>Forgot your password?</source>
+        <target state="final">忘記密碼了嗎？</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
         <source>registration.button</source>
@@ -31,16 +31,16 @@
         <target state="final">歡迎 %username%</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
-        <source>reset.intro</source>
-        <target state="final">……您忘記密碼了嗎？別擔心：Kimai 將協助您設定新的密碼：</target>
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="final">別擔心，Kimai 將協助您設定新的密碼！</target>
       </trans-unit>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" xml:space="preserve" approved="yes">
         <source>button_copy_url_to_browser</source>
-        <target state="final">如果該按鈕無效，請複製以下網址並在瀏覽器中貼上： %url%</target>
+        <target state="final">如果此按鈕無效，請複製以下網址並在瀏覽器中貼上： %url%</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
-        <target state="final">這是一封自動產生的電子郵件。請勿回覆，傳送至該地址的信件不會被閱讀。</target>
+        <target state="final">這是一封自動產生的電子郵件。請勿回覆，傳送至此地址的信件不會被閱讀。</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
         <source>absence_created_supervisor_subject</source>

@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use App\Entity\Tag;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
-use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,13 +35,15 @@ final class TagsSelectType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$options['allow_create']) {
-            return;
-        }
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
             /** @var array<string> $tagIds */
             $tagIds = $event->getData();
+
+            // this is mainly here, because the link from tags index page uses the non-array syntax
+            if (\is_string($tagIds) || \is_int($tagIds)) {
+                $tagIds = array_filter(array_unique(array_map('trim', explode(',', $tagIds))));
+            }
+
             if (!\is_array($tagIds)) {
                 return;
             }
@@ -59,13 +60,15 @@ final class TagsSelectType extends AbstractType
                     $tag = $this->tagRepository->findTagByName($tagId);
                 }
 
-                if ($tag === null) {
+                if ($options['allow_create'] && $tag === null) {
                     $tag = new Tag();
-                    $tag->setName(mb_substr($tagId, 0, 100));
+                    $tag->setName($tagId);
                     $this->tagRepository->saveTag($tag);
                 }
 
-                $tags[] = $tag->getId();
+                if ($tag !== null) {
+                    $tags[] = $tag->getId();
+                }
             }
 
             $event->setData($tags);
@@ -79,18 +82,15 @@ final class TagsSelectType extends AbstractType
             'class' => Tag::class,
             'label' => 'tag',
             'allow_create' => false,
+            'choice_value' => function (Tag $tag) {
+                return $tag->getId();
+            },
             'choice_attr' => function (Tag $tag) {
-                $color = $tag->getColor();
-                if ($color === null) {
-                    $color = (new Color())->getRandom($tag->getName());
-                }
-
-                return ['data-color' => $color];
+                return ['data-color' => $tag->getColorSafe()];
             },
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();
             },
-            'attr' => ['data-renderer' => 'color'],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -112,6 +112,10 @@ final class TagsSelectType extends AbstractType
                 'data-create' => 'post_tag',
             ]);
         }
+
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-renderer' => 'color',
+        ]);
     }
 
     public function getParent(): string

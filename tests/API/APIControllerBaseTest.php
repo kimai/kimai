@@ -287,6 +287,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'name' => 'string',
                     'color' => '@string',
+                    'color-safe' => 'string',
                     'visible' => 'bool',
                 ];
 

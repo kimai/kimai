@@ -14,7 +14,7 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Repository\TagRepository;
+use App\Form\Type\TagsType;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -51,7 +51,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $start = new \DateTime('first day of this month');
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $fixture->addTagNameToCreate('bar');
         $this->importFixture($fixture);
 
@@ -71,7 +71,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'state' => 1,
-            'pageSize' => 25,
+            'size' => 25,
             'daterange' => $dateRange,
             'customers' => [1],
             'projects' => [1],
@@ -531,7 +531,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $fixture->addTagNameToCreate('two');
         $this->importFixture($fixture);
 
@@ -636,7 +636,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->request($client, '/timesheet/' . $id . '/edit');
@@ -717,7 +717,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/timesheet/');

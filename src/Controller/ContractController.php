@@ -31,7 +31,7 @@ final class ContractController extends AbstractController
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
-        $canChangeUser = $this->isGranted('contract_other_profile');
+        $canChangeUser = $this->isGranted('hours_other_profile');
         $defaultDate = $dateTimeFactory->createStartOfYear();
         $now = $dateTimeFactory->createDateTime();
 

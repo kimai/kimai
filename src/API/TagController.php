@@ -39,7 +39,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Fetch all existing tags
+     * Deprecated: Fetch tags by filter as string collection
      */
     #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
     #[Route(methods: ['GET'], name: 'get_tags')]
@@ -49,6 +49,27 @@ final class TagController extends BaseApiController
         $filter = $paramFetcher->get('name');
 
         $data = $this->repository->findAllTagNames($filter);
+
+        $view = new View($data, 200);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Fetch tags by filter as entities
+     */
+    #[OA\Response(response: 200, description: 'Find the collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
+    #[Route(path: '/find', name: 'get_tags_full', methods: ['GET'])]
+    #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
+    public function findTags(ParamFetcherInterface $paramFetcher): Response
+    {
+        $filter = $paramFetcher->get('name');
+
+        $data = [];
+        if (\is_string($filter)) {
+            $data = $this->repository->findAllTags($filter);
+        }
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);

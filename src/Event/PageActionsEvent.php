@@ -141,6 +141,11 @@ class PageActionsEvent extends ThemeEvent
         $this->payload['actions'][$key] = null;
     }
 
+    public function addQuickImport(string $url): void
+    {
+        $this->addAction('import', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'import', 'icon' => 'upload', 'translation_domain' => 'actions']);
+    }
+
     public function addQuickExport(string $url): void
     {
         $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'export']);

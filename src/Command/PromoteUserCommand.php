@@ -33,13 +33,13 @@ final class PromoteUserCommand extends AbstractRoleCommand
             );
     }
 
-    protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role): void
+    protected function executeRoleCommand(UserService $userService, SymfonyStyle $output, User $user, bool $super, $role): void
     {
         $username = $user->getUserIdentifier();
         if ($super) {
             if (!$user->isSuperAdmin()) {
                 $user->setSuperAdmin(true);
-                $manipulator->saveUser($user);
+                $userService->saveUser($user);
                 $output->success(sprintf('User "%s" has been promoted as a super administrator.', $username));
             } else {
                 $output->warning(sprintf('User "%s" does already have the super administrator role.', $username));
@@ -47,7 +47,7 @@ final class PromoteUserCommand extends AbstractRoleCommand
         } else {
             if (!$user->hasRole($role)) {
                 $user->addRole($role);
-                $manipulator->saveUser($user);
+                $userService->saveUser($user);
                 $output->success(sprintf('Role "%s" has been added to user "%s".', $role, $username));
             } else {
                 $output->warning(sprintf('User "%s" did already have "%s" role.', $username, $role));

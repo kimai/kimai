@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 final class QuickEntryForm extends AbstractType
 {
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
@@ -70,7 +70,10 @@ final class QuickEntryForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                'start_date' => $options['start_date'],
+                // this is NOT the start_date, because it would prevent projects from appearing
+                // in the first days of the week, if the projects ends at the end of the week
+                // the validation still triggers if the user selects days outside the project range
+                'start_date' => $options['end_date'],
                 'end_date' => $options['end_date'],
                 'empty_data' => function (FormInterface $form) use ($options) {
                     return clone $options['prototype_data'];

@@ -14,9 +14,9 @@
         <source>reset.subject</source>
         <target state="translated">Reset kata sandi Anda</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target state="translated">Itu bisa terjadi …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Itu bisa terjadi …</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
@@ -30,9 +30,9 @@
         <source>registration.title</source>
         <target state="translated">Selamat datang %username%</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target state="translated">Jadi, Anda lupa kata sandi Anda? Jangan khawatir: Kimai akan membantu Anda membuat yang baru:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">Jadi, Anda lupa kata sandi Anda? Jangan khawatir: Kimai akan membantu Anda membuat yang baru:</target>
       </trans-unit>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>

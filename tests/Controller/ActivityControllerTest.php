@@ -81,7 +81,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
-            'pageSize' => 50,
+            'size' => 50,
             'customers' => [1],
             'projects' => [1],
             'page' => 1,
@@ -125,7 +125,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
-            'pageSize' => 50,
+            'size' => 50,
             'customers' => [1],
             'projects' => [1],
             'page' => 1,

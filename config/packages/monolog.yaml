@@ -19,7 +19,7 @@ when@prod:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!deprecation"]
-# deactivated, because currently there are too many deprecations cause by gedmo and doctrine
+# TODO reactivate once the many Doctrine deprecations are fixed
 #            deprecation:
 #                type: stream
 #                channels: ["deprecation"]

@@ -37,7 +37,22 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
             return '';
         }
 
-        return implode(', ', $value);
+        if (!\is_array($value)) {
+            return '';
+        }
+
+        $result = [];
+        foreach ($value as $item) {
+            if ($item instanceof Tag) {
+                $result[] = $item->getName();
+            } elseif (\is_string($item)) {
+                $result[] = $item;
+            } else {
+                throw new TransformationFailedException('Tags must only contain a Tag or a string.');
+            }
+        }
+
+        return implode(',', $result);
     }
 
     /**
@@ -45,29 +60,42 @@ final class TagArrayToStringTransformer implements DataTransformerInterface
      *
      * @see \Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::reverseTransform()
      *
-     * @param string|null $value
+     * @param array<string>|string|null $value
      * @return Tag[]
      * @throws TransformationFailedException
      */
-    public function reverseTransform(mixed $value): mixed
+    public function reverseTransform(mixed $value): array
     {
         // check for empty tag list
         if ('' === $value || null === $value) {
             return [];
         }
-        $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
 
-        // get the current tags and find the new ones that should be created
-        $tags = $this->tagRepository->findBy(['name' => $names]);
-        if ($this->create) {
-            // works, because of the implicit case: (string) $tag
-            $newNames = array_diff($names, $tags);
+        if (!\is_array($value)) {
+            $names = array_filter(array_unique(array_map('trim', explode(',', $value))));
+        } else {
+            $names = $value;
+        }
 
-            foreach ($newNames as $name) {
+        $tags = [];
+        foreach ($names as $tagName) {
+            if ($tagName === null || $tagName === '') {
+                continue;
+            }
+
+            $tagName = trim($tagName);
+
+            // do not check for numeric values as ID, this form type only submits tag names
+            $tag = $this->tagRepository->findTagByName($tagName);
+
+            // get the current tags and find the new ones that should be created
+            if ($tag === null && $this->create) {
                 $tag = new Tag();
-                $tag->setName(mb_substr($name, 0, 100));
+                $tag->setName(mb_substr($tagName, 0, 100));
                 $this->tagRepository->saveTag($tag);
+            }
 
+            if ($tag !== null) {
                 $tags[] = $tag;
             }
         }

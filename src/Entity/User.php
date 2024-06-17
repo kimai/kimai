@@ -298,6 +298,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @deprecated since 2.15
+     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('apiToken')]
     #[Serializer\Groups(['Default'])]
@@ -1026,7 +1029,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function isEqualTo(UserInterface $user): bool
     {
-        if (!$user instanceof self) {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->id !== $user->getId()) {
             return false;
         }
 

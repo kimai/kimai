@@ -47,7 +47,7 @@ final class SamlController extends AbstractController
             $session->remove($authErrorKey);
         }
 
-        if ($error) {
+        if ($error !== null) {
             if (\is_object($error) && method_exists($error, 'getMessage')) {
                 $error = $error->getMessage();
             }
@@ -60,13 +60,12 @@ final class SamlController extends AbstractController
             $redirectTarget = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
-        $url = $this->authFactory->create()->login($redirectTarget);
+        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
 
         if ($url === null) {
             throw new \RuntimeException('SAML login failed');
         }
 
-        // this line is not (yet) reached, as the previous call will exit
         return $this->redirect($url);
     }
 

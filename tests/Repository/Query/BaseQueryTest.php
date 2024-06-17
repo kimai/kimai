@@ -48,7 +48,7 @@ class BaseQueryTest extends TestCase
         $sut->setPageSize(99);
         $sut->setSearchTerm(new SearchTerm('sdf'));
 
-        $this->resetByFormError($sut, ['order', 'orderBy', 'page', 'pageSize', 'searchTerm']);
+        $this->resetByFormError($sut, ['order', 'orderBy', 'page', 'size', 'searchTerm']);
 
         self::assertEquals(1, $sut->getPage());
         self::assertEquals(50, $sut->getPageSize());

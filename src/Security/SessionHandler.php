@@ -53,6 +53,8 @@ final class SessionHandler extends PdoSessionHandler
             if (false === $limit->isAccepted()) {
                 throw new BadRequestHttpException('Too many requests with invalid Session ID. Prediction attack?');
             }
+
+            usleep(250000); // slow down potential attacks
         }
 
         return $result;

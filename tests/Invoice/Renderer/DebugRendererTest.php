@@ -262,6 +262,7 @@ class DebugRendererTest extends TestCase
         $keys = [
             'entry.row',
             'entry.description',
+            'entry.description_safe',
             'entry.amount',
             'entry.rate',
             'entry.rate_nc',

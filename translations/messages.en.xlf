@@ -1756,6 +1756,10 @@
         <source>absence_comment_mandatory</source>
         <target>Absence: Comment is a mandatory field</target>
       </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days">
+        <source>booking_allow_only_work_days</source>
+        <target>Allow time entries only for days for which expected hours are defined in the employment contract</target>
+      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires">
         <source>Expiry date</source>
         <target>Expiry date</target>

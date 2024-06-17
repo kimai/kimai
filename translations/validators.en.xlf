@@ -150,6 +150,10 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target>The period of absence must not extend beyond the turn of the year.</target>
       </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target>Please try to resubmit the form. If the problem persists, refresh your browser.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

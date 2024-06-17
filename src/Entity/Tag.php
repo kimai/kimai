@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Utils\Color;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
+#[Serializer\VirtualProperty('ColorSafe', exp: 'object.getColorSafe()', options: [new Serializer\SerializedName('color-safe'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Default'])])]
 class Tag
 {
     /**
@@ -71,7 +73,7 @@ class Tag
 
     public function setName(?string $tagName): Tag
     {
-        $this->name = $tagName;
+        $this->name = $tagName !== null ? trim($tagName) : $tagName;
 
         return $this;
     }
@@ -94,5 +96,10 @@ class Tag
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getColorSafe(): string
+    {
+        return $this->getColor() ?? (new Color())->getRandom($this->getName());
     }
 }
