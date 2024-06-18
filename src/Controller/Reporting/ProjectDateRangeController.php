@@ -55,16 +55,23 @@ final class ProjectDateRangeController extends AbstractController
             return $project->isQuarterlyBudget();
         });
 
-        // Filter the array
-        $notQuarterlyProjects = array_filter($projects, function ($project) {
-            return !$project->isQuarterlyBudget();
-        });
-
-
-        $entriesMonth = $service->getBudgetStatisticModelForProjectsByDateRange($notQuarterlyProjects, $beginMonth, $endMonth, $endMonth);
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $beginMonth, $endMonth, $endMonth);
         $entriesQuarter = $service->getBudgetStatisticModelForProjectsByDateRange($quarterlyProjects, $beginQuarter, $endQuarter, $endQuarter);
-        
-        $entries = array_merge($entriesMonth, $entriesQuarter);
+
+        // patch statistics model to keep montly sums
+        foreach ($entries as $entry) {
+            if ($entry->isQuarterlyBudget()) {
+                $result = $entriesQuarter = array_filter($entriesQuarter, function ($entryQuarter) use ($entry) {
+                    return $entryQuarter->getProject()->getId() == $entry->getProject()->getId();
+                });
+                if (!empty($result)) {
+                    current($result)->getStatistic()->setDuration($entry->getStatistic()->getDuration());
+                    $entry->setStatistic(current($result)->getStatistic());
+                }
+            }
+        }
+
+        $entries = array_merge($entries, $entriesQuarter);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
