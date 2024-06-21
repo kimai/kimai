@@ -280,7 +280,9 @@ class ProjectStatisticService
             $end = $dateFactory->getEndOfQuarter($today);
             $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
-                $models[$id]->setStatistic($statistic);
+                $models[$id]->setStatistic($statistic);       
+                // override the total for better displaying  
+                $models[$id]->setStatisticTotal($statistic);
             }
         }
 
