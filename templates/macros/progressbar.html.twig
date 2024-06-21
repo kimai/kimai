@@ -157,7 +157,7 @@
         {% if budgetStatisticModel.isQuarterlyBudget() %}
             {% set options = options|merge({
                 'current': budgetStatisticModel.getDurationBillableTotal(),
-                'open': (budgetStatisticModel.getDurationBillableTotal()-budgetStatisticModel.getBudget()),
+                'open':  max(budgetStatisticModel.getTimeBudget()-budgetStatisticModel.getDurationBillableTotal(), 0),
                 'trans_percent_open': 'stats.percentUsedLeft_quarter',
                 'trans_percent_spent': 'stats.percentUsed_quarter',
             }) %}

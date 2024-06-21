@@ -226,6 +226,7 @@ class ProjectStatisticService
             $dateFactory = new DateTimeFactory($today->getTimezone());
             $begin = $dateFactory->getStartOfQuarter($today);
             $end = $dateFactory->getEndOfQuarter($today);
+            $stats->setStatisticTotal($this->getProjectStatistics($project, $begin, $end));
         }
 
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
