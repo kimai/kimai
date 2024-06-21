@@ -301,7 +301,7 @@ class ProjectStatisticService
      * @param Project[] $projects
      * @return ProjectBudgetStatisticModel[]
      */
-    public function getBudgetStatisticModelForProjectsByDateRange(array $projects, DateTimeInterface $begin, DateTimeInterface $end, ?DateTimeInterface $totalsEnd = null): array
+    public function getBudgetStatisticModelForProjectsByDateRange(array $projects, DateTimeInterface $begin, DateTimeInterface $end, ?DateTimeInterface $totalsEnd = null, ?DateTimeInterface $totalsBegin = null): array
     {
         $models = [];
 
@@ -309,7 +309,7 @@ class ProjectStatisticService
             $models[$project->getId()] = new ProjectBudgetStatisticModel($project);
         }
 
-        $statisticsTotal = $this->getBudgetStatistic($projects, null, $totalsEnd);
+        $statisticsTotal = $this->getBudgetStatistic($projects, $totalsBegin, $totalsEnd);
         foreach ($statisticsTotal as $projectId => $statistic) {
             $models[$projectId]->setStatisticTotal($statistic);
         }
