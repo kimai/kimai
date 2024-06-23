@@ -577,7 +577,7 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (null !== $query->getEnd()) {
-            $qb->andWhere($qb->expr()->lte('t.begin', ':end'))
+            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
                 ->setParameter('end', $query->getEnd());
         }
 
