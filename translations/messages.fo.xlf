@@ -88,9 +88,9 @@
       <!--
               General labels
             -->
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Dato</target>
+        <target state="translated">Dato</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -104,9 +104,9 @@
         <source>duration</source>
         <target>Tíðarlongd</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Brúkari</target>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
+        <target state="translated">Brúkari</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -144,9 +144,9 @@
         <source>activity</source>
         <target>Virksemi</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Verkætlan</target>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
+        <target state="translated">Verkætlan</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>

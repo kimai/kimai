@@ -54,11 +54,12 @@ final class TagsInputType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-autocomplete-url' => $this->router->generate('get_tags'),
+            'data-autocomplete-url' => $this->router->generate('get_tags_full'),
             'data-minimum-character' => 3,
             'class' => 'form-select',
             'autocomplete' => 'off',
-            'data-form-widget' => 'autocomplete'
+            'data-form-widget' => 'tags',
+            'data-renderer' => 'color',
         ]);
 
         if ($options['allow_create']) {

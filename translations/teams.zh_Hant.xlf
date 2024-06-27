@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve" approved="yes">
         <source>team.project_visibility_inherited</source>
-        <target state="final">該專案有存取限制，因為已對客戶設定團隊權限。</target>
+        <target state="final">此專案有存取限制，因為已對客戶設定團隊權限。</target>
       </trans-unit>
       <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve" approved="yes">
         <source>team.visibility_global</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve" approved="yes">
         <source>team.activity_visibility_inherited</source>
-        <target state="final">該活動有存取限制，因為已對專案或客戶設定團隊權限。</target>
+        <target state="final">此活動有存取限制，因為已對專案或客戶設定團隊權限。</target>
       </trans-unit>
       <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve" approved="yes">
         <source>teams.project_access</source>

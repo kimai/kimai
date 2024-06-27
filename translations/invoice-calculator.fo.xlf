@@ -2,6 +2,18 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+        <source>date</source>
+        <target state="translated">Dato</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>user</source>
+        <target state="translated">Brúkari</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>project</source>
+        <target state="translated">Verkætlan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

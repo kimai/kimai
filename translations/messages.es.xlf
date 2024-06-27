@@ -1395,9 +1395,9 @@
         <source>includeWithBudget</source>
         <target state="translated">Mostrar los registros del presupuesto</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
-        <target state="translated">Claro</target>
+        <target state="translated">Brillante</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>

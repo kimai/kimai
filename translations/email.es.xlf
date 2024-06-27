@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Eso puede pasar …</target>
+        <target state="translated">¿Olvidaste tu contraseña?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… así que olvidaste tu contraseña? No te preocupes: Kimai te ayudará a crear una nueva:</target>
+        <target state="translated">¡No te preocupes, Kimai te ayudará a crear uno nuevo!</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>

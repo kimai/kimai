@@ -10,7 +10,6 @@
 namespace App\Form\Type;
 
 use App\Configuration\SystemConfiguration;
-use App\Constants;
 use App\Utils\Color;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -22,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ColorChoiceType extends AbstractType implements DataTransformerInterface
 {
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -36,7 +35,7 @@ final class ColorChoiceType extends AbstractType implements DataTransformerInter
         $options = [
             'documentation' => [
                 'type' => 'string',
-                'description' => sprintf('The hexadecimal color code (default: %s)', Constants::DEFAULT_COLOR),
+                'description' => 'The hexadecimal color code (default: auto-calculated by name)',
             ],
             'label' => 'color',
             'empty_data' => null,
@@ -50,7 +49,7 @@ final class ColorChoiceType extends AbstractType implements DataTransformerInter
         ];
 
         $choices = [];
-        $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
+        $colors = $this->systemConfiguration->getThemeColors();
 
         foreach ($colors as $name => $color) {
             $choices[$name] = $color;
@@ -69,44 +68,9 @@ final class ColorChoiceType extends AbstractType implements DataTransformerInter
         ]);
     }
 
-    /**
-     * @param string $config
-     * @return array<string, string>
-     */
-    private function convertStringToColorArray(string $config): array
+    public function transform(mixed $value): mixed
     {
-        $config = explode(',', $config);
-
-        $colors = [];
-        foreach ($config as $item) {
-            if (empty($item)) {
-                continue;
-            }
-            $item = explode('|', $item);
-            $key = $item[0];
-            $value = $key;
-
-            if (\count($item) > 1) {
-                $value = $item[1];
-            }
-
-            if (empty($key)) {
-                $key = $value;
-            }
-
-            if ($value === Constants::DEFAULT_COLOR) {
-                continue;
-            }
-
-            $colors[$key] = $value;
-        }
-
-        return array_unique($colors);
-    }
-
-    public function transform(mixed $data): mixed
-    {
-        return $data;
+        return $value;
     }
 
     public function reverseTransform(mixed $value): mixed

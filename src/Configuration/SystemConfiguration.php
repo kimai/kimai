@@ -9,6 +9,8 @@
 
 namespace App\Configuration;
 
+use App\Constants;
+
 final class SystemConfiguration
 {
     private bool $initialized = false;
@@ -479,6 +481,9 @@ final class SystemConfiguration
         return (bool) $this->find('theme.avatar_url');
     }
 
+    /**
+     * @internal will be made private soon after 2.18.0 - do ot access this method directly, but through getThemeColors()
+     */
     public function getThemeColorChoices(): string
     {
         $config = $this->find('theme.color_choices');
@@ -487,6 +492,40 @@ final class SystemConfiguration
         }
 
         return 'Silver|#c0c0c0';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getThemeColors(): array
+    {
+        $config = explode(',', $this->getThemeColorChoices());
+
+        $colors = [];
+        foreach ($config as $item) {
+            if (empty($item)) {
+                continue;
+            }
+            $item = explode('|', $item);
+            $key = $item[0];
+            $value = $key;
+
+            if (\count($item) > 1) {
+                $value = $item[1];
+            }
+
+            if (empty($key)) {
+                $key = $value;
+            }
+
+            if ($value === Constants::DEFAULT_COLOR) {
+                continue;
+            }
+
+            $colors[$key] = $value;
+        }
+
+        return array_unique($colors);
     }
 
     // ========== Projects ==========

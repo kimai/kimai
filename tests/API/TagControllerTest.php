@@ -54,6 +54,21 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertEquals('Test', $result[9]);
     }
 
+    public function testFindCollection(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importTagFixtures();
+        $this->assertAccessIsGranted($client, '/api/tags/find', 'GET', ['name' => '2018']);
+        $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
+        $result = json_decode($content, true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(3, \count($result));
+        self::assertApiResponseTypeStructure('TagEntity', $result[0]);
+    }
+
     public function testEmptyCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

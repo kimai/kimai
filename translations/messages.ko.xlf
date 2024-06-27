@@ -1073,7 +1073,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">비밀번호를 재설정 안내 이메일을 보내 드렸습니다.이메일에 나와있는 링크를 클릭하세요.알림:%tokenLifetime% 시간 내에 한번만 새 비밀번호를 요청할 수 있습니다. 이메일을 받지 못했다면 스팸메일함을 확인하시거나 재시도하시기 바랍니다.</target>
+        <target state="translated">비밀번호 재설정 링크가 전송되었습니다. 참고 : 한 번만 새로운 암호를 요청할 수 있습니다. %tokenLifetime% 시간. 이메일을받지 못하면 스팸 폴더를 확인하고 다시 시도하십시오.</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1234,6 +1234,54 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target state="translated">청구서번호-생성기</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications" xml:space="preserve">
+        <source>notifications</source>
+        <target state="translated">알림</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">검색 필터</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">프로젝트 번호</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
+        <source>security.unlock.intro</source>
+        <target state="translated">모든 기능에 접근하기 위해 암호를 입력하십시오</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve">
+        <source>created_by</source>
+        <target state="translated">만든이:</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve">
+        <source>invoiceLabel</source>
+        <target state="translated">송장 텍스트</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
+        <source>help.visible</source>
+        <target state="translated">만약 설정이 꺼져 있다면, 해당 객체는 dropdown-boxes와 목록 보기에 표시되지 않습니다.</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
+        <source>invisible</source>
+        <target state="translated">숨김</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
+        <source>skin</source>
+        <target state="translated">디자인</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
+        <source>help.teams</source>
+        <target state="translated">선택한 팀에 대한 가시성을 제한합니다.</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve">
+        <source>help.invoiceLabel</source>
+        <target state="translated">이 텍스트는 물건의 이름을 대체하여 송장 품목에 대해 더 자세한 라벨을 제공할 수 있게 합니다.</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
+        <source>help.invoiceText</source>
+        <target state="needs-translation">이 텍스트는 송장 문서에서 사용되며 추가적인 배송 조건을 기록하는 데 사용될 수 있습니다.</target>
       </trans-unit>
     </body>
   </file>

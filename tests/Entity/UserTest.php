@@ -511,6 +511,14 @@ class UserTest extends TestCase
         $sut2->setUserIdentifier('12345678');
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
+
+        self::assertFalse($sut->isEnabled());
+        $sut->setEnabled(true);
+        self::assertFalse($sut->isEqualTo($sut2));
+        self::assertFalse($sut2->isEqualTo($sut));
+        $sut2->setEnabled(true);
+        self::assertTrue($sut->isEqualTo($sut2));
+        self::assertTrue($sut2->isEqualTo($sut));
     }
 
     public function testSerialize(): void
