@@ -28,7 +28,7 @@ final class YearlyUserListForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
-            'show_range' => true,
+            'show_range' => $options['show_range'],
         ]);
         $builder->add('team', TeamType::class, [
             'multiple' => false,
@@ -51,6 +51,7 @@ final class YearlyUserListForm extends AbstractType
             'start_date' => new \DateTime(),
             'csrf_protection' => false,
             'method' => 'GET',
+            'show_range' => false,
         ]);
     }
 }
