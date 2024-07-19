@@ -82,7 +82,7 @@ final class Extensions extends AbstractExtension
             throw new \InvalidArgumentException('Unknown year: ' . $year);
         }
 
-        return \DateTimeImmutable::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $day);
+        return \DateTimeImmutable::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $day); // @phpstan-ignore-line
     }
 
     public function formatReportDate(\DateTimeInterface $dateTime): string

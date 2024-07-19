@@ -4009,21 +4009,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$counter of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setCounter\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$counter of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setCounterBillable\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$counter of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setCounterExported\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
