@@ -55,7 +55,7 @@ final class Extensions extends AbstractExtension
 
     public function buildReportDate(string|int $year, string|int $month = 1, string|int $day = 1): \DateTimeImmutable
     {
-        if (is_string($month)) {
+        if (\is_string($month)) {
             $month = (int) $month;
         }
         if ($month > 12 || $month < 1) {
@@ -65,7 +65,7 @@ final class Extensions extends AbstractExtension
             $month = '0' . $month;
         }
 
-        if (is_string($day)) {
+        if (\is_string($day)) {
             $day = (int) $day;
         }
         if ($day > 31 || $day < 1) {
@@ -75,7 +75,7 @@ final class Extensions extends AbstractExtension
             $day = '0' . $day;
         }
 
-        if (is_string($year)) {
+        if (\is_string($year)) {
             $year = (int) $year;
         }
         if ($year < 1980 || $year > 2100) {
