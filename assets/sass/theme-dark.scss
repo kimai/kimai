@@ -18,6 +18,9 @@
         th.today {
             color: var(--tblr-muted);
         }
+        thead .sorting:after {
+            opacity: $dark-font-opacity;
+        }
     }
 
     .overlay {
