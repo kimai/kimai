@@ -1807,6 +1807,10 @@
         <source>Activate</source>
         <target state="translated">Ativar</target>
       </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Permitir entradas de tempo apenas para dias para os quais as horas esperadas são definidas no contrato de trabalho</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

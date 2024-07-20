@@ -150,6 +150,10 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target state="translated">Razdoblje odsutnosti ne smije prijeći kraj godine.</target>
       </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Pokušaj ponovo poslati obrazac. Ako problem ne nestane, aktualiziraj prikaz preglednika.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

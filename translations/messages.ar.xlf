@@ -26,9 +26,9 @@
         <source>create</source>
         <target state="translated">إنشاء</target>
       </trans-unit>
-      <trans-unit id="DYHuW58" resname="confirm.delete">
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
         <source>confirm.delete</source>
-        <target state="translated">هل تريد حقًا حذفها؟</target>
+        <target state="translated">تأكيد الحذف؟</target>
       </trans-unit>
       <!--
               Login / Security
@@ -212,9 +212,9 @@
       <!--
               Dashboard
             -->
-      <trans-unit id="3bqLM8Q" resname="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title" xml:space="preserve">
         <source>dashboard.title</source>
-        <target>لوحة القيادة</target>
+        <target state="translated">لوحة التحكم</target>
       </trans-unit>
       <!--
               Widgets
@@ -701,17 +701,17 @@
         <source>search</source>
         <target>بحث</target>
       </trans-unit>
-      <trans-unit id=".0CFrRV" resname="upload">
+      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve">
         <source>upload</source>
-        <target>رفع</target>
+        <target state="translated">تحميل</target>
       </trans-unit>
       <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
         <target>تاكيد</target>
       </trans-unit>
-      <trans-unit id="I3TZF5S" resname="cancel">
+      <trans-unit id="I3TZF5S" resname="cancel" xml:space="preserve">
         <source>cancel</source>
-        <target>إلغاء الأمر</target>
+        <target state="translated">إلغاء</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1417,9 +1417,9 @@
         <source>created_at</source>
         <target state="translated">أُنشِئ على</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">المبدئيّ</target>
+        <target state="translated">الإفتراضي</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
@@ -1672,6 +1672,18 @@
       <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
         <source>days</source>
         <target state="translated">الأيام</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">تعطيل</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
+        <source>public_holiday.group</source>
+        <target state="translated">مجموعة العطلات</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">الغياب: التعليق حقل إلزامي</target>
       </trans-unit>
     </body>
   </file>

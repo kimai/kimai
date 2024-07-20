@@ -30,13 +30,29 @@
         <source>weekly</source>
         <target>Hebdomadaire : une entrée par semaine (utilise la date de début)</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Date : une seule entrée par jour (utilise la date de début)</target>
+        <target state="translated">Date</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
         <target>Prix : une entrée par prix</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Sélectionnez les champs par lesquels les éléments de la facture doivent être regroupés.</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Activité et utilisateur</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Projet et utilisateur</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Date et utilisateur</target>
       </trans-unit>
     </body>
   </file>

@@ -150,6 +150,10 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target state="final">Il periodo di congedo non deve superare la fine dell'anno.</target>
       </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="yes">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="final">Prova a inviare nuovamente il modulo. Se il problema persiste, aggiorna il browser.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

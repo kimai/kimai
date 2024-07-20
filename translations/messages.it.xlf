@@ -1786,6 +1786,10 @@
         <source>Activate</source>
         <target state="final">Attiva</target>
       </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve" approved="yes">
+        <source>booking_allow_only_work_days</source>
+        <target state="final">Consenti l'inserimento delle ore solo per i giorni per i quali le ore previste sono definite nel contratto di lavoro</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1807,6 +1807,10 @@
         <source>Activate</source>
         <target state="translated">Etkinleştir</target>
       </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve" approved="no">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Yalnızca iş sözleşmesinde beklenen saatlerin tanımlandığı günler için zaman kayıtlarına izin ver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
