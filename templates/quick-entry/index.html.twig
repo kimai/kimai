@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'page_setup.html.twig' %}
 
 {% block page_class %}quick-entry-page{% endblock %}
 
@@ -10,7 +10,6 @@
         {% block box_before %}
             {{ form_start(form, {attr: {id: 'quick-entries-form', class: 'form-dataTable quick-entries'}}) }}
             {{ form_widget(form._token) }}
-            {{ form_widget(form.date) }}
             {{ form_errors(form) }}
         {% endblock %}
         {% block box_after %}
@@ -106,10 +105,6 @@
                 }
             };
             recalculateTotals();
-
-            document.getElementById('{{ form.date.vars.id }}').addEventListener('change', function(ev) {
-                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', ev.target.value);
-            });
 
             document.getElementById('quick-entries-form').addEventListener('click', recalculateTotals);
             document.getElementById('quick-entries-form').addEventListener('change', recalculateTotals);

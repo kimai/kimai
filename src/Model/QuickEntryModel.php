@@ -25,7 +25,7 @@ class QuickEntryModel
      */
     private array $timesheets = [];
 
-    public function __construct(private ?User $user = null, private ?Project $project = null, private ?Activity $activity = null)
+    public function __construct(private User $user, private ?Project $project = null, private ?Activity $activity = null)
     {
     }
 
@@ -39,7 +39,7 @@ class QuickEntryModel
         return $this->prototype;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

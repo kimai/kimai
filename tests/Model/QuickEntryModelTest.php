@@ -23,11 +23,12 @@ class QuickEntryModelTest extends TestCase
 {
     public function testEmptyModel(): void
     {
-        $sut = new QuickEntryModel();
+        $user = new User();
+        $sut = new QuickEntryModel($user);
         self::assertFalse($sut->isPrototype());
         self::assertNull($sut->getProject());
         self::assertNull($sut->getActivity());
-        self::assertNull($sut->getUser());
+        self::assertEquals($user, $sut->getUser());
         self::assertEquals([], $sut->getNewTimesheet());
         self::assertEquals([], $sut->getTimesheets());
         self::assertNull($sut->getLatestEntry());
@@ -103,7 +104,8 @@ class QuickEntryModelTest extends TestCase
 
     public function testHasExistingTimesheet(): void
     {
-        $sut = new QuickEntryModel();
+        $user = new User();
+        $sut = new QuickEntryModel($user);
 
         self::assertFalse($sut->hasExistingTimesheet());
         $mock = $this->createMock(Timesheet::class);
@@ -128,11 +130,12 @@ class QuickEntryModelTest extends TestCase
 
     public function testPrototype(): void
     {
-        $sut = new QuickEntryModel();
+        $user = new User();
+        $sut = new QuickEntryModel($user);
         $sut->markAsPrototype();
         self::assertTrue($sut->isPrototype());
 
-        $sut = new QuickEntryModel();
+        $sut = new QuickEntryModel($user);
         $sut->markAsPrototype();
         $mock = $this->createMock(Timesheet::class);
         $mock->method('getId')->willReturn(1);
