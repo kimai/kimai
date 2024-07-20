@@ -90,7 +90,6 @@ final class ContractController extends AbstractController
             'boxes' => $controllerEvent->getController(),
             'year' => $year,
             'user' => $profile,
-            'form' => $form->createView(),
         ]);
     }
 }
