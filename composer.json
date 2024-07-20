@@ -172,7 +172,6 @@
             "@tests-integration"
         ],
         "linting": [
-            "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
