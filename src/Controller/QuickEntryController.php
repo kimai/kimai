@@ -27,7 +27,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Controller used to enter times in weekly form.
  */
-#[Route(path: '/quick_entry')]
 #[IsGranted('quick-entry')]
 final class QuickEntryController extends AbstractController
 {
@@ -40,7 +39,7 @@ final class QuickEntryController extends AbstractController
     {
     }
 
-    #[Route(path: '/', name: 'quick_entry', methods: ['GET', 'POST'])]
+    #[Route(path: '/quick_entry/', name: 'quick_entry', methods: ['GET', 'POST'])]
     public function quickEntry(Request $request): Response
     {
         $user = $this->getUser();
@@ -55,6 +54,7 @@ final class QuickEntryController extends AbstractController
             'include_user' => $this->isGranted('view_other_timesheet'),
             'timezone' => $factory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
+            'attr' => ['name' => 'quick_entry_weekrange_form']
         ]);
 
         $weeklyForm->submit($request->query->all(), false);
