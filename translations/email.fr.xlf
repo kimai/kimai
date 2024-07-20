@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Cela peut arriver…</target>
+        <target state="translated">Vous avez oublié votre mot de passe ?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,27 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… donc vous avez oublié votre mot de passe ? Ne vous inquiétez pas : Kimai vous aidera à en créer un nouveau :</target>
+        <target state="translated">Ne vous inquiétez pas, Kimai vous aidera à en créer un nouveau !</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nouvelle absence | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Une nouvelle absence a été créée pour %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Veuillez les examiner à l'adresse suivante : %approval_url%</target>
       </trans-unit>
     </body>
   </file>

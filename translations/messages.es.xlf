@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Control de tiempo</target>
+        <target state="translated">Seguimiento del Tiempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -108,9 +108,9 @@
         <source>my_times</source>
         <target>Mis horas</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
         <source>all_times</source>
-        <target>Partes de horas</target>
+        <target state="translated">Todo el tiempo</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -206,9 +206,9 @@
         <source>budget</source>
         <target>Presupuesto</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Bolsa de horas</target>
+        <target state="translated">Presupuesto de tiempo</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -875,13 +875,13 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve">
         <source>rates.title</source>
-        <target>Honorarios</target>
+        <target state="translated">Precios</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
         <source>rates.empty</source>
-        <target state="translated">Aún no se han configurado tarifas por hora.</target>
+        <target state="translated">No se han configurado los precios.</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -899,9 +899,9 @@
         <source>export_decimal</source>
         <target>Utilizar duración decimal al exportar</target>
       </trans-unit>
-      <trans-unit id="HcWuW2g" resname="layout">
+      <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve">
         <source>layout</source>
-        <target>Vista: disposición</target>
+        <target state="translated">Pantalla:diseño</target>
       </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
@@ -915,9 +915,9 @@
         <source>recalculate_rates</source>
         <target>Recalcular tarifas</target>
       </trans-unit>
-      <trans-unit id="5ofAsOs" resname="internalRate">
+      <trans-unit id="5ofAsOs" resname="internalRate" xml:space="preserve">
         <source>internalRate</source>
-        <target>Tasa interna</target>
+        <target state="translated">Tarifa interna</target>
       </trans-unit>
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
@@ -1055,9 +1055,9 @@
         <source>asc</source>
         <target>Ascendente</target>
       </trans-unit>
-      <trans-unit id="DUDrvjk" resname="remove_default">
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve">
         <source>remove_default</source>
-        <target>Eliminar favorito de búsqueda</target>
+        <target state="translated">Eliminar búsqueda de favorito</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -1183,9 +1183,9 @@
         <source>automatic</source>
         <target>Automático</target>
       </trans-unit>
-      <trans-unit id="OJ.wI1U" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
         <source>invoiceText</source>
-        <target state="translated">Texto de la factura</target>
+        <target state="translated">Información de factura</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
@@ -1251,9 +1251,9 @@
         <source>pagination</source>
         <target state="translated">Muestra las entradas %start% a %end% de %total%.</target>
       </trans-unit>
-      <trans-unit id="1MfS6X5" resname="remove_filter">
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
         <source>remove_filter</source>
-        <target state="translated">Restablecer el filtro de la búsqueda</target>
+        <target state="translated">Restablecer el filtro de  búsqueda</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -1275,9 +1275,9 @@
         <source>help.teams</source>
         <target state="translated">Restringe la visibilidad a los equipos seleccionados.</target>
       </trans-unit>
-      <trans-unit id="aOJITgv" resname="help.invoiceText">
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
-        <target state="translated">Este texto se utiliza en los documentos de facturación y puede utilizarse, por ejemplo, para indicar otras condiciones de entrega.</target>
+        <target state="translated">Este texto se utiliza en los documentos de factura y puede utilizarse, por ejemplo, para indicar otras condiciones de entrega.</target>
       </trans-unit>
       <trans-unit id="IDDfzoR" resname="invoiceLabel">
         <source>invoiceLabel</source>
@@ -1806,6 +1806,10 @@
       <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
         <source>Activate</source>
         <target state="translated">Activar</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Permitir las entradas únicamente en los días en que está establecido por el contrato de trabajo por el tiempo y las horas definidas</target>
       </trans-unit>
     </body>
   </file>

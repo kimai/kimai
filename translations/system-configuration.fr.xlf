@@ -288,15 +288,27 @@
       </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="needs-translation">Format du numéro de client</target>
+        <target state="translated">Format du numéro de client</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>
         <target state="translated">Autoriser la duplication du numéro de compte</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
         <source>activity.allow_inline_create</source>
-        <target state="needs-translation">Autoriser la création d’activités sous forme de suivi du temps</target>
+        <target state="translated">Autoriser la création d’activités depuis la saisie des temps</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Format du numéro de projet</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Format du numéro d’activité</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Autoriser plusieurs utilisations du même nombre</target>
       </trans-unit>
     </body>
   </file>

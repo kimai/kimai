@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="export.en.xlf">
     <body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig" xml:space="preserve">
+        <source>Default</source>
+        <target state="translated">Standard</target>
+      </trans-unit>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig" xml:space="preserve">
+        <source>With remaining budget</source>
+        <target state="translated">Med tilbageværende budget</target>
+      </trans-unit>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig" xml:space="preserve">
+        <source>With internal rates</source>
+        <target state="translated">Med interne priser</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Timeoverblik</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

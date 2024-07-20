@@ -2,6 +2,42 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="wizard.en.xlf">
     <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
+        <source>wizard.intro.title</source>
+        <target state="translated">Velkommen til Kimai</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
+        <source>wizard.intro.description</source>
+        <target state="translated">Denne guide hjælper dig til at konfigurere Kimai til dine behov.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Dine indstillinger</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">Din profil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Nogle basale indstillinger der gør dit arbejde med Kimai nemmere.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
+        <source>wizard.done.title</source>
+        <target state="translated">Tillykke</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">De vigtigste indstillinger er nu færdiggjort. Der er meget mere du kan indstille senere i din bruger profil.</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Skriv dit nye kodeord som du skal bruge til at logge ind fremadrettet.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Dit kodeord</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

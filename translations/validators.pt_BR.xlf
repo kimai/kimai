@@ -150,6 +150,10 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target state="translated">O período de ausência não deve se estender além da virada do ano.</target>
       </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="no">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Por favor, tente reenviar o formulário. Se o problema persistir, atualize seu navegador.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
