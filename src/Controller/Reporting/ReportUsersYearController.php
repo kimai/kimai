@@ -61,9 +61,11 @@ final class ReportUsersYearController extends AbstractController
         $dateTimeFactory = $this->getDateTimeFactory();
 
         $defaultDate = $dateTimeFactory->createStartOfYear();
+        $isFinancialYear = false;
 
         if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
             $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
+            $isFinancialYear = true;
         }
 
         $values = new YearlyUserList();
@@ -72,6 +74,7 @@ final class ReportUsersYearController extends AbstractController
         $form = $this->createFormForGetRequest(YearlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
+            'show_range' => $isFinancialYear,
         ]);
 
         $form->submit($request->query->all(), false);

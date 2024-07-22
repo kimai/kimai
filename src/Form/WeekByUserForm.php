@@ -7,51 +7,42 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting\YearlyUserList;
+namespace App\Form;
 
-use App\Form\Type\ProjectType;
-use App\Form\Type\ReportSumType;
-use App\Form\Type\TeamType;
-use App\Form\Type\YearPickerType;
+use App\Form\Type\UserType;
+use App\Form\Type\WeekPickerType;
+use App\Reporting\WeekByUser\WeekByUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @extends AbstractType<YearlyUserList>
- */
-final class YearlyUserListForm extends AbstractType
+final class WeekByUserForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('date', YearPickerType::class, [
+        $builder->add('date', WeekPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
-            'show_range' => $options['show_range'],
         ]);
-        $builder->add('team', TeamType::class, [
-            'multiple' => false,
-            'required' => false,
-            'width' => false,
-        ]);
-        $builder->add('project', ProjectType::class, [
-            'multiple' => false,
-            'required' => false,
-            'width' => false,
-        ]);
-        $builder->add('sumType', ReportSumType::class);
+
+        if ($options['include_user']) {
+            $builder->add('user', UserType::class, [
+                'width' => false,
+                'include_current_user_if_system_account' => true
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => YearlyUserList::class,
+            'data_class' => WeekByUser::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
+            'include_user' => false,
             'csrf_protection' => false,
             'method' => 'GET',
-            'show_range' => false,
         ]);
     }
 }

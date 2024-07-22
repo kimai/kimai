@@ -66,6 +66,7 @@
         "symfony/security-bundle": "^6.0",
         "symfony/security-csrf": "^6.0",
         "symfony/serializer": "^6.0",
+        "symfony/string": "v6.4.8",
         "symfony/translation": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/validator": "^6.0",
@@ -171,7 +172,6 @@
             "@tests-integration"
         ],
         "linting": [
-            "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",

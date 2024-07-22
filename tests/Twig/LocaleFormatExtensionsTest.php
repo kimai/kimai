@@ -483,6 +483,33 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertEquals($expected, $sut->getJavascriptConfiguration($user));
     }
 
+    public function testJavascriptConfigurationsForAnonymous(): void
+    {
+        $expected = [
+            'formatDuration' => '%h:%m',
+            'formatDate' => 'Y-m-d',
+            'defaultColor' => '#d2d6de',
+            'twentyFourHours' => false,
+            'updateBrowserTitle' => false,
+            'timezone' => 'Europe/Vienna',
+            'locale' => 'en',
+            'language' => 'en',
+            'user' => [
+                'id' => null,
+                'name' => 'anonymous',
+                'admin' => false,
+                'superAdmin' => false,
+            ],
+        ];
+
+        $security = $this->createMock(Security::class);
+
+        $sut = new LocaleFormatExtensions(new LocaleService($this->localeEn), $security);
+        $sut->setLocale('en');
+
+        self::assertEquals($expected, $sut->getJavascriptConfiguration());
+    }
+
     public function testDurationDecimal(): void
     {
         $record = $this->getTimesheet(9437);

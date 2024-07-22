@@ -36,9 +36,14 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
     RewriteRule .* - [E=BASE:%1]
 
-    # Sets the HTTP_AUTHORIZATION header removed by Apache
+    # Sets the HTTP_AUTHORIZATION header removed by Apache, if PHP is installed as CGI
+    # Required for the API and below are 3 different methods to achieve it
     RewriteCond %{HTTP:Authorization} .+
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
+    # This might be the only required line
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    # Apache 2.4.13+
+    # CGIPassAuth On
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial
