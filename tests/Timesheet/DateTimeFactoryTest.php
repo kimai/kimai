@@ -205,14 +205,14 @@ class DateTimeFactoryTest extends TestCase
 
         $now = $sut->createDateTime();
         $expected = $sut->createDateTime();
-        $expected->setDate((int) $expected->format('Y'), 7, 22);
-        $expected->setTime(23, 59, 59);
+        $expected = $expected->setDate((int) $expected->format('Y'), 7, 22);
+        $expected = $expected->setTime(23, 59, 59);
 
         if ($now > $expected) {
             $expected->modify('+1 year');
         }
 
-        $financial = $sut->createStartOfFinancialYear('2018-07-23 15:30:00');
+        $financial = $sut->createStartOfFinancialYear('2018-07-23 00:00:00');
         $end = $sut->createEndOfFinancialYear($financial);
 
         self::assertEquals($expected, $end);
