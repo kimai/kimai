@@ -41,7 +41,7 @@ final class RegenerateLocalesCommand extends Command
      */
     private array $noRegionCode = ['ar', 'id', 'pa', 'sl'];
     /**
-     * A list of locales that will be activated, not matter if translation files exist for them.
+     * A list of locales that will be activated, no matter if translation files exist for them.
      *
      * @var string[]
      */
