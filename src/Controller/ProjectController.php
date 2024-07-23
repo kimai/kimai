@@ -218,13 +218,13 @@ final class ProjectController extends AbstractController
     {
         $projectId = $comment->getProject()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.delete_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('project_details', ['id' => $projectId]);
         }
 
-        $csrfTokenManager->refreshToken('project.delete_comment');
+        $csrfTokenManager->refreshToken('comment.delete');
 
         try {
             $this->repository->deleteComment($comment);
@@ -261,13 +261,13 @@ final class ProjectController extends AbstractController
     {
         $projectId = $comment->getProject()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.pin_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('project_details', ['id' => $projectId]);
         }
 
-        $csrfTokenManager->refreshToken('project.pin_comment');
+        $csrfTokenManager->refreshToken('comment.pin');
 
         $comment->setPinned(!$comment->isPinned());
         try {
