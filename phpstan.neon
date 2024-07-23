@@ -4799,41 +4799,6 @@ parameters:
             path: src/Security/SessionHandler.php
 
         -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$day with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$hour with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$minute with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$second with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$week with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createWeekDateTime\\(\\) has parameter \\$year with no type specified\\.$#"
-            count: 1
-            path: src/Timesheet/DateTimeFactory.php
-
-        -
             message: "#^Parameter \\#2 \\$isFavorite of class App\\\\Model\\\\FavoriteTimesheet constructor expects bool, App\\\\Model\\\\FavoriteTimesheet\\|bool given\\.$#"
             count: 1
             path: src/Timesheet/FavoriteRecordService.php
