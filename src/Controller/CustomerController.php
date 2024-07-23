@@ -185,13 +185,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.delete_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.delete_comment');
+        $csrfTokenManager->refreshToken('comment.delete');
 
         try {
             $this->repository->deleteComment($comment);
@@ -228,13 +228,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.pin_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.pin_comment');
+        $csrfTokenManager->refreshToken('comment.pin');
 
         $comment->setPinned(!$comment->isPinned());
         try {
