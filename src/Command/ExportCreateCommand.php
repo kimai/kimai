@@ -227,7 +227,7 @@ final class ExportCreateCommand extends Command
                 $user = $this->userRepository->loadUserByIdentifier($username);
             } catch(\Exception) {
                 $io->error(
-                    sprintf('The given username "%s" could not be resolved', $username)
+                    \sprintf('The given username "%s" could not be resolved', $username)
                 );
 
                 return Command::FAILURE;

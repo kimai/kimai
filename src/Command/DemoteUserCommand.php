@@ -40,17 +40,17 @@ final class DemoteUserCommand extends AbstractRoleCommand
             if ($user->isSuperAdmin()) {
                 $user->setSuperAdmin(false);
                 $userService->saveUser($user);
-                $output->success(sprintf('Super administrator role has been removed from the user "%s".', $username));
+                $output->success(\sprintf('Super administrator role has been removed from the user "%s".', $username));
             } else {
-                $output->warning(sprintf('User "%s" doesn\'t have the super administrator role.', $username));
+                $output->warning(\sprintf('User "%s" doesn\'t have the super administrator role.', $username));
             }
         } else {
             if ($user->hasRole($role)) {
                 $user->removeRole($role);
                 $userService->saveUser($user);
-                $output->success(sprintf('Role "%s" has been removed from user "%s".', $role, $username));
+                $output->success(\sprintf('Role "%s" has been removed from user "%s".', $role, $username));
             } else {
-                $output->warning(sprintf('User "%s" didn\'t have "%s" role.', $username, $role));
+                $output->warning(\sprintf('User "%s" didn\'t have "%s" role.', $username, $role));
             }
         }
     }

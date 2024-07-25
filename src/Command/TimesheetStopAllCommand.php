@@ -38,7 +38,7 @@ final class TimesheetStopAllCommand extends Command
 
         if (!$output->isQuiet()) {
             $io = new SymfonyStyle($input, $output);
-            $io->success(sprintf('Stopped %s timesheet records.', $amount));
+            $io->success(\sprintf('Stopped %s timesheet records.', $amount));
         }
 
         return Command::SUCCESS;

@@ -51,9 +51,9 @@ final class DeactivateUserCommand extends Command
         if ($user->isEnabled()) {
             $user->setEnabled(false);
             $this->userService->saveUser($user);
-            $io->success(sprintf('User "%s" has been deactivated.', $username));
+            $io->success(\sprintf('User "%s" has been deactivated.', $username));
         } else {
-            $io->warning(sprintf('User "%s" is already deactivated.', $username));
+            $io->warning(\sprintf('User "%s" is already deactivated.', $username));
         }
 
         return Command::SUCCESS;

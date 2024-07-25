@@ -40,11 +40,11 @@ final class FileHelper
         $this->makeDir($directory);
 
         if (!is_dir($directory)) {
-            throw new \Exception(sprintf('Directory "%s" does not exist', $directory));
+            throw new \Exception(\sprintf('Directory "%s" does not exist', $directory));
         }
 
         if (!is_writable($directory)) {
-            throw new \Exception(sprintf('Directory "%s" is not writable', $directory));
+            throw new \Exception(\sprintf('Directory "%s" is not writable', $directory));
         }
 
         return $directory;

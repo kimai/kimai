@@ -77,7 +77,7 @@ final class CreateUserCommand extends AbstractUserCommand
 
         try {
             $this->userService->saveUser($user);
-            $io->success(sprintf('Success! Created user: %s', $username));
+            $io->success(\sprintf('Success! Created user: %s', $username));
         } catch (ValidationFailedException $ex) {
             $this->validationError($ex, $io);
 

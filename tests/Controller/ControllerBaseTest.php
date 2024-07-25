@@ -182,13 +182,13 @@ abstract class ControllerBaseTest extends WebTestCase
 
         self::assertTrue(
             $response->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The secure URL %s is not protected.', $url)
         );
 
         self::assertStringEndsWith(
             '/login',
             $response->getTargetUrl(),
-            sprintf('The secure URL %s does not redirect to the login form.', $url)
+            \sprintf('The secure URL %s does not redirect to the login form.', $url)
         );
     }
 
@@ -210,7 +210,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $client->request($method, $this->createUrl($url));
         self::assertFalse(
             $client->getResponse()->isSuccessful(),
-            sprintf('The secure URL %s is not protected for role %s', $url, $role)
+            \sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
         $this->assertAccessDenied($client);
     }
@@ -325,7 +325,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertEquals(
             \count($fieldNames),
             \count($validationErrors),
-            sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+            \sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
         );
 
         foreach ($fieldNames as $name) {
@@ -432,7 +432,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertNotNull($location);
 
         // check for meta refresh
-        $expectedMeta = sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
+        $expectedMeta = \sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
         self::assertStringContainsString($expectedMeta, $client->getResponse()->getContent());
 
         if ($url !== null) {

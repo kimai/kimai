@@ -56,8 +56,8 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, sprintf('%s?date=12999119191&sumType=%s', $this->getReportUrl(), $dataType));
-        self::assertStringContainsString(sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        $this->assertAccessIsGranted($client, \sprintf('%s?date=12999119191&sumType=%s', $this->getReportUrl(), $dataType));
+        self::assertStringContainsString(\sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
         self::assertEquals($title, $cell->text());
     }
@@ -69,8 +69,8 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importReportingFixture(User::ROLE_TEAMLEAD);
-        $this->assertAccessIsGranted($client, sprintf('%s?date=12999119191&sumType=%s', $this->getReportUrl(), $dataType));
-        self::assertStringContainsString(sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        $this->assertAccessIsGranted($client, \sprintf('%s?date=12999119191&sumType=%s', $this->getReportUrl(), $dataType));
+        self::assertStringContainsString(\sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
@@ -84,7 +84,7 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
-        $this->request($client, sprintf('%s?date=12999119191&sumType=%s', $this->getReportExportUrl(), $dataType));
+        $this->request($client, \sprintf('%s?date=12999119191&sumType=%s', $this->getReportExportUrl(), $dataType));
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);

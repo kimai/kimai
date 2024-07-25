@@ -402,7 +402,7 @@ final class TranslationCommand extends Command
 
         $xmlContent = '';
         foreach ($translations as $id => $values) {
-            $xmlContent .= sprintf(
+            $xmlContent .= \sprintf(
                 '<trans-unit id="%s" resname="%s"><source>%s</source><target>%s</target></trans-unit>',
                 $id,
                 $values['resname'],
@@ -463,7 +463,7 @@ final class TranslationCommand extends Command
 
             if (!\array_key_exists($key, $translations)) {
                 throw new \Exception(
-                    sprintf('Missing english translation for key: %s in file %s', $key, $file)
+                    \sprintf('Missing english translation for key: %s in file %s', $key, $file)
                 );
             }
             $unit->target[0] = $translations[$key];

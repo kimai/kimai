@@ -128,8 +128,8 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         $monthBegin = (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), 1)->setTime(0, 0, 0);
         $monthEnd = (clone $weekBegin)->setDate((int) $weekBegin->format('Y'), (int) $weekBegin->format('n'), (int) $weekBegin->format('t'))->setTime(23, 59, 59);
 
-        $yearBegin = $dateTimeFactory->createDateTime(sprintf('01 january %s 00:00:00', $year));
-        $yearEnd = $dateTimeFactory->createDateTime(sprintf('31 december %s 23:59:59', $year));
+        $yearBegin = $dateTimeFactory->createDateTime(\sprintf('01 january %s 00:00:00', $year));
+        $yearEnd = $dateTimeFactory->createDateTime(\sprintf('31 december %s 23:59:59', $year));
         $yearData = $this->repository->getDurationForTimeRange($yearBegin, $yearEnd, $user);
 
         $financialYearData = null;

@@ -76,7 +76,7 @@ trait RepositorySearchTrait
                     $and->add($qb->expr()->isNotNull($alias . '.value'));
                 } elseif ($metaValue === '~') {
                     $and->add(
-                        sprintf('NOT EXISTS(SELECT metaNotExists FROM %s metaNotExists WHERE metaNotExists.%s = %s.id)', $this->getMetaFieldClass(), $this->getMetaFieldName(), $rootAlias)
+                        \sprintf('NOT EXISTS(SELECT metaNotExists FROM %s metaNotExists WHERE metaNotExists.%s = %s.id)', $this->getMetaFieldClass(), $this->getMetaFieldName(), $rootAlias)
                     );
                 } elseif ($metaValue === '' || $metaValue === null) {
                     $qb->leftJoin($rootAlias . '.meta', $alias);
@@ -86,7 +86,7 @@ trait RepositorySearchTrait
                                 $qb->expr()->eq($alias . '.name', ':' . $paramName),
                                 $qb->expr()->isNull($alias . '.value')
                             ),
-                            sprintf('NOT EXISTS(SELECT metaNotExists FROM %s metaNotExists WHERE metaNotExists.%s = %s.id)', $this->getMetaFieldClass(), $this->getMetaFieldName(), $rootAlias)
+                            \sprintf('NOT EXISTS(SELECT metaNotExists FROM %s metaNotExists WHERE metaNotExists.%s = %s.id)', $this->getMetaFieldClass(), $this->getMetaFieldName(), $rootAlias)
                         )
                     );
                     $qb->setParameter($paramName, $metaName);

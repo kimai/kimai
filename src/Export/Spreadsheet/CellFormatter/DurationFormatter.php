@@ -26,7 +26,7 @@ final class DurationFormatter implements CellFormatterInterface
             throw new \InvalidArgumentException('Unsupported value given, only int is supported');
         }
 
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=%s/86400', $value));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=%s/86400', $value));
         $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(self::DURATION_FORMAT);
     }
 }

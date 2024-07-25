@@ -37,7 +37,7 @@ final class WidgetExtension implements RuntimeExtensionInterface
 
         if (\is_string($widget)) {
             if (!$this->service->hasWidget($widget)) {
-                throw new \InvalidArgumentException(sprintf('Unknown widget "%s" requested', $widget));
+                throw new \InvalidArgumentException(\sprintf('Unknown widget "%s" requested', $widget));
             }
 
             $widget = $this->service->getWidget($widget);
