@@ -2,9 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nl" datatype="plaintext" original="plugins.en.xlf">
     <body>
-      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+      <trans-unit id="vFSLi54" resname="plugin.none_installed" xml:space="preserve">
         <source>plugin.none_installed</source>
-        <target>U heeft nog geen plug-ins geïnstalleerd.</target>
+        <target state="translated">Er zijn nog geen plug-ins geïnstalleerd.</target>
+      </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">Meer uitbreidingen</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">Beschikbare plug-ins</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Koop nu</target>
       </trans-unit>
     </body>
   </file>
