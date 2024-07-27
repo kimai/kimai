@@ -1253,7 +1253,7 @@
       </trans-unit>
       <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
         <source>remove_filter</source>
-        <target state="translated">Restablecer el filtro de  búsqueda</target>
+        <target state="translated">Restablecer el filtro de búsqueda</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
