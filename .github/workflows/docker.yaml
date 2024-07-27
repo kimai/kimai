@@ -81,7 +81,6 @@ jobs:
             - name: Pull images
               run: |
                   docker pull kimai/kimai2:fpm
-                  docker pull kimai/kimai2:apache
 
             - name: Tag latest
               run: |
