@@ -39,7 +39,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             User::ROLE_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_admin')),
             User::ROLE_TEAMLEAD => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_TEAMLEAD, UserFixtures::DEFAULT_API_TOKEN . '_teamlead')),
             User::ROLE_USER => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_USER, UserFixtures::DEFAULT_API_TOKEN . '_user')),
-            default => throw new \Exception(sprintf('Unknown role "%s"', $role)),
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
         };
     }
 
@@ -74,13 +74,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         self::assertEquals(
             $data,
             json_decode($response->getContent(), true),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The secure URL %s is not protected.', $url)
         );
 
         self::assertEquals(
             Response::HTTP_UNAUTHORIZED,
             $response->getStatusCode(),
-            sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
+            \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );
     }
 
@@ -91,7 +91,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         self::assertFalse(
             $client->getResponse()->isSuccessful(),
-            sprintf('The secure URL %s is not protected for role %s', $url, $role)
+            \sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
 
         $this->assertApiException($client->getResponse(), [
@@ -248,7 +248,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             while (stripos($fieldName, '.') !== false) {
                 $parts = explode('.', $fieldName);
                 $tmp = array_shift($parts);
-                self::assertArrayHasKey($tmp, $data, sprintf('Could not find field "%s" in result', $tmp));
+                self::assertArrayHasKey($tmp, $data, \sprintf('Could not find field "%s" in result', $tmp));
                 $data = $data[$tmp];
                 if (\count($data) === 1 && \array_key_exists('children', $data)) {
                     $data = $data['children'];
@@ -256,8 +256,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 $fieldName = implode('.', $parts);
             }
 
-            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
-            self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
             }
@@ -648,7 +648,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 ];
 
             default:
-                throw new \Exception(sprintf('Unknown API response type: %s', $type));
+                throw new \Exception(\sprintf('Unknown API response type: %s', $type));
         }
     }
 
@@ -668,12 +668,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         sort($actual);
         sort($expectedKeys);
 
-        self::assertEquals($expectedKeys, $actual, sprintf('Structure for API response type "%s" does not match', $type));
+        self::assertEquals($expectedKeys, $actual, \sprintf('Structure for API response type "%s" does not match', $type));
 
         self::assertEquals(
             \count($actual),
             \count($expectedKeys),
-            sprintf('Mismatch between expected and result keys for API response type "%s". Expected %s keys but found %s.', $type, \count($expected), \count($actual))
+            \sprintf('Mismatch between expected and result keys for API response type "%s". Expected %s keys but found %s.', $type, \count($expected), \count($actual))
         );
 
         foreach ($expected as $key => $value) {
@@ -706,13 +706,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                             $value['type'] = substr($value['type'], 1);
                         }
 
-                        self::assertIsArray($result[$key], sprintf('Key "%s" in type "%s" is not an array', $key, $type));
+                        self::assertIsArray($result[$key], \sprintf('Key "%s" in type "%s" is not an array', $key, $type));
 
                         self::assertApiResponseTypeStructure($value['type'], $result[$key]);
                         break;
 
                     default:
-                        throw new \Exception(sprintf('Invalid result type "%s" for subresource given', $value['result']));
+                        throw new \Exception(\sprintf('Invalid result type "%s" for subresource given', $value['result']));
                 }
 
                 continue;
@@ -727,18 +727,18 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
             if (strtolower($value) === 'datetime') {
                 $date = \DateTime::createFromFormat('Y-m-d\TH:i:sO', $result[$key]);
-                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
                 $value = 'string';
             } elseif (strtolower($value) === 'date') {
                 $date = \DateTime::createFromFormat('Y-m-d', $result[$key]);
-                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
                 $value = 'string';
             }
 
             static::assertThat(
                 $result[$key],
                 new IsType($value),
-                sprintf('Found type mismatch in structure for API response type %s. Expected type "%s" for key "%s".', $type, $value, $key)
+                \sprintf('Found type mismatch in structure for API response type %s. Expected type "%s" for key "%s".', $type, $value, $key)
             );
         }
     }

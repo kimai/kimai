@@ -49,7 +49,8 @@ final class DateRangeType extends AbstractType
             'max_day' => null,
             'locale' => \Locale::getDefault(),
         ]);
-        $resolver->addAllowedTypes('timezone', ['string']);
+        $resolver->setAllowedTypes('separator', 'string');
+        $resolver->addAllowedTypes('timezone', 'string');
         $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
         $resolver->addAllowedTypes('max_day', ['null', 'string', \DateTimeInterface::class]);
 
@@ -59,6 +60,7 @@ final class DateRangeType extends AbstractType
 
             return $converter->convert($format);
         });
+        $resolver->setAllowedTypes('format', ['string']);
 
         $resolver->setDefault('attr', function (Options $options): array {
             $format = $this->localeService->getDateFormat($options['locale']);
@@ -115,6 +117,9 @@ final class DateRangeType extends AbstractType
         }
     }
 
+    /**
+     * @param array{'format': non-empty-string, 'separator': non-empty-string, 'allow_empty': true, 'timezone': non-empty-string} $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $formatDate = $options['format'];

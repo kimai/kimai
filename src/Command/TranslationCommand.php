@@ -28,7 +28,11 @@ use Symfony\Component\HttpClient\HttpClient;
 #[AsCommand(name: 'kimai:translations')]
 final class TranslationCommand extends Command
 {
-    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LocaleService $localeService)
+    public function __construct(
+        private readonly string $projectDirectory,
+        private readonly string $kernelEnvironment,
+        private readonly LocaleService $localeService
+    )
     {
         parent::__construct();
     }
@@ -70,6 +74,7 @@ final class TranslationCommand extends Command
 
         $sources = [];
         if ($input->getOption('source') !== null) {
+            /** @var string $tmp */
             $tmp = $input->getOption('source');
             foreach ($bases as $directory) {
                 $files = glob($directory);
@@ -95,6 +100,7 @@ final class TranslationCommand extends Command
 
         $targets = [];
         if ($input->getOption('target') !== null) {
+            /** @var string $tmp */
             $tmp = $input->getOption('target');
             foreach ($bases as $directory) {
                 $files = glob($directory);

@@ -27,8 +27,8 @@ class YearTest extends TestCase
         foreach($months as $key => $days) {
             $index = ++$key;
             $monthKey = ($index < 10) ? '0' . $index : $index;
-            $month = $sut->getMonth(new \DateTimeImmutable(sprintf('2020-%s-13 13:00:00', $monthKey)));
-            self::assertEquals(sprintf('2020-%s-01', $monthKey), $month->getMonth()->format('Y-m-d'));
+            $month = $sut->getMonth(new \DateTimeImmutable(\sprintf('2020-%s-13 13:00:00', $monthKey)));
+            self::assertEquals(\sprintf('2020-%s-01', $monthKey), $month->getMonth()->format('Y-m-d'));
             self::assertCount($days, $month->getDays());
         }
     }
