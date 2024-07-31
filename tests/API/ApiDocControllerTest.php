@@ -44,7 +44,7 @@ class ApiDocControllerTest extends ControllerBaseTest
         sort($actual);
         sort($expectedKeys);
 
-        self::assertEquals($expectedKeys, $actual, \sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
+        self::assertEquals($expectedKeys, $actual, sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
     }
 
     public function testGetJsonDocs(): void
