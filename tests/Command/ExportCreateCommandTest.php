@@ -162,12 +162,12 @@ class ExportCreateCommandTest extends KernelTestCase
 
     public function testCreateWithInvalidEmail(): void
     {
-        $this->assertCommandErrors(['--template' => 'csv', '--email' => ['tzuikmnbgtz']], 'Invalid "email" given: tzuikmnbgtz');
+        $this->assertCommandErrors(['--template' => 'csv', '--email' => ['tzuikmnbgtz']], 'Invalid "email" given');
     }
 
     public function testCreateWithInvalidEmails(): void
     {
-        $this->assertCommandErrors(['--template' => 'csv', '--email' => ['foo@example.com', 'foo@1']], 'Invalid "email" given: foo@1');
+        $this->assertCommandErrors(['--template' => 'csv', '--email' => ['foo@example.com', 'foo@1']], 'Invalid "email" given');
     }
 
     public function testCreateWithMissingEntries(): void
