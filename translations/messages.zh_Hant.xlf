@@ -118,9 +118,6 @@
         <source>Display of entries in selection lists</source>
         <target state="final">顯示選擇清單中的項目</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" xml:space="preserve" approved="yes">
         <source>Password</source>
         <target state="final">密碼</target>
@@ -157,9 +154,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">已傳送包含密碼重置鏈結的電子郵件。注意：您每 %tokenLifetime% 小時只能申請一次新密碼。如果您沒有收到電子郵件，請檢查您的垃圾郵件匣或重試。</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve" approved="yes">
         <source>menu.homepage</source>
         <target state="final">儀錶板</target>
@@ -224,9 +218,6 @@
         <source>Doctor</source>
         <target state="final">診斷</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found" xml:space="preserve" approved="yes">
         <source>error.no_entries_found</source>
         <target state="final">未找到符合您選擇的篩選條件的項目。</target>
@@ -247,9 +238,6 @@
         <source>error.directory_protected</source>
         <target state="final">目錄 “%dir%” 有寫入保護。</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
         <target state="final">日期</target>

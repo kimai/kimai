@@ -2,7 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <!-- Reports -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
         <source>report_tasks_assigned</source>
         <target>Tehtäväni</target>
@@ -11,7 +10,6 @@
         <source>report_tasks_teams</source>
         <target>Tiimin tehtävät</target>
       </trans-unit>
-      <!-- Actions -->
       <trans-unit id="XjAwhoV" resname="task.start">
         <source>task.start</source>
         <target>Aloita tehtävä</target>
@@ -40,7 +38,6 @@
         <source>task.create</source>
         <target>Luo tehtävä</target>
       </trans-unit>
-      <!-- Application -->
       <trans-unit id="s6YOYaU" resname="Tasks">
         <source>Tasks</source>
         <target>Tehtävien</target>

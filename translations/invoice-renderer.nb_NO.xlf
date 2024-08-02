@@ -10,12 +10,10 @@
         <source>help.upload</source>
         <target>Obs: Eksisterende filer vil bli overskrevet. Filtypene %extensions% støttes.</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target>For videre behandling</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Faktura</target>

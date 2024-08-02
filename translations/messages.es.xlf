@@ -54,9 +54,6 @@
         <source>my.profile</source>
         <target>Mi perfil</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Contraseña</target>
@@ -85,9 +82,6 @@
         <source>login_required</source>
         <target>Sin permisos. ¿Volver al inicio de sesión?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Página principal</target>
@@ -148,16 +142,10 @@
         <source>Doctor</source>
         <target>Doctor</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>No se encontraron registros en función de los filtros seleccionados.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Fecha</target>
@@ -254,9 +242,6 @@
         <source>teamlead</source>
         <target>Supervisor</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Acciones</target>
@@ -281,16 +266,10 @@
         <source>action.close</source>
         <target>Cerrar</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Página principal</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Mostrar menú</target>
@@ -307,9 +286,6 @@
         <source>progress</source>
         <target>Progreso</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Mis horas</target>
@@ -342,9 +318,6 @@
         <source>color</source>
         <target>Color</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Perfil de usuario</target>
@@ -385,7 +358,6 @@
         <source>login_initial_view</source>
         <target>Vista inicial al entrar</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mes</target>
@@ -402,19 +374,10 @@
         <source>daily_stats</source>
         <target>Mostrar estadísticas diarias en los partes de horas</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Calendario</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Cuenta</target>
@@ -463,9 +426,6 @@
         <source>currency</source>
         <target>Moneda</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Nombre</target>
@@ -486,16 +446,10 @@
         <source>roles</source>
         <target>Rol</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versión</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Administrador del sistema</target>
@@ -512,9 +466,6 @@
         <source>ROLE_USER</source>
         <target>Usuario</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Horas trabajadas hoy</target>
@@ -607,9 +558,6 @@
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% usado (%left% aún está abierto)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Plantilla de factura</target>
@@ -734,9 +682,6 @@
         <source>invoice_bank_account</source>
         <target>Cuenta bancaria</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Exportar</target>
@@ -769,9 +714,6 @@
         <source>export.date_copyright</source>
         <target>Creado el %date% con %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Los cálculos de su tiempo activo</target>
@@ -784,9 +726,6 @@
         <source>timesheet.start</source>
         <target state="translated">Empezar a controlar el tiempo</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Tamaño de página</target>

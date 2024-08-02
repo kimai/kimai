@@ -46,9 +46,6 @@
         <source>confirm</source>
         <target>Confirmer</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>Mot de passe</target>
@@ -73,9 +70,6 @@
         <source>api_token_repeat</source>
         <target>Répéter le mot de passe de l'API</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Tableau de bord</target>
@@ -128,16 +122,10 @@
         <source>tags</source>
         <target>Mots-clés</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Aucune entrée n'a été trouvée avec les filtres sélectionnés.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
         <target state="translated">Date</target>
@@ -226,9 +214,6 @@
         <source>email</source>
         <target>Courriel</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Actions</target>
@@ -249,23 +234,14 @@
         <source>action.close</source>
         <target>Fermer</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Tableau de bord</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Afficher le menu</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Mes fiches de temps</target>
@@ -298,9 +274,6 @@
         <source>color</source>
         <target>Couleur</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Profil de l'utilisateur</target>
@@ -341,7 +314,6 @@
         <source>login_initial_view</source>
         <target>Vue par défaut après connexion</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mois</target>
@@ -358,19 +330,10 @@
         <source>daily_stats</source>
         <target>Voir les statistiques journalières dans la fiche des temps</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Calendrier</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Compte</target>
@@ -419,9 +382,6 @@
         <source>currency</source>
         <target>Devise</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Nom</target>
@@ -442,16 +402,10 @@
         <source>roles</source>
         <target>Rôle</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Administrateur système</target>
@@ -468,9 +422,6 @@
         <source>ROLE_USER</source>
         <target>Utilisateur</target>
       </trans-unit>
-      <!--
-              Données statistiques pour le tableau de bord et les profils des usagers
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Heures travaillées aujourd'hui</target>
@@ -555,9 +506,6 @@
         <source>stats.customerTotal</source>
         <target>Clients</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Modèle de facture</target>
@@ -670,9 +618,6 @@
         <source>invoice_bank_account</source>
         <target>Compte bancaire</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Export</target>
@@ -701,9 +646,6 @@
         <source>export.date_copyright</source>
         <target>Généré le %date% avec %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Vos relevés de périodes d'activités</target>
@@ -716,9 +658,6 @@
         <source>timesheet.start</source>
         <target state="translated">Débuter le suivi du temps</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Taille de la page</target>

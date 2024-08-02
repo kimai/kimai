@@ -58,9 +58,6 @@
         <source>update_multiple</source>
         <target>%action% %count% indlæg?</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Kodeord</target>
@@ -89,9 +86,6 @@
         <source>login_required</source>
         <target>Mangler tilladelse. Omdiriger til login?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Dashboard</target>
@@ -152,16 +146,10 @@
         <source>Doctor</source>
         <target>Fejlsøgning</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Ingen indlæg baseret på dine valgte filtre blev fundet.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Dato</target>
@@ -258,9 +246,6 @@
         <source>teamlead</source>
         <target>Holdleder</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Handlinger</target>
@@ -285,16 +270,10 @@
         <source>action.close</source>
         <target>Luk</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Vis menu</target>
@@ -311,9 +290,6 @@
         <source>progress</source>
         <target>Fremskridt</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Min timeseddel</target>
@@ -354,9 +330,6 @@
         <source>append</source>
         <target>Tilføj</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Bruger profil</target>
@@ -397,7 +370,6 @@
         <source>login_initial_view</source>
         <target>Startsvisning efter login</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Måned</target>
@@ -414,19 +386,10 @@
         <source>daily_stats</source>
         <target>Vis daglig statistik i timeseddel</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Bruger</target>
@@ -479,9 +442,6 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Navn</target>
@@ -510,16 +470,10 @@
         <source>user_role.title</source>
         <target>Bruger rolle</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -536,9 +490,6 @@
         <source>ROLE_USER</source>
         <target>Bruger</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Arbejdstimer i dag</target>
@@ -631,9 +582,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% brugt (%left% tilbage)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Faturaskabelon</target>
@@ -762,9 +710,6 @@
         <source>invoice_bank_account</source>
         <target>Bankkonto</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Eksporter</target>
@@ -797,9 +742,6 @@
         <source>export.date_copyright</source>
         <target>Oprettet %date% med %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Dine aktive tidsregistreringer</target>
@@ -812,9 +754,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Opret ny tidsregistrering</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Sidestørrelse</target>

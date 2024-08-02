@@ -62,9 +62,6 @@
         <source>attachments</source>
         <target state="translated">Załączniki</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Hasło</target>
@@ -93,9 +90,6 @@
         <source>login_required</source>
         <target state="translated">Brak uprawnień. Przekierować na stronę logowania?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Pulpit</target>
@@ -156,9 +150,6 @@
         <source>Doctor</source>
         <target>Diagnostyka</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Nie znaleziono wpisów o tych kryteriach.</target>
@@ -167,9 +158,6 @@
         <source>error.no_comments_found</source>
         <target>Nie ma jeszcze komentarzy.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Data</target>
@@ -270,9 +258,6 @@
         <source>teamlead</source>
         <target>Zarządzanie zespołem</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Działania</target>
@@ -297,16 +282,10 @@
         <source>action.close</source>
         <target>Zamknij</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Pulpit</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Pokaż menu</target>
@@ -323,9 +302,6 @@
         <source>progress</source>
         <target>Postęp</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target state="translated">Moje wpisy</target>
@@ -366,9 +342,6 @@
         <source>append</source>
         <target>Dodaj</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Profil użytkownika</target>
@@ -409,7 +382,6 @@
         <source>login_initial_view</source>
         <target>Początkowy widok po zalogowaniu</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Miesiąc</target>
@@ -426,16 +398,10 @@
         <source>daily_stats</source>
         <target state="translated">Pokaż dzienne statystyki w ewidencji czynności</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendarz</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Start projektu</target>
@@ -444,9 +410,6 @@
         <source>project_end</source>
         <target>Koniec projektu</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number" xml:space="preserve">
         <source>number</source>
         <target state="translated">Numer klienta</target>
@@ -495,9 +458,6 @@
         <source>currency</source>
         <target>Waluta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Nazwa</target>
@@ -530,16 +490,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Dozwolone znaki: A-Z oraz _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Wersja</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -556,9 +510,6 @@
         <source>ROLE_USER</source>
         <target>Użytkownik</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target state="translated">Przepracowane godziny dzisiaj</target>
@@ -651,9 +602,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% zużyte (%left% wciąż pozostało)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve">
         <source>admin_invoice_template.title</source>
         <target state="translated">Szablon faktury</target>
@@ -778,9 +726,6 @@
         <source>invoice_bank_account</source>
         <target>Konto bankowe</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target state="translated">Eksport</target>
@@ -813,9 +758,6 @@
         <source>export.date_copyright</source>
         <target>Utworzono %date% za pomocą %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Twoje aktywne pomiary czasu</target>
@@ -828,9 +770,6 @@
         <source>timesheet.start</source>
         <target state="translated">Rozpocznij śledzenie czasu</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Rozmiar strony</target>

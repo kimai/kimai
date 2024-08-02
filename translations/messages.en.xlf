@@ -126,7 +126,6 @@
         <source>Display of entries in selection lists</source>
         <target>Display of entries in selection lists</target>
       </trans-unit>
-      <!-- Login / Security -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Password</target>
@@ -175,7 +174,6 @@
         <source>security.unlock.button</source>
         <target>Unlock</target>
       </trans-unit>
-      <!-- Menu / Navbar items -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Dashboard</target>
@@ -248,7 +246,6 @@
         <source>Doctor</source>
         <target>Doctor</target>
       </trans-unit>
-      <!-- Error templates -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>No entries were found based on your selected filters.</target>
@@ -269,7 +266,6 @@
         <source>error.directory_protected</source>
         <target>Directory "%dir%" is write protected.</target>
       </trans-unit>
-      <!-- General labels -->
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
         <target>Deleted</target>
@@ -438,7 +434,6 @@
         <source>help.billable</source>
         <target>If the setting is off, all time entries recorded in the future will be marked as "not billable".</target>
       </trans-unit>
-      <!-- Buttons & Actions -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Actions</target>
@@ -467,7 +462,6 @@
         <source>action.close</source>
         <target>Close</target>
       </trans-unit>
-      <!-- Dashboard -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
@@ -476,7 +470,6 @@
         <source>dashboard.edit_mode</source>
         <target>You can rearrange your widgets using drag &amp; drop. Adding widgets saves pending changes.</target>
       </trans-unit>
-      <!-- Widgets -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Show menu</target>
@@ -493,7 +486,6 @@
         <source>progress</source>
         <target>Progress</target>
       </trans-unit>
-      <!-- Timesheet -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>My times</target>
@@ -534,7 +526,6 @@
         <source>append</source>
         <target>Append</target>
       </trans-unit>
-      <!-- Column modal -->
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Customize display</target>
@@ -555,7 +546,6 @@
         <source>mobile</source>
         <target>Mobile</target>
       </trans-unit>
-      <!-- User profile -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>User profile</target>
@@ -580,7 +570,6 @@
         <source>profile.password</source>
         <target>Password</target>
       </trans-unit>
-      <!-- 2FA  -->
       <trans-unit id="FeFBn_3" resname="profile.2fa">
         <source>profile.2fa</source>
         <target>Two-Factor (2FA)</target>
@@ -601,7 +590,6 @@
         <source>login.2fa_label</source>
         <target>Confirmation code</target>
       </trans-unit>
-      <!-- END 2FA  -->
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API Access</target>
@@ -714,7 +702,6 @@
         <source>notifications</source>
         <target>Notifications</target>
       </trans-unit>
-      <!-- Notifications -->
       <trans-unit id="0ZWvn12" resname="notifications.welcome">
         <source>notifications.welcome</source>
         <target>Thank you for agreeing to notifications!</target>
@@ -723,7 +710,6 @@
         <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
         <target state="translated">You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Month</target>
@@ -748,12 +734,10 @@
         <source>update_browser_title</source>
         <target>Update browser title</target>
       </trans-unit>
-      <!-- User timesheet calendar -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Calendar</target>
       </trans-unit>
-      <!-- Projects -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Project start</target>
@@ -770,7 +754,6 @@
         <source>Activity number</source>
         <target>Activity number</target>
       </trans-unit>
-      <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Account</target>
@@ -823,7 +806,6 @@
         <source>currency</source>
         <target>Currency</target>
       </trans-unit>
-      <!-- Users -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Name</target>
@@ -868,7 +850,6 @@
         <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
         <target state="translated">Allowed character: A-Z and _ (min. 5 uppercase characters)</target>
       </trans-unit>
-      <!-- Plugins -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
@@ -877,7 +858,6 @@
         <source>plugin.installed</source>
         <target>Installed plugins</target>
       </trans-unit>
-      <!-- ROLES -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -894,7 +874,6 @@
         <source>ROLE_USER</source>
         <target>User</target>
       </trans-unit>
-      <!-- Statistics data for Dashboard & Users profile -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Today, %day%</target>
@@ -1079,7 +1058,6 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% used (%left% are still open this month)</target>
       </trans-unit>
-      <!-- Invoice -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Invoice template</target>
@@ -1284,7 +1262,6 @@
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">Skipped preview of %rows% more rows …</target>
       </trans-unit>
-      <!-- Export -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Export</target>
@@ -1325,7 +1302,6 @@
         <source>type</source>
         <target>Type</target>
       </trans-unit>
-      <!-- Navbar - recent entries and activities -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Your active time measurements</target>
@@ -1342,7 +1318,6 @@
         <source>timesheet.stop</source>
         <target>Stop time-tracking</target>
       </trans-unit>
-      <!-- TOOLBARS -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Page size</target>
@@ -1487,7 +1462,6 @@
         <source>default_value_new</source>
         <target>Default values for new entries</target>
       </trans-unit>
-      <!-- QUICK ENTRIES -->
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Weekly hours</target>

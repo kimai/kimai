@@ -62,9 +62,6 @@
         <source>attachments</source>
         <target>Atxikipenak</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Pasahitza</target>
@@ -93,9 +90,6 @@
         <source>login_required</source>
         <target>Baimena falta da. Saio hasierara bueltatu?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Orrialde nagusia</target>
@@ -156,9 +150,6 @@
         <source>Doctor</source>
         <target>Medikua</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Ez da emaitzarik aurkitu hautatutako iragaziekin.</target>
@@ -167,9 +158,6 @@
         <source>error.no_comments_found</source>
         <target>Oraindik ez da iruzkinik argitaratu.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Data</target>
@@ -266,9 +254,6 @@
         <source>teamlead</source>
         <target>Talde Leaderra</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Ekintzak</target>
@@ -293,16 +278,10 @@
         <source>action.close</source>
         <target>Itxi</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Orri nagusia</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Menua erakutsi</target>
@@ -319,9 +298,6 @@
         <source>progress</source>
         <target>Egoera</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Nire orduak</target>
@@ -354,9 +330,6 @@
         <source>color</source>
         <target>Kolorea</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Profila</target>
@@ -397,7 +370,6 @@
         <source>login_initial_view</source>
         <target>Sarrerako bista</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Hilabetea</target>
@@ -414,19 +386,10 @@
         <source>daily_stats</source>
         <target>Eguneroko estatistikak erakutsi ordu taulan</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Egutegia</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Proiektu hasiera</target>
@@ -435,9 +398,6 @@
         <source>project_end</source>
         <target>Proiektu bukaera</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Kontua</target>
@@ -490,9 +450,6 @@
         <source>currency</source>
         <target>Txanpoia</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Izena</target>
@@ -525,16 +482,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Bahimentutako hizkia: A-Z eta _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Bertsioa</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Sistema Administratzailea</target>
@@ -551,9 +502,6 @@
         <source>ROLE_USER</source>
         <target>Erabiltzailea</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Gaurko lan orduak</target>
@@ -646,9 +594,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% erabilia (%%left% faltan)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Faktura eredua</target>
@@ -777,9 +722,6 @@
         <source>invoice_bank_account</source>
         <target>Kontu Korronte Zenbakia</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Exportar</target>
@@ -812,9 +754,6 @@
         <source>export.date_copyright</source>
         <target>%date%-n sortua %kimai%-ren bitartez</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Zure denbora aktiboaren kalkuluak</target>
@@ -827,9 +766,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Sarrera berria sortu</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Orrialde tamaina</target>

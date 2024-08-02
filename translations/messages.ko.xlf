@@ -46,9 +46,6 @@
         <source>confirm</source>
         <target state="translated">확인</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target state="translated">암호</target>
@@ -73,9 +70,6 @@
         <source>api_token_repeat</source>
         <target state="translated">API 비밀번호 재확인</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">대시보드</target>
@@ -132,16 +126,10 @@
         <source>tags</source>
         <target state="translated">태그</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">선택한 필터를 기반으로 한 항목을 찾을 수 없습니다.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">날짜</target>
@@ -234,9 +222,6 @@
         <source>team</source>
         <target state="translated">팀</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">적용</target>
@@ -261,23 +246,14 @@
         <source>action.close</source>
         <target state="translated">닫기</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target state="translated">대시보드</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">메뉴보기</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target state="translated">나의 업무시간</target>
@@ -310,9 +286,6 @@
         <source>color</source>
         <target state="translated">색</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">사용자 프로필</target>
@@ -353,7 +326,6 @@
         <source>login_initial_view</source>
         <target state="translated">로그인 후 초기화면</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">월</target>
@@ -370,19 +342,10 @@
         <source>daily_stats</source>
         <target state="translated">일일통계 보기</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target state="translated">달력</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">고객번호</target>
@@ -431,9 +394,6 @@
         <source>currency</source>
         <target state="translated">통화</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target state="translated">이름</target>
@@ -454,16 +414,10 @@
         <source>roles</source>
         <target state="translated">역할</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target state="translated">버전</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">시스템 관리</target>
@@ -480,9 +434,6 @@
         <source>ROLE_USER</source>
         <target state="translated">사용자</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target state="translated">오늘 근무시간</target>
@@ -567,9 +518,6 @@
         <source>stats.customerTotal</source>
         <target state="translated">총 고객수</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">청구서 템플릿</target>
@@ -682,9 +630,6 @@
         <source>invoice_bank_account</source>
         <target state="translated">은행 계좌 번호</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target state="translated">내보내기</target>
@@ -713,9 +658,6 @@
         <source>export.date_copyright</source>
         <target state="translated">생성 %date% 의 %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target state="translated">활동 시간 측정</target>
@@ -728,9 +670,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">새로운 타임시트 생성하기</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">페이지 수</target>

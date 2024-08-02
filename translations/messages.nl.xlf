@@ -54,9 +54,6 @@
         <source>my.profile</source>
         <target>Mijn profiel</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Wachtwoord</target>
@@ -85,9 +82,6 @@
         <source>login_required</source>
         <target>Ontbrekende rechten. Terug naar het aanmeldscherm?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Overzicht</target>
@@ -148,16 +142,10 @@
         <source>Doctor</source>
         <target>Dokter</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">Geen resultaten gevonden met de gekozen filters.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -254,9 +242,6 @@
         <source>teamlead</source>
         <target>Teamleider</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Acties</target>
@@ -281,16 +266,10 @@
         <source>action.close</source>
         <target>Sluiten</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Overzicht</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Toon menu</target>
@@ -307,9 +286,6 @@
         <source>progress</source>
         <target>Voortgang</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Mijn tijden</target>
@@ -342,9 +318,6 @@
         <source>color</source>
         <target>Kleur</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">Gebruikersprofiel</target>
@@ -385,7 +358,6 @@
         <source>login_initial_view</source>
         <target state="translated">Eerste weergave na inloggen</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Maand</target>
@@ -402,19 +374,10 @@
         <source>daily_stats</source>
         <target>Geef het dagtotaal weer in "Mijn tijden"</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Agenda</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Rekening</target>
@@ -459,9 +422,6 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Naam</target>
@@ -482,16 +442,10 @@
         <source>roles</source>
         <target state="translated">Rollen</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versie</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Systeembeheerder</target>
@@ -508,9 +462,6 @@
         <source>ROLE_USER</source>
         <target>Gebruiker</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
         <target>Kalenderweek %week%</target>
@@ -607,9 +558,6 @@
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% gebruikt (%left% is nog open)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Factuursjabloon</target>
@@ -738,9 +686,6 @@
         <source>invoice_bank_account</source>
         <target>Bankrekening</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Exporteren</target>
@@ -773,9 +718,6 @@
         <source>export.date_copyright</source>
         <target>Gemaakt op %date% met %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target state="translated">Uw actieve tijdsmetingen</target>
@@ -788,9 +730,6 @@
         <source>timesheet.start</source>
         <target state="translated">Start tijdsregistratie</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">Paginagrootte</target>

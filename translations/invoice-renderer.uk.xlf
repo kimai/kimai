@@ -10,12 +10,10 @@
         <source>help.upload</source>
         <target state="translated">Увага: існуючі файли будуть перезаписані. Дозволені типи файлів: %extensions%.</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">Для подальшої обробки</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Рахунок</target>

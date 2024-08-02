@@ -2,13 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sl" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <!-- Reports -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
         <target state="translated">Naloge na uporabnika</target>
       </trans-unit>
-      <!-- Actions -->
-      <!-- Application -->
     </body>
   </file>
 </xliff>
