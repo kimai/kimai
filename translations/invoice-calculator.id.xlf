@@ -22,6 +22,10 @@
         <source>activity</source>
         <target state="translated">Aktivitas</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Pilih berdasarkan bidang mana item faktur harus dikelompokkan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

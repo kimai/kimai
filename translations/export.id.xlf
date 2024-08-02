@@ -6,6 +6,10 @@
         <source>Default</source>
         <target state="translated">Bawaan</target>
       </trans-unit>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig" xml:space="preserve">
+        <source>With remaining budget</source>
+        <target state="translated">Dengan anggaran yang tersisa</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
