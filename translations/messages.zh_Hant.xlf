@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="no">
         <source>Time Tracking</source>
-        <target state="final">工時追蹤</target>
+        <target state="translated">工時追蹤</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes" xml:space="preserve" approved="yes">
         <source>yes</source>
