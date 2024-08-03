@@ -84,7 +84,7 @@ class ActivityStatisticService
             $models[$activity->getId()] = new ActivityBudgetStatisticModel($activity);
             if ($activity->isMonthlyBudget()) {
                 $monthly[] = $activity;
-            } else if ($activity->isQuarterlyBudget()) {
+            } elseif ($activity->isQuarterlyBudget()) {
                 $quarterly[] = $activity;
             } else {
                 $allTime[] = $activity;

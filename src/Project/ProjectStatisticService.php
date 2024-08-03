@@ -173,7 +173,7 @@ class ProjectStatisticService
                     $qb->expr()->eq('p.budgetType', ':typeMonth')
                 );
                 $qb->setParameter('typeMonth', 'month');
-            } else if ($query->isBudgetTypeQuarterly()) {
+            } elseif ($query->isBudgetTypeQuarterly()) {
                 $qb->andWhere(
                     $qb->expr()->eq('p.budgetType', ':typeQuarter')
                 );
@@ -243,7 +243,7 @@ class ProjectStatisticService
             $models[$project->getId()] = new ProjectBudgetStatisticModel($project);
             if ($project->isMonthlyBudget()) {
                 $monthly[] = $project;
-            } else if ($project->isQuarterlyBudget()) {
+            } elseif ($project->isQuarterlyBudget()) {
                 $quarterly[] = $project;
             } else {
                 $allTime[] = $project;
@@ -275,7 +275,7 @@ class ProjectStatisticService
             $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
                 $models[$id]->setStatistic($statistic);
-                // override the total for better displaying  
+                // override the total for better displaying
                 $models[$id]->setStatisticTotal($statistic);
             }
         }

@@ -17,6 +17,7 @@ use DateTimeZone;
 final class DateTimeFactory
 {
     private DateTimeZone $timezone;
+
     private bool $startOnSunday = false;
 
     public static function createByUser(User $user): self
@@ -64,7 +65,7 @@ final class DateTimeFactory
             $startMonth = 10; // Q4
         }
 
-        $date->modify('first day of January')->setDate((int)$date->format('Y'), $startMonth, 1);
+        $date->modify('first day of January')->setDate((int) $date->format('Y'), $startMonth, 1);
         $date->setTime(0, 0, 0);
 
         return $date;
@@ -134,7 +135,6 @@ final class DateTimeFactory
         return $date;
     }
 
-
     public function getEndOfQuarter(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
@@ -151,9 +151,10 @@ final class DateTimeFactory
             $endMonth = 12; // Q4
         }
 
-        $date->setDate((int)$date->format('Y'), $endMonth, 1);
+        $date->setDate((int) $date->format('Y'), $endMonth, 1);
         $date = $date->modify('last day of this month');
         $date->setTime(23, 59, 59);
+
         return $date;
     }
 

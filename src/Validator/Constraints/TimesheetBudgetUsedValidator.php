@@ -146,7 +146,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             }
 
             $monthWasChanged = $begin->format('Y.m') !== $rawData['begin']->format('Y.m');
-            $quarterWasChanged = $begin->format('Y') !== $rawData['begin']->format('Y') || intval($begin->format('n') / 4) !== intval($rawData['begin']->format('n') / 4);
+            $quarterWasChanged = $begin->format('Y') !== $rawData['begin']->format('Y') || \intval($begin->format('n') / 4) !== \intval($rawData['begin']->format('n') / 4);
         }
 
         $now = new DateTime('now', $begin->getTimezone());
