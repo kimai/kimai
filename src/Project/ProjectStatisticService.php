@@ -50,8 +50,7 @@ class ProjectStatisticService
         private readonly TimesheetRepository $timesheetRepository,
         private readonly EventDispatcherInterface $dispatcher,
         private readonly UserRepository $userRepository
-    )
-    {
+    ) {
     }
 
     /**
@@ -80,8 +79,7 @@ class ProjectStatisticService
             ->select('1')
             ->from(Timesheet::class, 't')
             ->andWhere('p = t.project')
-            ->andWhere($qb2->expr()->gte('t.begin', ':begin'))
-        ;
+            ->andWhere($qb2->expr()->gte('t.begin', ':begin'));
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
@@ -104,8 +102,7 @@ class ProjectStatisticService
                 )
             )
             ->setParameter('project_end', $now, Types::DATETIME_IMMUTABLE)
-            ->setParameter('begin', $lastChange, Types::DATETIME_IMMUTABLE)
-        ;
+            ->setParameter('begin', $lastChange, Types::DATETIME_IMMUTABLE);
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
 
@@ -147,8 +144,7 @@ class ProjectStatisticService
                 )
             )
             ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
-            ->setParameter('end', $end, Types::DATETIME_MUTABLE)
-        ;
+            ->setParameter('end', $end, Types::DATETIME_MUTABLE);
 
         if (!$query->isIncludeNoWork()) {
             $qb2 = $this->projectRepository->createQueryBuilder('t1');
@@ -156,8 +152,7 @@ class ProjectStatisticService
                 ->select('1')
                 ->from(Timesheet::class, 't')
                 ->andWhere('p = t.project')
-                ->andWhere($qb2->expr()->between('t.begin', ':begin', ':end'))
-            ;
+                ->andWhere($qb2->expr()->between('t.begin', ':begin', ':end'));
             $qb->andWhere($qb->expr()->exists($qb2));
         }
 
@@ -183,7 +178,6 @@ class ProjectStatisticService
                     $qb->expr()->eq('p.budgetType', ':typeQuarter')
                 );
                 $qb->setParameter('typeQuarter', 'quarter');
-
             } else {
                 $qb->andWhere(
                     $qb->expr()->isNull('p.budgetType')
@@ -280,7 +274,7 @@ class ProjectStatisticService
             $end = $dateFactory->getEndOfQuarter($today);
             $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
-                $models[$id]->setStatistic($statistic);       
+                $models[$id]->setStatistic($statistic);
                 // override the total for better displaying  
                 $models[$id]->setStatisticTotal($statistic);
             }
@@ -353,21 +347,18 @@ class ProjectStatisticService
             ->groupBy('id')
             ->addGroupBy('billable')
             ->addGroupBy('exported')
-            ->setParameter('project', array_keys($statistics))
-        ;
+            ->setParameter('project', array_keys($statistics));
 
         if ($begin !== null) {
             $qb
                 ->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
-            ;
+                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE);
         }
 
         if ($end !== null) {
             $qb
                 ->andWhere($qb->expr()->lte('t.begin', ':end'))
-                ->setParameter('end', $end, Types::DATETIME_MUTABLE)
-            ;
+                ->setParameter('end', $end, Types::DATETIME_MUTABLE);
         }
 
         $result = $qb->getQuery()->getResult();
@@ -420,15 +411,13 @@ class ProjectStatisticService
             ->addSelect('t.billable as billable')
             ->andWhere('t.project = :project')
             ->setParameter('project', $query->getProject())
-            ->addGroupBy('billable')
-        ;
+            ->addGroupBy('billable');
 
         // fetch stats grouped by ACTIVITY for all time
         $qb1 = clone $qb;
         $qb1
             ->addSelect('IDENTITY(t.activity) as activity')
-            ->addGroupBy('t.activity')
-        ;
+            ->addGroupBy('t.activity');
 
         /** @var array<string, ActivityStatistic> $activities */
         $activities = [];
@@ -483,8 +472,7 @@ class ProjectStatisticService
             ->addSelect('IDENTITY(t.user) as user')
             ->addGroupBy('year')
             ->addGroupBy('month')
-            ->addGroupBy('user')
-        ;
+            ->addGroupBy('user');
 
         $userMonths = $qb1->getQuery()->getResult();
         $userIds = array_unique(array_column($userMonths, 'user'));
@@ -569,8 +557,7 @@ class ProjectStatisticService
         $qb1 = clone $qb;
         $qb1
             ->addSelect('YEAR(t.date) as year')
-            ->addGroupBy('year')
-        ;
+            ->addGroupBy('year');
 
         foreach ($qb1->getQuery()->getResult() as $year) {
             if (!\array_key_exists($year['year'], $years)) {
@@ -593,8 +580,7 @@ class ProjectStatisticService
                 ->andWhere('YEAR(t.date) = :year')
                 ->setParameter('year', $yearName)
                 ->addGroupBy('year')
-                ->addGroupBy('t.activity')
-            ;
+                ->addGroupBy('t.activity');
 
             /** @var array<int, array{"duration": int, "rate": float, "internalRate": float, "count": int, "billable": bool, "activity": int, "year": int}> $statsTmp */
             $statsTmp = $qb2->getQuery()->getArrayResult();
@@ -638,8 +624,7 @@ class ProjectStatisticService
             ->addSelect('YEAR(t.date) as year')
             ->addSelect('MONTH(t.date) as month')
             ->addGroupBy('year')
-            ->addGroupBy('month')
-        ;
+            ->addGroupBy('month');
         foreach ($qb1->getQuery()->getResult() as $month) {
             $tmp = $model->getYear($month['year'])->getMonth($month['month']);
             if ($tmp === null) {
@@ -682,8 +667,7 @@ class ProjectStatisticService
                 )
             )
             ->addGroupBy('p')
-            ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
-        ;
+            ->setParameter('project_end', $today, Types::DATETIME_MUTABLE);
 
         if ($query->getCustomer() !== null) {
             $qb->andWhere($qb->expr()->eq('c', ':customer'));
@@ -693,8 +677,7 @@ class ProjectStatisticService
         if (!$query->isIncludeNoWork()) {
             $qb
                 ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
-                ->andHaving($qb->expr()->gt('SUM(t.duration)', 0))
-            ;
+                ->andHaving($qb->expr()->gt('SUM(t.duration)', 0));
         }
 
         if ($query->isIncludeWithBudget()) {
@@ -756,8 +739,7 @@ class ProjectStatisticService
             ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($tplQb->expr()->in('t.project', ':project'))
             ->groupBy('t.project')
-            ->setParameter('project', $projectIds)
-        ;
+            ->setParameter('project', $projectIds);
 
         // find the most recent timesheet for each project
         $qb = clone $tplQb;
@@ -774,8 +756,7 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) = :start_date')
-            ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
-        ;
+            ->setParameter('start_date', $today, Types::DATETIME_MUTABLE);
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
@@ -787,8 +768,7 @@ class ProjectStatisticService
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
             ->setParameter('start_date', $startOfWeek, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
-        ;
+            ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE);
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
@@ -800,8 +780,7 @@ class ProjectStatisticService
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
             ->setParameter('start_date', $startMonth, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
-        ;
+            ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE);
 
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {

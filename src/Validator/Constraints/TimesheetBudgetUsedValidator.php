@@ -111,7 +111,8 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
 
             // if an existing entry was updated, but the relevant fields for budget calculation were not touched: do not validate!
             // this could for example happen when export flag is changed OR if "prevent overbooking"  config was recently activated and this is an old entry
-            if ($duration === $rawData['duration'] &&
+            if (
+                $duration === $rawData['duration'] &&
                 $rate === $rawData['rate'] &&
                 $value->isBillable() === $rawData['billable'] &&
                 $begin->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
@@ -235,8 +236,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 '%budget%' => $helper->money($budget, $currency),
                 '%free%' => $helper->money($free, $currency)
             ])
-            ->addViolation()
-        ;
+            ->addViolation();
     }
 
     private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration): void
@@ -259,7 +259,6 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 '%budget%' => $durationFormat->format($budget),
                 '%free%' => $durationFormat->format($free)
             ])
-            ->addViolation()
-        ;
+            ->addViolation();
     }
 }
