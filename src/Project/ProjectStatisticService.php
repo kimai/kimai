@@ -92,15 +92,15 @@ class ProjectStatisticService
                     $qb->expr()->lte('p.start', ':project_start')
                 )
             )
-            ->setParameter('project_start', $now, Types::DATETIME_IMMUTABLE)
+            ->setParameter('project_start', DateTimeImmutable::createFromInterface($now), Types::DATETIME_IMMUTABLE)
             ->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('p.end'),
                     $qb->expr()->gte('p.end', ':project_end')
                 )
             )
-            ->setParameter('project_end', $now, Types::DATETIME_IMMUTABLE)
-            ->setParameter('begin', $lastChange, Types::DATETIME_IMMUTABLE);
+            ->setParameter('project_end', DateTimeImmutable::createFromInterface($now), Types::DATETIME_IMMUTABLE)
+            ->setParameter('begin', DateTimeImmutable::createFromInterface($lastChange), Types::DATETIME_IMMUTABLE);
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
         $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
@@ -266,7 +266,7 @@ class ProjectStatisticService
             $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
                 $models[$id]->setStatistic($statistic);
-                // override the total for better displaying
+                // override the total for better displaying  
                 $models[$id]->setStatisticTotal($statistic);
             }
 
