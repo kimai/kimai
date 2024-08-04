@@ -118,7 +118,7 @@ final class QuickEntryController extends AbstractController
             $startFrom = null;
             if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
                 $startFrom = clone $startWeek;
-                $startFrom->modify(sprintf('-%s weeks', $takeOverWeeks));
+                $startFrom->modify(\sprintf('-%s weeks', $takeOverWeeks));
             }
 
             $favorites = $this->favoriteRecordService->favoriteEntries($user, $amount);

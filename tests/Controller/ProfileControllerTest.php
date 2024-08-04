@@ -243,7 +243,7 @@ class ProfileControllerTest extends ControllerBaseTest
     }
 
     /**
-     * @legacy
+     * @group legacy
      */
     public function testApiTokenAction(): void
     {

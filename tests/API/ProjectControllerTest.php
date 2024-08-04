@@ -47,10 +47,10 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
-            return sprintf('/api/projects/%s/rates/%s', $id, $rateId);
+            return \sprintf('/api/projects/%s/rates/%s', $id, $rateId);
         }
 
-        return sprintf('/api/projects/%s/rates', $id);
+        return \sprintf('/api/projects/%s/rates', $id);
     }
 
     protected function importTestRates($id): array

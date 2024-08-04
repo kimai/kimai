@@ -419,7 +419,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         ];
 
         foreach ($expected as $key => $value) {
-            self::assertEquals($value, $result[$key], sprintf('Field %s has invalid value', $key));
+            self::assertEquals($value, $result[$key], \sprintf('Field %s has invalid value', $key));
         }
     }
 

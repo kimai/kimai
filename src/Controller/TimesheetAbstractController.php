@@ -321,7 +321,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($disallowed > 0) {
-            $this->flashWarning(sprintf('You are missing the permission to edit %s timesheets', $disallowed));
+            $this->flashWarning(\sprintf('You are missing the permission to edit %s timesheets', $disallowed));
         }
 
         $dto->setEntities($timesheets);
@@ -411,7 +411,7 @@ abstract class TimesheetAbstractController extends AbstractController
                     $this->flashUpdateException($ex);
                 }
             } else {
-                $this->flashSuccess(sprintf('No changes for %s entries detected.', \count($timesheets)));
+                $this->flashSuccess(\sprintf('No changes for %s entries detected.', \count($timesheets)));
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             }

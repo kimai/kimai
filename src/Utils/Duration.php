@@ -85,7 +85,7 @@ final class Duration
             self::FORMAT_COLON => $this->parseColonFormat($duration),
             self::FORMAT_NATURAL => $this->parseNaturalFormat($duration),
             self::FORMAT_DECIMAL => $this->parseDecimalFormat($duration),
-            default => throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode)),
+            default => throw new \InvalidArgumentException(\sprintf('Unsupported duration format "%s"', $mode)),
         };
     }
 
@@ -116,7 +116,7 @@ final class Duration
         $parts = explode(':', $duration);
         if (\count($parts) < 2 || \count($parts) > 3) {
             throw new \InvalidArgumentException(
-                sprintf('Invalid colon format given in "%s"', $duration)
+                \sprintf('Invalid colon format given in "%s"', $duration)
             );
         }
 
@@ -124,13 +124,13 @@ final class Duration
         foreach ($parts as $part) {
             if (\strlen($part) === 0) {
                 throw new \InvalidArgumentException(
-                    sprintf('Colon format cannot parse "%s"', $duration)
+                    \sprintf('Colon format cannot parse "%s"', $duration)
                 );
             }
             // the entire time could be negative
             if ($i++ > 0 && ((int) $part) < 0) {
                 throw new \InvalidArgumentException(
-                    sprintf('Negative input is not allowed in "%s"', $duration)
+                    \sprintf('Negative input is not allowed in "%s"', $duration)
                 );
             }
         }

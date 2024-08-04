@@ -491,7 +491,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
 
         if (!\in_array($category, $allowed)) {
-            throw new \InvalidArgumentException(sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
+            throw new \InvalidArgumentException(\sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
         }
 
         $this->category = $category;

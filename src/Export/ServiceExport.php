@@ -161,7 +161,7 @@ final class ServiceExport
             $items = array_merge($items, $repository->getExportItemsForQuery($query));
             if ($max !== null && \count($items) > $max) {
                 throw new TooManyItemsExportException(
-                    sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
+                    \sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
                 );
             }
         }

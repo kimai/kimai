@@ -36,7 +36,7 @@ final class UserLocaleType extends AbstractType
         $resolver->setDefaults([
             'label' => 'locale',
             'help_html' => true,
-            'help' => sprintf('<a href="%1$s" target="help_locales">%2$s</a>', $route, $moreLink)
+            'help' => \sprintf('<a href="%1$s" target="help_locales">%2$s</a>', $route, $moreLink)
         ]);
     }
 

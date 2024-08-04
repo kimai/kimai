@@ -77,7 +77,7 @@ final class AppExtension extends Extension
             }
             foreach ($bundleConfig as $key => $value) {
                 if (\array_key_exists($key, $config)) {
-                    throw new \Exception(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
+                    throw new \Exception(\sprintf('Invalid bundle configuration "%s" found, skipping', $key));
                 }
                 $config[$key] = $value;
             }

@@ -32,7 +32,7 @@ final class SamlLoginAttributes
     public function getAttribute(string $name): mixed
     {
         if (!\array_key_exists($name, $this->attributes)) {
-            throw new \InvalidArgumentException(sprintf('This SAML login has no "%s" attribute.', $name));
+            throw new \InvalidArgumentException(\sprintf('This SAML login has no "%s" attribute.', $name));
         }
 
         return $this->attributes[$name];

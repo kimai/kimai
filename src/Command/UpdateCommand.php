@@ -91,7 +91,7 @@ final class UpdateCommand extends Command
         if ($cacheResult !== Command::SUCCESS) {
             $io->warning(
                 [
-                    sprintf('Updated %s to version %s but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION),
+                    \sprintf('Updated %s to version %s but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION),
                     'Please run the cache commands manually:',
                     'bin/console cache:clear --env=' . $environment . PHP_EOL .
                     'bin/console cache:warmup --env=' . $environment
@@ -99,7 +99,7 @@ final class UpdateCommand extends Command
             );
         } else {
             $io->success(
-                sprintf('Congratulations! Successfully updated %s to version %s', Constants::SOFTWARE, Constants::VERSION)
+                \sprintf('Congratulations! Successfully updated %s to version %s', Constants::SOFTWARE, Constants::VERSION)
             );
         }
 
