@@ -173,7 +173,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         }
         $months = [];
         for ($i = 1; $i < 13; $i++) {
-            $months[] = $this->getFormatter()->monthName(new DateTime(sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
+            $months[] = $this->getFormatter()->monthName(new DateTime(\sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
         }
 
         return $months;

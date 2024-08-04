@@ -70,13 +70,13 @@ class AuthenticationTest extends APIControllerBaseTest
         $this->assertEquals(
             $data,
             json_decode($response->getContent(), true),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The secure URL %s is not protected.', $url)
         );
 
         $this->assertEquals(
             Response::HTTP_FORBIDDEN,
             $response->getStatusCode(),
-            sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
+            \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );
     }
 

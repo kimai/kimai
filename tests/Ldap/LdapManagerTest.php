@@ -228,7 +228,7 @@ class LdapManagerTest extends TestCase
 
                 return $expected[1];
             }
-            $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
+            $this->fail(\sprintf('Unexpected search with baseDn %s', $baseDn));
         });
 
         $sut = $this->getLdapManager($driver);
@@ -269,7 +269,7 @@ class LdapManagerTest extends TestCase
                 return $expected[1];
             }
 
-            $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
+            $this->fail(\sprintf('Unexpected search with baseDn %s', $baseDn));
         });
 
         $sut = $this->getLdapManager($driver);
@@ -305,7 +305,7 @@ class LdapManagerTest extends TestCase
                 return $expected[1];
             }
 
-            $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
+            $this->fail(\sprintf('Unexpected search with baseDn %s', $baseDn));
         });
 
         $sut = $this->getLdapManager($driver, [
@@ -445,7 +445,7 @@ class LdapManagerTest extends TestCase
 
                 return $expectedGroups;
             }
-            $this->fail(sprintf('Unexpected search with baseDn %s', $baseDn));
+            $this->fail(\sprintf('Unexpected search with baseDn %s', $baseDn));
         });
 
         $sut = $this->getLdapManager($driver, $groupConfig);

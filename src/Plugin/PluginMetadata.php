@@ -25,36 +25,36 @@ class PluginMetadata
     public function __construct(string $path)
     {
         if (!is_dir($path) || !is_readable($path)) {
-            throw new \Exception(sprintf('Bundle directory "%s" cannot be accessed.', $path));
+            throw new \Exception(\sprintf('Bundle directory "%s" cannot be accessed.', $path));
         }
 
         $pluginName = basename($path);
         $composer = $path . '/composer.json';
 
         if (!file_exists($composer) || !is_readable($composer)) {
-            throw new \Exception(sprintf('Bundle "%s" does not ship composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" does not ship composer.json, which is required since 2.0.', $pluginName));
         }
 
         $json = json_decode(file_get_contents($composer), true);
 
         if (!\array_key_exists('extra', $json)) {
-            throw new \Exception(sprintf('Bundle "%s" does not define an "extra" node in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" does not define an "extra" node in composer.json, which is required since 2.0.', $pluginName));
         }
 
         if (!\array_key_exists('kimai', $json['extra'])) {
-            throw new \Exception(sprintf('Bundle "%s" does not define the "extra.kimai" node in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" does not define the "extra.kimai" node in composer.json, which is required since 2.0.', $pluginName));
         }
 
         if (!\array_key_exists('require', $json['extra']['kimai'])) {
-            throw new \Exception(sprintf('Bundle "%s" does not define the minimum Kimai version in "extra.kimai.required" in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" does not define the minimum Kimai version in "extra.kimai.required" in composer.json, which is required since 2.0.', $pluginName));
         }
 
         if (!\array_key_exists('name', $json['extra']['kimai'])) {
-            throw new \Exception(sprintf('Bundle "%s" does not define its name in "extra.kimai.name" in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" does not define its name in "extra.kimai.name" in composer.json, which is required since 2.0.', $pluginName));
         }
 
         if (!\is_int($json['extra']['kimai']['require'])) {
-            throw new \Exception(sprintf('Bundle "%s" defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.', $pluginName));
+            throw new \Exception(\sprintf('Bundle "%s" defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.', $pluginName));
         }
 
         $this->description = $json['description'] ?? '';

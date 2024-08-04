@@ -36,7 +36,7 @@ class TranslationsTest extends TestCase
             foreach ($body->children() as $transUnit) {
                 self::assertNotEmpty(
                     (string) $transUnit->target,
-                    sprintf(
+                    \sprintf(
                         'Found empty translation in language "%s" and file "%s" for key "%s"',
                         $xml->file->attributes()['target-language'],
                         basename($file),
@@ -88,14 +88,14 @@ class TranslationsTest extends TestCase
                         // some special cases, which don't work properly - base translation should be changed
                         preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
                         asort($matches[0]);
-                        self::assertEquals($transLang[$key], array_values($matches[0]), sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
+                        self::assertEquals($transLang[$key], array_values($matches[0]), \sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
                         $counter++;
                         unset($transLang[$key]);
                     }
                 }
 
                 $counter += \count($transLang);
-                self::assertEquals($expectedCounter, $counter, sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
+                self::assertEquals($expectedCounter, $counter, \sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
             }
         }
     }

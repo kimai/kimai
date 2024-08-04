@@ -106,13 +106,13 @@ class Kernel extends BaseKernel
 
             $plugin = new $pluginClass();
             if (!$plugin instanceof PluginInterface) {
-                throw new \Exception(sprintf('Bundle "%s" does not implement %s, which is not supported since 2.0.', $bundleName, PluginInterface::class));
+                throw new \Exception(\sprintf('Bundle "%s" does not implement %s, which is not supported since 2.0.', $bundleName, PluginInterface::class));
             }
 
             $meta = new PluginMetadata($fullPath);
 
             if ($meta->getKimaiVersion() > Constants::VERSION_ID) {
-                throw new \Exception(sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
+                throw new \Exception(\sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
             }
 
             $plugins[] = $plugin;

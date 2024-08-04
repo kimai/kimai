@@ -56,13 +56,13 @@ final class AnnotationExtractor implements ExtractorInterface
         foreach ($definitions as $definition) {
             $arguments = $definition->getArguments();
             if (!\array_key_exists('name', $arguments) || $arguments['name'] === null) {
-                throw new ExtractorException(sprintf('@Expose needs the "name" attribute on class level hierarchy, check %s::class', $value));
+                throw new ExtractorException(\sprintf('@Expose needs the "name" attribute on class level hierarchy, check %s::class', $value));
             }
             if (!\array_key_exists('exp', $arguments) || $arguments['exp'] === null) {
-                throw new ExtractorException(sprintf('@Expose needs the "exp" attribute on class level hierarchy, check %s::class', $value));
+                throw new ExtractorException(\sprintf('@Expose needs the "exp" attribute on class level hierarchy, check %s::class', $value));
             }
             if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
-                throw new ExtractorException(sprintf('@Expose needs the "label" attribute on class level hierarchy, check %s::class', $value));
+                throw new ExtractorException(\sprintf('@Expose needs the "label" attribute on class level hierarchy, check %s::class', $value));
             }
 
             $parsed = $this->expressionLanguage->parse($arguments['exp'], ['object']);
@@ -87,10 +87,10 @@ final class AnnotationExtractor implements ExtractorInterface
             foreach ($definitions as $definition) {
                 $arguments = $definition->getArguments();
                 if (\array_key_exists('exp', $arguments) && $arguments['exp'] !== null) {
-                    throw new ExtractorException(sprintf('@Expose only supports the "exp" attribute on class level hierarchy, check %s::$%s', $value, $property->getName()));
+                    throw new ExtractorException(\sprintf('@Expose only supports the "exp" attribute on class level hierarchy, check %s::$%s', $value, $property->getName()));
                 }
                 if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
-                    throw new ExtractorException(sprintf('@Expose needs the "label" attribute on property level hierarchy, check %s::$%s', $value, $property->getName()));
+                    throw new ExtractorException(\sprintf('@Expose needs the "label" attribute on property level hierarchy, check %s::$%s', $value, $property->getName()));
                 }
 
                 $name = $property->getName();
@@ -120,15 +120,15 @@ final class AnnotationExtractor implements ExtractorInterface
             $definitions = $method->getAttributes(Expose::class);
             foreach ($definitions as $definition) {
                 if (\count($method->getParameters()) > 0) {
-                    throw new ExtractorException(sprintf('@Expose does not support method %s::%s(...) as it has required parameters.', $value, $method->getName()));
+                    throw new ExtractorException(\sprintf('@Expose does not support method %s::%s(...) as it has required parameters.', $value, $method->getName()));
                 }
 
                 $arguments = $definition->getArguments();
                 if (\array_key_exists('exp', $arguments) && $arguments['exp'] !== null) {
-                    throw new ExtractorException(sprintf('@Expose only supports the "exp" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
+                    throw new ExtractorException(\sprintf('@Expose only supports the "exp" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
                 }
                 if (!\array_key_exists('label', $arguments) || $arguments['label'] === null) {
-                    throw new ExtractorException(sprintf('@Expose needs the "label" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
+                    throw new ExtractorException(\sprintf('@Expose needs the "label" attribute on method level hierarchy, check %s::%s()', $value, $method->getName()));
                 }
 
                 $name = $method->getName();

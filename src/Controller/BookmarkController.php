@@ -88,7 +88,7 @@ final class BookmarkController extends AbstractController
         }
 
         if (\count($enabled) > 50) {
-            throw new RuntimeException(sprintf('Too many columns provided, expected maximum 50, received %s.', \count($enabled)));
+            throw new RuntimeException(\sprintf('Too many columns provided, expected maximum 50, received %s.', \count($enabled)));
         }
 
         $user = $this->getUser();

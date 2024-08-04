@@ -73,7 +73,7 @@ final class InstallCommand extends Command
         }
 
         $io->success(
-            sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
+            \sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
         );
 
         return Command::SUCCESS;
@@ -118,12 +118,12 @@ final class InstallCommand extends Command
     {
         try {
             if ($this->connection->isConnected()) {
-                $io->note(sprintf('Database is existing and connection could be established'));
+                $io->note(\sprintf('Database is existing and connection could be established'));
 
                 return;
             }
 
-            if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
+            if (!$this->askConfirmation($input, $output, \sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
                 throw new \Exception('Skipped database creation, aborting installation');
             }
         } catch (\Exception $exception) {
@@ -152,7 +152,7 @@ final class InstallCommand extends Command
     {
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
-        $text = sprintf('<info>%s (yes/no)</info> [<comment>%s</comment>]:', $question, $default ? 'yes' : 'no');
+        $text = \sprintf('<info>%s (yes/no)</info> [<comment>%s</comment>]:', $question, $default ? 'yes' : 'no');
         $question = new ConfirmationQuestion(' ' . $text . ' ', $default, '/^y|yes/i');
 
         return $questionHelper->ask($input, $output, $question);

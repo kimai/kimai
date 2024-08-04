@@ -194,7 +194,7 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function setDurationTotal(Worksheet $sheet, int $column, int $row, string $startCoordinate, string $endCoordinate): void
     {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row));
         $style->getNumberFormat()->setFormatCode($this->durationFormat);
     }
@@ -204,19 +204,19 @@ abstract class AbstractSpreadsheetRenderer
         if (null === $duration) {
             $duration = 0;
         }
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=%s/%s', $duration, $this->durationBase));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=%s/%s', $duration, $this->durationBase));
         $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode($this->durationFormat);
     }
 
     protected function setRateTotal(Worksheet $sheet, int $column, int $row, string $startCoordinate, string $endCoordinate): void
     {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
     }
 
     protected function setRateStyle(Worksheet $sheet, int $column, int $row, ?string $currency): void
     {
         $sheet->getStyle(CellAddress::fromColumnAndRow($column, $row))->getNumberFormat()->setFormatCode(
-            sprintf($this->rateFormat, $currency ?? '')
+            \sprintf($this->rateFormat, $currency ?? '')
         );
     }
 
@@ -710,7 +710,7 @@ abstract class AbstractSpreadsheetRenderer
                 }
 
                 if (!\array_key_exists('render', $settings) || !\is_callable($settings['render'])) {
-                    throw new \RuntimeException(sprintf('Missing or invalid renderer for export column %s', $label));
+                    throw new \RuntimeException(\sprintf('Missing or invalid renderer for export column %s', $label));
                 }
 
                 $amount = $settings['render']($sheet, $entryHeaderRow, $entryHeaderColumn, $exportItem);

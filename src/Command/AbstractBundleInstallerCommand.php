@@ -72,7 +72,7 @@ abstract class AbstractBundleInstallerCommand extends Command
      */
     protected function getInstallerCommandName(): string
     {
-        return sprintf('kimai:bundle:%s:install', $this->getBundleCommandNamePart());
+        return \sprintf('kimai:bundle:%s:install', $this->getBundleCommandNamePart());
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class AbstractBundleInstallerCommand extends Command
 
         if ($parts[0] !== 'KimaiPlugin') {
             throw new LogicException(
-                sprintf('Unsupported namespace given, expected "KimaiPlugin" but received "%s". Please overwrite getBundleName() and return the correct bundle name.', $parts[0])
+                \sprintf('Unsupported namespace given, expected "KimaiPlugin" but received "%s". Please overwrite getBundleName() and return the correct bundle name.', $parts[0])
             );
         }
 
@@ -114,14 +114,14 @@ abstract class AbstractBundleInstallerCommand extends Command
 
         $bundleName = $this->getBundleName();
         $io->title(
-            sprintf('Starting installation of plugin: %s ...', $bundleName)
+            \sprintf('Starting installation of plugin: %s ...', $bundleName)
         );
 
         try {
             $this->importMigrations($io, $output);
         } catch (\Exception $ex) {
             $io->error(
-                sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
+                \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
             );
 
             return Command::FAILURE;
@@ -132,7 +132,7 @@ abstract class AbstractBundleInstallerCommand extends Command
                 $this->installAssets($io, $output);
             } catch (\Exception $ex) {
                 $io->error(
-                    sprintf('Failed to install assets for bundle %s. %s', $bundleName, $ex->getMessage())
+                    \sprintf('Failed to install assets for bundle %s. %s', $bundleName, $ex->getMessage())
                 );
 
                 return Command::FAILURE;
@@ -142,7 +142,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         chdir($path);
 
         $io->success(
-            sprintf('Congratulations! Plugin was successful installed: %s', $bundleName)
+            \sprintf('Congratulations! Plugin was successful installed: %s', $bundleName)
         );
 
         return Command::SUCCESS;

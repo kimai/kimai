@@ -51,19 +51,19 @@ final class ForbiddenPolicy implements SecurityPolicyInterface
     {
         foreach ($tags as $tag) {
             if (\in_array($tag, $this->forbiddenTags)) {
-                throw new SecurityNotAllowedTagError(sprintf('Tag "%s" is not allowed.', $tag), $tag);
+                throw new SecurityNotAllowedTagError(\sprintf('Tag "%s" is not allowed.', $tag), $tag);
             }
         }
 
         foreach ($filters as $filter) {
             if (\in_array($filter, $this->forbiddenFilters)) {
-                throw new SecurityNotAllowedFilterError(sprintf('Filter "%s" is not allowed.', $filter), $filter);
+                throw new SecurityNotAllowedFilterError(\sprintf('Filter "%s" is not allowed.', $filter), $filter);
             }
         }
 
         foreach ($functions as $function) {
             if (\in_array($function, $this->forbiddenFunctions)) {
-                throw new SecurityNotAllowedFunctionError(sprintf('Function "%s" is not allowed.', $function), $function);
+                throw new SecurityNotAllowedFunctionError(\sprintf('Function "%s" is not allowed.', $function), $function);
             }
         }
     }
@@ -86,7 +86,7 @@ final class ForbiddenPolicy implements SecurityPolicyInterface
 
         if ($forbidden) {
             $class = \get_class($obj);
-            throw new SecurityNotAllowedMethodError(sprintf('Calling "%s" method on a "%s" object is not allowed.', $method, $class), $class, $method);
+            throw new SecurityNotAllowedMethodError(\sprintf('Calling "%s" method on a "%s" object is not allowed.', $method, $class), $class, $method);
         }
     }
 
@@ -103,7 +103,7 @@ final class ForbiddenPolicy implements SecurityPolicyInterface
 
         if ($forbidden) {
             $class = \get_class($obj);
-            throw new SecurityNotAllowedPropertyError(sprintf('Calling "%s" property on a "%s" object is not allowed.', $property, $class), $class, $property);
+            throw new SecurityNotAllowedPropertyError(\sprintf('Calling "%s" property on a "%s" object is not allowed.', $property, $class), $class, $property);
         }
     }
 }

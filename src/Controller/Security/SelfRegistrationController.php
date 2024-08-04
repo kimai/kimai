@@ -164,7 +164,7 @@ final class SelfRegistrationController extends AbstractController
             return null;
         }
 
-        $key = sprintf('_security.%s.target_path', $token->getProviderKey());
+        $key = \sprintf('_security.%s.target_path', $token->getProviderKey());
 
         if ($session->has($key)) {
             return $session->get($key);

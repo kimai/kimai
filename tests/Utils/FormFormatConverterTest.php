@@ -98,7 +98,7 @@ class FormFormatConverterTest extends TestCase
         $sut = new FormFormatConverter();
         foreach ($this->getPossibleDateTimePattern() as $format => $example) {
             $pattern = $sut->convertToPattern($format, false);
-            $this->assertMatchesRegularExpression($pattern, $example, sprintf('Invalid pattern %s for format %s, did not match %s', $pattern, $format, $example));
+            $this->assertMatchesRegularExpression($pattern, $example, \sprintf('Invalid pattern %s for format %s, did not match %s', $pattern, $format, $example));
         }
     }
 

@@ -39,9 +39,9 @@ final class PaginationTemplate extends TwitterBootstrap5Template
     protected function linkLi(string $class, string $href, $text, ?string $rel = null): string
     {
         $liClass = implode(' ', array_filter(['page-item', $class]));
-        $rel = $rel ? sprintf(' rel="%s"', $rel) : '';
+        $rel = $rel ? \sprintf(' rel="%s"', $rel) : '';
 
-        return sprintf('<li class="%s"><a class="page-link pagination-link" href="%s"%s>%s</a></li>', $liClass, $href, $rel, $text);
+        return \sprintf('<li class="%s"><a class="page-link pagination-link" href="%s"%s>%s</a></li>', $liClass, $href, $rel, $text);
     }
 
     /**
@@ -53,7 +53,7 @@ final class PaginationTemplate extends TwitterBootstrap5Template
     {
         $liClass = implode(' ', array_filter(['page-item', $class]));
 
-        return sprintf('<li class="%s"><span class="page-link pagination-link">%s</span></li>', $liClass, $text);
+        return \sprintf('<li class="%s"><span class="page-link pagination-link">%s</span></li>', $liClass, $text);
     }
 
     public function current(int $page): string

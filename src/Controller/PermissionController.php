@@ -243,7 +243,7 @@ final class PermissionController extends AbstractController
         }
 
         if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \array_key_exists($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
-            throw new BadRequestHttpException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
+            throw new BadRequestHttpException(\sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
         }
 
         try {

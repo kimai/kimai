@@ -35,13 +35,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ExportCreateCommand extends Command
 {
     public function __construct(
-        private ServiceExport $serviceExport,
-        private CustomerRepository $customerRepository,
-        private ProjectRepository $projectRepository,
-        private TeamRepository $teamRepository,
-        private UserRepository $userRepository,
-        private TranslatorInterface $translator,
-        private MailerInterface $mailer
+        private readonly ServiceExport $serviceExport,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProjectRepository $projectRepository,
+        private readonly TeamRepository $teamRepository,
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private readonly MailerInterface $mailer
     ) {
         parent::__construct();
     }
@@ -197,17 +197,19 @@ final class ExportCreateCommand extends Command
         $subject = 'Export data available';
         $body = 'Your exported data is available, please find it attached to this email.';
 
+        /** @var array<string> $emails */
         $emails = [];
+        /** @var array<string> $tmp */
         $tmp = $input->getOption('email');
         if (\count($tmp) > 0) {
             foreach ($tmp as $email) {
                 $result = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($result === false) {
-                    $io->error('Invalid "email" given: ' . $email);
+                    $io->error('Invalid "email" given');
 
                     return Command::FAILURE;
                 }
-                $emails[] = $email;
+                $emails[] = (string) $email;
             }
         }
 
@@ -227,7 +229,7 @@ final class ExportCreateCommand extends Command
                 $user = $this->userRepository->loadUserByIdentifier($username);
             } catch(\Exception) {
                 $io->error(
-                    sprintf('The given username "%s" could not be resolved', $username)
+                    \sprintf('The given username "%s" could not be resolved', $username)
                 );
 
                 return Command::FAILURE;

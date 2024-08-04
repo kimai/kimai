@@ -57,7 +57,7 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
 
     protected function setDuration(Worksheet $sheet, int $column, int $row, ?int $duration): void
     {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), sprintf('=%s', $duration ?? 0));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=%s', $duration ?? 0));
     }
 
     protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void

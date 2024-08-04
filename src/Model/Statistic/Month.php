@@ -25,7 +25,7 @@ final class Month extends Timesheet
         $monthNumber = (int) $month;
         if ($monthNumber < 1 || $monthNumber > 12) {
             throw new InvalidArgumentException(
-                sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
+                \sprintf('Invalid month given. Expected 1-12, received "%s".', $monthNumber)
             );
         }
         $this->month = str_pad($month, 2, '0', STR_PAD_LEFT);

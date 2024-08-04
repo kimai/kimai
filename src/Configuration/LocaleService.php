@@ -140,11 +140,11 @@ final class LocaleService
     private function getConfig(string $key, string $locale): string|bool
     {
         if (!isset($this->languageSettings[$locale])) {
-            throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));
+            throw new \InvalidArgumentException(\sprintf('Unknown locale given: %s', $locale));
         }
 
         if (!isset($this->languageSettings[$locale][$key])) {
-            throw new \InvalidArgumentException(sprintf('Unknown setting for locale %s: %s', $locale, $key));
+            throw new \InvalidArgumentException(\sprintf('Unknown setting for locale %s: %s', $locale, $key));
         }
 
         return $this->languageSettings[$locale][$key];

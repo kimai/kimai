@@ -90,7 +90,7 @@ final class InvoiceCreateCommand extends Command
             $user = $this->userRepository->loadUserByIdentifier($username);
         } catch (\Exception $exception) {
             $io->error(
-                sprintf('The given username "%s" could not be resolved', $username)
+                \sprintf('The given username "%s" could not be resolved', $username)
             );
 
             return Command::FAILURE;
@@ -281,7 +281,7 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
+                $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                 continue;
             }
             $query->setTemplate($tpl);
@@ -293,7 +293,7 @@ final class InvoiceCreateCommand extends Command
                     $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
             }
         }
 
@@ -352,7 +352,7 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
+                $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
                 continue;
             }
             $query->setTemplate($tpl);
@@ -364,7 +364,7 @@ final class InvoiceCreateCommand extends Command
                     $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
             }
         }
 
@@ -391,7 +391,7 @@ final class InvoiceCreateCommand extends Command
             $columns = ['Filename'];
 
             $table = new Table($output);
-            $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
+            $table->setHeaderTitle(\sprintf('Created %s invoice(s)', \count($invoices)));
             $table->setHeaders($columns);
 
             foreach ($invoices as $invoiceFile) {
@@ -406,14 +406,14 @@ final class InvoiceCreateCommand extends Command
         $columns = ['ID', 'Customer', 'Total', 'Filename'];
 
         $table = new Table($output);
-        $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
+        $table->setHeaderTitle(\sprintf('Created %s invoice(s)', \count($invoices)));
         $table->setHeaders($columns);
 
         foreach ($invoices as $invoice) {
             $file = $this->serviceInvoice->getInvoiceFile($invoice);
             if (null === $file) {
                 $io->warning(
-                    sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId(), $invoice->getInvoiceFilename())
+                    \sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId(), $invoice->getInvoiceFilename())
                 );
                 continue;
             }
