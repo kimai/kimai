@@ -10,7 +10,6 @@ jobs:
     build:
         strategy:
             matrix:
-                type: [ dev, prod ]
                 server: [ fpm, apache ]
         runs-on: ubuntu-latest
 
@@ -43,11 +42,26 @@ jobs:
                       KIMAI=${{ env.kimai_version }}
                       TIMEZONE=Europe/London
                       BASE=${{ matrix.server }}
-                  target: ${{ matrix.type }}
-                  platforms: linux/amd64,linux/arm64 #,linux/arm/v8,linux/arm/v7,linux/arm/v6
+                  target: prod
+                  platforms: linux/amd64,linux/arm64
                   tags: |
-                      kimai/kimai2:${{ matrix.server }}-${{ matrix.type }}
-                      kimai/kimai2:${{ matrix.server }}-${{ env.kimai_version }}-${{ matrix.type }}
+                      kimai/kimai2:${{ matrix.server }}
+                      kimai/kimai2:${{ matrix.server }}-${{ env.kimai_version }}
+                  push: true
+
+            - name: Build dev image
+              if: matrix.server == 'apache'
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  build-args: |
+                      KIMAI=${{ env.kimai_version }}
+                      TIMEZONE=Europe/London
+                      BASE=apache
+                  target: dev
+                  platforms: linux/amd64,linux/arm64
+                  tags: |
+                      kimai/kimai2:dev
                   push: true
 
     tag:
@@ -66,35 +80,8 @@ jobs:
 
             - name: Pull images
               run: |
-                  docker pull kimai/kimai2:fpm-prod
-                  docker pull kimai/kimai2:fpm-dev
-                  docker pull kimai/kimai2:apache-prod
-                  docker pull kimai/kimai2:apache-dev
-
-            - name: Tag fpm
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:fpm kimai/kimai2:fpm-prod
-
-            - name: Tag fpm latest
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:fpm-latest kimai/kimai2:fpm-prod
+                  docker pull kimai/kimai2:fpm
 
             - name: Tag latest
               run: |
-                  docker buildx imagetools create -t kimai/kimai2:latest kimai/kimai2:fpm-prod
-
-            - name: Tag prod
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:prod kimai/kimai2:fpm-prod
-
-            - name: Tag apache
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:apache kimai/kimai2:apache-prod
-
-            - name: Tag apache latest
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:apache-latest kimai/kimai2:apache-prod
-
-            - name: Tag dev
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:dev kimai/kimai2:apache-dev
+                  docker buildx imagetools create -t kimai/kimai2:latest kimai/kimai2:fpm

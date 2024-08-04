@@ -2,12 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <!-- Reports -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
         <target state="translated">Tarefas por usuário</target>
       </trans-unit>
-      <!-- Actions -->
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>
         <target state="translated">Iniciar processamento</target>
@@ -36,7 +34,6 @@
         <source>task.create</source>
         <target state="translated">Criar tarefa</target>
       </trans-unit>
-      <!-- Application -->
       <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
         <source>Tasks</source>
         <target state="translated">Tarefas</target>

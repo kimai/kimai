@@ -46,9 +46,6 @@
         <source>confirm</source>
         <target state="translated">Bekräfta</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Lösenord</target>
@@ -73,9 +70,6 @@
         <source>api_token_repeat</source>
         <target state="translated">Upprepa API lösenord</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
         <target state="translated">Överblick</target>
@@ -124,16 +118,10 @@
         <source>menu.system_configuration</source>
         <target state="translated">Systeminställningar</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">Inga poster hittades baserat på dina valda filter.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Datum</target>
@@ -226,9 +214,6 @@
         <source>email</source>
         <target state="translated">E-post</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">Åtgärd</target>
@@ -249,23 +234,14 @@
         <source>action.close</source>
         <target state="translated">Stäng</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title" xml:space="preserve">
         <source>dashboard.title</source>
         <target state="translated">Överblick</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">Visa meny</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title" xml:space="preserve">
         <source>timesheet.title</source>
         <target state="translated">Min tidrapport</target>
@@ -294,9 +270,6 @@
         <source>fixedRate</source>
         <target state="translated">Fast pris</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">Användarprofil</target>
@@ -337,7 +310,6 @@
         <source>login_initial_view</source>
         <target state="translated">Initial vy efter inloggning</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">Månad</target>
@@ -354,19 +326,10 @@
         <source>daily_stats</source>
         <target state="translated">Visa daglig statistik i tidtabell</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target state="translated">Kalender</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">Konto</target>
@@ -415,9 +378,6 @@
         <source>currency</source>
         <target state="translated">Valuta</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target state="translated">Namn</target>
@@ -438,16 +398,10 @@
         <source>roles</source>
         <target state="translated">Roll</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -464,9 +418,6 @@
         <source>ROLE_USER</source>
         <target state="translated">Användare</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
         <target state="translated">Tid idag</target>
@@ -547,9 +498,6 @@
         <source>stats.customerTotal</source>
         <target state="translated">Antal kunder</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">Fakturamall</target>
@@ -662,9 +610,6 @@
         <source>invoice_bank_account</source>
         <target state="translated">Bankkonto</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target state="translated">Exportera</target>
@@ -693,9 +638,6 @@
         <source>export.date_copyright</source>
         <target state="translated">Skapad %date% med %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target state="translated">Dina aktiva tidsmätningar</target>
@@ -708,9 +650,6 @@
         <source>timesheet.start</source>
         <target state="translated">Påbörja tidtagning</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">Pappersstorlek</target>

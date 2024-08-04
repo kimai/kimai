@@ -74,9 +74,6 @@
         <source>file</source>
         <target>Fil</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target state="translated">Passord</target>
@@ -105,9 +102,6 @@
         <source>login_required</source>
         <target state="translated">Manglende tillatelse. Videresend til innlogging?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Administrasjon</target>
@@ -204,9 +198,6 @@
         <source>action.close</source>
         <target>Lukk</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Vis meny</target>
@@ -231,9 +222,6 @@
         <source>color</source>
         <target>Farge</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Brukerprofil</target>
@@ -266,7 +254,6 @@
         <source>lastLogin</source>
         <target>Siste innlogging</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Måned</target>
@@ -279,9 +266,6 @@
         <source>agendaDay</source>
         <target>Dag</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
@@ -294,9 +278,6 @@
         <source>project_end</source>
         <target>Prosjektslutt</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Konto</target>
@@ -341,9 +322,6 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Navn</target>
@@ -364,16 +342,10 @@
         <source>user_role.title</source>
         <target>Brukerrolle</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versjon</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Administrator</target>
@@ -386,9 +358,6 @@
         <source>ROLE_USER</source>
         <target>Bruker</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Arbeidstid</target>

@@ -74,9 +74,6 @@
         <source>rates.title</source>
         <target state="translated">Hinnat</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Salasana</target>
@@ -105,9 +102,6 @@
         <source>login_required</source>
         <target state="translated">Puuttuvat oikeudet. Uudelleen ohjataanko kirjautumiseen?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">Ohjauspaneeli</target>
@@ -172,9 +166,6 @@
         <source>Doctor</source>
         <target state="translated">Järjestelmän kunto</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">Valituilla suodattimilla ei löytynyt merkintöjä.</target>
@@ -183,9 +174,6 @@
         <source>error.no_comments_found</source>
         <target state="translated">Kommentteja ei ole vielä lähetetty.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Päivämäärä</target>
@@ -310,9 +298,6 @@
         <source>billable</source>
         <target state="translated">Laskutettava</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">Toiminnot</target>
@@ -337,16 +322,10 @@
         <source>action.close</source>
         <target state="translated">Sulje</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target state="translated">Ohjauspaneeli</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">Näytä valikko</target>
@@ -363,9 +342,6 @@
         <source>progress</source>
         <target state="translated">Edistyminen</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target state="translated">Omat ajat</target>
@@ -410,9 +386,6 @@
         <source>append</source>
         <target state="translated">Lisää</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">Käyttäjäprofiili</target>
@@ -461,7 +434,6 @@
         <source>lastLogin</source>
         <target state="translated">Viimeksi kirjautunut</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">Kuukausi</target>
@@ -482,19 +454,10 @@
         <source>export_decimal</source>
         <target state="translated">Käytä desimaalitarkkuutta viennissä</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target state="translated">Kalenteri</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target state="translated">Projektin aloitus</target>
@@ -503,9 +466,6 @@
         <source>project_end</source>
         <target state="translated">Projektin lopetus</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">Tili</target>
@@ -558,9 +518,6 @@
         <source>currency</source>
         <target state="translated">Valuutta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target state="translated">Nimi</target>
@@ -593,16 +550,10 @@
         <source>Allowed character: A-Z and _</source>
         <target state="translated">Sallitut merkit: A-Z and _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target state="translated">Versio</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">Järjestelmän ylläpitäjä</target>
@@ -619,9 +570,6 @@
         <source>ROLE_USER</source>
         <target state="translated">Käyttäjä</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target state="translated">Tänään, %day%</target>
@@ -730,9 +678,6 @@
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% käytetty (%left% on vielä auki)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">Lasku malli</target>
@@ -921,9 +866,6 @@
         <source>export.date_copyright</source>
         <target state="translated">Luotu %date% sovelluksella %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target state="translated">Sinun aktiiviset ajan mittaukset</target>
@@ -936,9 +878,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Luo uusi aikamerkintä</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">Sivun koko</target>

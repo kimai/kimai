@@ -6,6 +6,10 @@
         <source>teams.project_access</source>
         <target state="translated">Beri akses ke proyek</target>
       </trans-unit>
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
+        <source>teams.customer_access</source>
+        <target state="translated">Izinkan akses ke pelanggan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

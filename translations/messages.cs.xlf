@@ -46,9 +46,6 @@
         <source>confirm</source>
         <target>Potvrdit</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Heslo</target>
@@ -73,9 +70,6 @@
         <source>api_token_repeat</source>
         <target>Potvrdit API heslo</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Nástěnka</target>
@@ -132,16 +126,10 @@
         <source>tags</source>
         <target>Štítky</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Na základě vybraných dat nebyly nalezeny žádné záznamy.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -238,9 +226,6 @@
         <source>teamlead</source>
         <target>Vedoucí teamu</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Akce</target>
@@ -265,23 +250,14 @@
         <source>action.close</source>
         <target>Zavřít</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Nástěnka</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Zobrazit menu</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Moje časy</target>
@@ -314,9 +290,6 @@
         <source>color</source>
         <target>Barva</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Profil uživatele</target>
@@ -357,7 +330,6 @@
         <source>login_initial_view</source>
         <target>Počáteční zobrazení po přihlášení</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Měsíc</target>
@@ -374,19 +346,10 @@
         <source>daily_stats</source>
         <target>Zobrazit denní statistiky v pracovním výkaze</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendář</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Účet</target>
@@ -435,9 +398,6 @@
         <source>currency</source>
         <target>Měna</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Jméno</target>
@@ -458,16 +418,10 @@
         <source>roles</source>
         <target>Funkce</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Verze</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Systémový-Admin</target>
@@ -484,9 +438,6 @@
         <source>ROLE_USER</source>
         <target>Uživatel</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Dnešní pracovní doba</target>
@@ -571,9 +522,6 @@
         <source>stats.customerTotal</source>
         <target>Zákazníci</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Šablona faktury</target>
@@ -686,9 +634,6 @@
         <source>invoice_bank_account</source>
         <target>Bankovní účet</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Export</target>
@@ -717,9 +662,6 @@
         <source>export.date_copyright</source>
         <target>Vytvořeno %date% s %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Vaše aktivní měření času</target>
@@ -732,9 +674,6 @@
         <source>timesheet.start</source>
         <target state="translated">Spustit sledování času</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Velikost stránky</target>

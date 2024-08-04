@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nl" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Time tracking</source>
-        <target>Tijdregistratie</target>
+        <target state="translated">Tijdsregistratie</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -261,6 +261,58 @@
       <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows">
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Minimale aantal rijen</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+        <source>customer.number_format</source>
+        <target state="translated">Formaat klantnummer</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Toegestane vervanger: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve">
+        <source>calendar.title_pattern</source>
+        <target state="translated">Weergave van de titels van agenda-items</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Kopieer gegevens bij het toevoegen via slepen en neerzetten (0=gedeactiveerd)</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Neem teams over van de ingelogde gebruiker bij het aanmaken van nieuwe boekingen</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Sta toe dat eenzelfde nummer meerdere keren gebruikt wordt</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Formaat projectnummer</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Formaat activiteitsnummer</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Sta toe dat hetzelfde nummer meerdere keren gebruikt wordt</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration" xml:space="preserve">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="translated">Maximale duurtijd van een tijdsregistratie in minuten voordat er een "pauzewaarschuwing" wordt weergegeven (0 = gedeactiveerd)</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="translated">Maximale duurtijd van een tijdsregistratie in minuten voordat het opslaan wordt geweigerd (0 = gedeactiveerd)</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount" xml:space="preserve">
+        <source>calendar.dragdrop_amount</source>
+        <target state="translated">Aantal tijdsregistraties voor slepen en neerzetten (0 = gedeactiveerd)</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Sta het creëren van activiteiten toe via het tijdsregistratie formulier</target>
       </trans-unit>
     </body>
   </file>

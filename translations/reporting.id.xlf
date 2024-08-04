@@ -6,6 +6,10 @@
         <source>report_user_week</source>
         <target state="translated">Tampilan mingguan untuk satu pengguna</target>
       </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
+        <source>report_user_month</source>
+        <target state="translated">Tampilan bulanan untuk satu pengguna</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

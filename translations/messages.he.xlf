@@ -1662,9 +1662,9 @@
         <source>help</source>
         <target>תיעוד</target>
       </trans-unit>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target state="translated">פורום</target>
+      <trans-unit id="oYYDCG5" resname="support" xml:space="preserve" approved="yes">
+        <source>Support</source>
+        <target state="final">תמיכה</target>
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>

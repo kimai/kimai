@@ -126,7 +126,6 @@
         <source>Display of entries in selection lists</source>
         <target>Darstellung der Einträge in Auswahllisten</target>
       </trans-unit>
-      <!-- Login / Security -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>Passwort</target>
@@ -175,7 +174,6 @@
         <source>security.unlock.button</source>
         <target>Freischalten</target>
       </trans-unit>
-      <!-- Menu / Navbar items -->
       <trans-unit id="UoOv6mx" approved="yes" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Dashboard</target>
@@ -248,7 +246,6 @@
         <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <!-- Error templates -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
@@ -269,7 +266,6 @@
         <source>error.directory_protected</source>
         <target>Das Verzeichnis „%dir%“ ist schreibgeschützt.</target>
       </trans-unit>
-      <!-- General labels -->
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
         <target>Gelöscht</target>
@@ -438,7 +434,6 @@
         <source>help.billable</source>
         <target>Falls die Einstellung aus ist, werden alle zukünftig erfassten Zeiteinträge als "nicht abrechenbar" markiert.</target>
       </trans-unit>
-      <!-- Buttons & Actions -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Aktionen</target>
@@ -467,7 +462,6 @@
         <source>action.close</source>
         <target>Schließen</target>
       </trans-unit>
-      <!-- Dashboard -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
@@ -476,7 +470,6 @@
         <source>dashboard.edit_mode</source>
         <target>Sie können Ihre Widgets per Drag &amp; Drop neu anordnen. Das Hinzufügen von Widgets speichert ausstehende Änderungen.</target>
       </trans-unit>
-      <!-- Widgets -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Menü anzeigen</target>
@@ -493,7 +486,6 @@
         <source>progress</source>
         <target>Fortschritt</target>
       </trans-unit>
-      <!-- Timesheet -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Meine Zeiten</target>
@@ -534,7 +526,6 @@
         <source>append</source>
         <target>Hinzufügen</target>
       </trans-unit>
-      <!-- Column modal -->
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Darstellung anpassen</target>
@@ -555,7 +546,6 @@
         <source>mobile</source>
         <target>Mobil</target>
       </trans-unit>
-      <!-- User profile -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Benutzerprofil</target>
@@ -580,7 +570,6 @@
         <source>profile.password</source>
         <target>Passwort</target>
       </trans-unit>
-      <!-- 2FA  -->
       <trans-unit id="FeFBn_3" resname="profile.2fa">
         <source>profile.2fa</source>
         <target>Zwei-Faktor (2FA)</target>
@@ -601,7 +590,6 @@
         <source>login.2fa_label</source>
         <target>Bestätigungscode</target>
       </trans-unit>
-      <!-- END 2FA  -->
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API Zugang</target>
@@ -714,7 +702,6 @@
         <source>notifications</source>
         <target>Benachrichtigungen</target>
       </trans-unit>
-      <!-- Notifications -->
       <trans-unit id="0ZWvn12" resname="notifications.welcome">
         <source>notifications.welcome</source>
         <target>Vielen Dank, dass Sie Benachrichtigungen zugestimmt haben!</target>
@@ -723,7 +710,6 @@
         <source>notifications.denied</source>
         <target>Sie haben Benachrichtigungen abgelehnt. Lesen Sie bitte in der Dokumentation ihres Browsers nach, wie Sie diese aktivieren können.</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Monat</target>
@@ -748,12 +734,10 @@
         <source>update_browser_title</source>
         <target>Browser Titel aktualisieren</target>
       </trans-unit>
-      <!-- User timesheet calendar -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
-      <!-- Projects -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Projekt Start</target>
@@ -770,7 +754,6 @@
         <source>Activity number</source>
         <target>Tätigkeitsnummer</target>
       </trans-unit>
-      <!-- Customer -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Kundennummer</target>
@@ -823,7 +806,6 @@
         <source>currency</source>
         <target>Währung</target>
       </trans-unit>
-      <!-- Admin: User -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Name</target>
@@ -868,7 +850,6 @@
         <source>Allowed character: A-Z and _</source>
         <target>Erlaubte Zeichen: A-Z und _ (min. 5 Großbuchstaben)</target>
       </trans-unit>
-      <!-- Admin: Plugins -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
@@ -877,7 +858,6 @@
         <source>plugin.installed</source>
         <target>Installierte Erweiterungen</target>
       </trans-unit>
-      <!-- ROLES -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -894,7 +874,6 @@
         <source>ROLE_USER</source>
         <target>Benutzer</target>
       </trans-unit>
-      <!-- Statistics data for Dashboard & Users profile -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Heute, %day%</target>
@@ -1079,7 +1058,6 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% verwendet (noch %left% diesen Monat offen)</target>
       </trans-unit>
-      <!-- Invoice -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Vorlagen</target>
@@ -1284,7 +1262,6 @@
         <source>preview.skipped_rows</source>
         <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
       </trans-unit>
-      <!-- Export -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Export</target>
@@ -1325,7 +1302,6 @@
         <source>type</source>
         <target>Typ</target>
       </trans-unit>
-      <!-- Navbar - recent entries and activities -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Ihre aktiven Zeitmessungen</target>
@@ -1342,7 +1318,6 @@
         <source>timesheet.stop</source>
         <target>Zeiterfassung stoppen</target>
       </trans-unit>
-      <!-- TOOLBARS -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Ergebnisse</target>
@@ -1487,7 +1462,6 @@
         <source>default_value_new</source>
         <target>Standardwert für neue Einträge</target>
       </trans-unit>
-      <!-- QUICK ENTRIES -->
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Wochenstunden</target>

@@ -30,9 +30,6 @@
         <source>confirm.delete</source>
         <target>Вы действительно хотите удалить?</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Пароль</target>
@@ -57,9 +54,6 @@
         <source>api_token_repeat</source>
         <target state="translated">Повторите пароль API</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">Информпанель</target>
@@ -96,16 +90,10 @@
         <source>users</source>
         <target>Пользователи</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">В данном представлении записи не найдены! Измените фильтр или создайте новую запись.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Дата</target>
@@ -186,9 +174,6 @@
         <source>email</source>
         <target>Эл. почта</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Действия</target>
@@ -209,23 +194,14 @@
         <source>action.close</source>
         <target>Закрыть</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target state="translated">Информпанель</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Отобразить меню</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target state="translated">Учёт времени</target>
@@ -246,9 +222,6 @@
         <source>modal.columns.title</source>
         <target>Изменить видимость столбцов</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Имя пользователя</target>
@@ -281,12 +254,6 @@
         <source>profile.preferences</source>
         <target>Настройки</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Клиентский номер</target>
@@ -335,9 +302,6 @@
         <source>currency</source>
         <target>Валюта</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Имя</target>
@@ -358,9 +322,6 @@
         <source>roles</source>
         <target>Позиция</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Системный администратор</target>
@@ -377,9 +338,6 @@
         <source>ROLE_USER</source>
         <target>Пользователь</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Отработано сегодня</target>
@@ -460,9 +418,6 @@
         <source>stats.customerTotal</source>
         <target>Количество клиентов</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Шаблоны счетов</target>
@@ -543,16 +498,10 @@
         <source>orderNumber</source>
         <target>Номер заказа</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="needs-translation">Начать новый хронометраж</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Количество</target>
