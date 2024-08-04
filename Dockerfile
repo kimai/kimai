@@ -54,7 +54,6 @@ LABEL org.opencontainers.image.title="Kimai" \
       org.opencontainers.image.documentation="https://www.kimai.org/documentation/" \
       org.opencontainers.image.source="https://github.com/kimai/kimai" \
       org.opencontainers.image.version="${KIMAI}" \
-      org.opencontainers.image.revision="${{github.sha}}" \
       org.opencontainers.image.vendor="Kevin Papst" \
       org.opencontainers.image.licenses="AGPL-3.0" \
       org.opencontainers.image.base.name="docker.io/library/alpine"
