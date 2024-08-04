@@ -2,8 +2,8 @@
 $DB_HOST = urldecode($argv[1]);
 $DB_BASE = urldecode($argv[2]);
 $DB_PORT = $argv[3];
-$DB_USER = urldecode(str_replace('+', '%2B', $argv[4]));
-$DB_PASS = urldecode(str_replace('+', '%2B', $argv[5]));
+$DB_USER = urldecode($argv[4]);
+$DB_PASS = urldecode($argv[5]);
 
 echo "Testing DB:";
 echo "*";
