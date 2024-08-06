@@ -127,6 +127,12 @@
                 'trans_percent_spent': 'stats.percentUsed_month',
             }) %}
         {% endif %}
+        {% if budgetStatisticModel.isQuarterlyBudget() %}
+            {% set options = options|merge({
+                'trans_percent_open': 'stats.percentUsedLeft_quarter',
+                'trans_percent_spent': 'stats.percentUsed_quarter',
+            }) %}
+        {% endif %}
         {{ _self.progressbar_full(options) }}
     {% endif %}
 {% endmacro %}
@@ -138,14 +144,22 @@
     {% if budgetStatisticModel.hasTimeBudget() %}
         {% set options = {
             'max': budgetStatisticModel.getTimeBudget(),
-            'current': budgetStatisticModel.getTimeBudgetSpent(),
-            'open': (budgetStatisticModel.getTimeBudgetOpen()),
             'format': 'duration',
         } %}
         {% if budgetStatisticModel.isMonthlyBudget() %}
             {% set options = options|merge({
+                'current': budgetStatisticModel.getTimeBudgetSpent(),
+                'open': (budgetStatisticModel.getTimeBudgetOpen()),
                 'trans_percent_open': 'stats.percentUsedLeft_month',
                 'trans_percent_spent': 'stats.percentUsed_month',
+            }) %}
+        {% endif %}
+        {% if budgetStatisticModel.isQuarterlyBudget() %}
+            {% set options = options|merge({
+                'current': budgetStatisticModel.getDurationBillableTotal(),
+                'open':  max(budgetStatisticModel.getTimeBudget()-budgetStatisticModel.getDurationBillableTotal(), 0),
+                'trans_percent_open': 'stats.percentUsedLeft_quarter',
+                'trans_percent_spent': 'stats.percentUsed_quarter',
             }) %}
         {% endif %}
         {{ _self.progressbar_full(options) }}

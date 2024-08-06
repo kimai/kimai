@@ -58,6 +58,12 @@ class ActivityStatisticService
             $end = $dateFactory->getEndOfMonth($today);
         }
 
+        if ($activity->isQuarterlyBudget()) {
+            $dateFactory = new DateTimeFactory($today->getTimezone());
+            $begin = $dateFactory->getStartOfQuarter($today);
+            $end = $dateFactory->getEndOfQuarter($today);
+        }
+
         $stats->setStatistic($this->getActivityStatistics($activity, $begin, $end));
 
         return $stats;
@@ -71,12 +77,15 @@ class ActivityStatisticService
     {
         $models = [];
         $monthly = [];
+        $quarterly = [];
         $allTime = [];
 
         foreach ($activities as $activity) {
             $models[$activity->getId()] = new ActivityBudgetStatisticModel($activity);
             if ($activity->isMonthlyBudget()) {
                 $monthly[] = $activity;
+            } elseif ($activity->isQuarterlyBudget()) {
+                $quarterly[] = $activity;
             } else {
                 $allTime[] = $activity;
             }
@@ -96,6 +105,15 @@ class ActivityStatisticService
             $begin = $dateFactory->getStartOfMonth($today);
             $end = $dateFactory->getEndOfMonth($today);
             $statistics = $this->getBudgetStatistic($monthly, $begin, $end);
+            foreach ($statistics as $id => $statistic) {
+                $models[$id]->setStatistic($statistic);
+            }
+        }
+
+        if (\count($quarterly) > 0) {
+            $begin = $dateFactory->getStartOfQuarter($today);
+            $end = $dateFactory->getEndOfQuarter($today);
+            $statistics = $this->getBudgetStatistic($quarterly, $begin, $end);
             foreach ($statistics as $id => $statistic) {
                 $models[$id]->setStatistic($statistic);
             }
@@ -175,21 +193,18 @@ class ActivityStatisticService
             ->addGroupBy('billable')
             ->addGroupBy('exported')
             ->andWhere($qb->expr()->in('t.activity', ':activity'))
-            ->setParameter('activity', $activities)
-        ;
+            ->setParameter('activity', $activities);
 
         if ($begin !== null) {
             $qb
                 ->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
-            ;
+                ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE);
         }
 
         if ($end !== null) {
             $qb
                 ->andWhere($qb->expr()->lte('t.begin', ':end'))
-                ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
-            ;
+                ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE);
         }
 
         return $qb;

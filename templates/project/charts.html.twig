@@ -43,7 +43,7 @@
                 {% endfor %}
             {% endfor %}
             {{ bar_chart(chartPrefix, chartLabels, [chartData], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix}) }}
-        {% else %}
+        {% elseif not project.isQuarterlyBudget() %}
             <h4>
                 {%- if showMoneyBudget %}{{ 'budget'|trans }}{% else %}{{ 'timeBudget'|trans }}{% endif -%}
             </h4>

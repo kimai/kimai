@@ -5,7 +5,7 @@
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
-            {{ 'timeBudget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
+            {{ 'timeBudget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}{% if entity.isQuarterlyBudget() %}({{ 'budgetType_quarter'|trans }}){% endif %}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="time_budget_box"{% endblock %}
@@ -88,7 +88,7 @@
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
-            {{ 'budget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
+            {{ 'budget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}{% if entity.isQuarterlyBudget() %}({{ 'budgetType_quarter'|trans }}){% endif %}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="budget_box"{% endblock %}

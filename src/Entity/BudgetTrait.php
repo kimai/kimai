@@ -79,7 +79,7 @@ trait BudgetTrait
 
     public function setBudgetType(?string $budgetType = null): void
     {
-        if ($budgetType !== null && !\in_array($budgetType, ['month'])) {
+        if ($budgetType !== null && !\in_array($budgetType, ['month', 'quarter'])) {
             throw new \InvalidArgumentException('Unknown budget type: ' . $budgetType);
         }
         $this->budgetType = $budgetType;
@@ -90,6 +90,11 @@ trait BudgetTrait
         $this->setBudgetType('month');
     }
 
+    public function setIsQuarterlyBudget(): void
+    {
+        $this->setBudgetType('quarter');
+    }
+
     public function getBudgetType(): ?string
     {
         return $this->budgetType;
@@ -98,6 +103,11 @@ trait BudgetTrait
     public function isMonthlyBudget(): bool
     {
         return $this->hasBudgets() && $this->budgetType === 'month';
+    }
+
+    public function isQuarterlyBudget(): bool
+    {
+        return $this->hasBudgets() && $this->budgetType === 'quarter';
     }
 
     public function hasBudgets(): bool

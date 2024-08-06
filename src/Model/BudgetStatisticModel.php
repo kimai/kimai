@@ -66,9 +66,18 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         return $this->entity->isMonthlyBudget();
     }
 
+    public function isQuarterlyBudget(): bool
+    {
+        return $this->entity->isQuarterlyBudget();
+    }
+
     public function getDurationBillable(): int
     {
         if ($this->isMonthlyBudget()) {
+            return $this->getDurationBillableRelative();
+        }
+
+        if ($this->isQuarterlyBudget()) {
             return $this->getDurationBillableRelative();
         }
 
@@ -147,6 +156,10 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
             return $this->getRateBillableRelative();
         }
 
+        if ($this->isQuarterlyBudget()) {
+            return $this->getRateBillableRelative();
+        }
+
         return $this->getRateBillableTotal();
     }
 
@@ -177,6 +190,13 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
 
             return $this->statistic->getRate();
         }
+        if ($this->isQuarterlyBudget()) {
+            if ($this->statistic === null) {
+                return 0.00;
+            }
+
+            return $this->statistic->getRate();
+        }
 
         if ($this->statisticTotal === null) {
             return 0.00;
@@ -194,6 +214,13 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
 
             return $this->statistic->getDuration();
         }
+        if ($this->isQuarterlyBudget()) {
+            if ($this->statistic === null) {
+                return 0;
+            }
+
+            return $this->statistic->getDuration();
+        }
 
         if ($this->statisticTotal === null) {
             return 0;
@@ -205,6 +232,14 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getInternalRate(): float
     {
         if ($this->isMonthlyBudget()) {
+            if ($this->statistic === null) {
+                return 0.00;
+            }
+
+            return $this->statistic->getInternalRate();
+        }
+
+        if ($this->isQuarterlyBudget()) {
             if ($this->statistic === null) {
                 return 0.00;
             }

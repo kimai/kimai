@@ -38,16 +38,32 @@ final class ProjectDateRangeController extends AbstractController
         ]);
         $form->submit($request->query->all(), false);
 
-        $begin = $query->getMonth() ?? $defaultStart;
+        $beginMonth = $query->getMonth() ?? $defaultStart;
+        $beginQuarter = $dateFactory->getStartOfQuarter($beginMonth);
 
         $dateRange = new DateRange(true);
-        $dateRange->setBegin($begin);
-        $end = $dateFactory->getEndOfMonth($dateRange->getBegin()); // this resets the time
+        $dateRange->setBegin($beginMonth);
+        $endMonth = $dateFactory->getEndOfMonth($dateRange->getBegin()); // this resets the time
+        $endQuarter = $dateFactory->getEndOfQuarter($beginMonth);
 
-        $dateRange->setEnd($end);
+        $dateRange->setEnd($endMonth);
 
         $projects = $service->findProjectsForDateRange($query, $dateRange);
-        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $begin, $end, $end);
+
+        // Filter the array
+        $quarterlyProjects = array_filter($projects, function ($project) {
+            return $project->isQuarterlyBudget();
+        });
+
+        // Filter the array
+        $notQuarterlyProjects = array_filter($projects, function ($project) {
+            return !$project->isQuarterlyBudget();
+        });
+
+        $entriesMonth = $service->getBudgetStatisticModelForProjectsByDateRange($notQuarterlyProjects, $beginMonth, $endMonth, $endMonth);
+        $entriesQuarter = $service->getBudgetStatisticModelForProjectsByDateRange($quarterlyProjects, $beginMonth, $endMonth, $endQuarter, $beginQuarter);
+
+        $entries = array_merge($entriesMonth, $entriesQuarter);
 
         $byCustomer = [];
         foreach ($entries as $entry) {

@@ -74,6 +74,11 @@ final class ProjectDateRangeQuery
         return $this->budgetType === 'month';
     }
 
+    public function isBudgetTypeQuarterly(): bool
+    {
+        return $this->budgetType === 'quarter';
+    }
+
     public function getBudgetType(): ?string
     {
         return $this->budgetType;

@@ -17,6 +17,7 @@ use DateTimeZone;
 final class DateTimeFactory
 {
     private DateTimeZone $timezone;
+
     private bool $startOnSunday = false;
 
     public static function createByUser(User $user): self
@@ -44,6 +45,28 @@ final class DateTimeFactory
 
         $date = $date->modify('first day of this month');
         $date = $date->setTime(0, 0, 0);
+
+        return $date;
+    }
+
+    public function getStartOfQuarter(DateTimeInterface|string|null $date = null): DateTime
+    {
+        $date = $this->getDate($date);
+
+        $currentMonth = (int) $date->format('n');
+
+        if ($currentMonth <= 3) {
+            $startMonth = 1; // Q1
+        } elseif ($currentMonth <= 6) {
+            $startMonth = 4; // Q2
+        } elseif ($currentMonth <= 9) {
+            $startMonth = 7; // Q3
+        } else {
+            $startMonth = 10; // Q4
+        }
+
+        $date->modify('first day of January')->setDate((int) $date->format('Y'), $startMonth, 1);
+        $date->setTime(0, 0, 0);
 
         return $date;
     }
@@ -108,6 +131,29 @@ final class DateTimeFactory
         $date = $this->getDate($date);
         $date = $date->modify('last day of this month');
         $date = $date->setTime(23, 59, 59);
+
+        return $date;
+    }
+
+    public function getEndOfQuarter(DateTimeInterface|string|null $date = null): DateTime
+    {
+        $date = $this->getDate($date);
+
+        $currentMonth = (int) $date->format('n');
+
+        if ($currentMonth <= 3) {
+            $endMonth = 3; // Q1
+        } elseif ($currentMonth <= 6) {
+            $endMonth = 6; // Q2
+        } elseif ($currentMonth <= 9) {
+            $endMonth = 9; // Q3
+        } else {
+            $endMonth = 12; // Q4
+        }
+
+        $date->setDate((int) $date->format('Y'), $endMonth, 1);
+        $date = $date->modify('last day of this month');
+        $date->setTime(23, 59, 59);
 
         return $date;
     }
