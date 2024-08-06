@@ -226,6 +226,19 @@ final class SystemConfiguration
         return $this->findArray('saml.roles.mapping');
     }
 
+    public function isSamlTeamsResetOnLogin(): bool
+    {
+        return (bool) $this->find('saml.teams.resetOnLogin');
+    }
+
+    /**
+     * @return array<int, array<'saml'|'kimai'|'leader', string>>
+     */
+    public function getSamlTeamsMapping(): array
+    {
+        return $this->findArray('saml.teams.mapping');
+    }
+
     /**
      * @return array<string, array<mixed>|bool>
      */
@@ -245,6 +258,16 @@ final class SystemConfiguration
     public function getSamlRolesAttribute(): ?string
     {
         $attr = $this->find('saml.roles.attribute');
+        if (empty($attr)) {
+            return null;
+        }
+
+        return (string) $attr;
+    }
+
+    public function getSamlTeamsAttribute(): ?string
+    {
+        $attr = $this->find('saml.teams.attribute');
         if (empty($attr)) {
             return null;
         }
