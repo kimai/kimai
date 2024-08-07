@@ -22,9 +22,9 @@
         <source>activity</source>
         <target state="translated">Aktivitet grupperad - en post per aktivitet</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target state="translated">Projekt: en post per projekt</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
