@@ -18,7 +18,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
 {
     public function testIsSecure(): void
     {
-        $this->assertUrlIsSecured('/quick_entry');
+        $this->assertUrlIsSecured('/quick_entry/');
     }
 
     public function testIndexAction(): void

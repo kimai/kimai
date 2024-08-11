@@ -18,7 +18,7 @@ class ReportingControllerTest extends ControllerBaseTest
 {
     public function testIsSecure(): void
     {
-        $this->assertUrlIsSecured('/reporting');
+        $this->assertUrlIsSecured('/reporting/');
     }
 
     public function testOverviewPage(): void
