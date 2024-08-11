@@ -1110,6 +1110,10 @@
         <source>Updated at</source>
         <target state="translated">Zaktualizowano</target>
       </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated">
+        <source>Updated</source>
+        <target>Zaktualizowany</target>
+      </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target state="translated">Osiągnięto maksymalną ilość z %max% faktur. Możesz dodać więcej po usunięciu jednej.</target>
@@ -1433,6 +1437,10 @@
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
         <target state="translated">Utworzono o</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created">
+        <source>Created</source>
+        <target>Stworzony</target>
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>

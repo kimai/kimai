@@ -278,6 +278,10 @@
         <source>created_at</source>
         <target>Erstellt am</target>
       </trans-unit>
+      <trans-unit id="QG7.sen" resname="created">
+        <source>Created</source>
+        <target>Erstellt</target>
+      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -1254,9 +1258,17 @@
         <source>status.approved</source>
         <target>Genehmigt</target>
       </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve">
+        <source>approve</source>
+        <target>Genehmigen</target>
+      </trans-unit>
       <trans-unit id="Na24cyT" resname="status.requested">
         <source>status.requested</source>
         <target>Beantragt</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request">
+        <source>request</source>
+        <target>Beantragen</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
@@ -1469,6 +1481,10 @@
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Aktualisiert am</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated">
+        <source>Updated</source>
+        <target>Aktualisiert</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
