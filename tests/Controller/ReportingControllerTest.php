@@ -36,7 +36,10 @@ class ReportingControllerTest extends ControllerBaseTest
         $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
         $this->assertCount(11, $nodes);
         foreach ($nodes as $node) {
-            $url = $node->attributes->getNamedItem('href')->nodeValue;
+            self::assertNotNull($node->attributes);
+            $link = $node->attributes->getNamedItem('href');
+            self::assertNotNull($link);
+            $url = $link->nodeValue;
             self::assertNotNull($url);
             self::assertNotEmpty($url);
             self::assertStringStartsWith('/en/reporting/', $url);
