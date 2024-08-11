@@ -81,7 +81,16 @@ class PermissionControllerTest extends ControllerBaseTest
 
     public function testDeleteRoleIsSecured(): void
     {
-        $this->assertUrlIsSecured('/admin/permissions/roles/1/delete/sdfsdfsdfsd');
+        $client = self::createClient();
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+
+        $this->assertRequestIsSecured($client, '/admin/permissions/roles/' . $role->getId() . '/delete/sdfsdfsdfsd');
     }
 
     public function testDeleteRoleIsSecuredForRole(): void
@@ -150,7 +159,16 @@ class PermissionControllerTest extends ControllerBaseTest
 
     public function testSavePermissionIsSecured(): void
     {
-        $this->assertUrlIsSecured('/admin/permissions/roles/1/view_user/1/asdfasdf', 'POST');
+        $client = self::createClient();
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+
+        $this->assertRequestIsSecured($client, '/admin/permissions/roles/' . $role->getId() . '/view_user/1/asdfasdf', 'POST');
     }
 
     public function testSavePermissionIsSecuredForRole(): void
