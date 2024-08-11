@@ -85,7 +85,7 @@ final class RegenerateLocalesCommand extends Command
         $firstLevelLocales = [];
         foreach ($translationFilenames as $file) {
             $l = explode('.', basename($file))[1];
-            if (in_array($l, $this->skipLocale, true)) {
+            if (\in_array($l, $this->skipLocale, true)) {
                 continue;
             }
             $firstLevelLocales[] = $l;
