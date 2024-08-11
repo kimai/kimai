@@ -29,6 +29,21 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertCount(11, $nodes);
     }
 
+    public function testAllReports(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/reporting/');
+        $nodes = $client->getCrawler()->filter('section.content div.row-cards a.card-link');
+        $this->assertCount(11, $nodes);
+        foreach ($nodes as $node) {
+            $url = $node->attributes->getNamedItem('href')->nodeValue;
+            self::assertNotNull($url);
+            self::assertNotEmpty($url);
+            self::assertStringStartsWith('/en/reporting/', $url);
+            $this->request($client, $url);
+        }
+    }
+
     public function testOverviewPageAsUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
