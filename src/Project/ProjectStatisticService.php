@@ -50,8 +50,7 @@ class ProjectStatisticService
         private readonly TimesheetRepository $timesheetRepository,
         private readonly EventDispatcherInterface $dispatcher,
         private readonly UserRepository $userRepository
-    ) {
-    }
+    ) {}
 
     /**
      * WARNING: this method does not respect the budget type. Your results will always be with the "full lifetime data" or the "selected date-range".
@@ -278,7 +277,31 @@ class ProjectStatisticService
                 // override the total for better displaying
                 $models[$id]->setStatisticTotal($statistic);
             }
+
+            // monthly
+            $beginMonth = $dateFactory->createStartOfYear($begin);
+            $endMonth = $dateFactory->getEndOfMonth($beginMonth);
+            // generate for the whole year
+
+            for ($i = 0; $i < 4; $i++) {
+                for ($i2 = 0; $i2 < 3; $i2++) {
+                    // one quarter is 3 month        
+                    $statistics = $this->getBudgetStatistic($quarterly, $beginMonth, $endMonth);
+                    foreach ($statistics as $id => $statistic) {
+                        $models[$id . '_' . $endMonth->format('m')] = clone $models[$id];
+                        $models[$id . '_' . $endMonth->format('m')]->setStatistic($statistic);
+                        // override the total for better displaying
+                        $models[$id . '_' . $endMonth->format('m')]->setStatisticTotal($statistic);
+                    }
+
+                    $endMonth = $dateFactory->getStartOfMonth($endMonth);
+                    $endMonth = $endMonth->modify('+1 month');
+                    $endMonth = $dateFactory->getEndOfMonth($endMonth);
+                }
+                $beginMonth = $beginMonth->modify('+3 month');
+            }
         }
+
 
         if (\count($allTime) > 0) {
             // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)

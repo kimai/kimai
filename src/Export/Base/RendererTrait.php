@@ -207,6 +207,36 @@ trait RendererTrait
             }
         }
 
+        foreach ($exportItems as $exportItem) {
+            $customer = null;
+            $project = null;
+            $customerId = 'none';
+            $projectId = 'none';
+            $month = 'none';
+
+            if (null !== ($project = $exportItem->getProject())) {
+                $customer = $project->getCustomer();
+                $customerId = $customer->getId();
+                $projectId = $project->getId();
+                $month = $exportItem->getBegin()->format('m');
+                $projects[] = $project;
+            }
+
+            $id = $customerId . '_' . $projectId . '_' . $month;
+
+            if (!isset($summary[$id])) {
+                $summary[$id] = [
+                    'totals' => $empty->jsonSerialize(),
+                    'time' => $project->getTimeBudget(),
+                    'money' => $project->getBudget(),
+                    'time_left' => null,
+                    'money_left' => null,
+                    'time_left_total' => null,
+                    'money_left_total' => null,
+                ];
+            }
+        }
+
         $today = $this->getToday($query);
 
         $allBudgets = $projectStatisticService->getBudgetStatisticModelForProjects($projects, $today);
@@ -214,15 +244,17 @@ trait RendererTrait
         foreach ($allBudgets as $projectId => $statisticModel) {
             $project = $statisticModel->getProject();
             $id = $project->getCustomer()->getId() . '_' . $projectId;
-            $total = $statisticModel->getStatisticTotal();
-            $summary[$id]['totals'] = $total->jsonSerialize();
-            if ($statisticModel->hasTimeBudget()) {
-                $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
-                $summary[$id]['time_left_total'] = $statisticModel->getTimeBudgetOpen();
-            }
-            if ($statisticModel->hasBudget()) {
-                $summary[$id]['money_left'] = $statisticModel->getBudgetOpenRelative();
-                $summary[$id]['money_left_total'] = $statisticModel->getBudgetOpen();
+            if (isset($summary[$id])) {
+                $total = $statisticModel->getStatisticTotal();
+                $summary[$id]['totals'] = $total->jsonSerialize();
+                if ($statisticModel->hasTimeBudget()) {
+                    $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
+                    $summary[$id]['time_left_total'] = $statisticModel->getTimeBudgetOpen();
+                }
+                if ($statisticModel->hasBudget()) {
+                    $summary[$id]['money_left'] = $statisticModel->getBudgetOpenRelative();
+                    $summary[$id]['money_left_total'] = $statisticModel->getBudgetOpen();
+                }
             }
         }
 
