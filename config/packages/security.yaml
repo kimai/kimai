@@ -89,12 +89,12 @@ security:
     access_control:
         - { path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: '^/auth', roles: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)$', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/auth', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/login', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/register', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/resetting', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/', roles: ROLE_USER }
+        - { path: '^/{_locale}$', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/auth', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/login', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/register', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/resetting', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/', roles: ROLE_USER }
         - { path: '^/api', roles: IS_AUTHENTICATED }
 
 when@test:
