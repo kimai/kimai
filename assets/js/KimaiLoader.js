@@ -85,7 +85,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
-        kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
+        kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form', ['td.multiCheckbox', 'td.actions']));
         kimai.registerPlugin(new KimaiRemoteModal());
         kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));
