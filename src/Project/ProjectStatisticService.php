@@ -285,7 +285,7 @@ class ProjectStatisticService
 
             for ($i = 0; $i < 4; $i++) {
                 for ($i2 = 0; $i2 < 3; $i2++) {
-                    // one quarter is 3 month        
+                    // one quarter is 3 month
                     $statistics = $this->getBudgetStatistic($quarterly, $beginMonth, $endMonth);
                     foreach ($statistics as $id => $statistic) {
                         $models[$id . '_' . $endMonth->format('m')] = clone $models[$id];
@@ -301,7 +301,6 @@ class ProjectStatisticService
                 $beginMonth = $beginMonth->modify('+3 month');
             }
         }
-
 
         if (\count($allTime) > 0) {
             // display the budget at the end of the selected period and not the total sum of all times (do not include times in the future)
