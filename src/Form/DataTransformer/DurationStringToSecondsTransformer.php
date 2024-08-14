@@ -43,7 +43,7 @@ final class DurationStringToSecondsTransformer implements DataTransformerInterfa
 
     public function reverseTransform(mixed $value): ?int
     {
-        if (!\is_string($value)) {
+        if ($value === null) {
             return null;
         }
 
@@ -52,7 +52,7 @@ final class DurationStringToSecondsTransformer implements DataTransformerInterfa
         }
 
         // we need this one here, because the data transformer is executed BEFORE the constraint is called
-        if (!preg_match((new DurationConstraint())->pattern, $value)) {
+        if (!\is_string($value) || !preg_match((new DurationConstraint())->pattern, $value)) {
             throw new TransformationFailedException('Invalid duration format given');
         }
 
