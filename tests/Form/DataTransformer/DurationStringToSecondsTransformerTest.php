@@ -63,7 +63,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     }
 
     /**
-     * @return array<int, array<int, string|int|null>>
+     * @return array<int, array<int, string|int|float|null>>
      */
     public function getValidTestDataReverseTransform(): array
     {
@@ -73,6 +73,8 @@ class DurationStringToSecondsTransformerTest extends TestCase
             ['0', null],
             [null, null],
             ['87600000000:00:00', 315360000000000],
+            [87600000000, 315360000000000], // int will be treated we could argue if this is a correct behavior
+            [87599999999.5, 315359999998200], // only int can be used as hourly input
         ];
     }
 
@@ -85,7 +87,9 @@ class DurationStringToSecondsTransformerTest extends TestCase
             ['xxx'],
             [':::'],
             ['0::0'],
+            // too large
             ['87600000000:00:01'],
+            // too large
             [315360000000001],
         ];
     }
