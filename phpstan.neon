@@ -2149,21 +2149,6 @@ parameters:
             path: src/Form/CustomerEditForm.php
 
         -
-            message: "#^Class App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$formatToInt \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$intToFormat \\(int\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
             message: "#^Class App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
             count: 1
             path: src/Form/DataTransformer/SearchTermTransformer.php
