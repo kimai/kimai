@@ -140,8 +140,7 @@ class ProjectRepository extends EntityRepository
     /**
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
      *
-     * @param ProjectFormTypeQuery $query
-     * @return QueryBuilder
+     * @internal
      */
     public function getQueryBuilderForFormType(ProjectFormTypeQuery $query): QueryBuilder
     {
