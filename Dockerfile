@@ -83,8 +83,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV USER_ID=
 ENV GROUP_ID=
 
-VOLUME [ "/opt/kimai/var" ]
-
 CMD [ "/startup.sh" ]
 
 
