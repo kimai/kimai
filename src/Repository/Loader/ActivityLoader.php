@@ -12,12 +12,14 @@ namespace App\Repository\Loader;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class ActivityLoader implements LoaderInterface
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private bool $fullyHydrated = false
+    )
     {
     }
 
