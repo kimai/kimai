@@ -14,8 +14,22 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     use VisibilityTrait;
 
     public const CUSTOMER_ORDER_ALLOWED = [
-        'name', 'description' => 'comment', 'country', 'number', 'homepage', 'email', 'mobile', 'fax',
-        'phone', 'currency', 'address', 'contact', 'company', 'vat_id', 'budget', 'timeBudget', 'visible'
+        'name',
+        'description' => 'comment',
+        'country', 'number',
+        'homepage',
+        'email',
+        'mobile',
+        'fax',
+        'phone',
+        'currency',
+        'address',
+        'contact',
+        'company',
+        'vat_id',
+        'budget',
+        'timeBudget',
+        'visible'
     ];
 
     private ?string $country = null;
