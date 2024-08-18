@@ -76,11 +76,7 @@ class ActivityRepository extends EntityRepository
         $entityManager->flush();
     }
 
-    /**
-     * @param null|bool $visible
-     * @return int
-     */
-    public function countActivity($visible = null): int
+    public function countActivity(?bool $visible = null): int
     {
         if (null !== $visible) {
             return $this->count(['visible' => (bool) $visible]);
@@ -251,11 +247,9 @@ class ActivityRepository extends EntityRepository
 
     private function getQueryBuilderForQuery(ActivityQuery $query): QueryBuilder
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->select('a')
-            ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
         ;
