@@ -15,7 +15,11 @@ use Doctrine\ORM\QueryBuilder;
 
 final class LoaderPaginator implements PaginatorInterface
 {
-    public function __construct(private LoaderInterface $loader, private QueryBuilder $query, private int $results)
+    public function __construct(
+        private readonly LoaderInterface $loader,
+        private readonly QueryBuilder $query,
+        private readonly int $results
+    )
     {
     }
 
