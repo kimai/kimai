@@ -461,9 +461,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['customer-meta'])) {
-            /** @var CustomerQuery $customerQuery */
-            $customerQuery = $query->copyTo(new CustomerQuery());
-            $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
+            $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
 
             $columns['customer-meta'] = [
                 'header' => function (Worksheet $sheet, int $row, int $column) use ($customerMetaFields): int {

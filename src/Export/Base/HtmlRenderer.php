@@ -81,11 +81,8 @@ class HtmlRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
-        /** @var CustomerQuery $customerQuery */
-        $customerQuery = $query->copyTo(new CustomerQuery());
-
         $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
-        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
+        $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::EXPORT));
         $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
         $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
 
