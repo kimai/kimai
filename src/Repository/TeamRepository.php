@@ -23,7 +23,7 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Team>
+ * @extends EntityRepository<Team>
  */
 class TeamRepository extends EntityRepository
 {
@@ -228,7 +228,7 @@ class TeamRepository extends EntityRepository
         // OR we query for all teams where the user is a member - in later case $teams is not empty
         $or = $qb->expr()->orX();
 
-        // this query should limit to teams where the user is a teamlead (eg. in dropdowns or listing page)
+        // this query should limit to teams where the user is a teamlead (e.g. in dropdowns or listing page)
         if (null !== $user) {
             $qb->leftJoin('t.members', 'members');
             $or->add(
