@@ -9,19 +9,17 @@
 
 namespace App\Event;
 
-use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\BaseQuery;
 
 /**
  * Dynamically find possible meta fields for a customer query.
- *
- * @method CustomerQuery getQuery()
  */
 final class CustomerMetaDisplayEvent extends AbstractMetaDisplayEvent
 {
     public const EXPORT = 'export';
     public const CUSTOMER = 'customer';
 
-    public function __construct(CustomerQuery $query, string $location)
+    public function __construct(BaseQuery $query, string $location)
     {
         parent::__construct($query, $location);
     }

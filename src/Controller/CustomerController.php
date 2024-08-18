@@ -54,7 +54,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/customer')]
 final class CustomerController extends AbstractController
 {
-    public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
+    public function __construct(
+        private readonly CustomerRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher
+    )
     {
     }
 
