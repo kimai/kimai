@@ -16,7 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ProjectLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager, private bool $hydrateTeamMembers = false, private bool $hydrateTeams = true, private bool $hydrateMeta = true)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly bool $hydrateTeamMembers = false,
+        private readonly bool $hydrateTeams = true,
+        private readonly bool $hydrateMeta = true
+    )
     {
     }
 

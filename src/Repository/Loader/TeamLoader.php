@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class TeamLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -40,6 +40,7 @@ final class TeamLoader implements LoaderInterface
 
         $em = $this->entityManager;
 
+        // required wherever users are shown, e.g. on "Custom details" page
         $qb = $em->createQueryBuilder();
         $qb->select('PARTIAL team.{id}', 'members', 'user')
             ->from(Team::class, 'team')
@@ -49,6 +50,7 @@ final class TeamLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
+        // used in UserTeamProjects widget
         $qb = $em->createQueryBuilder();
         $qb->select('PARTIAL team.{id}', 'projects')
             ->from(Team::class, 'team')

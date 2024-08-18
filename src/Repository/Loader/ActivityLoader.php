@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ActivityLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -104,6 +104,7 @@ final class ActivityLoader implements LoaderInterface
                 ->execute();
         }
 
+        // required on "Activity listing" page for non super-admins
         $qb = $em->createQueryBuilder();
         $qb->select('PARTIAL a.{id}', 'teams')
             ->from(Activity::class, 'a')
