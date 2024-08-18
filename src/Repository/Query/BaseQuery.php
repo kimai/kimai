@@ -316,6 +316,9 @@ class BaseQuery
         return array_pop($shortClass);
     }
 
+    /**
+     * @internal
+     */
     public function copyTo(BaseQuery $query): BaseQuery
     {
         $query->setDefaults($this->defaults);
