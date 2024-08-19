@@ -64,12 +64,7 @@ class ActivityRepository extends EntityRepository
         return $activities;
     }
 
-    /**
-     * @param Activity $activity
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveActivity(Activity $activity)
+    public function saveActivity(Activity $activity): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($activity);
@@ -79,7 +74,7 @@ class ActivityRepository extends EntityRepository
     public function countActivity(?bool $visible = null): int
     {
         if (null !== $visible) {
-            return $this->count(['visible' => (bool) $visible]);
+            return $this->count(['visible' => $visible]);
         }
 
         return $this->count([]);
@@ -385,7 +380,7 @@ class ActivityRepository extends EntityRepository
         // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
-        return $paginator->getAll();
+        return $paginator->getAll(); // @phpstan-ignore-line
     }
 
     /**
