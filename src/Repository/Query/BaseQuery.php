@@ -317,9 +317,12 @@ class BaseQuery
     }
 
     /**
+     * @template T of BaseQuery
+     * @param T $query
+     * @return T
      * @internal
      */
-    public function copyTo(BaseQuery $query): BaseQuery
+    public final function copyTo(BaseQuery $query): BaseQuery
     {
         $query->setDefaults($this->defaults);
         if (null !== $this->getCurrentUser()) {
@@ -339,7 +342,13 @@ class BaseQuery
             $query->setVisibility($this->getVisibility());
         }
 
+        $query->copyFrom($this);
+
         return $query;
+    }
+
+    protected function copyFrom(BaseQuery $query): BaseQuery
+    {
     }
 
     public function isDefaultFilter(string $filter): bool

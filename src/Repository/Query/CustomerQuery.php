@@ -33,6 +33,16 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     ];
 
     private ?string $country = null;
+    /**
+     * @var array<int>
+     */
+    private array $ids = [];
+    /**
+     * @var array<CustomerQueryHydrate>
+     */
+    private array $hydrate = [
+        CustomerQueryHydrate::META_FIELDS
+    ];
 
     public function __construct()
     {
@@ -43,6 +53,19 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
         ]);
     }
 
+    protected function copyFrom(BaseQuery $query): BaseQuery
+    {
+        parent::copyFrom($query);
+
+        if ($query instanceof CustomerQuery) {
+            $this->setCustomerIds($query->getCustomerIds());
+            $this->setCountry($query->getCountry());
+            foreach ($query->getHydrate() as $hydrate) {
+                $this->addHydrate($hydrate);
+            }
+        }
+    }
+
     public function getCountry(): ?string
     {
         return $this->country;
@@ -51,5 +74,36 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     public function setCountry(?string $country): void
     {
         $this->country = $country;
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function setCustomerIds(array $ids): void
+    {
+        $this->ids = $ids;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getCustomerIds(): array
+    {
+        return $this->ids;
+    }
+
+    public function addHydrate(CustomerQueryHydrate $hydrate): void
+    {
+        if (!\in_array($hydrate, $this->hydrate, true)) {
+            $this->hydrate[] = $hydrate;
+        }
+    }
+
+    /**
+     * @return CustomerQueryHydrate[]
+     */
+    public function getHydrate(): array
+    {
+        return $this->hydrate;
     }
 }
