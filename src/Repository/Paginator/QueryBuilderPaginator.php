@@ -45,6 +45,9 @@ final class QueryBuilderPaginator implements PaginatorInterface
         return $query->execute(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public function getAll(): iterable
     {
         return $this->getResults($this->query->getQuery());

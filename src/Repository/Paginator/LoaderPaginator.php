@@ -54,6 +54,9 @@ final class LoaderPaginator implements PaginatorInterface
         return $results; // @phpstan-ignore-line
     }
 
+    /**
+     * @return iterable<mixed>
+     */
     public function getAll(): iterable
     {
         return $this->getResults($this->query->getQuery());
