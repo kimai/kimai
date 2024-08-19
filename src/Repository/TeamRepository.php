@@ -135,7 +135,7 @@ class TeamRepository extends EntityRepository
 
     /**
      * @param TeamQuery $query
-     * @return Timesheet[]
+     * @return Team[]
      */
     public function getTeamsForQuery(TeamQuery $query): iterable
     {
@@ -143,7 +143,7 @@ class TeamRepository extends EntityRepository
         // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
-        return $paginator->getAll();
+        return $paginator->getAll(); // @phpstan-ignore-line
     }
 
     private function getQueryBuilderForQuery(TeamQuery $query): QueryBuilder

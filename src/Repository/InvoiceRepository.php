@@ -277,7 +277,7 @@ class InvoiceRepository extends EntityRepository
         // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
-        return $paginator->getAll();
+        return $paginator->getAll(); // @phpstan-ignore-line
     }
 
     protected function getPaginatorForQuery(InvoiceArchiveQuery $query): PaginatorInterface
