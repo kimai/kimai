@@ -54,7 +54,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         ]);
     }
 
-    protected function copyFrom(BaseQuery $query): BaseQuery
+    protected function copyFrom(BaseQuery $query): void
     {
         parent::copyFrom($query);
 

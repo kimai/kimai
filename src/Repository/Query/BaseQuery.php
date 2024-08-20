@@ -347,7 +347,7 @@ class BaseQuery
         return $query;
     }
 
-    protected function copyFrom(BaseQuery $query): BaseQuery
+    protected function copyFrom(BaseQuery $query): void
     {
     }
 
