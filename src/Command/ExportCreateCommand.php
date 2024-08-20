@@ -12,6 +12,7 @@ namespace App\Command;
 use App\Export\ServiceExport;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ExportQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
@@ -108,8 +109,10 @@ final class ExportCreateCommand extends Command
 
         $customerIDs = $input->getOption('customer');
         $customers = [];
-        if (\count($customerIDs) > 0) {
-            $customers = $this->customerRepository->findByIds($customerIDs);
+        if (\is_array($customerIDs) && \count($customerIDs) > 0) {
+            $query = new CustomerQuery();
+            $query->setCustomerIds($customerIDs);
+            $customers = $this->customerRepository->getCustomersForQuery($query);
         }
 
         $projectIDs = $input->getOption('project');

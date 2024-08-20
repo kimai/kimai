@@ -284,11 +284,6 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$customerIDs of method App\\\\Repository\\\\CustomerRepository\\:\\:findByIds\\(\\) expects array\\<int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
             count: 2
             path: src/Command/ExportCreateCommand.php
@@ -340,7 +335,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
-            count: 4
+            count: 3
             path: src/Command/ExportCreateCommand.php
 
         -
@@ -4089,11 +4084,6 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\ActivityRepository\\:\\:saveActivity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
             count: 1
             path: src/Repository/ActivityRepository.php
@@ -4219,11 +4209,6 @@ parameters:
             path: src/Repository/Loader/DefaultLoader.php
 
         -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Invoice\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\InvoiceLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/InvoiceLoader.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/Loader/LoaderInterface.php
@@ -4264,11 +4249,6 @@ parameters:
             path: src/Repository/Loader/UserLoader.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Paginator\\\\LoaderPaginator\\:\\:getAll\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Paginator/LoaderPaginator.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Paginator\\\\LoaderPaginator\\:\\:getNbResults\\(\\) should return int\\<0, max\\> but returns int\\.$#"
             count: 1
             path: src/Repository/Paginator/LoaderPaginator.php
@@ -4282,16 +4262,6 @@ parameters:
             message: "#^Interface App\\\\Repository\\\\Paginator\\\\PaginatorInterface extends generic interface Pagerfanta\\\\Adapter\\\\AdapterInterface but does not specify its types\\: T$#"
             count: 1
             path: src/Repository/Paginator/PaginatorInterface.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Paginator\\\\PaginatorInterface\\:\\:getAll\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Paginator/PaginatorInterface.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Paginator\\\\QueryBuilderPaginator\\:\\:getAll\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Paginator/QueryBuilderPaginator.php
 
         -
             message: "#^Method App\\\\Repository\\\\Paginator\\\\QueryBuilderPaginator\\:\\:getNbResults\\(\\) should return int\\<0, max\\> but returns int\\.$#"
