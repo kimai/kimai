@@ -1,0 +1,53 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Repository\Paginator;
+
+use Doctrine\ORM\Query;
+
+final class QueryPaginator implements PaginatorInterface
+{
+    public function __construct(private readonly Query $query, private readonly int $results)
+    {
+    }
+
+    public function getNbResults(): int
+    {
+        return $this->results;
+    }
+
+    /**
+     * @return iterable<array-key, iterable<mixed>>
+     */
+    public function getSlice(int $offset, int $length): iterable
+    {
+        $query = $this->query
+            ->setFirstResult($offset)
+            ->setMaxResults($length);
+
+        return $this->getResults($query);
+    }
+
+    /**
+     * @param Query<null, mixed> $query
+     * @return iterable<array-key, iterable<mixed>>
+     */
+    private function getResults(Query $query)
+    {
+        return $query->execute(); // @phpstan-ignore-line
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public function getAll(): iterable
+    {
+        return $this->getResults($this->query);
+    }
+}
