@@ -322,7 +322,7 @@ class BaseQuery
      * @return T
      * @internal
      */
-    public final function copyTo(BaseQuery $query): BaseQuery
+    final public function copyTo(BaseQuery $query): BaseQuery
     {
         $query->setDefaults($this->defaults);
         if (null !== $this->getCurrentUser()) {
