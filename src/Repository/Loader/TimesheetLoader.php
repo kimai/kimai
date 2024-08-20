@@ -15,6 +15,9 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @implements LoaderInterface<Timesheet>
+ */
 final class TimesheetLoader implements LoaderInterface
 {
     public function __construct(

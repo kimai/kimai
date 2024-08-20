@@ -11,9 +11,20 @@ namespace App\Repository\Paginator;
 
 use Doctrine\ORM\Query;
 
+/**
+ * @template T
+ * @implements PaginatorInterface<T>
+ */
 final class QueryPaginator implements PaginatorInterface
 {
-    public function __construct(private readonly Query $query, private readonly int $results)
+    /**
+     * @param Query<null, T> $query
+     * @param int<0, max> $results
+     */
+    public function __construct(
+        private readonly Query $query,
+        private readonly int $results
+    )
     {
     }
 
@@ -23,7 +34,7 @@ final class QueryPaginator implements PaginatorInterface
     }
 
     /**
-     * @return iterable<array-key, iterable<mixed>>
+     * @return iterable<array-key, T>
      */
     public function getSlice(int $offset, int $length): iterable
     {
@@ -35,16 +46,16 @@ final class QueryPaginator implements PaginatorInterface
     }
 
     /**
-     * @param Query<null, mixed> $query
-     * @return iterable<array-key, iterable<mixed>>
+     * @param Query<null, T> $query
+     * @return iterable<array-key, T>
      */
-    private function getResults(Query $query)
+    private function getResults(Query $query): iterable
     {
         return $query->execute(); // @phpstan-ignore-line
     }
 
     /**
-     * @return iterable<mixed>
+     * @return iterable<array-key, T>
      */
     public function getAll(): iterable
     {

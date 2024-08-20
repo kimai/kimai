@@ -9,12 +9,15 @@
 
 namespace App\Repository\Loader;
 
+/**
+ * @template T
+ */
 interface LoaderInterface
 {
     /**
      * Prepares the given database results, to prevent lazy loading.
      *
-     * @param array $results
+     * @param array<array-key, T> $results
      */
     public function loadResults(array $results): void;
 }

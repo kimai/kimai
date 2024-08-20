@@ -12,8 +12,17 @@ namespace App\Repository\Paginator;
 use App\Repository\Loader\LoaderInterface;
 use Doctrine\ORM\Query;
 
+/**
+ * @template T
+ * @implements PaginatorInterface<T>
+ */
 final class LoaderQueryPaginator implements PaginatorInterface
 {
+    /**
+     * @param LoaderInterface<T> $loader
+     * @param Query<T> $query
+     * @param int<0, max> $results
+     */
     public function __construct(
         private readonly LoaderInterface $loader,
         private readonly Query $query,
@@ -28,10 +37,11 @@ final class LoaderQueryPaginator implements PaginatorInterface
     }
 
     /**
-     * @return iterable<array-key, iterable<mixed>>
+     * @return iterable<array-key, T>
      */
     public function getSlice(int $offset, int $length): iterable
     {
+        /** @var Query<null, T> $query */
         $query = $this->query
             ->setFirstResult($offset)
             ->setMaxResults($length);
@@ -40,21 +50,21 @@ final class LoaderQueryPaginator implements PaginatorInterface
     }
 
     /**
-     * @param Query<null, mixed> $query
-     * @return iterable<array-key, iterable<mixed>>
+     * @param Query<null, T> $query
+     * @return iterable<array-key, T>
      */
-    private function getResults(Query $query)
+    private function getResults(Query $query): iterable
     {
+        /** @var array<T> $results */
         $results = $query->execute();
 
-        // TODO should this be cached?
         $this->loader->loadResults($results);
 
-        return $results; // @phpstan-ignore-line
+        return $results;
     }
 
     /**
-     * @return iterable<mixed>
+     * @return iterable<array-key, T>
      */
     public function getAll(): iterable
     {

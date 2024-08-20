@@ -12,6 +12,9 @@ namespace App\Repository\Loader;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @implements LoaderInterface<Team>
+ */
 final class TeamLoader implements LoaderInterface
 {
     public function __construct(private readonly EntityManagerInterface $entityManager)

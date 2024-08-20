@@ -13,6 +13,9 @@ use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @implements LoaderInterface<User>
+ */
 final class UserLoader implements LoaderInterface
 {
     public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)

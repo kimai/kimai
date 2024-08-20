@@ -13,6 +13,10 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ * @implements LoaderInterface<Customer>
+ */
 final class CustomerLoader implements LoaderInterface
 {
     public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)

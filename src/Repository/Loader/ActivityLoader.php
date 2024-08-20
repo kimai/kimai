@@ -14,6 +14,10 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ * @implements LoaderInterface<Activity>
+ */
 final class ActivityLoader implements LoaderInterface
 {
     public function __construct(
