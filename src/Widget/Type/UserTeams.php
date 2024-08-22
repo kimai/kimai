@@ -9,13 +9,12 @@
 
 namespace App\Widget\Type;
 
-use App\Repository\Loader\UserLoader;
+use App\Repository\UserRepository;
 use App\Widget\WidgetInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 final class UserTeams extends AbstractWidget
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly UserRepository $userRepository)
     {
     }
 
@@ -57,12 +56,12 @@ final class UserTeams extends AbstractWidget
      */
     public function getData(array $options = []): mixed
     {
-        $user = $this->getUser();
+        $users = $this->userRepository->findByIds([$this->getUser()]);
 
-        // without this, every user would be lazy loaded
-        $loader = new UserLoader($this->entityManager, true);
-        $loader->loadResults([$user->getId()]);
+        if (\count($users) === 1) {
+            return $users[0]->getTeams();
+        }
 
-        return $user->getTeams();
+        return [];
     }
 }
