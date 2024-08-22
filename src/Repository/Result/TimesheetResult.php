@@ -47,6 +47,7 @@ final class TimesheetResult
                 $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
             }
 
+            /** @var array{'duration': int<0, max>, 'counter': int<0, max>} $result */
             $result = $qb->getQuery()->getArrayResult()[0];
             $duration = $withDuration ? $result['duration'] : 0;
 
