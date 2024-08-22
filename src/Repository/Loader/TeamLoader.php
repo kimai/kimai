@@ -9,6 +9,7 @@
 
 namespace App\Repository\Loader;
 
+use App\Entity\Project;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,12 +18,15 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class TeamLoader implements LoaderInterface
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly bool $loadCustomer = false
+    )
     {
     }
 
     /**
-     * @param array<int|Team> $results
+     * @param array<Team> $results
      */
     public function loadResults(array $results): void
     {
@@ -30,16 +34,12 @@ final class TeamLoader implements LoaderInterface
             return;
         }
 
-        $ids = array_map(function ($team) {
-            if ($team instanceof Team) {
-                // make sure that this potential doctrine proxy is initialized and filled with all data
-                $team->getName();
+        $ids = array_filter(array_unique(array_map(function (Team $team) {
+            // make sure that this potential doctrine proxy is initialized and filled with all data
+            $team->getName();
 
-                return $team->getId();
-            }
-
-            return $team;
-        }, $results);
+            return $team->getId();
+        }, $results)), function ($value) { return $value !== null; });
 
         $em = $this->entityManager;
 
@@ -55,11 +55,30 @@ final class TeamLoader implements LoaderInterface
 
         // used in UserTeamProjects widget
         $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL team.{id}', 'projects')
+        /** @var array<Team> $teams */
+        $teams = $qb->select('PARTIAL team.{id}', 'projects')
             ->from(Team::class, 'team')
             ->leftJoin('team.projects', 'projects')
             ->andWhere($qb->expr()->in('team.id', $ids))
             ->getQuery()
             ->execute();
+
+        $projectIds = [];
+        foreach ($teams as $team) {
+            foreach ($team->getProjects() as $project) {
+                $projectIds[] = $project->getId();
+            }
+        }
+
+        if ($this->loadCustomer) {
+            // used in UserTeamProjects widget
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL project.{id}', 'customer')
+                ->from(Project::class, 'project')
+                ->leftJoin('project.customer', 'customer')
+                ->andWhere($qb->expr()->in('project.id', $projectIds))
+                ->getQuery()
+                ->execute();
+        }
     }
 }
