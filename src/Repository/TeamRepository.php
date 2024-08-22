@@ -18,7 +18,6 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TeamQuery;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -59,34 +58,20 @@ class TeamRepository extends EntityRepository
         return $teams;
     }
 
-    /**
-     * @param Team $team
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveTeam(Team $team)
+    public function saveTeam(Team $team): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($team);
         $entityManager->flush();
     }
 
-    /**
-     * @param TeamMember $member
-     * @throws ORMException
-     */
-    public function removeTeamMember(TeamMember $member)
+    public function removeTeamMember(TeamMember $member): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($member);
     }
 
-    /**
-     * @param Team $team
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function deleteTeam(Team $team)
+    public function deleteTeam(Team $team): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($team);
@@ -95,9 +80,6 @@ class TeamRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for TeamType and your own 'query_builder' option.
-     *
-     * @param TeamQuery $query
-     * @return QueryBuilder
      */
     public function getQueryBuilderForFormType(TeamQuery $query): QueryBuilder
     {
@@ -117,7 +99,10 @@ class TeamRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    protected function getPaginatorForQuery(TeamQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<Team>
+     */
+    private function getPaginatorForQuery(TeamQuery $query): PaginatorInterface
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -125,6 +110,7 @@ class TeamRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->countDistinct('t.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
         $qb = $this->getQueryBuilderForQuery($query);
@@ -133,7 +119,6 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param TeamQuery $query
      * @return Team[]
      */
     public function getTeamsForQuery(TeamQuery $query): iterable
@@ -142,7 +127,7 @@ class TeamRepository extends EntityRepository
         // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
         $paginator = $this->getPaginatorForQuery($query);
 
-        return $paginator->getAll(); // @phpstan-ignore-line
+        return $paginator->getAll();
     }
 
     private function getQueryBuilderForQuery(TeamQuery $query): QueryBuilder
@@ -207,11 +192,9 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param User|null $user
      * @param Team[] $teams
      */
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         // make sure that all queries without a user see all user
         if (null === $user && empty($teams)) {

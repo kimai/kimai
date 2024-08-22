@@ -442,6 +442,9 @@ class TimesheetRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
+    /**
+     * @return PaginatorInterface<Timesheet>
+     */
     private function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -450,6 +453,7 @@ class TimesheetRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->count('t.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
         $qb = $this->getQueryBuilderForQuery($query);

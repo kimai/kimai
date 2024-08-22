@@ -33,7 +33,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<User>
+ * @extends EntityRepository<User>
  * @template-implements PasswordUpgraderInterface<User>
  * @template-implements UserProviderInterface<User>
  */
@@ -135,6 +135,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return parent::findOneBy(['username' => $username]);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
@@ -377,6 +380,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countUsersForQuery(UserQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -386,10 +392,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->select($qb->expr()->countDistinct('u.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
-    protected function getPaginatorForQuery(UserQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<User>
+     */
+    private function getPaginatorForQuery(UserQuery $query): PaginatorInterface
     {
         $counter = $this->countUsersForQuery($query);
         $qb = $this->getQueryBuilderForQuery($query);

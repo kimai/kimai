@@ -255,6 +255,9 @@ class InvoiceRepository extends EntityRepository
         return ['i.comment', 'customer.name', 'customer.company'];
     }
 
+    /**
+     * @return int<0, max>
+     */
     private function countInvoicesForQuery(InvoiceArchiveQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -265,7 +268,7 @@ class InvoiceRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('i.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     /**
@@ -274,9 +277,12 @@ class InvoiceRepository extends EntityRepository
      */
     public function getInvoicesForQuery(InvoiceArchiveQuery $query): iterable
     {
-        return $this->createInvoiceQuery($query)->execute();
+        return $this->createInvoiceQuery($query)->execute(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return PaginatorInterface<Invoice>
+     */
     private function getPaginatorForQuery(InvoiceArchiveQuery $query): PaginatorInterface
     {
         $counter = $this->countInvoicesForQuery($query);
