@@ -37,6 +37,7 @@ use App\Timesheet\DateTimeFactory;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -85,7 +86,7 @@ class ProjectStatisticService
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
-            ->select('p, c')
+            ->select('p')
             ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
@@ -109,11 +110,12 @@ class ProjectStatisticService
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
 
+        $query = $qb->getQuery();
+        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
         /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
+        $projects = $query->getResult();
 
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
         $loader->loadResults($projects);
 
         return $projects;
@@ -192,11 +194,13 @@ class ProjectStatisticService
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
 
+        $query = $qb->getQuery();
+        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
         /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
+        $projects = $query->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
         $loader->loadResults($projects);
 
         return $projects;
@@ -688,11 +692,13 @@ class ProjectStatisticService
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
 
+        $query = $qb->getQuery();
+        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
         /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
+        $projects = $query->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
+        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
         $loader->loadResults($projects);
 
         return $projects;
