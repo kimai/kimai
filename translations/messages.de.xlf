@@ -1370,9 +1370,9 @@
         <source>help.globalActivities</source>
         <target>Falls die Einstellung aus ist, können Zeiten nur mit projektspezifischen Tätigkeiten erfasst werden.</target>
       </trans-unit>
-      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
         <source>help.globalActivity</source>
-        <target>Wenn Sie kein Projekt auswählen wird diese Tätigkeit global und kann mit jedem Projekt kombinierbar ist. Wenn Sie ein Projekt auswählen, kann die Tätigkeit nur mit diesem verwendet werden. Die Einstellung kann nachträglich nicht mehr geändert werden.</target>
+        <target state="translated">Wenn Sie kein Projekt auswählen, wird diese Tätigkeit global und kann mit jedem Projekt kombinierbar werden. Wenn Sie ein Projekt auswählen, kann die Tätigkeit nur mit diesem verwendet werden. Die Einstellung kann nachträglich nicht mehr geändert werden.</target>
       </trans-unit>
       <trans-unit id="8BPmHPa" resname="batch_meta_fields">
         <source>batch_meta_fields</source>

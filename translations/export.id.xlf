@@ -10,6 +10,10 @@
         <source>With remaining budget</source>
         <target state="translated">Dengan anggaran yang tersisa</target>
       </trans-unit>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig" xml:space="preserve">
+        <source>With internal rates</source>
+        <target state="translated">Dengan tarif internal</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

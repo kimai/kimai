@@ -14,6 +14,10 @@
         <source>date</source>
         <target state="translated">Datum</target>
       </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>user</source>
+        <target state="translated">Uporabnik</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

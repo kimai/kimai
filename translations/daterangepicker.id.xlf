@@ -10,6 +10,10 @@
         <source>daterangepicker.yesterday</source>
         <target state="translated">Kemarin</target>
       </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve">
+        <source>daterangepicker.lastWeek</source>
+        <target state="translated">Minggu lalu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
