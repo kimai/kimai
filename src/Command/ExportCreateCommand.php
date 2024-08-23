@@ -12,7 +12,6 @@ namespace App\Command;
 use App\Export\ServiceExport;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ExportQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
@@ -107,27 +106,25 @@ final class ExportCreateCommand extends Command
         $timezone = new \DateTimeZone($timezone);
         $dateFactory = new DateTimeFactory($timezone);
 
-        $customerIDs = $input->getOption('customer');
+        $customerIDs = $this->optionToIntArray($input, 'customer');
         $customers = [];
-        if (\is_array($customerIDs) && \count($customerIDs) > 0) {
-            $query = new CustomerQuery();
-            $query->setCustomerIds($customerIDs);
-            $customers = $this->customerRepository->getCustomersForQuery($query);
+        if (\count($customerIDs) > 0) {
+            $customers = $this->customerRepository->findByIds($customerIDs);
         }
 
-        $projectIDs = $input->getOption('project');
+        $projectIDs = $this->optionToIntArray($input, 'project');
         $projects = [];
         if (\count($projectIDs) > 0) {
             $projects = $this->projectRepository->findByIds($projectIDs);
         }
 
-        $teamIDs = $input->getOption('team');
+        $teamIDs = $this->optionToIntArray($input, 'team');
         $teams = [];
         if (\count($teamIDs) > 0) {
             $teams = $this->teamRepository->findByIds($teamIDs);
         }
 
-        $userIDs = $input->getOption('user');
+        $userIDs = $this->optionToIntArray($input, 'user');
         $users = [];
         if (\count($userIDs) > 0) {
             $users = $this->userRepository->findByIds($userIDs);
@@ -288,6 +285,25 @@ final class ExportCreateCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @return array<int>
+     */
+    private function optionToIntArray(InputInterface $input, string $name): array
+    {
+        $results = [];
+
+        $options = $input->getOption($name);
+        if (\is_array($options) && \count($options) > 0) {
+            foreach ($options as $option) {
+                if (is_numeric($option)) {
+                    $results[] = (int) $option;
+                }
+            }
+        }
+
+        return $results;
     }
 
     private function savePreview(Response $response, string $directory): string

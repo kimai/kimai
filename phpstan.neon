@@ -304,11 +304,6 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$projectIds of method App\\\\Repository\\\\ProjectRepository\\:\\:findByIds\\(\\) expects array\\<int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function rtrim expects string, mixed given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
@@ -319,23 +314,8 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$teamIds of method App\\\\Repository\\\\TeamRepository\\:\\:findByIds\\(\\) expects array\\<int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$timezone of class DateTimeZone constructor expects string, mixed given\\.$#"
             count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$userIds of method App\\\\Repository\\\\UserRepository\\:\\:findByIds\\(\\) expects array\\<int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Command/ExportCreateCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
-            count: 3
             path: src/Command/ExportCreateCommand.php
 
         -
@@ -4169,11 +4149,6 @@ parameters:
             path: src/Repository/Loader/TimesheetLoader.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Repository/Loader/TimesheetLoader.php
-
-        -
             message: "#^Interface App\\\\Repository\\\\Paginator\\\\PaginatorInterface extends generic interface Pagerfanta\\\\Adapter\\\\AdapterInterface but does not specify its types\\: T$#"
             count: 1
             path: src/Repository/Paginator/PaginatorInterface.php
@@ -4259,17 +4234,7 @@ parameters:
             path: src/Repository/Query/TimesheetQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:getResults\\(\\) should return array\\<App\\\\Entity\\\\Timesheet\\> but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/Result/TimesheetResult.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:toIterable\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Result/TimesheetResult.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:\\$resultCache \\(array\\<App\\\\Entity\\\\Timesheet\\>\\|null\\) does not accept mixed\\.$#"
             count: 1
             path: src/Repository/Result/TimesheetResult.php
 
@@ -4375,11 +4340,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getActiveEntries\\(\\) should return array\\<App\\\\Entity\\\\Timesheet\\> but returns iterable\\<App\\\\Entity\\\\Timesheet\\>\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getHydratedResultsByQuery\\(\\) should return iterable\\<App\\\\Entity\\\\Timesheet\\> but returns mixed\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 
