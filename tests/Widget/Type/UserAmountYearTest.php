@@ -35,7 +35,6 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->method('getStatistic')->willReturn([]);
         $configuration = SystemConfigurationFactory::createStub();
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
