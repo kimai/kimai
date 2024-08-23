@@ -19,6 +19,9 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryBuilderPaginatorTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testPaginator(): void
     {
         $em = $this->createMock(EntityManager::class);

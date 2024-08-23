@@ -14,6 +14,7 @@ use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * @internal
  * @implements LoaderInterface<Team>
  */
 final class TeamLoader implements LoaderInterface
@@ -30,7 +31,7 @@ final class TeamLoader implements LoaderInterface
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 

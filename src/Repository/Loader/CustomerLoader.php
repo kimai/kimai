@@ -24,11 +24,11 @@ final class CustomerLoader implements LoaderInterface
     }
 
     /**
-     * @param array<int|Customer> $results
+     * @param array<Customer> $results
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 

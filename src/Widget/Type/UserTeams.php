@@ -9,15 +9,10 @@
 
 namespace App\Widget\Type;
 
-use App\Repository\UserRepository;
 use App\Widget\WidgetInterface;
 
 final class UserTeams extends AbstractWidget
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
-    }
-
     public function getWidth(): int
     {
         return WidgetInterface::WIDTH_HALF;
@@ -56,12 +51,6 @@ final class UserTeams extends AbstractWidget
      */
     public function getData(array $options = []): mixed
     {
-        $users = $this->userRepository->findByIds([$this->getUser()]);
-
-        if (\count($users) === 1) {
-            return $users[0]->getTeams();
-        }
-
-        return [];
+        return $this->getUser()->getTeams();
     }
 }

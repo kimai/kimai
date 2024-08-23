@@ -29,24 +29,20 @@ final class TimesheetLoader implements LoaderInterface
     }
 
     /**
-     * @param array<int|Timesheet> $results
+     * @param array<Timesheet> $results
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 
-        $ids = array_map(function ($timesheet) {
-            if ($timesheet instanceof Timesheet) {
-                // make sure that this potential doctrine proxy is initialized and filled with all data
-                $timesheet->getType();
+        $ids = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
+            // make sure that this potential doctrine proxy is initialized and filled with all data
+            $timesheet->getType();
 
-                return $timesheet->getId();
-            }
-
-            return $timesheet;
-        }, $results);
+            return $timesheet->getId();
+        }, $results)), function ($value) { return $value !== null; });
 
         $em = $this->entityManager;
 
@@ -59,9 +55,9 @@ final class TimesheetLoader implements LoaderInterface
             ->getQuery()
             ->execute();
 
-        $projectIds = array_map(function ($timesheet) {
-            return $timesheet->getProject()->getId();
-        }, $timesheets);
+        $projectIds = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
+            return $timesheet->getProject()?->getId();
+        }, $timesheets)), function ($value) { return $value !== null; });
 
         if ($this->fullyHydrated) {
             $qb = $em->createQueryBuilder();
@@ -83,9 +79,9 @@ final class TimesheetLoader implements LoaderInterface
             ->execute();
 
         if ($this->fullyHydrated) {
-            $customerIds = array_map(function ($project) {
+            $customerIds = array_filter(array_unique(array_map(function (Project $project) {
                 return $project->getCustomer()->getId();
-            }, $projects);
+            }, $projects)), function ($value) { return $value !== null; });
 
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL c.{id}', 'meta')

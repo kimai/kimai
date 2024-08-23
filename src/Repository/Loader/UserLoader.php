@@ -14,6 +14,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * @internal
  * @implements LoaderInterface<User>
  */
 final class UserLoader implements LoaderInterface
@@ -27,7 +28,7 @@ final class UserLoader implements LoaderInterface
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 

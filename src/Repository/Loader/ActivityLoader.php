@@ -28,11 +28,11 @@ final class ActivityLoader implements LoaderInterface
     }
 
     /**
-     * @param array<int|Activity> $results
+     * @param array<Activity> $results
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 

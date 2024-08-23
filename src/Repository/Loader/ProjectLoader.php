@@ -29,11 +29,11 @@ final class ProjectLoader implements LoaderInterface
     }
 
     /**
-     * @param array<int|Project> $results
+     * @param array<Project> $results
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 

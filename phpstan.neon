@@ -4269,11 +4269,6 @@ parameters:
             path: src/Repository/Result/TimesheetResult.php
 
         -
-            message: "#^Parameter \\#1 \\$results of method App\\\\Repository\\\\Loader\\\\TimesheetLoader\\:\\:loadResults\\(\\) expects array\\<App\\\\Entity\\\\Timesheet\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Repository/Result/TimesheetResult.php
-
-        -
             message: "#^Property App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:\\$resultCache \\(array\\<App\\\\Entity\\\\Timesheet\\>\\|null\\) does not accept mixed\\.$#"
             count: 1
             path: src/Repository/Result/TimesheetResult.php
@@ -4434,11 +4429,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Parameter \\#1 \\$results of method App\\\\Repository\\\\Loader\\\\TimesheetLoader\\:\\:loadResults\\(\\) expects array\\<App\\\\Entity\\\\Timesheet\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Parameter \\#2 \\$amount of class App\\\\Model\\\\Revenue constructor expects float, mixed given\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -4460,16 +4450,6 @@ parameters:
 
         -
             message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:deleteUser\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/UserRepository.php
 
@@ -5297,11 +5277,6 @@ parameters:
             message: "#^Strict comparison using \\!\\=\\= between App\\\\Entity\\\\User and null will always evaluate to true\\.$#"
             count: 1
             path: src/Widget/Type/PaginatedWorkingTimeChart.php
-
-        -
-            message: "#^Parameter \\#1 \\$results of method App\\\\Repository\\\\Loader\\\\UserLoader\\:\\:loadResults\\(\\) expects array\\<App\\\\Entity\\\\User\\|int\\>, array\\<int, int\\|null\\> given\\.$#"
-            count: 1
-            path: src/Widget/Type/UserTeams.php
 
         -
             message: "#^Property App\\\\Widget\\\\WidgetService\\:\\:\\$widgets type has no value type specified in iterable type array\\.$#"
