@@ -759,7 +759,7 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param Timesheet[]|int[] $timesheets
      */
-    public function setExported(array $timesheets)
+    public function setExported(array $timesheets): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
