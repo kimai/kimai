@@ -67,8 +67,7 @@ final class CustomerLoader implements LoaderInterface
 
         // required where we need to check team permissions, e.g. "Customer listing"
         $qb = $em->createQueryBuilder();
-        /** @var array<Customer> $customers */
-        $customers = $qb->select('PARTIAL c.{id}', 'teams')
+        $qb->select('PARTIAL c.{id}', 'teams')
             ->from(Customer::class, 'c')
             ->leftJoin('c.teams', 'teams')
             ->andWhere($qb->expr()->in('c.id', $customerIds))

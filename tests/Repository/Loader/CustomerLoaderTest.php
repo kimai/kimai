@@ -13,7 +13,6 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Query\CustomerQuery;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @covers \App\Repository\Loader\CustomerLoader
@@ -22,18 +21,14 @@ class CustomerLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults(): void
     {
-        $em = $this->getEntityManagerMock(2);
+        $em = $this->getEntityManagerMock(1);
 
         $query = new CustomerQuery();
         $query->loadTeams();
 
         $sut = new CustomerLoader($em, $query);
 
-        $team = $this->createMock(Team::class);
-        $team->expects($this->once())->method('getId')->willReturn(1);
         $entity = $this->createMock(Customer::class);
-        $entity->expects($this->once())->method('getTeams')->willReturn(new ArrayCollection([$team]));
-        $entity->expects($this->once())->method('getId')->willReturn(1);
 
         $sut->loadResults([$entity]);
     }
