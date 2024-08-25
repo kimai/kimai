@@ -145,7 +145,9 @@ abstract class TimesheetAbstractController extends AbstractController
         $event = new TimesheetMetaDefinitionEvent($entry);
         $this->dispatcher->dispatch($event);
 
-        $editForm = $this->getEditForm($entry, $request->get('page'));
+        $page = $request->get('page');
+        $page = is_numeric($page) ? (int) $page : 1;
+        $editForm = $this->getEditForm($entry, $page);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -508,12 +510,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Timesheet $entry
-     * @param int $page
-     * @return FormInterface
-     */
-    protected function getEditForm(Timesheet $entry, $page): FormInterface
+    private function getEditForm(Timesheet $entry, int $page): FormInterface
     {
         $mode = $this->getTrackingMode();
 

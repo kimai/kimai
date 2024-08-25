@@ -449,7 +449,6 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @param ActivityQuery $query
      * @return FormInterface<ActivityQuery>
      */
     private function getToolbarForm(ActivityQuery $query): FormInterface
@@ -461,6 +460,9 @@ final class ActivityController extends AbstractController
         ]);
     }
 
+    /**
+     * @return FormInterface<mixed>
+     */
     private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
