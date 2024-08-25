@@ -10,7 +10,6 @@
 namespace App\Tests\Repository\Loader;
 
 use App\Entity\Customer;
-use App\Entity\Team;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Query\CustomerQuery;
 
