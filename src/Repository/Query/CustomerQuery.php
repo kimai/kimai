@@ -91,7 +91,7 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
         return $this->customerIds;
     }
 
-    public function addHydrate(CustomerQueryHydrate $hydrate): void
+    private function addHydrate(CustomerQueryHydrate $hydrate): void
     {
         if (!\in_array($hydrate, $this->hydrate, true)) {
             $this->hydrate[] = $hydrate;
@@ -104,5 +104,10 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     public function getHydrate(): array
     {
         return $this->hydrate;
+    }
+
+    public function loadTeams(): void
+    {
+        $this->addHydrate(CustomerQueryHydrate::TEAMS);
     }
 }

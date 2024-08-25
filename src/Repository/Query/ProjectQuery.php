@@ -122,7 +122,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         return $this->projectIds;
     }
 
-    public function addHydrate(ProjectQueryHydrate $hydrate): void
+    private function addHydrate(ProjectQueryHydrate $hydrate): void
     {
         if (!\in_array($hydrate, $this->hydrate, true)) {
             $this->hydrate[] = $hydrate;
@@ -135,5 +135,10 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     public function getHydrate(): array
     {
         return $this->hydrate;
+    }
+
+    public function loadTeams(): void
+    {
+        $this->addHydrate(ProjectQueryHydrate::TEAMS);
     }
 }

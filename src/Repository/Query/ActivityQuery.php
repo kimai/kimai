@@ -162,7 +162,7 @@ class ActivityQuery extends BaseQuery implements VisibilityInterface
         return $this->activityIds;
     }
 
-    public function addHydrate(ActivityQueryHydrate $hydrate): void
+    private function addHydrate(ActivityQueryHydrate $hydrate): void
     {
         if (!\in_array($hydrate, $this->hydrate, true)) {
             $this->hydrate[] = $hydrate;
@@ -175,5 +175,10 @@ class ActivityQuery extends BaseQuery implements VisibilityInterface
     public function getHydrate(): array
     {
         return $this->hydrate;
+    }
+
+    public function loadTeams(): void
+    {
+        $this->addHydrate(ActivityQueryHydrate::TEAMS);
     }
 }

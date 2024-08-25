@@ -36,7 +36,6 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\Query\ProjectQueryHydrate;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
@@ -74,7 +73,7 @@ final class ProjectController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ProjectQuery();
-        $query->addHydrate(ProjectQueryHydrate::TEAMS);
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 

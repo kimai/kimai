@@ -13,7 +13,6 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Query\CustomerQuery;
-use App\Repository\Query\CustomerQueryHydrate;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -26,7 +25,7 @@ class CustomerLoaderTest extends AbstractLoaderTest
         $em = $this->getEntityManagerMock(2);
 
         $query = new CustomerQuery();
-        $query->addHydrate(CustomerQueryHydrate::TEAM_MEMBER);
+        $query->loadTeams();
 
         $sut = new CustomerLoader($em, $query);
 

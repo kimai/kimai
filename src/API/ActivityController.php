@@ -19,7 +19,6 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
-use App\Repository\Query\ActivityQueryHydrate;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -69,7 +68,7 @@ final class ActivityController extends BaseApiController
         $user = $this->getUser();
 
         $query = new ActivityQuery();
-        $query->addHydrate(ActivityQueryHydrate::TEAMS);
+        $query->loadTeams();
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');
