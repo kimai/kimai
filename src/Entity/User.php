@@ -128,7 +128,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @var Collection<UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
-    private ?Collection $preferences = null;
+    private ?Collection $preferences;
     /**
      * List of all team memberships.
      *
@@ -663,11 +663,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\SerializedName('teams')]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
-    public function getTeams(): iterable
+    public function getTeams(): array
     {
         $teams = [];
         foreach ($this->memberships as $membership) {
-            $teams[] = $membership->getTeam();
+            if ($membership->getTeam() !== null) {
+                $teams[] = $membership->getTeam();
+            }
         }
 
         return $teams;
