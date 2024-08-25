@@ -36,6 +36,7 @@ use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -484,6 +485,9 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
+    /**
+     * @param class-string<FormTypeInterface> $formClass
+     */
     protected function generateCreateForm(Timesheet $entry, string $formClass, string $action): FormInterface
     {
         $mode = $this->getTrackingMode();
@@ -568,6 +572,9 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'edit_rate_own_timesheet';
     }
 
+    /**
+     * @return class-string<FormTypeInterface>
+     */
     protected function getEditFormClassName(): string
     {
         return TimesheetEditForm::class;
