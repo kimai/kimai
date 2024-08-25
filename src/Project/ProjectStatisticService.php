@@ -130,6 +130,10 @@ class ProjectStatisticService
         $begin = $dateRange->getBegin();
         $end = $dateRange->getEnd();
 
+        if ($begin === null || $end === null) {
+            throw new \InvalidArgumentException('Missing date in date-range for project statistics');
+        }
+
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
             ->select('p')

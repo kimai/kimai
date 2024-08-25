@@ -541,9 +541,6 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @return FormInterface<CustomerComment>
-     */
     private function getCommentForm(CustomerComment $comment): FormInterface
     {
         if (null === $comment->getId()) {

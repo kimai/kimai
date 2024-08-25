@@ -11,7 +11,6 @@ namespace App\Repository\Loader;
 
 /**
  * @deprecated use QueryBuilderPaginator instead
- *
  * @implements LoaderInterface<mixed>
  */
 final class DefaultLoader implements LoaderInterface

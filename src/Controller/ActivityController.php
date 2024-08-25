@@ -51,7 +51,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/activity')]
 final class ActivityController extends AbstractController
 {
-    public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
+    public function __construct(
+        private readonly ActivityRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ActivityService $activityService
+    )
     {
     }
 
@@ -455,9 +460,6 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @return FormInterface<ActivityEditForm>
-     */
     private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
