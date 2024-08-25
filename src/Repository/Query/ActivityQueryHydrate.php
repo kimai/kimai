@@ -11,8 +11,6 @@ namespace App\Repository\Query;
 
 enum ActivityQueryHydrate
 {
-    case META_FIELDS;
     case TEAMS;
     case TEAM_MEMBER;
-    case PROJECT;
 }

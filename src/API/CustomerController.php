@@ -19,6 +19,7 @@ use App\Form\API\CustomerRateApiForm;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\CustomerQueryHydrate;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -65,6 +66,7 @@ final class CustomerController extends BaseApiController
         $user = $this->getUser();
 
         $query = new CustomerQuery();
+        $query->addHydrate(CustomerQueryHydrate::TEAMS);
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');

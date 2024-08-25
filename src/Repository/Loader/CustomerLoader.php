@@ -11,6 +11,8 @@ namespace App\Repository\Loader;
 
 use App\Entity\Customer;
 use App\Entity\Team;
+use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\CustomerQueryHydrate;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -19,7 +21,10 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class CustomerLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly CustomerQuery $query
+    )
     {
     }
 
@@ -32,41 +37,48 @@ final class CustomerLoader implements LoaderInterface
             return;
         }
 
-        $ids = array_map(function ($customer) {
-            if ($customer instanceof Customer) {
-                // make sure that this potential doctrine proxy is initialized and filled with all data
-                $customer->getName();
+        $customerIds = array_filter(array_unique(array_map(function (Customer $customer) {
+            // make sure that this potential doctrine proxy is initialized and filled with all data
+            $customer->getName();
 
-                return $customer->getId();
+            return $customer->getId();
+        }, $results)), function ($value) { return $value !== null; });
+
+        $hydrateTeams = false;
+        $hydrateTeamMembers = false;
+
+        foreach ($this->query->getHydrate() as $hydrate) {
+            switch ($hydrate) {
+                case CustomerQueryHydrate::TEAMS:
+                    $hydrateTeams = true;
+                    break;
+                case CustomerQueryHydrate::TEAM_MEMBER:
+                    $hydrateTeams = true;
+                    $hydrateTeamMembers = true;
+                    break;
             }
+        }
 
-            return $customer;
-        }, $results);
+        if (!$hydrateTeams) {
+            return;
+        }
 
         $em = $this->entityManager;
 
+        // required where we need to check team permissions, e.g. "Customer listing"
         $qb = $em->createQueryBuilder();
-        /** @var Customer[] $customers */
-        $customers = $qb->select('PARTIAL c.{id}', 'meta')
-            ->from(Customer::class, 'c')
-            ->leftJoin('c.meta', 'meta')
-            ->andWhere($qb->expr()->in('c.id', $ids))
-            ->getQuery()
-            ->execute();
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL c.{id}', 'teams')
+        /** @var array<Customer> $customers */
+        $customers = $qb->select('PARTIAL c.{id}', 'teams')
             ->from(Customer::class, 'c')
             ->leftJoin('c.teams', 'teams')
-            ->andWhere($qb->expr()->in('c.id', $ids))
+            ->andWhere($qb->expr()->in('c.id', $customerIds))
             ->getQuery()
             ->execute();
 
         // do not load team members or leads by default, because they will only be used on detail pages
-        // and there is no benefit in adding multiple queries for most requests when they are only needed in one place
-        if ($this->fullyHydrated) {
+        if ($hydrateTeamMembers) {
             $teamIds = [];
-            foreach ($customers as $customer) {
+            foreach ($results as $customer) {
                 foreach ($customer->getTeams() as $team) {
                     $teamIds[] = $team->getId();
                 }

@@ -19,7 +19,7 @@ class ActivityLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults(): void
     {
-        $em = $this->getEntityManagerMock(3);
+        $em = $this->getEntityManagerMock(1);
 
         $sut = new ActivityLoader($em);
 

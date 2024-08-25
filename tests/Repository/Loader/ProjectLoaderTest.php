@@ -29,9 +29,9 @@ class ProjectLoaderTest extends AbstractLoaderTest
 
         $results = [$entity];
 
-        $em = $this->getEntityManagerMock(4, $results);
+        $em = $this->getEntityManagerMock(2, $results);
 
         $sut = new ProjectLoader($em);
-        $sut->loadResults([$entity, 4711]);
+        $sut->loadResults([$entity]);
     }
 }

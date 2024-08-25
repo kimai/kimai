@@ -22,8 +22,7 @@ final class TimesheetLoader implements LoaderInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly bool $fullyHydrated = false,
-        private readonly bool $basicHydrated = true
+        private readonly bool $fullyHydrated = false
     )
     {
     }
@@ -46,18 +45,9 @@ final class TimesheetLoader implements LoaderInterface
 
         $em = $this->entityManager;
 
-        $qb = $em->createQueryBuilder();
-        /** @var array<Timesheet> $timesheets */
-        $timesheets = $qb->select('PARTIAL t.{id}', 'project')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.project', 'project')
-            ->andWhere($qb->expr()->in('t.id', $ids))
-            ->getQuery()
-            ->execute();
-
         $projectIds = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
             return $timesheet->getProject()?->getId();
-        }, $timesheets)), function ($value) { return $value !== null; });
+        }, $results)), function ($value) { return $value !== null; });
 
         if ($this->fullyHydrated) {
             $qb = $em->createQueryBuilder();
@@ -92,18 +82,10 @@ final class TimesheetLoader implements LoaderInterface
                 ->execute();
         }
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL t.{id}', 'activity')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.activity', 'activity')
-            ->andWhere($qb->expr()->in('t.id', $ids))
-            ->getQuery()
-            ->execute();
-
         if ($this->fullyHydrated) {
             $activityIds = array_filter(array_map(function (Timesheet $timesheet) {
                 return $timesheet->getActivity()?->getId();
-            }, $timesheets), function ($id): bool {
+            }, $results), function ($id): bool {
                 return $id !== null;
             });
 
@@ -116,30 +98,12 @@ final class TimesheetLoader implements LoaderInterface
                 ->execute();
         }
 
-        if ($this->basicHydrated) {
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL t.{id}', 'user')
-                ->from(Timesheet::class, 't')
-                ->leftJoin('t.user', 'user')
-                ->andWhere($qb->expr()->in('t.id', $ids))
-                ->getQuery()
-                ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL t.{id}', 'tags')
-                ->from(Timesheet::class, 't')
-                ->leftJoin('t.tags', 'tags')
-                ->andWhere($qb->expr()->in('t.id', $ids))
-                ->getQuery()
-                ->execute();
-
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL t.{id}', 'meta')
-                ->from(Timesheet::class, 't')
-                ->leftJoin('t.meta', 'meta')
-                ->andWhere($qb->expr()->in('t.id', $ids))
-                ->getQuery()
-                ->execute();
-        }
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL t.{id}', 'tags')
+            ->from(Timesheet::class, 't')
+            ->leftJoin('t.tags', 'tags')
+            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }

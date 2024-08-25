@@ -20,6 +20,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\ProjectQueryHydrate;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -74,6 +75,7 @@ final class ProjectController extends BaseApiController
         $user = $this->getUser();
 
         $query = new ProjectQuery();
+        $query->addHydrate(ProjectQueryHydrate::TEAMS);
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');

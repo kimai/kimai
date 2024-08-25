@@ -11,7 +11,6 @@ namespace App\Repository\Query;
 
 enum CustomerQueryHydrate
 {
-    case META_FIELDS;
     case TEAMS;
     case TEAM_MEMBER;
 }

@@ -22,8 +22,7 @@ final class ProjectLoader implements LoaderInterface
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly bool $hydrateTeamMembers = false,
-        private readonly bool $hydrateTeams = true,
-        private readonly bool $hydrateMeta = true
+        private readonly bool $hydrateTeams = true
     )
     {
     }
@@ -37,48 +36,25 @@ final class ProjectLoader implements LoaderInterface
             return;
         }
 
-        $ids = array_map(function ($project) {
-            if ($project instanceof Project) {
-                // make sure that this potential doctrine proxy is initialized and filled with all data
-                $project->getName();
+        $projectIds = array_filter(array_unique(array_map(function (Project $project) {
+            // make sure that this potential doctrine proxy is initialized and filled with all data
+            $project->getName();
 
-                return $project->getId();
-            }
-
-            return $project;
-        }, $results);
+            return $project->getId();
+        }, $results)), function ($value) { return $value !== null; });
 
         $em = $this->entityManager;
 
-        $qb = $em->createQueryBuilder();
-        /** @var Project[] $projects */
-        $projects = $qb->select('PARTIAL project.{id}', 'customer')
-            ->from(Project::class, 'project')
-            ->leftJoin('project.customer', 'customer')
-            ->andWhere($qb->expr()->in('project.id', $ids))
-            ->getQuery()
-            ->execute();
-
-        $customerIds = array_unique(array_map(function (Project $project) {
-            return $project->getCustomer()->getId();
-        }, $projects));
-
-        if ($this->hydrateMeta) {
-            $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL project.{id}', 'meta')
-                ->from(Project::class, 'project')
-                ->leftJoin('project.meta', 'meta')
-                ->andWhere($qb->expr()->in('project.id', $ids))
-                ->getQuery()
-                ->execute();
-        }
-
         if ($this->hydrateTeams) {
+            $customerIds = array_filter(array_unique(array_map(function (Project $project) {
+                return $project->getCustomer()->getId();
+            }, $results)), function ($value) { return $value !== null; });
+
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL project.{id}', 'teams')
                 ->from(Project::class, 'project')
                 ->leftJoin('project.teams', 'teams')
-                ->andWhere($qb->expr()->in('project.id', $ids))
+                ->andWhere($qb->expr()->in('project.id', $projectIds))
                 ->getQuery()
                 ->execute();
 
@@ -95,7 +71,7 @@ final class ProjectLoader implements LoaderInterface
         // and there is no benefit in adding multiple queries for most requests when they are only needed in one place
         if ($this->hydrateTeamMembers) {
             $teamIds = [];
-            foreach ($projects as $project) {
+            foreach ($results as $project) {
                 foreach ($project->getTeams() as $team) {
                     $teamIds[] = $team->getId();
                 }

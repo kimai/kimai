@@ -31,6 +31,7 @@ use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\ActivityQueryHydrate;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
@@ -66,6 +67,7 @@ final class ActivityController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ActivityQuery();
+        $query->addHydrate(ActivityQueryHydrate::TEAMS);
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 

@@ -32,6 +32,7 @@ use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\CustomerQueryHydrate;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -67,6 +68,7 @@ final class CustomerController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
+        $query->addHydrate(CustomerQueryHydrate::TEAMS);
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 

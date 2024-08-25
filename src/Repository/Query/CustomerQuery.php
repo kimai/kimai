@@ -36,13 +36,11 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     /**
      * @var array<int>
      */
-    private array $ids = [];
+    private array $customerIds = [];
     /**
      * @var array<CustomerQueryHydrate>
      */
-    private array $hydrate = [
-        CustomerQueryHydrate::META_FIELDS
-    ];
+    private array $hydrate = [];
 
     public function __construct()
     {
@@ -50,6 +48,7 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
             'orderBy' => 'name',
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'country' => null,
+            'customerIds' => [],
         ]);
     }
 
@@ -81,7 +80,7 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
      */
     public function setCustomerIds(array $ids): void
     {
-        $this->ids = $ids;
+        $this->customerIds = $ids;
     }
 
     /**
@@ -89,7 +88,7 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
      */
     public function getCustomerIds(): array
     {
-        return $this->ids;
+        return $this->customerIds;
     }
 
     public function addHydrate(CustomerQueryHydrate $hydrate): void

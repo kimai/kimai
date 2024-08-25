@@ -1509,11 +1509,6 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getTeams\\(\\) should return iterable\\<App\\\\Entity\\\\Team\\> but returns array\\<int, App\\\\Entity\\\\Team\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getTimezone\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
@@ -2184,16 +2179,6 @@ parameters:
             path: src/Form/Helper/ActivityHelper.php
 
         -
-            message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
             message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
@@ -2209,16 +2194,6 @@ parameters:
             path: src/Form/Helper/CustomerHelper.php
 
         -
-            message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
             message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/CustomerHelper.php
@@ -2231,16 +2206,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 2
-            path: src/Form/Helper/ProjectHelper.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Helper/ProjectHelper.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, string\\|null given\\.$#"
-            count: 1
             path: src/Form/Helper/ProjectHelper.php
 
         -
@@ -3299,11 +3264,6 @@ parameters:
             path: src/Form/Type/SystemConfigurationType.php
 
         -
-            message: "#^Parameter \\#1 \\$teams of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setTeams\\(\\) expects array\\<App\\\\Entity\\\\Team\\>\\|null, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Form/Type/TeamType.php
-
-        -
             message: "#^Parameter \\#1 \\$format of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Form/Type/TimePickerType.php
@@ -4034,11 +3994,6 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\BookmarkRepository\\:\\:deleteBookmark\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/BookmarkRepository.php
@@ -4094,11 +4049,6 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
             message: "#^Cannot access offset 'counter' on mixed\\.$#"
             count: 1
             path: src/Repository/InvoiceRepository.php
@@ -4130,11 +4080,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:getCounterFor\\(\\) should return int but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
             count: 1
             path: src/Repository/InvoiceRepository.php
 
@@ -4180,11 +4125,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
             count: 1
             path: src/Repository/ProjectRepository.php
 
@@ -4259,16 +4199,6 @@ parameters:
             path: src/Repository/TagRepository.php
 
         -
-            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(array\\<int, App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
-            count: 1
-            path: src/Repository/TeamRepository.php
-
-        -
-            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(list\\<App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
-            count: 1
-            path: src/Repository/TeamRepository.php
-
-        -
             message: "#^Argument of an invalid type array\\<string\\>\\|string supplied for foreach, only iterables are supported\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -4334,27 +4264,12 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:findTimesheetsById\\(\\) should return array\\<App\\\\Entity\\\\Timesheet\\> but returns iterable\\<App\\\\Entity\\\\Timesheet\\>\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getActiveEntries\\(\\) should return array\\<App\\\\Entity\\\\Timesheet\\> but returns iterable\\<App\\\\Entity\\\\Timesheet\\>\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getRawData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 
         -
             message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getRawData\\(\\) should return array but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:setExported\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 
@@ -4390,11 +4305,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$amount of class App\\\\Model\\\\Revenue constructor expects float, mixed given\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 

@@ -35,7 +35,7 @@ final class TeamLoader implements LoaderInterface
             return;
         }
 
-        $ids = array_filter(array_unique(array_map(function (Team $team) {
+        $teamIds = array_filter(array_unique(array_map(function (Team $team) {
             // make sure that this potential doctrine proxy is initialized and filled with all data
             $team->getName();
 
@@ -50,7 +50,7 @@ final class TeamLoader implements LoaderInterface
             ->from(Team::class, 'team')
             ->leftJoin('team.members', 'members')
             ->leftJoin('members.user', 'user')
-            ->andWhere($qb->expr()->in('team.id', $ids))
+            ->andWhere($qb->expr()->in('team.id', $teamIds))
             ->getQuery()
             ->execute();
 
@@ -60,12 +60,12 @@ final class TeamLoader implements LoaderInterface
         $teams = $qb->select('PARTIAL team.{id}', 'projects')
             ->from(Team::class, 'team')
             ->leftJoin('team.projects', 'projects')
-            ->andWhere($qb->expr()->in('team.id', $ids))
+            ->andWhere($qb->expr()->in('team.id', $teamIds))
             ->getQuery()
             ->execute();
 
         $projectIds = [];
-        foreach ($teams as $team) {
+        foreach ($results as $team) {
             foreach ($team->getProjects() as $project) {
                 $projectIds[] = $project->getId();
             }

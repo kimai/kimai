@@ -13,11 +13,13 @@ use App\Entity\Team;
 use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Repository\Loader\TeamLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TeamQuery;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -26,28 +28,26 @@ use Doctrine\ORM\QueryBuilder;
 class TeamRepository extends EntityRepository
 {
     /**
-     * @return Team[]
-     */
-    public function findAll(): array
-    {
-        $result = parent::findAll();
-
-        $loader = new TeamLoader($this->getEntityManager());
-        $loader->loadResults($result);
-
-        return $result;
-    }
-
-    /**
      * @param int[] $teamIds
      * @return Team[]
      */
     public function findByIds(array $teamIds): array
     {
+        $ids = array_filter(
+            array_unique($teamIds),
+            function ($value) {
+                return $value > 0;
+            }
+        );
+
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->createQueryBuilder('t');
         $qb
             ->where($qb->expr()->in('t.id', ':id'))
-            ->setParameter('id', $teamIds)
+            ->setParameter('id', $ids)
         ;
 
         $teams = $qb->getQuery()->getResult();
@@ -102,9 +102,9 @@ class TeamRepository extends EntityRepository
     /**
      * @return PaginatorInterface<Team>
      */
-    private function getPaginatorForQuery(TeamQuery $query): PaginatorInterface
+    private function getPaginatorForQuery(TeamQuery $teamQuery): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
+        $qb = $this->getQueryBuilderForQuery($teamQuery);
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
@@ -113,9 +113,9 @@ class TeamRepository extends EntityRepository
         /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $qb = $this->getQueryBuilderForQuery($query);
+        $query = $this->createTeamQuery($teamQuery);
 
-        return new LoaderPaginator(new TeamLoader($qb->getEntityManager()), $qb, $counter);
+        return new LoaderQueryPaginator(new TeamLoader($qb->getEntityManager()), $query, $counter);
     }
 
     /**
@@ -123,11 +123,13 @@ class TeamRepository extends EntityRepository
      */
     public function getTeamsForQuery(TeamQuery $query): iterable
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
+        /** @var array<Team> $teams */
+        $teams = $this->createTeamQuery($query)->execute();
 
-        return $paginator->getAll();
+        $loader = new TeamLoader($this->getEntityManager());
+        $loader->loadResults($teams);
+
+        return $teams;
     }
 
     private function getQueryBuilderForQuery(TeamQuery $query): QueryBuilder
@@ -236,5 +238,32 @@ class TeamRepository extends EntityRepository
         if ($or->count() > 0) {
             $qb->andWhere($or);
         }
+    }
+
+    /**
+     * @return Query<Team>
+     */
+    private function createTeamQuery(TeamQuery $teamQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($teamQuery)->getQuery();
+        $query = $this->prepareTeamQuery($query);
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Team> $query
+     * @return Query<Team>
+     */
+    public function prepareTeamQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        // $query->setFetchMode(Team::class, 'members', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'customers', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'projects', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'activities', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

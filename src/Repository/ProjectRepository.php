@@ -17,16 +17,19 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Loader\ProjectLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\ProjectQueryHydrate;
+use App\Repository\Query\VisibilityInterface;
 use App\Utils\Pagination;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
@@ -40,30 +43,29 @@ class ProjectRepository extends EntityRepository
 
     /**
      * @param int[] $projectIds
-     * @return Project[]
+     * @return array<Project>
      */
     public function findByIds(array $projectIds): array
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb
-            ->where($qb->expr()->in('p.id', ':id'))
-            ->setParameter('id', $projectIds)
-        ;
+        $ids = array_filter(
+            array_unique($projectIds),
+            function ($value) {
+                return $value > 0;
+            }
+        );
 
-        $projects = $qb->getQuery()->getResult();
+        if (\count($ids) === 0) {
+            return [];
+        }
 
-        $loader = new ProjectLoader($qb->getEntityManager(), true);
-        $loader->loadResults($projects);
+        $query = new ProjectQuery();
+        $query->setProjectIds($ids);
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
 
-        return $projects;
+        return $this->getProjectsForQuery($query);
     }
 
-    /**
-     * @param Project $project
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveProject(Project $project)
+    public function saveProject(Project $project): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($project);
@@ -71,13 +73,12 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @param null|bool $visible
-     * @return int
+     * @return int<0, max>
      */
-    public function countProject($visible = null): int
+    public function countProject(?bool $visible = null): int
     {
         if (null !== $visible) {
-            return $this->count(['visible' => (bool) $visible]);
+            return $this->count(['visible' => $visible]);
         }
 
         return $this->count([]);
@@ -91,7 +92,7 @@ class ProjectRepository extends EntityRepository
         }
     }
 
-    public function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
+    private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
     {
         $andX = $qb->expr()->andX();
 
@@ -212,6 +213,10 @@ class ProjectRepository extends EntityRepository
             ->leftJoin('p.customer', 'c')
         ;
 
+        if (\count($query->getProjectIds()) > 0) {
+            $qb->andWhere($qb->expr()->in('p.id', ':id'))->setParameter('id', $query->getProjectIds());
+        }
+
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
                 case 'customer':
@@ -331,6 +336,9 @@ class ProjectRepository extends EntityRepository
         return $and;
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countProjectsForQuery(ProjectQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -341,7 +349,7 @@ class ProjectRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('p.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     public function getPagerfantaForQuery(ProjectQuery $query): Pagination
@@ -349,34 +357,33 @@ class ProjectRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    private function getPaginatorForQuery(ProjectQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<Project>
+     */
+    private function getPaginatorForQuery(ProjectQuery $projectQuery): PaginatorInterface
     {
-        $counter = $this->countProjectsForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
+        $counter = $this->countProjectsForQuery($projectQuery);
+        $query = $this->createProjectQuery($projectQuery);
 
-        return new LoaderPaginator(new ProjectLoader($qb->getEntityManager()), $qb, $counter);
+        return new LoaderQueryPaginator(new ProjectLoader($this->getEntityManager(), false, true), $query, $counter);
     }
 
     /**
      * @param ProjectQuery $query
      * @return Project[]
      */
-    public function getProjectsForQuery(ProjectQuery $query): iterable
+    public function getProjectsForQuery(ProjectQuery $query): array
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-        $results = $qb->getQuery()->execute();
-        $loader = new ProjectLoader($qb->getEntityManager());
-        $loader->loadResults($results);
+        /** @var array<Project> $projects */
+        $projects = $this->createProjectQuery($query)->execute();
 
-        return $results;
+        $loader = new ProjectLoader($this->getEntityManager(), false, true);
+        $loader->loadResults($projects);
+
+        return $projects;
     }
 
-    /**
-     * @param Project $delete
-     * @param Project|null $replace
-     * @throws \Doctrine\ORM\Exception\ORMException
-     */
-    public function deleteProject(Project $delete, ?Project $replace = null)
+    public function deleteProject(Project $delete, ?Project $replace = null): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -428,17 +435,58 @@ class ProjectRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function saveComment(ProjectComment $comment)
+    public function saveComment(ProjectComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($comment);
         $entityManager->flush();
     }
 
-    public function deleteComment(ProjectComment $comment)
+    public function deleteComment(ProjectComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($comment);
         $entityManager->flush();
+    }
+
+    /**
+     * @return Query<Project>
+     */
+    private function createProjectQuery(ProjectQuery $projectQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($projectQuery)->getQuery();
+        $query = $this->prepareProjectQuery($query);
+
+        foreach ($projectQuery->getHydrate() as $hydrate) {
+            switch ($hydrate) {
+                case ProjectQueryHydrate::TEAMS:
+                    // does not yet work, see https://github.com/doctrine/orm/pull/8391
+                    // $query->setFetchMode(Project::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    break;
+
+                case ProjectQueryHydrate::TEAM_MEMBER:
+                    // does not yet work, see https://github.com/doctrine/orm/issues/11254
+                    // $query->setFetchMode(Project::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(Team::class, 'members', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(TeamMember::class, 'user', ClassMetadata::FETCH_EAGER);
+                    break;
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Project> $query
+     * @return Query<Project>
+     */
+    public function prepareProjectQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        $query->setFetchMode(Project::class, 'meta', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

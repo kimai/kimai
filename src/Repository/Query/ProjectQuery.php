@@ -34,13 +34,11 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     /**
      * @var array<int>
      */
-    private array $ids = [];
+    private array $projectIds = [];
     /**
      * @var array<ProjectQueryHydrate>
      */
-    private array $hydrate = [
-        ProjectQueryHydrate::META_FIELDS
-    ];
+    private array $hydrate = [];
 
     public function __construct()
     {
@@ -51,6 +49,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
             'projectEnd' => null,
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'globalActivities' => null,
+            'projectIds' => [],
         ]);
     }
 
@@ -112,7 +111,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
      */
     public function setProjectIds(array $ids): void
     {
-        $this->ids = $ids;
+        $this->projectIds = $ids;
     }
 
     /**
@@ -120,7 +119,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
      */
     public function getProjectIds(): array
     {
-        return $this->ids;
+        return $this->projectIds;
     }
 
     public function addHydrate(ProjectQueryHydrate $hydrate): void

@@ -268,7 +268,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 if (null === $exporter) {
                     $form->addError(new FormError('Invalid timesheet exporter given'));
                 } else {
-                    return $exporter->render($entries->getResults(true), $query);
+                    return $exporter->render($entries->getResults(), $query);
                 }
             }
         }

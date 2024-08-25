@@ -69,7 +69,7 @@ final class UserTeamProjects extends AbstractWidget
         $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
 
         $loader = new TeamLoader($this->entityManager, true);
-        $loader->loadResults(\is_array($teams) ? $teams : iterator_to_array($teams));
+        $loader->loadResults($teams);
 
         $projects = [];
 
