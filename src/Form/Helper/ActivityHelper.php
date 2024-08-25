@@ -44,7 +44,7 @@ final class ActivityHelper
     public function getChoiceLabel(Activity $activity): string
     {
         $name = $this->getChoicePattern();
-        $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
+        $name = str_replace(self::PATTERN_NAME, $activity->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_NUMBER, $activity->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $activity->getComment() ?? '', $name);
 
@@ -57,7 +57,7 @@ final class ActivityHelper
         }
 
         if ($name === '' || $name === self::SPACER) {
-            $name = $activity->getName();
+            $name = $activity->getName() ?? '';
         }
 
         return substr($name, 0, 110);
