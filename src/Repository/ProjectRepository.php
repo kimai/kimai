@@ -63,7 +63,7 @@ class ProjectRepository extends EntityRepository
             ->setParameter('id', $ids)
         ;
 
-        return $this->getProjects($qb->getQuery());
+        return $this->getProjects($this->prepareProjectQuery($qb->getQuery()));
     }
 
     public function saveProject(Project $project): void

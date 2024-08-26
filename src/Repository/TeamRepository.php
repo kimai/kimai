@@ -50,7 +50,7 @@ class TeamRepository extends EntityRepository
             ->setParameter('id', $ids)
         ;
 
-        return $this->getTeams($qb->getQuery());
+        return $this->getTeams($this->prepareTeamQuery($qb->getQuery()));
     }
 
     public function saveTeam(Team $team): void

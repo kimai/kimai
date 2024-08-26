@@ -72,7 +72,7 @@ class ActivityRepository extends EntityRepository
             ->setParameter('id', $ids)
         ;
 
-        return $this->getActivities($qb->getQuery());
+        return $this->getActivities($this->prepareActivityQuery($qb->getQuery()));
     }
 
     public function saveActivity(Activity $activity): void

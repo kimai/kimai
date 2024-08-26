@@ -60,7 +60,7 @@ class CustomerRepository extends EntityRepository
             ->setParameter('id', $ids)
         ;
 
-        return $this->getCustomers($qb->getQuery(), new CustomerQuery());
+        return $this->getCustomers($this->prepareCustomerQuery($qb->getQuery()), new CustomerQuery());
     }
 
     public function saveCustomer(Customer $customer): void

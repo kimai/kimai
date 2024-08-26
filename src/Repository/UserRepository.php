@@ -76,15 +76,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function getUserById(int $id): ?User
     {
-        /** @var User|null $user */
-        $user = $this->find($id);
+        $users = $this->findByIds([$id]);
 
-        if ($user !== null) {
-            $loader = new UserLoader($this->getEntityManager(), true);
-            $loader->loadResults([$user]);
+        if (\count($users) === 1) {
+            return $users[0];
         }
 
-        return $user;
+        return null;
     }
 
     /**
@@ -110,7 +108,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->setParameter('id', $ids)
         ;
 
-        return $this->getUsers($qb->getQuery());
+        return $this->getUsers($this->prepareUserQuery($qb->getQuery()));
     }
 
     /**
