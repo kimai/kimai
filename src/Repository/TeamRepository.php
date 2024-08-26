@@ -50,12 +50,7 @@ class TeamRepository extends EntityRepository
             ->setParameter('id', $ids)
         ;
 
-        $teams = $qb->getQuery()->getResult();
-
-        $loader = new TeamLoader($qb->getEntityManager());
-        $loader->loadResults($teams);
-
-        return $teams;
+        return $this->getTeams($qb->getQuery());
     }
 
     public function saveTeam(Team $team): void
@@ -123,8 +118,17 @@ class TeamRepository extends EntityRepository
      */
     public function getTeamsForQuery(TeamQuery $query): iterable
     {
+        return $this->getTeams($this->createTeamQuery($query));
+    }
+
+    /**
+     * @param Query<Team> $query
+     * @return Team[]
+     */
+    private function getTeams(Query $query): array
+    {
         /** @var array<Team> $teams */
-        $teams = $this->createTeamQuery($query)->execute();
+        $teams = $query->execute();
 
         $loader = new TeamLoader($this->getEntityManager());
         $loader->loadResults($teams);

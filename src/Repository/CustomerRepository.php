@@ -14,7 +14,6 @@ use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Paginator\LoaderQueryPaginator;
@@ -22,7 +21,6 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\CustomerQueryHydrate;
-use App\Repository\Query\VisibilityInterface;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -56,11 +54,13 @@ class CustomerRepository extends EntityRepository
             return [];
         }
 
-        $query = new CustomerQuery();
-        $query->setCustomerIds($ids);
-        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->where($qb->expr()->in('c.id', ':id'))
+            ->setParameter('id', $ids)
+        ;
 
-        return $this->getCustomersForQuery($query);
+        return $this->getCustomers($qb->getQuery(), new CustomerQuery());
     }
 
     public function saveCustomer(Customer $customer): void
@@ -302,12 +302,21 @@ class CustomerRepository extends EntityRepository
     /**
      * @return Customer[]
      */
-    public function getCustomersForQuery(CustomerQuery $query): array
+    public function getCustomersForQuery(CustomerQuery $customerQuery): array
+    {
+        return $this->getCustomers($this->createCustomerQuery($customerQuery), $customerQuery);
+    }
+
+    /**
+     * @param Query<Customer> $query
+     * @return Customer[]
+     */
+    private function getCustomers(Query $query, CustomerQuery $customerQuery): array
     {
         /** @var array<Customer> $customers */
-        $customers = $this->createCustomerQuery($query)->execute();
+        $customers = $query->execute();
 
-        $loader = new CustomerLoader($this->getEntityManager(), $query);
+        $loader = new CustomerLoader($this->getEntityManager(), $customerQuery);
         $loader->loadResults($customers);
 
         return $customers;

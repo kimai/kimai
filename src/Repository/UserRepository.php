@@ -74,13 +74,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
     }
 
-    /**
-     * Used to fetch a user by its ID.
-     *
-     * @param int $id
-     * @return null|User
-     */
-    public function getUserById($id): ?User
+    public function getUserById(int $id): ?User
     {
         /** @var User|null $user */
         $user = $this->find($id);
@@ -110,11 +104,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             return [];
         }
 
-        $query = new UserQuery();
-        $query->setUserIds($ids);
-        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->where($qb->expr()->in('u.id', ':id'))
+            ->setParameter('id', $ids)
+        ;
 
-        return $this->getUsersForQuery($query);
+        return $this->getUsers($qb->getQuery());
     }
 
     /**
@@ -401,8 +397,17 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function getUsersForQuery(UserQuery $query): array
     {
+        return $this->getUsers($this->createUserQuery($query));
+    }
+
+    /**
+     * @param Query<User> $query
+     * @return User[]
+     */
+    private function getUsers(Query $query): array
+    {
         /** @var array<User> $users */
-        $users = $this->createUserQuery($query)->execute();
+        $users = $query->execute();
 
         $loader = new UserLoader($this->getEntityManager());
         $loader->loadResults($users);

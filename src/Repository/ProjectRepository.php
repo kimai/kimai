@@ -22,7 +22,6 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\ProjectQueryHydrate;
-use App\Repository\Query\VisibilityInterface;
 use App\Utils\Pagination;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
@@ -58,11 +57,13 @@ class ProjectRepository extends EntityRepository
             return [];
         }
 
-        $query = new ProjectQuery();
-        $query->setProjectIds($ids);
-        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where($qb->expr()->in('p.id', ':id'))
+            ->setParameter('id', $ids)
+        ;
 
-        return $this->getProjectsForQuery($query);
+        return $this->getProjects($qb->getQuery());
     }
 
     public function saveProject(Project $project): void
@@ -369,13 +370,21 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @param ProjectQuery $query
      * @return Project[]
      */
     public function getProjectsForQuery(ProjectQuery $query): array
     {
+        return $this->getProjects($this->createProjectQuery($query));
+    }
+
+    /**
+     * @param Query<Project> $query
+     * @return Project[]
+     */
+    private function getProjects(Query $query): array
+    {
         /** @var array<Project> $projects */
-        $projects = $this->createProjectQuery($query)->execute();
+        $projects = $query->execute();
 
         $loader = new ProjectLoader($this->getEntityManager(), false, true);
         $loader->loadResults($projects);

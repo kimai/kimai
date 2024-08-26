@@ -21,7 +21,6 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ActivityQueryHydrate;
-use App\Repository\Query\VisibilityInterface;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -67,11 +66,13 @@ class ActivityRepository extends EntityRepository
             return [];
         }
 
-        $query = new ActivityQuery();
-        $query->setActivityIds($ids);
-        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->where($qb->expr()->in('a.id', ':id'))
+            ->setParameter('id', $ids)
+        ;
 
-        return $this->getActivitiesForQuery($query);
+        return $this->getActivities($qb->getQuery());
     }
 
     public function saveActivity(Activity $activity): void
@@ -395,8 +396,17 @@ class ActivityRepository extends EntityRepository
      */
     public function getActivitiesForQuery(ActivityQuery $query): array
     {
+        return $this->getActivities($this->createActivityQuery($query));
+    }
+
+    /**
+     * @param Query<Activity> $query
+     * @return Activity[]
+     */
+    private function getActivities(Query $query): array
+    {
         /** @var array<Activity> $activities */
-        $activities = $this->createActivityQuery($query)->execute();
+        $activities = $query->execute();
 
         $loader = new ActivityLoader($this->getEntityManager());
         $loader->loadResults($activities);
