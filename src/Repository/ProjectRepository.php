@@ -381,7 +381,7 @@ class ProjectRepository extends EntityRepository
      * @param Query<Project> $query
      * @return Project[]
      */
-    private function getProjects(Query $query): array
+    public function getProjects(Query $query): array
     {
         /** @var array<Project> $projects */
         $projects = $query->execute();

@@ -125,7 +125,7 @@ class TeamRepository extends EntityRepository
      * @param Query<Team> $query
      * @return Team[]
      */
-    private function getTeams(Query $query): array
+    public function getTeams(Query $query): array
     {
         /** @var array<Team> $teams */
         $teams = $query->execute();

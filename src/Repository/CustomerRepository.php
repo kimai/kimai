@@ -311,7 +311,7 @@ class CustomerRepository extends EntityRepository
      * @param Query<Customer> $query
      * @return Customer[]
      */
-    private function getCustomers(Query $query, CustomerQuery $customerQuery): array
+    public function getCustomers(Query $query, CustomerQuery $customerQuery): array
     {
         /** @var array<Customer> $customers */
         $customers = $query->execute();

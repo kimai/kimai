@@ -109,16 +109,9 @@ class ProjectStatisticService
         ;
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        $query = $qb->getQuery();
-        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
-        /** @var Project[] $projects */
-        $projects = $query->getResult();
-
-        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**
@@ -197,17 +190,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        $query = $qb->getQuery();
-        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
-        /** @var Project[] $projects */
-        $projects = $query->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     public function getBudgetStatisticModel(Project $project, DateTimeInterface $today): ProjectBudgetStatisticModel
@@ -695,17 +680,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        $query = $qb->getQuery();
-        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
-        /** @var Project[] $projects */
-        $projects = $query->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($qb->getEntityManager(), false, true);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**

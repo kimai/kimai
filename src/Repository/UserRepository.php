@@ -402,7 +402,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * @param Query<User> $query
      * @return User[]
      */
-    private function getUsers(Query $query): array
+    public function getUsers(Query $query): array
     {
         /** @var array<User> $users */
         $users = $query->execute();

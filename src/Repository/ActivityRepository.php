@@ -403,7 +403,7 @@ class ActivityRepository extends EntityRepository
      * @param Query<Activity> $query
      * @return Activity[]
      */
-    private function getActivities(Query $query): array
+    public function getActivities(Query $query): array
     {
         /** @var array<Activity> $activities */
         $activities = $query->execute();
