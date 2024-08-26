@@ -15,6 +15,7 @@ use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * @internal
  * @implements LoaderInterface<Project>
  */
 final class ProjectLoader implements LoaderInterface

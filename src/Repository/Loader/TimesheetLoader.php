@@ -16,6 +16,7 @@ use App\Entity\Timesheet;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * @internal
  * @implements LoaderInterface<Timesheet>
  */
 final class TimesheetLoader implements LoaderInterface
