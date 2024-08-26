@@ -29,7 +29,6 @@ use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ActivityRepository;
-use App\Repository\Loader\ProjectLoader;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -37,7 +36,6 @@ use App\Timesheet\DateTimeFactory;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
