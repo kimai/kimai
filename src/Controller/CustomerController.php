@@ -130,7 +130,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerQuery $query
      * @return MetaTableTypeInterface[]
      */
     private function findMetaColumns(CustomerQuery $query): array
