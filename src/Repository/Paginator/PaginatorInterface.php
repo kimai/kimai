@@ -11,12 +11,15 @@ namespace App\Repository\Paginator;
 
 use Pagerfanta\Adapter\AdapterInterface;
 
+/**
+ * @template-covariant T
+ */
 interface PaginatorInterface extends AdapterInterface
 {
     /**
      * Returns all available results without pagination.
      *
-     * @return iterable
+     * @return iterable<array-key, T>
      */
     public function getAll(): iterable;
 }

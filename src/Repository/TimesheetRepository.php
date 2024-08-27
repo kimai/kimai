@@ -21,7 +21,7 @@ use App\Entity\User;
 use App\Model\Revenue;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Result\TimesheetResult;
@@ -30,13 +30,15 @@ use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Timesheet>
+ * @extends EntityRepository<Timesheet>
  */
 class TimesheetRepository extends EntityRepository
 {
@@ -230,7 +232,6 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param string|string[] $select
      * @return int|mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     private function queryTimeRange(string|array $select, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
     {
@@ -346,9 +347,12 @@ class TimesheetRepository extends EntityRepository
             return $qb->getQuery()->getResult();
         }
 
-        return $this->getHydratedResultsByQuery($qb, false);
+        return $this->getHydratedResultsByQuery($qb);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countActiveEntries(?User $user = null): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -366,9 +370,12 @@ class TimesheetRepository extends EntityRepository
             ;
         }
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countActiveUsers(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?bool $billable = null): int
     {
         $tmp = $this->queryTimeRange('COUNT(DISTINCT(t.user))', $begin, $end, null, $billable);
@@ -377,7 +384,7 @@ class TimesheetRepository extends EntityRepository
             return 0;
         }
 
-        return (int) $tmp;
+        return (int) $tmp; // @phpstan-ignore-line
     }
 
     /**
@@ -442,7 +449,10 @@ class TimesheetRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    private function getPaginatorForQuery(TimesheetQuery $query): PaginatorInterface
+    /**
+     * @return int<0, max>
+     */
+    private function countTimesheetsForQuery(TimesheetQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -450,50 +460,60 @@ class TimesheetRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->count('t.id'))
         ;
-        $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $qb = $this->getQueryBuilderForQuery($query);
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
+    }
 
-        return new LoaderPaginator(new TimesheetLoader($qb->getEntityManager()), $qb, $counter);
+    /**
+     * @return PaginatorInterface<Timesheet>
+     */
+    private function getPaginatorForQuery(TimesheetQuery $timesheetQuery): PaginatorInterface
+    {
+        $counter = $this->countTimesheetsForQuery($timesheetQuery);
+        $query = $this->createTimesheetQuery($timesheetQuery);
+
+        return new LoaderQueryPaginator(new TimesheetLoader($this->getEntityManager()), $query, $counter);
     }
 
     /**
      * When switching $fullyHydrated to true, the call gets even more expensive.
      * You normally don't need this, unless you want to access deeply nested attributes for many entries.
      *
-     * @param TimesheetQuery $query
-     * @param bool $fullyHydrated
-     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
+    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false): array
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        return new TimesheetResult($query, $qb);
+        return new TimesheetResult(
+            $query,
+            $this->getEntityManager(),
+            $this->getQueryBuilderForQuery($query),
+            $this->createTimesheetQuery($query)
+        );
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param bool $fullyHydrated
-     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    private function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
+    private function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false): array
     {
-        $results = $qb->getQuery()->getResult();
+        /** @var Query<Timesheet> $query */
+        $query = $qb->getQuery();
+        $query = $this->prepareTimesheetQuery($query);
 
-        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated, $basicHydrated);
-        $loader->loadResults($results);
+        /** @var array<Timesheet> $timesheets */
+        $timesheets = $query->getResult();
 
-        return $results;
+        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader->loadResults($timesheets);
+
+        return $timesheets;
     }
 
     private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
@@ -660,12 +680,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param DateTime|null $startFrom
-     * @param int $limit
      * @return Timesheet[]
      */
-    public function getRecentActivities(User $user, DateTime $startFrom = null, int $limit = 10): array
+    public function getRecentActivities(User $user, ?\DateTimeInterface $startFrom = null, int $limit = 10): array
     {
         return $this->findTimesheetsById(
             $user,
@@ -674,12 +691,9 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @param DateTime|null $startFrom
-     * @param int $limit
      * @return array<int>
      */
-    public function getRecentActivityIds(User $user, DateTime $startFrom = null, int $limit = 10): array
+    public function getRecentActivityIds(User $user, ?\DateTimeInterface $startFrom = null, int $limit = 10): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -707,7 +721,7 @@ class TimesheetRepository extends EntityRepository
 
         if (null !== $startFrom) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $startFrom);
+                ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
         }
 
         $qb->join('t.project', 'p');
@@ -725,13 +739,10 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
      * @param array<int> $ids
-     * @param bool $fullyHydrated
-     * @param bool $basicHydrated
      * @return array<Timesheet>
      */
-    public function findTimesheetsById(User $user, array $ids, bool $fullyHydrated = false, bool $basicHydrated = true): array
+    public function findTimesheetsById(User $user, array $ids): array
     {
         if (\count($ids) === 0) {
             return [];
@@ -749,13 +760,13 @@ class TimesheetRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $user);
 
-        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
+        return $this->getHydratedResultsByQuery($qb);
     }
 
     /**
      * @param Timesheet[]|int[] $timesheets
      */
-    public function setExported(array $timesheets)
+    public function setExported(array $timesheets): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -895,5 +906,41 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $result > 0;
+    }
+
+    /**
+     * @return Query<Timesheet>
+     */
+    private function createTimesheetQuery(TimesheetQuery $timesheetQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($timesheetQuery)->getQuery();
+        $query = $this->prepareTimesheetQuery($query);
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Timesheet> $query
+     * @return Query<Timesheet>
+     */
+    public function prepareTimesheetQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        $query->setFetchMode(Timesheet::class, 'meta', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Timesheet::class, 'activity', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Timesheet::class, 'project', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Timesheet::class, 'user', ClassMetadata::FETCH_EAGER);
+
+        // not yet supported by Doctrine
+        // $query->setFetchMode(Activity::class, 'meta', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Project::class, 'meta', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Customer::class, 'meta', ClassMetadata::FETCH_EAGER);
+
+        // ManyToMany not supported by Doctrine yet
+        // $query->setFetchMode(Timesheet::class, 'tags', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

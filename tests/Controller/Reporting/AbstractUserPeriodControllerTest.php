@@ -18,7 +18,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
  */
 abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
 {
-    protected function importReportingFixture(string $role)
+    protected function importReportingFixture(string $role): void
     {
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(50);

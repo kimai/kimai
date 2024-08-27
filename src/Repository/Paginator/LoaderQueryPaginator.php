@@ -11,21 +11,21 @@ namespace App\Repository\Paginator;
 
 use App\Repository\Loader\LoaderInterface;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @template T
  * @implements PaginatorInterface<T>
  */
-final class LoaderPaginator implements PaginatorInterface
+final class LoaderQueryPaginator implements PaginatorInterface
 {
     /**
      * @param LoaderInterface<T> $loader
+     * @param Query<T> $query
      * @param int<0, max> $results
      */
     public function __construct(
         private readonly LoaderInterface $loader,
-        private readonly QueryBuilder $queryBuilder,
+        private readonly Query $query,
         private readonly int $results
     )
     {
@@ -37,20 +37,12 @@ final class LoaderPaginator implements PaginatorInterface
     }
 
     /**
-     * @return Query<null, T>
-     */
-    private function getQuery(): Query
-    {
-        return $this->queryBuilder->getQuery(); // @phpstan-ignore-line
-    }
-
-    /**
      * @return iterable<array-key, T>
      */
     public function getSlice(int $offset, int $length): iterable
     {
         /** @var Query<null, T> $query */
-        $query = $this->getQuery()
+        $query = $this->query
             ->setFirstResult($offset)
             ->setMaxResults($length);
 
@@ -59,11 +51,11 @@ final class LoaderPaginator implements PaginatorInterface
 
     /**
      * @param Query<null, T> $query
-     * @return array<array-key, T>
+     * @return iterable<array-key, T>
      */
-    private function getResults(Query $query): array
+    private function getResults(Query $query): iterable
     {
-        /** @var array<array-key, T> $results */
+        /** @var array<T> $results */
         $results = $query->execute();
 
         $this->loader->loadResults($results);
@@ -76,6 +68,6 @@ final class LoaderPaginator implements PaginatorInterface
      */
     public function getAll(): iterable
     {
-        return $this->getResults($this->getQuery());
+        return $this->getResults($this->query);
     }
 }

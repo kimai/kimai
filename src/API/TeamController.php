@@ -18,6 +18,7 @@ use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -53,7 +54,10 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['GET'], path: '', name: 'get_teams')]
     public function cgetAction(): Response
     {
-        $data = $this->repository->findAll();
+        $query = new TeamQuery();
+        $query->setCurrentUser($this->getUser());
+
+        $data = $this->repository->getTeamsForQuery($query);
 
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);

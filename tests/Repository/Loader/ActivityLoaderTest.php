@@ -10,6 +10,7 @@
 namespace App\Tests\Repository\Loader;
 
 use App\Entity\Activity;
+use App\Entity\Project;
 use App\Repository\Loader\ActivityLoader;
 
 /**
@@ -19,12 +20,15 @@ class ActivityLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults(): void
     {
-        $em = $this->getEntityManagerMock(3);
-
-        $sut = new ActivityLoader($em);
+        $project = $this->createMock(Project::class);
+        $project->expects($this->once())->method('getId')->willReturn(13);
 
         $entity = $this->createMock(Activity::class);
         $entity->expects($this->once())->method('getId')->willReturn(1);
+        $entity->expects($this->exactly(3))->method('getProject')->willReturn($project);
+
+        $em = $this->getEntityManagerMock(3);
+        $sut = new ActivityLoader($em);
 
         $sut->loadResults([$entity]);
     }

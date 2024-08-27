@@ -19,7 +19,6 @@ use App\Reporting\YearByUser\YearByUser;
 use App\Reporting\YearByUser\YearByUserForm;
 use DateTime;
 use DateTimeInterface;
-use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,11 +30,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('report:user')]
 final class UserYearController extends AbstractUserReportController
 {
-    /**
-     * @param Request $request
-     * @return Response
-     * @throws Exception
-     */
     #[Route(path: '/year', name: 'report_user_year', methods: ['GET', 'POST'])]
     public function yearByUser(Request $request, SystemConfiguration $systemConfiguration): Response
     {

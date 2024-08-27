@@ -65,6 +65,7 @@ final class CustomerController extends BaseApiController
         $user = $this->getUser();
 
         $query = new CustomerQuery();
+        $query->loadTeams();
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');

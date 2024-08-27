@@ -11,83 +11,62 @@ namespace App\Repository;
 
 use App\Entity\Team;
 use App\Entity\TeamMember;
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Loader\TeamLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TeamQuery;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Team>
+ * @extends EntityRepository<Team>
  */
 class TeamRepository extends EntityRepository
 {
-    /**
-     * @return Team[]
-     */
-    public function findAll(): array
-    {
-        $result = parent::findAll();
-
-        $loader = new TeamLoader($this->getEntityManager());
-        $loader->loadResults($result);
-
-        return $result;
-    }
-
     /**
      * @param int[] $teamIds
      * @return Team[]
      */
     public function findByIds(array $teamIds): array
     {
+        $ids = array_filter(
+            array_unique($teamIds),
+            function ($value) {
+                return $value > 0;
+            }
+        );
+
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->createQueryBuilder('t');
         $qb
             ->where($qb->expr()->in('t.id', ':id'))
-            ->setParameter('id', $teamIds)
+            ->setParameter('id', $ids)
         ;
 
-        $teams = $qb->getQuery()->getResult();
-
-        $loader = new TeamLoader($qb->getEntityManager());
-        $loader->loadResults($teams);
-
-        return $teams;
+        return $this->getTeams($this->prepareTeamQuery($qb->getQuery()));
     }
 
-    /**
-     * @param Team $team
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveTeam(Team $team)
+    public function saveTeam(Team $team): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($team);
         $entityManager->flush();
     }
 
-    /**
-     * @param TeamMember $member
-     * @throws ORMException
-     */
-    public function removeTeamMember(TeamMember $member)
+    public function removeTeamMember(TeamMember $member): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($member);
     }
 
-    /**
-     * @param Team $team
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function deleteTeam(Team $team)
+    public function deleteTeam(Team $team): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($team);
@@ -96,9 +75,6 @@ class TeamRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for TeamType and your own 'query_builder' option.
-     *
-     * @param TeamQuery $query
-     * @return QueryBuilder
      */
     public function getQueryBuilderForFormType(TeamQuery $query): QueryBuilder
     {
@@ -118,32 +94,46 @@ class TeamRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    protected function getPaginatorForQuery(TeamQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<Team>
+     */
+    private function getPaginatorForQuery(TeamQuery $teamQuery): PaginatorInterface
     {
-        $qb = $this->getQueryBuilderForQuery($query);
+        $qb = $this->getQueryBuilderForQuery($teamQuery);
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->countDistinct('t.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $qb = $this->getQueryBuilderForQuery($query);
+        $query = $this->createTeamQuery($teamQuery);
 
-        return new LoaderPaginator(new TeamLoader($qb->getEntityManager()), $qb, $counter);
+        return new LoaderQueryPaginator(new TeamLoader($qb->getEntityManager()), $query, $counter);
     }
 
     /**
-     * @param TeamQuery $query
-     * @return Timesheet[]
+     * @return Team[]
      */
     public function getTeamsForQuery(TeamQuery $query): iterable
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
+        return $this->getTeams($this->createTeamQuery($query));
+    }
 
-        return $paginator->getAll();
+    /**
+     * @param Query<Team> $query
+     * @return Team[]
+     */
+    public function getTeams(Query $query): array
+    {
+        /** @var array<Team> $teams */
+        $teams = $query->execute();
+
+        $loader = new TeamLoader($this->getEntityManager());
+        $loader->loadResults($teams);
+
+        return $teams;
     }
 
     private function getQueryBuilderForQuery(TeamQuery $query): QueryBuilder
@@ -208,11 +198,9 @@ class TeamRepository extends EntityRepository
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param User|null $user
      * @param Team[] $teams
      */
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         // make sure that all queries without a user see all user
         if (null === $user && empty($teams)) {
@@ -228,7 +216,7 @@ class TeamRepository extends EntityRepository
         // OR we query for all teams where the user is a member - in later case $teams is not empty
         $or = $qb->expr()->orX();
 
-        // this query should limit to teams where the user is a teamlead (eg. in dropdowns or listing page)
+        // this query should limit to teams where the user is a teamlead (e.g. in dropdowns or listing page)
         if (null !== $user) {
             $qb->leftJoin('t.members', 'members');
             $or->add(
@@ -254,5 +242,32 @@ class TeamRepository extends EntityRepository
         if ($or->count() > 0) {
             $qb->andWhere($or);
         }
+    }
+
+    /**
+     * @return Query<Team>
+     */
+    private function createTeamQuery(TeamQuery $teamQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($teamQuery)->getQuery();
+        $query = $this->prepareTeamQuery($query);
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Team> $query
+     * @return Query<Team>
+     */
+    public function prepareTeamQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        // $query->setFetchMode(Team::class, 'members', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'customers', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'projects', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(Team::class, 'activities', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

@@ -51,7 +51,7 @@ final class FavoriteRecordService
 
         $all = [];
         if (\count($ids) > 0) {
-            $timesheets = $this->repository->findTimesheetsById($user, $ids, false, false);
+            $timesheets = $this->repository->findTimesheetsById($user, $ids);
             foreach ($timesheets as $timesheet) {
                 $id = $timesheet->getId();
                 if ($id === null) {
