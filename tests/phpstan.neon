@@ -1219,11 +1219,6 @@ parameters:
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTest\\:\\:importReportingFixture\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/AbstractUserPeriodControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php

@@ -36,6 +36,7 @@ final class ActivityLoader implements LoaderInterface
         $activityIds = array_filter(array_unique(array_map(function (Activity $activity) {
             // make sure that this potential doctrine proxy is initialized and filled with all data
             $activity->getName();
+            // using reporting controller tests will show that error
             $activity->getProject()?->getName();
 
             return $activity->getId();
