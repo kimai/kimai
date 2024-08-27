@@ -478,6 +478,8 @@ class ActivityRepository extends EntityRepository
         $query->setFetchMode(Activity::class, 'meta', ClassMetadata::FETCH_EAGER);
         $query->setFetchMode(Activity::class, 'project', ClassMetadata::FETCH_EAGER);
 
+        // $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
+
         return $query;
     }
 }

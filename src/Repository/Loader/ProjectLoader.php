@@ -40,6 +40,7 @@ final class ProjectLoader implements LoaderInterface
         $projectIds = array_filter(array_unique(array_map(function (Project $project) {
             // make sure that this potential doctrine proxy is initialized and filled with all data
             $project->getName();
+            $project->getCustomer()?->getName();
 
             return $project->getId();
         }, $results)), function ($value) { return $value !== null; });
