@@ -1219,11 +1219,6 @@ parameters:
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTest\\:\\:importReportingFixture\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/AbstractUserPeriodControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php
@@ -1469,21 +1464,6 @@ parameters:
             path: DataFixtures/TestFixture.php
 
         -
-            message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) has parameter \\$tagArray with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\|null given\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#4 \\$description of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: DependencyInjection/AppExtensionTest.php
@@ -1599,11 +1579,6 @@ parameters:
             path: Entity/ProjectTest.php
 
         -
-            message: "#^Cannot access offset 0 on iterable\\<App\\\\Entity\\\\Team\\>\\.$#"
-            count: 1
-            path: Entity/TeamTest.php
-
-        -
             message: "#^Cannot call method getUser\\(\\) on mixed\\.$#"
             count: 1
             path: Entity/TeamTest.php
@@ -1632,11 +1607,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetValidationTest\\:\\:assertHasViolationForField\\(\\) has parameter \\$groups with no type specified\\.$#"
             count: 1
             path: Entity/TimesheetValidationTest.php
-
-        -
-            message: "#^Cannot access offset 0 on iterable\\<App\\\\Entity\\\\Team\\>\\.$#"
-            count: 1
-            path: Entity/UserTest.php
 
         -
             message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, string\\|null given\\.$#"

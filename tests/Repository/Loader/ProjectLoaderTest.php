@@ -25,13 +25,13 @@ class ProjectLoaderTest extends AbstractLoaderTest
 
         $entity = $this->createMock(Project::class);
         $entity->expects($this->once())->method('getId')->willReturn(1);
-        $entity->expects($this->once())->method('getCustomer')->willReturn($customer);
+        $entity->expects($this->exactly(2))->method('getCustomer')->willReturn($customer);
 
         $results = [$entity];
 
-        $em = $this->getEntityManagerMock(4, $results);
+        $em = $this->getEntityManagerMock(2, $results);
 
         $sut = new ProjectLoader($em);
-        $sut->loadResults([$entity, 4711]);
+        $sut->loadResults([$entity]);
     }
 }

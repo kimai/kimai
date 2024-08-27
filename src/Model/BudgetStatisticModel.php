@@ -22,7 +22,7 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     private ?BudgetStatistic $statistic = null;
     private ?BudgetStatistic $statisticTotal = null;
 
-    public function __construct(private EntityWithBudget $entity)
+    public function __construct(private readonly EntityWithBudget $entity)
     {
     }
 
@@ -36,7 +36,7 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         return $this->statistic;
     }
 
-    public function setStatistic(BudgetStatistic $statistic)
+    public function setStatistic(BudgetStatistic $statistic): void
     {
         $this->statistic = $statistic;
     }
@@ -46,7 +46,7 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
         return $this->statisticTotal;
     }
 
-    public function setStatisticTotal(BudgetStatistic $statistic)
+    public function setStatisticTotal(BudgetStatistic $statistic): void
     {
         $this->statisticTotal = $statistic;
     }

@@ -56,6 +56,10 @@ class Tag
     /**
      * This is ONLY here, so we can count the amount of timesheets.
      *
+     * See TagRepository "SIZE(t.timesheets)"
+     * Removing this makes the count more complicated.
+     * Should be refactored at some point in the future.
+     *
      * @var Collection<Timesheet>
      */
     #[ORM\ManyToMany(targetEntity: Timesheet::class, mappedBy: 'tags', fetch: 'EXTRA_LAZY')]

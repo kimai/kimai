@@ -73,6 +73,7 @@ final class ProjectController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ProjectQuery();
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 

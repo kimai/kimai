@@ -26,6 +26,10 @@ class UserQuery extends BaseQuery implements VisibilityInterface
      */
     private array $searchTeams = [];
     private ?bool $systemAccount = null;
+    /**
+     * @var array<int>
+     */
+    private array $userIds = [];
 
     public function __construct()
     {
@@ -34,6 +38,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
             'searchTeams' => [],
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'systemAccount' => null,
+            'userIds' => [],
         ]);
     }
 
@@ -73,5 +78,21 @@ class UserQuery extends BaseQuery implements VisibilityInterface
     public function setSystemAccount(?bool $systemAccount): void
     {
         $this->systemAccount = $systemAccount;
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function setUserIds(array $ids): void
+    {
+        $this->userIds = $ids;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getUserIds(): array
+    {
+        return $this->userIds;
     }
 }

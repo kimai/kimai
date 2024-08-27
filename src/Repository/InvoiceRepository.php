@@ -14,12 +14,13 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
 use App\Entity\Team;
 use App\Entity\User;
-use App\Repository\Loader\InvoiceLoader;
-use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
+use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\InvoiceArchiveQuery;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -254,7 +255,10 @@ class InvoiceRepository extends EntityRepository
         return ['i.comment', 'customer.name', 'customer.company'];
     }
 
-    public function countInvoicesForQuery(InvoiceArchiveQuery $query): int
+    /**
+     * @return int<0, max>
+     */
+    private function countInvoicesForQuery(InvoiceArchiveQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -264,7 +268,7 @@ class InvoiceRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('i.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     /**
@@ -273,23 +277,38 @@ class InvoiceRepository extends EntityRepository
      */
     public function getInvoicesForQuery(InvoiceArchiveQuery $query): iterable
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
-
-        return $paginator->getAll();
+        return $this->createInvoiceQuery($query)->execute(); // @phpstan-ignore-line
     }
 
-    protected function getPaginatorForQuery(InvoiceArchiveQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<Invoice>
+     */
+    private function getPaginatorForQuery(InvoiceArchiveQuery $query): PaginatorInterface
     {
         $counter = $this->countInvoicesForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
+        $query = $this->createInvoiceQuery($query);
 
-        return new LoaderPaginator(new InvoiceLoader($qb->getEntityManager()), $qb, $counter);
+        return new QueryPaginator($query, $counter);
     }
 
     public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
+    }
+
+    /**
+     * @return Query<Invoice>
+     */
+    private function createInvoiceQuery(InvoiceArchiveQuery $invoiceArchiveQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($invoiceArchiveQuery)->getQuery();
+
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        $query->setFetchMode(Invoice::class, 'meta', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Invoice::class, 'user', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Invoice::class, 'customer', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

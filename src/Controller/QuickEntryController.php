@@ -88,7 +88,7 @@ final class QuickEntryController extends AbstractController
         $result = $this->repository->getTimesheetResult($query);
 
         $rows = [];
-        foreach ($result->getResults(true) as $timesheet) {
+        foreach ($result->getResults() as $timesheet) {
             $i = 0;
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             $day = $timesheet->getBegin()->format('Y-m-d');

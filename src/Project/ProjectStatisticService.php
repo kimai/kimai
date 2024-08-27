@@ -29,7 +29,6 @@ use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ActivityRepository;
-use App\Repository\Loader\ProjectLoader;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -82,7 +81,7 @@ class ProjectStatisticService
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
-            ->select('p, c')
+            ->select('p')
             ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
@@ -104,15 +103,9 @@ class ProjectStatisticService
             ->setParameter('begin', $lastChange, Types::DATETIME_IMMUTABLE);
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**
@@ -123,6 +116,10 @@ class ProjectStatisticService
         $user = $query->getUser();
         $begin = $dateRange->getBegin();
         $end = $dateRange->getEnd();
+
+        if ($begin === null || $end === null) {
+            throw new \InvalidArgumentException('Missing date in date-range for project statistics');
+        }
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
@@ -190,15 +187,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     public function getBudgetStatisticModel(Project $project, DateTimeInterface $today): ProjectBudgetStatisticModel
@@ -719,15 +710,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**

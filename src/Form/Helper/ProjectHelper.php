@@ -70,7 +70,7 @@ final class ProjectHelper
     public function getChoiceLabel(Project $project): string
     {
         $name = $this->getChoicePattern();
-        $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
+        $name = str_replace(self::PATTERN_NAME, $project->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_NUMBER, $project->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()?->getName() ?? '', $name);
@@ -115,7 +115,7 @@ final class ProjectHelper
         }
 
         if ($name === '' || $name === self::SPACER) {
-            $name = $project->getName();
+            $name = $project->getName() ?? '';
         }
 
         return substr($name, 0, 110);

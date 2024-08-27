@@ -18,7 +18,6 @@ use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\DateRangeInterface;
-use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\SearchTerm;
 use PHPUnit\Framework\TestCase;
@@ -251,8 +250,14 @@ class BaseQueryTest extends TestCase
         $this->assertEquals([13, 27], $sut->getActivityIds());
     }
 
-    protected function assertCustomer(ProjectQuery $sut): void
+    protected function assertCustomer(BaseQuery $sut): void
     {
+        $this->assertTrue(method_exists($sut, 'getCustomers'));
+        $this->assertTrue(method_exists($sut, 'setCustomers'));
+        $this->assertTrue(method_exists($sut, 'hasCustomers'));
+        $this->assertTrue(method_exists($sut, 'addCustomer'));
+        $this->assertTrue(method_exists($sut, 'getCustomerIds'));
+
         $this->assertEquals([], $sut->getCustomers());
         $this->assertFalse($sut->hasCustomers());
 
