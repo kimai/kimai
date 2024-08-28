@@ -146,8 +146,8 @@ class ProjectStatisticService
                     )
                 )
             )
-            ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
-            ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+            ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
         ;
 
         if (!$query->isIncludeNoWork()) {
@@ -332,14 +332,14 @@ class ProjectStatisticService
         if ($begin !== null) {
             $qb
                 ->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
+                ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
             ;
         }
 
         if ($end !== null) {
             $qb
                 ->andWhere($qb->expr()->lte('t.begin', ':end'))
-                ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+                ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
             ;
         }
 
@@ -655,7 +655,7 @@ class ProjectStatisticService
                 )
             )
             ->addGroupBy('p')
-            ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
+            ->setParameter('project_end', DateTimeImmutable::createFromInterface($today), Types::DATETIME_IMMUTABLE)
         ;
 
         if ($query->getCustomer() !== null) {
@@ -747,7 +747,7 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) = :start_date')
-            ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($today), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -759,8 +759,8 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
-            ->setParameter('start_date', $startOfWeek, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($startOfWeek), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end_date', DateTimeImmutable::createFromInterface($endOfWeek), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -772,8 +772,8 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
-            ->setParameter('start_date', $startMonth, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($startMonth), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end_date', DateTimeImmutable::createFromInterface($endMonth), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
