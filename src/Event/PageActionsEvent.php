@@ -15,8 +15,6 @@ use App\Entity\User;
  * This event is triggered for every action:
  * - once per side load for page actions
  * - once for every entity item (table row)
- *
- * @property array{'actions': array, 'view': string} $payload
  */
 class PageActionsEvent extends ThemeEvent
 {
@@ -74,6 +72,9 @@ class PageActionsEvent extends ThemeEvent
         return $this->view;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getActions(): array
     {
         $actions = $this->payload['actions'];
@@ -109,6 +110,9 @@ class PageActionsEvent extends ThemeEvent
         return \array_key_exists('children', $this->payload['actions'][$submenu]);
     }
 
+    /**
+     * @param array<string, mixed> $action
+     */
     public function addActionToSubmenu(string $submenu, string $key, array $action): void
     {
         if ($this->hasAction($submenu)) {
@@ -119,11 +123,17 @@ class PageActionsEvent extends ThemeEvent
         $this->payload['actions'][$submenu]['children'][$key] = $action;
     }
 
+    /**
+     * @param array<string, mixed> $action
+     */
     public function replaceAction(string $key, array $action): void
     {
         $this->payload['actions'][$key] = $action;
     }
 
+    /**
+     * @param array<string, mixed> $action
+     */
     public function addAction(string $key, array $action): void
     {
         if (!$this->hasAction($key)) {

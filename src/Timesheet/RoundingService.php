@@ -23,7 +23,7 @@ final class RoundingService
 
     /**
      * @param RoundingInterface[] $roundingModes
-     * @param array<string, array{'days': array<string>, 'begin': int, 'end': int, 'duration': int, 'mode': string}> $rules
+     * @param array<string, mixed> $rules
      */
     public function __construct(
         private readonly SystemConfiguration $configuration,
@@ -35,7 +35,7 @@ final class RoundingService
     }
 
     /**
-     * @return array<string, array{'days': array<string>, 'begin': int, 'end': int, 'duration': int, 'mode': string}>
+     * @return array<string, mixed>
      */
     private function getRoundingRules(): array
     {

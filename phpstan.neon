@@ -1609,26 +1609,6 @@ parameters:
             path: src/Event/CalendarConfigurationEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:addAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:addActionToSubmenu\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:getActions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:replaceAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\PermissionsEvent\\:\\:getPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/PermissionsEvent.php
