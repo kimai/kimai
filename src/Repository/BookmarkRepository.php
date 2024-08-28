@@ -14,22 +14,25 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Bookmark>
+ * @extends EntityRepository<Bookmark>
  */
 class BookmarkRepository extends EntityRepository
 {
+    /** @var array<string, User> */
     private array $userCache = [];
 
-    public function saveBookmark(Bookmark $bookmark)
+    public function saveBookmark(Bookmark $bookmark): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($bookmark);
         $entityManager->flush();
 
-        $this->clearCache($bookmark->getUser());
+        if ($bookmark->getUser()) {
+            $this->clearCache($bookmark->getUser());
+        }
     }
 
-    private function clearCache(User $user): void
+    private function clearCache(?User $user): void
     {
         $key = 'user_' . $user->getId();
         if (\array_key_exists($key, $this->userCache)) {
@@ -37,12 +40,15 @@ class BookmarkRepository extends EntityRepository
         }
     }
 
-    public function deleteBookmark(Bookmark $bookmark)
+    public function deleteBookmark(Bookmark $bookmark): void
     {
         $em = $this->getEntityManager();
         $em->remove($bookmark);
         $em->flush();
-        $this->clearCache($bookmark->getUser());
+
+        if ($bookmark->getUser()) {
+            $this->clearCache($bookmark->getUser());
+        }
     }
 
     public function getSearchDefaultOptions(User $user, string $name): ?Bookmark

@@ -137,7 +137,10 @@ class InvoiceRepository extends EntityRepository
         return $this->count([]);
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    /**
+     * @param array<Team> $teams
+     */
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {

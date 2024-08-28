@@ -79,6 +79,9 @@ class CustomerRepository extends EntityRepository
         return $this->count([]);
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams);
@@ -87,6 +90,9 @@ class CustomerRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
     {
         $andX = $qb->expr()->andX();
@@ -349,6 +355,9 @@ class CustomerRepository extends EntityRepository
         }
     }
 
+    /**
+     * @return array<CustomerComment>
+     */
     public function getComments(Customer $customer): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
