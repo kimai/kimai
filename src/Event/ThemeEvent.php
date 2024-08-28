@@ -28,7 +28,7 @@ class ThemeEvent extends Event
     /**
      * @param array<string, mixed|array<mixed>> $payload
      */
-    public function __construct(private ?User $user = null, protected array $payload = [])
+    public function __construct(private readonly ?User $user = null, protected array $payload = [])
     {
     }
 

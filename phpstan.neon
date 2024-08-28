@@ -3959,54 +3959,9 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\BookmarkRepository\\:\\:deleteBookmark\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\BookmarkRepository\\:\\:saveBookmark\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\BookmarkRepository\\:\\:clearCache\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\BookmarkRepository\\:\\:\\$userCache type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:getCounterFor\\(\\) should return int but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Repository/Loader/ProjectLoader.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Repository/Loader/TimesheetLoader.php
-
-        -
-            message: "#^Interface App\\\\Repository\\\\Paginator\\\\PaginatorInterface extends generic interface Pagerfanta\\\\Adapter\\\\AdapterInterface but does not specify its types\\: T$#"
-            count: 1
-            path: src/Repository/Paginator/PaginatorInterface.php
 
         -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:getOrderGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4052,11 +4007,6 @@ parameters:
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Form\\\\Model\\\\DateRange\\|null\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:toIterable\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Result/TimesheetResult.php
 
         -
             message: "#^Method App\\\\Repository\\\\RoleRepository\\:\\:deleteRole\\(\\) has no return type specified\\.$#"

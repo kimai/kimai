@@ -23,7 +23,10 @@ class PageActionsEvent extends ThemeEvent
     private int $divider = 0;
     private ?string $locale = null;
 
-    public function __construct(User $user, array $payload, private string $action, private string $view)
+    /**
+     * @param array<string, mixed|array<mixed>> $payload
+     */
+    public function __construct(User $user, array $payload, private readonly string $action, private readonly string $view)
     {
         // only for BC reasons, do not access it directly!
         if (!\array_key_exists('actions', $payload)) {
