@@ -14,42 +14,54 @@ use App\Validator\Constraints\Duration as DurationConstraint;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+/**
+ * @implements DataTransformerInterface<string|int|null, string|null>
+ */
 final class DurationStringToSecondsTransformer implements DataTransformerInterface
 {
-    /**
-     * @param int $intToFormat
-     * @return string|null
-     */
-    public function transform(mixed $intToFormat): ?string
+    public function transform(mixed $value): ?string
     {
+        if ($value === null) {
+            return null;
+        }
+
         try {
-            return (new Duration())->format($intToFormat);
+            if (!\is_int($value) && is_numeric($value)) {
+                $value = (int) $value;
+            }
+
+            if (!\is_int($value)) {
+                // do not throw an exception, that would break the frontend, make it null / empty instead
+                return null;
+            }
+
+            return (new Duration())->format($value);
         } catch (\Exception | \TypeError $e) {
             throw new TransformationFailedException($e->getMessage());
         }
     }
 
-    /**
-     * @param string|null $formatToInt
-     * @return int|null
-     */
-    public function reverseTransform(mixed $formatToInt): ?int
+    public function reverseTransform(mixed $value): ?int
     {
-        if (null === $formatToInt) {
+        if ($value === null) {
             return null;
         }
 
-        if (empty($formatToInt)) {
+        if ($value === '') {
             return 0;
         }
 
+        if (\is_int($value) || \is_float($value)) {
+            $value = (string) $value;
+        }
+
         // we need this one here, because the data transformer is executed BEFORE the constraint is called
-        if (!preg_match((new DurationConstraint())->pattern, $formatToInt)) {
+        if (!preg_match((new DurationConstraint())->pattern, $value)) {
             throw new TransformationFailedException('Invalid duration format given');
         }
 
         try {
-            $seconds = (new Duration())->parseDurationString($formatToInt);
+            $seconds = (new Duration())->parseDurationString($value);
 
             // DateTime throws if a duration with too many seconds is passed and an amount of so
             // many seconds is likely not required in a time-tracking application ;-)

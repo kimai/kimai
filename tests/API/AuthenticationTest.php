@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace API;
+namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
-use App\Tests\API\APIControllerBaseTest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

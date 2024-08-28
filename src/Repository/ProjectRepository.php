@@ -85,6 +85,9 @@ class ProjectRepository extends EntityRepository
         return $this->count([]);
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams);
@@ -93,6 +96,9 @@ class ProjectRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
     {
         $andX = $qb->expr()->andX();
@@ -429,6 +435,9 @@ class ProjectRepository extends EntityRepository
         }
     }
 
+    /**
+     * @return array<ProjectComment>
+     */
     public function getComments(Project $project): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

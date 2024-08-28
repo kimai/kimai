@@ -83,13 +83,14 @@ class InvoiceRepository extends EntityRepository
             ;
         }
 
+        /** @var array{'counter': int|numeric-string}|null $result */
         $result = $qb->getQuery()->getOneOrNullResult();
 
         if ($result === null) {
             return 0;
         }
 
-        return $result['counter'];
+        return (int) $result['counter'];
     }
 
     public function getCounterForDay(\DateTimeInterface $date, ?Customer $customer = null, ?User $user = null): int
@@ -137,7 +138,10 @@ class InvoiceRepository extends EntityRepository
         return $this->count([]);
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    /**
+     * @param array<Team> $teams
+     */
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {

@@ -7,6 +7,8 @@ framework:
     csrf_protection: true
     annotations: false
     handle_all_throwables: true
+    disallow_search_engine_index: true
+    set_content_language_from_locale: true
 
     serializer:
         enable_attributes: true

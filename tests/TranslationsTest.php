@@ -58,7 +58,7 @@ class TranslationsTest extends TestCase
 
             foreach ($body->children() as $transUnit) {
                 preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
-                if (!empty($matches) && !empty($matches[0])) {
+                if (!empty($matches[0])) {
                     asort($matches[0]);
                     $trans[(string) $transUnit->source] = array_values($matches[0]);
                 }

@@ -46,6 +46,7 @@ final class TagController extends BaseApiController
     #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
+        // not using a query, as these are too expensive to fetch, the simple "name" list is easier to use
         $filter = $paramFetcher->get('name');
 
         $data = $this->repository->findAllTagNames($filter);
@@ -57,7 +58,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Fetch tags by filter as entities
+     * Fetch tags by filter (as full entities)
      */
     #[OA\Response(response: 200, description: 'Find the collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
     #[Route(path: '/find', name: 'get_tags_full', methods: ['GET'])]

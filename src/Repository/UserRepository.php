@@ -117,14 +117,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        if (\count($criteria) === 1 && isset($criteria['username'])) {
+        if (\count($criteria) === 1 && isset($criteria['username']) && \is_string($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);
         }
 
         return parent::findOneBy($criteria, $orderBy);
     }
 
-    public function findByUsername($username): ?User
+    public function findByUsername(string $username): ?User
     {
         return parent::findOneBy(['username' => $username]);
     }
@@ -321,9 +321,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        if ($query->hasSearchTerm()) {
+        $searchTerm = $query->getSearchTerm();
+        if ($searchTerm !== null) {
             $searchAnd = $qb->expr()->andX();
-            $searchTerm = $query->getSearchTerm();
 
             foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
                 $qb->leftJoin('u.preferences', 'meta');

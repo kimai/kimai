@@ -34,6 +34,7 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
+        - %rootDir%/../../../src/Event/PageActionsEvent.php
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
     doctrine:
@@ -1369,11 +1370,6 @@ parameters:
             path: src/Entity/Tag.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$timesheets with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Tag.php
-
-        -
             message: "#^Cannot call method removeMembership\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/Entity/Team.php
@@ -1612,26 +1608,6 @@ parameters:
             message: "#^Method App\\\\Event\\\\CalendarConfigurationEvent\\:\\:setConfiguration\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/CalendarConfigurationEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:addAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:addActionToSubmenu\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:getActions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\PageActionsEvent\\:\\:replaceAction\\(\\) has parameter \\$action with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/PageActionsEvent.php
 
         -
             message: "#^Method App\\\\Event\\\\PermissionsEvent\\:\\:getPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2097,21 +2073,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of function array_search expects array, mixed given\\.$#"
             count: 1
             path: src/Form/CustomerEditForm.php
-
-        -
-            message: "#^Class App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$formatToInt \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$intToFormat \\(int\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
 
         -
             message: "#^Class App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
@@ -3964,164 +3925,9 @@ parameters:
             path: src/Reporting/ProjectDetails/ProjectDetailsModel.php
 
         -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ActivityRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ActivityRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\BookmarkRepository\\:\\:deleteBookmark\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\BookmarkRepository\\:\\:saveBookmark\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function mb_substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\BookmarkRepository\\:\\:clearCache\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\BookmarkRepository\\:\\:\\$userCache type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/BookmarkRepository.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:getComments\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Cannot access offset 'counter' on mixed\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:addPermissionCriteria\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:getCounterFor\\(\\) should return int but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Repository/Loader/ProjectLoader.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Repository/Loader/TimesheetLoader.php
-
-        -
-            message: "#^Interface App\\\\Repository\\\\Paginator\\\\PaginatorInterface extends generic interface Pagerfanta\\\\Adapter\\\\AdapterInterface but does not specify its types\\: T$#"
-            count: 1
-            path: src/Repository/Paginator/PaginatorInterface.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:addPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:getComments\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ProjectRepository\\:\\:getPermissionCriteria\\(\\) has parameter \\$teams with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
 
         -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:getOrderGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4169,11 +3975,6 @@ parameters:
             path: src/Repository/Query/TimesheetQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Result\\\\TimesheetResult\\:\\:toIterable\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Result/TimesheetResult.php
-
-        -
             message: "#^Method App\\\\Repository\\\\RoleRepository\\:\\:deleteRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/RoleRepository.php
@@ -4182,16 +3983,6 @@ parameters:
             message: "#^Method App\\\\Repository\\\\RoleRepository\\:\\:saveRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/RoleRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TagRepository.php
 
         -
             message: "#^Argument of an invalid type array\\<string\\>\\|string supplied for foreach, only iterables are supported\\.$#"
@@ -4236,21 +4027,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
             path: src/Repository/TimesheetRepository.php
 
         -
@@ -4302,31 +4078,6 @@ parameters:
             message: "#^Parameter \\#2 \\$amount of class App\\\\Model\\\\Revenue constructor expects float, mixed given\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:findByUsername\\(\\) has parameter \\$username with no type specified\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$identifier of method App\\\\Repository\\\\UserRepository\\:\\:loadUserByIdentifier\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Repository/UserRepository.php
 
         -
             message: "#^Parameter \\#1 \\$message of class Symfony\\\\Component\\\\Security\\\\Core\\\\Exception\\\\AuthenticationException constructor expects string, string\\|null given\\.$#"

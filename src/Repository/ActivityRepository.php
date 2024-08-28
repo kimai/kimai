@@ -91,6 +91,9 @@ class ActivityRepository extends EntityRepository
         return $this->count([]);
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [], bool $globalsOnly = false): void
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams, $globalsOnly);
@@ -99,6 +102,9 @@ class ActivityRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [], bool $globalsOnly = false): Andx
     {
         $andX = $qb->expr()->andX();
