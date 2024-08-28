@@ -10,8 +10,6 @@
 namespace App\Entity;
 
 use App\Utils\Color;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -53,17 +51,8 @@ class Tag
 
     use ColorTrait;
 
-    /**
-     * This is ONLY here, so we can count the amount of timesheets.
-     *
-     * @var Collection<Timesheet>
-     */
-    #[ORM\ManyToMany(targetEntity: Timesheet::class, mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
-    private Collection $timesheets;
-
     public function __construct()
     {
-        $this->timesheets = new ArrayCollection();
     }
 
     public function getId(): ?int
