@@ -10,6 +10,10 @@
         <source>teams.customer_access</source>
         <target state="translated">Izinkan akses ke pelanggan</target>
       </trans-unit>
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
+        <source>team.visibility_global</source>
+        <target state="translated">Dapat dilihat oleh semua orang, karena belum ada tim yang ditugaskan.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

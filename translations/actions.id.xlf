@@ -10,6 +10,10 @@
         <source>reload</source>
         <target state="translated">Muat ulang</target>
       </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back" xml:space="preserve">
+        <source>back</source>
+        <target state="translated">Kembali</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

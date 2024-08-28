@@ -10,6 +10,10 @@
         <source>The entered passwords don't match.</source>
         <target state="translated">Kata sandi yang dimasukkan tidak cocok.</target>
       </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">Alamat email ini sudah digunakan.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
