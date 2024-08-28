@@ -59,6 +59,17 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
         ]);
     }
 
+    protected function copyFrom(BaseQuery $query): void
+    {
+        parent::copyFrom($query);
+
+        if ($query instanceof TimesheetQuery) {
+            foreach ($this->getUsers() as $user) {
+                $this->addUser($user);
+            }
+        }
+    }
+
     public function getMaxResults(): ?int
     {
         return $this->maxResults;

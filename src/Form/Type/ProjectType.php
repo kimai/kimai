@@ -27,7 +27,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ProjectType extends AbstractType
 {
-    public function __construct(private ProjectHelper $projectHelper, private CustomerHelper $customerHelper)
+    public function __construct(
+        private readonly ProjectHelper $projectHelper,
+        private readonly CustomerHelper $customerHelper
+    )
     {
     }
 

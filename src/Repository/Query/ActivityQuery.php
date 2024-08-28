@@ -14,8 +14,11 @@ use App\Entity\Project;
 /**
  * Can be used for advanced queries with the: ActivityRepository
  */
-class ActivityQuery extends ProjectQuery
+class ActivityQuery extends BaseQuery implements VisibilityInterface
 {
+    use VisibilityTrait;
+    use CustomerTrait;
+
     public const ACTIVITY_ORDER_ALLOWED = [
         'name',
         'description' => 'comment',
@@ -33,16 +36,43 @@ class ActivityQuery extends ProjectQuery
     private array $projects = [];
     private bool $globalsOnly = false;
     private bool $excludeGlobals = false;
+    /**
+     * @var array<int>
+     */
+    private array $activityIds = [];
+    /**
+     * @var array<ActivityQueryHydrate>
+     */
+    private array $hydrate = [];
 
     public function __construct()
     {
-        parent::__construct();
         $this->setDefaults([
             'orderBy' => 'name',
+            'customers' => [],
             'projects' => [],
             'globalsOnly' => false,
             'excludeGlobals' => false,
+            'activityIds' => [],
         ]);
+    }
+
+    protected function copyFrom(BaseQuery $query): void
+    {
+        parent::copyFrom($query);
+
+        if (method_exists($query, 'getCustomers')) {
+            $this->setCustomers($query->getCustomers());
+        }
+
+        if ($query instanceof ActivityQuery) {
+            $this->setActivityIds($query->getActivityIds());
+            $this->setGlobalsOnly($query->isGlobalsOnly());
+            $this->setExcludeGlobals($query->isExcludeGlobals());
+            foreach ($query->getHydrate() as $hydrate) {
+                $this->addHydrate($hydrate);
+            }
+        }
     }
 
     public function isGlobalsOnly(): bool
@@ -114,5 +144,41 @@ class ActivityQuery extends ProjectQuery
     public function hasProjects(): bool
     {
         return !empty($this->projects);
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function setActivityIds(array $ids): void
+    {
+        $this->activityIds = $ids;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getActivityIds(): array
+    {
+        return $this->activityIds;
+    }
+
+    private function addHydrate(ActivityQueryHydrate $hydrate): void
+    {
+        if (!\in_array($hydrate, $this->hydrate, true)) {
+            $this->hydrate[] = $hydrate;
+        }
+    }
+
+    /**
+     * @return ActivityQueryHydrate[]
+     */
+    public function getHydrate(): array
+    {
+        return $this->hydrate;
+    }
+
+    public function loadTeams(): void
+    {
+        $this->addHydrate(ActivityQueryHydrate::TEAMS);
     }
 }

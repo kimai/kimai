@@ -11,7 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Tag;
 use App\Entity\Timesheet;
-use App\Repository\Paginator\QueryBuilderPaginator;
+use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
 use App\Utils\Pagination;
@@ -116,9 +116,10 @@ class TagRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->count('tag.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $paginator = new QueryBuilderPaginator($qb1, $counter);
+        $paginator = new QueryPaginator($qb1->getQuery(), $counter);
 
         $pager = new Pagination($paginator);
         $pager->setMaxPerPage($query->getPageSize());

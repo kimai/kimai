@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\EmailEvent;
+use App\Event\UserEmailEvent;
 use App\Mail\KimaiMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -26,11 +27,17 @@ final class EmailSubscriber implements EventSubscriberInterface
     {
         return [
             EmailEvent::class => ['onMailEvent', 100],
+            UserEmailEvent::class => ['onUserMailEvent', 100],
         ];
     }
 
     public function onMailEvent(EmailEvent $event): void
     {
         $this->mailer->send($event->getEmail());
+    }
+
+    public function onUserMailEvent(UserEmailEvent $event): void
+    {
+        $this->mailer->sendToUser($event->getUser(), $event->getEmail());
     }
 }

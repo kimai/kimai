@@ -11,15 +11,19 @@ namespace App\Repository\Result;
 
 use App\Entity\Timesheet;
 use App\Repository\Loader\TimesheetLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\Pagination;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
+/**
+ * @internal
+ */
 final class TimesheetResult
 {
     private ?TimesheetResultStatistic $statisticCache = null;
-    private bool $cachedFullyHydrated = false;
     /**
      * @var array<Timesheet>|null
      */
@@ -27,16 +31,22 @@ final class TimesheetResult
 
     /**
      * @internal
+     * @param Query<null, Timesheet> $query
      */
-    public function __construct(private TimesheetQuery $query, private QueryBuilder $queryBuilder)
+    public function __construct(
+        private readonly TimesheetQuery $timesheetQuery,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly QueryBuilder $statisticQb,
+        private readonly Query $query
+    )
     {
     }
 
     public function getStatistic(): TimesheetResultStatistic
     {
         if ($this->statisticCache === null) {
-            $withDuration = $this->query->countFilter() > 0;
-            $qb = clone $this->queryBuilder;
+            $withDuration = $this->timesheetQuery->countFilter() > 0;
+            $qb = clone $this->statisticQb;
             $qb
                 ->resetDQLPart('select')
                 ->resetDQLPart('orderBy')
@@ -47,6 +57,7 @@ final class TimesheetResult
                 $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
             }
 
+            /** @var array{'duration': int<0, max>, 'counter': int<0, max>} $result */
             $result = $qb->getQuery()->getArrayResult()[0];
             $duration = $withDuration ? $result['duration'] : 0;
 
@@ -58,39 +69,34 @@ final class TimesheetResult
 
     public function toIterable(): iterable
     {
-        $query = $this->queryBuilder->getQuery();
-
-        return $query->toIterable();
+        return $this->query->toIterable();
     }
 
     /**
-     * @param bool $fullyHydrated
      * @return array<Timesheet>
      */
-    public function getResults(bool $fullyHydrated = false): array
+    public function getResults(): array
     {
-        if ($this->resultCache === null || ($fullyHydrated && $this->cachedFullyHydrated === false)) {
-            $query = $this->queryBuilder->getQuery();
-            $results = $query->getResult();
+        if ($this->resultCache === null) {
+            /** @var array<Timesheet> $results */
+            $results = $this->query->getResult();
 
-            $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $fullyHydrated);
+            $loader = new TimesheetLoader($this->entityManager, true);
             $loader->loadResults($results);
 
-            $this->cachedFullyHydrated = $fullyHydrated;
             $this->resultCache = $results;
         }
 
         return $this->resultCache;
     }
 
-    public function getPagerfanta(bool $fullyHydrated = false): Pagination
+    public function getPagerfanta(): Pagination
     {
-        $qb = clone $this->queryBuilder;
+        $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager), $this->query, $this->getStatistic()->getCount());
 
-        $loader = new LoaderPaginator(new TimesheetLoader($qb->getEntityManager(), $fullyHydrated), $qb, $this->getStatistic()->getCount());
         $paginator = new Pagination($loader);
-        $paginator->setMaxPerPage($this->query->getPageSize());
-        $paginator->setCurrentPage($this->query->getPage());
+        $paginator->setMaxPerPage($this->timesheetQuery->getPageSize());
+        $paginator->setCurrentPage($this->timesheetQuery->getPage());
 
         return $paginator;
     }

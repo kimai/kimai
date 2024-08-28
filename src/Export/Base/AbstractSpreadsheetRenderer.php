@@ -18,7 +18,9 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportFilename;
+use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
 use App\Utils\StringHelper;
@@ -461,9 +463,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['customer-meta'])) {
-            /** @var CustomerQuery $customerQuery */
-            $customerQuery = $query->copyTo(new CustomerQuery());
-            $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
+            $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query->copyTo(new CustomerQuery()), CustomerMetaDisplayEvent::EXPORT));
 
             $columns['customer-meta'] = [
                 'header' => function (Worksheet $sheet, int $row, int $column) use ($customerMetaFields): int {
@@ -491,7 +491,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['project-meta'])) {
-            $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
+            $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query->copyTo(new ProjectQuery()), ProjectMetaDisplayEvent::EXPORT));
             $columns['project-meta'] = [
                 'header' => function (Worksheet $sheet, int $row, int $column) use ($projectMetaFields): int {
                     foreach ($projectMetaFields as $metaField) {
@@ -518,7 +518,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['activity-meta'])) {
-            $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
+            $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query->copyTo(new ActivityQuery()), ActivityMetaDisplayEvent::EXPORT));
             $columns['activity-meta'] = [
                 'header' => function (Worksheet $sheet, int $row, int $column) use ($activityMetaFields): int {
                     foreach ($activityMetaFields as $metaField) {

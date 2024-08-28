@@ -45,7 +45,7 @@ final class CustomerHelper
     public function getChoiceLabel(Customer $customer): string
     {
         $name = $this->getChoicePattern();
-        $name = str_replace(self::PATTERN_NAME, $customer->getName(), $name);
+        $name = str_replace(self::PATTERN_NAME, $customer->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_COMMENT, $customer->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_NUMBER, $customer->getNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_COMPANY, $customer->getCompany() ?? '', $name);
@@ -59,7 +59,7 @@ final class CustomerHelper
         }
 
         if ($name === '' || $name === self::SPACER) {
-            $name = $customer->getName();
+            $name = $customer->getName() ?? '';
         }
 
         return substr($name, 0, 110);

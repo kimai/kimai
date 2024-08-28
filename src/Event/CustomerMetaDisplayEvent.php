@@ -13,8 +13,6 @@ use App\Repository\Query\CustomerQuery;
 
 /**
  * Dynamically find possible meta fields for a customer query.
- *
- * @method CustomerQuery getQuery()
  */
 final class CustomerMetaDisplayEvent extends AbstractMetaDisplayEvent
 {

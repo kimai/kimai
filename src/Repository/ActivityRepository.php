@@ -16,14 +16,16 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\Loader\ActivityLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
+use App\Repository\Query\ActivityQueryHydrate;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
@@ -37,53 +39,53 @@ class ActivityRepository extends EntityRepository
 
     /**
      * @param Project $project
-     * @return Activity[]
+     * @return array<Activity>
      */
     public function findByProject(Project $project): array
     {
-        return $this->findBy(['project' => $project]);
+        $query = new ActivityQuery();
+        $query->addProject($project);
+
+        return $this->getActivitiesForQuery($query);
     }
 
     /**
      * @param int[] $activityIds
-     * @return Activity[]
+     * @return array<Activity>
      */
     public function findByIds(array $activityIds): array
     {
+        $ids = array_filter(
+            array_unique($activityIds),
+            function ($value) {
+                return $value > 0;
+            }
+        );
+
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->createQueryBuilder('a');
         $qb
             ->where($qb->expr()->in('a.id', ':id'))
-            ->setParameter('id', $activityIds)
+            ->setParameter('id', $ids)
         ;
 
-        $activities = $qb->getQuery()->getResult();
-
-        $loader = new ActivityLoader($qb->getEntityManager(), true);
-        $loader->loadResults($activities);
-
-        return $activities;
+        return $this->getActivities($this->prepareActivityQuery($qb->getQuery()));
     }
 
-    /**
-     * @param Activity $activity
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function saveActivity(Activity $activity)
+    public function saveActivity(Activity $activity): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($activity);
         $entityManager->flush();
     }
 
-    /**
-     * @param null|bool $visible
-     * @return int
-     */
-    public function countActivity($visible = null): int
+    public function countActivity(?bool $visible = null): int
     {
         if (null !== $visible) {
-            return $this->count(['visible' => (bool) $visible]);
+            return $this->count(['visible' => $visible]);
         }
 
         return $this->count([]);
@@ -157,8 +159,7 @@ class ActivityRepository extends EntityRepository
     /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
      *
-     * @param ActivityFormTypeQuery $query
-     * @return QueryBuilder
+     * @internal
      */
     public function getQueryBuilderForFormType(ActivityFormTypeQuery $query): QueryBuilder
     {
@@ -252,14 +253,16 @@ class ActivityRepository extends EntityRepository
 
     private function getQueryBuilderForQuery(ActivityQuery $query): QueryBuilder
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->createQueryBuilder('a');
 
         $qb
-            ->select('a')
-            ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'p')
             ->leftJoin('p.customer', 'c')
         ;
+
+        if (\count($query->getActivityIds()) > 0) {
+            $qb->andWhere($qb->expr()->in('a.id', ':id'))->setParameter('id', $query->getActivityIds());
+        }
 
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
@@ -356,6 +359,9 @@ class ActivityRepository extends EntityRepository
         return ['a.name', 'a.comment', 'a.number'];
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countActivitiesForQuery(ActivityQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -366,7 +372,7 @@ class ActivityRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('a.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
@@ -374,33 +380,41 @@ class ActivityRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
-    protected function getPaginatorForQuery(ActivityQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<Activity>
+     */
+    private function getPaginatorForQuery(ActivityQuery $activityQuery): PaginatorInterface
     {
-        $counter = $this->countActivitiesForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
+        $counter = $this->countActivitiesForQuery($activityQuery);
+        $query = $this->createActivityQuery($activityQuery);
 
-        return new LoaderPaginator(new ActivityLoader($qb->getEntityManager()), $qb, $counter);
+        return new LoaderQueryPaginator(new ActivityLoader($this->getEntityManager()), $query, $counter);
     }
 
     /**
-     * @param ActivityQuery $query
      * @return Activity[]
      */
-    public function getActivitiesForQuery(ActivityQuery $query): iterable
+    public function getActivitiesForQuery(ActivityQuery $query): array
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
-
-        return $paginator->getAll();
+        return $this->getActivities($this->createActivityQuery($query));
     }
 
     /**
-     * @param Activity $delete
-     * @param Activity|null $replace
-     * @throws \Doctrine\ORM\Exception\ORMException
+     * @param Query<Activity> $query
+     * @return Activity[]
      */
-    public function deleteActivity(Activity $delete, ?Activity $replace = null)
+    public function getActivities(Query $query): array
+    {
+        /** @var array<Activity> $activities */
+        $activities = $query->execute();
+
+        $loader = new ActivityLoader($this->getEntityManager());
+        $loader->loadResults($activities);
+
+        return $activities;
+    }
+
+    public function deleteActivity(Activity $delete, ?Activity $replace = null): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -424,5 +438,48 @@ class ActivityRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
+    }
+
+    /**
+     * @return Query<Activity>
+     */
+    private function createActivityQuery(ActivityQuery $activityQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($activityQuery)->getQuery();
+        $query = $this->prepareActivityQuery($query);
+
+        foreach ($activityQuery->getHydrate() as $hydrate) {
+            switch ($hydrate) {
+                case ActivityQueryHydrate::TEAMS:
+                    // does not yet work, see https://github.com/doctrine/orm/pull/8391
+                    // $query->setFetchMode(Activity::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    break;
+
+                case ActivityQueryHydrate::TEAM_MEMBER:
+                    // does not yet work, see https://github.com/doctrine/orm/issues/11254
+                    // $query->setFetchMode(Activity::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(Team::class, 'members', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(TeamMember::class, 'user', ClassMetadata::FETCH_EAGER);
+                    break;
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Activity> $query
+     * @return Query<Activity>
+     */
+    public function prepareActivityQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        $query->setFetchMode(Activity::class, 'meta', ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode(Activity::class, 'project', ClassMetadata::FETCH_EAGER);
+
+        // $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }
