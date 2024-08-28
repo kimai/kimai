@@ -435,6 +435,9 @@ class ProjectRepository extends EntityRepository
         }
     }
 
+    /**
+     * @return array<ProjectComment>
+     */
     public function getComments(Project $project): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
