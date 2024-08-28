@@ -13,6 +13,7 @@ use Pagerfanta\Adapter\AdapterInterface;
 
 /**
  * @template-covariant T
+ * @extends AdapterInterface<T>
  */
 interface PaginatorInterface extends AdapterInterface
 {

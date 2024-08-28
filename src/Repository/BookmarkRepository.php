@@ -14,35 +14,45 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Bookmark>
+ * @extends EntityRepository<Bookmark>
  */
 class BookmarkRepository extends EntityRepository
 {
+    /** @var array<string, array<string, array<string, Bookmark>>> */
     private array $userCache = [];
 
-    public function saveBookmark(Bookmark $bookmark)
+    public function saveBookmark(Bookmark $bookmark): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($bookmark);
         $entityManager->flush();
 
-        $this->clearCache($bookmark->getUser());
+        if ($bookmark->getUser()) {
+            $this->clearCache($bookmark->getUser());
+        }
     }
 
-    private function clearCache(User $user): void
+    private function clearCache(?User $user): void
     {
+        if ($user === null || $user->getId() === null) {
+            return;
+        }
+
         $key = 'user_' . $user->getId();
         if (\array_key_exists($key, $this->userCache)) {
             unset($this->userCache[$key]);
         }
     }
 
-    public function deleteBookmark(Bookmark $bookmark)
+    public function deleteBookmark(Bookmark $bookmark): void
     {
         $em = $this->getEntityManager();
         $em->remove($bookmark);
         $em->flush();
-        $this->clearCache($bookmark->getUser());
+
+        if ($bookmark->getUser()) {
+            $this->clearCache($bookmark->getUser());
+        }
     }
 
     public function getSearchDefaultOptions(User $user, string $name): ?Bookmark
@@ -59,7 +69,7 @@ class BookmarkRepository extends EntityRepository
             $this->userCache[$key] = [];
             $all = $this->findBy(['user' => $user->getId()]);
             foreach ($all as $item) {
-                $this->userCache[$key][$item->getType()][mb_substr($item->getName(), 0, 50)] = $item;
+                $this->userCache[$key][$item->getType()][mb_substr($item->getName() ?? '__DEFAULT__', 0, 50)] = $item;
             }
         }
 

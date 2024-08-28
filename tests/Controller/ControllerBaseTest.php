@@ -178,18 +178,19 @@ abstract class ControllerBaseTest extends WebTestCase
 
         /** @var RedirectResponse $response */
         $response = $client->getResponse();
-        self::assertInstanceOf(RedirectResponse::class, $response);
 
         self::assertTrue(
             $response->isRedirect(),
-            \sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The URL %s is not protected (%s occurred).', $url, $response->getStatusCode())
         );
 
         self::assertStringEndsWith(
             '/login',
             $response->getTargetUrl(),
-            \sprintf('The secure URL %s does not redirect to the login form.', $url)
+            \sprintf('The URL %s does not redirect to the login form.', $url)
         );
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = ''): void

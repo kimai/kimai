@@ -67,6 +67,9 @@ final class TimesheetResult
         return $this->statisticCache;
     }
 
+    /**
+     * @return iterable<Timesheet>
+     */
     public function toIterable(): iterable
     {
         return $this->query->toIterable();

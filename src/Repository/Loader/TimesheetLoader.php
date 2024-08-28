@@ -71,7 +71,7 @@ final class TimesheetLoader implements LoaderInterface
 
         if ($this->fullyHydrated) {
             $customerIds = array_filter(array_unique(array_map(function (Project $project) {
-                return $project->getCustomer()->getId();
+                return $project->getCustomer()?->getId();
             }, $projects)), function ($value) { return $value !== null; });
 
             $qb = $em->createQueryBuilder();

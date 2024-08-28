@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace API\Authentication;
+namespace App\Tests\API\Authentication;
 
 use App\API\Authentication\AccessTokenHandler;
 use App\Entity\AccessToken;

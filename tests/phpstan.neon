@@ -18,6 +18,7 @@ parameters:
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
+        - identifier: missingType.iterableValue
         -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
@@ -2107,26 +2108,6 @@ parameters:
             message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
             count: 1
             path: Form/CustomerEditFormTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformerTest\\:\\:getInvalidTestDataReverseTransform\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/DataTransformer/DurationStringToSecondsTransformerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformerTest\\:\\:getInvalidTestDataTransform\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/DataTransformer/DurationStringToSecondsTransformerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformerTest\\:\\:getValidTestDataReverseTransform\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/DataTransformer/DurationStringToSecondsTransformerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformerTest\\:\\:getValidTestDataTransform\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/DataTransformer/DurationStringToSecondsTransformerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformerTest\\:\\:testInvalidReverseTransformThrowsException\\(\\) has parameter \\$transform with no type specified\\.$#"
