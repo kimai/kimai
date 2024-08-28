@@ -10,6 +10,10 @@
         <source>wizard.intro.description</source>
         <target state="translated">Wizard ini akan membantu Anda menyesuaikan Kimai dengan kebutuhan Anda.</target>
       </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Pengaturan anda</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

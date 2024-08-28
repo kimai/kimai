@@ -178,8 +178,8 @@
         <source>activity</source>
         <target state="translated">Aktivitet</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
         <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag" xml:space="preserve">
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Ett mejl har skickats. Det innehåller en länk som du måste klicka på för att återställa ditt lösenord. Obs: Du kan endast begära ett nytt lösenord en gång inom %tokenLifetime% timmar. Om du inte har fått mejlet kontrollera din spamkorg eller försök igen.</target>
+        <target state="translated">Ett e-postmeddelande har skickats med en länk för att återställa ditt lösenord. Obs: Du kan bara begära ett nytt lösenord en gång varje %tokenLifetime% timmar. Om du inte får e-postmeddelandet, kontrollera din spam-mapp eller försök igen.</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -994,9 +994,9 @@
         <source>stats.workingTimeYear</source>
         <target>Helår %year%</target>
       </trans-unit>
-      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
         <source>stats.workingTimeWeek</source>
-        <target>Vecka %week%</target>
+        <target state="translated">Kalendervecka %week%</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1664,7 +1664,7 @@
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
         <source>Time, date and currency format</source>
-        <target state="needs-translation">Landsformat</target>
+        <target state="translated">Tid, datum och valutaformat</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
@@ -1741,6 +1741,14 @@
       <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
         <source>Activate</source>
         <target state="translated">Aktivera</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">Är-timmar</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Tillåt tidsposter endast för dagar för vilka förväntade timmar definieras i anställningsavtalet</target>
       </trans-unit>
     </body>
   </file>

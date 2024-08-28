@@ -652,7 +652,7 @@
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve">
         <source>upload</source>
-        <target state="translated">تحميل</target>
+        <target state="translated">رفع</target>
       </trans-unit>
       <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
@@ -1633,6 +1633,26 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">الغياب: التعليق حقل إلزامي</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+        <source>confirmed_by_at</source>
+        <target state="translated">تم تأكيده بواسطة %user% في %date%</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">رقم المشروع</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">رقم النشاط</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">أوقف تتبع الوقت</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
+        <source>help.globalActivity</source>
+        <target state="translated">إذا لم تقم باختيار مشروع، سيصبح هذا النشاط عالميا، و يمكن دمجه مع أي مشروع. إذا اخترت مشروعا ، يمكن استعمال النشاط فقط مع هذا المشروع. لا يمكن تغيير هذا الاعداد لاحقا.</target>
       </trans-unit>
     </body>
   </file>

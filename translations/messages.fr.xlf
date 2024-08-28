@@ -1024,7 +1024,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Un courriel a été envoyé. Il contient un lien sur lequel vous devez cliquer pour réinitialiser votre mot de passe. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une seule fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez votre dossier d'indésirables ou réessayez.</target>
+        <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1304,7 +1304,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="needs-translation">Le mot de passe de l’API est utilisé pour la communication entre Kimai et vos applications</target>
+        <target state="translated">Ici, vous pouvez gérer vos jetons d'API, utilisés pour authentifier votre application auprès de Kimai.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1448,7 +1448,7 @@
       </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="needs-translation">Mois complet</target>
+        <target state="translated">Verrouiller le mois</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>

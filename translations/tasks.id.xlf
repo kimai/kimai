@@ -10,6 +10,10 @@
         <source>report_tasks_teams</source>
         <target state="translated">Tugas tim</target>
       </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Mulai memproses</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

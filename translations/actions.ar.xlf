@@ -10,9 +10,9 @@
         <source>back</source>
         <target>عودة</target>
       </trans-unit>
-      <trans-unit id="JiEhxTc" resname="edit">
-        <source>edit</source>
-        <target>تحرير</target>
+      <trans-unit id="JiEhxTc" resname="edit" xml:space="preserve">
+        <source>Edit</source>
+        <target state="translated">تعديل</target>
       </trans-unit>
       <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
@@ -30,9 +30,9 @@
         <source>profile-stats</source>
         <target>الملف الشخصي</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>settings</source>
-        <target>تفضيلات</target>
+        <target state="translated">التفضيلات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
@@ -101,6 +101,10 @@
       <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
         <target>إلغاء الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">إعادة تحميل</target>
       </trans-unit>
     </body>
   </file>

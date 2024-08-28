@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>ليس لديك أي إضافات مثبتة حتى الآن.</target>
       </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">المزيد من الاضافات</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">الإضافات المتوفرة</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">اشتري الآن</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

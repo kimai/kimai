@@ -10,6 +10,10 @@
         <source>Available plugins</source>
         <target state="translated">Plugin yang tersedia</target>
       </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Beli sekarang</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
