@@ -83,13 +83,14 @@ class InvoiceRepository extends EntityRepository
             ;
         }
 
+        /** @var array{'counter': int|numeric-string}|null $result */
         $result = $qb->getQuery()->getOneOrNullResult();
 
         if ($result === null) {
             return 0;
         }
 
-        return $result['counter'];
+        return (int) $result['counter'];
     }
 
     public function getCounterForDay(\DateTimeInterface $date, ?Customer $customer = null, ?User $user = null): int

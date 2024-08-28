@@ -34,6 +34,7 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
+        - %rootDir%/../../../src/Event/PageActionsEvent.php
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
     doctrine:
@@ -3924,21 +3925,6 @@ parameters:
             path: src/Reporting/ProjectDetails/ProjectDetailsModel.php
 
         -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
-            path: src/Repository/ActivityRepository.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Repository/Loader/ProjectLoader.php
@@ -4041,21 +4027,6 @@ parameters:
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method hasSearchTerm\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
-            count: 2
             path: src/Repository/TimesheetRepository.php
 
         -

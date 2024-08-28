@@ -15,6 +15,8 @@ use App\Entity\User;
  * This event is triggered for every action:
  * - once per side load for page actions
  * - once for every entity item (table row)
+ *
+ * @property array{actions: array<string, string|array<mixed>>, view: string} $payload
  */
 class PageActionsEvent extends ThemeEvent
 {
@@ -22,7 +24,7 @@ class PageActionsEvent extends ThemeEvent
     private ?string $locale = null;
 
     /**
-     * @param array<string, mixed|array<mixed>> $payload
+     * @param array<mixed> $payload
      */
     public function __construct(User $user, array $payload, private readonly string $action, private readonly string $view)
     {
@@ -59,8 +61,6 @@ class PageActionsEvent extends ThemeEvent
 
     /**
      * Custom view can only be table listings.
-     *
-     * @return bool
      */
     public function isCustomView(): bool
     {
@@ -73,7 +73,7 @@ class PageActionsEvent extends ThemeEvent
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, array<mixed>>
      */
     public function getActions(): array
     {
@@ -103,7 +103,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function hasSubmenu(string $submenu): bool
     {
-        if (!$this->hasAction($submenu)) {
+        if (!\array_key_exists($submenu, $this->payload['actions'])) {
             return false;
         }
 
@@ -115,10 +115,11 @@ class PageActionsEvent extends ThemeEvent
      */
     public function addActionToSubmenu(string $submenu, string $key, array $action): void
     {
-        if ($this->hasAction($submenu)) {
-            if (!\array_key_exists('children', $this->payload['actions'][$submenu])) {
-                $this->payload['actions'][$submenu]['children'] = [];
-            }
+        if (!\array_key_exists($submenu, $this->payload['actions'])) {
+            $this->payload['actions'][$submenu] = ['children' => []];
+        }
+        if (!\array_key_exists('children', $this->payload['actions'][$submenu])) {
+            $this->payload['actions'][$submenu]['children'] = [];
         }
         $this->payload['actions'][$submenu]['children'][$key] = $action;
     }

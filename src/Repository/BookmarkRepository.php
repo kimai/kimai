@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class BookmarkRepository extends EntityRepository
 {
-    /** @var array<string, User> */
+    /** @var array<string, array<string, array<string, Bookmark>>> */
     private array $userCache = [];
 
     public function saveBookmark(Bookmark $bookmark): void
@@ -34,6 +34,10 @@ class BookmarkRepository extends EntityRepository
 
     private function clearCache(?User $user): void
     {
+        if ($user === null || $user->getId() === null) {
+            return;
+        }
+
         $key = 'user_' . $user->getId();
         if (\array_key_exists($key, $this->userCache)) {
             unset($this->userCache[$key]);
@@ -65,7 +69,7 @@ class BookmarkRepository extends EntityRepository
             $this->userCache[$key] = [];
             $all = $this->findBy(['user' => $user->getId()]);
             foreach ($all as $item) {
-                $this->userCache[$key][$item->getType()][mb_substr($item->getName(), 0, 50)] = $item;
+                $this->userCache[$key][$item->getType()][mb_substr($item->getName() ?? '__DEFAULT__', 0, 50)] = $item;
             }
         }
 

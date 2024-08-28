@@ -154,8 +154,8 @@ class TagRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if ($query->hasSearchTerm()) {
-            $searchTerm = $query->getSearchTerm();
+        $searchTerm = $query->getSearchTerm();
+        if ($searchTerm !== null) {
             $searchAnd = $qb->expr()->andX();
 
             if ($searchTerm->hasSearchTerm()) {

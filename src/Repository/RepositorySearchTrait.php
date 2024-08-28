@@ -40,11 +40,11 @@ trait RepositorySearchTrait
 
     private function addSearchTerm(QueryBuilder $qb, BaseQuery $query): void
     {
-        if (!$query->hasSearchTerm()) {
+        $searchTerm = $query->getSearchTerm();
+
+        if ($searchTerm === null) {
             return;
         }
-
-        $searchTerm = $query->getSearchTerm();
 
         if (!$this->supportsMetaFields() && !$searchTerm->hasSearchTerm()) {
             return;
