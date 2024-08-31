@@ -18,17 +18,7 @@ use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
 final class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
 {
-    /**
-     * Bind value to a cell.
-     *
-     * @param Cell $cell Cell to bind value to
-     * @param mixed $value Value to bind in cell
-     *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     *
-     * @return bool
-     */
-    public function bindValue(Cell $cell, $value = null)
+    public function bindValue(Cell $cell, mixed $value): bool
     {
         if (\is_string($value)) {
             $value = StringHelper::sanitizeUTF8($value);
@@ -44,7 +34,7 @@ final class AdvancedValueBinder extends DefaultValueBinder implements IValueBind
 
                 $amount = substr_count($value, "\n");
                 $dimension = $cell->getWorksheet()->getRowDimension($cell->getRow());
-                if ($dimension->getRowHeight() !== -1) {
+                if ($dimension->getRowHeight() !== -1.0) {
                     $defaultHeight = $cell->getWorksheet()->getDefaultRowDimension()->getRowHeight();
                     $dimension->setRowHeight($defaultHeight * ($amount + 1));
                 }
