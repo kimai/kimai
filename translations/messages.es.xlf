@@ -1376,7 +1376,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="translated">A continuación se muestran ejemplos de reglas de formato para los idiomas admitidos.</target>
+        <target state="translated">A continuación se muestran ejemplos de reglas de formato para los idiomas admitidos</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
@@ -1388,7 +1388,7 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="translated">Esta configuración es responsable de la traducción del software.</target>
+        <target state="translated">Esta configuración es responsable de la traducción del software</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1749,6 +1749,22 @@
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
         <target state="translated">Permitir las entradas únicamente en los días en que está establecido por el contrato de trabajo por el tiempo y las horas definidas</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Aprobar</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Creado</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Pedido</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Actualizado</target>
       </trans-unit>
     </body>
   </file>
