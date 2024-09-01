@@ -26,9 +26,7 @@ and so much more.
 There are two [versions](https://www.kimai.org/documentation/versions.html) of Kimai existing:
 
 - [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1+)
-- [Version 1](https://github.com/kimai/kimai/tree/1.x) — EOL since mid of 2023 (PHP 7.4) 
-
-Do **NOT** use Version 1, it won't get any more updates!
+- [Version 1](https://github.com/kimai/kimai/tree/1.x) — do **NOT** use, EOL since mid of 2023 (PHP 7.4) 
 
 ### Links
 
@@ -38,23 +36,20 @@ Do **NOT** use Version 1, it won't get any more updates!
 
 ### Requirements
 
-- PHP 8.1.3 minimum
+- PHP 8.1.3 minimum (support for PHP 8.2 and 8.3)
 - MariaDB or MySQL
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
 
-Support for PHP 8.2 and 8.3.
-
 ## Installation
 
-- [Native setup](https://www.kimai.org/documentation/installation.html) — with Git and Composer
-- [Docker](https://hub.docker.com/r/kimai/kimai2) — containerized by @tobybatch
+- Caddy with Docker-Compose at [Hetzner](https://www.kimai.org/documentation/hosting-hetzner-cloud.html) and [DigitalOcean](https://www.kimai.org/documentation/hosting-digital-ocean.html)
+- [SSH setup](https://www.kimai.org/documentation/installation.html) with Git and Composer
+- [Docker images](https://hub.docker.com/r/kimai/kimai2) with FPM only or incl. Apache
+- [Synology](https://www.kimai.org/documentation/synology.html) user can host the Docker version 
+- [Developer setups](https://www.kimai.org/documentation/developers.html) if you want to create Kimai integrations
 
-There are also documentations for:
-- [developer setups](https://www.kimai.org/documentation/developers.html) — on your local machine
-- [shared hostings](https://www.kimai.org/documentation/installation.html#shared-hosting) — the least favorable option
-- [Synology](https://www.kimai.org/documentation/synology.html) — you could try to host the Docker version instead 
-- [1-click installer](https://www.kimai.org/documentation/installation.html#hosting-and-1-click-installations) — hosted environments 
+There are more documented ways for [on-premise hosting](https://www.kimai.org/documentation/chapter-on-premise.html). 
 
 And if you don't want to host Kimai, you can use [the Cloud version](https://www.kimai.cloud/) of it.
 
@@ -65,13 +60,12 @@ And if you don't want to host Kimai, you can use [the Cloud version](https://www
 
 ### Plugins
 
-- [Plugin marketplace](https://www.kimai.org/store/) — find existing plugins here
+- [Plugins](https://www.kimai.org/store/) — paid and free plugin marketplace
 - [Developer documentation](https://www.kimai.org/documentation/developers.html) — how to create a plugin
 
 ## Roadmap and releases
 
-You can see a rough development roadmap in the [Milestones](https://github.com/kimai/kimai/milestones) sections.
-It is open for changes and input from the community, your [ideas and questions](https://github.com/kimai/kimai/issues) are welcome.
+You can see a rough development [roadmap](https://github.com/orgs/kimai/projects/2), which is open for changes and input from the community, your [ideas](https://github.com/kimai/kimai/issues) are welcome.
 
 Release versions will be created on a regular basis, every couple of weeks latest.
 Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
