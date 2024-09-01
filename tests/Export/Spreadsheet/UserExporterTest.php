@@ -42,7 +42,9 @@ class UserExporterTest extends TestCase
         $user->setEmail('test@example.com');
         $user->setEnabled(false);
         $user->addRole(User::ROLE_TEAMLEAD);
-        $date = $user->getRegisteredAt();
+
+        $date = new \DateTime('2024-09-01 14:45:00');
+        $user->setRegisteredAt($date);
 
         $sut = new UserExporter($spreadsheetExporter, $annotationExtractor, $userPreferenceExtractor);
         $spreadsheet = $sut->export([$user], new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT));
