@@ -1750,6 +1750,22 @@
         <source>booking_allow_only_work_days</source>
         <target state="translated">Permitir registros de horas apenas nos dias onde as horas previstas estão definidas no contrato de trabalho</target>
       </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Aprovar</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Solicitar</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Criado</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Atualizado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
