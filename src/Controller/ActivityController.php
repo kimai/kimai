@@ -51,7 +51,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/activity')]
 final class ActivityController extends AbstractController
 {
-    public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
+    public function __construct(
+        private readonly ActivityRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ActivityService $activityService
+    )
     {
     }
 
@@ -61,6 +66,7 @@ final class ActivityController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ActivityQuery();
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
@@ -443,7 +449,6 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @param ActivityQuery $query
      * @return FormInterface<ActivityQuery>
      */
     private function getToolbarForm(ActivityQuery $query): FormInterface
@@ -456,7 +461,7 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @return FormInterface<ActivityEditForm>
+     * @return FormInterface<mixed>
      */
     private function createEditForm(Activity $activity): FormInterface
     {

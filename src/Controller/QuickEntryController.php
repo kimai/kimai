@@ -11,7 +11,9 @@ namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Form\QuickEntryForm;
+use App\Form\WeekByUserForm;
 use App\Model\QuickEntryWeek;
+use App\Reporting\WeekByUser\WeekByUser;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\FavoriteRecordService;
@@ -25,7 +27,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Controller used to enter times in weekly form.
  */
-#[Route(path: '/quick_entry')]
 #[IsGranted('quick-entry')]
 final class QuickEntryController extends AbstractController
 {
@@ -38,18 +39,30 @@ final class QuickEntryController extends AbstractController
     {
     }
 
-    #[Route(path: '/{begin}', name: 'quick_entry', methods: ['GET', 'POST'])]
-    public function quickEntry(Request $request, ?string $begin = null): Response
+    #[Route(path: '/quick_entry/', name: 'quick_entry', methods: ['GET', 'POST'])]
+    public function quickEntry(Request $request): Response
     {
-        $factory = $this->getDateTimeFactory();
+        $user = $this->getUser();
+        $factory = $this->getDateTimeFactory($user);
+        $defaultDate = $factory->createDateTime();
 
-        if ($begin !== null) {
-            try {
-                $begin = $factory->createDateTime($begin);
-            } catch (\Exception $ex) {
-                $begin = null;
-            }
-        }
+        $values = new WeekByUser();
+        $values->setUser($user);
+        $values->setDate($defaultDate);
+
+        $weeklyForm = $this->createFormForGetRequest(WeekByUserForm::class, $values, [
+            'include_user' => $this->isGranted('view_other_timesheet'),
+            'timezone' => $factory->getTimezone()->getName(),
+            'start_date' => $values->getDate(),
+            'attr' => ['name' => 'quick_entry_weekrange_form']
+        ]);
+
+        $weeklyForm->submit($request->query->all(), false);
+
+        $user = $values->getUser() ?? $user;
+        $factory = $this->getDateTimeFactory($user);
+
+        $begin = $values->getDate();
 
         if ($begin === null) {
             $begin = $factory->createDateTime();
@@ -57,7 +70,6 @@ final class QuickEntryController extends AbstractController
 
         $startWeek = $factory->getStartOfWeek($begin);
         $endWeek = $factory->getEndOfWeek($begin);
-        $user = $this->getUser();
 
         $tmpDay = clone $startWeek;
         $week = [];
@@ -76,7 +88,7 @@ final class QuickEntryController extends AbstractController
         $result = $this->repository->getTimesheetResult($query);
 
         $rows = [];
-        foreach ($result->getResults(true) as $timesheet) {
+        foreach ($result->getResults() as $timesheet) {
             $i = 0;
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             $day = $timesheet->getBegin()->format('Y-m-d');
@@ -106,7 +118,7 @@ final class QuickEntryController extends AbstractController
             $startFrom = null;
             if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
                 $startFrom = clone $startWeek;
-                $startFrom->modify(sprintf('-%s weeks', $takeOverWeeks));
+                $startFrom->modify(\sprintf('-%s weeks', $takeOverWeeks));
             }
 
             $favorites = $this->favoriteRecordService->favoriteEntries($user, $amount);
@@ -235,7 +247,7 @@ final class QuickEntryController extends AbstractController
                 if ($saved) {
                     $this->flashSuccess('action.update.success');
 
-                    return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
+                    return $this->redirectToRoute('quick_entry', ['date' => $begin->format('Y-m-d'), 'user' => $user->getId()]);
                 }
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
@@ -244,6 +256,8 @@ final class QuickEntryController extends AbstractController
 
         $page = new PageSetup('quick_entry.title');
         $page->setHelp('weekly-times.html');
+        $page->setPaginationForm($weeklyForm);
+        $page->setActionName('weekly-times');
 
         return $this->render('quick-entry/index.html.twig', [
             'page_setup' => $page,

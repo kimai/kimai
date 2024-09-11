@@ -36,6 +36,7 @@ use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -144,7 +145,9 @@ abstract class TimesheetAbstractController extends AbstractController
         $event = new TimesheetMetaDefinitionEvent($entry);
         $this->dispatcher->dispatch($event);
 
-        $editForm = $this->getEditForm($entry, $request->get('page'));
+        $page = $request->get('page');
+        $page = is_numeric($page) ? (int) $page : 1;
+        $editForm = $this->getEditForm($entry, $page);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -267,7 +270,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 if (null === $exporter) {
                     $form->addError(new FormError('Invalid timesheet exporter given'));
                 } else {
-                    return $exporter->render($entries->getResults(true), $query);
+                    return $exporter->render($entries->getResults(), $query);
                 }
             }
         }
@@ -321,7 +324,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($disallowed > 0) {
-            $this->flashWarning(sprintf('You are missing the permission to edit %s timesheets', $disallowed));
+            $this->flashWarning(\sprintf('You are missing the permission to edit %s timesheets', $disallowed));
         }
 
         $dto->setEntities($timesheets);
@@ -411,7 +414,7 @@ abstract class TimesheetAbstractController extends AbstractController
                     $this->flashUpdateException($ex);
                 }
             } else {
-                $this->flashSuccess(sprintf('No changes for %s entries detected.', \count($timesheets)));
+                $this->flashSuccess(\sprintf('No changes for %s entries detected.', \count($timesheets)));
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             }
@@ -484,6 +487,9 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
+    /**
+     * @param class-string<FormTypeInterface> $formClass
+     */
     protected function generateCreateForm(Timesheet $entry, string $formClass, string $action): FormInterface
     {
         $mode = $this->getTrackingMode();
@@ -504,12 +510,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Timesheet $entry
-     * @param int $page
-     * @return FormInterface
-     */
-    protected function getEditForm(Timesheet $entry, $page): FormInterface
+    private function getEditForm(Timesheet $entry, int $page): FormInterface
     {
         $mode = $this->getTrackingMode();
 
@@ -568,6 +569,9 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'edit_rate_own_timesheet';
     }
 
+    /**
+     * @return class-string<FormTypeInterface>
+     */
     protected function getEditFormClassName(): string
     {
         return TimesheetEditForm::class;

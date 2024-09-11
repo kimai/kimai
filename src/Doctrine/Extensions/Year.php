@@ -17,7 +17,7 @@ use Doctrine\ORM\Query\TokenType;
 
 final class Year extends FunctionNode
 {
-    private Node|string|null $value;
+    private Node|string $value;
 
     public function getSql(SqlWalker $sqlWalker): string
     {

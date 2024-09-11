@@ -21,8 +21,6 @@ version-resolver:
             - 'translation'
     default: patch
 template: |
-    [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://www.kimai.org/documentation/docker.html)
-
     **Compatible with PHP 8.1 to 8.3**
     
     $CHANGES

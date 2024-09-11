@@ -138,9 +138,9 @@
         <source>menu.logout</source>
         <target state="translated">Вийти</target>
       </trans-unit>
-      <trans-unit id="ypVQO7o" resname="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting" xml:space="preserve">
         <source>menu.reporting</source>
-        <target state="translated">Звіт</target>
+        <target state="translated">Звітнiсть</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>

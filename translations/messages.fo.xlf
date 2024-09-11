@@ -78,16 +78,10 @@
         <source>Doctor</source>
         <target>Lækni</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Ongar viðmerkingar eru sendar út enn.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
         <target state="translated">Dato</target>

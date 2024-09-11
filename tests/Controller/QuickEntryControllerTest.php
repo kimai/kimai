@@ -18,17 +18,19 @@ class QuickEntryControllerTest extends ControllerBaseTest
 {
     public function testIsSecure(): void
     {
-        $this->assertUrlIsSecured('/quick_entry');
+        $this->assertUrlIsSecured('/quick_entry/');
     }
 
     public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
-        $this->request($client, '/quick_entry');
+        $this->request($client, '/quick_entry/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $node = $client->getCrawler()->filter('section.content form[name=quick_entry_form]');
+        $node = $client->getCrawler()->filter('form[name=quick_entry_weekrange_form]');
         self::assertEquals(1, $node->filter('div.btn-group.week-picker-btn-group')->count());
+
+        $node = $client->getCrawler()->filter('section.content form[name=quick_entry_form]');
         self::assertEquals(1, $node->filter('input.btn-primary[type=submit]')->count());
 
         $addBtn = $node->filter('button.btn-success[type=button]');
@@ -62,11 +64,10 @@ class QuickEntryControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-7 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/quick_entry');
+        $this->request($client, '/quick_entry/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $node = $client->getCrawler()->filter('section.content form[name=quick_entry_form]');
-        self::assertEquals(1, $node->filter('div.btn-group.week-picker-btn-group')->count());
+        $node = $client->getCrawler()->filter('form[name=quick_entry_form]');
         self::assertEquals(1, $node->filter('input.btn-primary[type=submit]')->count());
 
         $addBtn = $node->filter('button.btn-success[type=button]');

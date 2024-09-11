@@ -356,16 +356,10 @@ final class TimesheetFixtures implements TestFixture
     }
 
     /**
-     * @param User $user
-     * @param Activity $activity
-     * @param Project $project
-     * @param string $description
      * @param \DateTime $start
-     * @param null|array $tagArray
-     * @param bool $setEndDate
-     * @return Timesheet
+     * @param array<Tag> $tagArray
      */
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $tagArray = [], $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, \DateTime $start, array $tagArray = [], bool $setEndDate = true): Timesheet
     {
         $end = clone $start;
         $end = $end->modify('+ ' . (rand(1, 86400)) . ' seconds');

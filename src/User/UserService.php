@@ -136,7 +136,7 @@ class UserService
         $user = $this->findUserByName($username);
 
         if ($user === null) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(\sprintf('User identified by "%s" username does not exist.', $username));
         }
 
         return $user;

@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace API;
+namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
-use App\Tests\API\APIControllerBaseTest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -70,13 +69,13 @@ class AuthenticationTest extends APIControllerBaseTest
         $this->assertEquals(
             $data,
             json_decode($response->getContent(), true),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The secure URL %s is not protected.', $url)
         );
 
         $this->assertEquals(
             Response::HTTP_FORBIDDEN,
             $response->getStatusCode(),
-            sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
+            \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );
     }
 

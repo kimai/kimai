@@ -41,7 +41,7 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
         }
 
         if (!$passport instanceof Passport || !$passport->hasBadge(PasswordCredentials::class)) {
-            throw new \LogicException(sprintf('LDAP authentication requires a passport containing a user and password credentials, authenticator "%s" does not fulfill these requirements.', \get_class($event->getAuthenticator())));
+            throw new \LogicException(\sprintf('LDAP authentication requires a passport containing a user and password credentials, authenticator "%s" does not fulfill these requirements.', \get_class($event->getAuthenticator())));
         }
 
         /** @var PasswordCredentials $passwordCredentials */

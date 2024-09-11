@@ -10,12 +10,10 @@
         <source>help.upload</source>
         <target>Attentie: Bestaande bestanden zullen overschreven worden. Toegestaande bestandstypes zijn: %extensions%.</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target>Voor verdere verwerking</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Factuur</target>
@@ -24,17 +22,21 @@
         <source>default</source>
         <target>Factuur</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text">
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve">
         <source>text</source>
-        <target>Text</target>
+        <target state="translated">Tekst</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target>Tijdsregistratie</target>
+        <target state="translated">Tijdrooster</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Freelancer</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Meer sjablonen kunt u hier downloaden</target>
       </trans-unit>
     </body>
   </file>

@@ -93,7 +93,7 @@
     {% endif %}
 
     {% if year is defined %}
-        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'working_time_detail_box', border: false, item: {options: {bodyExtraClass: 'border-top', open: not box_configuration.collapsed}, bodyClasses: 'p-0 table-responsive'}} %}
+        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'working_time_detail_box', border: false, item: {options: {bodyExtraClass: 'border-top', open: true}, bodyClasses: 'p-0 table-responsive'}} %}
             {% set yearShould = 0 %}
             {% set yearIs = 0 %}
             {% set approved = 0 %}

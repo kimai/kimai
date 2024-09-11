@@ -37,6 +37,7 @@ final class Extensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('report_date', [$this, 'buildReportDate']),
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
             new TwigFunction('random_color', [$this, 'randomColor']),
@@ -50,6 +51,38 @@ final class Extensions extends AbstractExtension
                 return !\is_string($value) && is_numeric($value);
             }),
         ];
+    }
+
+    public function buildReportDate(string|int $year, string|int $month = 1, string|int $day = 1): \DateTimeImmutable
+    {
+        if (\is_string($month)) {
+            $month = (int) $month;
+        }
+        if ($month > 12 || $month < 1) {
+            throw new \InvalidArgumentException('Unknown month: ' . $month);
+        }
+        if ($month < 10) {
+            $month = '0' . $month;
+        }
+
+        if (\is_string($day)) {
+            $day = (int) $day;
+        }
+        if ($day > 31 || $day < 1) {
+            throw new \InvalidArgumentException('Unknown day: ' . $day);
+        }
+        if ($day < 10) {
+            $day = '0' . $day;
+        }
+
+        if (\is_string($year)) {
+            $year = (int) $year;
+        }
+        if ($year < 1980 || $year > 2100) {
+            throw new \InvalidArgumentException('Unknown year: ' . $year);
+        }
+
+        return \DateTimeImmutable::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $day); // @phpstan-ignore-line
     }
 
     public function formatReportDate(\DateTimeInterface $dateTime): string

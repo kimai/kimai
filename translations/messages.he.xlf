@@ -1662,9 +1662,9 @@
         <source>help</source>
         <target>תיעוד</target>
       </trans-unit>
-      <trans-unit id="oYYDCG5" resname="support">
-        <source>support</source>
-        <target state="translated">פורום</target>
+      <trans-unit id="oYYDCG5" resname="support" xml:space="preserve" approved="yes">
+        <source>Support</source>
+        <target state="final">תמיכה</target>
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
@@ -1745,6 +1745,10 @@
       <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
         <source>Activate</source>
         <target state="translated">הפעלה</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">לאפשר רשומות שעות רק לימים שעבורם השעות הצפויות מוגדרות בחוזה ההעסקה</target>
       </trans-unit>
     </body>
   </file>

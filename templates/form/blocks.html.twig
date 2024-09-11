@@ -281,20 +281,27 @@
 {%- endblock secret_widget %}
 
 {% block yearpicker_widget -%}
+    {% set yearInt = year|date_format('Y') %}
     <div class="btn-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event-bubbles="change">
             {{ icon('left') }}
         </a>
-        <a class="btn" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">
-                {% if show_range %}
-                    {{ year|date_short }} &ndash; {{ nextYear|date_short }}
-                {% else %}
-                    {{ year|date_format('Y') }}
-                {% endif %}
-            </span>
-        </a>
+        {% if show_range %}
+            <a class="btn" href="#" onclick="return false;">
+                <span id="{{ form.vars.id }}_month_name">{{ year|date_short }} &ndash; {{ nextYear|date_short }}</span>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ yearInt }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
+                {% for i in (yearInt - 5)..(yearInt + 5) %}
+                    {% set tmpYear = report_date(i) %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event-bubbles="change" class="dropdown-item">{{ tmpYear|date_format('Y') }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextYear|report_date }}" data-event-bubbles="change">
             {{ icon('right') }}

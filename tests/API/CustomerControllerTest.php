@@ -46,10 +46,10 @@ class CustomerControllerTest extends APIControllerBaseTest
     protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
-            return sprintf('/api/customers/%s/rates/%s', $id, $rateId);
+            return \sprintf('/api/customers/%s/rates/%s', $id, $rateId);
         }
 
-        return sprintf('/api/customers/%s/rates', $id);
+        return \sprintf('/api/customers/%s/rates', $id);
     }
 
     protected function importTestRates($id): array

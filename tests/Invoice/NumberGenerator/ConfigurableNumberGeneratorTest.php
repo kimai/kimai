@@ -238,7 +238,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
     public function testInvalidGetInvoiceNumber(string $format, \DateTime $invoiceDate, string $brokenPart): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Unknown %s found', $brokenPart));
+        $this->expectExceptionMessage(\sprintf('Unknown %s found', $brokenPart));
 
         $sut = $this->getSut($format);
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());

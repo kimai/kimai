@@ -15,15 +15,16 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\Loader\UserLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -33,7 +34,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<User>
+ * @extends EntityRepository<User>
  * @template-implements PasswordUpgraderInterface<User>
  * @template-implements UserProviderInterface<User>
  */
@@ -48,11 +49,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
     }
 
-    /**
-     * @param User $user
-     * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
     public function saveUser(User $user): void
     {
         $entityManager = $this->getEntityManager();
@@ -78,23 +74,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
     }
 
-    /**
-     * Used to fetch a user by its ID.
-     *
-     * @param int $id
-     * @return null|User
-     */
-    public function getUserById($id): ?User
+    public function getUserById(int $id): ?User
     {
-        /** @var User|null $user */
-        $user = $this->find($id);
+        $users = $this->findByIds([$id]);
 
-        if ($user !== null) {
-            $loader = new UserLoader($this->getEntityManager(), true);
-            $loader->loadResults([$user]);
+        if (\count($users) === 1) {
+            return $users[0];
         }
 
-        return $user;
+        return null;
     }
 
     /**
@@ -103,18 +91,24 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function findByIds(array $userIds): array
     {
+        $ids = array_filter(
+            array_unique($userIds),
+            function ($value) {
+                return $value > 0;
+            }
+        );
+
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->createQueryBuilder('u');
         $qb
             ->where($qb->expr()->in('u.id', ':id'))
-            ->setParameter('id', $userIds)
+            ->setParameter('id', $ids)
         ;
 
-        $users = $qb->getQuery()->getResult();
-
-        $loader = new UserLoader($qb->getEntityManager(), true);
-        $loader->loadResults($users);
-
-        return $users;
+        return $this->getUsers($this->prepareUserQuery($qb->getQuery()));
     }
 
     /**
@@ -123,18 +117,21 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        if (\count($criteria) === 1 && isset($criteria['username'])) {
+        if (\count($criteria) === 1 && isset($criteria['username']) && \is_string($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);
         }
 
         return parent::findOneBy($criteria, $orderBy);
     }
 
-    public function findByUsername($username): ?User
+    public function findByUsername(string $username): ?User
     {
         return parent::findOneBy(['username' => $username]);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
@@ -200,11 +197,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param User|null $user
      * @param Team[] $teams
      */
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         // make sure that all queries without a user see all user
         if (null === $user && empty($teams)) {
@@ -259,25 +254,16 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     }
 
     /**
-     * @param string $role
      * @return User[]
      * @internal
      */
     public function findUsersWithRole(string $role): array
     {
-        if ($role === User::ROLE_USER) {
-            return $this->findAll();
-        }
+        $query = new UserQuery();
+        $query->setRole($role);
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb
-            ->select('u')
-            ->from(User::class, 'u')
-            ->andWhere('u.roles LIKE :role');
-        $qb->setParameter('role', '%' . $role . '%');
-
-        return $qb->getQuery()->getResult();
+        return $this->getUsersForQuery($query);
     }
 
     private function getQueryBuilderForQuery(UserQuery $query): QueryBuilder
@@ -335,9 +321,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        if ($query->hasSearchTerm()) {
+        $searchTerm = $query->getSearchTerm();
+        if ($searchTerm !== null) {
             $searchAnd = $qb->expr()->andX();
-            $searchTerm = $query->getSearchTerm();
 
             foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
                 $qb->leftJoin('u.preferences', 'meta');
@@ -377,6 +363,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countUsersForQuery(UserQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -386,15 +375,18 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             ->select($qb->expr()->countDistinct('u.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
-    protected function getPaginatorForQuery(UserQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<User>
+     */
+    private function getPaginatorForQuery(UserQuery $userQuery): PaginatorInterface
     {
-        $counter = $this->countUsersForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
+        $counter = $this->countUsersForQuery($userQuery);
+        $query = $this->createUserQuery($userQuery);
 
-        return new LoaderPaginator(new UserLoader($qb->getEntityManager()), $qb, $counter);
+        return new LoaderQueryPaginator(new UserLoader($this->getEntityManager()), $query, $counter);
     }
 
     /**
@@ -403,27 +395,25 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function getUsersForQuery(UserQuery $query): array
     {
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        return $this->getHydratedResultsByQuery($qb);
+        return $this->getUsers($this->createUserQuery($query));
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param Query<User> $query
      * @return User[]
      */
-    protected function getHydratedResultsByQuery(QueryBuilder $qb): array
+    public function getUsers(Query $query): array
     {
-        /** @var array<User> $results */
-        $results = $qb->getQuery()->getResult();
+        /** @var array<User> $users */
+        $users = $query->execute();
 
-        $loader = new UserLoader($qb->getEntityManager());
-        $loader->loadResults($results);
+        $loader = new UserLoader($this->getEntityManager());
+        $loader->loadResults($users);
 
-        return $results;
+        return $users;
     }
 
-    public function deleteUser(User $delete, ?User $replace = null)
+    public function deleteUser(User $delete, ?User $replace = null): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -454,9 +444,35 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $em->remove($delete);
             $em->flush();
             $em->commit();
-        } catch (ORMException $ex) {
+        } catch (\Exception $ex) {
             $em->rollback();
             throw $ex;
         }
+    }
+
+    /**
+     * @return Query<User>
+     */
+    private function createUserQuery(UserQuery $userQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($userQuery)->getQuery();
+        $query = $this->prepareUserQuery($query);
+
+        return $query;
+    }
+
+    /**
+     * @param Query<User> $query
+     * @return Query<User>
+     */
+    public function prepareUserQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        // $query->setFetchMode(User::class, 'preferences', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(User::class, 'supervisor', ClassMetadata::FETCH_EAGER);
+        // $query->setFetchMode(User::class, 'memberships', ClassMetadata::FETCH_EAGER);
+
+        return $query;
     }
 }

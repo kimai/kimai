@@ -35,7 +35,7 @@ final class LdapUserProvider implements UserProviderInterface
                 'username' => $identifier,
                 'result' => 'not found',
             ]);
-            $ex = new UserNotFoundException(sprintf('User "%s" not found', $identifier));
+            $ex = new UserNotFoundException(\sprintf('User "%s" not found', $identifier));
             $ex->setUserIdentifier($identifier);
 
             throw $ex;
@@ -53,17 +53,17 @@ final class LdapUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!($user instanceof User)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
         if (!$user->isLdapUser()) {
-            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUserIdentifier()));
+            throw new UnsupportedUserException(\sprintf('Account "%s" is not a registered LDAP user.', $user->getUserIdentifier()));
         }
 
         try {
             $this->ldapManager->updateUser($user);
         } catch (LdapDriverException $ex) {
-            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUserIdentifier()));
+            throw new UnsupportedUserException(\sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUserIdentifier()));
         }
 
         return $user;

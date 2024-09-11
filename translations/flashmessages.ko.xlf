@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
-        <target state="translated">경고 </target>
+        <target state="translated">경고</target>
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>

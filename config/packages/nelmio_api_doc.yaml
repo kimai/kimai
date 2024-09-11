@@ -45,9 +45,9 @@ nelmio_api_doc:
             - ^/api(?!/doc)
     documentation:
         info:
-            title: Kimai - API Docs
+            title: Kimai - API
             description: |
-                JSON API for the Kimai time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
+                JSON API for the Kimai time-tracking software. Read our [API documentation](https://www.kimai.org/documentation/rest-api.html) and download the [Open API definition](doc.json) to import into your API client.
             version: '1.0'
         components:
             securitySchemes:

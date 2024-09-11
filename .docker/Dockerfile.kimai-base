@@ -167,8 +167,6 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 FROM ${BASE}-base AS base
 ARG TIMEZONE
 
-LABEL maintainer="tobias@neontribe.co.uk"
-
 ENV TIMEZONE=${TIMEZONE}
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone && \
     # make composer home dir

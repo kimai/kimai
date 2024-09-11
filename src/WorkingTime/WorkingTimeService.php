@@ -27,7 +27,14 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  */
 final class WorkingTimeService
 {
-    public function __construct(private TimesheetRepository $timesheetRepository, private WorkingTimeRepository $workingTimeRepository, private EventDispatcherInterface $eventDispatcher)
+    /** @var array<string, WorkingTime|null> */
+    private array $latestApprovals = [];
+
+    public function __construct(
+        private readonly TimesheetRepository $timesheetRepository,
+        private readonly WorkingTimeRepository $workingTimeRepository,
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
     {
     }
 
@@ -43,7 +50,36 @@ final class WorkingTimeService
 
     public function getLatestApproval(User $user): ?WorkingTime
     {
-        return $this->workingTimeRepository->getLatestApproval($user);
+        if ($user->getId() === null) {
+            return null;
+        }
+
+        $key = 'u_' . $user->getId();
+
+        if (!\array_key_exists($key, $this->latestApprovals)) {
+            $this->latestApprovals[$key] = $this->workingTimeRepository->getLatestApproval($user);
+        }
+
+        return $this->latestApprovals[$key];
+    }
+
+    public function isApproved(User $user, \DateTimeInterface $dateTime): bool
+    {
+        $latestApproval = $this->getLatestApproval($user);
+        if ($latestApproval === null) {
+            return false;
+        }
+
+        $latestApprovalDate = $latestApproval->getDate();
+
+        $begin = \DateTimeImmutable::createFromInterface($dateTime);
+        $begin = $begin->setTime(0, 0, 0);
+
+        if ($begin > $latestApprovalDate) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getYear(User $user, \DateTimeInterface $yearDate, \DateTimeInterface $until): Year
@@ -123,6 +159,11 @@ final class WorkingTimeService
         }
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
+
+        $key = 'u_' . $user->getId();
+        if (\array_key_exists($key, $this->latestApprovals)) {
+            unset($this->latestApprovals[$key]);
+        }
 
         $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
     }

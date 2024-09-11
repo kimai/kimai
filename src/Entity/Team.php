@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\TeamRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_teams')]
 #[ORM\UniqueConstraint(columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
@@ -310,6 +311,7 @@ class Team
     }
 
     /**
+     * @internal
      * @return Collection<Customer>
      */
     public function getCustomers(): iterable
@@ -343,6 +345,7 @@ class Team
     }
 
     /**
+     * @internal
      * @return Collection<Project>
      */
     public function getProjects(): iterable
@@ -376,6 +379,7 @@ class Team
     }
 
     /**
+     * @internal
      * @return Collection<Activity>
      */
     public function getActivities(): iterable

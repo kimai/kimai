@@ -58,9 +58,6 @@
         <source>update_multiple</source>
         <target>%action% %count% indlæg?</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Kodeord</target>
@@ -89,9 +86,6 @@
         <source>login_required</source>
         <target>Mangler tilladelse. Omdiriger til login?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Dashboard</target>
@@ -152,16 +146,10 @@
         <source>Doctor</source>
         <target>Fejlsøgning</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Ingen indlæg baseret på dine valgte filtre blev fundet.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Dato</target>
@@ -258,9 +246,6 @@
         <source>teamlead</source>
         <target>Holdleder</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Handlinger</target>
@@ -285,16 +270,10 @@
         <source>action.close</source>
         <target>Luk</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Vis menu</target>
@@ -311,9 +290,6 @@
         <source>progress</source>
         <target>Fremskridt</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Min timeseddel</target>
@@ -354,9 +330,6 @@
         <source>append</source>
         <target>Tilføj</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Bruger profil</target>
@@ -397,7 +370,6 @@
         <source>login_initial_view</source>
         <target>Startsvisning efter login</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Måned</target>
@@ -414,19 +386,10 @@
         <source>daily_stats</source>
         <target>Vis daglig statistik i timeseddel</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Bruger</target>
@@ -479,9 +442,6 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Navn</target>
@@ -510,16 +470,10 @@
         <source>user_role.title</source>
         <target>Bruger rolle</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Version</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -536,9 +490,6 @@
         <source>ROLE_USER</source>
         <target>Bruger</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Arbejdstimer i dag</target>
@@ -631,9 +582,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% brugt (%left% tilbage)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Faturaskabelon</target>
@@ -762,9 +710,6 @@
         <source>invoice_bank_account</source>
         <target>Bankkonto</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Eksporter</target>
@@ -797,9 +742,6 @@
         <source>export.date_copyright</source>
         <target>Oprettet %date% med %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Dine aktive tidsregistreringer</target>
@@ -812,9 +754,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Opret ny tidsregistrering</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Sidestørrelse</target>
@@ -917,11 +856,11 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">En email er blevet sendt. Den indeholder et link du skal klikke på for at nulstille din adgangskode. Note: Du kan kun anmode om en ny adgangskode indenfor %tokenLifetime% timer. Hvis du ikke får en email så tjek din spam folder eller prøv igen.</target>
+        <target state="translated">En email er blevet sendt, med et link til at nulstille din adgangskode. Note: Du kan kun anmode om ny adgangskode en gang hver %tokenLifetime% time. Hvis du ikke har modtaget en email, så tjek din spam folder eller prøv igen.</target>
       </trans-unit>
-      <trans-unit id="ypVQO7o" resname="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting" xml:space="preserve">
         <source>menu.reporting</source>
-        <target>Rapportere</target>
+        <target state="translated">Rapportering</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -943,9 +882,9 @@
         <source>error.directory_protected</source>
         <target>Mappe »%dir%« er skrive beskyttet.</target>
       </trans-unit>
-      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
-        <source>Allowed character: A-Z and _</source>
-        <target state="needs-translation">Tilladte karaktere: A-Z and _</target>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _" xml:space="preserve">
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">Tilladte karakterer: A-Z og _ (min. 5 store bogstaver)</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
@@ -978,6 +917,478 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>Fakturanummergenerator</target>
+      </trans-unit>
+      <trans-unit id="djL6LMC" resname="help.rate" xml:space="preserve">
+        <source>help.rate</source>
+        <target state="translated">Timepris</target>
+      </trans-unit>
+      <trans-unit id="LIOnolg" resname="placeholder.type_message" xml:space="preserve">
+        <source>placeholder.type_message</source>
+        <target state="translated">Skriv din besked…</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Søge filter</target>
+      </trans-unit>
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
+        <source>Display of entries in selection lists</source>
+        <target state="translated">Visning af adgange i valgte lister</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve">
+        <source>invoiceLabel</source>
+        <target state="translated">Faktura tekst</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
+        <source>skin</source>
+        <target state="translated">Design</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile" xml:space="preserve">
+        <source>modal.columns.profile</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
+        <source>help.invoiceText</source>
+        <target state="translated">Denne tekst bliver brugt på faktura dokumenter and kan bruges til at gøre opmærksom på salgs og leveringsbetingelser.</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve">
+        <source>profile.2fa</source>
+        <target state="translated">To-faktor (2FA)</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
+        <source>complete_month.help</source>
+        <target state="translated">Dette vil låse alle årets dage før den valgte dato. Brugeren kan ikke længere oprette eller redigere tider i den låste periode.</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve">
+        <source>deleted</source>
+        <target state="translated">Slettet</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve">
+        <source>created_by</source>
+        <target state="translated">Oprettet af</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">Oprettet hos</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
+        <source>invoiceText</source>
+        <target state="translated">Fakturerings information</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Denne tekst erstatter navnet på objektet, det tillader mere detaljerede labels på faktura linjer.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
+        <source>help.visible</source>
+        <target state="translated">Hvis indstillingen er slået fra bliver objektet ikke vist i dropdown lister og liste visninger.</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
+        <source>invisible</source>
+        <target state="translated">Usynlig</target>
+      </trans-unit>
+      <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve">
+        <source>layout</source>
+        <target state="translated">Display: layout</target>
+      </trans-unit>
+      <trans-unit id="5ofAsOs" resname="internalRate" xml:space="preserve">
+        <source>internalRate</source>
+        <target state="translated">Intern pris</target>
+      </trans-unit>
+      <trans-unit id="Cxv_0wG" resname="help.internalRate" xml:space="preserve">
+        <source>help.internalRate</source>
+        <target state="translated">Hvis ikke andet er beskrevet bruges normal prisen</target>
+      </trans-unit>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates" xml:space="preserve">
+        <source>recalculate_rates</source>
+        <target state="translated">Genberegn prisen</target>
+      </trans-unit>
+      <trans-unit id="aVwNQcX" resname="billable" xml:space="preserve">
+        <source>billable</source>
+        <target state="translated">Fakturerbar</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve">
+        <source>login.2fa_intro</source>
+        <target state="translated">Indtast venligst bekræftelseskoden for at afslutte login processen.</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve">
+        <source>evaluation</source>
+        <target state="translated">Evaluering</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+        <source>completed_month_pdf</source>
+        <target state="translated">Afsluttet måned PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Dette dokument fungerer som bevis for timerne der er arbejdet.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review" xml:space="preserve">
+        <source>Review</source>
+        <target state="translated">Gennemse</target>
+      </trans-unit>
+      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
+        <source>work_times_result</source>
+        <target state="translated">Timer arbejdet</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve">
+        <source>notifications.welcome</source>
+        <target state="translated">Tak for at du har tilmedt dig notifikationer!</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">Forventet antal timer</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">Der er ikke konfigureret et timemål for denne bruger i ansættelses kontraktens indstillinger.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">Timer arbejdet</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+        <source>confirmed_by_at</source>
+        <target state="translated">Bekræftet af %user% den %date%</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">Manuelle bookinger</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Manuelle bookinger kan ikke efterfølgende ændres eller slettes!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">Vargiheden kan være både positive (stigning i arbejdet timer) og negative (reducering af arbejdet timer).</target>
+      </trans-unit>
+      <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve">
+        <source>profile.registration_date</source>
+        <target state="translated">Registreret kl</target>
+      </trans-unit>
+      <trans-unit id="b43sCwO" resname="help.fixedRate" xml:space="preserve">
+        <source>help.fixedRate</source>
+        <target state="translated">Hver registrering får samme pris uanset varigheden</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label" xml:space="preserve">
+        <source>modal.columns.label</source>
+        <target state="translated">Tabel kolonner</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve">
+        <source>work_contract</source>
+        <target state="translated">Ansættelses kontrakt</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no" xml:space="preserve">
+        <source>Holidays per year</source>
+        <target state="translated">Helligdage pr. år</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Bekræft venligst koden der aktiverer to-faktor godkendelse for denne konto.</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
+        <source>Working times</source>
+        <target state="translated">Arbejdstimer</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">Konto arbejds tider</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
+        <source>help.billable</source>
+        <target state="translated">Hvis indstillingen er slået fra bliver alle tidsregistreringer optaget i fremtiden markeret som "ikke fakturerbar".</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Du kan omarrangere dine widgets med træk og slip. Tilføjelse af widgets gemmer afventeden ændringer.</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve">
+        <source>desktop</source>
+        <target state="translated">Skrivebord</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve">
+        <source>profile.2fa_intro</source>
+        <target state="translated">Du kan aktivere en ny device ved at skanne billedet i din applikation.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label" xml:space="preserve">
+        <source>login.2fa_label</source>
+        <target state="translated">Bekræftelseskode</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday" xml:space="preserve">
+        <source>holiday</source>
+        <target state="translated">Ferie</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
+        <source>parental</source>
+        <target state="translated">Barselsorlov</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes" xml:space="preserve">
+        <source>favorite_routes</source>
+        <target state="translated">Farvoritter</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications" xml:space="preserve">
+        <source>notifications</source>
+        <target state="translated">Notifikationer</target>
+      </trans-unit>
+      <trans-unit id="gRIArHS" resname="lastLogin" xml:space="preserve">
+        <source>lastLogin</source>
+        <target state="translated">Sidste login</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Lås måned</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve">
+        <source>status.progress</source>
+        <target state="translated">Under behandling</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
+        <source>security.unlock.title</source>
+        <target state="translated">Lås op for konto</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
+        <source>security.unlock.button</source>
+        <target state="translated">Lås op</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
+        <source>help.teams</source>
+        <target state="translated">Begrænser synlighed til de valgte teams.</target>
+      </trans-unit>
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear" xml:space="preserve">
+        <source>stats.workingTimeYear</source>
+        <target state="translated">Helt år %year%</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Mine arbejdstimer denne måned</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Mine arbejdstimer dette år</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Mine totale arbejdstimer</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Min indtægt i dag</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal" xml:space="preserve">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Mine totale indtægter</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open" xml:space="preserve">
+        <source>mark_as_open</source>
+        <target state="translated">Marker som åben</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
+        <source>invoice_date.help</source>
+        <target state="translated">Du kan ændre faktura datoen her</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status" xml:space="preserve">
+        <source>status</source>
+        <target state="translated">Status</target>
+      </trans-unit>
+      <trans-unit id="X_NRsed" resname="status.new" xml:space="preserve">
+        <source>status.new</source>
+        <target state="translated">Ny</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
+        <source>status.planned</source>
+        <target state="translated">Planlagt</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve">
+        <source>status.closed</source>
+        <target state="translated">Afsluttet</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
+        <source>status.requested</source>
+        <target state="translated">Anmodet</target>
+      </trans-unit>
+      <trans-unit id="7zptTeh" resname="update_browser_title" xml:space="preserve">
+        <source>update_browser_title</source>
+        <target state="translated">Opdater browser titel</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Aktivitet nummer</target>
+      </trans-unit>
+      <trans-unit id="qX_CKtU" resname="tax_rate" xml:space="preserve">
+        <source>tax_rate</source>
+        <target state="translated">Skatteprocent</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve">
+        <source>system_account</source>
+        <target state="translated">System Bruger</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
+        <source>plugin.installed</source>
+        <target state="translated">Installerede plugins</target>
+      </trans-unit>
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve">
+        <source>stats.workingTimeMonth</source>
+        <target state="translated">%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Mine arbejdstimer i dag</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month" xml:space="preserve">
+        <source>stats.percentUsed_month</source>
+        <target state="translated">%percent%% brugt denne måned</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Mine arbejdstimer denne uge</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Mine indtægter dette år</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve">
+        <source>stats.percentUsedLeft_month</source>
+        <target state="translated">%percent%% brugt (%left% er stadig tilgængeligt denne måned)</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
+        <source>status.approved</source>
+        <target state="translated">Godkendt</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Stop tidsregistrering</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending" xml:space="preserve">
+        <source>status.pending</source>
+        <target state="translated">Afventer</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows" xml:space="preserve">
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="needs-translation">Sprang over forhåndsvisning af %rows% …</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled" xml:space="preserve">
+        <source>status.canceled</source>
+        <target state="translated">Afvist</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve">
+        <source>system_account.help</source>
+        <target state="translated">Vil blive skjult i rapporter og dropdowns</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title" xml:space="preserve">
+        <source>invoice_form.title</source>
+        <target state="translated">Opret faktura</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities" xml:space="preserve">
+        <source>globalActivities</source>
+        <target state="translated">Tillad globale aktiviteter</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve">
+        <source>export.warn_result_amount</source>
+        <target state="translated">Din søgning fandt frem til %count% resultater. Hvis eksporten fejler, skal du formindske din søgning endnu mere.</target>
+      </trans-unit>
+      <trans-unit id="pX_3dNm" resname="stats.revenue" xml:space="preserve">
+        <source>stats.revenue</source>
+        <target state="translated">Indkomster</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
+        <source>stats.workingTimeFinancialYear</source>
+        <target state="translated">Finansielt år</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
+        <source>security.unlock.intro</source>
+        <target state="translated">Venligst indtast din adgangskode for fuld adgang</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied" xml:space="preserve">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">Du har afviste notifikationer. Venligst referer til din web-browsers dokumentation, for at finde ud af hvordan man slår dem til.</target>
+      </trans-unit>
+      <trans-unit id="Xyjr.V." resname="project_start" xml:space="preserve">
+        <source>project_start</source>
+        <target state="translated">Projekt start</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Projekt nummer</target>
+      </trans-unit>
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
+        <source>stats.workingTimeToday</source>
+        <target state="translated">I dag, %day%</target>
+      </trans-unit>
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
+        <source>stats.workingTimeWeek</source>
+        <target state="translated">Kalender uge %week%</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="no">
+        <source>Working hours</source>
+        <target state="translated">Arbejdstimer</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
+        <source>stats.amountFinancialYear</source>
+        <target state="translated">Indtægter dette finansielle år</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">Fakturaren er genereret med denne skabelon.</target>
+      </trans-unit>
+      <trans-unit id="TBWoUYf" resname="project_end" xml:space="preserve">
+        <source>project_end</source>
+        <target state="translated">Projekt slutning</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices" xml:space="preserve">
+        <source>all_invoices</source>
+        <target state="translated">Faktura historik</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve">
+        <source>stats.workingTimeWeekShort</source>
+        <target state="translated">Uge %week%</target>
+      </trans-unit>
+      <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve">
+        <source>export_decimal</source>
+        <target state="needs-translation">Brug decimal længde i eksport</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve">
+        <source>Apps</source>
+        <target state="translated">Applikationer</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
+        <source>stats.durationFinancialYear</source>
+        <target state="translated">Arbejdstimer dette finansielle år</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Mine indtægter denne måned</target>
+      </trans-unit>
+      <trans-unit id="PHJwR4w" resname="status.paid" xml:space="preserve">
+        <source>status.paid</source>
+        <target state="translated">Betalt</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Min indtægt denne uge</target>
+      </trans-unit>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
+        <source>stats.activeUsersFinancialYear</source>
+        <target state="translated">Aktive brugere dette finansielle år</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type" xml:space="preserve">
+        <source>type</source>
+        <target state="translated">Type</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Faktura for denne klient er som standard, genereret med denne skabelon. Den kan blive ændret under faktura generation hvis nødvendigt.</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date" xml:space="preserve">
+        <source>invoice.payment_date</source>
+        <target state="translated">Betalings dato</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date" xml:space="preserve">
+        <source>invoice_date</source>
+        <target state="translated">Faktura dato</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help" xml:space="preserve">
+        <source>active.help</source>
+        <target state="translated">Deaktiverede brugere kan ikke længere logge ind, og er skjult i raporter og selektions bokse</target>
       </trans-unit>
     </body>
   </file>

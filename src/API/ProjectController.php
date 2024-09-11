@@ -74,6 +74,7 @@ final class ProjectController extends BaseApiController
         $user = $this->getUser();
 
         $query = new ProjectQuery();
+        $query->loadTeams();
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');

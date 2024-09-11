@@ -34,6 +34,14 @@
         <source>daterangepicker.thisYear</source>
         <target>Dette år</target>
       </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Dette år - indtil i dag</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Hele perioden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

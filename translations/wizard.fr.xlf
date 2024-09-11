@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">Les paramètres les plus importants sont maintenant terminés. Il y en a beaucoup d'autres que vous pourrez personnaliser plus tard dans votre profil utilisateur.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Votre mot de passe</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Veuillez saisir votre nouveau mot de passe, qui sera utilisé pour vous connecter à partir de maintenant.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

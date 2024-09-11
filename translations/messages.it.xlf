@@ -74,9 +74,6 @@
         <source>rates.title</source>
         <target state="final">Prezzi</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Password</target>
@@ -105,9 +102,6 @@
         <source>login_required</source>
         <target state="final">Autorizzazione mancante. Reindirizzare all'accesso?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage" approved="yes">
         <source>menu.homepage</source>
         <target state="final">Pannello di controllo</target>
@@ -172,9 +166,6 @@
         <source>Doctor</source>
         <target state="final">Medico</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found" approved="yes">
         <source>error.no_entries_found</source>
         <target state="final">Nessuna voce trovata in base ai filtri selezionati.</target>
@@ -183,9 +174,6 @@
         <source>error.no_comments_found</source>
         <target state="final">Non sono stati ancora pubblicati commenti.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date" approved="yes">
         <source>date</source>
         <target state="final">Data</target>
@@ -310,9 +298,6 @@
         <source>billable</source>
         <target state="final">Fatturabile</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions" approved="yes">
         <source>actions</source>
         <target state="final">Azioni</target>
@@ -337,16 +322,10 @@
         <source>action.close</source>
         <target state="final">Chiudi</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title" approved="yes">
         <source>dashboard.title</source>
         <target state="final">Pannello di controllo</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown" approved="yes">
         <source>toggle_dropdown</source>
         <target state="final">Mostra menu</target>
@@ -363,9 +342,6 @@
         <source>progress</source>
         <target state="final">Progresso</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title" approved="yes">
         <source>timesheet.title</source>
         <target state="final">Il mio tempo</target>
@@ -410,9 +386,6 @@
         <source>append</source>
         <target state="final">Appendi</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title" approved="yes">
         <source>profile.title</source>
         <target state="final">Profilo utente</target>
@@ -461,7 +434,6 @@
         <source>lastLogin</source>
         <target state="final">Ultimo accesso</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month" approved="yes">
         <source>month</source>
         <target state="final">Mese</target>
@@ -482,9 +454,6 @@
         <source>export_decimal</source>
         <target state="final">Usa durata decimale nell'esportazione</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar" approved="yes">
         <source>calendar</source>
         <target state="final">Calendario</target>
@@ -853,9 +822,6 @@
         <source>status.paid</source>
         <target state="final">Pagata</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export" approved="yes">
         <source>export</source>
         <target state="final">Esporta</target>
@@ -888,9 +854,6 @@
         <source>export.date_copyright</source>
         <target state="final">Creato il %date% con %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries" approved="yes">
         <source>active.entries</source>
         <target state="final">Misurazioni del tuo tempo attivo</target>
@@ -903,9 +866,6 @@
         <source>timesheet.start</source>
         <target state="final">Avvia il monitoraggio del tempo</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize" approved="yes">
         <source>pageSize</source>
         <target state="final">Dimensioni pagina</target>
@@ -1785,6 +1745,10 @@
       <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve" approved="yes">
         <source>Activate</source>
         <target state="final">Attiva</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve" approved="yes">
+        <source>booking_allow_only_work_days</source>
+        <target state="final">Consenti l'inserimento delle ore solo per i giorni per i quali le ore previste sono definite nel contratto di lavoro</target>
       </trans-unit>
     </body>
   </file>

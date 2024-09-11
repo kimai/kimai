@@ -46,9 +46,6 @@
         <source>cancel</source>
         <target>キャンセル</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">パスワード</target>
@@ -73,9 +70,6 @@
         <source>api_token_repeat</source>
         <target>API パスワード（再入力）</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>ダッシュボード</target>
@@ -128,16 +122,10 @@
         <source>tags</source>
         <target>タグ</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>指定されたフィルタ条件に該当する明細は見付かりませんでした。</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>日付</target>
@@ -226,9 +214,6 @@
         <source>email</source>
         <target>電子メール</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>アクション</target>
@@ -249,23 +234,14 @@
         <source>action.close</source>
         <target>閉じる</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>ダッシュボード</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>メニューを表示する</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>タイムシート</target>
@@ -298,9 +274,6 @@
         <source>color</source>
         <target>色</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>プロフィール</target>
@@ -341,7 +314,6 @@
         <source>login_initial_view</source>
         <target>ログイン後に表示するページ</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>月</target>
@@ -358,19 +330,10 @@
         <source>daily_stats</source>
         <target>タイムシートに日次の統計情報を表示する</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>カレンダー</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>口座</target>
@@ -419,9 +382,6 @@
         <source>currency</source>
         <target>通貨</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>名前</target>
@@ -442,16 +402,10 @@
         <source>roles</source>
         <target>ロール</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>バージョン</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>システム管理者</target>
@@ -468,9 +422,6 @@
         <source>ROLE_USER</source>
         <target>ユーザー</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>今日の活動時間</target>
@@ -555,9 +506,6 @@
         <source>stats.customerTotal</source>
         <target>得意先数の合計</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>請求書のテンプレート</target>
@@ -662,9 +610,6 @@
         <source>invoice_bank_account</source>
         <target>銀行口座</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>エクスポート</target>
@@ -693,9 +638,6 @@
         <source>export.date_copyright</source>
         <target>%kimai% で %date% に作成されました</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>進行中の時間記録のプロセス</target>
@@ -708,9 +650,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">新たに時間の記録を始める</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>1 ページあたりの表示件数</target>
@@ -914,6 +853,38 @@
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
         <target>請求書番号 ジェネレーター</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">検索フィルター</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
+        <source>security.unlock.title</source>
+        <target state="translated">アカウントのロックを解除</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries" xml:space="preserve">
+        <source>error.too_many_entries</source>
+        <target state="translated">リクエストを処理できませんでした。見つかった結果が多すぎます。</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
+        <source>invoiceText</source>
+        <target state="translated">請求先情報</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve">
+        <source>invoiceLabel</source>
+        <target state="translated">請求書のテキスト</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
+        <source>help.visible</source>
+        <target state="translated">設定がオフの場合、オブジェクトはドロップダウンボックスやリストビューに表示されません。</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
+        <source>invisible</source>
+        <target state="translated">非表示</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
+        <source>skin</source>
+        <target state="translated">デザイン</target>
       </trans-unit>
     </body>
   </file>

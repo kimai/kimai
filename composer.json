@@ -42,7 +42,7 @@
         "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^4.0",
         "pagerfanta/pagerfanta": "^3.0",
-        "phpoffice/phpspreadsheet": "^1.16",
+        "phpoffice/phpspreadsheet": "^2.0",
         "phpoffice/phpword": "^1.0",
         "psr/container": "^2.0",
         "psr/log": "^3.0",
@@ -171,7 +171,6 @@
             "@tests-integration"
         ],
         "linting": [
-            "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",

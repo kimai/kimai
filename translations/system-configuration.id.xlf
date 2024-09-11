@@ -10,6 +10,10 @@
         <source>theme</source>
         <target state="translated">Tema</target>
       </trans-unit>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
+        <source>theme.markdown_content</source>
+        <target state="translated">Izinkan format markdown dalam deskripsi dan komentar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

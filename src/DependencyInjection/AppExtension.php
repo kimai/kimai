@@ -77,7 +77,7 @@ final class AppExtension extends Extension
             }
             foreach ($bundleConfig as $key => $value) {
                 if (\array_key_exists($key, $config)) {
-                    throw new \Exception(sprintf('Invalid bundle configuration "%s" found, skipping', $key));
+                    throw new \Exception(\sprintf('Invalid bundle configuration "%s" found, skipping', $key));
                 }
                 $config[$key] = $value;
             }
@@ -107,7 +107,9 @@ final class AppExtension extends Extension
 
     private function setLanguageFormats(ContainerBuilder $container): void
     {
-        $locales = explode('|', $container->getParameter('app_locales'));
+        $locales = $container->getParameter('kimai_locales');
+        // @deprecated since 2.21.0
+        $container->setParameter('app_locales', implode('|', $locales));
 
         $directory = $container->getParameter('kernel.project_dir');
         $settings = include $directory . DIRECTORY_SEPARATOR . 'config/locales.php';

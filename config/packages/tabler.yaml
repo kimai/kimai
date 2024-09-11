@@ -29,7 +29,6 @@ tabler:
     routes:
         tabler_welcome: dashboard
         tabler_login: login
-        tabler_logout: logout
         tabler_login_check: security_check
         tabler_registration: registration_register
         tabler_registration_register: registration_register

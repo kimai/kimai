@@ -29,7 +29,10 @@ final class DataTable implements \Countable, \IteratorAggregate
     private bool $sticky = true;
     private ?string $paginationRoute = null;
 
-    public function __construct(private string $tableName, private BaseQuery $query)
+    public function __construct(
+        private readonly string $tableName,
+        private readonly BaseQuery $query
+    )
     {
     }
 

@@ -6,6 +6,26 @@
         <source>invoice_calculator</source>
         <target state="translated">Pengelompokan baris faktur</target>
       </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>project</source>
+        <target state="translated">Proyek</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+        <source>date</source>
+        <target state="translated">Tanggal</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>user</source>
+        <target state="needs-translation">Pengguna</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+        <source>activity</source>
+        <target state="translated">Aktivitas</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Pilih berdasarkan bidang mana item faktur harus dikelompokkan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

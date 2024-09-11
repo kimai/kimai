@@ -56,7 +56,7 @@ jobs:
                 run: composer install
 
             -   name: Validate Composer
-                run: composer validate --strict
+                run: composer validate --strict --no-check-all
 
             -   name: Warmup cache
                 run: APP_ENV=dev bin/console kimai:reload -n

@@ -64,7 +64,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions(): void
     {
-        $functions = ['class_name', 'iso_day_by_name', 'random_color'];
+        $functions = ['report_date', 'class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         $this->assertCount(\count($functions), $twigFunctions);

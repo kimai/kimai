@@ -74,9 +74,6 @@
         <source>rates.title</source>
         <target>Lệ phí</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>Mật khẩu</target>
@@ -105,9 +102,6 @@
         <source>login_required</source>
         <target>Thiếu sự cho phép. Chuyển hướng để đăng nhập?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Bảng điều khiển</target>
@@ -168,9 +162,6 @@
         <source>Doctor</source>
         <target>Bác sĩ</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Không có mục nào được tìm thấy dựa trên các bộ lọc đã chọn của bạn.</target>
@@ -179,9 +170,6 @@
         <source>error.no_comments_found</source>
         <target>Chưa có bình luận nào được đăng.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Ngày</target>
@@ -294,9 +282,6 @@
         <source>teamlead</source>
         <target>Đồng đội</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Hành động</target>
@@ -321,16 +306,10 @@
         <source>action.close</source>
         <target>Đóng</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Bảng điều khiển</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Hiển thị menu</target>
@@ -347,9 +326,6 @@
         <source>progress</source>
         <target>Phát triển</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Bảng chấm công</target>
@@ -386,9 +362,6 @@
         <source>color</source>
         <target>Màu sắc</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Thông tin người dùng</target>
@@ -433,7 +406,6 @@
         <source>lastLogin</source>
         <target>Lần đăng nhập cuôi</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Tháng</target>
@@ -454,16 +426,10 @@
         <source>export_decimal</source>
         <target>Sử dụng thời lượng thập phân khi xuất</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Lịch</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Dự án bắt đầu</target>
@@ -472,9 +438,6 @@
         <source>project_end</source>
         <target>Kết thúc dự án</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Tài khoản</target>
@@ -527,9 +490,6 @@
         <source>currency</source>
         <target>Tiền tệ</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Tên</target>
@@ -562,16 +522,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Cho phép ký tự: A-Z và _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Phiên bản</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Quản trị hệ thống</target>
@@ -588,9 +542,6 @@
         <source>ROLE_USER</source>
         <target>Người dùng</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Giờ làm việc hôm nay</target>
@@ -683,9 +634,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% đã sử dụng (%left% vẫn đang mở)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">Mẫu hóa đơn</target>
@@ -830,9 +778,6 @@
         <source>status.paid</source>
         <target>Đã thanh toán</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Xuất</target>
@@ -865,9 +810,6 @@
         <source>export.date_copyright</source>
         <target>Tạo %date% với %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Đo thời gian hoạt động của bạn</target>
@@ -880,9 +822,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Tạo bản ghi thời gian mới</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Kích thước trang</target>

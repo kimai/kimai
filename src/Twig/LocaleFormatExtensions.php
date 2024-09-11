@@ -173,7 +173,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         }
         $months = [];
         for ($i = 1; $i < 13; $i++) {
-            $months[] = $this->getFormatter()->monthName(new DateTime(sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
+            $months[] = $this->getFormatter()->monthName(new DateTime(\sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
         }
 
         return $months;
@@ -189,18 +189,36 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->getFormatter()->dayName($dateTime, $short);
     }
 
-    public function getJavascriptConfiguration(User $user): array
+    public function getJavascriptConfiguration(?User $user = null): array
     {
+        $language = User::DEFAULT_LANGUAGE;
+        $browserTitle = false;
+        $id = null;
+        $name = 'anonymous';
+        $admin = false;
+        $superAdmin = false;
+        $timezone = date_default_timezone_get();
+
+        if ($user !== null) {
+            $browserTitle = (bool) $user->getPreferenceValue('update_browser_title');
+            $language = $user->getLanguage();
+            $id = $user->getId();
+            $name = $user->getDisplayName();
+            $admin = $user->isAdmin();
+            $superAdmin = $user->isSuperAdmin();
+            $timezone = $user->getTimezone();
+        }
+
         return [
             'locale' => $this->locale,
-            'language' => $user->getLanguage(),
+            'language' => $language,
             'formatDuration' => $this->localeService->getDurationFormat($this->locale),
             'formatDate' => $this->localeService->getDateFormat($this->locale),
             'defaultColor' => Constants::DEFAULT_COLOR,
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
-            'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),
-            'timezone' => $user->getTimezone(),
-            'user' => ['id' => $user->getId(), 'name' => $user->getDisplayName(), 'admin' => $user->isAdmin(), 'superAdmin' => $user->isSuperAdmin()],
+            'updateBrowserTitle' => $browserTitle,
+            'timezone' => $timezone,
+            'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin],
         ];
     }
 

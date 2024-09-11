@@ -32,13 +32,12 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
 
         $allowCreate = $this->isGranted('create_invoice');
         $allowView = $this->isGranted('view_invoice');
-        $allowCustomer = $this->isGranted('access', $invoice->getCustomer());
 
-        if ($allowCustomer && $allowCreate) {
+        if ($allowCreate) {
             $event->addEdit($this->path('admin_invoice_edit', ['id' => $invoice->getId()]));
         }
 
-        if ($allowCustomer && $allowView) {
+        if ($allowView) {
             $event->addAction('download', ['url' => $this->path('admin_invoice_download', ['id' => $invoice->getId()]), 'target' => '_blank']);
         }
 
@@ -46,7 +45,7 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($allowCustomer && $allowCreate) {
+        if ($allowCreate) {
             if (!$invoice->isPending()) {
                 $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
             } else {

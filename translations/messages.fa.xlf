@@ -82,9 +82,6 @@
         <source>sum.total</source>
         <target>جمع</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target state="translated">رمزعبور</target>
@@ -113,9 +110,6 @@
         <source>login_required</source>
         <target state="translated">مجوز از دست رفته است. تغییر مسیر برای ورود به سیستم؟</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>داشبرد</target>

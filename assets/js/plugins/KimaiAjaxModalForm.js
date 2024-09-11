@@ -17,9 +17,10 @@ import { Modal } from 'bootstrap';
 
 export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
-    constructor(selector) {
+    constructor(selector, stopSelector) {
         super();
         this._selector = selector;
+        this._stopSelector = stopSelector;
     }
 
     getId()
@@ -63,7 +64,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
         this.addClickHandler(this._selector, (href) => {
             this.openUrlInModal(href);
-        });
+        }, this._stopSelector);
     }
 
     _getModal()

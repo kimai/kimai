@@ -482,7 +482,7 @@ final class SystemConfiguration
     }
 
     /**
-     * @internal will be made private soon after 2.18.0 - do ot access this method directly, but through getThemeColors()
+     * @internal will be made private soon after 2.18.0 - do not access this method directly, but through getThemeColors()
      */
     public function getThemeColorChoices(): string
     {

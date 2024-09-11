@@ -35,13 +35,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ExportCreateCommand extends Command
 {
     public function __construct(
-        private ServiceExport $serviceExport,
-        private CustomerRepository $customerRepository,
-        private ProjectRepository $projectRepository,
-        private TeamRepository $teamRepository,
-        private UserRepository $userRepository,
-        private TranslatorInterface $translator,
-        private MailerInterface $mailer
+        private readonly ServiceExport $serviceExport,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProjectRepository $projectRepository,
+        private readonly TeamRepository $teamRepository,
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private readonly MailerInterface $mailer
     ) {
         parent::__construct();
     }
@@ -106,25 +106,25 @@ final class ExportCreateCommand extends Command
         $timezone = new \DateTimeZone($timezone);
         $dateFactory = new DateTimeFactory($timezone);
 
-        $customerIDs = $input->getOption('customer');
+        $customerIDs = $this->optionToIntArray($input, 'customer');
         $customers = [];
         if (\count($customerIDs) > 0) {
             $customers = $this->customerRepository->findByIds($customerIDs);
         }
 
-        $projectIDs = $input->getOption('project');
+        $projectIDs = $this->optionToIntArray($input, 'project');
         $projects = [];
         if (\count($projectIDs) > 0) {
             $projects = $this->projectRepository->findByIds($projectIDs);
         }
 
-        $teamIDs = $input->getOption('team');
+        $teamIDs = $this->optionToIntArray($input, 'team');
         $teams = [];
         if (\count($teamIDs) > 0) {
             $teams = $this->teamRepository->findByIds($teamIDs);
         }
 
-        $userIDs = $input->getOption('user');
+        $userIDs = $this->optionToIntArray($input, 'user');
         $users = [];
         if (\count($userIDs) > 0) {
             $users = $this->userRepository->findByIds($userIDs);
@@ -197,17 +197,19 @@ final class ExportCreateCommand extends Command
         $subject = 'Export data available';
         $body = 'Your exported data is available, please find it attached to this email.';
 
+        /** @var array<string> $emails */
         $emails = [];
+        /** @var array<string> $tmp */
         $tmp = $input->getOption('email');
         if (\count($tmp) > 0) {
             foreach ($tmp as $email) {
                 $result = filter_var($email, FILTER_VALIDATE_EMAIL);
                 if ($result === false) {
-                    $io->error('Invalid "email" given: ' . $email);
+                    $io->error('Invalid "email" given');
 
                     return Command::FAILURE;
                 }
-                $emails[] = $email;
+                $emails[] = (string) $email;
             }
         }
 
@@ -227,7 +229,7 @@ final class ExportCreateCommand extends Command
                 $user = $this->userRepository->loadUserByIdentifier($username);
             } catch(\Exception) {
                 $io->error(
-                    sprintf('The given username "%s" could not be resolved', $username)
+                    \sprintf('The given username "%s" could not be resolved', $username)
                 );
 
                 return Command::FAILURE;
@@ -283,6 +285,25 @@ final class ExportCreateCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @return array<int>
+     */
+    private function optionToIntArray(InputInterface $input, string $name): array
+    {
+        $results = [];
+
+        $options = $input->getOption($name);
+        if (\is_array($options) && \count($options) > 0) {
+            foreach ($options as $option) {
+                if (is_numeric($option)) {
+                    $results[] = (int) $option;
+                }
+            }
+        }
+
+        return $results;
     }
 
     private function savePreview(Response $response, string $directory): string

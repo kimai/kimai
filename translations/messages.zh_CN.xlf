@@ -58,9 +58,6 @@
         <source>update_multiple</source>
         <target>%action% %count% 条目?</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>密码</target>
@@ -89,9 +86,6 @@
         <source>login_required</source>
         <target>无许可。重新登录？</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>控制主页</target>
@@ -152,16 +146,10 @@
         <source>Doctor</source>
         <target>医生</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>基于您所选的筛选项未找到相应条目。</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>日期</target>
@@ -258,9 +246,6 @@
         <source>teamlead</source>
         <target state="translated">团队负责人</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>行动</target>
@@ -285,16 +270,10 @@
         <source>action.close</source>
         <target>关闭</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>控制主页</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>展示菜单</target>
@@ -311,9 +290,6 @@
         <source>progress</source>
         <target>进展</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>我的时间</target>
@@ -346,9 +322,6 @@
         <source>color</source>
         <target>颜色</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>用户资料</target>
@@ -389,7 +362,6 @@
         <source>login_initial_view</source>
         <target>登录后初始查看</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>月</target>
@@ -406,19 +378,10 @@
         <source>daily_stats</source>
         <target>在时间表中展示每日状态</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>日历</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">账户</target>
@@ -471,9 +434,6 @@
         <source>currency</source>
         <target>货币</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>名字</target>
@@ -506,16 +466,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>可用字母: A-Z 以及 _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>版本</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>系统-管理</target>
@@ -532,9 +486,6 @@
         <source>ROLE_USER</source>
         <target>用户</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>今日工作时长</target>
@@ -627,9 +578,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% 已用 (%left% 仍然可用)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>发票模板</target>
@@ -758,9 +706,6 @@
         <source>invoice_bank_account</source>
         <target state="translated">银行账户</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>输出</target>
@@ -793,9 +738,6 @@
         <source>export.date_copyright</source>
         <target>创建了 %date% 与 %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>您的活跃时间测量</target>
@@ -808,9 +750,6 @@
         <source>timesheet.start</source>
         <target state="translated">开始时间跟踪</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>页面大小</target>

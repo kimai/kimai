@@ -150,6 +150,130 @@
         <source>theme.avatar_url</source>
         <target>Tillad brugen af URL'er for avatar billeder</target>
       </trans-unit>
+      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve">
+        <source>company.financial_year</source>
+        <target state="translated">Finans år</target>
+      </trans-unit>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve">
+        <source>timesheet.rules.allow_overlapping_records</source>
+        <target state="translated">Tillad overlappende tidsregistreringer</target>
+      </trans-unit>
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_timezone</source>
+        <target state="translated">Tidszone (hvis feltet er tomt bliver brugerens tidszone brugt)</target>
+      </trans-unit>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows" xml:space="preserve">
+        <source>quick_entry.minimum_rows</source>
+        <target state="translated">Minimum antal rækker</target>
+      </trans-unit>
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget" xml:space="preserve">
+        <source>timesheet.rules.allow_overbooking_budget</source>
+        <target state="translated">Tillad overbookning af gemte budgetter</target>
+      </trans-unit>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_start</source>
+        <target state="translated">Lukke periodens start (PHP relativ dato i forhold til nu)</target>
+      </trans-unit>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_end</source>
+        <target state="translated">Lukke periodens slut (PHP relativ dato i forhold til nu)</target>
+      </trans-unit>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve">
+        <source>timesheet.rules.lockdown_grace_period</source>
+        <target state="translated">Henstandsperiode periode slut (PHP relativ dato til lukke perioden slutning)</target>
+      </trans-unit>
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities" xml:space="preserve">
+        <source>quick_entry.recent_activities</source>
+        <target state="translated">Antal indtastninger flyttet fra tidligere uger</target>
+      </trans-unit>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks" xml:space="preserve">
+        <source>quick_entry.recent_activity_weeks</source>
+        <target state="translated">Overflytning af indtastninger fra de sidste X uger (tom eller 0 over al tid)</target>
+      </trans-unit>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration" xml:space="preserve">
+        <source>timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Tillad tidsregistreringer med tom varighed</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period" xml:space="preserve">
+        <source>lockdown_period</source>
+        <target state="translated">Lukke periode</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off" xml:space="preserve">
+        <source>off</source>
+        <target state="translated">Slukket</target>
+      </trans-unit>
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset" xml:space="preserve">
+        <source>user_auth_password_reset</source>
+        <target state="translated">Glemt password</target>
+      </trans-unit>
+      <trans-unit id="BGHQ8YO" resname="user_auth_login" xml:space="preserve">
+        <source>user_auth_login</source>
+        <target state="translated">Login formular</target>
+      </trans-unit>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment" xml:space="preserve">
+        <source>timesheet.duration_increment</source>
+        <target state="translated">Minut valg for tidsperioden</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve">
+        <source>first_weekday</source>
+        <target state="translated">Første dag i ugen</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount" xml:space="preserve">
+        <source>calendar.dragdrop_amount</source>
+        <target state="translated">Mængde af indgange til træk og slip (0=deaktiveret)</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Komma separeret liste af HTML farve-koder. Farve navne kan indstilles ved at prefixe farvekoden med navnet og en "|" som adskiller. Eksempel White|#ffffff,Black|#000000.</target>
+      </trans-unit>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment" xml:space="preserve">
+        <source>timesheet.time_increment</source>
+        <target state="translated">Minut valg for fra og til</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication" xml:space="preserve">
+        <source>authentication</source>
+        <target state="translated">Godkendelse (authentication)</target>
+      </trans-unit>
+      <trans-unit id="EFY6GmX" resname="theme.color_choices" xml:space="preserve">
+        <source>theme.color_choices</source>
+        <target state="translated">Tilladte farver</target>
+      </trans-unit>
+      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve">
+        <source>user_auth_registration</source>
+        <target state="translated">Bruger registrering</target>
+      </trans-unit>
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl" xml:space="preserve">
+        <source>user_auth_password_reset_retry_ttl</source>
+        <target state="translated">Glemt password - sekunder før en bruger kan bede om den næste e-mail</target>
+      </trans-unit>
+      <trans-unit id="ihORk9W" resname="ldap_activate" xml:space="preserve">
+        <source>ldap_activate</source>
+        <target state="translated">LDAP login</target>
+      </trans-unit>
+      <trans-unit id="0noFWbL" resname="saml_activate" xml:space="preserve">
+        <source>saml_activate</source>
+        <target state="translated">SAML login</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Kopier data når det bliver tilføjet via træk og slip</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve">
+        <source>calendar.title_pattern</source>
+        <target state="translated">Visning af titlet på kalender indtastninger</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Tillad oprettelse af aktiviteter in tidsregistrerings formularen</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Brug teamet fra den bruger der er logget ind når der oprettes nye rækker</target>
+      </trans-unit>
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl" xml:space="preserve">
+        <source>user_auth_password_reset_token_ttl</source>
+        <target state="translated">Glemt password - sekunder før et reset link udløber</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -200,7 +200,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[ORM\JoinTable(name: 'kimai2_timesheet_tags')]
     #[ORM\JoinColumn(name: 'timesheet_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'timesheets', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
     #[Assert\Valid]
     private Collection $tags;
     /**
@@ -491,7 +491,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
 
         if (!\in_array($category, $allowed)) {
-            throw new \InvalidArgumentException(sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
+            throw new \InvalidArgumentException(\sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
         }
 
         $this->category = $category;

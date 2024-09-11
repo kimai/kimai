@@ -10,7 +10,8 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
-use App\Repository\Paginator\QueryBuilderPaginator;
+use App\Entity\Timesheet;
+use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
 use App\Utils\Pagination;
@@ -115,9 +116,10 @@ class TagRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->count('tag.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $paginator = new QueryBuilderPaginator($qb1, $counter);
+        $paginator = new QueryPaginator($qb1->getQuery(), $counter);
 
         $pager = new Pagination($paginator);
         $pager->setMaxPerPage($query->getPageSize());
@@ -130,7 +132,11 @@ class TagRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('tag');
 
-        $qb->select('tag.id, tag.name, tag.color, tag.visible, SIZE(tag.timesheets) as amount');
+        $qb1 = $this->getEntityManager()->createQueryBuilder();
+        $qb1->from(Timesheet::class, 't')->select('COUNT(tags)')->innerJoin('t.tags', 'tags')->where('tags.id = tag.id');
+
+        $qb->select('tag.id, tag.name, tag.color, tag.visible');
+        $qb->addSelect('(' . $qb1->getDQL() . ') as amount');
 
         $orderBy = $query->getOrderBy();
         $orderBy = match ($orderBy) {
@@ -148,8 +154,8 @@ class TagRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if ($query->hasSearchTerm()) {
-            $searchTerm = $query->getSearchTerm();
+        $searchTerm = $query->getSearchTerm();
+        if ($searchTerm !== null) {
             $searchAnd = $qb->expr()->andX();
 
             if ($searchTerm->hasSearchTerm()) {

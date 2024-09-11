@@ -41,12 +41,14 @@ final class PermissionController extends AbstractController
 {
     public const TOKEN_NAME = 'user_role_permissions';
 
-    public function __construct(private RolePermissionManager $manager, private RoleRepository $roleRepository)
+    public function __construct(
+        private readonly RolePermissionManager $manager,
+        private readonly RoleRepository $roleRepository
+    )
     {
     }
 
     #[Route(path: '', name: 'admin_user_permissions', methods: ['GET', 'POST'])]
-    #[IsGranted('role_permissions')]
     public function permissions(EventDispatcherInterface $dispatcher, CsrfTokenManagerInterface $csrfTokenManager, RoleService $roleService, UserRepository $userRepository): Response
     {
         $all = $this->roleRepository->findAll();
@@ -167,7 +169,6 @@ final class PermissionController extends AbstractController
     }
 
     #[Route(path: '/roles/create', name: 'admin_user_roles', methods: ['GET', 'POST'])]
-    #[IsGranted('role_permissions')]
     public function createRole(Request $request): Response
     {
         $role = new Role();
@@ -200,8 +201,7 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/roles/{id}/delete/{csrfToken}', name: 'admin_user_role_delete', methods: ['GET', 'POST'])]
-    #[IsGranted('role_permissions')]
+    #[Route(path: '/roles/{role}/delete/{csrfToken}', name: 'admin_user_role_delete', methods: ['GET', 'POST'])]
     public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
@@ -230,8 +230,7 @@ final class PermissionController extends AbstractController
         return $this->redirectToRoute('admin_user_permissions');
     }
 
-    #[Route(path: '/roles/{id}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
-    #[IsGranted('role_permissions')]
+    #[Route(path: '/roles/{role}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
     public function savePermission(Role $role, string $name, bool $value, string $csrfToken, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
@@ -243,7 +242,7 @@ final class PermissionController extends AbstractController
         }
 
         if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \array_key_exists($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
-            throw new BadRequestHttpException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
+            throw new BadRequestHttpException(\sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
         }
 
         try {

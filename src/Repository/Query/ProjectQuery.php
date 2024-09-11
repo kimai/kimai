@@ -9,11 +9,10 @@
 
 namespace App\Repository\Query;
 
-use App\Entity\Customer;
-
 class ProjectQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
+    use CustomerTrait;
 
     public const PROJECT_ORDER_ALLOWED = [
         'name',
@@ -29,13 +28,17 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         'visible'
     ];
 
-    /**
-     * @var array<Customer>
-     */
-    private array $customers = [];
     private ?\DateTime $projectStart = null;
     private ?\DateTime $projectEnd = null;
     private ?bool $globalActivities = null;
+    /**
+     * @var array<int>
+     */
+    private array $projectIds = [];
+    /**
+     * @var array<ProjectQueryHydrate>
+     */
+    private array $hydrate = [];
 
     public function __construct()
     {
@@ -46,50 +49,27 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
             'projectEnd' => null,
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
             'globalActivities' => null,
+            'projectIds' => [],
         ]);
     }
 
-    public function addCustomer(Customer $customer): self
+    protected function copyFrom(BaseQuery $query): void
     {
-        $this->customers[] = $customer;
+        parent::copyFrom($query);
 
-        return $this;
-    }
+        if (method_exists($query, 'getCustomers')) {
+            $this->setCustomers($query->getCustomers());
+        }
 
-    /**
-     * @param array<Customer> $customers
-     * @return $this
-     */
-    public function setCustomers(array $customers): self
-    {
-        $this->customers = $customers;
-
-        return $this;
-    }
-
-    /**
-     * @return array<Customer>
-     */
-    public function getCustomers(): array
-    {
-        return $this->customers;
-    }
-
-    /**
-     * @return array<int>
-     */
-    public function getCustomerIds(): array
-    {
-        return array_filter(array_values(array_unique(array_map(function (Customer $customer) {
-            return $customer->getId();
-        }, $this->customers))), function ($id) {
-            return $id !== null;
-        });
-    }
-
-    public function hasCustomers(): bool
-    {
-        return !empty($this->customers);
+        if ($query instanceof ProjectQuery) {
+            $this->setProjectIds($query->getProjectIds());
+            $this->setProjectStart($query->getProjectStart());
+            $this->setProjectEnd($query->getProjectEnd());
+            $this->setGlobalActivities($query->getGlobalActivities());
+            foreach ($query->getHydrate() as $hydrate) {
+                $this->addHydrate($hydrate);
+            }
+        }
     }
 
     public function getProjectStart(): ?\DateTime
@@ -124,5 +104,41 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     public function setGlobalActivities(?bool $globalActivities): void
     {
         $this->globalActivities = $globalActivities;
+    }
+
+    /**
+     * @param array<int> $ids
+     */
+    public function setProjectIds(array $ids): void
+    {
+        $this->projectIds = $ids;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getProjectIds(): array
+    {
+        return $this->projectIds;
+    }
+
+    private function addHydrate(ProjectQueryHydrate $hydrate): void
+    {
+        if (!\in_array($hydrate, $this->hydrate, true)) {
+            $this->hydrate[] = $hydrate;
+        }
+    }
+
+    /**
+     * @return ProjectQueryHydrate[]
+     */
+    public function getHydrate(): array
+    {
+        return $this->hydrate;
+    }
+
+    public function loadTeams(): void
+    {
+        $this->addHydrate(ProjectQueryHydrate::TEAMS);
     }
 }

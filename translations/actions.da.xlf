@@ -78,6 +78,54 @@
         <source>create-timesheet-multiuser</source>
         <target>Til flere brugere</target>
       </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">Genindlæs</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve">
+        <source>details</source>
+        <target state="translated">Vis</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter" xml:space="preserve">
+        <source>filter</source>
+        <target state="translated">Filtrer data</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve">
+        <source>vcard</source>
+        <target state="translated">Visitkort</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve">
+        <source>Add widget</source>
+        <target state="translated">Tilføj widget</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve">
+        <source>Remove widget</source>
+        <target state="translated">Fjern widget</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">Importer</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve">
+        <source>invoice.pending</source>
+        <target state="translated">Afventer betaling</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid" xml:space="preserve">
+        <source>invoice.paid</source>
+        <target state="translated">Faktura betalt</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve">
+        <source>invoice.cancel</source>
+        <target state="translated">Annuller faktura</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download" xml:space="preserve">
+        <source>download</source>
+        <target state="translated">Download</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">Synkronisering</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

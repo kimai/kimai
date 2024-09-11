@@ -29,7 +29,6 @@ use App\Reporting\ProjectInactive\ProjectInactiveQuery;
 use App\Reporting\ProjectView\ProjectViewModel;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use App\Repository\ActivityRepository;
-use App\Repository\Loader\ProjectLoader;
 use App\Repository\ProjectRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
@@ -85,7 +84,7 @@ class ProjectStatisticService
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
-            ->select('p, c')
+            ->select('p')
             ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
             ->andWhere($qb->expr()->eq('c.visible', true))
@@ -108,15 +107,9 @@ class ProjectStatisticService
         ;
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**
@@ -127,6 +120,10 @@ class ProjectStatisticService
         $user = $query->getUser();
         $begin = $dateRange->getBegin();
         $end = $dateRange->getEnd();
+
+        if ($begin === null || $end === null) {
+            throw new \InvalidArgumentException('Missing date in date-range for project statistics');
+        }
 
         $qb = $this->projectRepository->createQueryBuilder('p');
         $qb
@@ -146,8 +143,8 @@ class ProjectStatisticService
                     )
                 )
             )
-            ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
-            ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+            ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
         ;
 
         if (!$query->isIncludeNoWork()) {
@@ -191,15 +188,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     public function getBudgetStatisticModel(Project $project, DateTimeInterface $today): ProjectBudgetStatisticModel
@@ -332,14 +323,14 @@ class ProjectStatisticService
         if ($begin !== null) {
             $qb
                 ->andWhere($qb->expr()->gte('t.begin', ':begin'))
-                ->setParameter('begin', $begin, Types::DATETIME_MUTABLE)
+                ->setParameter('begin', DateTimeImmutable::createFromInterface($begin), Types::DATETIME_IMMUTABLE)
             ;
         }
 
         if ($end !== null) {
             $qb
                 ->andWhere($qb->expr()->lte('t.begin', ':end'))
-                ->setParameter('end', $end, Types::DATETIME_MUTABLE)
+                ->setParameter('end', DateTimeImmutable::createFromInterface($end), Types::DATETIME_IMMUTABLE)
             ;
         }
 
@@ -655,7 +646,7 @@ class ProjectStatisticService
                 )
             )
             ->addGroupBy('p')
-            ->setParameter('project_end', $today, Types::DATETIME_MUTABLE)
+            ->setParameter('project_end', DateTimeImmutable::createFromInterface($today), Types::DATETIME_IMMUTABLE)
         ;
 
         if ($query->getCustomer() !== null) {
@@ -687,15 +678,9 @@ class ProjectStatisticService
         }
 
         $this->projectRepository->addPermissionCriteria($qb, $user);
+        $query = $this->projectRepository->prepareProjectQuery($qb->getQuery());
 
-        /** @var Project[] $projects */
-        $projects = $qb->getQuery()->getResult();
-
-        // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->projectRepository->createQueryBuilder('p')->getEntityManager(), false, false, false);
-        $loader->loadResults($projects);
-
-        return $projects;
+        return $this->projectRepository->getProjects($query);
     }
 
     /**
@@ -747,7 +732,7 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) = :start_date')
-            ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($today), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -759,8 +744,8 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
-            ->setParameter('start_date', $startOfWeek, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($startOfWeek), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end_date', DateTimeImmutable::createFromInterface($endOfWeek), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();
@@ -772,8 +757,8 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb
             ->andWhere('DATE(t.date) BETWEEN :start_date AND :end_date')
-            ->setParameter('start_date', $startMonth, Types::DATETIME_MUTABLE)
-            ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
+            ->setParameter('start_date', DateTimeImmutable::createFromInterface($startMonth), Types::DATETIME_IMMUTABLE)
+            ->setParameter('end_date', DateTimeImmutable::createFromInterface($endMonth), Types::DATETIME_IMMUTABLE)
         ;
 
         $result = $qb->getQuery()->getScalarResult();

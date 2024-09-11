@@ -30,7 +30,7 @@ final class ColorPickerType extends AbstractType implements DataTransformerInter
         $resolver->setDefaults([
             'documentation' => [
                 'type' => 'string',
-                'description' => sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
+                'description' => \sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
             ],
             'label' => 'color',
             'empty_data' => null,

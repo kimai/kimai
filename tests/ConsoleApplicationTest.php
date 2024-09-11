@@ -25,6 +25,6 @@ class ConsoleApplicationTest extends TestCase
         $sut = new ConsoleApplication($kernel);
         self::assertEquals(Constants::SOFTWARE, $sut->getName());
         self::assertEquals(Constants::VERSION, $sut->getVersion());
-        self::assertEquals(sprintf('%s <info>%s</info> (env: <comment></>, debug: <comment>false</>)', Constants::SOFTWARE, Constants::VERSION), $sut->getLongVersion());
+        self::assertEquals(\sprintf('%s <info>%s</info> (env: <comment></>, debug: <comment>false</>)', Constants::SOFTWARE, Constants::VERSION), $sut->getLongVersion());
     }
 }

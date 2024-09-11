@@ -68,6 +68,7 @@ final class ActivityController extends BaseApiController
         $user = $this->getUser();
 
         $query = new ActivityQuery();
+        $query->loadTeams();
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');

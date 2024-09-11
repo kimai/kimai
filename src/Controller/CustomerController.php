@@ -54,7 +54,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/customer')]
 final class CustomerController extends AbstractController
 {
-    public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
+    public function __construct(
+        private readonly CustomerRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher
+    )
     {
     }
 
@@ -64,6 +67,7 @@ final class CustomerController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
@@ -126,7 +130,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerQuery $query
      * @return MetaTableTypeInterface[]
      */
     private function findMetaColumns(CustomerQuery $query): array
@@ -185,13 +188,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.delete_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.delete_comment');
+        $csrfTokenManager->refreshToken('comment.delete');
 
         try {
             $this->repository->deleteComment($comment);
@@ -228,13 +231,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.pin_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.pin_comment');
+        $csrfTokenManager->refreshToken('comment.pin');
 
         $comment->setPinned(!$comment->isPinned());
         try {
@@ -539,7 +542,7 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @return FormInterface<CustomerComment>
+     * @return FormInterface<mixed>
      */
     private function getCommentForm(CustomerComment $comment): FormInterface
     {

@@ -11,10 +11,11 @@ namespace App\Repository;
 
 use App\Entity\InvoiceTemplate;
 use App\Repository\Paginator\PaginatorInterface;
-use App\Repository\Paginator\QueryBuilderPaginator;
+use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\BaseQuery;
 use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -49,12 +50,16 @@ class InvoiceTemplateRepository extends EntityRepository
         return $qb;
     }
 
-    protected function getPaginatorForQuery(BaseQuery $query): PaginatorInterface
+    /**
+     * @return PaginatorInterface<InvoiceTemplate>
+     */
+    private function getPaginatorForQuery(BaseQuery $baseQuery): PaginatorInterface
     {
-        $counter = $this->countTemplatesForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
+        $counter = $this->countTemplatesForQuery($baseQuery);
+        /** @var Query<InvoiceTemplate> $query */
+        $query = $this->getQueryBuilderForQuery($baseQuery)->getQuery();
 
-        return new QueryBuilderPaginator($qb, $counter);
+        return new QueryPaginator($query, $counter);
     }
 
     public function getPagerfantaForQuery(BaseQuery $query): Pagination
@@ -62,6 +67,9 @@ class InvoiceTemplateRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
+    /**
+     * @return int<0, max>
+     */
     public function countTemplatesForQuery(BaseQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -71,7 +79,7 @@ class InvoiceTemplateRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('t.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     public function saveTemplate(InvoiceTemplate $template): void

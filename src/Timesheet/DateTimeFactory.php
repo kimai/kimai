@@ -42,18 +42,18 @@ final class DateTimeFactory
     {
         $date = $this->getDate($date);
 
-        $date->modify('first day of this month');
-        $date->setTime(0, 0, 0);
+        $date = $date->modify('first day of this month');
+        $date = $date->setTime(0, 0, 0);
 
         return $date;
     }
 
     public function getStartOfLastMonth(): DateTimeInterface
     {
-        $newDate = $this->createDateTime('first day of -1 month');
-        $newDate->setTime(0, 0, 0);
+        $date = $this->createDateTime('first day of -1 month');
+        $date = $date->setTime(0, 0, 0);
 
-        return $newDate;
+        return $date;
     }
 
     private function getDate(DateTimeInterface|string|null $date = null): DateTime
@@ -79,11 +79,11 @@ final class DateTimeFactory
 
             // if today = sunday => increase week by one
             if ($date->format('N') !== '7') {
-                $date->modify('-1 week');
+                $date = $date->modify('-1 week');
             }
         }
 
-        return $this->createWeekDateTime($date->format('o'), $date->format('W'), $firstDay, 0, 0, 0);
+        return $this->createWeekDateTime((int) $date->format('o'), (int) $date->format('W'), $firstDay, 0, 0, 0);
     }
 
     public function getEndOfWeek(DateTimeInterface|string|null $date = null): DateTime
@@ -96,36 +96,35 @@ final class DateTimeFactory
 
             // only change when today is not sunday
             if ($date->format('N') === '7') {
-                $date->modify('+1 week');
+                $date = $date->modify('+1 week');
             }
         }
 
-        return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
+        return $this->createWeekDateTime((int) $date->format('o'), (int) $date->format('W'), $lastDay, 23, 59, 59);
     }
 
     public function getEndOfMonth(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
-
         $date = $date->modify('last day of this month');
-        $date->setTime(23, 59, 59);
+        $date = $date->setTime(23, 59, 59);
 
         return $date;
     }
 
     public function getEndOfLastMonth(): DateTimeInterface
     {
-        $newDate = $this->createDateTime('last day of -1 month');
-        $newDate->setTime(23, 59, 59);
+        $date = $this->createDateTime('last day of -1 month');
+        $date = $date->setTime(23, 59, 59);
 
-        return $newDate;
+        return $date;
     }
 
-    private function createWeekDateTime($year, $week, $day, $hour, $minute, $second)
+    private function createWeekDateTime(int $year, int $week, int $day, int $hour, int $minute, int $second): DateTime
     {
         $date = new DateTime('now', $this->getTimezone());
-        $date->setISODate($year, $week, $day);
-        $date->setTime($hour, $minute, $second);
+        $date = $date->setISODate($year, $week, $day);
+        $date = $date->setTime($hour, $minute, $second);
 
         return $date;
     }
@@ -154,21 +153,17 @@ final class DateTimeFactory
     {
         $date = $this->getDate($date);
 
-        $date->modify('first day of january 00:00:00');
-
-        return $date;
+        return $date->modify('first day of january 00:00:00');
     }
 
     public function createEndOfYear(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
 
-        $date->modify('last day of december 23:59:59');
-
-        return $date;
+        return $date->modify('last day of december 23:59:59');
     }
 
-    public function createStartOfFinancialYear(?string $financialYear = null): DateTime
+    public function createStartOfFinancialYear(?string $financialYear = null): DateTimeInterface
     {
         $defaultDate = $this->createDateTime('01 january this year 00:00:00');
 
@@ -177,21 +172,22 @@ final class DateTimeFactory
         }
 
         $financialYear = $this->createDateTime($financialYear);
-        $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+        $financialYear = $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+        $financialYear = $financialYear->setTime(0, 0, 0);
 
-        $now = $this->createDateTime('00:00:00');
+        $today = $this->createDateTime('00:00:00');
 
-        if ($financialYear >= $now) {
-            $financialYear->modify('-1 year');
+        if ($financialYear > $today) {
+            $financialYear = $financialYear->modify('-1 year');
         }
 
         return $financialYear;
     }
 
-    public function createEndOfFinancialYear(DateTimeInterface $financialYear): DateTime
+    public function createEndOfFinancialYear(DateTimeInterface $financialYear): DateTimeInterface
     {
         $yearEnd = DateTime::createFromInterface($financialYear);
-        $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
+        $yearEnd = $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
 
         return $yearEnd;
     }

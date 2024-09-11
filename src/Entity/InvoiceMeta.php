@@ -31,7 +31,7 @@ class InvoiceMeta implements MetaTableTypeInterface
     {
         if (!($entity instanceof Invoice)) {
             throw new \InvalidArgumentException(
-                sprintf('Expected instanceof Invoice, received "%s"', \get_class($entity))
+                \sprintf('Expected instanceof Invoice, received "%s"', \get_class($entity))
             );
         }
         $this->invoice = $entity;

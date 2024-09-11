@@ -1,6 +1,6 @@
 parameters:
     locale: en
-    app_locales: ar|cs|de|de_CH|da|en|eo|es|eu|fr|he|hu|it|ja|ko|nl|pl|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
+    kimai_locales: ['ar', 'cs', 'de', 'de_CH', 'da', 'en', 'eo', 'es', 'eu', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt_BR', 'ro', 'ru', 'sk', 'sv', 'tr', 'vi', 'zh_CN']
 
 services:
     _defaults:
@@ -23,7 +23,3 @@ services:
     App\User\UserService:
         public: true
         arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
-
-    App\Plugin\PluginManager:
-        public: true
-        arguments: [!tagged kimai.plugin]

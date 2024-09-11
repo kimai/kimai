@@ -110,9 +110,6 @@
         <source>modal.dirty</source>
         <target>Η φόρμα έχει μεταβληθεί. Παρακαλούμε πατήστε "Αποθήκευση" για να αποθηκεύσετε τις αλλαγές ή "Κλείσιμο" για να τις ακυρώσετε.</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Διαπιστευτήριο</target>
@@ -141,9 +138,6 @@
         <source>login_required</source>
         <target>Ληγμένη συνεδρία. Ανακατεύθυνση στην οθόνη σύνδεσης;</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Συνοπτικός πίνακας</target>
@@ -208,9 +202,6 @@
         <source>Doctor</source>
         <target>Διαγνώσεις</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Δεν βρέθηκαν καταχωρήσεις με βάση τα επιλεγμένα φίλτρα.</target>
@@ -219,9 +210,6 @@
         <source>error.no_comments_found</source>
         <target>Δεν υπάρχουν δημοσιευμένα σχόλια ακόμη.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Ημερομηνία</target>
@@ -346,9 +334,6 @@
         <source>billable</source>
         <target>Τιμολογήσιμο</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Ενέργειες</target>
@@ -373,16 +358,10 @@
         <source>action.close</source>
         <target>Κλείσιμο</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Συνοπτικός πίνακας</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Εμφάνιση μενού</target>
@@ -399,9 +378,6 @@
         <source>progress</source>
         <target>Πρόοδος</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Οι ώρες μου</target>
@@ -446,9 +422,6 @@
         <source>append</source>
         <target>Προσάρτηση</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Προφίλ χρήστη</target>
@@ -497,7 +470,6 @@
         <source>lastLogin</source>
         <target>Τελευταία σύνδεση</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Μήνας</target>
@@ -522,19 +494,10 @@
         <source>update_browser_title</source>
         <target>Ενημέρωση τίτλου προγράμματος περιήγησης</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Ημερολόγιο</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Εκκίνηση έργου</target>
@@ -543,9 +506,6 @@
         <source>project_end</source>
         <target>Τερματισμός έργου</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Λογαριασμός</target>
@@ -602,9 +562,6 @@
         <source>currency</source>
         <target>Νόμισμα</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Όνομα</target>
@@ -637,16 +594,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Επιτρεπόμενοι λατινικοί χαρακτήρες: A-Z και _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Έκδοση</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Διαχειριστής συστήματος</target>
@@ -663,9 +614,6 @@
         <source>ROLE_USER</source>
         <target>Χρήστης</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Σήμερα, %day%</target>
@@ -774,9 +722,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% χρησιμοποιείται (%left% είναι ακόμα ενεργά)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Πρότυπο τιμολογίου</target>
@@ -929,9 +874,6 @@
         <source>preview.skipped_rows</source>
         <target>Παράλειψη προ-επισκόπησης %rows% και περισσότερων γραμμών …</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Εξαγωγή</target>
@@ -964,9 +906,6 @@
         <source>export.date_copyright</source>
         <target>Δημιουργήθηκε την %date% με το %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Οι ενεργές μετρήσεις του χρόνου σας</target>
@@ -979,9 +918,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Δημιουργήστε νέα εγγραφή ωρών</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Μέγεθος σελίδας</target>

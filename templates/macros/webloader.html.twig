@@ -1,8 +1,9 @@
 {% macro init_frontend_loader() %}
+    {% set fdow = app.user is not null ? app.user.firstDayOfWeek : 'monday' %}
     {% set configurations = javascript_configurations(app.user)|merge({
         login: path('login'),
         direction: tabler_bundle.rightToLeft ? 'rtl' : 'ltr',
-        first_dow_iso: iso_day_by_name(app.user.firstDayOfWeek),
+        first_dow_iso: iso_day_by_name(fdow),
     }) %}
     <script type="text/javascript">
         window.addEventListener('load', function() {

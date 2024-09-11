@@ -74,9 +74,6 @@
         <source>rates.title</source>
         <target>Kotizoj</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Pasvorto</target>
@@ -105,9 +102,6 @@
         <source>login_required</source>
         <target>Mankas permeso. Redirekti al ensaluto?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Panelo</target>
@@ -168,9 +162,6 @@
         <source>Doctor</source>
         <target>Sistem-sano</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Neniuj elementoj estis trovitaj surbaze de elektitaj filtriloj.</target>
@@ -179,9 +170,6 @@
         <source>error.no_comments_found</source>
         <target>Ankoraŭ ne estas komentoj.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Dato</target>
@@ -282,9 +270,6 @@
         <source>teamlead</source>
         <target>Teamgvidanto</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Aktivaĵoj</target>
@@ -309,16 +294,10 @@
         <source>action.close</source>
         <target>Fermi</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Panelo</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Montri menuon</target>
@@ -335,9 +314,6 @@
         <source>progress</source>
         <target>Progreso</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Miaj tempoj</target>
@@ -378,9 +354,6 @@
         <source>append</source>
         <target>Postglui</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Profilo de uzanto</target>
@@ -425,7 +398,6 @@
         <source>lastLogin</source>
         <target>Lasta ensaluto</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Monato</target>
@@ -446,19 +418,10 @@
         <source>export_decimal</source>
         <target>Uzi dekuman daŭron en eksporto</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendaro</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Komenco de projekto</target>
@@ -467,9 +430,6 @@
         <source>project_end</source>
         <target>Fino de projekto</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Konto</target>
@@ -522,9 +482,6 @@
         <source>currency</source>
         <target>Valuto</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Nomo</target>
@@ -557,16 +514,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Permesitaj signoj: A-Z kaj _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versio</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Sistema administranto</target>
@@ -583,9 +534,6 @@
         <source>ROLE_USER</source>
         <target>Uzanto</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Laborhoroj hodiaŭ</target>
@@ -678,9 +626,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% uzitaj (%left% estas daŭre malfermitaj)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Fakturŝablono</target>
@@ -825,9 +770,6 @@
         <source>status.paid</source>
         <target>Pagita</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Eksporti</target>
@@ -860,9 +802,6 @@
         <source>export.date_copyright</source>
         <target>Kreita je la %date% per %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Viaj aktivaj tempomezuroj</target>
@@ -875,9 +814,6 @@
         <source>timesheet.start</source>
         <target state="needs-translation">Krei novan temporegistraĵon</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Grandeco de la paĝo</target>
