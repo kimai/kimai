@@ -49,7 +49,7 @@ final class ProjectLoader implements LoaderInterface
 
         $em = $this->entityManager;
 
-        if ($this->hydrateTeams && count($projectIds) > 0) {
+        if ($this->hydrateTeams && \count($projectIds) > 0) {
             $customerIds = array_filter(array_unique(array_map(function (Project $project) {
                 return $project->getCustomer()->getId();
             }, $results)), function ($value) { return $value !== null; });
@@ -62,7 +62,7 @@ final class ProjectLoader implements LoaderInterface
                 ->getQuery()
                 ->execute();
 
-            if (count($customerIds) > 0) {
+            if (\count($customerIds) > 0) {
                 $qb = $em->createQueryBuilder();
                 $qb->select('PARTIAL customer.{id}', 'teams')
                     ->from(Customer::class, 'customer')

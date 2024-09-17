@@ -82,7 +82,7 @@ final class ActivityLoader implements LoaderInterface
         }
 
         // required on "Activity listing" page for non super-admins
-        if (count($activityIds) > 0) {
+        if (\count($activityIds) > 0) {
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL a.{id}', 'teams')
                 ->from(Activity::class, 'a')

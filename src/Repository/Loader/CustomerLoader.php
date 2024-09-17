@@ -66,7 +66,7 @@ final class CustomerLoader implements LoaderInterface
         $em = $this->entityManager;
 
         // required where we need to check team permissions, e.g. "Customer listing"
-        if (count($customerIds) > 0) {
+        if (\count($customerIds) > 0) {
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL c.{id}', 'teams')
                 ->from(Customer::class, 'c')

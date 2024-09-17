@@ -45,7 +45,7 @@ final class TeamLoader implements LoaderInterface
         $em = $this->entityManager;
 
         // required wherever users are shown, e.g. on "Custom details" page
-        if (count($teamIds) > 0) {
+        if (\count($teamIds) > 0) {
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL team.{id}', 'members', 'user')
                 ->from(Team::class, 'team')
@@ -73,7 +73,7 @@ final class TeamLoader implements LoaderInterface
             }
         }
 
-        if ($this->loadCustomer && count($projectIds) > 0) {
+        if ($this->loadCustomer && \count($projectIds) > 0) {
             // used in UserTeamProjects widget
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL project.{id}', 'customer')
