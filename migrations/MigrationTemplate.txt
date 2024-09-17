@@ -24,11 +24,15 @@ final class <className> extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $this->abortIf(true, 'Migration was auto-generated, adapt to your needs before running it.');
+
 <up>
     }
 
     public function down(Schema $schema): void
     {
+        $this->abortIf(true, 'Migration was auto-generated, adapt to your needs before running it.');
+
 <down>
     }<override>
 }
