@@ -18,13 +18,22 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigureMainMenuEventTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
+    public function testLegacy(): void
+    {
+        $sut = new ConfigureMainMenuEvent();
+
+        self::assertNotNull($sut->getAppsMenu()); // @phpstan-ignore-line
+    }
+
     public function testGetterAndSetter(): void
     {
         $sut = new ConfigureMainMenuEvent();
 
         self::assertNotNull($sut->getMenu());
         self::assertNotNull($sut->getAdminMenu());
-        self::assertNotNull($sut->getAppsMenu());
         self::assertNotNull($sut->getSystemMenu());
 
         self::assertNull($sut->getTimesheetMenu());
