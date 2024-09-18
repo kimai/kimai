@@ -1766,6 +1766,18 @@
         <source>api_password_deprecated</source>
         <target>API Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
       </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day">
+        <source>hours_per_day</source>
+        <target>Stunden pro Tag</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week">
+        <source>hours_per_week</source>
+        <target>Stunden pro Woche</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month">
+        <source>hours_per_month</source>
+        <target>Stunden pro Monat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
