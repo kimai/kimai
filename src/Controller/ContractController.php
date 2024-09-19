@@ -79,7 +79,7 @@ final class ContractController extends AbstractController
 
         $boxConfiguration = new BoxConfiguration();
         $boxConfiguration->setDecimal(false);
-        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration() && $summary->count() > 0);
+        $boxConfiguration->setCollapsed($summary->count() > 0);
 
         return $this->render('contract/status.html.twig', [
             'box_configuration' => $boxConfiguration,
