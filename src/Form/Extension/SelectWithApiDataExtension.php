@@ -64,7 +64,7 @@ final class SelectWithApiDataExtension extends AbstractTypeExtension
         $parent = $form->getParent();
         do {
             $formPrefixes[] = $parent->getName();
-        } while (($parent = $parent->getParent()) !== null);
+        } while (($parent = $parent?->getParent()) !== null);
 
         $formPrefix = implode('_', array_reverse($formPrefixes));
         $formField = $apiData['select'];
