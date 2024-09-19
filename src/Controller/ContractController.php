@@ -53,7 +53,7 @@ final class ContractController extends AbstractController
 
         /** @var User $profile */
         $profile = $values->getUser();
-        if ($this->getUser() !== $profile && !$canChangeUser) {
+        if (!$this->isGranted('hours', $profile)) {
             throw $this->createAccessDeniedException('Cannot access user contract settings');
         }
 

@@ -51,7 +51,7 @@ final class UserSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('edit', $id, $action);
         }
 
-        if ($user->hasContractSettings() || $this->isGranted('hours_other_profile')) {
+        if ($this->isGranted('hours', $user)) {
             $event->addActionToSubmenu('report', 'work_times', ['url' => $this->path('user_contract', ['user' => $user->getId()]), 'title' => 'work_times']);
         }
 
