@@ -135,8 +135,9 @@ class TagRepository extends EntityRepository
         $qb1 = $this->getEntityManager()->createQueryBuilder();
         $qb1->from(Timesheet::class, 't')->select('COUNT(tags)')->innerJoin('t.tags', 'tags')->where('tags.id = tag.id');
 
+        $dql = $qb1->getDQL(); // see https://github.com/phpstan/phpstan-doctrine/issues/606
         $qb->select('tag.id, tag.name, tag.color, tag.visible');
-        $qb->addSelect('(' . $qb1->getDQL() . ') as amount');
+        $qb->addSelect('(' . $dql . ') as amount');
 
         $orderBy = $query->getOrderBy();
         $orderBy = match ($orderBy) {
