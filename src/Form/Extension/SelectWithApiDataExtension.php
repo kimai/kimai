@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class SelectWithApiDataExtension extends AbstractTypeExtension
 {
-    public function __construct(private UrlGeneratorInterface $router)
+    public function __construct(private readonly UrlGeneratorInterface $router)
     {
     }
 
@@ -30,11 +30,6 @@ final class SelectWithApiDataExtension extends AbstractTypeExtension
         return [EntityType::class];
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (!isset($options['api_data'])) {
