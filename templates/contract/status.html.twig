@@ -127,8 +127,8 @@
                         {% endif %}
                         <th>{{ 'month'|trans }}</th>
                         <th class="text-end total">{{ 'sum.total'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_should'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_is'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_should'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_is'|trans }}</th>
                         {% for day in 1..31 %}
                         <th class="text-end contractDay">{% if day < 10 %}0{% endif %}{{ day }}</th>
                         {% endfor %}
