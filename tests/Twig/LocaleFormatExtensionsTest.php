@@ -14,7 +14,6 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
