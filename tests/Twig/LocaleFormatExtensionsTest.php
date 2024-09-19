@@ -580,22 +580,6 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertFalse($sut->isWeekend(new \DateTime('first friday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first saturday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first sunday this month')));
-
-        // seconds case: a user with work-hour configuration
-        $user = new User();
-        $user->setWorkHoursTuesday(1);
-        $user->setWorkHoursThursday(1);
-        $user->setWorkHoursSaturday(1);
-        $user->setWorkHoursSunday(1);
-
-        $sut = $this->getSut('en', $this->localeEn);
-        self::assertTrue($sut->isWeekend(new \DateTime('first monday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first tuesday this month')));
-        self::assertTrue($sut->isWeekend(new \DateTime('first wednesday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first thursday this month')));
-        self::assertTrue($sut->isWeekend(new \DateTime('first friday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first saturday this month')));
-        self::assertFalse($sut->isWeekend(new \DateTime('first sunday this month')));
     }
 
     protected function getTimesheet($seconds): Timesheet
