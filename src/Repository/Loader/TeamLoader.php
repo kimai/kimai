@@ -45,24 +45,26 @@ final class TeamLoader implements LoaderInterface
         $em = $this->entityManager;
 
         // required wherever users are shown, e.g. on "Custom details" page
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL team.{id}', 'members', 'user')
-            ->from(Team::class, 'team')
-            ->leftJoin('team.members', 'members')
-            ->leftJoin('members.user', 'user')
-            ->andWhere($qb->expr()->in('team.id', $teamIds))
-            ->getQuery()
-            ->execute();
+        if (\count($teamIds) > 0) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL team.{id}', 'members', 'user')
+                ->from(Team::class, 'team')
+                ->leftJoin('team.members', 'members')
+                ->leftJoin('members.user', 'user')
+                ->andWhere($qb->expr()->in('team.id', $teamIds))
+                ->getQuery()
+                ->execute();
 
-        // used in UserTeamProjects widget
-        $qb = $em->createQueryBuilder();
-        /** @var array<Team> $teams */
-        $teams = $qb->select('PARTIAL team.{id}', 'projects')
-            ->from(Team::class, 'team')
-            ->leftJoin('team.projects', 'projects')
-            ->andWhere($qb->expr()->in('team.id', $teamIds))
-            ->getQuery()
-            ->execute();
+            // used in UserTeamProjects widget
+            $qb = $em->createQueryBuilder();
+            /** @var array<Team> $teams */
+            $teams = $qb->select('PARTIAL team.{id}', 'projects')
+                ->from(Team::class, 'team')
+                ->leftJoin('team.projects', 'projects')
+                ->andWhere($qb->expr()->in('team.id', $teamIds))
+                ->getQuery()
+                ->execute();
+        }
 
         $projectIds = [];
         foreach ($results as $team) {
@@ -71,7 +73,7 @@ final class TeamLoader implements LoaderInterface
             }
         }
 
-        if ($this->loadCustomer) {
+        if ($this->loadCustomer && \count($projectIds) > 0) {
             // used in UserTeamProjects widget
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL project.{id}', 'customer')

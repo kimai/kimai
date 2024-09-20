@@ -23,6 +23,7 @@ services:
             - '../src/API/Model/'
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Form/Model/'
             - '../src/Repository/Loader/'
             - '../src/Repository/Paginator/'
             - '../src/Repository/Query/'

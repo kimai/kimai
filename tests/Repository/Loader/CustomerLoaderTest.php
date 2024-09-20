@@ -20,7 +20,7 @@ class CustomerLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults(): void
     {
-        $em = $this->getEntityManagerMock(1);
+        $em = $this->getEntityManagerMock(0);
 
         $query = new CustomerQuery();
         $query->loadTeams();
@@ -30,5 +30,23 @@ class CustomerLoaderTest extends AbstractLoaderTest
         $entity = $this->createMock(Customer::class);
 
         $sut->loadResults([$entity]);
+    }
+
+    public function testLoadResultsWithMocks(): void
+    {
+        $em = $this->getEntityManagerMock(1);
+
+        $query = new CustomerQuery();
+        $query->loadTeams();
+
+        $sut = new CustomerLoader($em, $query);
+
+        $entity = $this->createMock(Customer::class);
+        $entity->method('getId')->willReturn(1);
+
+        $entity2 = $this->createMock(Customer::class);
+        $entity->method('getId')->willReturn(2);
+
+        $sut->loadResults([$entity, $entity2]);
     }
 }

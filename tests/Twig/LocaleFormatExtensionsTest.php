@@ -14,7 +14,6 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -55,10 +54,7 @@ class LocaleFormatExtensionsTest extends TestCase
         $user = new User();
         $user->setTimezone('Europe/Vienna');
 
-        $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn($user);
-
-        $sut = new LocaleFormatExtensions(new LocaleService($languageSettings), $security);
+        $sut = new LocaleFormatExtensions(new LocaleService($languageSettings));
         $sut->setLocale($locale);
 
         return $sut;
@@ -502,9 +498,7 @@ class LocaleFormatExtensionsTest extends TestCase
             ],
         ];
 
-        $security = $this->createMock(Security::class);
-
-        $sut = new LocaleFormatExtensions(new LocaleService($this->localeEn), $security);
+        $sut = new LocaleFormatExtensions(new LocaleService($this->localeEn));
         $sut->setLocale('en');
 
         self::assertEquals($expected, $sut->getJavascriptConfiguration());
@@ -586,22 +580,6 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertFalse($sut->isWeekend(new \DateTime('first friday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first saturday this month')));
         self::assertTrue($sut->isWeekend(new \DateTime('first sunday this month')));
-
-        // seconds case: a user with work-hour configuration
-        $user = new User();
-        $user->setWorkHoursTuesday(1);
-        $user->setWorkHoursThursday(1);
-        $user->setWorkHoursSaturday(1);
-        $user->setWorkHoursSunday(1);
-
-        $sut = $this->getSut('en', $this->localeEn);
-        self::assertTrue($sut->isWeekend(new \DateTime('first monday this month'), $user));
-        self::assertFalse($sut->isWeekend(new \DateTime('first tuesday this month'), $user));
-        self::assertTrue($sut->isWeekend(new \DateTime('first wednesday this month'), $user));
-        self::assertFalse($sut->isWeekend(new \DateTime('first thursday this month'), $user));
-        self::assertTrue($sut->isWeekend(new \DateTime('first friday this month'), $user));
-        self::assertFalse($sut->isWeekend(new \DateTime('first saturday this month'), $user));
-        self::assertFalse($sut->isWeekend(new \DateTime('first sunday this month'), $user));
     }
 
     protected function getTimesheet($seconds): Timesheet

@@ -1755,31 +1755,6 @@ parameters:
             path: Export/Renderer/AbstractRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\MetaFieldColumnSubscriber\\:\\:loadActivityField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\MetaFieldColumnSubscriber\\:\\:loadCustomerField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\MetaFieldColumnSubscriber\\:\\:loadProjectField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\MetaFieldColumnSubscriber\\:\\:loadTimesheetField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\MetaFieldColumnSubscriber\\:\\:prepareEntity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
             message: "#^Call to an undefined method App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface\\:\\:getIcon\\(\\)\\.$#"
             count: 1
             path: Export/Renderer/CsvRendererTest.php
@@ -1985,42 +1960,12 @@ parameters:
             path: Export/Spreadsheet/Entities/MethodRequiresParams.php
 
         -
-            message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Export/Spreadsheet/UserExporterTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Export/Spreadsheet/Writer/BinaryFileResponseWriterTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\AbstractRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Export\\\\TimesheetExportInterface but returns object\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\MetaFieldColumnSubscriber\\:\\:loadActivityField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\MetaFieldColumnSubscriber\\:\\:loadCustomerField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\MetaFieldColumnSubscriber\\:\\:loadProjectField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\MetaFieldColumnSubscriber\\:\\:loadTimesheetField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\MetaFieldColumnSubscriber\\:\\:prepareEntity\\(\\) has no return type specified\\.$#"
             count: 1
             path: Export/Timesheet/AbstractRendererTest.php
 

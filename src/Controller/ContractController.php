@@ -53,7 +53,7 @@ final class ContractController extends AbstractController
 
         /** @var User $profile */
         $profile = $values->getUser();
-        if ($this->getUser() !== $profile && !$canChangeUser) {
+        if (!$this->isGranted('hours', $profile)) {
             throw $this->createAccessDeniedException('Cannot access user contract settings');
         }
 
@@ -79,9 +79,10 @@ final class ContractController extends AbstractController
 
         $boxConfiguration = new BoxConfiguration();
         $boxConfiguration->setDecimal(false);
-        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration() && $summary->count() > 0);
+        $boxConfiguration->setCollapsed($summary->count() > 0);
 
         return $this->render('contract/status.html.twig', [
+            'withWorkHourConfiguration' => $profile->hasWorkHourConfiguration(),
             'box_configuration' => $boxConfiguration,
             'page_setup' => $page,
             'decimal' => $boxConfiguration->isDecimal(),

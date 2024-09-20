@@ -82,12 +82,14 @@ final class ActivityLoader implements LoaderInterface
         }
 
         // required on "Activity listing" page for non super-admins
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL a.{id}', 'teams')
-            ->from(Activity::class, 'a')
-            ->leftJoin('a.teams', 'teams')
-            ->andWhere($qb->expr()->in('a.id', $activityIds))
-            ->getQuery()
-            ->execute();
+        if (\count($activityIds) > 0) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL a.{id}', 'teams')
+                ->from(Activity::class, 'a')
+                ->leftJoin('a.teams', 'teams')
+                ->andWhere($qb->expr()->in('a.id', $activityIds))
+                ->getQuery()
+                ->execute();
+        }
     }
 }

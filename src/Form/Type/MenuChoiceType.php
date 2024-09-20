@@ -45,7 +45,7 @@ final class MenuChoiceType extends AbstractType
         $this->eventDispatcher->dispatch($event);
 
         $choices = $this->getChoicesFromMenu($event->getMenu(), $filter);
-        $choices += $this->getChoicesFromMenu($event->getAppsMenu(), $filter);
+        $choices += $this->getChoicesFromMenu($event->getAppsMenu(), $filter); // @phpstan-ignore-line
         $choices += $this->getChoicesFromMenu($event->getAdminMenu(), $filter);
         $choices += $this->getChoicesFromMenu($event->getSystemMenu(), $filter);
 

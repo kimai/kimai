@@ -155,16 +155,6 @@ parameters:
             path: src/API/UserController.php
 
         -
-            message: "#^Method App\\\\Activity\\\\ActivityStatisticService\\:\\:createStatisticQueryBuilder\\(\\) has parameter \\$activities with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Activity/ActivityStatisticService.php
-
-        -
-            message: "#^Method App\\\\Activity\\\\ActivityStatisticService\\:\\:getBudgetStatistic\\(\\) should return array\\<int, App\\\\Model\\\\ActivityStatistic\\> but returns array\\<int\\|string, App\\\\Model\\\\ActivityStatistic\\>\\.$#"
-            count: 1
-            path: src/Activity/ActivityStatisticService.php
-
-        -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ActivityStatisticEvent constructor expects App\\\\Model\\\\ActivityStatistic, App\\\\Model\\\\ActivityStatistic\\|null given\\.$#"
             count: 1
             path: src/Activity/ActivityStatisticService.php
@@ -2095,32 +2085,7 @@ parameters:
             path: src/Form/DataTransformer/StringToArrayTransformer.php
 
         -
-            message: "#^Method App\\\\Form\\\\Extension\\\\DocumentationLinkExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Extension/DocumentationLinkExtension.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Extension\\\\EnhancedChoiceTypeExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Extension/EnhancedChoiceTypeExtension.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Extension\\\\IconExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Extension/IconExtension.php
-
-        -
             message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
-            message: "#^Cannot call method getParent\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Extension\\\\SelectWithApiDataExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Extension/SelectWithApiDataExtension.php
 

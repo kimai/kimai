@@ -17,7 +17,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserSubscriber extends AbstractActionsSubscriber
 {
-    public function __construct(AuthorizationCheckerInterface $auth, UrlGeneratorInterface $urlGenerator, private EventDispatcherInterface $eventDispatcher)
+    public function __construct(
+        AuthorizationCheckerInterface $auth,
+        UrlGeneratorInterface $urlGenerator,
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
     {
         parent::__construct($auth, $urlGenerator);
     }
@@ -45,6 +49,10 @@ final class UserSubscriber extends AbstractActionsSubscriber
 
         foreach ($subEvent->getActions() as $id => $action) {
             $event->addActionToSubmenu('edit', $id, $action);
+        }
+
+        if ($this->isGranted('hours', $user)) {
+            $event->addActionToSubmenu('report', 'work_times', ['url' => $this->path('user_contract', ['user' => $user->getId()]), 'title' => 'work_times']);
         }
 
         if (($event->getUser()->getId() === $user->getId() && $this->isGranted('report:user')) || $this->isGranted('report:other')) {
