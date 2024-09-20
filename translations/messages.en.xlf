@@ -1778,6 +1778,18 @@
         <source>hours_per_month</source>
         <target>Hours per month</target>
       </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days">
+        <source>work_days</source>
+        <target>Working days</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode">
+        <source>work_hours_mode</source>
+        <target>Working time calculation</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day">
+        <source>last_working_day</source>
+        <target>Last working day</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
