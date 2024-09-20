@@ -560,7 +560,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
-        <target>Arbeitet seit</target>
+        <target>Erster Arbeitstag</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -640,7 +640,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>Expected number of hours</source>
-        <target>Erwartete Stundenzahl</target>
+        <target>Erwartete Stunden</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -648,7 +648,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
-        <target>Ist-Stunden</target>
+        <target>Geleistete Stunden</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
