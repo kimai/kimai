@@ -32,7 +32,7 @@ final class FavoriteController extends AbstractController
     {
         $favoriteRecordService->addFavorite($timesheet);
 
-        return $this->render('favorite/index.html.twig');
+        return $this->redirectToRoute('favorites_timesheets');
     }
 
     #[Route(path: '/timesheet/remove/{id}', name: 'favorites_timesheets_remove', methods: ['GET'])]
@@ -41,6 +41,6 @@ final class FavoriteController extends AbstractController
     {
         $favoriteRecordService->removeFavorite($timesheet);
 
-        return $this->render('favorite/index.html.twig');
+        return $this->redirectToRoute('favorites_timesheets');
     }
 }
