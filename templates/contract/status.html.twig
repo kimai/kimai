@@ -8,8 +8,6 @@
 
 {% block main %}
 
-    {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
-
     {% if not withWorkHourConfiguration %}
         {% set warningMsg %}
             {{ 'work_times_should.none_configured'|trans }}
