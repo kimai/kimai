@@ -560,7 +560,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
-        <target>Working since</target>
+        <target>First working day</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -640,7 +640,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should">
         <source>Expected number of hours</source>
-        <target>Expected number of hours</target>
+        <target>Expected hours</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -648,7 +648,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is">
         <source>work_times_is</source>
-        <target>Is-hours</target>
+        <target>Hours worked</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1765,6 +1765,30 @@
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
         <target>API passwords are outdated: please use API tokens instead.</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day">
+        <source>hours_per_day</source>
+        <target>Hours per day</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week">
+        <source>hours_per_week</source>
+        <target>Hours per week</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month">
+        <source>hours_per_month</source>
+        <target>Hours per month</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days">
+        <source>work_days</source>
+        <target>Working days</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode">
+        <source>work_hours_mode</source>
+        <target>Working time calculation</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day">
+        <source>last_working_day</source>
+        <target>Last working day</target>
       </trans-unit>
     </body>
   </file>

@@ -66,13 +66,15 @@ final class CustomerLoader implements LoaderInterface
         $em = $this->entityManager;
 
         // required where we need to check team permissions, e.g. "Customer listing"
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL c.{id}', 'teams')
-            ->from(Customer::class, 'c')
-            ->leftJoin('c.teams', 'teams')
-            ->andWhere($qb->expr()->in('c.id', $customerIds))
-            ->getQuery()
-            ->execute();
+        if (\count($customerIds) > 0) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL c.{id}', 'teams')
+                ->from(Customer::class, 'c')
+                ->leftJoin('c.teams', 'teams')
+                ->andWhere($qb->expr()->in('c.id', $customerIds))
+                ->getQuery()
+                ->execute();
+        }
 
         // do not load team members or leads by default, because they will only be used on detail pages
         if ($hydrateTeamMembers) {

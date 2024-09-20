@@ -26,11 +26,6 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         return [EntityType::class, ChoiceType::class];
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['selectpicker']) && false === $options['selectpicker']) {
@@ -59,7 +54,7 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 
         // there is a very weird logic in vendor/symfony/twig-bridge/Resources/views/Form/form_div_layout.html.twig
         // in block "block choice_widget_collapsed" that resets "{% set required = false %}", so we fake it into the select
-        if (true === $options['required'] && (!\array_key_exists('size', $options['attr']) || $options['attr']['size'] <= 1)) {
+        if (true === $options['required'] && \is_array($options['attr']) && (!\array_key_exists('size', $options['attr']) || $options['attr']['size'] <= 1)) {
             $extendedOptions['required'] = 'required';
             $extendedOptions['placeholder'] = '';
         }

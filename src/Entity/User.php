@@ -1117,9 +1117,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             $initial = mb_substr($initial, 0, $length, 'UTF-8');
         }
 
-        $initial = mb_strtoupper($initial);
-
-        return $initial;
+        return mb_strtoupper($initial);
     }
 
     public function getAccountNumber(): ?string

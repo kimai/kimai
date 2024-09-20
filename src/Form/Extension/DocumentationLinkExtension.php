@@ -25,19 +25,11 @@ final class DocumentationLinkExtension extends AbstractTypeExtension
         return [FormType::class];
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['docu_chapter'] = $options['docu_chapter'] ?? null;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['docu_chapter']);

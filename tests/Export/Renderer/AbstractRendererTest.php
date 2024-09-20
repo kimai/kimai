@@ -34,15 +34,15 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
 {
     /**
-     * @param string $classname
-     * @return ExportRendererInterface|TimesheetExportInterface
+     * @param class-string $classname
      */
-    protected function getAbstractRenderer(string $classname)
+    protected function getAbstractRenderer(string $classname): ExportRendererInterface|TimesheetExportInterface
     {
         $languages = [
             'en' => LocaleService::DEFAULT_SETTINGS
@@ -53,7 +53,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
         $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages), $security);
+        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages));
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -61,11 +61,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         return new $classname($translator, $dateExtension, $dispatcher, $security);
     }
 
-    /**
-     * @param ExportRendererInterface $renderer
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function render(ExportRendererInterface $renderer)
+    protected function render(ExportRendererInterface $renderer): Response
     {
         $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
@@ -198,29 +194,29 @@ class MetaFieldColumnSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function loadTimesheetField(TimesheetMetaDisplayEvent $event)
+    public function loadTimesheetField(TimesheetMetaDisplayEvent $event): void
     {
         $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo'));
         $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo2'));
     }
 
-    public function loadCustomerField(CustomerMetaDisplayEvent $event)
+    public function loadCustomerField(CustomerMetaDisplayEvent $event): void
     {
         $event->addField($this->prepareEntity(new CustomerMeta(), 'customer-foo'));
     }
 
-    public function loadProjectField(ProjectMetaDisplayEvent $event)
+    public function loadProjectField(ProjectMetaDisplayEvent $event): void
     {
         $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo'));
         $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo2')->setIsVisible(false));
     }
 
-    public function loadActivityField(ActivityMetaDisplayEvent $event)
+    public function loadActivityField(ActivityMetaDisplayEvent $event): void
     {
         $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
     }
 
-    private function prepareEntity(MetaTableTypeInterface $meta, string $name)
+    private function prepareEntity(MetaTableTypeInterface $meta, string $name): MetaTableTypeInterface
     {
         return $meta
             ->setLabel('Working place')
