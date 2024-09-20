@@ -112,11 +112,11 @@ final class FavoriteRecordService
     public function removeFavorite(Timesheet $timesheet): void
     {
         if ($timesheet->getUser() === null) {
-            throw new \InvalidArgumentException('Cannot favorite timesheet without user');
+            throw new \InvalidArgumentException('Cannot remove favorite without user');
         }
 
         if ($timesheet->getId() === null) {
-            throw new \InvalidArgumentException('Cannot favorite unsaved timesheet');
+            throw new \InvalidArgumentException('Cannot remove unsaved favorite');
         }
 
         $this->removeFavoriteById($timesheet->getUser(), $timesheet->getId());
