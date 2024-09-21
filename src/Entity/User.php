@@ -1305,6 +1305,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return ($date instanceof \DateTimeInterface) ? $date : null;
     }
 
+    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
+    }
+
+    public function getPublicHolidayGroup(): null|string
+    {
+        $group = $this->getPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP);
+
+        return $group === null ? $group : (string) $group;
+    }
+
+    public function getHolidaysPerYear(): float
+    {
+        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
+
+        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
+    }
+
     /**
      * @deprecated since 2.22.0
      */
@@ -1359,25 +1378,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkHoursSunday(?int $seconds): void
     {
         $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds ?? 0);
-    }
-
-    public function setWorkStartingDay(?\DateTimeInterface $date): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
-    }
-
-    public function getPublicHolidayGroup(): null|string
-    {
-        $group = $this->getPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP);
-
-        return $group === null ? $group : (string) $group;
-    }
-
-    public function getHolidaysPerYear(): float
-    {
-        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
-
-        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
     public function setPublicHolidayGroup(null|string $group = null): void
