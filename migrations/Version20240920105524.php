@@ -40,7 +40,7 @@ WHERE kp.value > 0
             $this->addSql('INSERT INTO kimai2_user_preferences (`user_id`, `name`, `value`) VALUES (:id, :name, :value)', [
                 'id' => $id,
                 'name' => 'work_contract_type',
-                'value' => 'day',
+                'value' => 'default',
             ]);
         }
     }

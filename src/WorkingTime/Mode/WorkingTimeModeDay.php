@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class WorkingTimeModeDay implements WorkingTimeMode
 {
-    final public const ID = 'day';
+    final public const ID = 'default';
 
     /**
      * @var array<string, string>
