@@ -1404,29 +1404,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (float) number_format((round($holidays * 2) / 2), 1);
     }
 
-    public function hasSupervisor(): bool
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function hasContractSettings(): bool
     {
-        return $this->supervisor !== null;
-    }
-
-    public function getSupervisor(): ?User
-    {
-        return $this->supervisor;
-    }
-
-    public function setSupervisor(?User $supervisor): void
-    {
-        $this->supervisor = $supervisor;
-    }
-
-    public function getWorkContractMode(): string
-    {
-        return (string) $this->getPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID);
-    }
-
-    public function setWorkContractMode(string $mode): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
+        return $this->getHolidaysPerYear() !== 0.0 || $this->hasWorkHourConfiguration();
     }
 
     public function hasWorkHourConfiguration(): bool
@@ -1459,11 +1442,28 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getWorkHoursForDay($dateTime) > 0;
     }
 
-    /**
-     * @deprecated since 2.22.0
-     */
-    public function hasContractSettings(): bool
+    public function hasSupervisor(): bool
     {
-        return $this->getHolidaysPerYear() !== 0.0 || $this->hasWorkHourConfiguration();
+        return $this->supervisor !== null;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(?User $supervisor): void
+    {
+        $this->supervisor = $supervisor;
+    }
+
+    public function getWorkContractMode(): string
+    {
+        return (string) $this->getPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID);
+    }
+
+    public function setWorkContractMode(string $mode): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
     }
 }
