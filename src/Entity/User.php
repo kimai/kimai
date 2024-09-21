@@ -1409,7 +1409,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function hasContractSettings(): bool
     {
-        return $this->getHolidaysPerYear() !== 0.0 || $this->hasWorkHourConfiguration();
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
     }
 
     public function hasWorkHourConfiguration(): bool

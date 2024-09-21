@@ -102,7 +102,7 @@ final class WorkingTimeService
 
         $stats = null;
         $firstDay = $user->getWorkStartingDay();
-        $calculator = $this->contractModeService->getModeForUser($user)->getCalculator($user);
+        $calculator = $this->getContractMode($user)->getCalculator($user);
 
         foreach ($year->getMonths() as $month) {
             foreach ($month->getDays() as $day) {
