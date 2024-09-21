@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use App\Validator\Constraints as Constraints;
+use App\WorkingTime\Mode\WorkingTimeModeNone;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -1232,41 +1233,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 
-    public function getWorkHoursMonday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
-    }
-
-    public function getWorkHoursTuesday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
-    }
-
-    public function getWorkHoursWednesday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
-    }
-
-    public function getWorkHoursThursday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
-    }
-
-    public function getWorkHoursFriday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
-    }
-
-    public function getWorkHoursSaturday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
-    }
-
-    public function getWorkHoursSunday(): int
-    {
-        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
-    }
-
     public function getWorkStartingDay(): ?\DateTimeInterface
     {
         $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
@@ -1302,41 +1268,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
-    public function setWorkHoursMonday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_MONDAY, $seconds);
-    }
-
-    public function setWorkHoursTuesday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, $seconds);
-    }
-
-    public function setWorkHoursWednesday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, $seconds);
-    }
-
-    public function setWorkHoursThursday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, $seconds);
-    }
-
-    public function setWorkHoursFriday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, $seconds);
-    }
-
-    public function setWorkHoursSaturday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, $seconds);
-    }
-
-    public function setWorkHoursSunday(int $seconds): void
-    {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds);
-    }
-
     public function setPublicHolidayGroup(null|string $group = null): void
     {
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
@@ -1361,22 +1292,39 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return (float) number_format((round($holidays * 2) / 2), 1);
     }
 
-    public function hasContractSettings(): bool
+    public function hasSupervisor(): bool
     {
-        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
+        return $this->supervisor !== null;
+    }
+
+    public function getSupervisor(): ?User
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(?User $supervisor): void
+    {
+        $this->supervisor = $supervisor;
+    }
+
+    public function getWorkContractMode(): string
+    {
+        return (string) $this->getPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID);
+    }
+
+    public function setWorkContractMode(string $mode): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
     }
 
     public function hasWorkHourConfiguration(): bool
     {
-        return $this->getWorkHoursMonday() !== 0 ||
-            $this->getWorkHoursTuesday() !== 0 ||
-            $this->getWorkHoursWednesday() !== 0 ||
-            $this->getWorkHoursThursday() !== 0 ||
-            $this->getWorkHoursFriday() !== 0 ||
-            $this->getWorkHoursSaturday() !== 0 ||
-            $this->getWorkHoursSunday() !== 0;
+        return $this->getWorkContractMode() !== WorkingTimeModeNone::ID;
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursForDay(\DateTimeInterface $dateTime): int
     {
         return match ($dateTime->format('N')) {
@@ -1391,23 +1339,131 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         };
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function isWorkDay(\DateTimeInterface $dateTime): bool
     {
         return $this->getWorkHoursForDay($dateTime) > 0;
     }
 
-    public function hasSupervisor(): bool
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function hasContractSettings(): bool
     {
-        return $this->supervisor !== null;
+        return $this->getHolidaysPerYear() !== 0.0 || $this->hasWorkHourConfiguration();
     }
 
-    public function getSupervisor(): ?User
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursMonday(): int
     {
-        return $this->supervisor;
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
     }
 
-    public function setSupervisor(?User $supervisor): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursTuesday(): int
     {
-        $this->supervisor = $supervisor;
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursWednesday(): int
+    {
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursThursday(): int
+    {
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursFriday(): int
+    {
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursSaturday(): int
+    {
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function getWorkHoursSunday(): int
+    {
+        return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursMonday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_MONDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursTuesday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursWednesday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursThursday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursFriday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursSaturday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, $seconds ?? 0);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursSunday(?int $seconds): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds ?? 0);
     }
 }

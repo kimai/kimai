@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
@@ -552,14 +553,15 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByRole(User::ROLE_USER);
+        $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(0, $user->getWorkHoursMonday());
-        $this->assertEquals(0, $user->getWorkHoursTuesday());
-        $this->assertEquals(0, $user->getWorkHoursWednesday());
-        $this->assertEquals(0, $user->getWorkHoursThursday());
-        $this->assertEquals(0, $user->getWorkHoursFriday());
-        $this->assertEquals(0, $user->getWorkHoursSaturday());
-        $this->assertEquals(0, $user->getWorkHoursSunday());
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
 
         $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
 
@@ -580,13 +582,14 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
+        $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(3600, $user->getWorkHoursMonday());
-        $this->assertEquals(7200, $user->getWorkHoursTuesday());
-        $this->assertEquals(10800, $user->getWorkHoursWednesday());
-        $this->assertEquals(16200, $user->getWorkHoursThursday());
-        $this->assertEquals(18720, $user->getWorkHoursFriday());
-        $this->assertEquals(25140, $user->getWorkHoursSaturday());
-        $this->assertEquals(60, $user->getWorkHoursSunday());
+        $this->assertEquals(3600, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        $this->assertEquals(7200, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        $this->assertEquals(10800, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        $this->assertEquals(16200, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        $this->assertEquals(18720, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        $this->assertEquals(25140, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        $this->assertEquals(60, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
     }
 }

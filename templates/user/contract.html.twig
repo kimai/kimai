@@ -2,20 +2,39 @@
 
 {% block form_content %}
 
+    <script>
+        function toggleWorkingContractModeForm(value)
+        {
+            document.querySelectorAll('.work_contract_mode').forEach(function (element) {
+                element.classList.add('d-none');
+            });
+
+            // Show the element with the class 'work_contract_mode_' + value
+            var elementToShow = document.querySelector('.work_contract_mode_' + value);
+            if (elementToShow) {
+                elementToShow.classList.remove('d-none');
+            }
+        }
+    </script>
+
     {% form_theme form 'form/horizontal.html.twig' %}
 
     {{ form_row(form._token) }}
 
-    <fieldset class="form-fieldset form-fieldset-light">
-        <legend>{{ 'work_times_should'|trans }}</legend>
-        {{ form_row(form.workHoursMonday) }}
-        {{ form_row(form.workHoursTuesday) }}
-        {{ form_row(form.workHoursWednesday) }}
-        {{ form_row(form.workHoursThursday) }}
-        {{ form_row(form.workHoursFriday) }}
-        {{ form_row(form.workHoursSaturday) }}
-        {{ form_row(form.workHoursSunday) }}
-    </fieldset>
+    {% if form.workContractMode is defined  %}
+        <fieldset class="form-fieldset form-fieldset-light border-0 pb-0">
+            <legend>{{ 'work_times_should'|trans }}</legend>
+            {{ form_row(form.workContractMode, {attr:{'onchange': 'toggleWorkingContractModeForm(this.value)'}}) }}
+        </fieldset>
+    {% endif %}
+
+    {% for mode in form.vars.workContractModes %}
+        <fieldset class="form-fieldset form-fieldset-light  border-0 work_contract_mode work_contract_mode_{{ mode.getId() }} {% if user.getWorkContractMode() != mode.getId() %}d-none{% endif %}">
+            {% for field in mode.getFormFields() %}
+                {{ form_row(form.children[field]) }}
+            {% endfor %}
+        </fieldset>
+    {% endfor %}
 
     <fieldset class="form-fieldset form-fieldset-light">
         {{- form_rest(form) -}}
