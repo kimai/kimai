@@ -33,38 +33,24 @@ class UserPreference
     public const LOCALE = 'locale';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_MONDAY = WorkingTimeCalculatorDay::WORK_HOURS_MONDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_TUESDAY = WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_WEDNESDAY = WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_THURSDAY = WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_FRIDAY = WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_SATURDAY = WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY;
+    /** @deprecated since 2.22*/
+    public const WORK_HOURS_SUNDAY = WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY;
     public const WORK_STARTING_DAY = 'work_start_day';
     public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     public const HOLIDAYS_PER_YEAR = 'holidays';
     public const WORK_CONTRACT_TYPE = 'work_contract_type';
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_MONDAY = WorkingTimeCalculatorDay::WORK_HOURS_MONDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_TUESDAY = WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_WEDNESDAY = WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_THURSDAY = WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_FRIDAY = WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_SATURDAY = WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY;
-    /**
-     * @deprecated since 2.22
-     */
-    public const WORK_HOURS_SUNDAY = WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
