@@ -44,7 +44,7 @@ WHERE kp.value > 0
             ]);
         }
 
-        if (count($ids) === 0) {
+        if (\count($ids) === 0) {
             $this->preventEmptyMigrationWarning();
         }
     }
