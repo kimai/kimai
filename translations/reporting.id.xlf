@@ -10,6 +10,10 @@
         <source>report_user_month</source>
         <target state="translated">Tampilan bulanan untuk satu pengguna</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
+        <source>report_user_year</source>
+        <target state="translated">Tampilan tahunan untuk satu pengguna</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

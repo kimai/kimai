@@ -330,9 +330,9 @@
         <source>profile.about_me</source>
         <target>关于我</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>自什么时候开始工作</target>
+        <target state="needs-translation">自什么时候开始工作</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -992,7 +992,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">一封电子邮件已经发送。它包含一个您必须单击才能重置密码的链接。注意:您只能在%tokenLifetime%小时内请求一次新密码。如果没有收到电子邮件，请检查垃圾邮件文件夹或重试。</target>
+        <target state="translated">已发送一封内含重置密码链接的电子邮件。注意：您只能每隔 %tokenLifetime% 小时申请一次新密码。如果您没有收到电子邮件，请检查您的垃圾邮件文件夹或重试。</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1340,7 +1340,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="needs-translation">API 密码用于 Kimai 和您的应用程序之间的通信</target>
+        <target state="translated">您可以在这里管理用于向 Kimai 验证应用程序的 API Token。</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1460,11 +1460,11 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">目标小时数</target>
+        <target state="needs-translation">期望小时数</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">是-小时</target>
+        <target state="needs-translation">是-小时</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1646,9 +1646,9 @@
         <source>days</source>
         <target state="translated">天</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">孩子生病</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">亲属生病</target>
       </trans-unit>
       <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
         <source>unpaid_vacation</source>
@@ -1707,8 +1707,8 @@
         <target state="translated">缺席：注释为必填字段</target>
       </trans-unit>
       <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
-        <source>Format for time, date, and currency</source>
-        <target state="needs-translation">时间、日期和货币的格式</target>
+        <source>Time, date and currency format</source>
+        <target state="translated">时间、日期和货币的格式</target>
       </trans-unit>
       <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
         <source>timesheet.stop</source>
@@ -1745,6 +1745,26 @@
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
         <source>Activity number</source>
         <target state="translated">活跃次数</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">创建</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">支持</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">请求</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">更新</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">只允许在雇用合同中输入预期的工作时长</target>
       </trans-unit>
     </body>
   </file>

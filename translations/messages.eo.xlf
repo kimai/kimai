@@ -362,9 +362,9 @@
         <source>profile.about_me</source>
         <target>Pri mi</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Laboras ekde</target>
+        <target state="needs-translation">Laboras ekde</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>

@@ -10,6 +10,10 @@
         <source>help.upload</source>
         <target state="translated">Perhatian: file yang sudah ada akan ditimpa. Jenis file yang diizinkan adalah: %extensions%.</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Anda dapat mengunduh templat lebih lanjut di sini</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

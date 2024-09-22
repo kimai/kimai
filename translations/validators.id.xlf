@@ -14,6 +14,10 @@
         <source>This e-mail address is already in use.</source>
         <target state="translated">Alamat email ini sudah digunakan.</target>
       </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
+        <source>The username is already used.</source>
+        <target state="translated">Nama pengguna sudah digunakan.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

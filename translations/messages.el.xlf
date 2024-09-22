@@ -430,9 +430,9 @@
         <source>profile.about_me</source>
         <target>Σχετικά με μένα</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Εργάζεται από τότε</target>
+        <target state="needs-translation">Εργάζεται από τότε</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>

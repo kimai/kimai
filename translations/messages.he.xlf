@@ -374,25 +374,25 @@
         <source>profile.about_me</source>
         <target>על עצמי</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve" approved="yes">
         <source>profile.first_entry</source>
-        <target>תחילת עבודה</target>
+        <target state="final">יום העבודה הראשון</target>
       </trans-unit>
-      <trans-unit id="xEYQXPy" resname="profile.settings">
+      <trans-unit id="xEYQXPy" resname="profile.settings" xml:space="preserve" approved="yes">
         <source>profile.settings</source>
-        <target>פרופיל</target>
+        <target state="final">פרופיל</target>
       </trans-unit>
-      <trans-unit id="A6TLLQa" resname="profile.password">
+      <trans-unit id="A6TLLQa" resname="profile.password" xml:space="preserve" approved="yes">
         <source>profile.password</source>
-        <target>סיסמה</target>
+        <target state="final">סיסמה</target>
       </trans-unit>
-      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token" xml:space="preserve" approved="yes">
         <source>profile.api-token</source>
-        <target state="translated">גישה ל־API</target>
+        <target state="final">גישה ל־API</target>
       </trans-unit>
-      <trans-unit id="ygtTz8." resname="profile.roles">
+      <trans-unit id="ygtTz8." resname="profile.roles" xml:space="preserve" approved="yes">
         <source>profile.roles</source>
-        <target>תפקידים</target>
+        <target state="final">תפקידים</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
@@ -882,9 +882,9 @@
         <source>stats.workingTimeToday</source>
         <target>היום, %day%</target>
       </trans-unit>
-      <trans-unit id="1c0EQaz" resname="profile.registration_date">
+      <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve" approved="yes">
         <source>profile.registration_date</source>
-        <target>מועד הרישום</target>
+        <target state="final">מועד הרישום</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -1198,9 +1198,9 @@
         <source>stats.userAmountWeek</source>
         <target state="translated">ההכנסה שלי השבוע</target>
       </trans-unit>
-      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve" approved="yes">
         <source>profile.2fa_intro</source>
-        <target state="translated">אפשר להפעיל מכשיר חדש על ידי סריקת התמונה ביישומון שלך.</target>
+        <target state="final">אפשר להפעיל מכשיר חדש על ידי סריקת התמונה ביישומון שלך.</target>
       </trans-unit>
       <trans-unit id="BjyLITj" resname="stats.userDurationYear">
         <source>stats.userDurationYear</source>
@@ -1210,13 +1210,13 @@
         <source>stats.userDurationMonth</source>
         <target state="translated">שעות העבודה שלי החודש</target>
       </trans-unit>
-      <trans-unit id="FeFBn_3" resname="profile.2fa">
+      <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve" approved="yes">
         <source>profile.2fa</source>
-        <target state="translated">דו־שלבי (2FA)</target>
+        <target state="final">דו־שלבי (2FA)</target>
       </trans-unit>
-      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve" approved="yes">
         <source>profile.2fa_confirmation</source>
-        <target state="translated">נא לאשר את הקוד שיפעיל את האימות הדו־שלבי לחשבון הזה.</target>
+        <target state="final">נא לאשר את הקוד שיפעיל את האימות הדו־שלבי לחשבון הזה.</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
         <source>stats.userDurationWeek</source>
@@ -1318,13 +1318,13 @@
         <source>desktop</source>
         <target state="translated">מחשב</target>
       </trans-unit>
-      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve" approved="yes">
         <source>login.2fa_intro</source>
-        <target state="translated">נא למלא את קוד האימות כדי להשלים את תהליך הכניסה למערכת.</target>
+        <target state="final">נא למלא את קוד האימות כדי להשלים את תהליך הכניסה למערכת.</target>
       </trans-unit>
-      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+      <trans-unit id="FgKTw5v" resname="login.2fa_label" xml:space="preserve" approved="yes">
         <source>login.2fa_label</source>
-        <target state="translated">קוד אימות</target>
+        <target state="final">קוד אימות</target>
       </trans-unit>
       <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
@@ -1414,17 +1414,17 @@
         <source>created_at</source>
         <target state="translated">נוצר ב־</target>
       </trans-unit>
-      <trans-unit id="eCEGRzN" resname="work_contract">
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve" approved="yes">
         <source>work_contract</source>
-        <target state="translated">חוזה העסקה</target>
+        <target state="final">חוזה העסקה</target>
       </trans-unit>
-      <trans-unit id="7_d7IB3" resname="evaluation">
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve" approved="yes">
         <source>evaluation</source>
-        <target state="translated">הערכה</target>
+        <target state="final">הערכה</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve" approved="yes">
         <source>Complete month</source>
-        <target state="translated">נעילת חודש</target>
+        <target state="final">נעילת חודש</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1442,13 +1442,13 @@
         <source>Account working times</source>
         <target state="translated">זמני העבודה בחשבון</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve" approved="yes">
         <source>work_times_is</source>
-        <target state="translated">שעות בפועל</target>
+        <target state="final">שעות עבודה בפועל</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
+      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve" approved="yes">
         <source>work_times_result</source>
-        <target state="translated">שעות עבודה</target>
+        <target state="final">שעות עבודה</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -1478,13 +1478,13 @@
         <source>review</source>
         <target state="translated">סקירה</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve" approved="yes">
         <source>Expected number of hours</source>
-        <target state="translated">מספר השעות הצפוי</target>
+        <target state="final">שעות צפויות</target>
       </trans-unit>
-      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve" approved="yes">
         <source>work_times_should.none_configured</source>
-        <target state="translated">לא הוגדרו שעות יעד למשתמש זה בהגדרות חוזה ההעסקה.</target>
+        <target state="final">לא הוגדרו שעות יעד למשתמש זה בהגדרות חוזה ההעסקה.</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
@@ -1542,13 +1542,13 @@
         <source>sickness</source>
         <target state="translated">מחלה</target>
       </trans-unit>
-      <trans-unit id="2SmKENG" resname="other">
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve" approved="yes">
         <source>other</source>
-        <target state="translated">אחר</target>
+        <target state="final">אחר</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
+      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve" approved="yes">
         <source>button.request</source>
-        <target state="translated">הגשה</target>
+        <target state="final">הגשה</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro">
         <source>sickness.intro</source>
@@ -1610,9 +1610,9 @@
         <source>Category</source>
         <target>קטגוריה</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">מחלת ילד</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve" approved="yes">
+        <source>Sickness of a relative</source>
+        <target state="final">מחלת קרוב משפחה</target>
       </trans-unit>
       <trans-unit id="Vp7xjKh" resname="Audit logs">
         <source>Audit logs</source>
@@ -1749,6 +1749,22 @@
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
         <target state="translated">לאפשר רשומות שעות רק לימים שעבורם השעות הצפויות מוגדרות בחוזה ההעסקה</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve" approved="yes">
+        <source>Created</source>
+        <target state="final">יצירה</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve" approved="yes">
+        <source>request</source>
+        <target state="final">בקשה</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve" approved="yes">
+        <source>approve</source>
+        <target state="final">אישור</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve" approved="yes">
+        <source>Updated</source>
+        <target state="final">עדכון</target>
       </trans-unit>
     </body>
   </file>

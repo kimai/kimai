@@ -1610,9 +1610,9 @@
         <source>sickness</source>
         <target>Sickness</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target>Sickness of a child</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Sickness of a relative</target>
       </trans-unit>
       <trans-unit id="2SmKENG" resname="other">
         <source>other</source>

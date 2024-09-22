@@ -14,6 +14,10 @@
         <source>daterangepicker.lastWeek</source>
         <target state="translated">Minggu lalu</target>
       </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve">
+        <source>daterangepicker.thisWeek</source>
+        <target state="translated">Minggu ini</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

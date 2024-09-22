@@ -14,6 +14,10 @@
         <source>theme.markdown_content</source>
         <target state="translated">Izinkan format markdown dalam deskripsi dan komentar</target>
       </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
+        <source>theme.avatar_url</source>
+        <target state="translated">Izinkan penggunaan URL untuk gambar avatar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

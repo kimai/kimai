@@ -394,9 +394,9 @@
         <source>profile.about_me</source>
         <target state="final">Su di me</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry" approved="yes">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" approved="yes" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="final">Lavorando dal</target>
+        <target state="final">Primo giorno lavorativo</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date" approved="yes">
         <source>profile.registration_date</source>
@@ -1436,7 +1436,7 @@
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times" approved="yes" xml:space="preserve">
         <source>Working times</source>
-        <target state="final">Ore lavorate</target>
+        <target state="final">Orari di lavoro</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account" approved="yes">
         <source>Account working times</source>
@@ -1448,15 +1448,15 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" approved="yes" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="final">Numero di ore previsto</target>
+        <target state="final">Ore previste</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" approved="yes">
         <source>manual_bookings.duration_help</source>
         <target state="final">La durata può essere sia positiva (aumento dell'is-time) che negativa (riduzione dell'is-time).</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is" approved="yes">
+      <trans-unit id="31dFXhR" resname="work_times_is" approved="yes" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="final">Is-ore</target>
+        <target state="final">Ore lavorate</target>
       </trans-unit>
       <trans-unit id="EX27Gdt" resname="created_by" approved="yes">
         <source>created_by</source>
@@ -1642,9 +1642,9 @@
         <source>Custom content</source>
         <target state="final">Contenuti personalizzati</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child" approved="yes">
-        <source>sickness_child</source>
-        <target state="final">Malattia di un bambino</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" approved="yes" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="final">Malattia di un parente</target>
       </trans-unit>
       <trans-unit id="XE01Ar1" resname="parental" approved="yes">
         <source>parental</source>
@@ -1749,6 +1749,46 @@
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve" approved="yes">
         <source>booking_allow_only_work_days</source>
         <target state="final">Consenti l'inserimento delle ore solo per i giorni per i quali le ore previste sono definite nel contratto di lavoro</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve" approved="yes">
+        <source>Updated</source>
+        <target state="final">Aggiornato</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve" approved="yes">
+        <source>Created</source>
+        <target state="final">Creato</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve" approved="yes">
+        <source>request</source>
+        <target state="final">Richiedi</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve" approved="yes">
+        <source>approve</source>
+        <target state="final">Approva</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve" approved="yes">
+        <source>hours_per_day</source>
+        <target state="final">Ore al giorno</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve" approved="yes">
+        <source>hours_per_month</source>
+        <target state="final">Ore al mese</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve" approved="yes">
+        <source>hours_per_week</source>
+        <target state="final">Ore alla settimana</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve" approved="yes">
+        <source>last_working_day</source>
+        <target state="final">Ultimo giorno lavorativo</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve" approved="yes">
+        <source>work_hours_mode</source>
+        <target state="final">Calcolo dell'orario di lavoro</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve" approved="yes">
+        <source>work_days</source>
+        <target state="final">Giorni lavorativi</target>
       </trans-unit>
     </body>
   </file>
