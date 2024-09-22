@@ -10,7 +10,6 @@
 namespace App\API;
 
 use App\Entity\Invoice;
-use App\Entity\User;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
@@ -39,7 +38,7 @@ final class InvoiceController extends BaseApiController
     }
 
     /**
-     * Returns a collection of invoices (which are visible to the user)
+     * Returns a paginated collection of invoices.
      *
      * Needs permission: view_invoice
      */
@@ -54,11 +53,8 @@ final class InvoiceController extends BaseApiController
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new InvoiceArchiveQuery();
-        $query->setCurrentUser($user);
+        $this->prepareQuery($query, $paramFetcher);
         $factory = $this->getDateTimeFactory();
 
         $begin = $paramFetcher->get('begin');
@@ -79,29 +75,15 @@ final class InvoiceController extends BaseApiController
             }
         }
 
-        $page = $paramFetcher->get('page');
-        if (\is_string($page) && $page !== '') {
-            $query->setPage((int) $page);
-        }
-
-        $size = $paramFetcher->get('size');
-        if (is_numeric($size)) {
-            $query->setPageSize((int) $size);
-        }
-
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
         foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
             $query->addCustomer($customer);
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getPagerfantaForQuery($query);
-        $results = (array) $data->getCurrentPageResults();
-
-        $view = new View($results, 200);
+        $view = $this->createPaginatedView($data);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
-        $this->addPagination($view, $data);
 
         return $this->viewHandler->handle($view);
     }
