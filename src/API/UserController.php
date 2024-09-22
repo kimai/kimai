@@ -57,10 +57,12 @@ final class UserController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
-        $query->setCurrentUser($this->getUser());
+        $this->prepareBaseQuery($query, $paramFetcher);
 
         $visible = $paramFetcher->get('visible');
         if (\is_string($visible) && $visible !== '') {
@@ -82,9 +84,8 @@ final class UserController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getUsersForQuery($query);
-        $view = new View($data, 200);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createViewForPagination($pagination);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {

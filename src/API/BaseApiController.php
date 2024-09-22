@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\Pagination;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -52,11 +53,45 @@ abstract class BaseApiController extends AbstractController
         return DateTimeFactory::createByUser($user);
     }
 
-    protected function addPagination(View $view, Pagination $pagination): void
+    protected function prepareBaseQuery(BaseQuery $query, ParamFetcherInterface $paramFetcher): void
     {
+        $query->setIsApiCall(true);
+        $query->setCurrentUser($this->getUser());
+
+        $all = $paramFetcher->all(true);
+        if (array_key_exists('page', $all)) {
+            $page = $all['page'];
+            if (\is_string($page) && $page !== '') {
+                $query->setPage((int) $page);
+            }
+        }
+
+        if (array_key_exists('size', $all)) {
+            $size = $all['size'];
+            if (\is_string($size) && $size !== '') {
+                $query->setPageSize((int)$size);
+            }
+        }
+
+        if (array_key_exists('pageSize', $all)) {
+            $size = $all['pageSize'];
+            if (\is_string($size) && $size !== '') {
+                $query->setPageSize((int)$size);
+            }
+        }
+    }
+
+    protected function createViewForPagination(Pagination $pagination): View
+    {
+        $results = (array) $pagination->getCurrentPageResults();
+
+        $view = new View($results, 200);
+
         $view->setHeader('X-Page', (string) $pagination->getCurrentPage());
         $view->setHeader('X-Total-Count', (string) $pagination->getNbResults());
         $view->setHeader('X-Total-Pages', (string) $pagination->getNbPages());
         $view->setHeader('X-Per-Page', (string) $pagination->getMaxPerPage());
+
+        return $view;
     }
 }
