@@ -326,7 +326,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
     public function testNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Project object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/' . PHP_INT_MAX);
     }
 
     public function testPostAction(): void

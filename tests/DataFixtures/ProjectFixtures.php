@@ -19,6 +19,8 @@ use Faker\Factory;
  */
 final class ProjectFixtures implements TestFixture
 {
+    use FixturesTrait;
+
     private int $amount = 0;
     private ?bool $isVisible = null;
     /**
@@ -113,21 +115,5 @@ final class ProjectFixtures implements TestFixture
         $manager->flush();
 
         return $created;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Customer>
-     */
-    private function getAllCustomers(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Customer[] $entries */
-        $entries = $manager->getRepository(Customer::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
     }
 }

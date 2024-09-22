@@ -40,6 +40,8 @@ nelmio_api_doc:
             - { alias: TeamCollection,              type: App\Entity\Team,                          groups: [Default, Collection, Team] }
             - { alias: TeamMember,                  type: App\Entity\TeamMember,                    groups: [Team_Entity] }
             - { alias: TeamMembership,              type: App\Entity\TeamMember,                    groups: [User_Entity] }
+            - { alias: Invoice,                     type: App\Entity\Invoice,                       groups: [Default, Entity, Invoice, Invoice_Entity] }
+            - { alias: InvoiceCollection,           type: App\Entity\Invoice,                       groups: [Default, Collection, Invoice] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
