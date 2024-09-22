@@ -17,13 +17,15 @@ use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
+use App\WorkingTime\Mode\WorkingTimeMode;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Model\Month;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @internal this API and the entire namespace is instable: you should expect changes!
+ * @internal this API and the entire namespace is experimental: expect changes!
  */
 final class WorkingTimeService
 {
@@ -33,9 +35,15 @@ final class WorkingTimeService
     public function __construct(
         private readonly TimesheetRepository $timesheetRepository,
         private readonly WorkingTimeRepository $workingTimeRepository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly WorkingTimeModeFactory $contractModeService
     )
     {
+    }
+
+    public function getContractMode(User $user): WorkingTimeMode
+    {
+        return $this->contractModeService->getModeForUser($user);
     }
 
     public function getYearSummary(Year $year, \DateTimeInterface $until): YearPerUserSummary
@@ -94,6 +102,7 @@ final class WorkingTimeService
 
         $stats = null;
         $firstDay = $user->getWorkStartingDay();
+        $calculator = $this->getContractMode($user)->getCalculator($user);
 
         foreach ($year->getMonths() as $month) {
             foreach ($month->getDays() as $day) {
@@ -111,7 +120,7 @@ final class WorkingTimeService
                 $result = new WorkingTime($user, $dayDate);
 
                 if ($firstDay === null || $firstDay <= $dayDate) {
-                    $result->setExpectedTime($user->getWorkHoursForDay($dayDate));
+                    $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
                 }
 
                 if (\array_key_exists($key, $stats)) {
