@@ -14,6 +14,10 @@
         <source>task.start</source>
         <target state="translated">Mulai memproses</target>
       </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Jeda pemrosesan</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

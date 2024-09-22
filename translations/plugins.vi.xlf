@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target>Bạn chưa cài đặt phần mở rộng nào.</target>
       </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">Thêm tiện ích mở rộng</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">Plugin hiện có</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Mua ngay</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

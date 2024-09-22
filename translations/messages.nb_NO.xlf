@@ -610,9 +610,9 @@
         <source>help.fixedRate</source>
         <target state="translated">Hver tidsoppføring får samme verdi, uavhengig av varighet</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeidet siden</target>
+        <target state="needs-translation">Arbeidet siden</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
