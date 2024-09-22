@@ -107,10 +107,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null): void
+    protected function assertEntityNotFound(string $role, string $url): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, $url, $method);
+        $this->request($client, $url);
         $this->assertApiException($client->getResponse(), [
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'

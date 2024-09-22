@@ -245,7 +245,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     public function testNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Activity object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/activities/' . PHP_INT_MAX);
     }
 
     public function testPostAction(): void

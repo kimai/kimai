@@ -83,7 +83,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
     public function testNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Team object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/' . PHP_INT_MAX);
     }
 
     public function testDeleteActionWithUnknownTeam(): void
