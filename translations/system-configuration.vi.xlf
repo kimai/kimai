@@ -282,6 +282,38 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Sao chép dữ liệu khi thêm bằng cách kéo và thả</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+        <source>customer.number_format</source>
+        <target state="translated">Định dạng mã số khách hàng</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Thay thế cho phép: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Sang qua tên nhóm của người dùng đang đăng nhập khi tạo dữ liệu mới</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Cho phép trùng số tài khoản</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Định dạng mã số dự án</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Định dạng mã số hoạt động</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Cho phép một số được dùng nhiều lần</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Cho phép tạo hoạt động trong bảng theo dõi thời gian</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

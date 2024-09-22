@@ -298,9 +298,9 @@
         <source>profile.about_me</source>
         <target>O mně</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Začátek práce</target>
+        <target state="needs-translation">Začátek práce</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1474,13 +1474,13 @@
         <source>completed_month_pdf_note</source>
         <target state="translated">Tento dokument slouží jako doklad o odpracovaných hodinách.</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Je-hodin</target>
+        <target state="needs-translation">Je-hodin</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Očekávaný počet hodin</target>
+        <target state="needs-translation">Očekávaný počet hodin</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -1622,9 +1622,9 @@
         <source>Absence calendar</source>
         <target state="translated">Kalendář nepřítomnosti</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Ošetřování dítěte</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Ošetřování dítěte</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields">
         <source>Meta fields</source>

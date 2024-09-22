@@ -14,21 +14,21 @@
         <source>short</source>
         <target state="translated">Giờ: hồ sơ được tổng hợp, tổng số một mục nhập</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target>Người dùng: một mục nhập cho mỗi người dùng</target>
+        <target state="translated">Người dùng</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Hoạt động: một mục nhập cho mỗi hoạt động</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target>Dự án: một mục nhập cho mỗi dự án</target>
+        <target state="translated">Dự án</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Ngày: một mục nhập một ngày (sử dụng ngày bắt đầu)</target>
+        <target state="translated">Ngày</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
@@ -37,6 +37,22 @@
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
         <target state="translated">Hàng tuần: mỗi mục nhập cho mỗi tuần (sử dụng ngày bắt đầu)</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Hoạt động và người dùng</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Chọn mục để phân theo nhóm cho các dịch vụ trong hóa đơn</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Dự án và người dùng</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Ngày và người dùng</target>
       </trans-unit>
     </body>
   </file>

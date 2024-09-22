@@ -278,9 +278,9 @@
         <source>profile.about_me</source>
         <target state="translated">Om mig</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Arbetat sedan</target>
+        <target state="needs-translation">Arbetat sedan</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1572,7 +1572,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Måltimmar</target>
+        <target state="needs-translation">Måltimmar</target>
       </trans-unit>
       <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
         <source>Search filter</source>
@@ -1679,8 +1679,8 @@
         <target state="translated">Ett unikt ID som används för autentisering och vid export av data</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
-        <source>sickness_child</source>
-        <target state="translated">Vård av barn</target>
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Vård av barn</target>
       </trans-unit>
       <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
         <source>force_password_change</source>
@@ -1744,7 +1744,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Är-timmar</target>
+        <target state="needs-translation">Är-timmar</target>
       </trans-unit>
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>

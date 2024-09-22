@@ -2,7 +2,114 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="tasks.en.xlf">
     <body>
-
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+        <source>Tasks</source>
+        <target state="translated">Những tác vụ</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+        <source>task_todo</source>
+        <target state="translated">Tác vụ cần làm</target>
+      </trans-unit>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Tác vụ cho mỗi người dùng</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Tác vụ nhóm</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Bắt đầu xử lý</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Tạm dừng xử lý</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Phân công cho tôi</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">Xóa tác vụ</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+        <source>task.reopen</source>
+        <target state="translated">Mở lại tác vụ</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="translated">Hoàn thành tác vụ</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+        <source>task.create</source>
+        <target state="translated">Tạo tác vụ</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+        <source>tasks.pending</source>
+        <target state="translated">Tác vụ dở dang</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+        <source>task.help.end</source>
+        <target state="translated">Tác vụ phải được hoàn thành trước ngày này</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+        <source>task.help.user</source>
+        <target state="translated">Phân công tác vụ cho người dùng</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+        <source>task.help.team</source>
+        <target state="translated">Phân công tác vụ cho nhóm</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="translated">Số lượng tác vụ hiển thị trên một trang trong công cụ bảng điều khiển</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Thời gian dự kiến</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Thời gian dự kiến cần để hoàn thành tác vụ trong hh:mm</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Mô tả này sẽ được sao chép vào mỗi bảng chấm công</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Những tag này sẽ được sao chép vào mỗi bảng chấm công</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
+        <source>task_overdue</source>
+        <target state="translated">Quá hạn</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
+        <source>task_no_estimation</source>
+        <target state="translated">Không có ước tính</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
+        <source>task_with_estimation</source>
+        <target state="translated">Có ước tính</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
+        <source>task_not_started</source>
+        <target state="translated">Chưa bắt đầu</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
+        <source>task_started</source>
+        <target state="translated">Đẵ bắt đầu làm</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+        <source>task.help.title</source>
+        <target state="translated">Mô tả ngắn về tác vụ</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+        <source>tasks.my</source>
+        <target state="translated">Tác vụ của tôi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
