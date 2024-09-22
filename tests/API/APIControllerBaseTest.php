@@ -107,10 +107,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null): void
+    protected function assertEntityNotFound(string $role, string $url): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, $url, $method);
+        $this->request($client, $url);
         $this->assertApiException($client->getResponse(), [
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
@@ -272,6 +272,25 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected static function getExpectedResponseStructure(string $type): array
     {
         switch ($type) {
+            case 'Invoice':
+            case 'InvoiceCollection':
+                return [
+                    'id' => 'int',
+                    'comment' => '@string',
+                    'createdAt' => 'datetime',
+                    'currency' => 'string',
+                    'customer' => ['result' => 'object', 'type' => '@Customer'],
+                    'user' => ['result' => 'object', 'type' => '@User'],
+                    'dueDays' => 'int',
+                    'invoiceNumber' => 'string',
+                    'metaFields' => 'array',
+                    'paymentDate' => '@datetime',
+                    'status' => 'string',
+                    'tax' => 'float',
+                    'total' => 'float',
+                    'vat' => 'float',
+                ];
+
             case 'PageActionItem':
                 return [
                     'id' => 'string',

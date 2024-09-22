@@ -448,7 +448,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetEntityNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX);
     }
 
     public function testPostAction(): void
