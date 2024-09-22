@@ -17,6 +17,7 @@ use App\Entity\UserPreference;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Tests\Security\TestUserEntity;
+use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -74,13 +75,6 @@ class UserTest extends TestCase
         $user->setAccountNumber('A-058375');
         self::assertEquals('A-058375', $user->getAccountNumber());
 
-        self::assertEquals(0, $user->getWorkHoursMonday());
-        self::assertEquals(0, $user->getWorkHoursTuesday());
-        self::assertEquals(0, $user->getWorkHoursWednesday());
-        self::assertEquals(0, $user->getWorkHoursThursday());
-        self::assertEquals(0, $user->getWorkHoursFriday());
-        self::assertEquals(0, $user->getWorkHoursSaturday());
-        self::assertEquals(0, $user->getWorkHoursSunday());
         self::assertEquals(0, $user->getHolidaysPerYear());
         self::assertFalse($user->hasWorkHourConfiguration());
         self::assertNull($user->getPublicHolidayGroup());
@@ -88,9 +82,22 @@ class UserTest extends TestCase
         self::assertNull($user->getSupervisor());
     }
 
+    /**
+     * @deprecated
+     * @group legacy
+     */
     public function testWorkContract(): void
     {
         $user = new User();
+
+        self::assertEquals(0, $user->getWorkHoursMonday());
+        self::assertEquals(0, $user->getWorkHoursTuesday());
+        self::assertEquals(0, $user->getWorkHoursWednesday());
+        self::assertEquals(0, $user->getWorkHoursThursday());
+        self::assertEquals(0, $user->getWorkHoursFriday());
+        self::assertEquals(0, $user->getWorkHoursSaturday());
+        self::assertEquals(0, $user->getWorkHoursSunday());
+        self::assertFalse($user->hasWorkHourConfiguration());
 
         $monday = new \DateTime('2023-05-08 12:00:00', new \DateTimeZone('Europe/Berlin'));
         $tuesday = new \DateTime('2023-05-09 12:00:00', new \DateTimeZone('Europe/Berlin'));
@@ -107,6 +114,8 @@ class UserTest extends TestCase
         self::assertFalse($user->isWorkDay($friday));
         self::assertFalse($user->isWorkDay($saturday));
         self::assertFalse($user->isWorkDay($sunday));
+
+        $user->setWorkContractMode(WorkingTimeModeDay::ID);
 
         $user->setWorkHoursMonday(7200);
         self::assertTrue($user->hasWorkHourConfiguration());
