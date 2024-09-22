@@ -225,19 +225,15 @@ class Invoice implements EntityWithMetaFields
             throw new \InvalidArgumentException('Missing due-days or vat setting');
         }
 
-        $this->customer = $model->getCustomer();
-        $this->user = $model->getUser();
-        $this->total = $model->getCalculator()->getTotal();
-        $this->tax = $model->getCalculator()->getTax();
-        $this->invoiceNumber = $model->getInvoiceNumber();
-        $this->currency = $model->getCurrency();
-
-        $createdAt = $model->getInvoiceDate();
-        $this->createdAt = \DateTime::createFromInterface($createdAt);
-        $this->timezone = $createdAt->getTimezone()->getName();
-
-        $this->dueDays = $template->getDueDays();
-        $this->vat = $template->getVat();
+        $this->setCustomer($model->getCustomer());
+        $this->setUser($model->getUser());
+        $this->setTotal($model->getCalculator()->getTotal());
+        $this->setTax($model->getCalculator()->getTax());
+        $this->setInvoiceNumber($model->getInvoiceNumber());
+        $this->setCurrency($model->getCurrency());
+        $this->setCreatedAt($model->getInvoiceDate());
+        $this->setDueDays($template->getDueDays());
+        $this->setVat($template->getVat());
 
         return $this;
     }
@@ -403,6 +399,52 @@ class Invoice implements EntityWithMetaFields
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function setVat(float $vat): void
+    {
+        $this->vat = $vat;
+    }
+
+    public function setInvoiceNumber(string $invoiceNumber): void
+    {
+        $this->invoiceNumber = $invoiceNumber;
+    }
+
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = \DateTime::createFromInterface($createdAt);
+        $this->timezone = $createdAt->getTimezone()->getName();
+    }
+
+    public function setTotal(float $total): void
+    {
+        $this->total = $total;
+    }
+
+    public function setTax(float $tax): void
+    {
+        $this->tax = $tax;
+    }
+
+    public function setCurrency(string $currency): void
+    {
+        $this->currency = $currency;
+    }
+
+    public function setDueDays(int $dueDays): void
+    {
+        $this->dueDays = $dueDays;
     }
 
     public function __clone()
