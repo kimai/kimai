@@ -76,6 +76,25 @@ class InvoiceControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
 
+    public function testGetCollectionWithPagination(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->importInvoiceFixtures(20);
+
+        $query = ['page' => 2, 'size' => 4];
+        $this->assertAccessIsGranted($client, '/api/invoices', 'GET', $query);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertEquals(4, \count($result));
+        $this->assertPagination($client->getResponse(), 2, 4, 5, 20);
+        self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
+    }
+
     public function testGetEntityIsSecure(): void
     {
         $client = $this->getClientForAuthenticatedUser();
