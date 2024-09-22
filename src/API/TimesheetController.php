@@ -96,7 +96,7 @@ final class TimesheetController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
-        $this->prepareBaseQuery($query, $paramFetcher);
+        $this->prepareQuery($query, $paramFetcher);
         $seeAll = false;
 
         if ($this->isGranted('view_other_timesheet')) {

@@ -65,7 +65,7 @@ final class CustomerController extends BaseApiController
     {
         $query = new CustomerQuery();
         $query->loadTeams();
-        $this->prepareBaseQuery($query, $paramFetcher);
+        $this->prepareQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {

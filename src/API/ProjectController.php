@@ -74,7 +74,7 @@ final class ProjectController extends BaseApiController
     {
         $query = new ProjectQuery();
         $query->loadTeams();
-        $this->prepareBaseQuery($query, $paramFetcher);
+        $this->prepareQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {

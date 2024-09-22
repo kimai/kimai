@@ -68,7 +68,7 @@ final class ActivityController extends BaseApiController
     {
         $query = new ActivityQuery();
         $query->loadTeams();
-        $this->prepareBaseQuery($query, $paramFetcher);
+        $this->prepareQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {
