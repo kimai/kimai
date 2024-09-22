@@ -239,7 +239,7 @@ final class TimesheetController extends BaseApiController
         }
 
         $pagination = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createViewForPagination($pagination);
+        $view = $this->createPaginatedView($pagination);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {

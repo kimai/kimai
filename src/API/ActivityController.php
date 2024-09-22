@@ -110,7 +110,7 @@ final class ActivityController extends BaseApiController
         }
 
         $pagination = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createViewForPagination($pagination);
+        $view = $this->createPaginatedView($pagination);
 
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
