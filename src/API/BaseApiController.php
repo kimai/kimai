@@ -53,45 +53,51 @@ abstract class BaseApiController extends AbstractController
         return DateTimeFactory::createByUser($user);
     }
 
-    protected function prepareBaseQuery(BaseQuery $query, ParamFetcherInterface $paramFetcher): void
+    protected function prepareQuery(BaseQuery $query, ParamFetcherInterface $paramFetcher): void
     {
         $query->setIsApiCall(true);
         $query->setCurrentUser($this->getUser());
 
+        // there is no function has() in ParamFetcherInterface, so we need to use all() and check for the key
         $all = $paramFetcher->all(true);
-        if (array_key_exists('page', $all)) {
+
+        if (\array_key_exists('page', $all)) {
             $page = $all['page'];
-            if (\is_string($page) && $page !== '') {
+            if (is_numeric($page)) {
                 $query->setPage((int) $page);
             }
         }
 
-        if (array_key_exists('size', $all)) {
+        if (\array_key_exists('size', $all)) {
             $size = $all['size'];
-            if (\is_string($size) && $size !== '') {
-                $query->setPageSize((int)$size);
+            if (is_numeric($size)) {
+                $query->setPageSize((int) $size);
             }
         }
 
-        if (array_key_exists('pageSize', $all)) {
+        if (\array_key_exists('pageSize', $all)) {
             $size = $all['pageSize'];
-            if (\is_string($size) && $size !== '') {
-                $query->setPageSize((int)$size);
+            if (is_numeric($size)) {
+                $query->setPageSize((int) $size);
             }
         }
     }
 
-    protected function createViewForPagination(Pagination $pagination): View
+    protected function createPaginatedView(Pagination $pagination): View
     {
         $results = (array) $pagination->getCurrentPageResults();
 
         $view = new View($results, 200);
+        $this->addPagination($view, $pagination);
 
+        return $view;
+    }
+
+    protected function addPagination(View $view, Pagination $pagination): void
+    {
         $view->setHeader('X-Page', (string) $pagination->getCurrentPage());
         $view->setHeader('X-Total-Count', (string) $pagination->getNbResults());
         $view->setHeader('X-Total-Pages', (string) $pagination->getNbPages());
         $view->setHeader('X-Per-Page', (string) $pagination->getMaxPerPage());
-
-        return $view;
     }
 }

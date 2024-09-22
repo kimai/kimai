@@ -43,6 +43,10 @@ WHERE kp.value > 0
                 'value' => 'day',
             ]);
         }
+
+        if (\count($ids) === 0) {
+            $this->preventEmptyMigrationWarning();
+        }
     }
 
     public function down(Schema $schema): void
