@@ -38,7 +38,7 @@ class ApiDocControllerTest extends ControllerBaseTest
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User'];
+        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -70,6 +70,8 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/customers/{id}/meta',
             '/api/customers/{id}/rates',
             '/api/customers/{id}/rates/{rateId}',
+            '/api/invoices',
+            '/api/invoices/{id}',
             '/api/projects',
             '/api/projects/{id}',
             '/api/projects/{id}/meta',
