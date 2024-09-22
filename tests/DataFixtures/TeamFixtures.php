@@ -9,7 +9,6 @@
 
 namespace App\Tests\DataFixtures;
 
-use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -19,22 +18,15 @@ use Doctrine\Persistence\ObjectManager;
  */
 final class TeamFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $addCustomer = true;
+    use FixturesTrait;
+
+    private int $amount = 0;
+    private bool $addCustomer = true;
     /**
      * @var User[]
      */
-    private $skipUser = [];
-    /**
-     * @var bool
-     */
-    private $addUser = true;
+    private array $skipUser = [];
+    private bool $addUser = true;
     /**
      * @var callable
      */
@@ -44,7 +36,6 @@ final class TeamFixtures implements TestFixture
      * Will be called prior to persisting the object.
      *
      * @param callable $callback
-     * @return TeamFixtures
      */
     public function setCallback(callable $callback): TeamFixtures
     {
@@ -87,7 +78,6 @@ final class TeamFixtures implements TestFixture
     }
 
     /**
-     * @param ObjectManager $manager
      * @return Team[]
      */
     public function load(ObjectManager $manager): array
@@ -134,37 +124,5 @@ final class TeamFixtures implements TestFixture
         $manager->flush();
 
         return $created;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Customer>
-     */
-    private function getAllCustomers(ObjectManager $manager)
-    {
-        $all = [];
-        /** @var Customer[] $entries */
-        $entries = $manager->getRepository(Customer::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
-     */
-    private function getAllUsers(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var User[] $entries */
-        $entries = $manager->getRepository(User::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
     }
 }
