@@ -58,8 +58,8 @@ class InvoiceFixtures implements TestFixture
             $invoice->setCustomer($customers[array_rand($customers)]);
 
             $prefix = uniqid($i . '_') . '_';
-            $invoice->setInvoiceNumber($prefix . $faker->randomNumber(10));
-            $invoice->setFilename($prefix . $faker->randomNumber(10));
+            $invoice->setInvoiceNumber($prefix . $faker->randomNumber(3));
+            $invoice->setFilename($prefix . $faker->randomNumber(3));
             $invoice->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'));
             $invoice->setUser($users[array_rand($users)]);
             $invoice->setDueDays($faker->randomNumber(2));

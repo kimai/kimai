@@ -24,6 +24,8 @@ final class Version20240920105524 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $this->preventEmptyMigrationWarning();
+
         $ids = $this->connection->fetchFirstColumn("
 SELECT DISTINCT user_id
 FROM kimai2_user_preferences AS kp
