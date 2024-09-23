@@ -42,7 +42,7 @@
         <div class="input-group inline-search position-static">
             <button type="button" class="btn {{ btnClass }} dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
                 {{ icon('filter', true) }}
-                {% if filterCount > 0 %}<span class="badge badge-pill bg-blue ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
+                {% if filterCount > 0 %}<span class="badge badge-pill bg-primary text-primary-fg ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
             </button>
             <div class="dropdown-menu p-3 search-dropdown" data-popper-placement="bottom-start" aria-labelledby="search-dropdown-btn">
                 {{ form_rest(form) }}
