@@ -97,7 +97,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $table->addColumn('project', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('activity', ['class' => 'd-none d-xl-table-cell']);
         $table->addColumn('description', ['class' => 'd-none']);
-        $table->addColumn('tags', ['class' => 'd-none badges', 'orderBy' => false]);
+        $table->addColumn('tags', ['class' => 'd-none', 'orderBy' => false]);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
