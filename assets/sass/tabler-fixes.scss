@@ -33,8 +33,8 @@ fieldset:empty {
 }
 
 .navbar[data-bs-theme=dark] {
-    /* give navigation elements better contrast */
-    --tblr-navbar-color: hsla(0,0%,100%,.9);
+    /* give navigation elements slightly higher contrast */
+    --tblr-navbar-color: hsla(0,0%,100%,.8);
 }
 
 /* this is not a bugfix, but it adds a border for better visual segregation */
