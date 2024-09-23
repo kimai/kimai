@@ -326,9 +326,9 @@
         <source>profile.about_me</source>
         <target state="translated">Hakkımda</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Şu günden beri çalışıyor</target>
+        <target state="translated">İlk çalışma günü</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1452,7 +1452,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Beklenen saat sayısı</target>
+        <target state="translated">Beklenen saat</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
@@ -1490,9 +1490,9 @@
         <source>holiday</source>
         <target state="translated">Tatil</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Saat</target>
+        <target state="translated">Çalışılan saatler</target>
       </trans-unit>
       <trans-unit id="Na24cyT" resname="status.requested">
         <source>status.requested</source>
@@ -1682,9 +1682,9 @@
         <source>Absence calendar</source>
         <target state="translated">Devamsızlık takvimi</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Çocuğun hastalanması</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Yakın akrabanın hastalanması</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
@@ -1765,6 +1765,30 @@
       <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
         <source>approve</source>
         <target state="translated">Onayla</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Gün başına saat</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Hafta başına saat</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Çalışma süresi hesaplama</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Son çalışma günü</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Ay başına saat</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Çalışma günleri</target>
       </trans-unit>
     </body>
   </file>

@@ -742,9 +742,9 @@
         <source>profile.registration_date</source>
         <target>Skrásett tann</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeitt síðan</target>
+        <target state="needs-translation">Arbeitt síðan</target>
       </trans-unit>
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>

@@ -326,9 +326,9 @@
         <source>profile.about_me</source>
         <target state="translated">Over mijzelf</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Aan het werk sinds</target>
+        <target state="needs-translation">Aan het werk sinds</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1420,15 +1420,15 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Streefuren</target>
+        <target state="needs-translation">Streefuren</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target state="translated">Bevestigd door %user% op %date%</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Is-uren</target>
+        <target state="needs-translation">Is-uren</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1663,8 +1663,8 @@
         <target state="translated">Ouderschapsverlof</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
-        <source>sickness_child</source>
-        <target state="translated">Ziekte kind</target>
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Ziekte kind</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
         <source>supervisor</source>

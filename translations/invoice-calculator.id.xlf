@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target state="needs-translation">Pengguna</target>
+        <target state="translated">Pengguna</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
@@ -25,6 +25,10 @@
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
         <source>invoice_calculator.help</source>
         <target state="translated">Pilih berdasarkan bidang mana item faktur harus dikelompokkan</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">Default (satu baris per entri)</target>
       </trans-unit>
     </body>
   </file>

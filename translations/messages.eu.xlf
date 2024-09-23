@@ -338,9 +338,9 @@
         <source>profile.about_me</source>
         <target>Niri buruz</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Honez gero aktibo</target>
+        <target state="needs-translation">Honez gero aktibo</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>

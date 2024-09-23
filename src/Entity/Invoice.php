@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('invoiceNumber')]
 #[UniqueEntity('invoiceFilename')]
+#[Serializer\ExclusionPolicy('all')]
 #[Exporter\Order(['id', 'createdAt', 'invoiceNumber', 'status', 'customer', 'subtotal', 'total', 'tax', 'currency', 'vat', 'dueDays', 'dueDate', 'paymentDate', 'user', 'invoiceFilename', 'customerNumber', 'comment'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Exporter\Expose(name: 'customerNumber', label: 'number', exp: 'object.getCustomer() === null ? null : object.getCustomer().getNumber()')]
@@ -44,56 +45,78 @@ class Invoice implements EntityWithMetaFields
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     #[ORM\Column(name: 'invoice_number', type: 'string', length: 50, nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'invoice.number', type: 'string')]
     private ?string $invoiceNumber = null;
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Invoice'])]
     #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
     #[ORM\ManyToOne(targetEntity: Customer::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?Customer $customer = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?User $user = null;
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'date', type: 'datetime')]
     private ?\DateTime $createdAt = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     private ?string $timezone = null;
     #[ORM\Column(name: 'total', type: 'float', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'total_rate', type: 'float')]
     private float $total = 0.00;
     #[ORM\Column(name: 'tax', type: 'float', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'invoice.tax', type: 'float')]
     private float $tax = 0.00;
     #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(max: 3)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'currency', type: 'string')]
     private ?string $currency = null;
     #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0, max: 999)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Invoice'])]
     #[Exporter\Expose(label: 'due_days', type: 'integer')]
     private int $dueDays = 30;
     #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0.0, max: 99.99)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'tax_rate', type: 'float')]
     private float $vat = 0.00;
     #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'status', type: 'string')]
     private string $status = self::STATUS_NEW;
     #[ORM\Column(name: 'invoice_filename', type: 'string', length: 150, nullable: false)]
@@ -103,6 +126,8 @@ class Invoice implements EntityWithMetaFields
     private ?string $invoiceFilename = null;
     private bool $localized = false;
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?\DateTime $paymentDate = null;
     /**
      * Meta fields registered with the invoice
@@ -191,7 +216,6 @@ class Invoice implements EntityWithMetaFields
     public function setModel(InvoiceModel $model): Invoice
     {
         $template = $model->getTemplate();
-
         if ($template === null) {
             throw new \InvalidArgumentException('Missing invoice template');
         }
@@ -200,19 +224,25 @@ class Invoice implements EntityWithMetaFields
             throw new \InvalidArgumentException('Missing due-days or vat setting');
         }
 
-        $this->customer = $model->getCustomer();
-        $this->user = $model->getUser();
-        $this->total = $model->getCalculator()->getTotal();
-        $this->tax = $model->getCalculator()->getTax();
-        $this->invoiceNumber = $model->getInvoiceNumber();
-        $this->currency = $model->getCurrency();
+        $customer = $model->getCustomer();
+        if ($customer === null) {
+            throw new \InvalidArgumentException('Missing invoice customer');
+        }
 
-        $createdAt = $model->getInvoiceDate();
-        $this->createdAt = \DateTime::createFromInterface($createdAt);
-        $this->timezone = $createdAt->getTimezone()->getName();
+        $user = $model->getUser();
+        if ($user === null) {
+            throw new \InvalidArgumentException('Missing invoice user');
+        }
 
-        $this->dueDays = $template->getDueDays();
-        $this->vat = $template->getVat();
+        $this->setCustomer($customer);
+        $this->setUser($user);
+        $this->setTotal($model->getCalculator()->getTotal());
+        $this->setTax($model->getCalculator()->getTax());
+        $this->setInvoiceNumber($model->getInvoiceNumber());
+        $this->setCurrency($model->getCurrency());
+        $this->setCreatedAt($model->getInvoiceDate());
+        $this->setDueDays($template->getDueDays());
+        $this->setVat($template->getVat());
 
         return $this;
     }
@@ -378,6 +408,52 @@ class Invoice implements EntityWithMetaFields
         $current->merge($meta);
 
         return $this;
+    }
+
+    public function setVat(float $vat): void
+    {
+        $this->vat = $vat;
+    }
+
+    public function setInvoiceNumber(string $invoiceNumber): void
+    {
+        $this->invoiceNumber = $invoiceNumber;
+    }
+
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = \DateTime::createFromInterface($createdAt);
+        $this->timezone = $createdAt->getTimezone()->getName();
+    }
+
+    public function setTotal(float $total): void
+    {
+        $this->total = $total;
+    }
+
+    public function setTax(float $tax): void
+    {
+        $this->tax = $tax;
+    }
+
+    public function setCurrency(string $currency): void
+    {
+        $this->currency = $currency;
+    }
+
+    public function setDueDays(int $dueDays): void
+    {
+        $this->dueDays = $dueDays;
     }
 
     public function __clone()

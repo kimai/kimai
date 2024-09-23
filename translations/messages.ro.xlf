@@ -354,9 +354,9 @@
         <source>profile.about_me</source>
         <target>Despre mine</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Lucrez de la</target>
+        <target state="needs-translation">Lucrez de la</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1400,11 +1400,11 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Numărul de ore estimat</target>
+        <target state="needs-translation">Numărul de ore estimat</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Timpul de lucru este</target>
+        <target state="needs-translation">Timpul de lucru este</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
         <source>work_times_result</source>
@@ -1583,8 +1583,8 @@
         <target state="translated">Boală</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
-        <source>sickness_child</source>
-        <target state="translated">Boala unui copil</target>
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Boala unui copil</target>
       </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
         <source>button.report</source>

@@ -1018,9 +1018,9 @@
         <source>notifications.welcome</source>
         <target state="final">感謝您允許通知！</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve" approved="yes">
-        <source>sickness_child</source>
-        <target state="final">子女病假</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve" approved="no">
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">子女病假</target>
       </trans-unit>
       <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve" approved="yes">
         <source>status.progress</source>
@@ -1034,9 +1034,9 @@
         <source>sickness</source>
         <target state="final">病假</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve" approved="yes">
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve" approved="no">
         <source>Expected number of hours</source>
-        <target state="final">預期工時</target>
+        <target state="needs-translation">預期工時</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time" xml:space="preserve" approved="yes">
         <source>invoice.total_working_time</source>
@@ -1074,9 +1074,9 @@
         <source>help.invoiceTemplate_customer</source>
         <target state="final">此客戶的收支單預設使用此模版產生。若有需要，可以在收支單產生途中修改。</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve" approved="yes">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve" approved="no">
         <source>profile.first_entry</source>
-        <target state="final">工作開始於</target>
+        <target state="needs-translation">工作開始於</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type" xml:space="preserve" approved="yes">
         <source>type</source>
@@ -1106,9 +1106,9 @@
         <source>status.requested</source>
         <target state="final">已請求</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve" approved="yes">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve" approved="no">
         <source>work_times_is</source>
-        <target state="final">實際工時</target>
+        <target state="needs-translation">實際工時</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled" xml:space="preserve" approved="yes">
         <source>status.canceled</source>

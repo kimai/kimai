@@ -19,7 +19,6 @@ use Faker\Factory;
 class InvoiceTemplateFixtures implements TestFixture
 {
     /**
-     * @param ObjectManager $manager
      * @return InvoiceTemplate[]
      */
     public function load(ObjectManager $manager): array

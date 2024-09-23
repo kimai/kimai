@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Điều đó có thể xảy ra…</target>
+        <target state="translated">Quên mật khẩu?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
@@ -40,7 +40,27 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… bạn quên mật khẩu? Đừng lo lắng: Kimai sẽ giúp bạn tạo một cái mới:</target>
+        <target state="translated">Đừng lo, Kimai sẽ giúp bạn tạo mật khẩu mới!</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Có vắng mặt mới | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Xin phép vắng mặt mới được tạo cho %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Vui lòng xét duyệt tại: %approval_url%</target>
       </trans-unit>
     </body>
   </file>

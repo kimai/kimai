@@ -282,9 +282,9 @@
         <source>profile.about_me</source>
         <target>À propos de moi</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Activités suivies depuis</target>
+        <target state="needs-translation">Activités suivies depuis</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1440,7 +1440,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Nombre d'heures attendues</target>
+        <target state="needs-translation">Nombre d'heures attendues</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1538,9 +1538,9 @@
         <source>time_off</source>
         <target state="translated">Congé</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Heures réelles</target>
+        <target state="needs-translation">Heures réelles</target>
       </trans-unit>
       <trans-unit id="op76XPd" resname="search_filter">
         <source>Search filter</source>
@@ -1610,9 +1610,9 @@
         <source>send_to</source>
         <target state="translated">Envoyer à %name%</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Maladie d'un enfant</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Maladie d'un enfant</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>

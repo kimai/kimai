@@ -19,9 +19,9 @@ use App\Repository\Query\InvoiceQuery;
 final class InvoiceModelFactory
 {
     public function __construct(
-        private CustomerStatisticService $customerStatisticService,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        private readonly CustomerStatisticService $customerStatisticService,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService
     ) {
     }
 

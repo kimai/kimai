@@ -442,9 +442,9 @@
         <source>profile.about_me</source>
         <target>O meni</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Početak rada</target>
+        <target state="needs-translation">Početak rada</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -1436,7 +1436,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Očekivani broj sati</target>
+        <target state="needs-translation">Očekivani broj sati</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1446,9 +1446,9 @@
         <source>work_times_result</source>
         <target state="translated">Radni sati</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Odrađeni sati</target>
+        <target state="needs-translation">Odrađeni sati</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1550,9 +1550,9 @@
         <source>button.report</source>
         <target state="translated">Izvještaj</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>sickness.intro</source>
-        <target state="translated">Bolest, posjet liječniku, njega bliskih srodnika itd.</target>
+        <target state="translated">Bolest, posjet liječniku, njega članova obitelji itd.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1602,9 +1602,9 @@
         <source>Category</source>
         <target state="translated">Kategorija</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Bolest djeteta</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Bolest člana obitelji</target>
       </trans-unit>
       <trans-unit id="0xFBb6O" resname="Expenses">
         <source>Expenses</source>
