@@ -10,7 +10,7 @@
     {% if column == 'name' %}
         {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
     {% elseif column == 'amount' %}
-        {{ widgets.badge_counter(entry.amount, null, (entry.amount == 0 ? 'bg-yellow' : '')) }}
+        {{ widgets.badge_counter(entry.amount, null, (entry.amount == 0 ? 'yellow' : '')) }}
     {% elseif column == 'visible' %}
         {{ widgets.label_visible(entry.visible) }}
     {% elseif column == 'actions' %}

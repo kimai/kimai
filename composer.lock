@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30e0cd4d74c85f6523a08a515a2b40f5",
+    "content-hash": "a40ae5a30271a18a340d536f06bf17ae",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2319,16 +2319,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "1.4.2",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "a146645041c2ddbda2a1d10234a4d523820fd741"
+                "reference": "72b36e5be2aa19e4b72b2cd1068c64304379fc19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/a146645041c2ddbda2a1d10234a4d523820fd741",
-                "reference": "a146645041c2ddbda2a1d10234a4d523820fd741",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/72b36e5be2aa19e4b72b2cd1068c64304379fc19",
+                "reference": "72b36e5be2aa19e4b72b2cd1068c64304379fc19",
                 "shasum": ""
             },
             "require": {
@@ -2376,7 +2376,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.4.2"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.5.1"
             },
             "funding": [
                 {
@@ -2388,7 +2388,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-05T20:05:16+00:00"
+            "time": "2024-09-09T12:23:51+00:00"
         },
         {
             "name": "league/csv",

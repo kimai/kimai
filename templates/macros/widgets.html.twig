@@ -229,20 +229,20 @@
     {% if teams|length > 0 %}
         {{ _self.badge_counter(teams|length) }}
     {% else %}
-        {{ _self.badge_counter(0, null, 'bg-gray') }}
+        {{ _self.badge_counter(0, null, 'gray') }}
     {% endif %}
 {% endmacro %}
 
 {% macro badge_counter(count, url, type) %}
-    {% if url %}
-        <a href="{{ url }}"><span class="badge {{ type|default('bg-blue') }}">{{ count }}</span></a>
+    {% if url is not null %}
+        <a href="{{ url }}">{{ _self.badge_type(count, type|default('blue')) }}</a>
     {% else %}
-        <span class="badge {{ type|default('bg-blue') }}">{{ count }}</span>
+        {{ _self.badge_type(count, type|default('blue')) }}
     {% endif %}
 {% endmacro %}
 
 {% macro label(title, type, tooltip) %}
-    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }}">{{ title }}</span>
+    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }} text-{{ type|default('success') }}-fg">{{ title }}</span>
 {% endmacro %}
 
 {% macro label_color(title, color) %}
@@ -251,6 +251,11 @@
 
 {% macro badge(title, color) %}
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
+{% endmacro %}
+
+{% macro badge_type(title, type) %}
+    {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ type ~ '-fg' : '') %}
+    <span class="badge {{ class }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro form_errors(form) %}
@@ -306,9 +311,14 @@
 {% endmacro %}
 
 {% macro tag_list(taglist) %}
+    <div class="tags-list">
     {% for tag in taglist %}
-        {{ _self.badge(tag.name, tag.color|colorize(tag.name)) }}
+        <span class="tag">
+            <span class="legend" style="background-color: {{ tag.color|colorize(tag.name) }}"></span>
+            {{ tag.name }}
+        </span>
     {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro meta_field_value(entity, field) %}

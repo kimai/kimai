@@ -17,18 +17,28 @@ fieldset.form-fieldset > legend {
     --tblr-dropdown-divider-margin-y: .5rem;
 }
 
-/*
-fixes translucent scroll border, e.g. in timesheet modal duration dropdown
-https://github.com/tabler/tabler/issues/1606
-*/
+/* fix translucent scroll border (e.g. timesheet modal duration dropdown) - see https://github.com/tabler/tabler/issues/1606 */
 .dropdown-menu {
     background-clip: border-box;
 }
 
-/*
-hide empty fieldset
-https://github.com/tabler/tabler/issues/1650
-*/
+/* hide empty fieldset - see https://github.com/tabler/tabler/issues/1650 */
 fieldset:empty {
     display: none;
+}
+
+:host,:root,[data-bs-theme=light] {
+    /* remove the shadow from all form element groups */
+    --tblr-box-shadow-input: none;
+}
+
+.navbar[data-bs-theme=dark] {
+    /* give navigation elements slightly higher contrast */
+    --tblr-navbar-color: hsla(0,0%,100%,.8);
+}
+
+/* this is not a bugfix, but it adds a border for better visual segregation */
+.nav-pills .nav-link.active {
+    border-width: 1px;
+    border-style: solid;
 }

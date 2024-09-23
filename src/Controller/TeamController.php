@@ -62,7 +62,7 @@ final class TeamController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-sm-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
-        $table->addColumn('amount', ['title' => 'amount', 'class' => 'd-sm-none text-center', 'orderBy' => false]);
+        $table->addColumn('amount', ['title' => 'amount', 'class' => 'd-sm-none text-center w-min', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('teams');
