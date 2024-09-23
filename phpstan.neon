@@ -725,16 +725,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) should return array\\|null but returns mixed\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:redirectToRouteAfterCreate\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
