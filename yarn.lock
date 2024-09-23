@@ -1788,7 +1788,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.7":
+"@popperjs/core@npm:^2.11.8":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
@@ -1927,13 +1927,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/core@npm:1.0.0-beta19":
-  version: 1.0.0-beta19
-  resolution: "@tabler/core@npm:1.0.0-beta19"
+"@tabler/core@npm:1.0.0-beta21":
+  version: 1.0.0-beta21
+  resolution: "@tabler/core@npm:1.0.0-beta21"
   dependencies:
-    "@popperjs/core": ^2.11.7
-    bootstrap: 5.3.0-alpha3
+    "@popperjs/core": ^2.11.8
+    "@tabler/icons": ^3.14.0
+    bootstrap: 5.3.3
   peerDependencies:
+    "@melloware/coloris": ^0.19.1
     apexcharts: ^3.40.0
     autosize: ^6.0.1
     choices.js: ^10.2.0
@@ -1948,9 +1950,11 @@ __metadata:
     nouislider: ^15.7.0
     plyr: ^3.7.8
     star-rating.js: ^4.3.0
-    tinymce: ^6.4.2
+    tinymce: ^6.4.2 || ^7.0.0
     tom-select: ^2.2.2
   peerDependenciesMeta:
+    "@melloware/coloris":
+      optional: true
     apexcharts:
       optional: true
     autosize:
@@ -1983,7 +1987,14 @@ __metadata:
       optional: true
     tom-select:
       optional: true
-  checksum: 478a44394d88a517f333a75a2ecf216cc5711f61e50f2b00c34f5ccc8d936ccb17d229e12d5fa300baef7d50a635a2d53666382a09187be230df59eca8884da5
+  checksum: 3553b474ec49454f9219bfd8a7c73ec1cdb72eb09f896361d4b4ce49ffe850f36f34f022ad0ed5c3cc52c2d70f58cd0c46004247cc45130a8f05a1d72509e656
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:^3.14.0":
+  version: 3.17.0
+  resolution: "@tabler/icons@npm:3.17.0"
+  checksum: 7fa857fff75a7c6779b8bd50eb00edc29ca324beb18f9e3af13f7aa8872f667faef5527c3c3cf31acbb3ba0aba9017d5524f80b9fc22740577cfcd05765a5f53
   languageName: node
   linkType: hard
 
@@ -2839,12 +2850,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:5.3.0-alpha3":
-  version: 5.3.0-alpha3
-  resolution: "bootstrap@npm:5.3.0-alpha3"
+"bootstrap@npm:5.3.3":
+  version: 5.3.3
+  resolution: "bootstrap@npm:5.3.3"
   peerDependencies:
-    "@popperjs/core": ^2.11.7
-  checksum: 1739c40e4033c134e9dc51235e8018f267a9fc8114feba6a5b402f2ab0c68e67c363e2f243c79f252d1cf8fcde82262b04bbaaf6ea1695c37537c02f34ae4f79
+    "@popperjs/core": ^2.11.8
+  checksum: 537b68db30150075614310e9ebdf1be9b4affdf89ca226d59f4352e82a368b203af13ed0ce5ccfa4e06f141ecd233f7432ca3817e9c1a39863a05fbe13c73c4b
   languageName: node
   linkType: hard
 
@@ -5018,7 +5029,7 @@ __metadata:
     "@fullcalendar/interaction": ^5.11
     "@fullcalendar/timegrid": ^5.11
     "@symfony/webpack-encore": ^4.0
-    "@tabler/core": 1.0.0-beta19
+    "@tabler/core": 1.0.0-beta21
     chart.js: ^4.0
     core-js: ^3.6
     eslint: ^8.0
