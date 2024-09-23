@@ -24,7 +24,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, ExportQuery::ORDER_ASC);
+        $this->assertOrder($sut);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);
