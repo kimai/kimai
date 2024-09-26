@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,10 +31,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Constraints\Project]
-class Project implements EntityWithMetaFields, EntityWithBudget
+class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique Project ID
@@ -178,6 +181,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
@@ -473,6 +477,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         if ($this->id !== null) {
             $this->id = null;
         }
+
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();

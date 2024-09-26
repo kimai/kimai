@@ -646,8 +646,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
             $this->id = null;
         }
 
-        // field will not be set, if it contains a value
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
         $this->exported = false;
 
         $currentMeta = $this->meta;
