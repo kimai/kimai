@@ -130,6 +130,10 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    #[ORM\Column(name: 'break', type: 'integer', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
@@ -319,10 +323,20 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     public function getCalculatedDuration(): ?int
     {
         if ($this->begin !== null && $this->end !== null) {
-            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+            return $this->end->getTimestamp() - $this->begin->getTimestamp() - $this->getBreak();
         }
 
         return null;
+    }
+
+    public function getBreak(): int
+    {
+        return $this->break ?? 0;
+    }
+
+    public function setBreak(?int $break): void
+    {
+        $this->break = $break ?? 0;
     }
 
     public function setUser(?User $user): Timesheet
