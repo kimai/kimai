@@ -9,9 +9,12 @@
 
 namespace App\Doctrine\Behavior;
 
-interface ModifiedAt
+/**
+ * @internal
+ */
+interface CreatedAt
 {
-    public function getModifiedAt(): ?\DateTimeImmutable;
+    public function getCreatedAt(): ?\DateTimeImmutable;
 
-    public function setModifiedAt(\DateTimeImmutable $dateTime): void;
+    public function setCreatedAt(\DateTimeImmutable $dateTime): void;
 }

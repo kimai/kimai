@@ -14,9 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 trait ModifiedTrait
 {
     #[ORM\Column(name: 'modified_at', type: 'datetime_immutable', nullable: true)]
-    private \DateTimeImmutable $modifiedAt;
+    private ?\DateTimeImmutable $modifiedAt = null;
 
-    public function getModifiedAt(): \DateTimeImmutable
+    public function getModifiedAt(): ?\DateTimeImmutable
     {
         return $this->modifiedAt;
     }
