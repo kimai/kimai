@@ -182,9 +182,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->getFormatter()->dayName($dateTime, $short);
     }
 
-    public function getJavascriptConfiguration(?User $user = null): array
+    public function getJavascriptConfiguration(?User $user = null, ?string $language = null): array
     {
-        $language = User::DEFAULT_LANGUAGE;
         $browserTitle = false;
         $id = null;
         $name = 'anonymous';
@@ -194,7 +193,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         if ($user !== null) {
             $browserTitle = (bool) $user->getPreferenceValue('update_browser_title');
-            $language = $user->getLanguage();
+            $language = $language ?? $user->getLanguage();
             $id = $user->getId();
             $name = $user->getDisplayName();
             $admin = $user->isAdmin();
@@ -202,8 +201,10 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             $timezone = $user->getTimezone();
         }
 
+        $language = $language ?? $this->locale ?? User::DEFAULT_LANGUAGE;
+
         return [
-            'locale' => $this->locale,
+            'locale' => $language,
             'language' => $language,
             'formatDuration' => $this->localeService->getDurationFormat($this->locale),
             'formatDate' => $this->localeService->getDateFormat($this->locale),
