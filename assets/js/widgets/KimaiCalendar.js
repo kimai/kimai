@@ -109,12 +109,11 @@ export default class KimaiCalendar {
             nextYear: this.options['icons']['nextYear'],
         };
         BootstrapTheme.prototype.rtlIconClasses = {
-            prev: this.options['icons']['next'],
-            next: this.options['icons']['previous'],
-            prevYear: this.options['icons']['nextYear'],
-            nextYear: this.options['icons']['previousYear'],
+            prev: this.options['icons']['previous'],
+            next: this.options['icons']['next'],
+            prevYear: this.options['icons']['previousYear'],
+            nextYear: this.options['icons']['nextYear'],
         };
-
         let calendarOptions = {
             locales: [ enGbLocale, enUsLocale, arLocale, csLocale, daLocale, deLocale, deAtLocale, elLocale,
                 esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
