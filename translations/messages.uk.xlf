@@ -350,9 +350,9 @@
         <source>profile.about_me</source>
         <target state="translated">Про мене</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Початок роботи</target>
+        <target state="needs-translation">Початок роботи</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -1436,7 +1436,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Очікувана кількість годин</target>
+        <target state="needs-translation">Очікувана кількість годин</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1466,9 +1466,9 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">В налаштуваннях трудового договору цього користувача не налаштовані цільові години.</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Витрачені години</target>
+        <target state="needs-translation">Витрачені години</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1622,9 +1622,9 @@
         <source>days</source>
         <target state="translated">Дні</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Хвороба дитини</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Хвороба дитини</target>
       </trans-unit>
       <trans-unit id="Vp7xjKh" resname="Audit logs">
         <source>Audit logs</source>

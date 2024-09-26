@@ -34,7 +34,6 @@ final class CustomerFixtures implements TestFixture
      * Will be called prior to persisting the object.
      *
      * @param callable $callback
-     * @return CustomerFixtures
      */
     public function setCallback(callable $callback): CustomerFixtures
     {
@@ -63,7 +62,6 @@ final class CustomerFixtures implements TestFixture
     }
 
     /**
-     * @param ObjectManager $manager
      * @return Customer[]
      */
     public function load(ObjectManager $manager): array

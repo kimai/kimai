@@ -15,6 +15,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Form\AccessTokenForm;
 use App\Form\Model\TotpActivation;
+use App\Form\Model\UserContractModel;
 use App\Form\UserApiPasswordType;
 use App\Form\UserContractType;
 use App\Form\UserEditType;
@@ -267,7 +268,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('contract', 'profile')]
     public function contractAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserContractType::class, $profile, [
+        $form = $this->createForm(UserContractType::class, new UserContractModel($profile), [
             'action' => $this->generateUrl('user_profile_contract', ['username' => $profile->getUserIdentifier()]),
             'method' => 'POST',
         ]);

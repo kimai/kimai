@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
         <source>invoice_renderer</source>
-        <target>Tài liệu hóa đơn</target>
+        <target state="translated">Mẫu hóa đơn</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
@@ -14,9 +14,9 @@
         <source>timesheet</source>
         <target>Bảng chấm công</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target>Freelancer</target>
+      <trans-unit id="m1UyfD9" resname="service-date" xml:space="preserve">
+        <source>Single service date</source>
+        <target state="translated">Ngày cung cấp dịch vụ</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
@@ -33,6 +33,10 @@
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target state="translated">Văn bản</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Bạn có thể tải thêm bản mẫu ở đây</target>
       </trans-unit>
     </body>
   </file>

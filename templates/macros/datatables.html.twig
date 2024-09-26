@@ -17,15 +17,9 @@
 
 {# compare templates/page_setup.html.twig block table_actions #}
 {% macro actions(dataTable) %}
-    {% set btnClass = '' %}
-    {% set bgClass = '' %}
-    {% if not tabler_bundle.isNavbarOverlapping() and not tabler_bundle.isDarkMode() %}
-        {% set btnClass = 'btn-white' %}
-        {% set bgClass = 'bg-white' %}
-    {% endif %}
     <div class="btn-list">
     {% if dataTable.hasConfiguration() %}
-        <a class="btn btn-icon {{ btnClass }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}" title="{{ 'modal.columns.title'|trans }}">
+        <a class="btn btn-icon" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}" title="{{ 'modal.columns.title'|trans }}">
             {{ icon('columns', true) }}
         </a>
     {% endif %}
@@ -40,9 +34,9 @@
         {% set order = form_widget(form.order) %}
         {% set filterCount = dataTable.getQuery().countFilter() %}
         <div class="input-group inline-search position-static">
-            <button type="button" class="btn {{ btnClass }} dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
                 {{ icon('filter', true) }}
-                {% if filterCount > 0 %}<span class="badge badge-pill bg-blue ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
+                {% if filterCount > 0 %}<span class="badge badge-pill bg-primary text-primary-fg ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
             </button>
             <div class="dropdown-menu p-3 search-dropdown" data-popper-placement="bottom-start" aria-labelledby="search-dropdown-btn">
                 {{ form_rest(form) }}
@@ -64,7 +58,7 @@
                 </div>
             </div>
             {{ searchTerm|raw }}
-            <span class="input-group-text {{ bgClass }}">
+            <span class="input-group-text">
                 {% set bookmarkToken = csrf_token('search') %}
                 {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary' %}
                 <input type="hidden" name="_token" value="{{ bookmarkToken }}">

@@ -8,8 +8,6 @@
 
 {% block main %}
 
-    {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
-
     {% if not withWorkHourConfiguration %}
         {% set warningMsg %}
             {{ 'work_times_should.none_configured'|trans }}
@@ -127,8 +125,8 @@
                         {% endif %}
                         <th>{{ 'month'|trans }}</th>
                         <th class="text-end total">{{ 'sum.total'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_should'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_is'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_should'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_is'|trans }}</th>
                         {% for day in 1..31 %}
                         <th class="text-end contractDay">{% if day < 10 %}0{% endif %}{{ day }}</th>
                         {% endfor %}
@@ -167,7 +165,7 @@
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
                                 {% set class = 'text-end contractDay text-nowrap' %}
-                                {% if day.day is weekend(user) %}
+                                {% if day.workingTime.expectedTime == 0 %}
                                     {% set class = class ~ ' weekend' %}
                                 {% endif %}
                                 {% if day.workingTime.expectedTime > 0 and day.workingTime.actualTime == 0 and now > day.day %}
@@ -226,51 +224,6 @@
                         </tr>
                     </tfoot>
                 </table>
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
-
-    {% if withWorkHourConfiguration %}
-        {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
-
-        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'work_contract_should_preview', border: false, item: {options: {bodyExtraClass: 'border-top'}}} %}
-            {% from "macros/status.html.twig" import status_duration %}
-            {% block title %}
-                {{ 'work_times_should'|trans }}
-                &nbsp;
-                {{ status_duration(expectedWeekTimes|duration) }}
-            {% endblock %}
-            {% block body %}
-                <div class="datagrid">
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Monday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursMonday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Tuesday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursTuesday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Wednesday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursWednesday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Thursday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursThursday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Friday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursFriday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Saturday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursSaturday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Sunday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursSunday|duration }}</div>
-                    </div>
-                </div>
             {% endblock %}
         {% endembed %}
     {% endif %}

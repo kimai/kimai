@@ -19,6 +19,8 @@ use Faker\Factory;
  */
 final class ActivityFixtures implements TestFixture
 {
+    use FixturesTrait;
+
     private int $amount = 0;
     private bool $isGlobal = false;
     private ?bool $isVisible = null;
@@ -126,21 +128,5 @@ final class ActivityFixtures implements TestFixture
         $manager->flush();
 
         return $created;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
-     */
-    private function getAllProjects(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Project[] $entries */
-        $entries = $manager->getRepository(Project::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
     }
 }

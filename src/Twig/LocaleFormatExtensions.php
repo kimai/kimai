@@ -18,7 +18,6 @@ use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
 use DateTime;
 use DateTimeInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -30,7 +29,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     private ?LocaleFormatter $formatter = null;
     private ?string $locale = null;
 
-    public function __construct(private LocaleService $localeService, private Security $security)
+    public function __construct(private readonly LocaleService $localeService)
     {
     }
 
@@ -111,19 +110,13 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->locale;
     }
 
-    public function isWeekend(\DateTimeInterface|string|null $dateTime, ?User $user = null): bool
+    public function isWeekend(\DateTimeInterface|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTimeInterface) {
             return false;
         }
 
         $day = (int) $dateTime->format('N');
-
-        /** @var User|null $tmp */
-        $tmp = $user ?? $this->security->getUser();
-        if ($tmp !== null && $tmp->hasWorkHourConfiguration()) {
-            return !$tmp->isWorkDay($dateTime);
-        }
 
         return ($day === 6 || $day === 7);
     }

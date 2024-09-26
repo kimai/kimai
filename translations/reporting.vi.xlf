@@ -46,6 +46,10 @@
         <source>report_customer_monthly_projects</source>
         <target state="translated">Dự án theo tháng, hoạt động và người dùng</target>
       </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Tổng quan khách hàng</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

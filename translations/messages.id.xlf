@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>User</source>
-        <target state="needs-translation">Pengguna</target>
+        <target state="translated">Pengguna</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
         <source>invoiceText</source>
@@ -372,7 +372,7 @@
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
         <source>help.visible</source>
-        <target state="needs-translation">Jika setelan jni dimatikan, nama barang tidak akan ditampilkan dalam boks atau tampilan daftar</target>
+        <target state="translated">Jika setelan ini dimatikan, nama barang tidak ditampilkan dalam kotak / tampilan daftar</target>
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve">
         <source>Visible</source>
@@ -480,7 +480,7 @@
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit" xml:space="preserve">
         <source>timesheet.edit</source>
-        <target state="needs-translation">Sunting laporan</target>
+        <target state="translated">Sunting laporan</target>
       </trans-unit>
       <trans-unit id="5vB9Q7X" resname="begin" xml:space="preserve">
         <source>begin</source>
@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Bekerja sejak</target>
+        <target state="needs-translation">Bekerja sejak</target>
       </trans-unit>
       <trans-unit id="A6TLLQa" resname="profile.password" xml:space="preserve">
         <source>profile.password</source>
@@ -640,7 +640,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Pilihan ini akan mengunci semua hari dalam setahun sebelum hari yang Anda pilih. Anda tidak akan dapat membuat atau menyunting waktu dalam jangka waktu yang telah dikuncikan lagi.</target>
+        <target state="translated">Pilihan ini akan mengunci semua hari dalam setahun sebelum hari yang Anda pilih. Anda tidak akan dapat membuat atau menyunting waktu dalam jangka waktu yang telah dikuncikan lagi.</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
         <source>completed_month_pdf_note</source>
@@ -656,7 +656,7 @@
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve">
         <source>profile.registration_date</source>
-        <target state="needs-translation">Teregistrasi di</target>
+        <target state="translated">Teregistrasi di</target>
       </trans-unit>
       <trans-unit id="H.IqJTQ" resname="login_initial_view" xml:space="preserve">
         <source>login_initial_view</source>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Perkiraan jumlah jam</target>
+        <target state="needs-translation">Perkiraan jumlah jam</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
@@ -861,6 +861,34 @@
       <trans-unit id="h7voece" resname="avatar" xml:space="preserve">
         <source>avatar</source>
         <target state="translated">Gambar profil (URL)</target>
+      </trans-unit>
+      <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
+        <source>menu.plugin</source>
+        <target state="translated">Plugin</target>
+      </trans-unit>
+      <trans-unit id="KhBzpuZ" resname="tag" xml:space="preserve">
+        <source>tag</source>
+        <target state="translated">Tag</target>
+      </trans-unit>
+      <trans-unit id="Kw3N1AA" resname="actions" xml:space="preserve">
+        <source>actions</source>
+        <target state="translated">Aksi</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve">
+        <source>desktop</source>
+        <target state="translated">Desktop</target>
+      </trans-unit>
+      <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
+        <source>tags</source>
+        <target state="translated">Tag</target>
+      </trans-unit>
+      <trans-unit id="1STBoIE" resname="mobile" xml:space="preserve">
+        <source>mobile</source>
+        <target state="translated">Seluler</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Membuat</target>
       </trans-unit>
     </body>
   </file>

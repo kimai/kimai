@@ -117,7 +117,7 @@ class ActivityStatisticService
 
     /**
      * @param Activity[] $activities
-     * @return array<int, ActivityStatistic>
+     * @return array<int|string, ActivityStatistic>
      */
     private function getBudgetStatistic(array $activities, ?DateTimeInterface $begin = null, ?DateTimeInterface $end = null): array
     {
@@ -159,6 +159,9 @@ class ActivityStatisticService
         return $statistics;
     }
 
+    /**
+     * @param Activity[] $activities
+     */
     private function createStatisticQueryBuilder(array $activities, \DateTimeInterface $begin = null, ?\DateTimeInterface $end = null): QueryBuilder
     {
         $qb = $this->timesheetRepository->createQueryBuilder('t');

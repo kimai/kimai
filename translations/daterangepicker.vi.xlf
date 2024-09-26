@@ -34,6 +34,14 @@
         <source>daterangepicker.thisYear</source>
         <target>Năm này</target>
       </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Năm nay — đến hôm nay</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Tùy chỉnh giai đoạn</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

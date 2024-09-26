@@ -558,9 +558,9 @@
         <source>profile.registration_date</source>
         <target>Registriert am</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeitet seit</target>
+        <target state="needs-translation">Arbeitet seit</target>
       </trans-unit>
       <trans-unit id="HWKJZ0T" resname="profile.about_me">
         <source>profile.about_me</source>

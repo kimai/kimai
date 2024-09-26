@@ -294,9 +294,9 @@
         <source>profile.about_me</source>
         <target state="translated">나의 정보</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">업무 시작일</target>
+        <target state="needs-translation">업무 시작일</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>

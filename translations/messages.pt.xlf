@@ -282,9 +282,9 @@
         <source>profile.about_me</source>
         <target>Sobre mim</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>A trabalhar desde</target>
+        <target state="needs-translation">A trabalhar desde</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1562,9 +1562,9 @@
         <source>Absence calendar</source>
         <target state="translated">Calendário de ausências</target>
       </trans-unit>
-      <trans-unit id="Nw2x5hI" resname="sickness_child">
-        <source>sickness_child</source>
-        <target state="translated">Doença da criança</target>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Doença da criança</target>
       </trans-unit>
       <trans-unit id=".wmq_rT" resname="force_password_change">
         <source>force_password_change</source>
@@ -1624,15 +1624,15 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="translated">Número de horas previsto</target>
+        <target state="needs-translation">Número de horas previsto</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
         <target state="translated">Nenhuma hora-alvo foi configurada para esse utilizador nas configurações do contrato de trabalho.</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Is-horas</target>
+        <target state="needs-translation">Is-horas</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>

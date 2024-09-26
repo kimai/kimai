@@ -394,9 +394,9 @@
         <source>profile.about_me</source>
         <target state="translated">Tietoa minusta</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Työskennellyt alkaen</target>
+        <target state="needs-translation">Työskennellyt alkaen</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -1551,8 +1551,8 @@
         <target state="translated">Menot</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
-        <source>sickness_child</source>
-        <target state="translated">Lapsi sairaana</target>
+        <source>Sickness of a relative</source>
+        <target state="needs-translation">Lapsi sairaana</target>
       </trans-unit>
       <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
         <source>Translations</source>

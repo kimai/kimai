@@ -24,6 +24,8 @@ use Faker\Factory;
  */
 final class TimesheetFixtures implements TestFixture
 {
+    use FixturesTrait;
+
     private int $running = 0;
     /**
      * @var Activity[]
@@ -305,54 +307,6 @@ final class TimesheetFixtures implements TestFixture
         $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
 
         return $start;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Activity>
-     */
-    private function getAllActivities(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Activity[] $entries */
-        $entries = $manager->getRepository(Activity::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
-     */
-    private function getAllProjects(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Project[] $entries */
-        $entries = $manager->getRepository(Project::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
-     */
-    private function getAllUsers(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var User[] $entries */
-        $entries = $manager->getRepository(User::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
     }
 
     /**

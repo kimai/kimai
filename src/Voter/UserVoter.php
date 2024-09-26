@@ -74,10 +74,6 @@ final class UserVoter extends Voter
             return $this->permissionManager->hasRolePermission($user, 'contract_other_profile');
         }
 
-        if ($attribute === 'hours') {
-            return $this->permissionManager->hasRolePermission($user, 'hours_other_profile');
-        }
-
         if ($attribute === 'access_user') {
             return $user->canSeeUser($subject);
         }
