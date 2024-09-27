@@ -3,7 +3,6 @@
 /.env-*
 /.idea/
 .DS_Store
-/phpstan.sh
 
 # custom apache rules e.g. to deactivate ioncube loader
 /public/.user.ini
