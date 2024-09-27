@@ -11,7 +11,7 @@
 # ----------------------------------------------------------------------
 
 phpstan() {
-	vendor/bin/php-cs-fixer fix --config var/plugins/$1Bundle/.php-cs-fixer.dist.php var/plugins/$1Bundle/ ${ARGS}
+	vendor/bin/php-cs-fixer fix --config var/plugins/$1Bundle/.php-cs-fixer.dist.php ${ARGS}
 }
 
 if [[ -n $2 ]]; then
@@ -35,7 +35,5 @@ vendor/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php ${ARGS}
 for dir in var/plugins/*Bundle/
 do
 	echo ""
-	echo "=======> $dir <======="
-	echo ""
-	vendor/bin/php-cs-fixer fix --config ${dir}.php-cs-fixer.dist.php ${dir} ${ARGS}
+	vendor/bin/php-cs-fixer fix --config ${dir}.php-cs-fixer.dist.php ${ARGS}
 done
