@@ -204,7 +204,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         $language ??= $this->locale ?? User::DEFAULT_LANGUAGE;
 
         return [
-            'locale' => $language,
+            'locale' => $this->locale,
             'language' => $language,
             'formatDuration' => $this->localeService->getDurationFormat($this->locale),
             'formatDate' => $this->localeService->getDateFormat($this->locale),
