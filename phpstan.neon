@@ -750,31 +750,6 @@ parameters:
             path: src/Controller/Auth/SamlController.php
 
         -
-            message: "#^Parameter \\#1 \\$dataTable of method App\\\\Utils\\\\ProfileManager\\:\\:getDatatableName\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#1 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:isValidProfile\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 3
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:getDatatableName\\(\\) expects string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:setProfile\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of class Symfony\\\\Component\\\\Security\\\\Csrf\\\\CsrfToken constructor expects string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 3
-            path: src/Controller/BookmarkController.php
-
-        -
             message: "#^Cannot access offset 'user' on mixed\\.$#"
             count: 1
             path: src/Controller/CalendarController.php
