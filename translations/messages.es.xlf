@@ -328,7 +328,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Activo desde</target>
+        <target state="translated">Primer día laborable</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1432,7 +1432,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Número de horas previstas</target>
+        <target state="translated">Horas previstas</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1576,7 +1576,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Horario</target>
+        <target state="translated">Horas trabajadas</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
         <source>Account working times</source>
@@ -1765,6 +1765,30 @@
       <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
         <source>Updated</source>
         <target state="translated">Actualizado</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Horas semanales</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Horas mensuales</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Días laborables</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Cálculo de la jornada laboral</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Último día laborable</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Horas diarias</target>
       </trans-unit>
     </body>
   </file>

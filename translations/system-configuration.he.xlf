@@ -38,13 +38,13 @@
         <source>timesheet.active_entries.hard_limit</source>
         <target>כמות מותרת לרשומות זמן פעילות במקביל</target>
       </trans-unit>
-      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers" xml:space="preserve" approved="yes">
         <source>calendar.week_numbers</source>
-        <target>הצג מספרי שבוע</target>
+        <target state="final">הצגת מספרי שבוע</target>
       </trans-unit>
-      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+      <trans-unit id="qaoBvYU" resname="calendar.weekends" xml:space="preserve" approved="yes">
         <source>calendar.weekends</source>
-        <target>הצג סופי שבוע</target>
+        <target state="final">הצגת סופי שבוע</target>
       </trans-unit>
       <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
         <source>calendar.businessHours.begin</source>
@@ -62,9 +62,9 @@
         <source>calendar.visibleHours.end</source>
         <target>סיום טווח זמן</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve" approved="yes">
         <source>calendar.slot_duration</source>
-        <target>משך זמן העבודה בתצוגת שבוע ויום (פורמט: hh:mm:ss)</target>
+        <target state="final">משך זמן העבודה בתצוגת שבוע ויום (תבנית: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -150,9 +150,9 @@
         <source>timesheet.default_begin</source>
         <target>זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)</target>
       </trans-unit>
-      <trans-unit id="UTurPF1" resname="invoice.number_format">
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve">
         <source>invoice.number_format</source>
-        <target>פורמט מספר חשבונית</target>
+        <target state="translated">תבנית מספר חשבונית</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
@@ -262,9 +262,9 @@
         <source>quick_entry.recent_activities</source>
         <target>מספר הרשומות שנלקחו מהשבועות הקודמים</target>
       </trans-unit>
-      <trans-unit id="winWMI1" resname="calendar.title_pattern">
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve" approved="yes">
         <source>calendar.title_pattern</source>
-        <target>הצגת כותרות רשומות לוח השנה</target>
+        <target state="final">הצגת כותרות רשומות לוח השנה</target>
       </trans-unit>
       <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
         <source>quick_entry.recent_activity_weeks</source>

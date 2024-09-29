@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Začátek práce</target>
+        <target state="translated">První pracovní den</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1070,13 +1070,13 @@
         <source>remove_default</source>
         <target>Smazat oblíbené vyhledávání</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Aktivační email byl odeslán na %email%. Email obsahuje aktivační odkaz, na který musíte kliknout pro aktivaci účtu.</target>
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">Aktivační e-mail byl odeslán na adresu %email%. E-mail obsahuje aktivační odkaz, na který musíte kliknout pro aktivaci účtu.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">Email s odkazem pro obnovení hesla byl odeslán. Poznámka: O nové heslo si můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud email neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
+        <target state="translated">Byl vám zaslán e-mail s odkazem na obnovení hesla. Poznámka: O nové heslo můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud e-mail neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1476,11 +1476,11 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Je-hodin</target>
+        <target state="translated">Odpracované hodiny</target>
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Očekávaný počet hodin</target>
+        <target state="translated">Očekávané hodiny</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -1624,7 +1624,7 @@
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>
-        <target state="needs-translation">Ošetřování dítěte</target>
+        <target state="translated">Ošetřování příbuzného</target>
       </trans-unit>
       <trans-unit id="J6EJUj9" resname="Meta fields">
         <source>Meta fields</source>
@@ -1749,6 +1749,46 @@
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">Nepřítomnost: Komentář je povinné pole</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Hodin za den</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Pracovní dny</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Výpočet pracovní doby</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Hodin za týden</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Hodin za měsíc</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Poslední pracovní den</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Vytvořeno</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Schválit</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Požádat</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Aktualizováno</target>
       </trans-unit>
     </body>
   </file>

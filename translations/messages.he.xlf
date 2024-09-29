@@ -1766,6 +1766,30 @@
         <source>Updated</source>
         <target state="final">עדכון</target>
       </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve" approved="yes">
+        <source>hours_per_day</source>
+        <target state="final">שעות ביום</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve" approved="yes">
+        <source>hours_per_week</source>
+        <target state="final">שעות בשבוע</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve" approved="yes">
+        <source>hours_per_month</source>
+        <target state="final">שעות בחודש</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve" approved="yes">
+        <source>last_working_day</source>
+        <target state="final">יום העבודה האחרון</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve" approved="yes">
+        <source>work_days</source>
+        <target state="final">ימי עבודה</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve" approved="yes">
+        <source>work_hours_mode</source>
+        <target state="final">חישוב זמן עבודה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

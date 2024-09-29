@@ -234,9 +234,9 @@
         <source>tag</source>
         <target>Thẻ</target>
       </trans-unit>
-      <trans-unit id="E_bHhGR" resname="hourlyRate">
+      <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve">
         <source>hourlyRate</source>
-        <target>Tỷ lệ hàng giờ</target>
+        <target state="translated">Giá theo giờ</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
