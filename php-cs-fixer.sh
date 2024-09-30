@@ -10,7 +10,7 @@
 # [params] - additional parameters for PHPCsFixer, e.g. --dry-run
 # ----------------------------------------------------------------------
 
-phpstan() {
+phpcsfixer() {
 	vendor/bin/php-cs-fixer fix --config var/plugins/$1Bundle/.php-cs-fixer.dist.php ${ARGS}
 }
 
@@ -22,7 +22,10 @@ fi
 
 if [[ -n $1 ]]; then
 	if [ -d "var/plugins/$1Bundle/" ]; then
-		phpstan $1
+		phpcsfixer $1
+		exit
+	elif [ "$1" == 'core' ]; then
+		vendor/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php ${ARGS}
 		exit
 	else
 		echo "Plugin $1 not found"

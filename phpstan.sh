@@ -24,6 +24,12 @@ if [[ -n $1 ]]; then
 	if [ -d "var/plugins/$1Bundle/" ]; then
 		phpstan $1
 		exit
+	elif [ "$1" == 'core' ]; then
+		vendor/bin/phpstan analyse -c phpstan.neon ${ARGS}
+		exit
+	elif [ "$1" == 'test' ]; then
+		vendor/bin/phpstan analyse -c tests/phpstan.neon ${ARGS}
+		exit
 	else
 		echo "Plugin $1 not found"
 		exit 1
