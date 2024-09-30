@@ -1010,11 +1010,6 @@ parameters:
             path: src/Controller/Security/PasswordResetController.php
 
         -
-            message: "#^Parameter \\#1 \\$token of method App\\\\User\\\\UserService\\:\\:findUserByConfirmationToken\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Security/PasswordResetController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Security\\\\SelfRegistrationController\\:\\:getTargetUrlFromSession\\(\\) should return string\\|null but returns mixed\\.$#"
             count: 1
             path: src/Controller/Security/SelfRegistrationController.php

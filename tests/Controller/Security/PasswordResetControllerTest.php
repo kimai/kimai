@@ -55,6 +55,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $this->assertTrue($response->isSuccessful());
 
         $content = $response->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('Reset your password', $content);
         $this->assertStringContainsString('<form class="card-body security-password-reset" action="/en/resetting/send-email" method="post" autocomplete="off">', $content);
@@ -86,6 +87,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
     }
@@ -98,6 +100,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
     }
@@ -110,6 +113,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
     }
@@ -127,11 +131,13 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
 
         $user = $this->loadUserFromDatabase('john_user');
         $token = $user->getConfirmationToken();
+        $this->assertNotNull($token);
         $this->assertGreaterThan(10, \strlen($token));
     }
 
@@ -144,11 +150,13 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
 
         $user = $this->loadUserFromDatabase('john_user');
         $token = $user->getConfirmationToken();
+        $this->assertNotNull($token);
         $this->assertGreaterThan(10, \strlen($token));
 
         $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
@@ -156,11 +164,13 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
+        $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
 
         $user = $this->loadUserFromDatabase('john_user');
         $tokenNew = $user->getConfirmationToken();
+        $this->assertNotNull($tokenNew);
         $this->assertGreaterThan(10, \strlen($tokenNew));
         // ake sure that the token cannot be changed immediately (there is a waiting period of 2 hours)
         $this->assertEquals($token, $tokenNew);
