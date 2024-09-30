@@ -2319,16 +2319,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "72b36e5be2aa19e4b72b2cd1068c64304379fc19"
+                "reference": "0b0fe326cd92c946fed9a828425ff9a7950dffa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/72b36e5be2aa19e4b72b2cd1068c64304379fc19",
-                "reference": "72b36e5be2aa19e4b72b2cd1068c64304379fc19",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/0b0fe326cd92c946fed9a828425ff9a7950dffa1",
+                "reference": "0b0fe326cd92c946fed9a828425ff9a7950dffa1",
                 "shasum": ""
             },
             "require": {
@@ -2376,7 +2376,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.5.1"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.5.2"
             },
             "funding": [
                 {
@@ -2388,7 +2388,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-09T12:23:51+00:00"
+            "time": "2024-09-30T13:42:48+00:00"
         },
         {
             "name": "league/csv",
@@ -3055,16 +3055,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.31.0",
+            "version": "v4.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "322c47b9fa3c5913ec9bbeba537a32407151be73"
+                "reference": "6ea702702ffb3382e9fd9776c868ff7386dbc772"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/322c47b9fa3c5913ec9bbeba537a32407151be73",
-                "reference": "322c47b9fa3c5913ec9bbeba537a32407151be73",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/6ea702702ffb3382e9fd9776c868ff7386dbc772",
+                "reference": "6ea702702ffb3382e9fd9776c868ff7386dbc772",
                 "shasum": ""
             },
             "require": {
@@ -3165,7 +3165,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.31.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.32.0"
             },
             "funding": [
                 {
@@ -3173,7 +3173,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-24T13:56:25+00:00"
+            "time": "2024-09-30T13:06:21+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -3750,16 +3750,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "2.2.2",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "ffbcee68069b073bff07a71eb321dcd9f2763513"
+                "reference": "c972c146ddd5e8350ea839355b9bb0ce6a8fa33e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/ffbcee68069b073bff07a71eb321dcd9f2763513",
-                "reference": "ffbcee68069b073bff07a71eb321dcd9f2763513",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/c972c146ddd5e8350ea839355b9bb0ce6a8fa33e",
+                "reference": "c972c146ddd5e8350ea839355b9bb0ce6a8fa33e",
                 "shasum": ""
             },
             "require": {
@@ -3848,9 +3848,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.2.2"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.3.0"
             },
-            "time": "2024-08-08T02:31:26+00:00"
+            "time": "2024-09-29T07:06:02+00:00"
         },
         {
             "name": "phpoffice/phpword",
@@ -11108,16 +11108,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.2.0",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
                 "shasum": ""
             },
             "require": {
@@ -11160,9 +11160,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.2.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
             },
-            "time": "2024-09-15T16:40:33+00:00"
+            "time": "2024-09-29T13:56:26+00:00"
         },
         {
             "name": "phar-io/manifest",
