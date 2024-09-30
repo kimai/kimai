@@ -27,11 +27,15 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
 {
+    public const CSRF_TOKEN = 'password_reset';
+
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly UserService $userService,
@@ -56,59 +60,55 @@ final class PasswordResetController extends AbstractController
      * Request reset user password: submit form and send email.
      */
     #[Route(path: '/send-email', name: 'resetting_send_email', methods: ['POST'])]
-    public function sendEmailAction(Request $request, TranslatorInterface $translator): Response
+    public function sendEmailAction(Request $request, TranslatorInterface $translator, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
         }
 
         $username = $request->request->get('username');
-        if (!\is_string($username) || trim($username) === '') {
-            throw $this->createAccessDeniedException('Username cannot be empty');
-        }
+        $token = $request->request->get('_csrf_token');
 
-        $user = $this->userService->findUserByUsernameOrEmail($username);
+        try {
+            $user = null;
 
-        if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
-            if (!$user->isInternalUser()) {
-                throw $this->createAccessDeniedException(
-                    \sprintf('The user "%s" tried to reset the password, but it is registered as "%s" auth-type.', $user->getUserIdentifier(), $user->getAuth())
-                );
+            if (\is_string($token) && $csrfTokenManager->isTokenValid(new CsrfToken(self::CSRF_TOKEN, $token))) {
+                if (\is_string($username) && $username !== '') {
+                    $user = $this->userService->findUserByUsernameOrEmail($username);
+                }
             }
 
-            if (null === $user->getConfirmationToken()) {
+            $csrfTokenManager->refreshToken(self::CSRF_TOKEN);
+
+            if ($user !== null && $user->isInternalUser() && !$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
+                // always generate a new token
                 $user->setConfirmationToken($this->userService->generateSecurityToken());
+
+                $mail = $this->generateResettingEmailMessage($user, $translator);
+                $event = new EmailPasswordResetEvent($user, $mail);
+                $this->eventDispatcher->dispatch($event);
+
+                // this will finally send the email
+                $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
+
+                $user->markPasswordRequested();
+                $this->userService->saveUser($user);
             }
-
-            $mail = $this->generateResettingEmailMessage($user, $translator);
-            $event = new EmailPasswordResetEvent($user, $mail);
-            $this->eventDispatcher->dispatch($event);
-
-            // this will finally send the email
-            $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
-
-            $user->markPasswordRequested();
-            $this->userService->saveUser($user);
+        } catch (\Exception $ex) {
+            // this is an expected exception: do not log this attempt
         }
 
-        return $this->redirectToRoute('resetting_check_email', ['username' => $username]);
+        return $this->redirectToRoute('resetting_check_email');
     }
 
     /**
      * Tell the user to check his email provider.
      */
     #[Route(path: '/check-email', name: 'resetting_check_email', methods: ['GET'])]
-    public function checkEmailAction(Request $request): Response
+    public function checkEmailAction(): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
-        }
-
-        $username = $request->query->get('username');
-
-        if (empty($username)) {
-            // the user does not come from the sendEmail action
-            return $this->redirectToRoute('resetting_request');
         }
 
         return $this->render('security/password-reset/check_email.html.twig', [

@@ -67,7 +67,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
             'username' => 'john_user',
         ]);
 
-        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email?username=john_user'));
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -76,5 +76,93 @@ class PasswordResetControllerTest extends ControllerBaseTest
 
         $this->request($client, '/resetting/reset/' . $token);
         $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testResetWithMissingUsername(): void
+    {
+        $client = self::createClient();
+        $this->request($client, '/resetting/send-email', 'POST');
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+    }
+
+    public function testResetWithEmptyUsername(): void
+    {
+        $client = self::createClient();
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => '']);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+    }
+
+    public function testResetWithUnknownUsername(): void
+    {
+        $client = self::createClient();
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'foobar']);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+    }
+
+    public function testResetWithKnownUsername(): void
+    {
+        $client = self::createClient();
+
+        $user = $this->loadUserFromDatabase('john_user');
+        $token = $user->getConfirmationToken();
+        $this->assertEquals('', $token);
+
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+
+        $user = $this->loadUserFromDatabase('john_user');
+        $token = $user->getConfirmationToken();
+        $this->assertGreaterThan(10, \strlen($token));
+    }
+
+    public function testResetWithKnownUsernameMultipleTimes(): void
+    {
+        $client = self::createClient();
+
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+
+        $user = $this->loadUserFromDatabase('john_user');
+        $token = $user->getConfirmationToken();
+        $this->assertGreaterThan(10, \strlen($token));
+
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+
+        $user = $this->loadUserFromDatabase('john_user');
+        $tokenNew = $user->getConfirmationToken();
+        $this->assertGreaterThan(10, \strlen($tokenNew));
+        // ake sure that the token cannot be changed immediately (there is a waiting period of 2 hours)
+        $this->assertEquals($token, $tokenNew);
     }
 }
