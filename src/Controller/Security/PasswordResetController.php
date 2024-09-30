@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -119,10 +120,17 @@ final class PasswordResetController extends AbstractController
      * Reset user password.
      */
     #[Route(path: '/reset/{token}', name: 'resetting_reset', methods: ['GET', 'POST'])]
-    public function resetAction(Request $request, LoginManager $loginManager, ?string $token): Response
+    public function resetAction(string $token, Request $request, LoginManager $loginManager, RateLimiterFactory $resetPasswordLimiter): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
+        }
+
+        $limiter = $resetPasswordLimiter->create($request->getClientIp());
+        $limit = $limiter->consume();
+
+        if (!$limit->isAccepted()) {
+            return new Response(null, Response::HTTP_TOO_MANY_REQUESTS);
         }
 
         $user = $this->userService->findUserByConfirmationToken($token);

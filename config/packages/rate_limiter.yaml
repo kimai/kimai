@@ -5,3 +5,8 @@ framework:
             limit: 250
             interval: '1 hour'
             lock_factory: null
+        reset_password:
+            policy: 'fixed_window'
+            limit: 10
+            interval: '6 hours'
+            lock_factory: null
