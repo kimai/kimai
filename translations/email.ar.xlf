@@ -18,10 +18,6 @@
         <source>registration.button</source>
         <target>فعل حسابك</target>
       </trans-unit>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">إذا كان الزر لا يعمل ، يرجى نسخ &amp; والصق عنوان URL التالي في متصفحك:%url%</target>
-      </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
         <target state="translated">لقد قمت بالتسجيل في متتبع الوقت Kimai بالبريد الإلكتروني%email%. يرجى تفعيل حسابك في الساعات القليلة القادمة ، قبل انتهاء صلاحية الرابط.</target>

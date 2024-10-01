@@ -34,10 +34,6 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="final">別擔心，Kimai 將協助您設定新的密碼！</target>
       </trans-unit>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" xml:space="preserve" approved="yes">
-        <source>button_copy_url_to_browser</source>
-        <target state="final">如果此按鈕無效，請複製以下網址並在瀏覽器中貼上： %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
         <target state="final">這是一封自動產生的電子郵件。請勿回覆，傳送至此地址的信件不會被閱讀。</target>
