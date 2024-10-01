@@ -8,6 +8,7 @@ framework:
         reset_password:
             policy: 'fixed_window'
             limit: 10
+            interval: '1 hour'
             lock_factory: null
 
 when@test:
@@ -17,3 +18,4 @@ when@test:
                 policy: 'fixed_window'
                 limit: 100
                 interval: '1 minute'
+                lock_factory: null
