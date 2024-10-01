@@ -24,19 +24,19 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target>Passwort zurücksetzen</target>
+        <target>Anmelden bei Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
         <source>Forgot your password?</source>
-        <target state="final">Passwort vergessen?</target>
+        <target state="final">Bei Ihrem Konto anmelden</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
-        <target>Passwort zurücksetzen</target>
+        <target>Anmelden</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="final">Keine Sorge: Kimai hilft dir, ein neues zu erstellen!</target>
+        <target>Dieser Link ist nur für die nächsten 15 Minuten gültig.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
