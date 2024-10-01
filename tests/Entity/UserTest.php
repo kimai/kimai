@@ -41,7 +41,6 @@ class UserTest extends TestCase
         self::assertNull($user->getAccountNumber());
         self::assertNull($user->getApiToken());
         self::assertNull($user->getPlainApiToken());
-        self::assertNull($user->getPasswordRequestedAt());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
@@ -50,6 +49,7 @@ class UserTest extends TestCase
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->isPasswordRequestNonExpired(3599));
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
@@ -225,20 +225,6 @@ class UserTest extends TestCase
         $user = new User();
         $user->setRegisteredAt($date);
         self::assertEquals($date, $user->getRegisteredAt());
-    }
-
-    public function testPasswordRequestedAt(): void
-    {
-        $date = new \DateTimeImmutable('-60 minutes');
-        $sut = new User();
-        self::assertFalse($sut->isPasswordRequestNonExpired(3599));
-
-        self::assertNull($sut->getPasswordRequestedAt());
-        $sut->setPasswordRequestedAt($date);
-        self::assertEquals($date, $sut->getPasswordRequestedAt());
-        self::assertFalse($sut->isPasswordRequestNonExpired(3599));
-        // 10 seconds just to make sure it doesn't expire by accident
-        self::assertTrue($sut->isPasswordRequestNonExpired(3610));
     }
 
     public function testPreferences(): void

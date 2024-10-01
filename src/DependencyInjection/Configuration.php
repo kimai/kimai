@@ -552,7 +552,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
                 ->integerNode('password_reset_retry_ttl')
-                    ->defaultValue(7200)
+                    ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)

@@ -16,7 +16,7 @@ use App\Tests\Controller\ControllerBaseTest;
  */
 class PasswordResetControllerTest extends ControllerBaseTest
 {
-    private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET')
+    private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET'): void
     {
         $client = self::createClient();
         $this->setSystemConfiguration('user.password_reset', false);
@@ -37,11 +37,6 @@ class PasswordResetControllerTest extends ControllerBaseTest
     public function testCheckEmailWithDeactivatedFeature(): void
     {
         $this->testResetActionWithDeactivatedFeature('/resetting/check-email');
-    }
-
-    public function testResetWithDeactivatedFeature(): void
-    {
-        $this->testResetActionWithDeactivatedFeature('/resetting/reset/1234567890');
     }
 
     public function testResetRequestPageIsRendered(): void
@@ -72,11 +67,10 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $user = $this->loadUserFromDatabase('john_user');
-        $token = $user->getConfirmationToken();
+        // TODO test the actual email and provided login link
 
-        $this->request($client, '/resetting/reset/' . $token);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $user = $this->loadUserFromDatabase('john_user');
+        $this->assertTrue($user->requiresPasswordReset());
     }
 
     public function testResetWithMissingUsername(): void
@@ -89,7 +83,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
-        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 1:00 hours.', $content);
     }
 
     public function testResetWithEmptyUsername(): void
@@ -102,7 +96,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
-        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 1:00 hours.', $content);
     }
 
     public function testResetWithUnknownUsername(): void
@@ -115,7 +109,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
-        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 1:00 hours.', $content);
     }
 
     public function testResetWithKnownUsername(): void
@@ -123,8 +117,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $client = self::createClient();
 
         $user = $this->loadUserFromDatabase('john_user');
-        $token = $user->getConfirmationToken();
-        $this->assertNull($token);
+        $this->assertFalse($user->requiresPasswordReset());
 
         $this->request($client, '/resetting/request');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -139,11 +132,11 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
         $this->assertNotFalse($content);
         $this->assertStringContainsString('An email has been sent with a link to reset your password.', $content);
-        $this->assertStringContainsString('Note: You can only request a new password once every 2:00 hours.', $content);
+        $this->assertStringContainsString('Note: You can only request a new password once every 1:00 hours.', $content);
+
+        // TODO test the actual email and provided login link
 
         $user = $this->loadUserFromDatabase('john_user');
-        $token = $user->getConfirmationToken();
-        $this->assertNotNull($token);
-        $this->assertGreaterThan(10, \strlen($token));
+        $this->assertTrue($user->requiresPasswordReset());
     }
 }
