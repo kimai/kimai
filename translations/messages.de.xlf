@@ -1790,6 +1790,14 @@
         <source>last_working_day</source>
         <target>Letzter Arbeitstag</target>
       </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit">
+        <source>profit</source>
+        <target>Gewinn</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs">
+        <source>costs</source>
+        <target>Kosten</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
