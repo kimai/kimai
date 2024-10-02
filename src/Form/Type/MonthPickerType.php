@@ -27,7 +27,7 @@ final class MonthPickerType extends AbstractType
         $resolver->setDefaults([
             'widget' => 'single_text',
             'html5' => false,
-            'format' => DateType::HTML5_FORMAT,
+            'format' => 'yyyy-MM',
             'start_date' => new \DateTime(),
         ]);
     }

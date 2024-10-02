@@ -312,21 +312,21 @@
 {%- endblock yearpicker_widget %}
 
 {% block monthpicker_widget -%}
-    <div class="btn-group">
+    <div class="input-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|month_picker }}" data-event-bubbles="change">
             {{ icon('left') }}
         </a>
-        <a class="btn" href="#" onclick="return false;">
+        <a class="btn d-none input-month-polyfill" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
         </a>
+        {%- set required = false -%}
+        <input {{ block('widget_attributes') }} type="month" id="{{ form.vars.id }}_month_name" class="form-control" value="{{ month|month_picker }}" />
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|month_picker }}" data-event-bubbles="change">
             {{ icon('right') }}
         </a>
     </div>
-    {%- set required = false -%}
-    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
