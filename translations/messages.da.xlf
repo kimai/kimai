@@ -1286,8 +1286,8 @@
         <source>export.warn_result_amount</source>
         <target state="translated">Din søgning fandt frem til %count% resultater. Hvis eksporten fejler, skal du formindske din søgning endnu mere.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue" xml:space="preserve">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue" xml:space="preserve">
+        <source>revenue</source>
         <target state="translated">Indkomster</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">

@@ -570,8 +570,8 @@
         <source>Working hours</source>
         <target state="final">工作時數</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue" xml:space="preserve" approved="yes">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue" xml:space="preserve" approved="yes">
+        <source>revenue</source>
         <target state="final">營收</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="yes">

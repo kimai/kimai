@@ -157,7 +157,7 @@
                             {% if stats.internalRate > 0 %}
                                 {% set revenueTotal = stats.rateBillable - stats.internalRate %}
                                 <tr>
-                                    <td>{{ 'stats.revenue'|trans }} ({{ 'billable'|trans }} - {{ 'internalRate'|trans }})</td>
+                                    <td>{{ 'revenue'|trans }} ({{ 'billable'|trans }} - {{ 'internalRate'|trans }})</td>
                                     <td class="text-nowrap text-end">{{ revenueTotal|money(currency) }}</td>
                                     <td class="text-nowrap text-end">-</td>
                                 </tr>
@@ -171,7 +171,7 @@
                             {% if stats.internalRate > 0 %}
                                 {% set revenueHourlyRate = revenueTotal / stats.duration|chart_duration %}
                                 <tr>
-                                    <td>{{ 'hourlyRate'|trans }} ({{ 'stats.revenue'|trans }} / {{ durationTrans|trans }})</td>
+                                    <td>{{ 'hourlyRate'|trans }} ({{ 'revenue'|trans }} / {{ durationTrans|trans }})</td>
                                     <td class="text-nowrap text-end">{{ revenueHourlyRate|money(currency) }}</td>
                                     <td class="text-nowrap text-end">-</td>
                                 </tr>

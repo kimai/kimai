@@ -1018,8 +1018,8 @@
         <source>registration.check_email</source>
         <target>Retpoŝta mesaĝo estis sendita al %email%. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por aktivigi vian konton.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Enspezoj</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">

@@ -1010,8 +1010,8 @@
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
         <target state="translated">Hesabınızı etkinleştirmek için tıklanabilir bir etkinleştirme bağlantısı içeren e-posta %email% adresine gönderildi.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Kazançlar</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">

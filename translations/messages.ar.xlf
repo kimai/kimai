@@ -1082,8 +1082,8 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="needs-translation">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target state="translated">الإيرادات</target>
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
