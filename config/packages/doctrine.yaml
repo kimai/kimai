@@ -25,7 +25,7 @@ doctrine:
             datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
         controller_resolver:
-            auto_mapping: true
+            auto_mapping: false
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default
         enable_lazy_ghost_objects: true
