@@ -136,8 +136,6 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
     REQUEST_METHOD=GET \
     cgi-fcgi -bind -connect 127.0.0.1:9000 || exit 1
 
-
-
 ###########################
 # apache base build
 ###########################
@@ -163,8 +161,6 @@ EXPOSE 8001
 HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
     CMD curl -f http://127.0.0.1:8001 || exit 1
 
-
-
 ###########################
 # global base build
 ###########################
@@ -179,6 +175,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     chown -R www-data:www-data /composer && \
     echo "echo \"This image is not intended to be used stand alone. It's a base image for the Kimai project.\"" > /entrypoint.sh && \
     chmod 777 /entrypoint.sh
+
 # copy composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
