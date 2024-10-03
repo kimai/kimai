@@ -14,7 +14,7 @@
 ARG BASE="fpm"
 ARG PHP_VER="8.2"
 ARG COMPOSER_VER="latest"
-ARG TIMEZONE="Europe/London"
+ARG TIMEZONE="Europe/Berlin"
 
 ###########################
 # Shared tools
@@ -62,7 +62,6 @@ RUN apk add --no-cache \
     libzip-dev \
     # xsl
     libxslt-dev
-
 
 # apache debian php extension base
 FROM php:${PHP_VER}-apache-bookworm AS apache-php-ext-base
