@@ -30,10 +30,6 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="needs-translation">... så du har glemt dit kodeord? Intet problem: Kimai hjælper dig med at oprette et nyt:</target>
       </trans-unit>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" xml:space="preserve">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Hvis knappen ikke virker så kopier følgende URL i og indsæt den i din browser: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
         <target state="translated">Dette er en automatisk genereret e-mail. Svar venligst ikke på den, modtager postkassen bliver ikke læst.</target>

@@ -1,5 +1,5 @@
 {% set timeBudgetVisible = is_granted('time', entity) %}
-{% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.durationTotal' %}
+{% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.workingTime' %}
 {% if timeBudgetVisible %}
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/progressbar.html.twig" as progress %}
@@ -22,54 +22,29 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="text-nowrap text-end w-min">
-                                {% if entity.timeBudget > 0 %}
-                                100%
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </td>
                         </tr>
-                        {% set totalPercentReached = 100 %}
-                        {% if entity.timeBudget > 0 %}
-                            {% set totalPercentReached = (stats.durationBillable / (entity.timeBudget / 100)) %}
-                        {% endif %}
                         <tr>
                             <td>{{ durationTrans|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.duration|duration }}</td>
-                            <td class="text-nowrap text-end">{{ totalPercentReached|number_format(2) }}%</td>
                         </tr>
-                        {% set percentReached = 0 %}
-                        {% if stats.duration > 0 %}
-                            {% set percentReached = (stats.durationBillable / (stats.duration / 100)) %}
-                        {% endif %}
                         <tr>
                             <td>{{ 'billable'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.durationBillable|duration }}</td>
-                            <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'not_exported'|trans }}</td>
-                            <td class="text-nowrap text-end">
-                                {% set not_exported = (stats.statisticTotal.durationBillable - stats.statisticTotal.durationBillableExported) %}
-                                {% if export_url is defined and export_url is not null %}
-                                    <a href="{{ export_url }}">{{ not_exported|duration }}</a>
-                                {% else %}
-                                    {{ not_exported|duration }}
-                                {% endif %}
-                            </td>
-                            <td class="text-nowrap text-end">-</td>
                         </tr>
                         {% if entity.timeBudget > 0 %}
-                        <tr>
-                            <th colspan="3" class="text-nowrap text-end">
-                                {% if totalPercentReached < 100 %}
-                                    {{ 'stats.percentUsedLeft'|trans({'%percent%': totalPercentReached|number_format(2), '%left%': (entity.timeBudget - stats.durationBillable)|duration}) }}
-                                {% else %}
-                                    {{ 'stats.percentUsed'|trans({'%percent%': totalPercentReached|number_format(2)}) }}
-                                {% endif %}
-                            </th>
-                        </tr>
+                            {% set totalPercentReached = 100 %}
+                            {% if entity.timeBudget > 0 %}
+                                {% set totalPercentReached = (stats.durationBillable / (entity.timeBudget / 100)) %}
+                            {% endif %}
+                            <tr>
+                                <th colspan="2" class="text-nowrap text-end">
+                                    {% if totalPercentReached < 100 %}
+                                        {{ 'stats.percentUsedLeft'|trans({'%percent%': totalPercentReached|number_format(2), '%left%': (entity.timeBudget - stats.durationBillable)|duration}) }}
+                                    {% else %}
+                                        {{ 'stats.percentUsed'|trans({'%percent%': totalPercentReached|number_format(2)}) }}
+                                    {% endif %}
+                                </th>
+                            </tr>
                         {% endif %}
                     </table>
                 </div>
@@ -93,7 +68,6 @@
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="budget_box"{% endblock %}
         {% block box_body %}
-            {% set rateTrans = entity.isMonthlyBudget() ? 'stats.amountMonth' : 'stats.amountTotal' %}
             <div class="row">
                 <div class="col-12 col-md-6 order-1 order-md-0">
                     <table class="table table-hover dataTable">
@@ -106,80 +80,45 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="text-nowrap text-end w-min">
-                                {% if entity.budget > 0 %}
-                                    100%
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </td>
                         </tr>
-                        {% set totalPercentReached = 100 %}
-                        {% if entity.budget > 0 %}
-                            {% set totalPercentReached = (stats.rateBillable / (entity.budget / 100)) %}
-                        {% endif %}
                         <tr>
-                            <td>{{ rateTrans|trans }}</td>
-                            <td class="text-nowrap text-end">{{ stats.rate|money(currency) }}</td>
-                            <td class="text-nowrap text-end">{{ totalPercentReached|number_format(2) }}%</td>
-                        </tr>
-                        {% set percentReached = 0 %}
-                        {% if stats.rate > 0 %}
-                            {% set percentReached = (stats.rateBillable / (stats.rate / 100)) %}
-                        {% endif %}
-                        <tr>
-                            <td>{{ 'billable'|trans }}</td>
+                            <td>{{ 'revenue'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.rateBillable|money(currency) }}</td>
-                            <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
                         <tr>
-                            <td>{{ 'not_invoiced'|trans }}</td>
-                            <td class="text-nowrap text-end">
-                                {% set not_exported = (stats.statisticTotal.rateBillable - stats.statisticTotal.rateBillableExported) %}
-                                {% if invoice_url is defined and invoice_url is not null %}
-                                    <a href="{{ invoice_url }}">{{ not_exported|money(currency) }}</a>
-                                {% else %}
-                                    {{ not_exported|money(currency) }}
-                                {% endif %}
-                            </td>
-                            <td class="text-nowrap text-end">-</td>
-                        </tr>
-                        {% set percentReached = 0 %}
-                        {% if stats.rateBillable > 0 %}
-                            {% set percentReached = (stats.internalRate / (stats.rateBillable / 100)) %}
-                        {% endif %}
-                        <tr>
-                            <td>{{ 'internalRate'|trans }}</td>
+                            <td>{{ 'costs'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.internalRate|money(currency) }}</td>
-                            <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
                         {% if not entity.isMonthlyBudget() and timeBudgetVisible and stats.duration > 0 and stats.duration|chart_duration > 0.00 %}
+                            {% set revenueTotal = stats.rateBillable - stats.internalRate %}
                             {% if stats.internalRate > 0 %}
-                                {% set revenueTotal = stats.rateBillable - stats.internalRate %}
                                 <tr>
-                                    <td>{{ 'stats.revenue'|trans }} ({{ 'billable'|trans }} - {{ 'internalRate'|trans }})</td>
+                                    <td>{{ 'profit'|trans }} ({{ 'revenue'|trans }} - {{ 'costs'|trans }})</td>
                                     <td class="text-nowrap text-end">{{ revenueTotal|money(currency) }}</td>
-                                    <td class="text-nowrap text-end">-</td>
                                 </tr>
                             {% endif %}
-                            {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
-                            <tr>
-                                <td>{{ 'hourlyRate'|trans }} ({{ 'billable'|trans }} / {{ durationTrans|trans }})</td>
-                                <td class="text-nowrap text-end">{{ realHourlyRate|money(currency) }}</td>
-                                <td class="text-nowrap text-end">-</td>
-                            </tr>
-                            {% if stats.internalRate > 0 %}
-                                {% set revenueHourlyRate = revenueTotal / stats.duration|chart_duration %}
+                            {% if stats.duration > 0 %}
+                                {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
                                 <tr>
-                                    <td>{{ 'hourlyRate'|trans }} ({{ 'stats.revenue'|trans }} / {{ durationTrans|trans }})</td>
-                                    <td class="text-nowrap text-end">{{ revenueHourlyRate|money(currency) }}</td>
-                                    <td class="text-nowrap text-end">-</td>
+                                    <td>{{ 'hourlyRate'|trans }} ({{ 'revenue'|trans }} / {{ durationTrans|trans }})</td>
+                                    <td class="text-nowrap text-end">{{ realHourlyRate|money(currency) }}</td>
                                 </tr>
+                                {% if revenueTotal != 0.0 %}
+                                    {% set revenueHourlyRate = revenueTotal / stats.duration|chart_duration %}
+                                    <tr>
+                                        <td>{{ 'hourlyRate'|trans }} ({{ 'profit'|trans }} / {{ durationTrans|trans }})</td>
+                                        <td class="text-nowrap text-end">{{ revenueHourlyRate|money(currency) }}</td>
+                                    </tr>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                         {% if entity.budget > 0 %}
+                            {% set totalPercentReached = 100 %}
+                            {% if entity.budget > 0 %}
+                                {% set totalPercentReached = (stats.rateBillable / (entity.budget / 100)) %}
+                            {% endif %}
                             <tr>
-                                <th colspan="3" class="text-nowrap text-end">
+                                <th colspan="2" class="text-nowrap text-end">
                                     {% if totalPercentReached < 100 %}
                                         {{ 'stats.percentUsedLeft'|trans({'%percent%': totalPercentReached|number_format(2), '%left%': (entity.budget - stats.rateBillable)|money(currency)}) }}
                                     {% else %}
@@ -192,10 +131,9 @@
                 </div>
                 <div class="col-12 col-md-6 order-0 order-md-1 p-3">
                     {% if entity.budget > 0 %}
-                        <div class="mb-3">{{ progress.progressbar(entity.budget, stats.rateBillable, rateTrans|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}</div>
+                        <div class="mb-3">{{ progress.progressbar(entity.budget, stats.rateBillable, 'revenue'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}</div>
                     {% endif %}
-                    <div class="mb-3">{{ progress.progressbar(stats.rate, stats.rateBillable, 'billable'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ stats.rate|money(currency), true) }}</div>
-                    <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'internalRate'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
+                    <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'costs'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
                 </div>
             </div>
         {% endblock %}

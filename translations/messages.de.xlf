@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
-        <target>Zeit-Budget</target>
+        <target>Stundenkontingent</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -906,9 +906,9 @@
         <source>Working hours</source>
         <target state="final">Arbeitszeit</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
-        <target>Einnahmen</target>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
+        <target>Umsatz</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
@@ -1789,6 +1789,14 @@
       <trans-unit id="IFT9pou" resname="last_working_day">
         <source>last_working_day</source>
         <target>Letzter Arbeitstag</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit">
+        <source>profit</source>
+        <target>Gewinn</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs">
+        <source>costs</source>
+        <target>Kosten</target>
       </trans-unit>
     </body>
   </file>

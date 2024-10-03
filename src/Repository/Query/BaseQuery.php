@@ -285,7 +285,7 @@ class BaseQuery
         return $this;
     }
 
-    public function setBookmark(Bookmark $bookmark): void
+    public function setBookmark(?Bookmark $bookmark): void
     {
         $this->bookmark = $bookmark;
     }

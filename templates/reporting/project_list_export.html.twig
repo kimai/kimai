@@ -17,9 +17,9 @@
         'amountTotal': {'title': 'stats.amountTotal'|trans},
         'billableMoney': {'title': 'billable'|trans},
         'internalRate': {'title': 'internalRate'|trans},
-        'revenue': {'title': ('stats.revenue'|trans ~ ' (' ~ 'billable'|trans ~ ' - ' ~ 'internalRate'|trans ~ ')')},
+        'revenue': {'title': ('revenue'|trans ~ ' (' ~ 'billable'|trans ~ ' - ' ~ 'internalRate'|trans ~ ')')},
         'hourlyBillable': {'title': ('hourlyRate'|trans ~ ' (' ~ 'billable'|trans ~ ' / ' ~  'stats.durationTotal'|trans ~ ')')},
-        'hourlyTotal': {'title': ('hourlyRate'|trans ~ ' (' ~ 'stats.revenue'|trans ~ ' / ' ~ 'stats.durationTotal'|trans ~ ')')},
+        'hourlyTotal': {'title': ('hourlyRate'|trans ~ ' (' ~ 'revenue'|trans ~ ' / ' ~ 'stats.durationTotal'|trans ~ ')')},
         'invoiced': {'title': 'not_invoiced'|trans},
     }) %}
 {% endif %}

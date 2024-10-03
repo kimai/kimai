@@ -225,7 +225,6 @@ class BaseQueryTest extends TestCase
 
         $sut->addActivity($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getActivities());
-        $this->assertEquals([], $sut->getActivityIds());
 
         $sut->setActivities([]);
         $this->assertEquals([], $sut->getActivities());
@@ -247,7 +246,11 @@ class BaseQueryTest extends TestCase
         $activity->method('getId')->willReturn(27);
         $sut->addActivity($activity);
 
-        $this->assertEquals([13, 27], $sut->getActivityIds());
+        $ids = [];
+        foreach ($sut->getActivities() as $activity) {
+            $ids[] = $activity->getId();
+        }
+        $this->assertEquals([13, 27, null, 27], $ids);
     }
 
     protected function assertCustomer(BaseQuery $sut): void

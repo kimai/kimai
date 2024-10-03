@@ -77,9 +77,9 @@
                 {% endif %}
 
                 {% if filterCount > 0 and not form.vars.data.isBookmarkSearch() %}
-                    <button class="{{ searchBtnClass }} text-orange" type="submit" id="resetSearchFilter" name="resetSearchFilter" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">
+                    <a class="{{ searchBtnClass }} text-orange" href="{{ path(app.request.attributes.get('_route')) }}" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">
                         {{ icon('cancel') }}
-                    </button>
+                    </a>
                 {% endif %}
             </span>
         </div>
