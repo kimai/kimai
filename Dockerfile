@@ -31,7 +31,6 @@ FROM git-dev AS git-prod
 WORKDIR /opt/kimai
 RUN rm -r tests
 
-
 # FPM base
 FROM kimai/kimai-base:fpm AS fpm-base
 
@@ -70,7 +69,7 @@ COPY .docker/service.sh /service.sh
 COPY .docker/self-test.sh /self-test.sh
 COPY .docker/dbtest.php /dbtest.php
 
-ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=5.7.40"
+ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=8.3"
 ENV APP_SECRET=change_this_to_something_unique
 # The default container name for nginx is nginx
 ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
@@ -88,7 +87,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 VOLUME [ "/opt/kimai/var" ]
 
 CMD [ "/startup.sh" ]
-
 
 ###########################
 # final builds
@@ -115,7 +113,7 @@ RUN \
     /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
 ENV APP_ENV=dev
 ENV DATABASE_URL=
-ENV memory_limit=256M
+ENV memory_limit=512M
 
 # production build
 FROM base AS prod
@@ -143,4 +141,4 @@ RUN \
     /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
 ENV APP_ENV=prod
 ENV DATABASE_URL=
-ENV memory_limit=256M
+ENV memory_limit=512M

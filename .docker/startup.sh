@@ -6,7 +6,7 @@ echo $KIMAI
 function config() {
   # set mem limits and copy in custom logger config
   if [ -z "$memory_limit" ]; then
-    memory_limit=256M
+    memory_limit=512M
   fi
 
   DATABASE_USER=$(awk -F '[/:@]' '{print $4}' <<< "$DATABASE_URL")
