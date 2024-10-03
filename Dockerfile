@@ -4,6 +4,15 @@
 # | . \| | | | | | | (_| | |
 # |_|\_\_|_| |_| |_|\__,_|_|
 #
+# Kimai images for:
+# - plain PHP FPM
+# - Apache with PHP
+# ---------------------------------------------------------------------
+# For local testing by maintainer:
+#
+# docker build -t kimai-local-fpm --build-arg BASE=fpm .
+# docker build -t kimai-local-apache --build-arg BASE=apache .
+# ---------------------------------------------------------------------
 
 # Source base [fpm/apache]
 ARG BASE="fpm"
@@ -92,7 +101,7 @@ CMD [ "/startup.sh" ]
 # final builds
 ###########################
 
-# developement build
+# development build
 FROM base AS dev
 # copy kimai develop source
 COPY --from=git-dev --chown=www-data:www-data /opt/kimai /opt/kimai
