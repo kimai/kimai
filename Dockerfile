@@ -79,18 +79,11 @@ ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=
 ENV ADMINMAIL=
-ENV DB_TYPE=
-ENV DB_USER=
-ENV DB_PASS=
-ENV DB_HOST=
-ENV DB_PORT=
-ENV DB_BASE=
-ENV COMPOSER_MEMORY_LIMIT=-1
-# If this set then the image will start, run a self test and then exit. It's used for the release process
-ENV TEST_AND_EXIT=
-ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV USER_ID=
 ENV GROUP_ID=
+# default values to configure composer behavior
+ENV COMPOSER_MEMORY_LIMIT=-1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 VOLUME [ "/opt/kimai/var" ]
 
