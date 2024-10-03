@@ -372,7 +372,7 @@
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
         <source>help.visible</source>
-        <target state="translated">Jika setelan ini dimatikan, nama barang tidak ditampilkan dalam kotak / tampilan daftar</target>
+        <target state="translated">Jika setelan ini dimatikan, nama barang tidak ditampilkan dalam kotak / tampilan daftar.</target>
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve">
         <source>Visible</source>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate" xml:space="preserve">
         <source>help.internalRate</source>
-        <target state="translated">Jika harga ini tidak dicantumkan, harga normal akan digunakan.</target>
+        <target state="translated">Jika tidak dispesifikasi, harga normal akan digunakan</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email" xml:space="preserve">
         <source>E-mail</source>
@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Bekerja sejak</target>
+        <target state="translated">Bekerja sejak hari</target>
       </trans-unit>
       <trans-unit id="A6TLLQa" resname="profile.password" xml:space="preserve">
         <source>profile.password</source>
@@ -568,7 +568,7 @@
       </trans-unit>
       <trans-unit id="j4Kd9N1" resname="calendar_initial_view" xml:space="preserve">
         <source>calendar_initial_view</source>
-        <target state="needs-translation">Tampilan kalender awal</target>
+        <target state="translated">Tampilan kalender awal</target>
       </trans-unit>
       <trans-unit id="gRIArHS" resname="lastLogin" xml:space="preserve">
         <source>lastLogin</source>
@@ -652,7 +652,7 @@
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
         <source>work_times_result</source>
-        <target state="needs-translation">Jam bekerja</target>
+        <target state="translated">Jam bekerja</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve">
         <source>profile.registration_date</source>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Perkiraan jumlah jam</target>
+        <target state="translated">Perkiraan jam</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
@@ -889,6 +889,74 @@
       <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
         <source>Created</source>
         <target state="translated">Membuat</target>
+      </trans-unit>
+      <trans-unit id="r49TNAg" resname="daily_stats" xml:space="preserve">
+        <source>daily_stats</source>
+        <target state="translated">Tampilkan statistik harian di lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve">
+        <source>system_account</source>
+        <target state="translated">Akun Sistem</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve">
+        <source>system_account.help</source>
+        <target state="translated">Akan disembunyikan dalam laporan dan dropdown</target>
+      </trans-unit>
+      <trans-unit id="Zs9VE7N" resname="roles" xml:space="preserve">
+        <source>roles</source>
+        <target state="translated">Peran</target>
+      </trans-unit>
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title" xml:space="preserve">
+        <source>user_permissions.title</source>
+        <target state="translated">Izin pengguna</target>
+      </trans-unit>
+      <trans-unit id="G.GEdlk" resname="user_role.title" xml:space="preserve">
+        <source>user_role.title</source>
+        <target state="translated">Peran pengguna</target>
+      </trans-unit>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _" xml:space="preserve">
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">Karakter yang diperbolehkan: AZ dan _ (minimal 5 karakter huruf besar)</target>
+      </trans-unit>
+      <trans-unit id="XKTzhQz" resname="version" xml:space="preserve">
+        <source>version</source>
+        <target state="translated">Versi</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">Pemesanan manual</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">Pemesanan manual tidak dapat diubah atau dihapus selanjutnya!</target>
+      </trans-unit>
+      <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve">
+        <source>export_decimal</source>
+        <target state="translated">Gunakan durasi desimal dalam ekspor</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">Waktu kerja akun</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help" xml:space="preserve">
+        <source>active.help</source>
+        <target state="translated">Pengguna yang dinonaktifkan tidak dapat lagi masuk dan disembunyikan dalam laporan dan kotak pilihan</target>
+      </trans-unit>
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve">
+        <source>ROLE_TEAMLEAD</source>
+        <target state="translated">Pemimpin tim</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">Bawaan</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
+        <source>plugin.installed</source>
+        <target state="translated">Plugin yang diinstal</target>
+      </trans-unit>
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN" xml:space="preserve">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target state="translated">Admin Sistem</target>
       </trans-unit>
     </body>
   </file>
