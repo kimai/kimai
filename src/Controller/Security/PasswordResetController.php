@@ -50,6 +50,10 @@ final class PasswordResetController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        if ($this->isGranted('IS_AUTHENTICATED')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         return $this->render('security/password-reset/request.html.twig');
     }
 
@@ -67,6 +71,10 @@ final class PasswordResetController extends AbstractController
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
+        }
+
+        if ($this->isGranted('IS_AUTHENTICATED')) {
+            return $this->redirectToRoute('homepage');
         }
 
         $limiter = $resetPasswordLimiter->create($request->getClientIp());

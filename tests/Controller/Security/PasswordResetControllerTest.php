@@ -73,6 +73,20 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $this->assertTrue($user->requiresPasswordReset());
     }
 
+    public function testRequestAsLoggedInUserRedirects(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/resetting/request');
+        $this->assertIsRedirect($client, $this->createUrl('/homepage'));
+    }
+
+    public function testResetAsLoggedInUserRedirects(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->request($client, '/resetting/send-email', 'POST');
+        $this->assertIsRedirect($client, $this->createUrl('/homepage'));
+    }
+
     public function testResetWithMissingUsername(): void
     {
         $client = self::createClient();
