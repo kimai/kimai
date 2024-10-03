@@ -42,6 +42,8 @@ RUN rm -r tests
 
 # FPM base
 FROM kimai/kimai-base:fpm AS fpm-base
+RUN sed -i "s/;ping.path/ping.path/g" /usr/local/etc/php-fpm.d/www.conf && \
+    sed -i "s/;access.suppress_path\[\] = \/ping/access.suppress_path\[\] = \/ping/g" /usr/local/etc/php-fpm.d/www.conf
 
 # Apache base
 FROM kimai/kimai-base:apache AS apache-base
