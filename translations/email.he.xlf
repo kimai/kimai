@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
-        <target>זהו מייל שנוצר אוטומטית. נא לא להשיב למייל זה.</target>
+        <target state="final">זאת הודעת דוא״ל שנוצרת אוטומטית. נא לא להשיב לה, אף אחד לא ייקרא את זה.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
         <source>registration.subject</source>
-        <target>הפעל את החשבון שלך</target>
+        <target state="final">הפעלת החשבון שלך</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>

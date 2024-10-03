@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Tohle se může stát…</target>
+        <target state="translated">Zapomněli jste heslo?</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
@@ -36,7 +36,27 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… takže jste zapomněli heslo? Nevadí, Kimai vám pomůže s vytvořením nového:</target>
+        <target state="translated">Nebojte se, Kimai vám pomůže vytvořit nové!</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nová nepřítomnost | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Pro uživatele %absence_user% byla vytvořena nová nepřítomnost.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Prohlédněte si ji prosím na adrese: %approval_url%</target>
       </trans-unit>
     </body>
   </file>
