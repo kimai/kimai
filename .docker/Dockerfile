@@ -7,9 +7,17 @@
 # Base images for:
 # - plain PHP FPM
 # - Apache with PHP
+# ---------------------------------------------------------------------
+# For production builds:
 #
 # docker build -t kimai/kimai-base:fpm --build-arg BASE=fpm .
 # docker build -t kimai/kimai-base:apache --build-arg BASE=apache .
+# ---------------------------------------------------------------------
+# For local testing by maintainer:
+#
+# docker build -t kimai-local-fpm-base --build-arg BASE=fpm .
+# docker build -t kimai-local-apache-base --build-arg BASE=apache .
+# ---------------------------------------------------------------------
 
 ARG BASE="fpm"
 ARG PHP_VER="8.2"
