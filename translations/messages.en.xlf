@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
-        <target>Time budget</target>
+        <target>Hourly quota</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
