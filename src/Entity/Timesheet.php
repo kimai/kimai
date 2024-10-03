@@ -9,7 +9,8 @@
 
 namespace App\Entity;
 
-use App\Doctrine\ModifiedAt;
+use App\Doctrine\Behavior\ModifiedAt;
+use App\Doctrine\Behavior\ModifiedTrait;
 use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
@@ -48,6 +49,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\TimesheetDeactivated]
 class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 {
+    use ModifiedTrait;
+
     /**
      * Category: Normal work-time (default category)
      */
@@ -127,6 +130,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    #[ORM\Column(name: 'break', type: 'integer', nullable: true)]
+    private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
@@ -190,8 +195,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
     private ?string $category = self::WORK;
-    #[ORM\Column(name: 'modified_at', type: 'datetime_immutable', nullable: true)]
-    private \DateTimeImmutable $modifiedAt;
     /**
      * Tags
      *
@@ -220,7 +223,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         $this->tags = new ArrayCollection();
         $this->meta = new ArrayCollection();
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     /**
@@ -318,10 +321,20 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     public function getCalculatedDuration(): ?int
     {
         if ($this->begin !== null && $this->end !== null) {
-            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+            return $this->end->getTimestamp() - $this->begin->getTimestamp() - $this->getBreak();
         }
 
         return null;
+    }
+
+    public function getBreak(): int
+    {
+        return $this->break ?? 0;
+    }
+
+    public function setBreak(?int $break): void
+    {
+        $this->break = $break ?? 0;
     }
 
     public function setUser(?User $user): Timesheet
@@ -550,16 +563,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    public function getModifiedAt(): \DateTimeImmutable
-    {
-        return $this->modifiedAt;
-    }
-
-    public function setModifiedAt(\DateTimeImmutable $dateTime): void
-    {
-        $this->modifiedAt = $dateTime;
-    }
-
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -607,7 +610,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         // this needs to be done, otherwise doctrine will not see the item as changed
         // and the calculators will not run
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         if (null === ($current = $this->getMetaField($meta->getName()))) {
             $meta->setEntity($this);
@@ -655,8 +658,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
             $this->id = null;
         }
 
-        // field will not be set, if it contains a value
-        $this->modifiedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
         $this->exported = false;
 
         $currentMeta = $this->meta;

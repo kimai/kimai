@@ -1018,8 +1018,8 @@
         <source>stats.amountFinancialYear</source>
         <target state="final">Entrate in quest'anno finanziario</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue" approved="yes">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue" approved="yes">
+        <source>revenue</source>
         <target state="final">Entrate</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" approved="yes" xml:space="preserve">

@@ -25,6 +25,8 @@ doctrine:
             datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
         controller_resolver:
+            # FIXME this is causing a deprecation and needs to be changed
+            # auto_mapping: false
             auto_mapping: true
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default
