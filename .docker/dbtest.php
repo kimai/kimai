@@ -1,17 +1,17 @@
 <?php
-$DB_HOST = urldecode($argv[1]);
-$DB_BASE = urldecode($argv[2]);
-$DB_PORT = $argv[3];
-$DB_USER = urldecode($argv[4]);
-$DB_PASS = urldecode($argv[5]);
+$DATABASE_HOST = urldecode($argv[1]);
+$DATABASE_BASE = urldecode($argv[2]);
+$DATABASE_PORT = $argv[3];
+$DATABASE_USER = urldecode($argv[4]);
+$DATABASE_PASS = urldecode($argv[5]);
 
 echo "Testing DB:";
 echo "*";
-echo "* new \PDO(mysql:host=$DB_HOST;dbname=$DB_BASE;port=$DB_PORT, $DB_USER, $DB_PASS, [ \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ]);";
+echo "* new \PDO(mysql:host=$DATABASE_HOST;dbname=$DATABASE_BASE;port=$DATABASE_PORT, $DATABASE_USER, $DATABASE_PASS, [ \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ]);";
 echo "*";
 
 try {
-    $pdo = new \PDO("mysql:host=$DB_HOST;dbname=$DB_BASE;port=$DB_PORT", "$DB_USER", "$DB_PASS", [
+    $pdo = new \PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_BASE;port=$DATABASE_PORT", "$DATABASE_USER", "$DATABASE_PASS", [
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
     ]);
 } catch(\Exception $ex) {
