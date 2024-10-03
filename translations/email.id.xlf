@@ -34,10 +34,6 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="needs-translation">Jadi, Anda lupa kata sandi Anda? Jangan khawatir: Kimai akan membantu Anda membuat yang baru:</target>
       </trans-unit>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Jika tombol tidak berfungsi, tolong salin &amp; tempel URL berikut ke peramban Anda: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target state="translated">Ini adalah email yang dibuat secara otomatis. Tolong jangan balas, alamat ini tidak akan dibaca.</target>

@@ -26,6 +26,9 @@
                 margin-bottom: 0;
             }
         }
+        .input-group {
+            width: unset;
+        }
     }
 }
 
@@ -33,7 +36,6 @@
     width: 20px;
     height: 20px;
     display: inline-block;
-    margin-right: 10px;
     border-radius: var(--tblr-border-radius);
 }
 

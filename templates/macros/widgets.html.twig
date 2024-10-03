@@ -542,14 +542,6 @@
     </div>
 {% endmacro %}
 
-{% macro percent(maximum, current) %}
-    {% if maximum > 0 %}
-        {{ (current / (maximum / 100))|number_format(2) }} %
-    {% else %}
-        {{ 0|number_format(2) }} %
-    {% endif %}
-{% endmacro %}
-
 {% macro page_reloader(events, full_reload) %}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {

@@ -620,7 +620,7 @@ class TimesheetRepository extends EntityRepository
 
         if ($query->hasActivities()) {
             $qb->andWhere($qb->expr()->in('t.activity', ':activity'))
-                ->setParameter('activity', $query->getActivityIds());
+                ->setParameter('activity', $query->getActivities());
         }
 
         if ($query->hasProjects()) {

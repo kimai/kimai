@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" approved="yes" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
@@ -28,19 +24,19 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target>Passwort zurücksetzen</target>
+        <target>Anmelden bei Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
         <source>Forgot your password?</source>
-        <target state="final">Passwort vergessen?</target>
+        <target state="final">Bei Ihrem Konto anmelden</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
-        <target>Passwort zurücksetzen</target>
+        <target>Anmelden</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="final">Keine Sorge: Kimai hilft dir, ein neues zu erstellen!</target>
+        <target>Dieser Link ist nur für die nächsten 15 Minuten gültig.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>

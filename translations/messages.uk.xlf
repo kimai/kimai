@@ -442,8 +442,8 @@
         <source>Working hours</source>
         <target>Робочий час</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target state="translated">Доходи</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">

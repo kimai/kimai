@@ -1014,8 +1014,8 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">비밀번호 재설정 링크가 전송되었습니다. 참고 : 한 번만 새로운 암호를 요청할 수 있습니다. %tokenLifetime% 시간. 이메일을받지 못하면 스팸 폴더를 확인하고 다시 시도하십시오.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>수익</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
