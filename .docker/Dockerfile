@@ -1,4 +1,16 @@
-# Source base [fpm/apache]
+#  _  ___                 _
+# | |/ (_)_ __ ___   __ _(_)
+# | ' /| | '_ ` _ \ / _` | |
+# | . \| | | | | | | (_| | |
+# |_|\_\_|_| |_| |_|\__,_|_|
+#
+# Base images for:
+# - plain PHP FPM
+# - Apache with PHP
+#
+# docker build -t kimai/kimai-base:fpm --build-arg BASE=fpm .
+# docker build -t kimai/kimai-base:apache --build-arg BASE=apache .
+
 ARG BASE="fpm"
 ARG PHP_VER="8.2"
 ARG COMPOSER_VER="latest"
@@ -15,7 +27,7 @@ FROM composer:${COMPOSER_VER} AS composer
 # PHP extensions
 ###########################
 
-#fpm alpine php extension base
+# fpm alpine php extension base
 FROM php:${PHP_VER}-fpm-alpine AS fpm-php-ext-base
 RUN apk add --no-cache \
     # build-tools
@@ -62,7 +74,6 @@ RUN apt-get install -y \
         libzip-dev \
         libxslt1-dev \
         libfreetype6-dev
-
 
 # php extension gd - 13.86s
 FROM ${BASE}-php-ext-base AS php-ext-gd
@@ -203,6 +214,3 @@ COPY --from=php-ext-redis /usr/local/lib/php/extensions/no-debug-non-zts-2022082
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 CMD [ "/entrypoint.sh" ]
-
-# docker build -t kimai/kimai-base:fpm --build-arg BASE=fpm .
-# docker build -t kimai/kimai-base:apache --build-arg BASE=apache .
