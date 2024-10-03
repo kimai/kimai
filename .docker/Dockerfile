@@ -24,7 +24,7 @@
 # ---------------------------------------------------------------------
 
 ARG BASE="fpm"
-ARG PHP_VER="8.2"
+ARG PHP_VER="8.3"
 ARG COMPOSER_VER="latest"
 ARG TIMEZONE="Europe/Berlin"
 
@@ -195,22 +195,22 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # PHP extension xsl
 COPY --from=php-ext-xsl /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini
-COPY --from=php-ext-xsl /usr/local/lib/php/extensions/no-debug-non-zts-20220829/xsl.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/xsl.so
+COPY --from=php-ext-xsl /usr/local/lib/php/extensions/no-debug-non-zts-20230831/xsl.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/xsl.so
 # PHP extension pdo_mysql
 COPY --from=php-ext-pdo_mysql /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini /usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini
-COPY --from=php-ext-pdo_mysql /usr/local/lib/php/extensions/no-debug-non-zts-20220829/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/pdo_mysql.so
+COPY --from=php-ext-pdo_mysql /usr/local/lib/php/extensions/no-debug-non-zts-20230831/pdo_mysql.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/pdo_mysql.so
 # PHP extension zip
 COPY --from=php-ext-zip /usr/local/etc/php/conf.d/docker-php-ext-zip.ini /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
-COPY --from=php-ext-zip /usr/local/lib/php/extensions/no-debug-non-zts-20220829/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/zip.so
+COPY --from=php-ext-zip /usr/local/lib/php/extensions/no-debug-non-zts-20230831/zip.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/zip.so
 # PHP extension ldap
 COPY --from=php-ext-ldap /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini /usr/local/etc/php/conf.d/docker-php-ext-ldap.ini
-COPY --from=php-ext-ldap /usr/local/lib/php/extensions/no-debug-non-zts-20220829/ldap.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/ldap.so
+COPY --from=php-ext-ldap /usr/local/lib/php/extensions/no-debug-non-zts-20230831/ldap.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/ldap.so
 # PHP extension gd
 COPY --from=php-ext-gd /usr/local/etc/php/conf.d/docker-php-ext-gd.ini /usr/local/etc/php/conf.d/docker-php-ext-gd.ini
-COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20220829/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/gd.so
+COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20230831/gd.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/gd.so
 # PHP extension intl
 COPY --from=php-ext-intl /usr/local/etc/php/conf.d/docker-php-ext-intl.ini /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
-COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20220829/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/intl.so
+COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20230831/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/intl.so
 # PHP extension opcache
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
