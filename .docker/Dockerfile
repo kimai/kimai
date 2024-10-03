@@ -76,7 +76,7 @@ RUN apk add --no-cache \
     libxslt-dev
 
 # apache debian php extension base
-FROM php:${PHP_VER}-apache-bullseye AS apache-php-ext-base
+FROM php:${PHP_VER}-apache-bookworm AS apache-php-ext-base
 RUN apt-get update
 RUN apt-get install -y \
         libldap2-dev \
@@ -152,7 +152,7 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 # apache base build
 ###########################
 
-FROM php:${PHP_VER}-apache-bullseye AS apache-base
+FROM php:${PHP_VER}-apache-bookworm AS apache-base
 ARG TIMEZONE
 RUN apt-get update && \
     apt-get install -y \
