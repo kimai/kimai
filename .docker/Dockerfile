@@ -177,7 +177,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
     # make composer home dir
     mkdir /composer  && \
     chown -R www-data:www-data /composer && \
-    echo "echo -e This imnage is not intended to be used stand alone. It's a base image\necho for the Kimai project. https://www.kimai.org\n" > /entrypoint.sh && \
+    echo "echo \"This image is not intended to be used stand alone. It's a base image for the Kimai project.\"" > /entrypoint.sh && \
     chmod 777 /entrypoint.sh
 # copy composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
