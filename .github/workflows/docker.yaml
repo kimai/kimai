@@ -1,16 +1,11 @@
 name: 'Docker Build'
-# act -j build -W ./.github/workflows/docker.yaml --secret-file  .dockerhub.secrets
 
 on:
-    workflow_dispatch:
     release:
         types: [released]
 
 jobs:
     build:
-        strategy:
-            matrix:
-                server: [ fpm, apache ]
         runs-on: ubuntu-latest
 
         steps:
@@ -18,41 +13,51 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Install buildx
-              uses: docker/setup-buildx-action@v3
-
-            - name: Install lastversion
-              run: sudo apt-get update -y; sudo apt-get install --no-install-recommends -y python3 python3-pip; pip install lastversion
-
             - name: Login to DockerHub
               uses: docker/login-action@v3
               with:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-            - name: get lastest version
-              id: remote_version
-              run: echo "kimai_version=$(lastversion https://github.com/kimai/kimai)" >> $GITHUB_ENV
+            - name: Determine version
+              run: echo "kimai_version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
-            - name: Build
+            - name: FPM image
               uses: docker/build-push-action@v5
               with:
                   context: .
+                  file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
-                      BASE=${{ matrix.server }}
+                      BASE=fpm
                   target: prod
                   platforms: linux/amd64,linux/arm64
                   tags: |
-                      kimai/kimai2:${{ matrix.server }}
-                      kimai/kimai2:${{ matrix.server }}-${{ env.kimai_version }}
+                      kimai/kimai2:latest
+                      kimai/kimai2:fpm
+                      kimai/kimai2:fpm-${{ env.kimai_version }}
                   push: true
 
-            - name: Build dev image
-              if: matrix.server == 'apache'
+            - name: Apache image
               uses: docker/build-push-action@v5
               with:
                   context: .
+                  file: Dockerfile
+                  build-args: |
+                      KIMAI=${{ env.kimai_version }}
+                      BASE=apache
+                  target: prod
+                  platforms: linux/amd64,linux/arm64
+                  tags: |
+                      kimai/kimai2:apache
+                      kimai/kimai2:apache-${{ env.kimai_version }}
+                  push: true
+
+            - name: Development image
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
                       BASE=apache
@@ -61,25 +66,3 @@ jobs:
                   tags: |
                       kimai/kimai2:dev
                   push: true
-
-    tag:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-
-            - name: Login to DockerHub
-              uses: docker/login-action@v3
-              with:
-                  username: ${{secrets.DOCKERHUB_USERNAME}}
-                  password: ${{secrets.DOCKERHUB_PASSWORD}}
-
-            - name: Install buildx
-              uses: docker/setup-buildx-action@v3
-
-            - name: Pull images
-              run: |
-                  docker pull kimai/kimai2:fpm
-
-            - name: Tag latest
-              run: |
-                  docker buildx imagetools create -t kimai/kimai2:latest kimai/kimai2:fpm
