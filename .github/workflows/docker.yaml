@@ -1,6 +1,7 @@
 name: 'Docker Build'
 
 on:
+    workflow_dispatch:
     release:
         types: [released]
 
@@ -23,7 +24,23 @@ jobs:
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
 
             - name: Determine version
-              run: echo "kimai_version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+              run: |
+                  input="${{ github.event.release.tag_name }}"
+                  
+                  # Determine between manual trigger and release event
+                  if [ -z "$input" ]; then
+                      echo "Manually run, using ref_name: ${{ github.ref_name }}"
+                      version="${{ github.ref_name }}"
+                  else
+                      version="$input"
+                  fi
+
+                  if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then
+                    echo "Invalid version number: $version"
+                    exit 1
+                  fi
+                  
+                  echo "kimai_version=$version" >> $GITHUB_ENV
 
             - name: FPM image
               uses: docker/build-push-action@v5
