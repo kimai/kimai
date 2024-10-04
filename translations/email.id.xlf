@@ -2,17 +2,17 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Reset kata sandi Anda</target>
+        <target state="needs-translation">Reset kata sandi Anda</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target state="translated">Aktifkan akun Anda</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Reset kata sandi Anda</target>
+        <target state="needs-translation">Reset kata sandi Anda</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>

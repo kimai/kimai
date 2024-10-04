@@ -22,17 +22,17 @@
         <source>registration.intro</source>
         <target state="translated">Zarejestrowałeś się w w rejestratorze czasu Kimai za pomocą e-maila %email%. Aktywuj konto w ciągu kilku następnych godzin, zanim link wygaśnie.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Zresetuj swoje hasło</target>
+        <target state="needs-translation">Zresetuj swoje hasło</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
         <target state="needs-translation">To może się zdarzyć…</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Zresetuj swoje hasło</target>
+        <target state="needs-translation">Zresetuj swoje hasło</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

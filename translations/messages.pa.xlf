@@ -210,9 +210,9 @@
         <source>tags</source>
         <target state="translated">ਟੈਗ</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">ਸਮਾਂ ਬਜਟ</target>
+        <target state="needs-translation">ਸਮਾਂ ਬਜਟ</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>

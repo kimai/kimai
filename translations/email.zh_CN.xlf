@@ -10,9 +10,9 @@
         <source>registration.title</source>
         <target>欢迎 %username%</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>重置您的密码</target>
+        <target state="needs-translation">重置您的密码</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
@@ -30,9 +30,9 @@
         <source>Forgot your password?</source>
         <target state="needs-translation">这可能发生…</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">重置您的密码</target>
+        <target state="needs-translation">重置您的密码</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>

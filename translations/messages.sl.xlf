@@ -426,9 +426,9 @@
         <source>help.invoiceText</source>
         <target state="translated">To besedilo se uporablja v dokumentih računa in se lahko uporablja npr. za beleženje nadaljnjih pogojev dostave.</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Časovni proračun</target>
+        <target state="needs-translation">Časovni proračun</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">
         <source>help.visible</source>

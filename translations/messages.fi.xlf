@@ -222,9 +222,9 @@
         <source>budget</source>
         <target state="translated">Budjetti</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Aika budjetti</target>
+        <target state="needs-translation">Aika budjetti</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

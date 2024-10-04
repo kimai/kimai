@@ -222,9 +222,9 @@
         <source>budget</source>
         <target state="final">Βudget</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget" approved="yes">
+      <trans-unit id="qbD0dHa" resname="timeBudget" approved="yes" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="final">Budget di tempo</target>
+        <target state="final">Quota oraria</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" approved="yes">
         <source>activity</source>
@@ -1789,6 +1789,14 @@
       <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve" approved="yes">
         <source>work_days</source>
         <target state="final">Giorni lavorativi</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve" approved="yes">
+        <source>profit</source>
+        <target state="final">Profitto</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve" approved="yes">
+        <source>costs</source>
+        <target state="final">Costi</target>
       </trans-unit>
     </body>
   </file>

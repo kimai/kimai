@@ -218,9 +218,9 @@
         <source>budget</source>
         <target>Buĝeto</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Tempobuĝeto</target>
+        <target state="needs-translation">Tempobuĝeto</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
