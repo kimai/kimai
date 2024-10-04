@@ -6,9 +6,6 @@ $DATABASE_USER = urldecode($argv[4]);
 $DATABASE_PASS = urldecode($argv[5]);
 
 echo "Testing DB:";
-echo "*";
-echo "* new \PDO(mysql:host=$DATABASE_HOST;dbname=$DATABASE_BASE;port=$DATABASE_PORT, $DATABASE_USER, $DATABASE_PASS, [ \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ]);";
-echo "*";
 
 try {
     $pdo = new \PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_BASE;port=$DATABASE_PORT", "$DATABASE_USER", "$DATABASE_PASS", [

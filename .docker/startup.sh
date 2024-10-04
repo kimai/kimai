@@ -3,12 +3,8 @@
 KIMAI=$(cat /opt/kimai/version.txt)
 echo $KIMAI
 
-function config() {
-  # set mem limits and copy in custom logger config
-  if [ -z "$memory_limit" ]; then
-    memory_limit=256M
-  fi
-
+function waitForDB() {
+  # Parse sql connection data
   DATABASE_USER=$(awk -F '[/:@]' '{print $4}' <<< "$DATABASE_URL")
   DATABASE_PASS=$(awk -F '[/:@]' '{print $5}' <<< "$DATABASE_URL")
   DATABASE_HOST=$(awk -F '[/:@]' '{print $6}' <<< "$DATABASE_URL")
@@ -30,10 +26,11 @@ function config() {
 
 function handleStartup() {
   # set mem limits and copy in custom logger config
+  if [ -z "$memory_limit" ]; then
+    memory_limit=512M
+  fi
   sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /usr/local/etc/php/php.ini
   cp /assets/monolog.yaml /opt/kimai/config/packages/monolog.yaml
-
-  tar -zx -C /opt/kimai -f /var/tmp/public.tgz
 
   if [ -z "$USER_ID" ]; then
     USER_ID=$(id -u www-data)
@@ -76,7 +73,31 @@ function handleStartup() {
   fi
 }
 
-config
-handleStartup
+function prepareKimai() {
+  # These are idempotent, so we can run them on every start-up
+  /opt/kimai/bin/console -n kimai:install
+  /opt/kimai/bin/console -n kimai:update
+  if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
+    /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
+  fi
+  echo "$KIMAI" > /opt/kimai/var/installed
+  echo "Kimai is ready"
+}
 
-exec /service.sh
+function runServer() {
+  # Just while I'm fixing things
+  /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
+  chown -R $USER_ID:$GROUP_ID /opt/kimai/var
+  if [ -e /use_apache ]; then
+    exec /usr/sbin/apache2 -D FOREGROUND
+  elif [ -e /use_fpm ]; then
+    exec php-fpm
+  else
+    echo "Error, unknown server type"
+  fi
+}
+
+waitForDB
+handleStartup
+prepareKimai
+runServer
