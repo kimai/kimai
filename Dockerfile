@@ -78,8 +78,8 @@ RUN apk add --no-cache \
 
 # apache debian php extension base
 FROM php:8.3-apache-bookworm AS apache-php-ext-base
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
         libldap2-dev \
         libicu-dev \
         libpng-dev \
