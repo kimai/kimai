@@ -25,7 +25,6 @@
 
 ARG BASE="fpm"
 ARG PHP_VER="8.3"
-ARG COMPOSER_VER="latest"
 ARG TIMEZONE="Europe/Berlin"
 
 ###########################
@@ -33,7 +32,7 @@ ARG TIMEZONE="Europe/Berlin"
 ###########################
 
 # composer base image
-FROM composer:${COMPOSER_VER} AS composer
+FROM composer:latest AS composer
 
 ###########################
 # PHP extensions
