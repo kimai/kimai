@@ -16,6 +16,11 @@
 # docker run -d --name kimai-apache
 # docker exec -ti kimai-apache /bin/bash
 # ---------------------------------------------------------------------
+# Official PHP images: https://hub.docker.com/_/php/
+# https://github.com/docker-library/docs/blob/master/php/README.md#supported-tags-and-respective-dockerfile-links
+# Pass-through Arguments: https://benkyriakou.com/posts/docker-args-empty
+# Best practices: https://docs.docker.com/build/building/best-practices/
+# ---------------------------------------------------------------------
 
 # Source base, one of: fpm, apache
 ARG BASE="fpm"
@@ -217,7 +222,6 @@ COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # full kimai source
 FROM alpine:latest AS git-dev
-# pass-through Arguments in every stage. See: https://benkyriakou.com/posts/docker-args-empty
 ARG KIMAI
 ARG TIMEZONE
 RUN apk add --no-cache git && \
