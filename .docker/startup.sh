@@ -32,8 +32,6 @@ function handleStartup() {
   sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /usr/local/etc/php/php.ini
   cp /assets/monolog.yaml /opt/kimai/config/packages/monolog.yaml
 
-  tar -zx -C /opt/kimai -f /var/tmp/public.tgz
-
   if [ -z "$USER_ID" ]; then
     USER_ID=$(id -u www-data)
   fi
