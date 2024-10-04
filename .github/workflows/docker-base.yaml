@@ -31,9 +31,8 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                   context: .docker
-                  file: .docker/Dockerfile.kimai-base
+                  file: .docker/Dockerfile
                   build-args: |
-                      TIMEZONE=Europe/London
                       BASE=${{ matrix.server }}
                   platforms: linux/amd64,linux/arm64 #,linux/arm/v8,linux/arm/v7,linux/arm/v6
                   tags: |
