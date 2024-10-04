@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="needs-translation">Formát čísla zákazníka</target>
+        <target state="translated">Formát čísla zákazníka</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>
@@ -301,6 +301,18 @@
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">Převzít týmy od přihlášeného uživatele při vytváření nových záznamů</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Formát čísla projektu</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Formát čísla aktivity</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Povolit vícenásobné použití stejného čísla</target>
       </trans-unit>
     </body>
   </file>

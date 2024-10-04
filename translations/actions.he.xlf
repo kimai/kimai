@@ -6,25 +6,25 @@
         <source>stop</source>
         <target>עצור</target>
       </trans-unit>
-      <trans-unit id="PEgjRvN" resname="back">
+      <trans-unit id="PEgjRvN" resname="back" xml:space="preserve" approved="yes">
         <source>back</source>
-        <target>חזור</target>
+        <target state="final">חזרה</target>
       </trans-unit>
-      <trans-unit id="JiEhxTc" resname="edit">
-        <source>edit</source>
-        <target>ערוך</target>
+      <trans-unit id="JiEhxTc" resname="edit" xml:space="preserve" approved="yes">
+        <source>Edit</source>
+        <target state="final">עריכה</target>
       </trans-unit>
-      <trans-unit id="4G2jBDS" resname="trash">
+      <trans-unit id="4G2jBDS" resname="trash" xml:space="preserve" approved="yes">
         <source>trash</source>
-        <target>מחק</target>
+        <target state="final">מחיקה</target>
       </trans-unit>
-      <trans-unit id="hF6RgxM" resname="report">
+      <trans-unit id="hF6RgxM" resname="report" xml:space="preserve" approved="yes">
         <source>report</source>
-        <target>דו''ח</target>
+        <target state="final">דוח</target>
       </trans-unit>
-      <trans-unit id="JeK2sQZ" resname="repeat">
+      <trans-unit id="JeK2sQZ" resname="repeat" xml:space="preserve" approved="yes">
         <source>repeat</source>
-        <target>התחל שוב</target>
+        <target state="final">התחלה מחדש</target>
       </trans-unit>
       <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
@@ -38,37 +38,37 @@
         <source>Filter timesheets</source>
         <target>גיליונות שעות</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
+      <trans-unit id="xY9_cU2" resname="customer.filter" xml:space="preserve" approved="yes">
         <source>Filter customers</source>
-        <target>סנן לקוחות</target>
+        <target state="final">סינון לקוחות</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
+      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
         <source>Filter projects</source>
-        <target>סנן פרויקטים</target>
+        <target state="final">סינון מיזמים</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
+      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve">
         <source>Filter activities</source>
-        <target>סנן פעילויות</target>
+        <target state="translated">סינון פעילויות</target>
       </trans-unit>
-      <trans-unit id="b1pgNOd" resname="copy">
+      <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve">
         <source>copy</source>
-        <target>צור עותק</target>
+        <target state="translated">יצירת עותק</target>
       </trans-unit>
-      <trans-unit id="TqFAWIF" resname="home">
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve" approved="yes">
         <source>home</source>
-        <target>דף הבית</target>
+        <target state="final">דף הבית</target>
       </trans-unit>
-      <trans-unit id="PBlIO2x" resname="create-project">
+      <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve" approved="yes">
         <source>create-project</source>
-        <target>צור פרוייקט</target>
+        <target state="final">יצירת מיזם</target>
       </trans-unit>
-      <trans-unit id="UbouFOs" resname="create-activity">
+      <trans-unit id="UbouFOs" resname="create-activity" xml:space="preserve" approved="yes">
         <source>create-activity</source>
-        <target>צור פעילות</target>
+        <target state="final">יצירת פעילות</target>
       </trans-unit>
-      <trans-unit id="QR1nvcR" resname="create-timesheet">
+      <trans-unit id="QR1nvcR" resname="create-timesheet" xml:space="preserve" approved="yes">
         <source>create-timesheet</source>
-        <target>צור גיליון שעות</target>
+        <target state="final">יצירת גיליון שעות</target>
       </trans-unit>
       <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
@@ -82,9 +82,9 @@
         <source>download</source>
         <target state="translated">הורדה</target>
       </trans-unit>
-      <trans-unit id="hHIeqOW" resname="invoice.pending">
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve" approved="yes">
         <source>invoice.pending</source>
-        <target>ממתין לתשלום</target>
+        <target state="final">בהמתנה לתשלום</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>

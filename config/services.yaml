@@ -22,6 +22,7 @@ services:
         exclude:
             - '../src/API/Model/'
             - '../src/DependencyInjection/'
+            - '../src/Doctrine/Extensions/'
             - '../src/Entity/'
             - '../src/Event/'
             - '../src/Form/Model/'

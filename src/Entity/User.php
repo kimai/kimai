@@ -986,31 +986,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function markPasswordRequested(): void
     {
-        $this->setPasswordRequestedAt(new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone())));
-    }
-
-    public function markPasswordResetted(): void
-    {
-        $this->setConfirmationToken(null);
-        $this->setPasswordRequestedAt(null);
-    }
-
-    public function setPasswordRequestedAt(?\DateTimeImmutable $date): void
-    {
-        $this->passwordRequestedAt = $date;
-    }
-
-    /**
-     * Gets the timestamp that the user requested a password reset.
-     */
-    public function getPasswordRequestedAt(): ?\DateTimeImmutable
-    {
-        return $this->passwordRequestedAt;
+        $this->passwordRequestedAt = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
     }
 
     public function isPasswordRequestNonExpired(int $seconds): bool
     {
-        $date = $this->getPasswordRequestedAt();
+        $date = $this->passwordRequestedAt;
 
         if (!($date instanceof \DateTimeInterface)) {
             return false;
@@ -1159,6 +1140,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setRequiresPasswordReset(bool $require = true): void
     {
         $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+
+        if (!$require) {
+            $this->passwordRequestedAt = null;
+        }
     }
 
     public function hasSeenWizard(string $wizard): bool

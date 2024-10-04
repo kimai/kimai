@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Εάν το κουμπί δεν λειτουργεί, παρακαλούμε αντιγράψτε &amp; και επικολλήστε την ακόλουθη διεύθυνση URL στο πρόγραμμα περιήγησης: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Αυτό είναι ένα αυτοματοποιημένο e-mail. Παρακαλούμε μην απαντήσετε, το περιεχόμενο δεν θα αναγνωσθεί.</target>

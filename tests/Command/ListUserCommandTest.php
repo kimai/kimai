@@ -25,8 +25,8 @@ class ListUserCommandTest extends KernelTestCase
     {
         $commandTester = $this->getCommandTester();
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Username   Email   Roles   Active   PW Reset', $output);
-        $this->assertStringContainsString('---------- ------- ------- -------- ----------', $output);
+        $this->assertStringContainsString('Username   Email   Roles   Active   Authenticator', $output);
+        $this->assertStringContainsString('---------- ------- ------- -------- -------------', $output);
     }
 
     protected function getCommandTester(): CommandTester

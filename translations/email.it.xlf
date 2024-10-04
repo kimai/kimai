@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" approved="yes">
-        <source>button_copy_url_to_browser</source>
-        <target state="final">Se il pulsante non funziona, copia e incolla il seguente URL nel tuo browser: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" approved="yes">
         <source>automated_email_dont_answer</source>
         <target state="final">Questa è un'e-mail generata automaticamente. Non rispondere, questo indirizzo non verrà letto.</target>

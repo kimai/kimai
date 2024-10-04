@@ -1002,8 +1002,8 @@
         <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
         <target state="translated">Um e-mail contendo um link de ativação clicável para ativar a sua conta foi enviado para %email%.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Receitas</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">

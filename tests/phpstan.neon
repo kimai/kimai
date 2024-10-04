@@ -1270,16 +1270,6 @@ parameters:
             path: Controller/Reporting/ProjectViewControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\PasswordResetControllerTest\\:\\:testResetActionWithDeactivatedFeature\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Security/PasswordResetControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 6
-            path: Controller/Security/PasswordResetControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
             path: Controller/Security/SecurityControllerTest.php
