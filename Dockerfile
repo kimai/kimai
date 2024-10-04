@@ -165,7 +165,8 @@ RUN apt-get update && \
         libpng16-16 \
         libzip4 \
         libxslt1.1 \
-        libfreetype6 && \
+        libfreetype6 \
+        unzip && \
     echo "Listen 8001" > /etc/apache2/ports.conf && \
     a2enmod rewrite && \
     touch /use_apache
