@@ -2,6 +2,10 @@ name: 'Docker Build'
 
 on:
     workflow_dispatch:
+        inputs:
+            kimai_tag:
+                description: 'Kimai tag to build'
+                required: true
     release:
         types: [released]
 
@@ -25,13 +29,14 @@ jobs:
 
             - name: Determine version
               run: |
-                  input="${{ github.event.release.tag_name }}"
+                  input="${{ github.event.inputs.kimai_version }}"
                   
                   # Determine between manual trigger and release event
                   if [ -z "$input" ]; then
-                      echo "Manually run, using ref_name: ${{ github.ref_name }}"
-                      version="${{ github.ref_name }}"
+                      echo "Using release tag: ${{ github.event.release.tag_name }}"
+                      version="${{ github.event.release.tag_name }}"
                   else
+                      echo "Using tag provided: $input"
                       version="$input"
                   fi
 
