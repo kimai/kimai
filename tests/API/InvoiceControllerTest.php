@@ -11,7 +11,6 @@ namespace App\Tests\API;
 
 use App\Entity\Invoice;
 use App\Entity\User;
-use App\Tests\API\APIControllerBaseTest;
 use App\Tests\DataFixtures\InvoiceFixtures;
 
 /**
