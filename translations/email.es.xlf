@@ -22,21 +22,21 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="translated">Te has registrado en el cronómetro de Kimai con la dirección de correo electrónico %email%. Por favor, activa tu cuenta en las próximas horas, antes de que caduque el enlace.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Restablecer su contraseña</target>
+        <target state="needs-translation">Restablecer su contraseña</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">¿Olvidaste tu contraseña?</target>
+        <target state="needs-translation">¿Olvidaste tu contraseña?</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Restablecer su contraseña</target>
+        <target state="needs-translation">Restablecer su contraseña</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">¡No te preocupes, Kimai te ayudará a crear uno nuevo!</target>
+        <target state="needs-translation">¡No te preocupes, Kimai te ayudará a crear uno nuevo!</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>

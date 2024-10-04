@@ -902,9 +902,9 @@
         <source>layout</source>
         <target state="translated">Отображение: формат</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Бюджет времени</target>
+        <target state="needs-translation">Бюджет времени</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>

@@ -744,7 +744,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Anggaran waktu</target>
+        <target state="needs-translation">Anggaran waktu</target>
       </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours" xml:space="preserve">
         <source>hours</source>

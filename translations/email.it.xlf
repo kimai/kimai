@@ -22,21 +22,21 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="final">Ti sei registrato al time-tracker Kimai con l'indirizzo e-mail %email%. Attiva il tuo account nelle prossime ore, prima che il collegamento scada.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject" approved="yes">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" approved="yes" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="final">Reimposta password</target>
+        <target state="final">Accedi a Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" approved="yes" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="final">Hai dimenticato la password?</target>
+        <target state="final">Accedi al tuo account</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button" approved="yes">
+      <trans-unit id="qbt.84Y" resname="reset.button" approved="yes" xml:space="preserve">
         <source>reset.button</source>
-        <target state="final">Reimposta password</target>
+        <target state="final">Registrazione</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" approved="yes" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="final">Non preoccuparti, Kimai ti aiuterà a crearne una nuova!</target>
+        <target state="final">Questo link sarà valido solo per i prossimi 15 minuti.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" approved="yes">
         <source>absence_created_supervisor_subject</source>

@@ -22,17 +22,17 @@
         <source>registration.intro</source>
         <target>Vi aliĝis al la temporegistrilo Kimai per la retadreso %email%. Bonvolu aktivigi vian konton dum la sekvaj kelkaj horoj, antaŭ ol la ligilo senvalidiĝos.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Restarigi vian pasvorton</target>
+        <target state="needs-translation">Restarigi vian pasvorton</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
         <target state="needs-translation">Tio povas okazi …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Restarigi vian pasvorton</target>
+        <target state="needs-translation">Restarigi vian pasvorton</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

@@ -22,17 +22,17 @@
         <source>registration.intro</source>
         <target>Du har registrert deg på Kimai-tidssporer med e-posten %email%. Aktiver kontoen din i løpet av de neste timene før lenken utløper.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Tilbakestill passordet</target>
+        <target state="needs-translation">Tilbakestill passordet</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
         <target state="needs-translation">Det kan skje …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Tilbakestill passordet</target>
+        <target state="needs-translation">Tilbakestill passordet</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

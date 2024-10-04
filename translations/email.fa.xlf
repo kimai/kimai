@@ -22,17 +22,17 @@
         <source>registration.intro</source>
         <target state="translated">شما در رهگیر زمان Kimai با ایمیل %email% ثبت نام کرده اید. اکنون باید ایمیل خود را در همین زمان، قبل از باطل شدن لینک فعال کنید.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>پسورد خود را ریست کنید</target>
+        <target state="needs-translation">پسورد خود را ریست کنید</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
         <target state="needs-translation">آن می تواند اتفاق بیفتد …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>پسورد خود را ریست کنید</target>
+        <target state="needs-translation">پسورد خود را ریست کنید</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

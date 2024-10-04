@@ -22,21 +22,21 @@
         <source>registration.intro</source>
         <target>Bạn đã đăng ký theo dõi thời gian Kimai với email %email%. Bây giờ bạn phải kích hoạt tài khoản của mình trong vài giờ tới, trước khi liên kết hết hạn.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Đặt lại mật khẩu của bạn</target>
+        <target state="needs-translation">Đặt lại mật khẩu của bạn</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">Quên mật khẩu?</target>
+        <target state="needs-translation">Quên mật khẩu?</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Đặt lại mật khẩu của bạn</target>
+        <target state="needs-translation">Đặt lại mật khẩu của bạn</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Đừng lo, Kimai sẽ giúp bạn tạo mật khẩu mới!</target>
+        <target state="needs-translation">Đừng lo, Kimai sẽ giúp bạn tạo mật khẩu mới!</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>

@@ -594,9 +594,9 @@
         <source>tag</source>
         <target>الوسوم</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>الميزانية الزمنية</target>
+        <target state="needs-translation">الميزانية الزمنية</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>

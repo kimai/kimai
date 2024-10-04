@@ -22,21 +22,21 @@
         <source>registration.intro</source>
         <target>Você se inscreveu no rastreador de tempo Kimai com o e-mail %email%. ative a sua conta nas próximas horas, antes que o link expire.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Redefina a sua senha</target>
+        <target state="translated">Faça login no Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">Esqueceu a sua senha?</target>
+        <target state="translated">Faça login em sua conta</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Redefina a sua senha</target>
+        <target state="translated">Entrar</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Não se preocupe, o Kimai vai ajudá-lo a criar uma nova!</target>
+        <target state="translated">Esse link tem validade para os próximos 15 minutos.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>

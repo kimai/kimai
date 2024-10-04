@@ -246,9 +246,9 @@
         <source>activity</source>
         <target>فعالیت</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>بودجه زمان</target>
+        <target state="needs-translation">بودجه زمان</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>

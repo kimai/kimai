@@ -22,17 +22,17 @@
         <source>registration.intro</source>
         <target>Εγγραφήκατε στο λογισμικό παρακολούθησης χρόνου Kimai με το e-mail %email%. Παρακαλούμε ενεργοποιήσετε τον λογαριασμό σας εντός μερικών ωρών, προτού λήξει ο σύνδεσμος.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Επαναφορά του κωδικού σας</target>
+        <target state="needs-translation">Επαναφορά του κωδικού σας</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
         <target state="needs-translation">Αυτό μπορεί να συμβεί …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Επαναφορά κωδικού πρόσβασης</target>
+        <target state="needs-translation">Επαναφορά κωδικού πρόσβασης</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
