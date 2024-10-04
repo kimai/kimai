@@ -265,7 +265,6 @@ ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serve
 ENV APP_SECRET=change_this_to_something_unique
 # The default container name for nginx is nginx
 ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
-ENV TRUSTED_HOSTS=nginx,localhost,127.0.0.1
 ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=
