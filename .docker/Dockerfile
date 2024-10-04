@@ -24,7 +24,6 @@
 # ---------------------------------------------------------------------
 
 ARG BASE="fpm"
-ARG PHP_VER="8.3"
 ARG TIMEZONE="Europe/Berlin"
 
 ###########################
@@ -39,7 +38,7 @@ FROM composer:latest AS composer
 ###########################
 
 # fpm alpine php extension base
-FROM php:${PHP_VER}-fpm-alpine AS fpm-php-ext-base
+FROM php:8.3-fpm-alpine AS fpm-php-ext-base
 RUN apk add --no-cache \
     # build-tools
     autoconf \
@@ -75,7 +74,7 @@ RUN apk add --no-cache \
     libxslt-dev
 
 # apache debian php extension base
-FROM php:${PHP_VER}-apache-bookworm AS apache-php-ext-base
+FROM php:8.3-apache-bookworm AS apache-php-ext-base
 RUN apt-get update
 RUN apt-get install -y \
         libldap2-dev \
@@ -121,7 +120,7 @@ RUN docker-php-ext-install -j$(nproc) opcache
 ###########################
 
 # fpm base build
-FROM php:${PHP_VER}-fpm-alpine AS fpm-base
+FROM php:8.3-fpm-alpine AS fpm-base
 ARG TIMEZONE
 RUN apk add --no-cache \
         bash \
@@ -151,7 +150,7 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 # apache base build
 ###########################
 
-FROM php:${PHP_VER}-apache-bookworm AS apache-base
+FROM php:8.3-apache-bookworm AS apache-base
 ARG TIMEZONE
 RUN apt-get update && \
     apt-get install -y \

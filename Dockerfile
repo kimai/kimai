@@ -16,8 +16,6 @@
 
 # Source base [fpm/apache]
 ARG BASE="fpm"
-ARG PHP_VER="8.2"
-ARG COMPOSER_VER="latest"
 # Branch name
 ARG KIMAI="main"
 # Timezone for images
