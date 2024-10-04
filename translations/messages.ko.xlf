@@ -178,9 +178,9 @@
         <source>budget</source>
         <target state="translated">예산</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">예상 시간</target>
+        <target state="needs-translation">예상 시간</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

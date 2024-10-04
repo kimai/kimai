@@ -22,21 +22,21 @@
         <source>registration.intro</source>
         <target>Zaregistrovali jste se do Kimai time-tracker s e-mailovou adresou %email%. Nyní je potřeba váš účet aktivovat v několika nejbližších hodinách, jinak odkaz expiruje.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Reset hesla</target>
+        <target state="needs-translation">Reset hesla</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">Zapomněli jste heslo?</target>
+        <target state="needs-translation">Zapomněli jste heslo?</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Reset hesla</target>
+        <target state="needs-translation">Reset hesla</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Nebojte se, Kimai vám pomůže vytvořit nové!</target>
+        <target state="needs-translation">Nebojte se, Kimai vám pomůže vytvořit nové!</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>

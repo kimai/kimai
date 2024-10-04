@@ -130,9 +130,9 @@
         <source>budget</source>
         <target>Fíggjarætlan</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Tíðarætlan</target>
+        <target state="needs-translation">Tíðarætlan</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

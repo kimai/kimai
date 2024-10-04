@@ -242,9 +242,9 @@
         <source>budget</source>
         <target state="translated">Бюджет</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Бюджет часу</target>
+        <target state="needs-translation">Бюджет часу</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>

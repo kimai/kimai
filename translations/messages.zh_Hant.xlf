@@ -290,9 +290,9 @@
         <source>budget</source>
         <target state="final">預算</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="yes">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="no">
         <source>timeBudget</source>
-        <target state="final">時間預算</target>
+        <target state="needs-translation">時間預算</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
         <source>activity</source>
