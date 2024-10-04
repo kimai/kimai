@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace API;
+namespace App\Tests\API;
 
 use App\Entity\Invoice;
 use App\Entity\User;
