@@ -315,7 +315,7 @@ RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --no-dev --optimize-autoloader && \
     composer --no-ansi clearcache && \
-    composer --no-ansi require --working-dir=/opt/kimai laminas/laminas-ldap && \
+    composer --no-ansi require --update-no-dev --working-dir=/opt/kimai laminas/laminas-ldap && \
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     sed -i "s/expose_php = On/expose_php = Off/g" /usr/local/etc/php/php.ini && \
     sed -i "s/;opcache.enable=1/opcache.enable=1/g" /usr/local/etc/php/php.ini && \
