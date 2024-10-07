@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Hodinový rozpočet</target>
+        <target state="translated">Hodinová kvóta</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1789,6 +1789,14 @@
       <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
         <source>Updated</source>
         <target state="translated">Aktualizováno</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Zisk</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Náklady</target>
       </trans-unit>
     </body>
   </file>

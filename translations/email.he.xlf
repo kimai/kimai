@@ -22,21 +22,21 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="translated">נרשמת למערכת דיווח השעות Kimai עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="yes">
         <source>reset.subject</source>
-        <target state="needs-translation">איפוס הסיסמה שלך</target>
+        <target state="final">כניסה ל־Kimai</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
         <source>Forgot your password?</source>
-        <target state="needs-translation">שכחת את הסיסמה שלך?</target>
+        <target state="final">כניסה לחשבון שלך</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="no">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="yes">
         <source>reset.button</source>
-        <target state="needs-translation">איפוס הסיסמה שלך</target>
+        <target state="final">כניסה</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">אל דאגה, Kimai יעזור לך ליצור סיסמה חדשה!</target>
+        <target state="final">הקישור הזה יהיה תקף למשך 15 הדקות הקרובות בלבד.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
         <source>absence_created_supervisor_subject</source>

@@ -196,7 +196,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Zaman bütçesi</target>
+        <target state="translated">Saatlik kota</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1789,6 +1789,14 @@
       <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
         <source>work_days</source>
         <target state="translated">Çalışma günleri</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Maliyetler</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Kar</target>
       </trans-unit>
     </body>
   </file>

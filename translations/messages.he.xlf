@@ -218,9 +218,9 @@
         <source>budget</source>
         <target>תקציב</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="yes">
         <source>timeBudget</source>
-        <target state="needs-translation">תקציב זמן</target>
+        <target state="final">מכסה שעתית</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1789,6 +1789,14 @@
       <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve" approved="yes">
         <source>work_hours_mode</source>
         <target state="final">חישוב זמן עבודה</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve" approved="yes">
+        <source>costs</source>
+        <target state="final">עלויות</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve" approved="yes">
+        <source>profit</source>
+        <target state="final">רווח</target>
       </trans-unit>
     </body>
   </file>
