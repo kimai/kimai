@@ -29,8 +29,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 final class UserFixtures extends Fixture implements FixtureGroupInterface
 {
-    public const DEFAULT_PASSWORD = 'kitten';
-    public const DEFAULT_API_TOKEN = 'api_kitten';
+    public const DEFAULT_PASSWORD = 'password';
+    public const DEFAULT_API_TOKEN = 'password';
     public const DEFAULT_AVATAR = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y';
 
     public const USERNAME_USER = 'john_user';
