@@ -118,9 +118,9 @@
         <source>An absence must have a date.</source>
         <target state="translated">Devamsızlığın bir tarihi olmalıdır.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">İlk iş gününüzden önce devamsızlık rezervasyonu yapılamaz.</target>
+        <target state="needs-translation">İlk iş gününüzden önce devamsızlık rezervasyonu yapılamaz.</target>
       </trans-unit>
       <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
