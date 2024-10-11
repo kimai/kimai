@@ -110,9 +110,9 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="final">Non hai abbastanza straordinari, ti restano {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="no" xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="final">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
+        <target state="needs-translation">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." approved="yes">
         <source>Not enough holidays left.</source>
