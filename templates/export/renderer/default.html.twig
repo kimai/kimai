@@ -269,6 +269,8 @@
         .items td.cost,
         .items th.column-rate,
         .items th.column-internalRate,
+        .items th.column-hourlyRate,
+        .items th.column-fixedRate,
         .items th.column-duration
         {
             text-align: right;
@@ -708,10 +710,10 @@
                                 {% endif %}
                             </td>
                         {% endfor %}
-                        <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
+                        <td class="cost column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
                             {{ entry.hourlyRate|money(entry.project.customer.currency) }}
                         </td>
-                        <td class="column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
+                        <td class="cost column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
                         <td class="duration column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
