@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Odsotnosti ni mogoče zabeležiti pred prvim delovnim dnem.</target>
+        <target state="needs-translation">Odsotnosti ni mogoče zabeležiti pred prvim delovnim dnem.</target>
       </trans-unit>
       <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
         <source>This absence type is not known.</source>

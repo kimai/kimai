@@ -24,19 +24,19 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Parolanızı sıfırlayın</target>
+        <target state="translated">Kimai'de oturum açın</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Parolanızı mı unuttunuz?</target>
+        <target state="translated">Hesabınızda oturum açın</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Parolanızı sıfırlayın</target>
+        <target state="translated">Oturum aç</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">Endişelenmeyin, Kimai yeni bir tane oluşturmanıza yardım edecek!</target>
+        <target state="translated">Bu bağlantı yalnızca önümüzdeki 15 dakika boyunca geçerli olacaktır.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>

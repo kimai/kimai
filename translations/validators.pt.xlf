@@ -114,9 +114,9 @@
         <source>The chosen date is already locked.</source>
         <target state="translated">A data escolhida já está bloqueada.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Uma ausência não pode ser marcada antes do seu primeiro dia útil.</target>
+        <target state="needs-translation">Uma ausência não pode ser marcada antes do seu primeiro dia útil.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
