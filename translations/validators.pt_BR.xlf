@@ -110,9 +110,9 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="translated">Você não tem horas extras suficientes, o restante é {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Uma ausência não pode ser marcada antes de seu primeiro dia útil.</target>
+        <target state="needs-translation">Uma ausência não pode ser marcada antes de seu primeiro dia útil.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
