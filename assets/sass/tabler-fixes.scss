@@ -42,3 +42,10 @@ fieldset:empty {
     border-width: 1px;
     border-style: solid;
 }
+
+[data-bs-theme=dark] {
+    /* fixes  https://github.com/tabler/tabler/issues/1974 */
+    .litepicker .container__days .day-item.is-in-range {
+        --litepicker-is-in-range-color: var(--tblr-primary-text-emphasis);
+    }
+}
