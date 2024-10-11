@@ -35,7 +35,7 @@ final class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    public function groupBy(Activity $activity, $key, $index): ?string
+    public function groupBy(Activity $activity, $key, $index): string
     {
         if (null === $activity->getProject()) {
             return '';
