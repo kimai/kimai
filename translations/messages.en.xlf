@@ -1798,6 +1798,10 @@
         <source>costs</source>
         <target>Costs</target>
       </trans-unit>
+      <trans-unit id="FOvlalA" resname="break">
+        <source>break</source>
+        <target>Break</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

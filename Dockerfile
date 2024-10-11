@@ -13,8 +13,8 @@
 #
 # docker build --no-cache -t kimai-fpm --build-arg BASE=fpm .
 # docker build --no-cache -t kimai-apache --build-arg BASE=apache .
-# docker run -d --name kimai-apache
-# docker exec -ti kimai-apache /bin/bash
+# docker run -d --name kimai-apache-app kimai-apache
+# docker exec -ti kimai-apache-app /bin/bash
 # ---------------------------------------------------------------------
 # Official PHP images: https://hub.docker.com/_/php/
 # https://github.com/docker-library/docs/blob/master/php/README.md#supported-tags-and-respective-dockerfile-links
@@ -259,7 +259,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 
 # copy startup script & DB checking script
 COPY .docker/dbtest.php /dbtest.php
-COPY .docker/startup.sh /startup.sh
+COPY .docker/entrypoint.sh /entrypoint.sh
 
 ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=8.3"
 ENV APP_SECRET=change_this_to_something_unique
@@ -277,7 +277,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 VOLUME [ "/opt/kimai/var" ]
 
-CMD [ "/startup.sh" ]
+CMD [ "/entrypoint.sh" ]
 
 ###########################
 # final builds

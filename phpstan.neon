@@ -470,36 +470,6 @@ parameters:
             path: src/Command/ResetTestCommand.php
 
         -
-            message: "#^Strict comparison using \\!\\=\\= between '\\$2y\\$13\\$X8…' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'Administrator'\\|'CFO'\\|'Developer'\\|'Developer \\(left…'\\|'Head of Development'\\|'Quality Tester 1'\\|'Quality Tester 2'\\|'Super Administrator' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin'\\|'chris_user'\\|'clara_customer'\\|'john_user'\\|'susan_super'\\|'test_user_1'\\|'test_user_2'\\|'tony_teamlead' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin@example…'\\|'chris_user@example…'\\|'clara_customer…'\\|'john_user@example…'\\|'susan_super@example…'\\|'test_user_1@example…'\\|'test_user_2@example…'\\|'tony_teamlead…' and null will always evaluate to true\\.$#"
-            count: 2
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 0\\|1 and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between array\\{\\}\\|array\\{'ROLE_ADMIN'\\}\\|array\\{'ROLE_CUSTOMER'\\}\\|array\\{'ROLE_SUPER_ADMIN'\\}\\|array\\{'ROLE_TEAMLEAD'\\} and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
             message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php
@@ -1113,16 +1083,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 2
             path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Method App\\\\DataFixtures\\\\UserFixtures\\:\\:getUserDefinition\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/UserFixtures.php
-
-        -
-            message: "#^Method App\\\\DataFixtures\\\\UserFixtures\\:\\:getUserPreferences\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/UserFixtures.php
 
         -
             message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:createPermissionParameter\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"

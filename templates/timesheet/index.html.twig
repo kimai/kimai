@@ -110,6 +110,8 @@
         {% else %}
             <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
         {% endif %}
+    {% elseif column == 'break' %}
+        {{ entry.break|duration }}
     {% elseif column == 'hourlyRate' %}
         {{ entryHourlyRate }}
     {% elseif column == 'rate' %}
