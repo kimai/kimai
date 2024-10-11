@@ -122,9 +122,9 @@
         <source>An absence must have a date.</source>
         <target state="translated">Nepřítomnost musí mít datum.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Absenci nelze rezervovat před prvním pracovním dnem.</target>
+        <target state="needs-translation">Absenci nelze rezervovat před prvním pracovním dnem.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
