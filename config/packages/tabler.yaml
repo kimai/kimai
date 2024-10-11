@@ -29,7 +29,6 @@ tabler:
     routes:
         tabler_welcome: dashboard
         tabler_login: login
-        tabler_logout: logout
         tabler_login_check: security_check
         tabler_registration: registration_register
         tabler_registration_register: registration_register
@@ -110,7 +109,7 @@ tabler:
         profile: fas fa-user-edit
         profile-stats: far fa-chart-bar
         project: fas fa-briefcase
-        repeat: fas fa-redo-alt
+        repeat: fas fa-repeat
         reporting: far fa-chart-bar
         report: far fa-chart-bar
         review: fas fa-user-check
@@ -122,7 +121,7 @@ tabler:
         search: fas fa-search
         settings: fas fa-cog
         shop: fas fa-shopping-cart
-        spinner: fas fa-spinner fa-pulse
+        spinner: fas fa-spinner
         start: fas fa-play
         start-small: far fa-play-circle
         stop: fas fa-stop

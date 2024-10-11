@@ -24,10 +24,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class DeactivateUserCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -41,7 +38,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $this->application->add(new DeactivateUserCommand($userService));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
@@ -49,7 +46,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         self::assertInstanceOf(DeactivateUserCommand::class, $command);
     }
 
-    protected function callCommand(?string $username)
+    protected function callCommand(?string $username): CommandTester
     {
         $command = $this->application->find('kimai:user:deactivate');
         $input = [
@@ -66,7 +63,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testDeactivate()
+    public function testDeactivate(): void
     {
         $commandTester = $this->callCommand('john_user');
 
@@ -81,7 +78,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         self::assertFalse($user->isEnabled());
     }
 
-    public function testDeactivateOnDeactivatedUser()
+    public function testDeactivateOnDeactivatedUser(): void
     {
         $commandTester = $this->callCommand('chris_user');
 
@@ -89,7 +86,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[WARNING] User "chris_user" is already deactivated.', $output);
     }
 
-    public function testWithMissingUsername()
+    public function testWithMissingUsername(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');

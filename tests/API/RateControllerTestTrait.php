@@ -20,22 +20,16 @@ use App\Entity\User;
  */
 trait RateControllerTestTrait
 {
-    /**
-     * @param string|int $id
-     * @param string|int|null $rateId
-     * @return string
-     */
-    abstract protected function getRateUrl($id = '1', $rateId = null): string;
+    abstract protected function getRateUrl(string|int $id = '1', string|int|null $rateId = null): string;
 
     abstract protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string;
 
     /**
-     * @param string|int $id
      * @return RateInterface[]
      */
-    abstract protected function importTestRates($id): array;
+    abstract protected function importTestRates(string|int $id): array;
 
-    public function testAddRateMissingEntityAction()
+    public function testAddRateMissingEntityAction(): void
     {
         $data = [
             'user' => 1,
@@ -47,7 +41,7 @@ trait RateControllerTestTrait
         $this->assertEntityNotFoundForPost($client, $this->getRateUrl(99), $data);
     }
 
-    public function testAddRateMissingUserAction()
+    public function testAddRateMissingUserAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -63,7 +57,7 @@ trait RateControllerTestTrait
         $this->assertApiCallValidationError($response, ['user']);
     }
 
-    public function testAddRateActionWithInvalidUser()
+    public function testAddRateActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $data = [
@@ -77,7 +71,7 @@ trait RateControllerTestTrait
         $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
 
-    public function testAddRateAction()
+    public function testAddRateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -89,7 +83,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertRateStructure($result, null);
         $this->assertNotEmpty($result['id']);
@@ -98,7 +95,7 @@ trait RateControllerTestTrait
         $this->assertFalse($result['isFixed']);
     }
 
-    public function testAddFixedRateAction()
+    public function testAddFixedRateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -110,7 +107,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertRateStructure($result, 1);
         $this->assertNotEmpty($result['id']);
@@ -119,18 +119,21 @@ trait RateControllerTestTrait
         $this->assertTrue($result['isFixed']);
     }
 
-    public function testGetRatesEmptyResult()
+    public function testGetRatesEmptyResult(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, $this->getRateUrl(1));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertEmpty($result);
     }
 
-    public function testGetRates()
+    public function testGetRates(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $expectedRates = $this->importTestRates(1);
@@ -138,7 +141,10 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(1));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(\count($expectedRates), \count($result));
@@ -148,17 +154,17 @@ trait RateControllerTestTrait
         }
     }
 
-    public function testGetRatesEntityNotFound()
+    public function testGetRatesEntityNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_ADMIN, $this->getRateUrl(99));
     }
 
-    public function testGetRatesIsSecured()
+    public function testGetRatesIsSecured(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, $this->getRateUrl(1));
     }
 
-    public function testDeleteRate()
+    public function testDeleteRate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $expectedRates = $this->importTestRates(1);
@@ -171,24 +177,27 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrlByRate($expectedRates[0], true));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         $this->assertEquals(\count($expectedRates) - 1, \count($result));
     }
 
-    public function testDeleteRateEntityNotFound()
+    public function testDeleteRateEntityNotFound(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertNotFoundForDelete($client, $this->getRateUrl(99, 1));
     }
 
-    public function testDeleteRateRateNotFound()
+    public function testDeleteRateRateNotFound(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertNotFoundForDelete($client, $this->getRateUrl(1, 99));
     }
 
-    public function testDeleteRateWithInvalidAssignment()
+    public function testDeleteRateWithInvalidAssignment(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->importTestRates(1);
@@ -197,7 +206,7 @@ trait RateControllerTestTrait
         $this->assertNotFoundForDelete($client, $this->getRateUrl(2, 1));
     }
 
-    public function testDeleteNotAllowed()
+    public function testDeleteNotAllowed(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $rates = $this->importTestRates(1);
@@ -209,7 +218,7 @@ trait RateControllerTestTrait
         $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
-    protected function assertRateStructure(array $result, $user = null)
+    public function assertRateStructure(array $result, $user = null): void
     {
         $expectedKeys = [
             'id', 'rate', 'internalRate', 'isFixed', 'user'

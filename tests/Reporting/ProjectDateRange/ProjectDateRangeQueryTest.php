@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectDateRangeQueryTest extends TestCase
 {
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $user = new User();
         $date = new \DateTime();
@@ -36,7 +36,7 @@ class ProjectDateRangeQueryTest extends TestCase
         self::assertTrue($sut->isBudgetIndependent());
     }
 
-    public function testSetterGetter()
+    public function testSetterGetter(): void
     {
         $sut = new ProjectDateRangeQuery(new \DateTime(), new User());
 

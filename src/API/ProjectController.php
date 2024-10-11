@@ -25,18 +25,17 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/projects')]
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
@@ -46,11 +45,11 @@ final class ProjectController extends BaseApiController
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private ProjectRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ProjectRateRepository $projectRateRepository,
-        private ProjectService $projectService
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly ProjectRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectRateRepository $projectRateRepository,
+        private readonly ProjectService $projectService
     ) {
     }
 
@@ -58,9 +57,7 @@ final class ProjectController extends BaseApiController
      * Returns a collection of projects (which are visible to the user)
      */
     #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
-    #[Rest\Get(path: '', name: 'get_projects')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '', name: 'get_projects')]
     #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter projects')]
     #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter projects: 1=visible, 2=hidden, 3=both')]
@@ -77,6 +74,7 @@ final class ProjectController extends BaseApiController
         $user = $this->getUser();
 
         $query = new ProjectQuery();
+        $query->loadTeams();
         $query->setCurrentUser($user);
 
         $order = $paramFetcher->get('order');
@@ -156,9 +154,8 @@ final class ProjectController extends BaseApiController
      * Returns one project
      */
     #[OA\Response(response: 200, description: 'Returns one project entity', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
-    #[Rest\Get(path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'project')]
     public function getAction(Project $project): Response
     {
         $view = new View($project, 200);
@@ -172,9 +169,7 @@ final class ProjectController extends BaseApiController
      */
     #[OA\Post(description: 'Creates a new project and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
-    #[Rest\Post(path: '', name: 'post_project')]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['POST'], path: '', name: 'post_project')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_project')) {
@@ -214,9 +209,7 @@ final class ProjectController extends BaseApiController
     #[OA\Patch(description: 'Update an existing project, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project ID to update', required: true)]
-    #[Rest\Patch(path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Project $project): Response
     {
         $event = new ProjectMetaDefinitionEvent($project);
@@ -253,9 +246,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project record ID to set the meta-field value for', required: true)]
-    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
@@ -286,9 +277,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rates will be returned', required: true)]
-    #[Rest\Get(path: '/{id}/rates', name: 'get_project_rates', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/{id}/rates', name: 'get_project_rates', requirements: ['id' => '\d+'])]
     public function getRatesAction(Project $project): Response
     {
         $rates = $this->projectRateRepository->getRatesForProject($project);
@@ -306,9 +295,7 @@ final class ProjectController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
-    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_project_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
+    #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_project_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Project $project, #[MapEntity(mapping: ['rateId' => 'id'])] ProjectRate $rate): Response
     {
         if ($rate->getProject() !== $project) {
@@ -329,9 +316,7 @@ final class ProjectController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectRateForm'))]
-    #[Rest\Post(path: '/{id}/rates', name: 'post_project_rate', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_project_rate', requirements: ['id' => '\d+'])]
     public function postRateAction(Project $project, Request $request): Response
     {
         $rate = new ProjectRate();

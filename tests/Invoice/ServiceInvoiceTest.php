@@ -38,11 +38,7 @@ class ServiceInvoiceTest extends TestCase
     private function getSut(array $paths): ServiceInvoice
     {
         $languages = [
-            'en' => [
-                'date' => 'Y.m.d',
-                'duration' => '%h:%m',
-                'time' => 'H:i',
-            ]
+            'en' => LocaleService::DEFAULT_SETTINGS
         ];
 
         $formattings = new LocaleService($languages);
@@ -204,8 +200,8 @@ class ServiceInvoiceTest extends TestCase
         self::assertNotNull($query->getBegin());
         self::assertNotNull($query->getEnd());
 
-        self::assertEquals('2010-01-27T00:00:00+0100', $query->getBegin()->format(DATE_ISO8601));
-        self::assertEquals('2020-11-27T23:59:59+0100', $query->getEnd()->format(DATE_ISO8601));
+        self::assertEquals('2010-01-27T00:00:00+01:00', $query->getBegin()->format(DATE_ATOM));
+        self::assertEquals('2020-11-27T23:59:59+01:00', $query->getEnd()->format(DATE_ATOM));
     }
 
     public function testCreateModelsIncludesModelsWithNegativeTotal(): void

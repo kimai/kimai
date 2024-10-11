@@ -77,7 +77,7 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
             $this->mergeSumInvoiceItem($invoiceItem, $entry);
         }
 
-        return array_values($invoiceItems);
+        return $this->sortEntries(array_values($invoiceItems));
     }
 
     /**

@@ -110,7 +110,7 @@
                                 </a>
                             {% elseif name == 'invoiced' %}
                                 <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                    {{ entry.notBilledRate|money(currency) }}
+                                    {{ entry.notExportedRate|money(currency) }}
                                 </a>
                             {% elseif name == 'projectStart' %}
                                 {% if project.start is not null %}{{ project.start|date_short }}{% endif %}

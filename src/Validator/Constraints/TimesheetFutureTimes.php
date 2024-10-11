@@ -22,7 +22,7 @@ final class TimesheetFutureTimes extends TimesheetConstraint
 
     public string $message = 'The date cannot be in the future.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DashboardEventTest extends TestCase
 {
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $user = new User();
         $user->setAlias('foo');

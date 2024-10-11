@@ -19,7 +19,7 @@ use App\WorkingTime\WorkingTimeService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Users can control their working time statistics
@@ -31,7 +31,7 @@ final class ContractController extends AbstractController
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
-        $canChangeUser = $this->isGranted('contract_other_profile');
+        $canChangeUser = $this->isGranted('hours_other_profile');
         $defaultDate = $dateTimeFactory->createStartOfYear();
         $now = $dateTimeFactory->createDateTime();
 
@@ -53,7 +53,7 @@ final class ContractController extends AbstractController
 
         /** @var User $profile */
         $profile = $values->getUser();
-        if ($this->getUser() !== $profile && !$canChangeUser) {
+        if (!$this->isGranted('hours', $profile)) {
             throw $this->createAccessDeniedException('Cannot access user contract settings');
         }
 
@@ -79,9 +79,10 @@ final class ContractController extends AbstractController
 
         $boxConfiguration = new BoxConfiguration();
         $boxConfiguration->setDecimal(false);
-        $boxConfiguration->setCollapsed($profile->hasWorkHourConfiguration() && $summary->count() > 0);
+        $boxConfiguration->setCollapsed($summary->count() > 0);
 
         return $this->render('contract/status.html.twig', [
+            'withWorkHourConfiguration' => $profile->hasWorkHourConfiguration(),
             'box_configuration' => $boxConfiguration,
             'page_setup' => $page,
             'decimal' => $boxConfiguration->isDecimal(),
@@ -90,7 +91,6 @@ final class ContractController extends AbstractController
             'boxes' => $controllerEvent->getController(),
             'year' => $year,
             'user' => $profile,
-            'form' => $form->createView(),
         ]);
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ca" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <trans-unit id="XohImNo" resname="password" approved="no" xml:space="preserve">
+        <source>Password</source>
+        <target state="needs-translation">Password</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="CT59X9u" resname="contact" approved="no" xml:space="preserve">
+        <source>Contact</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve">
+        <source>donate</source>
+        <target state="needs-translation">Donate</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
+        <source>yes</source>
+        <target state="translated">Sí</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no" xml:space="preserve">
+        <source>no</source>
+        <target state="translated">No</target>
+      </trans-unit>
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
+        <source>This is a mandatory field</source>
+        <target state="translated">Obligatori</target>
+      </trans-unit>
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
+        <source>admin_entity.delete_confirm</source>
+        <target state="translated">Aquestes dades també s'esborraran! Alternativament, podeu seleccionar una entrada a la qual es transferiran totes les dades:</target>
+      </trans-unit>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Time Tracking</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve">
+        <source>create</source>
+        <target state="translated">Crear</target>
+      </trans-unit>
+      <trans-unit id=".3dyBTq" resname="both" approved="no" xml:space="preserve">
+        <source>Both</source>
+        <target state="translated">Tots dos</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve">
+        <source>automatic</source>
+        <target state="translated">Automàtic</target>
+      </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
+        <source>confirm.delete</source>
+        <target state="translated">De veritat voleu eliminar-lo?</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

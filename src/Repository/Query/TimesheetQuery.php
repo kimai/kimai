@@ -14,7 +14,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
-class TimesheetQuery extends ActivityQuery implements BillableInterface
+class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRangeInterface
 {
     use BillableTrait;
     use DateRangeTrait;
@@ -57,6 +57,17 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
             'users' => [],
             'activities' => [],
         ]);
+    }
+
+    protected function copyFrom(BaseQuery $query): void
+    {
+        parent::copyFrom($query);
+
+        if ($query instanceof TimesheetQuery) {
+            foreach ($this->getUsers() as $user) {
+                $this->addUser($user);
+            }
+        }
     }
 
     public function getMaxResults(): ?int
@@ -115,18 +126,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     public function setUser(?User $user): void
     {
         $this->timesheetUser = $user;
-    }
-
-    /**
-     * @return array<int>
-     */
-    public function getActivityIds(): array
-    {
-        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
-            return $activity->getId();
-        }, $this->activities)), function ($id) {
-            return $id !== null;
-        }));
     }
 
     /**

@@ -47,10 +47,10 @@ class ProjectControllerTest extends APIControllerBaseTest
     protected function getRateUrl($id = '1', $rateId = null): string
     {
         if (null !== $rateId) {
-            return sprintf('/api/projects/%s/rates/%s', $id, $rateId);
+            return \sprintf('/api/projects/%s/rates/%s', $id, $rateId);
         }
 
-        return sprintf('/api/projects/%s/rates', $id);
+        return \sprintf('/api/projects/%s/rates', $id);
     }
 
     protected function importTestRates($id): array
@@ -88,16 +88,19 @@ class ProjectControllerTest extends APIControllerBaseTest
         return [$rate1, $rate2];
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/projects');
     }
 
-    public function testGetCollection()
+    public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/projects');
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
@@ -206,7 +209,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         }
 
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
@@ -242,9 +248,27 @@ class ProjectControllerTest extends APIControllerBaseTest
         yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
     }
 
-    public function testGetEntity()
+    public function testGetEntityIsSecure(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/projects/1');
+    }
+
+    public function testGetEntity(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/projects/1');
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+    }
+
+    public function testGetEntityComplex(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $em = $this->getEntityManager();
 
         $customer = new Customer('first one');
@@ -268,7 +292,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $em->flush();
 
         $this->assertAccessIsGranted($client, '/api/projects/' . $project->getId());
-        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
 
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
@@ -297,12 +324,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         }
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Project object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/projects/' . PHP_INT_MAX);
     }
 
-    public function testPostAction()
+    public function testPostAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -318,7 +345,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -331,7 +361,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertFalse($result['visible']);
     }
 
-    public function testPostActionWithOtherFields()
+    public function testPostActionWithOtherFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -344,7 +374,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -354,7 +387,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertTrue($result['visible']);
     }
 
-    public function testPostActionWithOtherFieldsAndFalse()
+    public function testPostActionWithOtherFieldsAndFalse(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -367,7 +400,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -377,7 +413,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertFalse($result['visible']);
     }
 
-    public function testPostActionWithOtherFields3()
+    public function testPostActionWithOtherFields3(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -390,7 +426,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -400,7 +439,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertTrue($result['visible']);
     }
 
-    public function testPostActionWithLeastFields()
+    public function testPostActionWithLeastFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -410,7 +449,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
@@ -420,7 +462,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertFalse($result['visible']);
     }
 
-    public function testPostActionWithInvalidUser()
+    public function testPostActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $data = [
@@ -433,7 +475,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot create projects');
     }
 
-    public function testPostActionWithInvalidData()
+    public function testPostActionWithInvalidData(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -447,7 +489,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['customer'], true);
     }
 
-    public function testPatchAction()
+    public function testPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -461,13 +503,16 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $content = $client->getResponse()->getContent();
+        $this->assertIsString($content);
+        $result = json_decode($content, true);
+
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
     }
 
-    public function testPatchActionWithInvalidUser()
+    public function testPatchActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -482,12 +527,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertApiResponseAccessDenied($response, 'User cannot update project');
     }
 
-    public function testPatchActionWithUnknownActivity()
+    public function testPatchActionWithUnknownActivity(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/projects/255', []);
     }
 
-    public function testInvalidPatchAction()
+    public function testInvalidPatchAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
@@ -502,12 +547,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertApiCallValidationError($response, ['customer']);
     }
 
-    public function testMetaActionThrowsNotFound()
+    public function testMetaActionThrowsNotFound(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/projects/42/meta', []);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingName()
+    public function testMetaActionThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['value' => 'X'], [
             'code' => 400,
@@ -515,7 +560,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingValue()
+    public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X'], [
             'code' => 400,
@@ -523,7 +568,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaActionThrowsExceptionOnMissingMetafield()
+    public function testMetaActionThrowsExceptionOnMissingMetafield(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X', 'value' => 'Y'], [
             'code' => 404,
@@ -531,7 +576,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         ]);
     }
 
-    public function testMetaAction()
+    public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());

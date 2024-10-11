@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetMultiUpdateDTOTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new TimesheetMultiUpdateDTO();
         self::assertEmpty($sut->getEntities());
@@ -46,7 +46,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertEquals([], $sut->getUpdateMeta());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new TimesheetMultiUpdateDTO();
 

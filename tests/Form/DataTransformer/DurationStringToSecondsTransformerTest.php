@@ -18,27 +18,26 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class DurationStringToSecondsTransformerTest extends TestCase
 {
-    /**
-     * @var DurationStringToSecondsTransformer
-     */
-    private $sut;
+    private DurationStringToSecondsTransformer $sut;
 
     protected function setUp(): void
     {
         $this->sut = new DurationStringToSecondsTransformer();
     }
 
-    public function getValidTestDataTransform()
+    public function getValidTestDataTransform(): array
     {
         return [
             ['0:00', '0'],
+            ['123:00', '442800'],
+            ['123:00', 442800],
             ['0:00', 0],
             ['2:00', 7213], // by default no seconds are returned
             [null, null],
         ];
     }
 
-    public function getInvalidTestDataTransform()
+    public function getInvalidTestDataTransform(): array
     {
         return [
             [''],
@@ -49,7 +48,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getValidTestDataTransform
      */
-    public function testTransform($expected, $transform)
+    public function testTransform($expected, $transform): void
     {
         $this->assertEquals($expected, $this->sut->transform($transform));
     }
@@ -57,14 +56,16 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getInvalidTestDataTransform
      */
-    public function testInvalidTransformThrowsException($transform)
+    public function testInvalidTransformThrowsException($transform): void
     {
-        $this->expectException(TransformationFailedException::class);
-
-        $this->sut->transform($transform);
+        $value = $this->sut->transform($transform);
+        $this->assertNull($value);
     }
 
-    public function getValidTestDataReverseTransform()
+    /**
+     * @return array<int, array<int, string|int|float|null>>
+     */
+    public function getValidTestDataReverseTransform(): array
     {
         return [
             ['2h3s', 7203],
@@ -72,16 +73,23 @@ class DurationStringToSecondsTransformerTest extends TestCase
             ['0', null],
             [null, null],
             ['87600000000:00:00', 315360000000000],
+            [87600000000, 315360000000000], // int will be treated we could argue if this is a correct behavior
+            [87599999999.5, 315359999998200], // only int can be used as hourly input
         ];
     }
 
-    public function getInvalidTestDataReverseTransform()
+    /**
+     * @return array<int, array<int, string|int>>
+     */
+    public function getInvalidTestDataReverseTransform(): array
     {
         return [
             ['xxx'],
             [':::'],
             ['0::0'],
+            // too large
             ['87600000000:00:01'],
+            // too large
             [315360000000001],
         ];
     }
@@ -89,7 +97,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getValidTestDataReverseTransform
      */
-    public function testReverseTransform($transform, $expected)
+    public function testReverseTransform($transform, $expected): void
     {
         $this->assertEquals($expected, $this->sut->reverseTransform($transform));
     }
@@ -97,7 +105,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @dataProvider getInvalidTestDataReverseTransform
      */
-    public function testInvalidReverseTransformThrowsException($transform)
+    public function testInvalidReverseTransformThrowsException($transform): void
     {
         $this->expectException(TransformationFailedException::class);
 

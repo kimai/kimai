@@ -22,42 +22,25 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 abstract class APIControllerBaseTest extends ControllerBaseTest
 {
+    /**
+     * @return array<string, string>
+     */
+    private function getAuthHeader(string $username, string $password): array
+    {
+        return [
+            'HTTP_AUTHORIZATION' => 'Bearer ' . $password,
+        ];
+    }
+
     protected function getClientForAuthenticatedUser(string $role = User::ROLE_USER): HttpKernelBrowser
     {
-        switch ($role) {
-            case User::ROLE_SUPER_ADMIN:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_SUPER_ADMIN,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_ADMIN:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_ADMIN,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_TEAMLEAD:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_TEAMLEAD,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            case User::ROLE_USER:
-                $client = self::createClient([], [
-                    'HTTP_X_AUTH_USER' => UserFixtures::USERNAME_USER,
-                    'HTTP_X_AUTH_TOKEN' => UserFixtures::DEFAULT_API_TOKEN,
-                ]);
-                break;
-
-            default:
-                throw new \Exception(sprintf('Unknown role "%s"', $role));
-        }
-
-        return $client;
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_SUPER_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_super')),
+            User::ROLE_ADMIN => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_ADMIN, UserFixtures::DEFAULT_API_TOKEN . '_admin')),
+            User::ROLE_TEAMLEAD => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_TEAMLEAD, UserFixtures::DEFAULT_API_TOKEN . '_teamlead')),
+            User::ROLE_USER => self::createClient([], $this->getAuthHeader(UserFixtures::USERNAME_USER, UserFixtures::DEFAULT_API_TOKEN . '_user')),
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
     }
 
     protected function createUrl(string $url): string
@@ -81,35 +64,26 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
     {
         $this->request($client, $url, $method);
-        $this->assertResponseIsSecured($client->getResponse(), $url);
-    }
+        $response = $client->getResponse();
 
-    /**
-     * @param Response $response
-     * @param string $url
-     */
-    protected function assertResponseIsSecured(Response $response, string $url): void
-    {
-        $data = ['message' => 'Authentication required, missing user header: X-AUTH-USER'];
+        $data = [
+            'message' => 'Unauthorized',
+            'code' => 401
+        ];
 
         self::assertEquals(
             $data,
             json_decode($response->getContent(), true),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The secure URL %s is not protected.', $url)
         );
 
         self::assertEquals(
-            Response::HTTP_FORBIDDEN,
+            Response::HTTP_UNAUTHORIZED,
             $response->getStatusCode(),
-            sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
+            \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())
         );
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param string $method
-     */
     protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -117,7 +91,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         self::assertFalse(
             $client->getResponse()->isSuccessful(),
-            sprintf('The secure URL %s is not protected for role %s', $url, $role)
+            \sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
 
         $this->assertApiException($client->getResponse(), [
@@ -133,10 +107,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null): void
+    protected function assertEntityNotFound(string $role, string $url): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
-        $this->request($client, $url, $method);
+        $this->request($client, $url);
         $this->assertApiException($client->getResponse(), [
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
@@ -274,7 +248,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             while (stripos($fieldName, '.') !== false) {
                 $parts = explode('.', $fieldName);
                 $tmp = array_shift($parts);
-                self::assertArrayHasKey($tmp, $data, sprintf('Could not find field "%s" in result', $tmp));
+                self::assertArrayHasKey($tmp, $data, \sprintf('Could not find field "%s" in result', $tmp));
                 $data = $data[$tmp];
                 if (\count($data) === 1 && \array_key_exists('children', $data)) {
                     $data = $data['children'];
@@ -282,8 +256,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 $fieldName = implode('.', $parts);
             }
 
-            self::assertArrayHasKey($fieldName, $data, sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
-            self::assertArrayHasKey('errors', $data[$fieldName], sprintf('Field %s has no validation problem', $fieldName));
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
             }
@@ -298,6 +272,25 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected static function getExpectedResponseStructure(string $type): array
     {
         switch ($type) {
+            case 'Invoice':
+            case 'InvoiceCollection':
+                return [
+                    'id' => 'int',
+                    'comment' => '@string',
+                    'createdAt' => 'datetime',
+                    'currency' => 'string',
+                    'customer' => ['result' => 'object', 'type' => '@Customer'],
+                    'user' => ['result' => 'object', 'type' => '@User'],
+                    'dueDays' => 'int',
+                    'invoiceNumber' => 'string',
+                    'metaFields' => 'array',
+                    'paymentDate' => '@datetime',
+                    'status' => 'string',
+                    'tax' => 'float',
+                    'total' => 'float',
+                    'vat' => 'float',
+                ];
+
             case 'PageActionItem':
                 return [
                     'id' => 'string',
@@ -313,6 +306,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'id' => 'int',
                     'name' => 'string',
                     'color' => '@string',
+                    'color-safe' => 'string',
                     'visible' => 'bool',
                 ];
 
@@ -364,6 +358,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'roles' => ['result' => 'array', 'type' => 'string'],
                     'initials' => 'string',
                     'language' => 'string',
+                    'locale' => 'string',
                     'timezone' => 'string',
                     'accountNumber' => '@string',
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
@@ -471,6 +466,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => 'int',
+                    'number' => '@int',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -484,6 +480,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'number' => '@int',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -496,6 +493,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'customer' => 'int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
@@ -514,6 +512,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'customer' => 'int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
@@ -537,6 +536,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'comment' => '@string',
                 ];
@@ -548,6 +548,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
+                    'number' => '@int',
                     'color' => '@string',
                     'comment' => '@string',
                 ];
@@ -560,6 +561,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
@@ -575,6 +577,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'project' => '@int',
+                    'number' => '@int',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
@@ -664,7 +667,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 ];
 
             default:
-                throw new \Exception(sprintf('Unknown API response type: %s', $type));
+                throw new \Exception(\sprintf('Unknown API response type: %s', $type));
         }
     }
 
@@ -684,12 +687,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         sort($actual);
         sort($expectedKeys);
 
-        self::assertEquals($expectedKeys, $actual, sprintf('Structure for API response type "%s" does not match', $type));
+        self::assertEquals($expectedKeys, $actual, \sprintf('Structure for API response type "%s" does not match', $type));
 
         self::assertEquals(
             \count($actual),
             \count($expectedKeys),
-            sprintf('Mismatch between expected and result keys for API response type "%s". Expected %s keys but found %s.', $type, \count($expected), \count($actual))
+            \sprintf('Mismatch between expected and result keys for API response type "%s". Expected %s keys but found %s.', $type, \count($expected), \count($actual))
         );
 
         foreach ($expected as $key => $value) {
@@ -722,13 +725,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                             $value['type'] = substr($value['type'], 1);
                         }
 
-                        self::assertIsArray($result[$key], sprintf('Key "%s" in type "%s" is not an array', $key, $type));
+                        self::assertIsArray($result[$key], \sprintf('Key "%s" in type "%s" is not an array', $key, $type));
 
                         self::assertApiResponseTypeStructure($value['type'], $result[$key]);
                         break;
 
                     default:
-                        throw new \Exception(sprintf('Invalid result type "%s" for subresource given', $value['result']));
+                        throw new \Exception(\sprintf('Invalid result type "%s" for subresource given', $value['result']));
                 }
 
                 continue;
@@ -743,18 +746,18 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
             if (strtolower($value) === 'datetime') {
                 $date = \DateTime::createFromFormat('Y-m-d\TH:i:sO', $result[$key]);
-                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
                 $value = 'string';
             } elseif (strtolower($value) === 'date') {
                 $date = \DateTime::createFromFormat('Y-m-d', $result[$key]);
-                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
+                self::assertInstanceOf(\DateTime::class, $date, \sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
                 $value = 'string';
             }
 
             static::assertThat(
                 $result[$key],
                 new IsType($value),
-                sprintf('Found type mismatch in structure for API response type %s. Expected type "%s" for key "%s".', $type, $value, $key)
+                \sprintf('Found type mismatch in structure for API response type %s. Expected type "%s" for key "%s".', $type, $value, $key)
             );
         }
     }

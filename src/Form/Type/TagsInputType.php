@@ -10,6 +10,7 @@
 namespace App\Form\Type;
 
 use App\Form\DataTransformer\TagArrayToStringTransformer;
+use App\Repository\TagRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,15 +25,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class TagsInputType extends AbstractType
 {
-    public function __construct(private TagArrayToStringTransformer $transformer, private UrlGeneratorInterface $router)
+    public function __construct(
+        private readonly TagRepository $tagRepository,
+        private readonly UrlGeneratorInterface $router
+    )
     {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->addModelTransformer(new CollectionToArrayTransformer(), true)
-            ->addModelTransformer($this->transformer, true);
+        $builder->addModelTransformer(new CollectionToArrayTransformer(), true);
+        $builder->addModelTransformer(new TagArrayToStringTransformer($this->tagRepository, (bool) $options['allow_create']), true);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -45,16 +48,18 @@ final class TagsInputType extends AbstractType
             'allow_create' => false,
             'label' => 'tag',
         ]);
+        $resolver->setAllowedTypes('allow_create', 'bool');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-autocomplete-url' => $this->router->generate('get_tags'),
+            'data-autocomplete-url' => $this->router->generate('get_tags_full'),
             'data-minimum-character' => 3,
             'class' => 'form-select',
             'autocomplete' => 'off',
-            'data-form-widget' => 'autocomplete'
+            'data-form-widget' => 'tags',
+            'data-renderer' => 'color',
         ]);
 
         if ($options['allow_create']) {

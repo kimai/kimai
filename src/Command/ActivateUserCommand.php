@@ -50,10 +50,10 @@ final class ActivateUserCommand extends Command
 
         if (!$user->isEnabled()) {
             $user->setEnabled(true);
-            $this->userService->updateUser($user);
-            $io->success(sprintf('User "%s" has been activated.', $username));
+            $this->userService->saveUser($user);
+            $io->success(\sprintf('User "%s" has been activated.', $username));
         } else {
-            $io->warning(sprintf('User "%s" is already active.', $username));
+            $io->warning(\sprintf('User "%s" is already active.', $username));
         }
 
         return Command::SUCCESS;

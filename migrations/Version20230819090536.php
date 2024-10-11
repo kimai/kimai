@@ -2,10 +2,17 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * @version 2.0.31
@@ -32,10 +39,5 @@ final class Version20230819090536 extends AbstractMigration
         $table->removeForeignKey('FK_B9AC5BCE19E9AC5F');
         $table->dropIndex('IDX_B9AC5BCE19E9AC5F');
         $table->dropColumn('supervisor_id');
-    }
-
-    public function isTransactional(): bool
-    {
-        return false;
     }
 }

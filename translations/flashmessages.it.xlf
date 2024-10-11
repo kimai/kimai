@@ -2,57 +2,57 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
-      <trans-unit id="S9k1S7Z" resname="warning">
+      <trans-unit id="S9k1S7Z" resname="warning" approved="yes">
         <source>warning</source>
-        <target>Avvertimento</target>
+        <target state="final">Avvertimento</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" approved="yes">
         <source>timesheet.stop.success</source>
-        <target>La registrazione é stata fermata</target>
+        <target state="final">La registrazione del tempo è stata fermata</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" approved="yes">
         <source>timesheet.stop.error</source>
-        <target>La registrazione non può essere fermata</target>
+        <target state="final">La registrazione del tempo non può essere fermata</target>
       </trans-unit>
-      <trans-unit id="CCUoZga" resname="timesheet.start.success">
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" approved="yes">
         <source>timesheet.start.success</source>
-        <target>Registrazione avviata</target>
+        <target state="final">La registrazione del tempo è stata avviata</target>
       </trans-unit>
-      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" approved="yes">
         <source>timesheet.start.error</source>
-        <target>La registrazione non può essere avviata</target>
+        <target state="final">La registrazione del tempo non può essere avviata</target>
       </trans-unit>
-      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" approved="yes">
         <source>timesheet.locked.warning</source>
-        <target>Stai modificando attività già esportate</target>
+        <target state="final">Stai modificando una registrazione già esportata</target>
       </trans-unit>
-      <trans-unit id="72Ih8zO" resname="action.update.success">
+      <trans-unit id="72Ih8zO" resname="action.update.success" approved="yes">
         <source>action.update.success</source>
-        <target>Salvataggio avvenuto</target>
+        <target state="final">Modifiche salvate</target>
       </trans-unit>
-      <trans-unit id="xeu1LSy" resname="action.update.error">
+      <trans-unit id="xeu1LSy" resname="action.update.error" approved="yes">
         <source>action.update.error</source>
-        <target>I cambiamenti non possono essere salvati: %reason%</target>
+        <target state="final">Impossibile salvare le modifiche: %reason%</target>
       </trans-unit>
-      <trans-unit id="YV50HDB" resname="action.delete.success">
+      <trans-unit id="YV50HDB" resname="action.delete.success" approved="yes">
         <source>action.delete.success</source>
-        <target>Informazioni cancellate</target>
+        <target state="final">La voce è stata eliminata</target>
       </trans-unit>
-      <trans-unit id="mW91Tmb" resname="action.delete.error">
+      <trans-unit id="mW91Tmb" resname="action.delete.error" approved="yes">
         <source>action.delete.error</source>
-        <target>Le informazioni non possono essere cancellate: %reason%</target>
+        <target state="final">La voce non può essere eliminata: %reason%</target>
       </trans-unit>
-      <trans-unit id="B_cz49z" resname="invoice.first_template">
+      <trans-unit id="B_cz49z" resname="invoice.first_template" approved="yes">
         <source>invoice.first_template</source>
-        <target>Crea un modello di fatturazione per continuare</target>
+        <target state="final">Prima crea un modello di fattura</target>
       </trans-unit>
-      <trans-unit id="wejAEcR" resname="action.upload.error">
+      <trans-unit id="wejAEcR" resname="action.upload.error" approved="yes">
         <source>action.upload.error</source>
-        <target>Il file non ha potuto essere caricato o salvato: %reason%</target>
+        <target state="final">Impossibile caricare o salvare il file: %reason%</target>
       </trans-unit>
-      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" approved="yes">
         <source>action.csrf.error</source>
-        <target>L'azione non può essere eseguita: token di sicurezza non valido.</target>
+        <target state="final">Impossibile eseguire l'azione: token di sicurezza non valido.</target>
       </trans-unit>
     </body>
   </file>

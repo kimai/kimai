@@ -1,41 +1,30 @@
 {% extends 'reporting/layout.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% set showMoneyBudget = is_granted('budget_money', 'project') %}
-{% set showTimeBudget = is_granted('budget_time', 'project') %}
-{% set viewRevenue = is_granted('view_rate_other_timesheet') %}
-
 {% set columns = {
-    'name':          {'class': 'alwaysVisible'},
+    'name': {'class': 'alwaysVisible'},
 } %}
-{% if showTimeBudget %}
+{% if is_granted('budget_time', 'project') %}
     {% set columns = columns|merge({
-        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
+        'timeBudget': {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
     }) %}
 {% endif %}
-{% if showMoneyBudget %}
+{% if is_granted('budget_money', 'project') %}
     {% set columns = columns|merge({
-        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
+        'budget': {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
     }) %}
 {% endif %}
 {% set columns = columns|merge({
-    'duration':      {'class': 'text-end hw-min w-min', 'title': 'stats.durationMonth'|trans, 'columnClass': 'w-min'},
+    'duration': {'class': 'text-center hw-min', 'title': 'duration'|trans, 'columnClass': 'w-min'},
 }) %}
-{% if showMoneyBudget %}
+{% if is_granted('view_rate_other_timesheet') %}
     {% set columns = columns|merge({
-        'rate':          {'class': 'text-end hw-min w-min', 'title': 'stats.amountMonth'|trans, 'columnClass': 'w-min'},
+        'revenue': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+        'costs': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+        'profit': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% set columns = columns|merge({
-    'duration':      {'class': 'text-center hw-min', 'title': 'stats.durationMonth'|trans, 'columnClass': 'w-min'},
-}) %}
-{% if viewRevenue %}
-    {% set columns = columns|merge({
-        'rate':          {'class': 'text-center hw-min', 'title': 'stats.amountMonth'|trans, 'columnClass': 'w-min'},
-    }) %}
-{% endif %}
-{% set columns = columns|merge({
-    'billable':      {'class': 'd-none d-sm-table-cell text-center hw-min w-min', 'columnClass': 'w-min'},
     'actions':       {'class': 'actions alwaysVisible'},
 }) %}
 {% set tableName = 'project_daterange_reporting' %}
@@ -45,28 +34,24 @@
 {% endblock %}
 
 {% block report_form_layout %}
-    {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
-    <div class="btn-list w-100">
-        {{ form_widget(form.month, {'label': false}) }}
-        {{ form_widget(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
-        <div class="dropdown">
-            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ icon('filter', true) }}
-            </button>
-            <ul class="dropdown-menu checkbox-menu">
-                {% for option in form.budgetType.children %}
-                    <li class="dropdown-item">
-                        {{ form_widget(option) }}
-                    </li>
-                {% endfor %}
-                <li class="dropdown-divider"></li>
+    {{ form_widget(form.month, {'label': false}) }}
+    {{ form_widget(form.customer, {'label': false, 'placeholder': 'customer'}) }}
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('filter', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.budgetType.children %}
                 <li class="dropdown-item">
-                    {{ form_widget(form.includeNoWork) }}
+                    {{ form_widget(option) }}
                 </li>
-            </ul>
-        </div>
+            {% endfor %}
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-item">
+                {{ form_widget(form.includeNoWork) }}
+            </li>
+        </ul>
     </div>
-    {{ form_end(form) }}
 {% endblock %}
 
 {% block report %}
@@ -99,10 +84,12 @@
                                 {{ widgets.label_project(project) }}
                             {% elseif name == 'duration' %}
                                 {{ entry.statistic.duration|duration }}
-                            {% elseif name == 'rate' %}
-                                {{ entry.statistic.rate|money(currency) }}
-                            {% elseif name == 'billable' %}
-                                {{ widgets.percent(entry.statistic.rate, entry.statistic.rateBillable) }}
+                            {% elseif name == 'revenue' %}
+                                {{ entry.statistic.rateBillable|money(currency) }}
+                            {% elseif name == 'costs' %}
+                                {{ entry.statistic.internalRate|money(currency) }}
+                            {% elseif name == 'profit' %}
+                                {{ (entry.statistic.rateBillable - entry.statistic.internalRate)|money(currency) }}
                             {% elseif name == 'timeBudget' %}
                                 {% if is_granted('time', project) %}
                                     {{ progress.progressbar_timebudget(entry) }}

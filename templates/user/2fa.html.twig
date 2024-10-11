@@ -11,54 +11,35 @@
                 <img onclick="document.getElementById('totp_secret').classList.toggle('d-none');" data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
                 <span id="totp_secret" style="display: block" class="d-none">{{ secret }}</span>
             </p>
-            {% if user.totpAuthenticationEnabled %}
-                <div class="row mb-3">
-                    <div class="form-selectgroup form-selectgroup-boxes d-flex">
-                        <label class="form-selectgroup-item flex-column">
-                            <input type="radio" id="user_two_factor_enable" name="user_two_factor[enabled]" class="form-selectgroup-input" value="1" checked="checked">
-                            <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                <div class="me-3">
-                                    <span class="form-selectgroup-check"></span>
-                                </div>
-                                <div>
-                                    <label class="form-check-label" for="user_two_factor_enable">{{ 'activated'|trans }}</label>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="form-selectgroup-item flex-column">
-                            <input type="radio" id="user_two_factor_disable" name="user_two_factor[enabled]" class="form-selectgroup-input" value="0">
-                            <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                <div class="me-3">
-                                    <span class="form-selectgroup-check"></span>
-                                </div>
-                                <div>
-                                    <label class="form-check-label" for="user_two_factor_disable">{{ 'deactivated'|trans }}</label>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                {{ form_start(deactivate, {'attr': {'id': 'user_two_factor_form'}}) }}
-                {{ form_end(deactivate) }}
-            {% else %}
+            {% if not user.totpAuthenticationEnabled %}
                 {{ form_start(form, {'attr': {'id': 'user_two_factor_form'}}) }}
                 <p>{{ 'profile.2fa_confirmation'|trans }}</p>
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
+            {% else %}
+                <strong><i class="{{ 'success'|icon(true) }} text-success"></i> {{ 'activated'|trans }}</strong>
             {% endif %}
         </div>
     </div>
     <div class="card-footer">
-        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" id="user_two_factor_button" />
+        {% if user.totpAuthenticationEnabled %}
+            {{ form_start(deactivate, {'attr': {'id': 'user_two_factor_form'}}) }}
+                <input type="submit" value="{{ 'deactivate'|trans }}" class="btn btn-warning" id="user_two_factor_button" />
+            {{ form_end(deactivate) }}
+        {% else %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" id="user_two_factor_button" />
+        {% endif %}
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    {% if not user.totpAuthenticationEnabled %}
     <script>
         document.getElementById('user_two_factor_button').addEventListener('click', function(){
             document.getElementById('user_two_factor_form').submit();
         });
     </script>
+    {% endif %}
 {% endblock %}

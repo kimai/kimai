@@ -9,6 +9,8 @@
 
 namespace App\Configuration;
 
+use App\Constants;
+
 final class SystemConfiguration
 {
     private bool $initialized = false;
@@ -31,10 +33,7 @@ final class SystemConfiguration
     }
 
     /**
-     * Set an array item to a given value using "dot" notation.
-     * If no key is given to the method, the entire array will be replaced.
-     *
-     * @internal
+     * Set a new or replace an existing system configuration.
      */
     public function set(string $key, mixed $value): void
     {
@@ -127,6 +126,8 @@ final class SystemConfiguration
      */
     public function offsetExists($offset): bool
     {
+        @trigger_error('The method "SystemConfiguration::offsetExists()" is deprecated, use "has()" instead', E_USER_DEPRECATED);
+
         return $this->has($offset);
     }
 
@@ -135,6 +136,8 @@ final class SystemConfiguration
      */
     public function offsetGet($offset): mixed
     {
+        @trigger_error('The method "SystemConfiguration::offsetGet()" is deprecated, use "find()" instead', E_USER_DEPRECATED);
+
         return $this->find($offset);
     }
 
@@ -143,16 +146,9 @@ final class SystemConfiguration
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->set($offset, $value);
-    }
+        @trigger_error('The method "SystemConfiguration::offsetSet()" is deprecated, use "set()" instead', E_USER_DEPRECATED);
 
-    /**
-     * @deprecated since 2.0.35
-     * @throws \BadMethodCallException
-     */
-    public function offsetUnset(mixed $offset): void
-    {
-        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+        $this->set($offset, $value);
     }
 
     // ========== Authentication configurations ==========
@@ -454,7 +450,12 @@ final class SystemConfiguration
 
     public function getQuickEntriesRecentAmount(): int
     {
-        return $this->getIncrement('quick_entry.recent_activities', 5, 5);
+        return $this->getIncrement('quick_entry.recent_activities', 5, 0);
+    }
+
+    public function isBreakTimeEnabled(): bool
+    {
+        return (bool) $this->find('timesheet.rules.break_time_active');
     }
 
     // ========== Company configurations ==========
@@ -482,14 +483,51 @@ final class SystemConfiguration
         return (bool) $this->find('theme.avatar_url');
     }
 
-    public function getThemeColorChoices(): ?string
+    /**
+     * @internal will be made private soon after 2.18.0 - do not access this method directly, but through getThemeColors()
+     */
+    public function getThemeColorChoices(): string
     {
         $config = $this->find('theme.color_choices');
-        if (!empty($config)) {
+        if (\is_string($config) && $config !== '') {
             return $config;
         }
 
         return 'Silver|#c0c0c0';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getThemeColors(): array
+    {
+        $config = explode(',', $this->getThemeColorChoices());
+
+        $colors = [];
+        foreach ($config as $item) {
+            if (empty($item)) {
+                continue;
+            }
+            $item = explode('|', $item);
+            $key = $item[0];
+            $value = $key;
+
+            if (\count($item) > 1) {
+                $value = $item[1];
+            }
+
+            if (empty($key)) {
+                $key = $value;
+            }
+
+            if ($value === Constants::DEFAULT_COLOR) {
+                continue;
+            }
+
+            $colors[$key] = $value;
+        }
+
+        return array_unique($colors);
     }
 
     // ========== Projects ==========

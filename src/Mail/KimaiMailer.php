@@ -10,6 +10,7 @@
 namespace App\Mail;
 
 use App\Configuration\MailConfiguration;
+use App\Entity\User;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -17,16 +18,33 @@ use Symfony\Component\Mime\RawMessage;
 
 final class KimaiMailer implements MailerInterface
 {
-    public function __construct(private MailConfiguration $configuration, private MailerInterface $mailer)
+    public function __construct(private readonly MailConfiguration $configuration, private readonly MailerInterface $mailer)
     {
     }
 
     public function send(RawMessage $message, Envelope $envelope = null): void
     {
-        if ($message instanceof Email) {
+        if (!$message instanceof Email) {
+            $email = new Email();
+            $email->text($message->toString());
+            $message = $email;
+        }
+
+        if (\count($message->getFrom()) === 0) {
             $message->from($this->configuration->getFromAddress());
         }
 
         $this->mailer->send($message);
+    }
+
+    public function sendToUser(User $user, Email $message, Envelope $envelope = null): void
+    {
+        if (!$user->isEnabled() || $user->getEmail() === null) {
+            return;
+        }
+
+        $message->to($user->getEmail());
+
+        $this->send($message, $envelope);
     }
 }

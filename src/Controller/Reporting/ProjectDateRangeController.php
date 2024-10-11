@@ -10,6 +10,7 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
+use App\Entity\Customer;
 use App\Form\Model\DateRange;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
@@ -17,7 +18,7 @@ use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProjectDateRangeController extends AbstractController
@@ -30,21 +31,27 @@ final class ProjectDateRangeController extends AbstractController
         $dateFactory = $this->getDateTimeFactory();
         $user = $this->getUser();
 
-        $query = new ProjectDaterangeQuery($dateFactory->getStartOfMonth(), $user);
+        $defaultStart = $dateFactory->getStartOfMonth();
+        $query = new ProjectDaterangeQuery($defaultStart, $user);
         $form = $this->createFormForGetRequest(ProjectDateRangeForm::class, $query, [
             'timezone' => $user->getTimezone()
         ]);
         $form->submit($request->query->all(), false);
 
+        $begin = $query->getMonth() ?? $defaultStart;
+
         $dateRange = new DateRange(true);
-        $dateRange->setBegin($query->getMonth());
-        $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
+        $dateRange->setBegin($begin);
+        $end = $dateFactory->getEndOfMonth($dateRange->getBegin()); // this resets the time
+
+        $dateRange->setEnd($end);
 
         $projects = $service->findProjectsForDateRange($query, $dateRange);
-        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $dateRange->getBegin(), $dateRange->getEnd(), $dateRange->getEnd());
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $begin, $end, $end);
 
         $byCustomer = [];
         foreach ($entries as $entry) {
+            /** @var Customer $customer */
             $customer = $entry->getProject()->getCustomer();
             if (!isset($byCustomer[$customer->getId()])) {
                 $byCustomer[$customer->getId()] = ['customer' => $customer, 'projects' => []];

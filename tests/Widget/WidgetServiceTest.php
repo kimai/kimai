@@ -18,13 +18,13 @@ use PHPUnit\Framework\TestCase;
  */
 class WidgetServiceTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new WidgetService();
         self::assertFalse($sut->hasWidget('sdfsdf'));
     }
 
-    public function testHasAndGetWidget()
+    public function testHasAndGetWidget(): void
     {
         $widget = new More();
         $widget->setId('sdfsdf');

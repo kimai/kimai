@@ -9,6 +9,9 @@
 
 namespace App\Export;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag]
 interface RendererInterface extends ExportRendererInterface
 {
 }

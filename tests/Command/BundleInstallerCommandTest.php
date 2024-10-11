@@ -30,7 +30,7 @@ class BundleInstallerCommandTest extends KernelTestCase
     /**
      * @param class-string $className
      */
-    protected function getCommand(string $className): Command
+    private function getCommand(string $className): Command
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);

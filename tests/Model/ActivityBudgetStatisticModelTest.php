@@ -36,7 +36,7 @@ class ActivityBudgetStatisticModelTest extends TestCase
         return new Activity();
     }
 
-    public function testAdditionals()
+    public function testAdditionals(): void
     {
         $entity = $this->getEntity();
         $sut = $this->getSut($entity);

@@ -22,7 +22,7 @@ use Symfony\Component\Security\Http\HttpUtils;
  */
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
-    public function testWithAlwaysUseDefaultTargetPath()
+    public function testWithAlwaysUseDefaultTargetPath(): void
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => true]);
@@ -32,7 +32,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $this->assertTrue($response->isRedirect($defaultTargetPath));
     }
 
-    public function testRelayState()
+    public function testRelayState(): void
     {
         $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()), ['always_use_default_target_path' => false]);
         $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', 'http://localhost/relayed'), $this->getSamlToken());
@@ -40,7 +40,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $this->assertTrue($response->isRedirect('http://localhost/relayed'));
     }
 
-    public function testWithoutRelayState()
+    public function testWithoutRelayState(): void
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);
@@ -50,7 +50,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $this->assertTrue($response->isRedirect($defaultTargetPath));
     }
 
-    public function testRelayStateLoop()
+    public function testRelayStateLoop(): void
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());
         $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);

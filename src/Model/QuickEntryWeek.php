@@ -27,7 +27,7 @@ class QuickEntryWeek
     {
     }
 
-    public function addRow(?User $user = null, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
+    public function addRow(User $user, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
     {
         $model = $this->createRow($user, $project, $activity);
 
@@ -36,7 +36,7 @@ class QuickEntryWeek
         return $model;
     }
 
-    public function createRow(?User $user = null, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
+    public function createRow(User $user, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
     {
         return new QuickEntryModel($user, $project, $activity);
     }

@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
-        <target state="translated">Überbuchung gespeicherter Budgets zulassen</target>
+        <target state="translated">Überbuchung von hinterlegten Budgets erlauben</target>
       </trans-unit>
       <trans-unit id="t38HFZd" resname="calendar.week_numbers">
         <source>calendar.week_numbers</source>
@@ -46,9 +46,9 @@
         <source>timesheet.default_begin</source>
         <target state="translated">Standardstartzeit (wird nicht in allen Zeiterfassungsmodi verwendet)</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Format der Kundennummern</target>
+        <target state="needs-translation">Format der Kundennummern</target>
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
@@ -296,7 +296,7 @@
       </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
         <source>activity.allow_inline_create</source>
-        <target state="translated">Erstellung von Aktivitäten im Zeiterfassungsformular zulassen</target>
+        <target state="translated">Erstellung von Tätigkeiten im Zeiterfassungsformular zulassen</target>
       </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>

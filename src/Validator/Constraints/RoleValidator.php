@@ -16,14 +16,14 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class RoleValidator extends ConstraintValidator
 {
-    public function __construct(private RoleService $service)
+    public function __construct(private readonly RoleService $service)
     {
     }
 
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof Role) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Role');
+            throw new UnexpectedTypeException($constraint, Role::class);
         }
 
         $roles = $value;

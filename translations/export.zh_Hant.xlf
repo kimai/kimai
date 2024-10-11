@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="export.en.xlf">
     <body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig" xml:space="preserve" approved="yes">
+        <source>Default</source>
+        <target state="final">預設</target>
+      </trans-unit>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig" xml:space="preserve" approved="yes">
+        <source>With internal rates</source>
+        <target state="final">列出內部費率</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve" approved="yes">
+        <source>Timesheet</source>
+        <target state="final">工時單</target>
+      </trans-unit>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig" xml:space="preserve" approved="yes">
+        <source>With remaining budget</source>
+        <target state="final">列出剩餘預算</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -14,7 +14,7 @@ use App\Repository\BookmarkRepository;
 use App\Utils\ProfileManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\RuntimeException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -30,7 +30,7 @@ final class BookmarkController extends AbstractController
     public const PARAM_DATATABLE = 'datatable_name';
     public const PARAM_PROFILE = 'datatable_profile';
 
-    public function __construct(private BookmarkRepository $bookmarkRepository, private ProfileManager $profileManager)
+    public function __construct(private readonly BookmarkRepository $bookmarkRepository, private readonly ProfileManager $profileManager)
     {
     }
 
@@ -41,11 +41,11 @@ final class BookmarkController extends AbstractController
             throw $this->createNotFoundException('Missing CSRF Token');
         }
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, $request->request->get(self::PARAM_TOKEN_NAME)))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, (string) $request->request->get(self::PARAM_TOKEN_NAME)))) {
             throw $this->createAccessDeniedException('Invalid CSRF Token');
         }
 
-        $profile = $request->request->get(self::PARAM_PROFILE);
+        $profile = (string) $request->request->get(self::PARAM_PROFILE);
         if (!$this->profileManager->isValidProfile($profile)) {
             throw $this->createNotFoundException('Invalid profile given');
         }
@@ -63,16 +63,16 @@ final class BookmarkController extends AbstractController
             throw $this->createNotFoundException('Missing data: csrf token, datatable name or profile');
         }
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, $request->request->get(self::PARAM_TOKEN_NAME)))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, (string) $request->request->get(self::PARAM_TOKEN_NAME)))) {
             throw $this->createAccessDeniedException('Invalid CSRF Token');
         }
 
-        $profile = $request->request->get(self::PARAM_PROFILE);
+        $profile = (string) $request->request->get(self::PARAM_PROFILE);
         if (!$this->profileManager->isValidProfile($profile)) {
             throw $this->createNotFoundException('Invalid profile given');
         }
 
-        $datatableName = $request->request->get(self::PARAM_DATATABLE);
+        $datatableName = (string) $request->request->get(self::PARAM_DATATABLE);
         $datatableName = $this->profileManager->getDatatableName($datatableName, $profile);
 
         if (empty($datatableName) || mb_strlen($datatableName) > 50) {
@@ -88,7 +88,7 @@ final class BookmarkController extends AbstractController
         }
 
         if (\count($enabled) > 50) {
-            throw new RuntimeException(sprintf('Too many columns provided, expected maximum 50, received %s.', \count($enabled)));
+            throw new RuntimeException(\sprintf('Too many columns provided, expected maximum 50, received %s.', \count($enabled)));
         }
 
         $user = $this->getUser();
@@ -116,16 +116,16 @@ final class BookmarkController extends AbstractController
             throw $this->createNotFoundException('Missing data: csrf token, datatable name or profile');
         }
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, $request->request->get(self::PARAM_TOKEN_NAME)))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken(self::DATATABLE_TOKEN, (string) $request->request->get(self::PARAM_TOKEN_NAME)))) {
             throw $this->createAccessDeniedException('Invalid CSRF Token');
         }
 
-        $profile = $request->request->get(self::PARAM_PROFILE);
+        $profile = (string) $request->request->get(self::PARAM_PROFILE);
         if (!$this->profileManager->isValidProfile($profile)) {
             throw $this->createNotFoundException('Invalid profile given');
         }
 
-        $datatableName = $request->request->get(self::PARAM_DATATABLE);
+        $datatableName = (string) $request->request->get(self::PARAM_DATATABLE);
         $datatableName = $this->profileManager->getDatatableName($datatableName, $profile);
 
         $bookmark = $this->bookmarkRepository->findBookmark($this->getUser(), Bookmark::COLUMN_VISIBILITY, $datatableName);

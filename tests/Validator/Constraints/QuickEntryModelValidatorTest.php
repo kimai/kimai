@@ -12,6 +12,7 @@ namespace App\Tests\Validator\Constraints;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Model\QuickEntryModel as QuickEntryModelEntity;
 use App\Validator\Constraints\QuickEntryModel;
 use App\Validator\Constraints\QuickEntryModelValidator;
@@ -31,23 +32,24 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
         return new QuickEntryModelValidator();
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new QuickEntryModel());
     }
 
-    public function testTriggersOnMissingProjectAndActivity()
+    public function testTriggersOnMissingProjectAndActivity(): void
     {
-        $model = new QuickEntryModelEntity();
+        $user = new User();
+        $model = new QuickEntryModelEntity($user);
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime());
         $timesheet->setBegin(new \DateTime('+ 1 hour'));
@@ -64,9 +66,10 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testTriggersOnMissingActivity()
+    public function testTriggersOnMissingActivity(): void
     {
-        $model = new QuickEntryModelEntity();
+        $user = new User();
+        $model = new QuickEntryModelEntity($user);
         $model->setProject(new Project());
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime());
@@ -81,9 +84,10 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testTriggersOnMissingProject()
+    public function testTriggersOnMissingProject(): void
     {
-        $model = new QuickEntryModelEntity();
+        $user = new User();
+        $model = new QuickEntryModelEntity($user);
         $model->setActivity(new Activity());
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime());
@@ -98,18 +102,20 @@ class QuickEntryModelValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testDoesNotTriggerOnPrototype()
+    public function testDoesNotTriggerOnPrototype(): void
     {
-        $model = new QuickEntryModelEntity();
+        $user = new User();
+        $model = new QuickEntryModelEntity($user);
 
         $this->validator->validate($model, new QuickEntryModel());
 
         $this->assertNoViolation();
     }
 
-    public function testDoesNotTriggerOnProperlyFilled()
+    public function testDoesNotTriggerOnProperlyFilled(): void
     {
-        $model = new QuickEntryModelEntity();
+        $user = new User();
+        $model = new QuickEntryModelEntity($user);
         $model->setActivity(new Activity());
         $model->setProject(new Project());
         $timesheet = new Timesheet();

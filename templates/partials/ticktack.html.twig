@@ -4,7 +4,7 @@
     {# fake entry, because at least one html template node is needed #}
     {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
 {% endif %}
-<div class="nav-item d-flex me-sm-3 me-1">
+<div class="nav-item d-flex me-1 ticktac">
     <div class="btn-list">
         {% set class = "btn-outline-white" %}
         {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
@@ -12,13 +12,13 @@
         {% endif %}
         {% set entry = active_timesheets[0] %}
         <div class="ticktac-menu" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
-            <a data-replacer="url" class="api-link ticktac-running ticktac-stop btn {{ class }} btn-icon px-sm-2" href="#" data-href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success"{% if hasActiveRecords %} accesskey="s"{% endif %}>
+            <a title="{{ 'timesheet.stop'|trans }}" data-replacer="url" class="api-link ticktac-running ticktac-stop btn {{ class }} btn-icon px-sm-2" href="#" data-href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success"{% if hasActiveRecords %} accesskey="s"{% endif %}>
                 <i class="text-red {{ 'stop-small'|icon(false) }} me-0 me-sm-1"></i>
                 <span class="d-none d-sm-block" data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry is iterable ? 0|duration : entry|duration }}</span>
             </a>
         </div>
         <div class="ticktac-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
-            <a href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn {{ class }} btn-icon px-sm-2" accesskey="n">
+            <a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn {{ class }} btn-icon px-sm-2" accesskey="n">
                 <i class="text-green {{ 'start'|icon(false) }} me-0 me-sm-1"></i>
                 <span class="d-none d-sm-block">{{ 0|duration }}</span>
             </a>

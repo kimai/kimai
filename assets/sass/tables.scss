@@ -26,7 +26,7 @@ table.dataTable {
     thead .sorting_asc:after,
     thead .sorting_desc:after {
         padding-left: 5px;
-        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 6 Free';
         opacity: 0.5;
         font-size: 12px;
     }
@@ -123,7 +123,7 @@ table.dataTable {
     }
     th.weekend,
     td.weekend {
-        background-color: var(--tblr-bg-surface-secondary);
+        background-color: var(--tblr-bg-surface-tertiary);
     }
     /* order is important, "today” should overwrite "weekend" therefor later in the file */
     th.today {
@@ -152,4 +152,11 @@ table.table-hover {
             }
         }
     }
+}
+
+/* For the context menu */
+.action-dropdown,
+.actions .dropdown .dropdown-menu {
+    // stay on top of sticky elements (like table header)
+    z-index: 1021;
 }

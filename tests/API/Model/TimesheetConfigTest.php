@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetConfigTest extends TestCase
 {
-    public function testSetter()
+    public function testSetter(): void
     {
         $sut = new TimesheetConfig();
         $sut->setIsAllowFutureTimes(false);

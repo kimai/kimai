@@ -24,11 +24,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * No permission check on controller level, only for single routes.
+ *
+ * There was "view_other_timesheet" here once, but it is a bug.
+ * Some companies (rarely, but existing) want their employees to enter time, but not to see it afterward.
+ *
+ * It is legit to only own "create_other_timesheet" without "view_other_timesheet".
+ */
 #[Route(path: '/team/timesheet')]
-#[IsGranted('view_other_timesheet')]
 final class TimesheetTeamController extends TimesheetAbstractController
 {
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_timesheet', methods: ['GET'])]

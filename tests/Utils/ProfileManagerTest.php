@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
  */
 class ProfileManagerTest extends TestCase
 {
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $request = new Request();
         $session = new Session(new MockFileSessionStorage());
@@ -48,7 +48,7 @@ class ProfileManagerTest extends TestCase
     /**
      * @dataProvider getInvalidProfiles
      */
-    public function testIsInvalidProfile(string $profile)
+    public function testIsInvalidProfile(string $profile): void
     {
         $sut = new ProfileManager();
         self::assertFalse($sut->isValidProfile($profile));
@@ -71,7 +71,7 @@ class ProfileManagerTest extends TestCase
     /**
      * @dataProvider getDatatableNames
      */
-    public function testDatatableName(string $expected, string $datatable, ?string $prefix)
+    public function testDatatableName(string $expected, string $datatable, ?string $prefix): void
     {
         $sut = new ProfileManager();
         self::assertEquals($expected, $sut->getDatatableName($datatable, $prefix));
@@ -98,13 +98,13 @@ class ProfileManagerTest extends TestCase
     /**
      * @dataProvider getProfileNames
      */
-    public function testGetProfile(string $profile, string $expected)
+    public function testGetProfile(string $profile, string $expected): void
     {
         $sut = new ProfileManager();
         self::assertEquals($expected, $sut->getProfile($profile));
     }
 
-    public function testSetProfile()
+    public function testSetProfile(): void
     {
         $request = new Request();
         $session = new Session(new MockFileSessionStorage());
@@ -139,7 +139,7 @@ class ProfileManagerTest extends TestCase
     /**
      * @dataProvider getCookieProfiles
      */
-    public function testGetProfileFromCookie(string $cookieValue, string $expected)
+    public function testGetProfileFromCookie(string $cookieValue, string $expected): void
     {
         $request = new Request();
         self::assertFalse($request->cookies->has(ProfileManager::COOKIE_PROFILE));
@@ -168,7 +168,7 @@ class ProfileManagerTest extends TestCase
     /**
      * @dataProvider getSessionProfiles
      */
-    public function testGetProfileFromSession(string $sessionValue, string $expected)
+    public function testGetProfileFromSession(string $sessionValue, string $expected): void
     {
         $request = new Request();
         self::assertFalse($request->cookies->has(ProfileManager::COOKIE_PROFILE));

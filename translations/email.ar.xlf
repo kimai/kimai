@@ -18,29 +18,25 @@
         <source>registration.button</source>
         <target>فعل حسابك</target>
       </trans-unit>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">إذا كان الزر لا يعمل ، يرجى نسخ &amp; والصق عنوان URL التالي في متصفحك:%url%</target>
-      </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
         <target state="translated">لقد قمت بالتسجيل في متتبع الوقت Kimai بالبريد الإلكتروني%email%. يرجى تفعيل حسابك في الساعات القليلة القادمة ، قبل انتهاء صلاحية الرابط.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">إعادة تعيين كلمة المرور</target>
+        <target state="needs-translation">إعادة تعيين كلمة المرور</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target state="translated">يمكن أن يحدث ذلك …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">يمكن أن يحدث ذلك …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">إعادة تعيين كلمة المرور</target>
+        <target state="needs-translation">إعادة تعيين كلمة المرور</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target state="translated">... هل نسيت كلمة مرورك؟ لا تقلق: سوف تساعدك Kimai في إنشاء واحدة جديدة:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">... هل نسيت كلمة مرورك؟ لا تقلق: سوف تساعدك Kimai في إنشاء واحدة جديدة:</target>
       </trans-unit>
     </body>
   </file>

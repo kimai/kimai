@@ -20,13 +20,21 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class QuickEntryVoter extends Voter
 {
-    public function __construct(private RolePermissionManager $permissionManager, private TrackingModeService $trackingModeService)
+    public function __construct(
+        private readonly RolePermissionManager $permissionManager,
+        private readonly TrackingModeService $trackingModeService
+    )
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return 'quick-entry' === $attribute;
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return 'quick-entry' === $attribute;
+        return $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

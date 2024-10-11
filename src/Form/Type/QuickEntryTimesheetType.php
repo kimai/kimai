@@ -56,7 +56,7 @@ final class QuickEntryTimesheetType extends AbstractType
             function (FormEvent $event) use ($durationOptions) {
                 /** @var Timesheet|null $data */
                 $data = $event->getData();
-                if (null === $data || null === $data->getEnd()) {
+                if (null === $data || $data->isRunning()) {
                     $event->getForm()->get('duration')->setData(null);
                 }
 

@@ -2,6 +2,7 @@
     {% set used = used|default(false) %}
     {% block modal_id %}form_modal{% endblock %}
     {% block modal_before %}{{ form_start(form) }}{% endblock %}
+    {% block modal_effects %}{% endblock %}
     {% block modal_title %}
         {{ title|default('confirm.delete'|trans) }}
     {% endblock %}

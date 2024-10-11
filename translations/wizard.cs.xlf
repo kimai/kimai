@@ -30,6 +30,14 @@
         <source>wizard.done.description</source>
         <target state="translated">Nejdůležitější nastavení jsou nyní dokončena. Existuje mnoho dalších nastavení, která si můžete později přizpůsobit ve svém uživatelském profilu.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title">
+        <source>wizard.password.title</source>
+        <target state="translated">Vaše heslo</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description">
+        <source>wizard.password.description</source>
+        <target state="translated">Zadejte prosím své nové heslo, které bude od této chvíle používáno pro přihlašování.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

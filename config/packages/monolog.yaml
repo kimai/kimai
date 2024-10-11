@@ -6,11 +6,16 @@ when@prod:
         handlers:
             main:
                 type: fingers_crossed
-                action_level: notice
-                handler: nested
-                excluded_http_codes: [403, 404]
+                action_level: error
+                handler: file_log
+                excluded_http_codes:
+                    - {400: ['^/api/']}
+                    - {401: ['^/api/']}
+                    - 403
+                    - 404
+                    - {405: ['/homepage$', '/login_check$', '/export/data$']}
                 channels: ["!deprecation"]
-            nested:
+            file_log:
                 type: stream
                 level: info
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
@@ -19,21 +24,25 @@ when@prod:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!deprecation"]
-# deactivated, because currently there are too many deprecations cause by gedmo and doctrine
-#            deprecation:
-#                type: stream
-#                channels: ["deprecation"]
-#                path: "%kernel.logs_dir%/deprecations.log"
-#                formatter: monolog.formatter.deprecation
 
 when@dev:
     monolog:
         handlers:
             main:
+                type: fingers_crossed
+                action_level: notice
+                handler: file_log
+                excluded_http_codes:
+                    - {400: ['^/api/']}
+                    - {401: ['^/api/']}
+                    - 403
+                    - 404
+                    - {405: ['/homepage$', '/login_check$', '/export/data$']}
+                channels: ["!event", "!deprecation"]
+            file_log:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event", "!deprecation"]
                 formatter: monolog.formatter.kimai
             console:
                 type: console

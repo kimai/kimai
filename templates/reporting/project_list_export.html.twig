@@ -1,0 +1,134 @@
+{% set columns = {
+    'customer':         {'title': 'customer'|trans},
+    'name':             {'title': 'name'|trans},
+    'budgetType':       {'title': 'budgetType'|trans},
+} %}
+{% if is_granted('budget_time', 'project') %}
+    {% set columns = columns|merge({
+        'timeBudget': {'title': 'timeBudget'|trans},
+        'durationTotal': {'title': 'stats.durationTotal'|trans},
+        'billableTime': {'title': 'billable'|trans},
+        'exported': {'title': 'not_exported'|trans},
+    }) %}
+{% endif %}
+{% if is_granted('budget_money', 'project') %}
+    {% set columns = columns|merge({
+        'budget': {'title': 'budget'|trans},
+        'amountTotal': {'title': 'stats.amountTotal'|trans},
+        'billableMoney': {'title': 'billable'|trans},
+        'internalRate': {'title': 'internalRate'|trans},
+        'revenue': {'title': ('revenue'|trans ~ ' (' ~ 'billable'|trans ~ ' - ' ~ 'internalRate'|trans ~ ')')},
+        'hourlyBillable': {'title': ('hourlyRate'|trans ~ ' (' ~ 'billable'|trans ~ ' / ' ~  'stats.durationTotal'|trans ~ ')')},
+        'hourlyTotal': {'title': ('hourlyRate'|trans ~ ' (' ~ 'revenue'|trans ~ ' / ' ~ 'stats.durationTotal'|trans ~ ')')},
+        'invoiced': {'title': 'not_invoiced'|trans},
+    }) %}
+{% endif %}
+<table>
+    <thead>
+        <tr>
+        {% for column, settings in columns %}
+            <th>{{ settings.title }}</th>
+        {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+            {% for entry in mapping.projects|sort((a, b) => a.project.name <=> b.project.name) %}
+                <tr>
+                {% set project = entry.project %}
+                {% set budgetStatisticModel = entry.getBudgetStatisticModel() %}
+                {% set currency = project.customer.currency %}
+                {% set durationTotal = entry.durationTotal|chart_duration %}
+                {% set canSeeTimeBudget = is_granted('time', project) %}
+                {% set showTimeBudget = project.hasTimeBudget() and canSeeTimeBudget %}
+                {% set canSeeMoneyBudget = is_granted('budget', project) %}
+                {% set showMoneyBudget = project.hasBudget() and canSeeMoneyBudget %}
+                {% set revenue = budgetStatisticModel.getBudgetSpent() - budgetStatisticModel.getInternalRate() %}
+                {% for name, column_config in columns %}
+                    <td>
+                    {% if name == 'name' %}
+                        {{ project.name }}
+                    {% elseif name == 'budgetType' %}
+                        {% if project.budgetType is not null %}
+                            {{ ('budgetType_' ~ project.budgetType)|trans }}
+                        {% endif %}
+                    {% elseif name == 'customer' %}
+                        {{ project.customer.name }}
+                    {% elseif name == 'lastRecord' %}
+                        {% if entry.lastRecord is not null %}
+                            {{ entry.lastRecord|date_short }}
+                        {% else %}
+                            &ndash;
+                        {% endif %}
+                    {% elseif name == 'today' %}
+                        {{ entry.durationDay|duration }}
+                    {% elseif name == 'week' %}
+                        {{ entry.durationWeek|duration }}
+                    {% elseif name == 'month' %}
+                        {{ entry.durationMonth|duration }}
+                    {% elseif name == 'timeBudget' %}
+                        {% if showTimeBudget %}
+                            {{ budgetStatisticModel.getTimeBudget()|duration }}
+                        {% else %}
+                            &ndash;
+                        {% endif %}
+                    {% elseif name == 'durationTotal' %}
+                        {{ entry.durationTotal|duration }}
+                    {% elseif name == 'billableTime' %}
+                        {% if canSeeTimeBudget %}
+                            {{ budgetStatisticModel.getTimeBudgetSpent()|duration }}
+                        {% endif %}
+                    {% elseif name == 'exported' %}
+                        {% if canSeeTimeBudget %}
+                            {{ entry.notExportedDuration|duration }}
+                        {% endif %}
+                    {% elseif name == 'budget' %}
+                        {% if showMoneyBudget %}
+                            {{ budgetStatisticModel.getBudget()|money(currency) }}
+                        {% else %}
+                            &ndash;
+                        {% endif %}
+                    {% elseif name == 'amountTotal' %}
+                        {% if canSeeMoneyBudget %}
+                            {{ budgetStatisticModel.getStatisticTotal().getRate()|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'billableMoney' %}
+                        {% if canSeeMoneyBudget %}
+                            {{ budgetStatisticModel.getBudgetSpent()|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'internalRate' %}
+                        {% if canSeeMoneyBudget %}
+                            {{ budgetStatisticModel.getInternalRate()|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'revenue' %}
+                        {% if canSeeMoneyBudget %}
+                            {{ revenue|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'hourlyBillable' %}
+                        {% if canSeeMoneyBudget and durationTotal > 0 %}
+                            {{ (budgetStatisticModel.getBudgetSpent() / durationTotal)|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'hourlyTotal' %}
+                        {% if canSeeMoneyBudget and durationTotal > 0 %}
+                            {{ (revenue / durationTotal)|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'invoiced' %}
+                        {% if canSeeMoneyBudget %}
+                            {{ entry.notExportedRate|money(currency) }}
+                        {% endif %}
+                    {% elseif name == 'projectStart' %}
+                        {% if project.start is not null %}{{ project.start|date_short }}{% endif %}
+                    {% elseif name == 'projectEnd' %}
+                        {% if project.end is not null %}{{ project.end|date_short }}{% endif %}
+                    {% elseif name == 'comment' %}
+                        {{ project.comment }}
+                    {% elseif name == 'actions' %}
+                        {{ projectActions.project(project, 'custom') }}
+                    {% endif %}
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>

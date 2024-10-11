@@ -27,7 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EntityWithMetaFieldsExporterTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects(self::once())->method('dispatch')->willReturnCallback(function (ProjectMetaDisplayEvent $event) {
@@ -51,6 +51,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         $project->setTimeBudget(1234567890);
         $project->setColor('#ababab');
         $project->setVisible(false);
+        $project->setNumber('PRJ-0815');
         $project->setMetaField((new ProjectMeta())->setName('foo meta')->setValue('some magic')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('hidden meta')->setValue('will not be seen')->setIsVisible(false));
         $project->setMetaField((new ProjectMeta())->setName('bar meta')->setValue('is happening')->setIsVisible(true));
@@ -60,21 +61,22 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         $worksheet = $spreadsheet->getActiveSheet();
 
         $i = 0;
-        self::assertNull($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals(123456.7890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('=1234567890/86400', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertTrue($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('some magic', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('is happening', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertNull($worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('test project', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('A customer', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals(1234567890, $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals(123456.7890, $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('=1234567890/86400', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('#ababab', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertFalse($worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('Lorem Ipsum', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertTrue($worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('PRJ-0815', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('some magic', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('is happening', $worksheet->getCell([++$i, 2])->getValue());
     }
 }

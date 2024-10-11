@@ -102,10 +102,6 @@
         <source>Cannot stop running timesheet</source>
         <target state="translated">شما یک رکورد زمانی فعال دارید که به طور خودکار متوقف نمی شود.</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">مقدار داده شده یک فرمت روزانه معتبر نیست.</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

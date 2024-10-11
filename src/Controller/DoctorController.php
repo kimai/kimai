@@ -15,7 +15,7 @@ use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -265,6 +265,7 @@ final class DoctorController extends AbstractController
             'sys_temp_dir',
             'date.timezone',
             'session.gc_maxlifetime',
+            'disable_functions'
         ];
 
         $settings = [];
@@ -303,12 +304,12 @@ final class DoctorController extends AbstractController
         )) {
             foreach ($matches as $match) {
                 $fn = $plainText;
-                if (isset($match[3])) {
+                if (isset($match[2]) && isset($match[3])) {
                     $keys1 = array_keys($phpinfo);
                     $phpinfo[end($keys1)][$fn($match[2])] = isset($match[4]) ? [$fn($match[3]), $fn($match[4])] : $fn($match[3]);
                 } else {
                     $keys1 = array_keys($phpinfo);
-                    $phpinfo[end($keys1)][] = $fn($match[2]);
+                    $phpinfo[end($keys1)][] = $fn($match[2]); // @phpstan-ignore-line
                 }
             }
         }

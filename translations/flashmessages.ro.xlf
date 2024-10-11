@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="B_cz49z" resname="invoice.first_template">
         <source>invoice.first_template</source>
-        <target> Înainte de a începe trebuie să creezi cel puțin un șablon pentru facturi</target>
+        <target>Înainte de a începe trebuie să creezi cel puțin un șablon pentru facturi</target>
       </trans-unit>
       <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>

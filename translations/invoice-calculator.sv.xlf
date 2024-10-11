@@ -6,29 +6,29 @@
         <source>invoice_calculator</source>
         <target state="translated">Kalkylerad summa</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Ingångsbaserad - en mätning per gång (standard)</target>
+        <target state="translated">Standardvärde (en rad per post)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
         <target state="translated">Timmar summerade - endast en post</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target state="translated">Användare: en post per användare</target>
+        <target state="translated">Användare</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target state="translated">Aktivitet grupperad - en post per aktivitet</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target state="translated">Projekt: en post per projekt</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Datum: en post per dag (använder startdatum)</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
@@ -37,6 +37,22 @@
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
         <target state="translated">Veckovis: en post per vecka (använder startdatum)</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Välj vilka fält som skall användas för att gruppera fakturaposterna</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Aktivitet och användare</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Projekt och användare</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Datum och användare</target>
       </trans-unit>
     </body>
   </file>

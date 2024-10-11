@@ -58,7 +58,7 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
@@ -68,7 +68,7 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-28'))
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(84.75)
@@ -78,7 +78,7 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-29'))
             ->setEnd(new DateTime())
             ->setDuration(1800)
             ->setRate(111.11)
@@ -88,7 +88,7 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-08'))
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(1947.99)
@@ -98,7 +98,7 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new DateTime())
+            ->setBegin(new DateTime('2018-11-28'))
             ->setEnd(new DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -126,10 +126,14 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals(404.38, $entries[0]->getRate());
-        $this->assertEquals(2032.74, $entries[1]->getRate());
-        $this->assertEquals(84, $entries[2]->getRate());
-        self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
+
+        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
+
+        $this->assertEquals(404.38, $entries[2]->getRate());
+        $this->assertEquals(2032.74, $entries[0]->getRate());
+        $this->assertEquals(84, $entries[1]->getRate());
     }
 
     public function testDescriptionByProject(): void

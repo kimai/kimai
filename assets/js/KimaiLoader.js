@@ -42,6 +42,7 @@ import KimaiNotification from "./plugins/KimaiNotification";
 import KimaiHotkeys from "./plugins/KimaiHotkeys";
 import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
 import KimaiUser from "./plugins/KimaiUser";
+import KimaiAutocompleteTags from "./forms/KimaiAutocompleteTags";
 
 export default class KimaiLoader {
 
@@ -70,6 +71,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDateRangePicker('input[data-daterangepicker="on"]'));
         kimai.registerPlugin(new KimaiDatePicker('input[data-datepicker="on"]'));
         kimai.registerPlugin(new KimaiAutocomplete());
+        kimai.registerPlugin(new KimaiAutocompleteTags());
         kimai.registerPlugin(new KimaiTimesheetForm());
         kimai.registerPlugin(new KimaiTeamForm());
         kimai.registerPlugin(new KimaiCopyDataForm());
@@ -83,7 +85,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
-        kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
+        kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form', ['td.multiCheckbox', 'td.actions']));
         kimai.registerPlugin(new KimaiRemoteModal());
         kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));

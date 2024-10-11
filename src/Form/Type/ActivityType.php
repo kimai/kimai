@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ActivityType extends AbstractType
 {
-    public function __construct(private ActivityHelper $activityHelper, private ProjectHelper $projectHelper)
+    public function __construct(private readonly ActivityHelper $activityHelper, private readonly ProjectHelper $projectHelper)
     {
     }
 
@@ -35,10 +35,10 @@ final class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    public function groupBy(Activity $activity, $key, $index): ?string
+    public function groupBy(Activity $activity, $key, $index): string
     {
         if (null === $activity->getProject()) {
-            return null;
+            return '';
         }
 
         return $this->projectHelper->getChoiceLabel($activity->getProject());

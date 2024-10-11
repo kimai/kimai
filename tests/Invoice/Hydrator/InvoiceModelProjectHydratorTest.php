@@ -21,7 +21,7 @@ class InvoiceModelProjectHydratorTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $model = $this->getInvoiceModel();
 
@@ -31,12 +31,14 @@ class InvoiceModelProjectHydratorTest extends TestCase
         $this->assertModelStructure($result);
     }
 
-    protected function assertModelStructure(array $model)
+    public function assertModelStructure(array $model): void
     {
         $keys = [
             'project.id',
             'project.name',
             'project.comment',
+            'project.number',
+            'project.invoice_text',
             'project.order_date',
             'project.order_number',
             'project.meta.foo-project',
@@ -55,6 +57,8 @@ class InvoiceModelProjectHydratorTest extends TestCase
             'project.1.id',
             'project.1.name',
             'project.1.comment',
+            'project.1.number',
+            'project.1.invoice_text',
             'project.1.order_date',
             'project.1.order_number',
             'project.1.meta.foo-project',

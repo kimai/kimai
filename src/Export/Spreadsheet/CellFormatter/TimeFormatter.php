@@ -25,8 +25,8 @@ final class TimeFormatter implements CellFormatterInterface
             return;
         }
 
-        if (!$value instanceof \DateTime) {
-            throw new \InvalidArgumentException('Unsupported value given, only DateTime is supported');
+        if (!$value instanceof \DateTimeInterface) {
+            throw new \InvalidArgumentException('Unsupported value given, only DateTimeInterface is supported');
         }
 
         $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), Date::PHPToExcel($value));

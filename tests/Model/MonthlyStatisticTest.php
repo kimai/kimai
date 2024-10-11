@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MonthlyStatisticTest extends TestCase
 {
-    public function testStatistic()
+    public function testStatistic(): void
     {
         $begin = new \DateTime('2017-04-07 12:00:00');
         $end = new \DateTime('2019-11-13 18:00:00');

@@ -1,11 +1,7 @@
 {% if is_granted('start_own_timesheet') %}
-    {% set class = "btn-outline-white" %}
-    {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
-        {% set class = "btn-dark" %}
-    {% endif %}
-    <div class="nav-item d-flex me-sm-3 me-1">
-        <a href="{{ path('favorites_timesheets') }}" class="btn btn-icon {{ class}} px-0 remote-modal-load" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" aria-label="{{ 'recent.activities'|trans }}">
-            {{ icon('repeat') }}
+    <div class="nav-item d-flex me-1 recent-activities">
+        <a href="{{ path('favorites_timesheets') }}" class="btn btn-icon px-0 remote-modal-load recent-activities-btn" data-modal-title="{{ 'recent.activities'|trans }}" tabindex="-1" title="{{ 'recent.activities'|trans }}">
+            {{ icon('repeat', true) }}
         </a>
     </div>
 {% endif %}

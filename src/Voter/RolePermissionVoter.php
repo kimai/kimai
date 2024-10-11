@@ -21,18 +21,24 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class RolePermissionVoter extends Voter
 {
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return $this->permissionManager->isRegisteredPermission($attribute);
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        // we only work on single strings that have no subject
+        return $subjectType === 'null';
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // we only work on single strings that have no subject
-        if (null !== $subject) {
-            return false;
-        }
-
-        return $this->permissionManager->isRegisteredPermission($attribute);
+        return $subject === null && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

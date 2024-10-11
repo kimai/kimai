@@ -13,33 +13,46 @@ use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @internal
+ * @implements LoaderInterface<User>
+ */
 final class UserLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly bool $fullyHydrated = false
+    )
     {
     }
 
     /**
-     * @param array<int|User> $results
+     * @param array<User> $results
      */
     public function loadResults(array $results): void
     {
-        if (empty($results)) {
+        if (\count($results) === 0) {
             return;
         }
 
-        $ids = array_map(function ($user) {
-            if ($user instanceof User) {
-                // make sure that this potential doctrine proxy is initialized and filled with all data
-                $user->getDisplayName();
+        $userIds = array_filter(array_unique(array_map(function (User $user) {
+            // make sure that this potential doctrine proxy is initialized and filled with all data
+            $user->getDisplayName();
 
-                return $user->getId();
-            }
-
-            return $user;
-        }, $results);
+            return $user->getId();
+        }, $results)), function ($value) { return $value !== null; });
 
         $em = $this->entityManager;
+
+        // this is currently needed, as it does not work via the Doctrine eager fetch method
+        // on user listing pages, if users are already in the unit of work from another load
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL user.{id}', 'preferences')
+            ->from(User::class, 'user')
+            ->leftJoin('user.preferences', 'preferences')
+            ->andWhere($qb->expr()->in('user.id', $userIds))
+            ->getQuery()
+            ->execute();
 
         $qb = $em->createQueryBuilder();
         /** @var User[] $users */
@@ -47,15 +60,7 @@ final class UserLoader implements LoaderInterface
             ->from(User::class, 'user')
             ->leftJoin('user.memberships', 'memberships')
             ->leftJoin('memberships.team', 'team')
-            ->andWhere($qb->expr()->in('user.id', $ids))
-            ->getQuery()
-            ->execute();
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL user.{id}', 'preferences')
-            ->from(User::class, 'user')
-            ->leftJoin('user.preferences', 'preferences')
-            ->andWhere($qb->expr()->in('user.id', $ids))
+            ->andWhere($qb->expr()->in('user.id', $userIds))
             ->getQuery()
             ->execute();
 

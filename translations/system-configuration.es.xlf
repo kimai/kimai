@@ -290,7 +290,7 @@
         <source>allowed_replacer</source>
         <target state="translated">Sustitutos permitidos: %replacer%</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
         <target state="translated">Formato del número de cliente</target>
       </trans-unit>
@@ -301,6 +301,18 @@
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>
         <target state="translated">Permitir duplicar el número de la cuenta</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Permitir el uso múltiple del mismo número</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Formato del número de proyecto</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Formato del número de actividad</target>
       </trans-unit>
     </body>
   </file>

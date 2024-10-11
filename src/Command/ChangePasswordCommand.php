@@ -67,7 +67,7 @@ final class ChangePasswordCommand extends AbstractUserCommand
         try {
             $user->setPlainPassword($password);
             $this->userService->updateUser($user, ['PasswordUpdate']);
-            $io->success(sprintf('Changed password for user "%s".', $username));
+            $io->success(\sprintf('Changed password for user "%s".', $username));
         } catch (ValidationFailedException $ex) {
             $this->validationError($ex, $io);
 

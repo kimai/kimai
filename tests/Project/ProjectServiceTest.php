@@ -56,10 +56,10 @@ class ProjectServiceTest extends TestCase
 
         $configuration = SystemConfigurationFactory::createStub(['project' => ['copy_teams_on_create' => $copyTeamsOnCreate]]);
 
-        return new ProjectService($configuration, $repository, $dispatcher, $validator);
+        return new ProjectService($repository, $configuration, $dispatcher, $validator);
     }
 
-    public function testCannotSavePersistedProjectAsNew()
+    public function testCannotSavePersistedProjectAsNew(): void
     {
         $project = $this->createMock(Project::class);
         $project->expects($this->once())->method('getId')->willReturn(1);
@@ -72,7 +72,7 @@ class ProjectServiceTest extends TestCase
         $sut->saveNewProject($project, new Context(new User()));
     }
 
-    public function testSaveNewProjectHasValidationError()
+    public function testSaveNewProjectHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
         $constraints->add(new ConstraintViolation('toooo many tests', 'abc.def', [], '$root', 'begin', 4, null, null, null, '$cause'));
@@ -88,7 +88,7 @@ class ProjectServiceTest extends TestCase
         $sut->saveNewProject(new Project(), new Context(new User()));
     }
 
-    public function testUpdateDispatchesEvents()
+    public function testUpdateDispatchesEvents(): void
     {
         $project = $this->createMock(Project::class);
         $project->method('getId')->willReturn(1);
@@ -111,7 +111,7 @@ class ProjectServiceTest extends TestCase
         $sut->updateProject($project);
     }
 
-    public function testCreateNewProjectDispatchesEvents()
+    public function testCreateNewProjectDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
@@ -134,7 +134,7 @@ class ProjectServiceTest extends TestCase
         self::assertSame($customer, $project->getCustomer());
     }
 
-    public function testSaveNewProjectDispatchesEvents()
+    public function testSaveNewProjectDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
@@ -156,7 +156,7 @@ class ProjectServiceTest extends TestCase
         self::assertCount(0, $project->getTeams());
     }
 
-    public function testCreateNewProjectCopiesTeam()
+    public function testCreateNewProjectCopiesTeam(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
@@ -174,7 +174,7 @@ class ProjectServiceTest extends TestCase
         self::assertCount(2, $project->getTeams());
     }
 
-    public function testCreateNewProjectWithoutCustomer()
+    public function testCreateNewProjectWithoutCustomer(): void
     {
         $sut = $this->getSut();
 

@@ -2,12 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <!-- Reports -->
-      <!-- Actions -->
-      <!-- Application -->
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
         <target state="translated">Tugas per pengguna</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Tugas tim</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Mulai memproses</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Jeda pemrosesan</target>
       </trans-unit>
     </body>
   </file>

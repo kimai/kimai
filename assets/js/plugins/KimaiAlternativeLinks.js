@@ -24,7 +24,7 @@ export default class KimaiAlternativeLinks extends KimaiReducedClickHandler {
     init() {
         this.addClickHandler(this._selector, function(href) {
             window.location = href;
-        });
+        }, []);
     }
 
 }

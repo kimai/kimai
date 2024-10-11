@@ -137,6 +137,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
+        $this->assertEquals(['Maroon' => '#800000', 'Brown' => '#a52a2a', 'Red' => '#ff0000', 'Orange' => '#ffa500', '#ffffff' => '#ffffff', '#000000' => '#000000'], $sut->getThemeColors());
     }
 
     public function testDefaultWithLoader(): void
@@ -160,16 +161,8 @@ class SystemConfigurationTest extends TestCase
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertTrue($sut->isSamlActive());
         $this->assertEquals('Silver|#c0c0c0', $sut->getThemeColorChoices());
+        $this->assertEquals(['Silver' => '#c0c0c0'], $sut->getThemeColors());
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
-    }
-
-    public function testOffsetUnsetThrowsException(): void
-    {
-        $this->expectException(\BadMethodCallException::class);
-        $this->expectExceptionMessage('SystemBundleConfiguration does not support offsetUnset()');
-
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $sut->offsetUnset('dfsdf');
     }
 
     public function testUnknownConfigs(): void

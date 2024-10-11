@@ -23,7 +23,7 @@ class UserVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
@@ -89,7 +89,7 @@ class UserVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestDataForAuthType
      */
-    public function testPasswordIsDeniedForNonInternalUser(string $authType, int $result)
+    public function testPasswordIsDeniedForNonInternalUser(string $authType, int $result): void
     {
         $user = new User();
         $user->setUserIdentifier('admin');
@@ -112,7 +112,7 @@ class UserVoterTest extends AbstractVoterTest
         ];
     }
 
-    public function testViewTeamMember()
+    public function testViewTeamMember(): void
     {
         $userMock = $this->createMock(User::class);
         $userMock->method('getId')->willReturn(1);

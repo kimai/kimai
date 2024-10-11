@@ -49,21 +49,21 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetFutureTimesValidator($config);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage']));
     }
 
-    public function testFutureBeginIsDisallowed()
+    public function testFutureBeginIsDisallowed(): void
     {
         $begin = new \DateTime('+10 hour');
         $timesheet = new Timesheet();
@@ -77,7 +77,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testFutureBeginIsAllowed()
+    public function testFutureBeginIsAllowed(): void
     {
         $this->validator = $this->createMyValidator(true);
         $this->validator->initialize($this->context);

@@ -26,6 +26,18 @@
         <source>wizard.done.title</source>
         <target state="translated">Gefeliciteerd</target>
       </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">De belangrijkste instellingen zijn nu voltooid. Er zijn er nog veel meer die u later in uw gebruikersprofiel kunt aanpassen.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Uw wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Voer uw nieuwe wachtwoord in.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -44,21 +44,21 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetLongRunningValidator($config);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLongRunning(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetLongRunning(['message' => 'myMessage']));
     }
 
-    public function testLongRunningTriggers()
+    public function testLongRunningTriggers(): void
     {
         $begin = new \DateTime();
         $end = new \DateTime('+10 hour');
@@ -75,7 +75,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testLongRunningTriggersOverMaximum()
+    public function testLongRunningTriggersOverMaximum(): void
     {
         $begin = new \DateTime();
         $end = clone $begin;
@@ -93,7 +93,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testLongRunningDoesNotTriggerOnMaximum()
+    public function testLongRunningDoesNotTriggerOnMaximum(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime());
@@ -105,7 +105,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testLongRunningNotTriggersIfConfiguredToZero()
+    public function testLongRunningNotTriggersIfConfiguredToZero(): void
     {
         $this->validator = $this->createMyValidator(0);
         $this->validator->initialize($this->context);
@@ -121,7 +121,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testLongRunningNotTriggersIfDurationIsLowerThan()
+    public function testLongRunningNotTriggersIfDurationIsLowerThan(): void
     {
         $this->validator = $this->createMyValidator(121);
         $this->validator->initialize($this->context);
@@ -137,7 +137,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testNotTriggersOnRunningRecord()
+    public function testNotTriggersOnRunningRecord(): void
     {
         $begin = new \DateTime('-10 hour');
         $timesheet = new Timesheet();
@@ -147,7 +147,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testGetTargets()
+    public function testGetTargets(): void
     {
         $constraint = new TimesheetLongRunning();
         self::assertEquals('class', $constraint->getTargets());

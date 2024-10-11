@@ -24,7 +24,7 @@ final class TimesheetExported extends TimesheetConstraint
      */
     public null|\DateTime|string $now;
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

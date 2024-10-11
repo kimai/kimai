@@ -26,9 +26,9 @@
         <source>timesheet.mode_default</source>
         <target>[Default] start and end times can be edited</target>
       </trans-unit>
-      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
-        <source>timesheet.mode_duration_fixed_begin</source>
-        <target>[Duration] configurable fixed start-time, only duration can be changed</target>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" approved="yes">
+        <source>[Duration] configurable fixed start-time, only duration can be changed</source>
+        <target state="final">[Duration] configurable fixed start-time, only duration can be changed</target>
       </trans-unit>
       <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
         <source>timesheet.mode_punch</source>
@@ -208,11 +208,23 @@
       </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format">
         <source>customer.number_format</source>
-        <target>Customer number Format</target>
+        <target>Customer number format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>
         <target>Allow duplicate account number</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format">
+        <source>project.number_format</source>
+        <target>Project number format</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format">
+        <source>activity.number_format</source>
+        <target>Activity number format</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number">
+        <source>allow_duplicate_number</source>
+        <target>Allow multiple usages of the same number</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>

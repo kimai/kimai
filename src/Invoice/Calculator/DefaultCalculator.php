@@ -39,7 +39,7 @@ final class DefaultCalculator extends AbstractMergedCalculator implements Calcul
             $entries[] = $item;
         }
 
-        return $entries;
+        return $this->sortEntries($entries);
     }
 
     public function getId(): string

@@ -40,27 +40,23 @@ nelmio_api_doc:
             - { alias: TeamCollection,              type: App\Entity\Team,                          groups: [Default, Collection, Team] }
             - { alias: TeamMember,                  type: App\Entity\TeamMember,                    groups: [Team_Entity] }
             - { alias: TeamMembership,              type: App\Entity\TeamMember,                    groups: [User_Entity] }
+            - { alias: Invoice,                     type: App\Entity\Invoice,                       groups: [Default, Entity, Invoice, Invoice_Entity] }
+            - { alias: InvoiceCollection,           type: App\Entity\Invoice,                       groups: [Default, Collection, Invoice] }
     areas:
         path_patterns:
             - ^/api(?!/doc)
     documentation:
         info:
-            title: Kimai - API Docs
+            title: Kimai - API
             description: |
-                JSON API for the Kimai time-tracking software: [API documentation](https://www.kimai.org/documentation/rest-api.html), [Swagger definition file](doc.json)
-            version: '0.7'
+                JSON API for the Kimai time-tracking software. Read our [API documentation](https://www.kimai.org/documentation/rest-api.html) and download the [Open API definition](doc.json) to import into your API client.
+            version: '1.0'
         components:
             securitySchemes:
-                apiUser:
-                    type: apiKey
-                    description: 'Value: {Username}'
-                    name: X-AUTH-USER
-                    in: header
-                apiToken:
-                    type: apiKey
-                    description: 'Value: {API Token}'
-                    name: X-AUTH-TOKEN
-                    in: header
+                bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: KIMAI
+                    description: API Token
         security:
-            - X-AUTH-USER: []
-              X-AUTH-TOKEN: []
+            - bearer: []

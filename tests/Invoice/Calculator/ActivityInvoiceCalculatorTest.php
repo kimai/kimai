@@ -36,6 +36,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries(): void
     {
+        $date = new \DateTime();
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
@@ -54,7 +55,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->setDuration(3600)
             ->setRate(293.27)
@@ -64,7 +65,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84.75)
@@ -74,7 +75,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-28'))
             ->setEnd(new \DateTime())
             ->setDuration(1800)
             ->setRate(111.11)
@@ -84,7 +85,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-28'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(1947.99)
@@ -94,7 +95,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -104,7 +105,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet6 = new Timesheet();
         $timesheet6
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(0)
             ->setRate(0)
@@ -113,8 +114,8 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet7 = new Timesheet();
         $timesheet7
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(clone $date)
+            ->setEnd(new \DateTime('2018-11-18'))
             ->setDuration(0)
             ->setRate(0)
             ->setUser(new User())
@@ -123,7 +124,7 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet8 = new Timesheet();
         $timesheet8
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(0)
             ->setRate(0)
@@ -150,6 +151,11 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(4, $entries);
+        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
+
         $this->assertEquals(404.38, $entries[0]->getRate());
         $this->assertEquals(2032.74, $entries[1]->getRate());
         $this->assertEquals(84, $entries[2]->getRate());

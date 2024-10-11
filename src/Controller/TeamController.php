@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/admin/teams')]
@@ -61,9 +61,8 @@ final class TeamController extends AbstractController
         $table->setReloadEvents('kimai.teamUpdate');
 
         $table->addColumn('name', ['class' => 'alwaysVisible']);
-        $table->addColumn('teamlead', ['class' => 'd-none badges', 'orderBy' => false]);
-        $table->addColumn('teamlead_avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
-        $table->addColumn('user', ['class' => 'd-none badges', 'orderBy' => false, 'title' => 'user']);
+        $table->addColumn('avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-sm-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
+        $table->addColumn('amount', ['title' => 'amount', 'class' => 'd-sm-none text-center w-min', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('teams');
@@ -97,7 +96,7 @@ final class TeamController extends AbstractController
 
         $i = 1;
         do {
-            $newName = sprintf('%s (%s)', $team->getName(), $i++);
+            $newName = \sprintf('%s (%s)', $team->getName(), $i++);
         } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
         $newTeam->setName($newName);
 

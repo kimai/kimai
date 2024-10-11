@@ -64,7 +64,7 @@ final class InvoiceCreateCommand extends Command
             ->addOption('project', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of project IDs', null)
             ->addOption('by-customer', null, InputOption::VALUE_NONE, 'If set, one invoice for each active customer in the given timerange is created')
             ->addOption('by-project', null, InputOption::VALUE_NONE, 'If set, one invoice for each active project in the given timerange is created')
-            ->addOption('set-exported', null, InputOption::VALUE_NONE, 'Whether the invoice items should be marked as exported')
+            ->addOption('set-exported', null, InputOption::VALUE_NONE, '[DEPRECATED] this flag has no meaning any more: invoiced items are always exported')
             ->addOption('template', null, InputOption::VALUE_OPTIONAL, 'Invoice template', null)
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
@@ -90,7 +90,7 @@ final class InvoiceCreateCommand extends Command
             $user = $this->userRepository->loadUserByIdentifier($username);
         } catch (\Exception $exception) {
             $io->error(
-                sprintf('The given username "%s" could not be resolved', $username)
+                \sprintf('The given username "%s" could not be resolved', $username)
             );
 
             return Command::FAILURE;
@@ -156,10 +156,12 @@ final class InvoiceCreateCommand extends Command
                 return Command::FAILURE;
             }
         }
-        if (!$start instanceof \DateTime) {
+        if (!$start instanceof \DateTimeInterface) {
             $start = $dateFactory->getStartOfMonth();
         }
-        $start->setTime(0, 0, 0);
+
+        $start = \DateTimeImmutable::createFromInterface($start);
+        $start = $start->setTime(0, 0, 0);
 
         $end = $input->getOption('end');
         if (!empty($end)) {
@@ -171,17 +173,18 @@ final class InvoiceCreateCommand extends Command
                 return Command::FAILURE;
             }
         }
-        if (!$end instanceof \DateTime) {
+        if (!$end instanceof \DateTimeInterface) {
             $end = $dateFactory->getEndOfMonth();
         }
-        $end->setTime(23, 59, 59);
+
+        $end = \DateTimeImmutable::createFromInterface($end);
+        $end = $end->setTime(23, 59, 59);
 
         $searchTerm = null;
         if (null !== $input->getOption('search')) {
             $searchTerm = new SearchTerm($input->getOption('search'));
         }
 
-        $markAsExported = false;
         if ($input->getOption('preview') !== null) {
             $this->previewUniqueFile = (bool) $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
@@ -191,7 +194,7 @@ final class InvoiceCreateCommand extends Command
                 return Command::FAILURE;
             }
         } elseif ($input->getOption('set-exported')) {
-            $markAsExported = true;
+            @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
         // =============== VALIDATION END ===============
@@ -278,7 +281,7 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
+                $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                 continue;
             }
             $query->setTemplate($tpl);
@@ -290,7 +293,7 @@ final class InvoiceCreateCommand extends Command
                     $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
             }
         }
 
@@ -349,7 +352,7 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
+                $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
                 continue;
             }
             $query->setTemplate($tpl);
@@ -361,7 +364,7 @@ final class InvoiceCreateCommand extends Command
                     $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
             }
         }
 
@@ -388,7 +391,7 @@ final class InvoiceCreateCommand extends Command
             $columns = ['Filename'];
 
             $table = new Table($output);
-            $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
+            $table->setHeaderTitle(\sprintf('Created %s invoice(s)', \count($invoices)));
             $table->setHeaders($columns);
 
             foreach ($invoices as $invoiceFile) {
@@ -403,14 +406,14 @@ final class InvoiceCreateCommand extends Command
         $columns = ['ID', 'Customer', 'Total', 'Filename'];
 
         $table = new Table($output);
-        $table->setHeaderTitle(sprintf('Created %s invoice(s)', \count($invoices)));
+        $table->setHeaderTitle(\sprintf('Created %s invoice(s)', \count($invoices)));
         $table->setHeaders($columns);
 
         foreach ($invoices as $invoice) {
             $file = $this->serviceInvoice->getInvoiceFile($invoice);
             if (null === $file) {
                 $io->warning(
-                    sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId(), $invoice->getInvoiceFilename())
+                    \sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId(), $invoice->getInvoiceFilename())
                 );
                 continue;
             }

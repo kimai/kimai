@@ -18,7 +18,7 @@ abstract class AbstractCustomerEventTest extends TestCase
 {
     abstract protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent;
 
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $customer = new Customer('foo');
         $sut = $this->createCustomerEvent($customer);

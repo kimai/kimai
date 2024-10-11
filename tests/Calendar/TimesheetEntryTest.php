@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetEntryTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $project = new Project();
         $activity = new Activity();
@@ -60,7 +60,7 @@ class TimesheetEntryTest extends TestCase
         $this->assertEquals($expectedData, $sut->getData());
     }
 
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $timesheet = new Timesheet();
 
@@ -78,7 +78,7 @@ class TimesheetEntryTest extends TestCase
         $this->assertEquals($expectedData, $sut->getData());
     }
 
-    public function testGetTitle()
+    public function testGetTitle(): void
     {
         $project = new Project();
         $project->setName('sdfsdf');

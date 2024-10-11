@@ -2,6 +2,34 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="tasks.en.xlf">
     <body>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Feladatok felhasználónként</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Csapat feladatok</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Feldolgozás indítása</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Feldolgozás szüneteltetése</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Feladat hozzám rendelése</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">Feladat elengedése</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+        <source>task.reopen</source>
+        <target state="translated">Feladat újra megnyitása</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

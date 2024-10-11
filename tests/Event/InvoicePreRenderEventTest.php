@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoicePreRenderEventTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
         $document = new InvoiceDocument(new \SplFileInfo(__FILE__));

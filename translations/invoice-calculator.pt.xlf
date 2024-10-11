@@ -6,9 +6,9 @@
         <source>invoice_calculator</source>
         <target state="translated">Cálculo da soma</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Padrão: um registo de entrada por tempo</target>
+        <target state="translated">Predefinição (uma linha por entrada)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="translated">Usuário: uma entrada por usuário</target>
+        <target state="translated">Utilizador</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Projeto: uma entrada por projeto</target>
+        <target state="translated">Projeto</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Data: uma entrada por dia (utiliza a data de início)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
@@ -37,6 +37,22 @@
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
         <target state="translated">Preço: uma entrada por preço</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Selecione por quais campos os elementos da fatura devem ser agrupados</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user">
+        <source>activity_user</source>
+        <target state="translated">Atividade e utilizador</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user">
+        <source>project_user</source>
+        <target state="translated">Projeto e utilizador</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user">
+        <source>date_user</source>
+        <target state="translated">Data e utilizador</target>
       </trans-unit>
     </body>
   </file>

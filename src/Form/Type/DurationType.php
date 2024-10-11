@@ -34,6 +34,7 @@ final class DurationType extends AbstractType
             'max_hours' => 24,
             'icon' => 'clock',
         ]);
+        $resolver->setAllowedTypes('max_hours', 'int');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -54,7 +55,7 @@ final class DurationType extends AbstractType
             }
 
             // we track times for humans and no entry should ever be that long
-            if ($maxHours > $options['max_hours']) {
+            if (\is_int($options['max_hours']) && $maxHours > $options['max_hours']) {
                 $maxHours = $options['max_hours'];
             }
 

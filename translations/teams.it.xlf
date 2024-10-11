@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" approved="yes">
         <source>teams.project_access</source>
-        <target>Concedi accesso ai progetti</target>
+        <target state="final">Concedi accesso ai progetti</target>
       </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
+      <trans-unit id="QchGnbx" resname="teams.customer_access" approved="yes">
         <source>teams.customer_access</source>
-        <target>Concedi accesso ai clienti</target>
+        <target state="final">Concedi accesso ai clienti</target>
       </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" approved="yes">
         <source>team.visibility_global</source>
-        <target>Visibile a chiunque, in assenza del gruppo assegnato.</target>
+        <target state="final">Visibile a tutti, poiché non è stato ancora assegnato alcun team.</target>
       </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" approved="yes">
         <source>team.visibility_restricted</source>
-        <target>Visibile solo ai seguenti gruppi e a tutti gli amministratori.</target>
+        <target state="final">Visibile solo ai seguenti team e a tutti gli amministratori.</target>
       </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" approved="yes">
         <source>team.project_visibility_inherited</source>
-        <target>Progetto con accesso limitato perchè i permessi di gruppo sono impostati per i clienti.</target>
+        <target state="final">Il progetto ha accesso limitato perché le autorizzazioni del team sono impostate per il cliente.</target>
       </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
+      <trans-unit id="cZEIdcu" resname="team.create_default" approved="yes">
         <source>team.create_default</source>
-        <target>Crea un nuovo gruppo per limitare l'accesso</target>
+        <target state="final">Crea un nuovo team per limitare l'accesso</target>
       </trans-unit>
-      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" approved="yes">
         <source>team.activity_visibility_inherited</source>
-        <target>L'attività ha un accesso limitato, perché le autorizzazioni del gruppo sono impostate per il progetto e/o il cliente.</target>
+        <target state="final">L'attività ha accesso limitato perché le autorizzazioni del team sono impostate per il progetto e/o il cliente.</target>
       </trans-unit>
-      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+      <trans-unit id="6g81kYY" approved="yes" resname="team.member">
         <source>team.member</source>
-        <target state="translated">Membro</target>
+        <target state="final">Membro</target>
       </trans-unit>
     </body>
   </file>

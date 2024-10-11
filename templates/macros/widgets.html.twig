@@ -1,5 +1,27 @@
+{%- macro search_filter(route, options) -%}
+    {% set opts = {'performSearch': 1} %}
+    {% if options.begin is defined and options.end is defined %}
+        {% set opts = opts|merge({'daterange': (options.begin|report_date ~ ' - ' ~ options.end|report_date)}) %}
+    {% endif %}
+    {% if options.customer is defined %}
+        {% set opts = opts|merge({'customers[]': options.customer}) %}
+    {% endif %}
+    {% if options.project is defined %}
+        {% set opts = opts|merge({'projects[]': options.project}) %}
+    {% endif %}
+    {% if options.activity is defined %}
+        {% set opts = opts|merge({'activities[]': options.activity}) %}
+    {% endif %}
+    {% if options.user is defined %}
+        {% set opts = opts|merge({'users[]': options.user}) %}
+    {% endif %}
+    {% if options.preview is defined %}
+        {% set opts = opts|merge({'preview': options.preview}) %}
+    {% endif %}
+    {{- path(route, opts) -}}
+{% endmacro %}
+
 {%- macro page_actions(actions) -%}
-    {% set large = true %}
     {% set btnClasses = 'btn-primary' %}
     {% set helpClasses = '' %}
     {% if tabler_bundle.isNavbarOverlapping() %}
@@ -11,32 +33,7 @@
     {% set help = null %}
     <div class="page-actions">
         <div class="pa-desktop d-none d-sm-inline-flex btn-list">
-        {%- apply spaceless -%}
-            {%- for icon, values in actions  %}
-                {% if 'help' in icon %}
-                    {% set help = values %}
-                {% elseif 'divider' in icon and values is null %}
-                    {# what to do here ? #}
-                {% else %}
-                    {% if values.children is defined and values.children|length > 0 %}
-                            <div class="dropdown">
-                                <button type="button" class="btn {{ btnClasses}} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
-                                </button>
-                                <div class="dropdown-menu">
-                                {%- for icon, values in values.children %}
-                                    {% set values = values|merge({class: 'dropdown-item action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
-                                    {{ _self.action_button(false, values, false) }}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                    {% else %}
-                        {% set values = values|merge({combined: large, class: btnClasses ~ ' action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
-                        {{ _self.action_button(icon, values) }}
-                    {% endif %}
-                {% endif %}
-            {% endfor -%}
-        {% endapply %}
+        {{ _self.actions(actions, {large: true, button_class: btnClasses}) }}
         {% if help is not null %}
             {% set help = help|merge({class: helpClasses ~ ' action-help ' ~ (help.class|default(''))}) %}
             {{ _self.action_button('help', help) }}
@@ -52,6 +49,35 @@
             {{ _self.table_actions(actions, btnClass) }}
         </div>
     </div>
+{%- endmacro -%}
+
+{%- macro actions(actions, options) -%}
+    {% set large = options.large ?? true %}
+    {% set btnClasses = options.button_class ?? 'btn-primary' %}
+    {%- for icon, values in actions  %}
+        {% if 'help' in icon %}
+            {% set help = values %}
+        {% elseif 'divider' in icon and values is null %}
+            {# what to do here ? #}
+        {% else %}
+            {% if values.children is defined and values.children|length > 0 %}
+                <div class="dropdown">
+                    <button type="button" class="btn {{ btnClasses }} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
+                    </button>
+                    <div class="dropdown-menu">
+                        {%- for icon, values in values.children %}
+                            {% set values = values|merge({class: 'dropdown-item action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
+                            {{ _self.action_button(false, values, false) }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% set values = values|merge({combined: large, class: btnClasses ~ ' action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
+                {{ _self.action_button(icon, values) }}
+            {% endif %}
+        {% endif %}
+    {% endfor -%}
 {%- endmacro -%}
 
 {% macro page_header(title) %}
@@ -191,34 +217,32 @@
 
 {# for @internal use only #}
 {% macro label_color_dot(type, isVisible, name, url, color) %}
-    {% apply spaceless %}
     {%- if url is not empty -%}<a href="{{ url }}">{% endif %}
     <span class="pe-1 label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
         <span class="badge me-1" {% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
         {{- name -}}
     </span>
-        {%- if url is not empty -%}</a>{% endif %}
-    {% endapply %}
+    {%- if url is not empty -%}</a>{% endif %}
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}
     {% if teams|length > 0 %}
         {{ _self.badge_counter(teams|length) }}
     {% else %}
-        {{ _self.badge_counter(0, null, 'bg-gray') }}
+        {{ _self.badge_counter(0, null, 'gray') }}
     {% endif %}
 {% endmacro %}
 
 {% macro badge_counter(count, url, type) %}
-    {% if url %}
-        <a href="{{ url }}"><span class="badge {{ type|default('bg-blue') }}">{{ count }}</span></a>
+    {% if url is not null %}
+        <a href="{{ url }}">{{ _self.badge_type(count, type|default('blue')) }}</a>
     {% else %}
-        <span class="badge {{ type|default('bg-blue') }}">{{ count }}</span>
+        {{ _self.badge_type(count, type|default('blue')) }}
     {% endif %}
 {% endmacro %}
 
 {% macro label(title, type, tooltip) %}
-    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }}">{{ title }}</span>
+    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }} text-{{ type|default('success') }}-fg">{{ title }}</span>
 {% endmacro %}
 
 {% macro label_color(title, color) %}
@@ -227,6 +251,11 @@
 
 {% macro badge(title, color) %}
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
+{% endmacro %}
+
+{% macro badge_type(title, type) %}
+    {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ type ~ '-fg' : '') %}
+    <span class="badge {{ class }}">{{ title }}</span>
 {% endmacro %}
 
 {% macro form_errors(form) %}
@@ -277,19 +306,24 @@
 
 {% macro action_button(icon, values, type) %}
     {% import '@theme/components/button.html.twig' as macro %}
-    {% set values = values|merge({'tooltip_attr': 'data-toggle'}) %}
+    {% set values = (values ?? {})|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.button(icon, values, type) }}
 {% endmacro %}
 
 {% macro tag_list(taglist) %}
+    <div class="tags-list">
     {% for tag in taglist %}
-        {{ _self.badge(tag.name, tag.color|colorize(tag.name)) }}
+        <span class="tag">
+            <span class="legend" style="background-color: {{ tag.color|colorize(tag.name) }}"></span>
+            {{ tag.name }}
+        </span>
     {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro meta_field_value(entity, field) %}
     {% set metaField = entity.metaField(field.name) %}
-    {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+    {% if not metaField is null %}
         {% set metaField = metaField.merge(field) %}
         {{ _self.form_type_value(metaField.type, metaField.value, entity) }}
     {% endif %}
@@ -506,14 +540,6 @@
         </div>
         {% endfor %}
     </div>
-{% endmacro %}
-
-{% macro percent(maximum, current) %}
-    {% if maximum > 0 %}
-        {{ (current / (maximum / 100))|number_format(2) }} %
-    {% else %}
-        {{ 0|number_format(2) }} %
-    {% endif %}
 {% endmacro %}
 
 {% macro page_reloader(events, full_reload) %}

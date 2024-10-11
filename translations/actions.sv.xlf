@@ -70,9 +70,9 @@
         <source>create-timesheet</source>
         <target state="translated">Skapa tidrapport</target>
       </trans-unit>
-      <trans-unit id="T_PN1AT" resname="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve">
         <source>permissions</source>
-        <target>Lagrättigheter</target>
+        <target state="translated">Gruppbehörigheter</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
@@ -117,6 +117,14 @@
       <trans-unit id="QCf1FUG" resname="reload">
         <source>reload</source>
         <target state="translated">Ladda om</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">Importera</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">Synkronisering</target>
       </trans-unit>
     </body>
   </file>

@@ -47,21 +47,21 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetOverlappingValidator($config, $repository);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
     }
 
-    public function testOverlappingDisallowedWithRecords()
+    public function testOverlappingDisallowedWithRecords(): void
     {
         $begin = new \DateTime();
         $end = new \DateTime('+10 hour');
@@ -77,7 +77,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testOverlappingDisallowedWithoutRecords()
+    public function testOverlappingDisallowedWithoutRecords(): void
     {
         $this->validator = $this->createMyValidator(false, false);
         $this->validator->initialize($this->context);
@@ -92,7 +92,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    public function testOverlappingAllowedWithRecords()
+    public function testOverlappingAllowedWithRecords(): void
     {
         $this->validator = $this->createMyValidator(true, true);
         $this->validator->initialize($this->context);
@@ -107,7 +107,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    public function testOverlappingAllowedWithoutRecords()
+    public function testOverlappingAllowedWithoutRecords(): void
     {
         $this->validator = $this->createMyValidator(true, false);
         $this->validator->initialize($this->context);

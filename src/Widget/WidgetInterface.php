@@ -10,12 +10,14 @@
 namespace App\Widget;
 
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Form;
 
 /**
  * No BC promise!
  * Use AbstractWidget to get a BC safe base class.
  */
+#[AutoconfigureTag]
 interface WidgetInterface
 {
     public const COLOR_TODAY = 'green';

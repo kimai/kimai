@@ -22,16 +22,13 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class PluginCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
-    public function testWithPlugins()
+    public function testWithPlugins(): void
     {
         $plugin1 = $this->getMockBuilder(PluginInterface::class)->onlyMethods(['getName', 'getPath'])->getMock();
         $plugin1->expects($this->any())->method('getName')->willReturn('TestBundle');
-        $plugin1->expects($this->once())->method('getPath')->willReturn(__DIR__ . '/../Plugin/Fixtures/TestPlugin');
+        $plugin1->expects($this->exactly(2))->method('getPath')->willReturn(__DIR__ . '/../Plugin/Fixtures/TestPlugin');
 
         $commandTester = $this->getCommandTester([$plugin1], []);
         $output = $commandTester->getDisplay();
@@ -40,7 +37,7 @@ class PluginCommandTest extends KernelTestCase
         $this->assertStringContainsString('TestPlugin from composer.json', $output);
     }
 
-    protected function getCommandTester(array $plugins, array $options = [])
+    private function getCommandTester(array $plugins, array $options = []): CommandTester
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);

@@ -9,6 +9,7 @@ Encore
     .cleanupOutputBeforeBuild()
 
     .addEntry('app', './assets/app.js')
+    .addEntry('app-rtl', './assets/app-rtl.js')
     .addEntry('export-pdf', './assets/export-pdf.js')
     .addEntry('invoice', './assets/invoice.js')
     .addEntry('invoice-pdf', './assets/invoice-pdf.js')
@@ -26,7 +27,9 @@ Encore
     .enableSingleRuntimeChunk()
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps(!Encore.isProduction())
-    .enableBuildNotifications()
+
+    // disabled as ""webpack-notifier": "^1.13"" id currently only compatible with rosetta
+    //.enableBuildNotifications()
 
     .enableSassLoader(function(sassOptions) {}, {
         resolveUrlLoader: false

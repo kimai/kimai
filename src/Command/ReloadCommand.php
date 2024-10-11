@@ -110,7 +110,7 @@ final class ReloadCommand extends Command
         }
 
         $io->success(
-            sprintf('Kimai config was reloaded')
+            \sprintf('Kimai config was reloaded')
         );
 
         return Command::SUCCESS;

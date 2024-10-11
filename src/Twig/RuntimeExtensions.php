@@ -11,10 +11,12 @@ namespace App\Twig;
 
 use App\Twig\Runtime\EncoreExtension;
 use App\Twig\Runtime\MarkdownExtension;
+use App\Twig\Runtime\MenuExtension;
 use App\Twig\Runtime\QrCodeExtension;
 use App\Twig\Runtime\ThemeExtension;
 use App\Twig\Runtime\TimesheetExtension;
 use App\Twig\Runtime\WidgetExtension;
+use App\Utils\StringHelper;
 use KevinPapst\TablerBundle\Twig\RuntimeExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -37,6 +39,7 @@ final class RuntimeExtensions extends AbstractExtension
             new TwigFunction('render_widget', [WidgetExtension::class, 'renderWidget'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('icon', [RuntimeExtension::class, 'createIcon'], ['is_safe' => ['html']]),
             new TwigFunction('qr_code_data_uri', [QrCodeExtension::class, 'qrCodeDataUriFunction']),
+            new TwigFunction('user_shortcuts', [MenuExtension::class, 'getUserShortcuts']),
         ];
     }
 
@@ -49,6 +52,7 @@ final class RuntimeExtensions extends AbstractExtension
             new TwigFilter('comment1line', [MarkdownExtension::class, 'commentOneLiner'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
             new TwigFilter('colorize', [ThemeExtension::class, 'colorize']),
             new TwigFilter('icon', [RuntimeExtension::class, 'icon']),
+            new TwigFilter('sanitize_dde', StringHelper::sanitizeDDE(...)),
         ];
     }
 }

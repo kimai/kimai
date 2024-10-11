@@ -120,18 +120,33 @@ abstract class ControllerBaseTest extends WebTestCase
             default => null,
         };
 
+        if ($username === null) {
+            throw new \Exception('Unknown username: ' . $username);
+        }
+
+        return $this->loginByUsername($username);
+    }
+
+    protected function loginByUsername(string $username): HttpKernelBrowser
+    {
         $client = static::createClient();
 
-        if ($username !== null) {
-            /** @var UserRepository $userRepository */
-            $userRepository = $this->getPrivateService(UserRepository::class);
-            $user = $userRepository->findByUsername($username);
-            if ($user === null) {
-                throw new \Exception('Unknown user: ' . $username);
-            }
-
-            $client->loginUser($user, 'secured_area');
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getPrivateService(UserRepository::class);
+        $user = $userRepository->findByUsername($username);
+        if ($user === null) {
+            throw new \Exception('Unknown user: ' . $username);
         }
+
+        $client->loginUser($user, 'secured_area');
+
+        return $client;
+    }
+
+    protected function loginUser(User $user): HttpKernelBrowser
+    {
+        $client = static::createClient();
+        $client->loginUser($user, 'secured_area');
 
         return $client;
     }
@@ -163,18 +178,19 @@ abstract class ControllerBaseTest extends WebTestCase
 
         /** @var RedirectResponse $response */
         $response = $client->getResponse();
-        self::assertInstanceOf(RedirectResponse::class, $response);
 
         self::assertTrue(
             $response->isRedirect(),
-            sprintf('The secure URL %s is not protected.', $url)
+            \sprintf('The URL %s is not protected (%s occurred).', $url, $response->getStatusCode())
         );
 
         self::assertStringEndsWith(
             '/login',
             $response->getTargetUrl(),
-            sprintf('The secure URL %s does not redirect to the login form.', $url)
+            \sprintf('The URL %s does not redirect to the login form.', $url)
         );
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     protected function assertSuccessResponse(HttpKernelBrowser $client, string $message = ''): void
@@ -195,7 +211,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $client->request($method, $this->createUrl($url));
         self::assertFalse(
             $client->getResponse()->isSuccessful(),
-            sprintf('The secure URL %s is not protected for role %s', $url, $role)
+            \sprintf('The secure URL %s is not protected for role %s', $url, $role)
         );
         $this->assertAccessDenied($client);
     }
@@ -310,7 +326,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertEquals(
             \count($fieldNames),
             \count($validationErrors),
-            sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+            \sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
         );
 
         foreach ($fieldNames as $name) {
@@ -417,7 +433,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertNotNull($location);
 
         // check for meta refresh
-        $expectedMeta = sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
+        $expectedMeta = \sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
         self::assertStringContainsString($expectedMeta, $client->getResponse()->getContent());
 
         if ($url !== null) {

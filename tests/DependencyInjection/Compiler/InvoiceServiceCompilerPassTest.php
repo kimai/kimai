@@ -13,11 +13,14 @@ use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\Calculator\UserInvoiceCalculator;
+use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
+use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\Renderer\DocxRenderer;
+use App\Invoice\RendererInterface;
 use App\Invoice\ServiceInvoice;
-use App\Kernel;
 use App\Repository\TimesheetInvoiceItemRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,22 +40,22 @@ class InvoiceServiceCompilerPassTest extends TestCase
 
         $renderers = [DocxRenderer::class];
         foreach ($renderers as $renderer) {
-            $container->register($renderer)->addTag(Kernel::TAG_INVOICE_RENDERER);
+            $container->register($renderer)->addTag(RendererInterface::class);
         }
 
         $numberGenerators = [DateNumberGenerator::class, ConfigurableNumberGenerator::class];
         foreach ($numberGenerators as $numberGenerator) {
-            $container->register($numberGenerator)->addTag(Kernel::TAG_INVOICE_NUMBER_GENERATOR);
+            $container->register($numberGenerator)->addTag(NumberGeneratorInterface::class);
         }
 
         $calculators = [DefaultCalculator::class, UserInvoiceCalculator::class, ShortInvoiceCalculator::class];
         foreach ($calculators as $calculator) {
-            $container->register($calculator)->addTag(Kernel::TAG_INVOICE_CALCULATOR);
+            $container->register($calculator)->addTag(CalculatorInterface::class);
         }
 
         $repositories = [TimesheetInvoiceItemRepository::class];
         foreach ($repositories as $repository) {
-            $container->register($repository)->addTag(Kernel::TAG_INVOICE_REPOSITORY);
+            $container->register($repository)->addTag(InvoiceItemRepositoryInterface::class);
         }
 
         return $container;

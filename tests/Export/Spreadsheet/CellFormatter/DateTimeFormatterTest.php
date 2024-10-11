@@ -37,10 +37,10 @@ class DateTimeFormatterTest extends AbstractFormatterTest
         return Date::PHPToExcel($this->date);
     }
 
-    public function testFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unsupported value given, only DateTime is supported');
+        $this->expectExceptionMessage('Unsupported value given, only DateTimeInterface is supported');
 
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
@@ -49,7 +49,7 @@ class DateTimeFormatterTest extends AbstractFormatterTest
         $sut->setFormattedValue($worksheet, 1, 1, 'sdfsdf');
     }
 
-    protected function assertCellStyle(Style $style)
+    public function assertCellStyle(Style $style): void
     {
         self::assertEquals(DateTimeFormatter::DATETIME_FORMAT, $style->getNumberFormat()->getFormatCode());
     }

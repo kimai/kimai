@@ -17,12 +17,17 @@ doctrine:
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
+                    collation: utf8mb4_unicode_ci
                 schema_manager_factory: doctrine.dbal.default_schema_manager_factory
 
         types:
             datetime: App\Doctrine\UTCDateTimeType
+            datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
+        controller_resolver:
+            # FIXME this is causing a deprecation and needs to be changed
+            # auto_mapping: false
+            auto_mapping: true
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default
         enable_lazy_ghost_objects: true
@@ -48,7 +53,10 @@ doctrine:
 when@test:
     doctrine:
         dbal:
-            logging: false
+            connections:
+                default:
+                    logging: false
+                    use_savepoints: true
 
 when@prod:
     doctrine:

@@ -24,71 +24,34 @@ use Faker\Factory;
  */
 final class TimesheetFixtures implements TestFixture
 {
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var int
-     */
-    private $running = 0;
+    use FixturesTrait;
+
+    private int $running = 0;
     /**
      * @var Activity[]
      */
-    private $activities = [];
+    private array $activities = [];
     /**
      * @var Project[]
      */
-    private $projects = [];
-    /**
-     * @var \DateTime
-     */
-    private $startDate;
-    /**
-     * @var \DateTime
-     */
-    private $fixedStartDate;
-    /**
-     * @var bool
-     */
-    private $fixedRate = false;
+    private array $projects = [];
+    private ?\DateTime $startDate = null;
+    private ?\DateTime $fixedStartDate = null;
+    private bool $fixedRate = false;
     /**
      * @var callable
      */
     private $callback;
+    private bool $hourlyRate = false;
+    private bool $allowEmptyDescriptions = true;
+    private bool $exported = false;
     /**
-     * @var bool
+     * @var array<string|Tag>
      */
-    private $hourlyRate = false;
-    /**
-     * @var bool
-     */
-    private $allowEmptyDescriptions = true;
-    /**
-     * @var bool
-     */
-    private $exported = false;
-    /**
-     * @var bool
-     */
-    private $useTags = false;
-    /**
-     * @var array
-     */
-    private $tags = [];
+    private array $tags = [];
 
-    public function __construct(?User $user = null, ?int $amount = null)
+    public function __construct(private ?User $user = null, private int $amount = 0)
     {
-        if ($user !== null) {
-            $this->setUser($user);
-        }
-        if ($amount !== null) {
-            $this->setAmount($amount);
-        }
     }
 
     public function setAllowEmptyDescriptions(bool $allowEmptyDescriptions): TimesheetFixtures
@@ -183,13 +146,6 @@ final class TimesheetFixtures implements TestFixture
         return $this;
     }
 
-    public function setUseTags(bool $useTags): TimesheetFixtures
-    {
-        $this->useTags = $useTags;
-
-        return $this;
-    }
-
     /**
      * @param string[] $tags
      * @return TimesheetFixtures
@@ -234,14 +190,19 @@ final class TimesheetFixtures implements TestFixture
 
         $faker = Factory::create();
 
-        $users = [$this->user];
-        if ($this->user === null) {
+        $users = [];
+
+        if ($this->user !== null) {
+            $users[] = $this->user;
+        } else {
             $users = $this->getAllUsers($manager);
         }
 
         $tags = $this->getTagObjectList();
         foreach ($tags as $tag) {
-            $manager->persist($tag);
+            if ($tag->getId() === null) {
+                $manager->persist($tag);
+            }
         }
         $manager->flush();
 
@@ -310,21 +271,25 @@ final class TimesheetFixtures implements TestFixture
         return $created;
     }
 
+    /**
+     * @return array<Tag>
+     */
     private function getTagObjectList(): array
     {
-        if (true === $this->useTags) {
-            $all = [];
-            foreach ($this->tags as $tagName) {
-                $tagObject = new Tag();
-                $tagObject->setName($tagName);
-
-                $all[] = $tagObject;
+        $all = [];
+        foreach ($this->tags as $tagName) {
+            if ($tagName instanceof Tag) {
+                $all[] = $tagName;
+                continue;
             }
 
-            return $all;
+            $tagObject = new Tag();
+            $tagObject->setName($tagName);
+
+            $all[] = $tagObject;
         }
 
-        return [];
+        return $all;
     }
 
     private function getDateTime(int $i): \DateTime
@@ -345,64 +310,10 @@ final class TimesheetFixtures implements TestFixture
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Activity>
-     */
-    private function getAllActivities(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Activity[] $entries */
-        $entries = $manager->getRepository(Activity::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
-     */
-    private function getAllProjects(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var Project[] $entries */
-        $entries = $manager->getRepository(Project::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
-     */
-    private function getAllUsers(ObjectManager $manager): array
-    {
-        $all = [];
-        /** @var User[] $entries */
-        $entries = $manager->getRepository(User::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
-    }
-
-    /**
-     * @param User $user
-     * @param Activity $activity
-     * @param Project $project
-     * @param string $description
      * @param \DateTime $start
-     * @param null|array $tagArray
-     * @param bool $setEndDate
-     * @return Timesheet
+     * @param array<Tag> $tagArray
      */
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, $description, \DateTime $start, $tagArray = [], $setEndDate = true)
+    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, \DateTime $start, array $tagArray = [], bool $setEndDate = true): Timesheet
     {
         $end = clone $start;
         $end = $end->modify('+ ' . (rand(1, 86400)) . ' seconds');
@@ -433,9 +344,7 @@ final class TimesheetFixtures implements TestFixture
             $entry->setHourlyRate($hourlyRate);
         }
 
-        if (null !== $this->exported) {
-            $entry->setExported($this->exported);
-        }
+        $entry->setExported($this->exported);
 
         if ($setEndDate) {
             $entry->setEnd($end);

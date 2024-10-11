@@ -1,11 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Jos painike ei toimi, kopioi ja liitä seuraava osoite selaimeesi: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target state="translated">Tämä on automaattisesti generoitu sähköposti. Älä vastaa tähän, koska osoitteeseen lähetettyjä viestejä ei lueta.</target>
@@ -26,21 +22,21 @@
         <source>registration.intro</source>
         <target state="translated">Olet rekisteröitynyt Kimai työajan-seurantaan sähköpostiosoitteella %email%. Nyt sinun tulee aktivoida tunnuksesi seuraavien tuntien aikana, ennen kuin linkki vanhenee.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Resetoi salasanasi</target>
+        <target state="needs-translation">Resetoi salasanasi</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target state="translated">Näin voi käydä …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Näin voi käydä …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Resetoi salasanasi</target>
+        <target state="needs-translation">Resetoi salasanasi</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target state="translated">… eli unohdit salasanasi? Ei hätää: Kimai auttaa sinua tekemään uuden:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… eli unohdit salasanasi? Ei hätää: Kimai auttaa sinua tekemään uuden:</target>
       </trans-unit>
     </body>
   </file>

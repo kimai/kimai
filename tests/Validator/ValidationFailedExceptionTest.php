@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
  */
 class ValidationFailedExceptionTest extends TestCase
 {
-    public function testException()
+    public function testException(): void
     {
         $list = new ConstraintViolationList();
         $sut = new ValidationFailedException($list);
@@ -27,7 +27,7 @@ class ValidationFailedExceptionTest extends TestCase
         self::assertSame($list, $sut->getViolations());
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $list = new ConstraintViolationList();
         $sut = new ValidationFailedException($list, 'Something went wrong');

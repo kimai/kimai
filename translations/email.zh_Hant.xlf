@@ -2,6 +2,62 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="email.en.xlf">
     <body>
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="no">
+        <source>reset.button</source>
+        <target state="needs-translation">重設您的密碼</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
+        <source>registration.subject</source>
+        <target state="final">啟用您的帳號</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="no">
+        <source>reset.subject</source>
+        <target state="needs-translation">重設您的密碼</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">忘記密碼了嗎？</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
+        <source>registration.button</source>
+        <target state="final">啟用您的帳號</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve" approved="yes">
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="final">您在 Kimai 工時追蹤工具所註冊的電子信箱地址為 %email%。鏈結將於數小時內失效，請於鏈結失效前點選以啟用您的帳號。</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve" approved="yes">
+        <source>registration.title</source>
+        <target state="final">歡迎 %username%</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">別擔心，Kimai 將協助您設定新的密碼！</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
+        <source>automated_email_dont_answer</source>
+        <target state="final">這是一封自動產生的電子郵件。請勿回覆，傳送至此地址的信件不會被閱讀。</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
+        <source>absence_created_supervisor_subject</source>
+        <target state="final">新缺勤紀錄 | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="final">已為 %absence_user% 建立新缺勤紀錄。
+
+%absence_type%：%absence_comment%
+
+%absence_list%
+
+請在此審核：%approval_url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -23,7 +23,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class ActivityTest extends AbstractEntityTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Activity();
         $this->assertNull($sut->getId());
@@ -42,12 +42,12 @@ class ActivityTest extends AbstractEntityTest
         $this->assertInstanceOf(Collection::class, $sut->getTeams());
     }
 
-    public function testBudgets()
+    public function testBudgets(): void
     {
         $this->assertBudget(new Activity());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Activity();
         $this->assertInstanceOf(Activity::class, $sut->setName('foo-bar'));
@@ -82,7 +82,7 @@ class ActivityTest extends AbstractEntityTest
         $this->assertFalse($sut->isGlobal());
     }
 
-    public function testMetaFields()
+    public function testMetaFields(): void
     {
         $sut = new Activity();
         $meta = new ActivityMeta();
@@ -110,7 +110,7 @@ class ActivityTest extends AbstractEntityTest
         self::assertCount(2, $sut->getVisibleMetaFields());
     }
 
-    public function testTeams()
+    public function testTeams(): void
     {
         $sut = new Activity();
         $team = new Team('foo');
@@ -133,7 +133,7 @@ class ActivityTest extends AbstractEntityTest
         self::assertCount(0, $team->getActivities());
     }
 
-    public function testExportAnnotations()
+    public function testExportAnnotations(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -152,6 +152,7 @@ class ActivityTest extends AbstractEntityTest
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['activity_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -169,7 +170,7 @@ class ActivityTest extends AbstractEntityTest
         }
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $sut = new Activity();
         $sut->setName('activity1111');

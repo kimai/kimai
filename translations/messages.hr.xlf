@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hr" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Evidentiranje vremena</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Evidentiranje vremena</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -55,11 +52,11 @@
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
-        <target>Traži</target>
+        <target state="translated">Pretraga</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
-        <target>Traži pojam</target>
+        <target state="translated">Pojam pretrage</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -113,9 +110,6 @@
         <source>modal.dirty</source>
         <target state="translated">Obrazac se promijenio. Za spremanje promjena pritisni „Spremi”, za prekidnje pritisni „Zatvori”.</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>Lozinka</target>
@@ -148,13 +142,10 @@
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="translated">Poslan je e-mail na %email%. Sadrži poveznicu koju moraš pritisnuti za aktiviranje računa.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Poslan je e-mail. Sadrži poveznicu koju moraš pritisnuti za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom u roku od %tokenLifetime% sata. Ako ne dobiješ e-mail, provjeri mapu neželjene pošte ili pokušaj ponovo.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="translated">Poslan je e-mail s poveznicom za obnavljanje lozinke. Napomena: Novu lozinku možeš zatražiti samo jednom svakih %tokenLifetime% sata(i). Ako ne primiš e-mail, provjeri mapu nepoželjene pošte ili pokušaj ponovo.</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Pregledna ploča</target>
@@ -219,9 +210,6 @@
         <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Na temelju odabranih filtara nisu pronađeni unosi.</target>
@@ -234,9 +222,6 @@
         <source>error.too_many_entries</source>
         <target>Zahtjev se nije mogao obraditi, pronađeno je previše rezultata.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Datum</target>
@@ -285,9 +270,9 @@
         <source>budget</source>
         <target>Budžet</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Vremenski budžet</target>
+        <target state="needs-translation">Vremenski budžet</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -361,9 +346,6 @@
         <source>billable</source>
         <target>Naplativo</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Radnje</target>
@@ -388,16 +370,10 @@
         <source>action.close</source>
         <target>Zatvori</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Pregledna ploča</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">Prikaži izbornik</target>
@@ -414,9 +390,6 @@
         <source>progress</source>
         <target>Napredak</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Moja vremena</target>
@@ -453,17 +426,14 @@
         <source>color</source>
         <target>Boja</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Zamijeni</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target>Dodaj</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Korisnički profil</target>
@@ -472,9 +442,9 @@
         <source>profile.about_me</source>
         <target>O meni</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Početak rada</target>
+        <target state="needs-translation">Početak rada</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -512,7 +482,6 @@
         <source>lastLogin</source>
         <target>Zadnja prijava</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mjesec</target>
@@ -529,24 +498,18 @@
         <source>daily_stats</source>
         <target state="translated">Prikaži dnevne statistike u vremenskoj tablici</target>
       </trans-unit>
-      <trans-unit id="dherSTU" resname="export_decimal">
+      <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve">
         <source>export_decimal</source>
-        <target>Koristi decimalno trajanje u izvozu</target>
+        <target state="translated">Koristi decimalni format za trajanje u izvozu</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Aktualiziraj naslov preglednika</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendar</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Početak projekta</target>
@@ -555,9 +518,6 @@
         <source>project_end</source>
         <target>Kraj projekta</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Račun</target>
@@ -614,16 +574,13 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Ime</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Titula</target>
+        <target state="translated">Naslov</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -649,16 +606,10 @@
         <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
         <target state="translated">Dozvoljeni znakovi: A-Z i _ (barem 5 velikih slova)</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Verzija</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Administrator sustava</target>
@@ -675,9 +626,6 @@
         <source>ROLE_USER</source>
         <target>Korisnik</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Danas, %day%</target>
@@ -698,12 +646,12 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Fiskalna godina</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Radno vrijeme</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Prihodi</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
@@ -778,9 +726,9 @@
         <source>stats.activeUsersFinancialYear</source>
         <target>Aktivni korisnici ove fiskalne godine</target>
       </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>
-        <target>Aktivni korisnici ukupno</target>
+        <target state="translated">Aktivni korisnici ikada</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
@@ -818,9 +766,6 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent% % korišteno (%left% preostalo ovaj mjesec)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Predložak računa</target>
@@ -869,9 +814,9 @@
         <source>template</source>
         <target state="translated">Predložak računa</target>
       </trans-unit>
-      <trans-unit id="ohNu8DK" resname="due_days">
+      <trans-unit id="ohNu8DK" resname="due_days" xml:space="preserve">
         <source>due_days</source>
-        <target>Rok plaćanja u danima</target>
+        <target state="translated">Uvjet plaćanja u danima</target>
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
         <source>invoice.due_days</source>
@@ -973,9 +918,6 @@
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">Preskočen je pregled od još %rows% redaka …</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Izvoz</target>
@@ -1016,9 +958,6 @@
         <source>type</source>
         <target>Vrsta</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Mjerenja tvog aktivnog vremena</target>
@@ -1029,11 +968,8 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Stvori nov vremenski zapis</target>
+        <target state="translated">Pokreni evidentiranje vremena</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Veličina stranice</target>
@@ -1088,7 +1024,7 @@
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
-        <target state="translated">Prikaži unose bez uknjiženja</target>
+        <target state="translated">Prikaži unose bez rezevacija</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -1104,7 +1040,7 @@
       </trans-unit>
       <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
-        <target state="translated">Bez uknjiženja vremena od</target>
+        <target state="translated">Bez rezeviranja vremena od</target>
       </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
@@ -1334,21 +1270,17 @@
         <source>pagination</source>
         <target state="translated">Pokaži unose %start% do %end% od %total%.</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
-        <target state="translated">Svijetlo</target>
+        <target state="translated">Svijetla</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API lozinka se koristi za komunikaciju između Kimaija i tvojih programa</target>
+        <target state="translated">Ovdje možeš upravljati svojim API tokenima koji se koriste za autentifikaciju tvoje aplikacije u Kimaiju.</target>
       </trans-unit>
-      <trans-unit id="WOFPb2i" resname="skin.dark">
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve">
         <source>skin.dark</source>
-        <target state="translated">Tamno</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Još nisi upisao/la API lozinku. Iz sigurnosnih razloga ne možeš koristiti API dok ne spremiš lozinku.</target>
+        <target state="translated">Tamna</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1448,11 +1380,11 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Podržani jezici s pravilima formatiranja</target>
+        <target state="translated">Ovdje se nalaze primjeri s pravilima formatiranja za podržane jezike</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Osim prevođenja sučelja, ova je postavka također odgovorna za formate vremena, datuma i valute.</target>
+        <target state="translated">Ova je postavka odgovorna za prijevod softvera</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1495,32 +1427,28 @@
         <target state="translated">Evaluacija</target>
       </trans-unit>
       <trans-unit id="mS4SSmt" resname="work_times">
-        <source>work_times</source>
-        <target state="translated">Radno vrijeme</target>
+        <source>Working times</source>
+        <target state="translated">Radna vremena</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
         <target state="translated">Ovaj dokument služi kao dokaz o odrađenim satima.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target state="translated">Ciljani sati</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Ovdje konfigurirane vrijednosti se koriste za računanje računa po satu.</target>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="needs-translation">Očekivani broj sati</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
-        <target state="translated">Ručna uknjiženja</target>
+        <target state="translated">Ručne rezervacije</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
         <target state="translated">Radni sati</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Odrađeni sati</target>
+        <target state="needs-translation">Odrađeni sati</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1540,7 +1468,7 @@
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
-        <target state="translated">Ručna uknjiženja se naknadno ne mogu promijeniti niti izbrisati!</target>
+        <target state="translated">Ručne rezervacije se naknadno ne mogu promijeniti niti izbrisati!</target>
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
@@ -1550,13 +1478,13 @@
         <source>manual_bookings.duration_help</source>
         <target state="translated">Trajanje može biti pozitivno (povećanje utrošenog vremena) i negativno (smanjenje utrošenog vremena).</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Završi mjesec</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Zaključi mjesec</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Nakon završavanja mjeseca, korisnik više neće moći stviriti butu uređivati vremena za to razdoblje.</target>
+        <target state="translated">Ovime će se zaključiti svi dani u godini prije odabranog datuma. Korisnik više neće moći stvarati ili uređivati vremena za zaključeno razdoblje.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1622,9 +1550,9 @@
         <source>button.report</source>
         <target state="translated">Izvještaj</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>sickness.intro</source>
-        <target state="translated">Bolest, posjet liječniku, njega bliskih srodnika itd.</target>
+        <target state="translated">Bolest, posjet liječniku, njega članova obitelji itd.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1669,6 +1597,174 @@
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
         <target state="translated">Pri sljedećoj prijavi će korisnik morati unijeti novu lozinku.</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Kategorija</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Bolest člana obitelji</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Troškovi</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Dnevnici revizija</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Prijevod</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Prilagođen sadržaj</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Kalendar odsutnosti</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Prilagođena polja</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Roditeljski dopust</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Pregled</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Uvoznik</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Prijevodi</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Kategorije</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Neplaćeni praznici</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">Dani</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">Korisnički ID</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">Jedinstveni identifikator korisnika se koristi za autentifikaciju i izvoze</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentacija</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Forum</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Doniraj</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Datum</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target>Konfigurirani format</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Generator broja računa</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target state="translated">Prekini evidentiranje vremena</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Dodaj unos u popis skupnog aktualiziranja</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Odaberi sve unose za popis skupnog aktualiziranja</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">Filtar pretrage</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Time, date and currency format</source>
+        <target state="translated">Format za vrijeme, datum i valutu</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Odsutnost: Komentar je obavezno polje</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktiviraj</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Datum isteka</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API lozinke su zastarjele: umjesto njih koristi API tokene.</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Broj aktivnosti</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Broj projekta</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Deaktiviraj</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Zadnja upotreba</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Ovo je jedini put prikazivanje ključa! Stoga ga spremi na sigurno mjesto i osiguraj da ga kopiraš prije zatvaranja ovog prozora.</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano ugovorom o radu</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Odobri</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Aktualizirano</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Stvoreno</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Zatraži</target>
       </trans-unit>
     </body>
   </file>

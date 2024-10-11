@@ -9,17 +9,17 @@
 
 namespace App\Widget\Type;
 
-use App\Entity\Project;
-use App\Entity\Team;
 use App\Project\ProjectStatisticService;
-use App\Repository\Loader\ProjectLoader;
 use App\Repository\Loader\TeamLoader;
 use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class UserTeamProjects extends AbstractWidget
 {
-    public function __construct(private ProjectStatisticService $statisticService, private EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly ProjectStatisticService $statisticService,
+        private readonly EntityManagerInterface $entityManager
+    )
     {
     }
 
@@ -65,32 +65,21 @@ final class UserTeamProjects extends AbstractWidget
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
+        $teams = $user->getTeams();
         $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
 
-        $loader = new TeamLoader($this->entityManager);
-        $loader->loadResults($user->getTeams());
+        $loader = new TeamLoader($this->entityManager, true);
+        $loader->loadResults($teams);
 
-        $teamProjects = [];
         $projects = [];
 
-        /** @var Team $team */
-        foreach ($user->getTeams() as $team) {
-            /** @var Project $project */
+        foreach ($teams as $team) {
             foreach ($team->getProjects() as $project) {
-                if (!isset($teamProjects[$project->getId()])) {
-                    $teamProjects[$project->getId()] = $project;
+                if (!$project->isVisibleAtDate($now) || !$project->hasBudgets()) {
+                    continue;
                 }
+                $projects[$project->getId()] = $project;
             }
-        }
-
-        $loader = new ProjectLoader($this->entityManager, false, false, false);
-        $loader->loadResults($teamProjects);
-
-        foreach ($teamProjects as $id => $project) {
-            if (!$project->isVisibleAtDate($now) || !$project->hasBudgets()) {
-                continue;
-            }
-            $projects[$project->getId()] = $project;
         }
 
         return $this->statisticService->getBudgetStatisticModelForProjects($projects, $now);

@@ -55,7 +55,7 @@
 {% endblock %}
 
 {% block report_form_layout %}
-    {{ form_widget(form.project, {'label': false, 'placeholder': 'please_choose'}) }}
+    {{ form_widget(form.project, {'label': false, 'placeholder': 'project'}) }}
 {% endblock %}
 
 {% block report %}
@@ -98,7 +98,7 @@
             <ul class="nav nav-pills" data-bs-toggle="tabs">
                 <li class="nav-item"><a class="nav-link active" data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
                 {% if view_revenue %}
-                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'revenue'|trans }}</a></li>
                 {% endif %}
                 {% if see_users %}
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
@@ -307,7 +307,7 @@
                     <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
                 {% endif %}
                 {% if showTotalRevenueChart  %}
-                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'revenue'|trans }}</a></li>
                 {% endif %}
                 {% if see_users and project_details.userStats|length > 0 %}
                     <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
@@ -395,7 +395,7 @@
                                 </div>
                                 <div class="datagrid-content">
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                        {{ project_view.notBilledRate|money(currency) }}
+                                        {{ project_view.notExportedRate|money(currency) }}
                                     </a>
                                 </div>
                             </div>

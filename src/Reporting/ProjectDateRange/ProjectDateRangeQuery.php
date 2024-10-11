@@ -14,16 +14,14 @@ use App\Entity\User;
 
 final class ProjectDateRangeQuery
 {
-    private \DateTime $month;
-    private ?User $user;
+    private ?\DateTime $month;
     private ?Customer $customer = null;
     private bool $includeNoWork = false;
     private ?string $budgetType = null;
 
-    public function __construct(\DateTime $month, User $user)
+    public function __construct(\DateTime $month, private User $user)
     {
         $this->month = clone $month;
-        $this->user = $user;
     }
 
     public function isBudgetIndependent(): bool
@@ -46,7 +44,7 @@ final class ProjectDateRangeQuery
         $this->includeNoWork = $includeNoWork;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

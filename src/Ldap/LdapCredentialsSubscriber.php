@@ -41,7 +41,7 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
         }
 
         if (!$passport instanceof Passport || !$passport->hasBadge(PasswordCredentials::class)) {
-            throw new \LogicException(sprintf('LDAP authentication requires a passport containing a user and password credentials, authenticator "%s" does not fulfill these requirements.', \get_class($event->getAuthenticator())));
+            throw new \LogicException(\sprintf('LDAP authentication requires a passport containing a user and password credentials, authenticator "%s" does not fulfill these requirements.', \get_class($event->getAuthenticator())));
         }
 
         /** @var PasswordCredentials $passwordCredentials */
@@ -62,12 +62,12 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             throw new BadCredentialsException('The presented user needs to be a Kimai user.');
         }
 
-        // removing this code allows to upgrade from local to LDAP users
-        // if (!$user->isLdapUser()) {
-        //    return;
-        // }
-
         if (!$this->ldapManager->bind($user->getUserIdentifier(), $presentedPassword)) {
+            // if the login failed and the user is registered with "kimai" auth, simply return:
+            // the FormLogin authenticator will take over and the user can log in via internal database
+            if (!$user->isLdapUser()) {
+                return;
+            }
             throw new BadCredentialsException('The presented password is invalid.');
         }
 

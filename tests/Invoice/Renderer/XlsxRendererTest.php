@@ -25,7 +25,7 @@ class XlsxRendererTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testSupports()
+    public function testSupports(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
@@ -46,7 +46,7 @@ class XlsxRendererTest extends TestCase
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
+    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         /** @var XlsxRenderer $sut */
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);

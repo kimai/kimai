@@ -11,6 +11,9 @@ namespace App\DependencyInjection;
 
 use App\Entity\Customer;
 use App\Entity\User;
+use App\Form\Helper\ActivityHelper;
+use App\Form\Helper\CustomerHelper;
+use App\Form\Helper\ProjectHelper;
 use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -114,8 +117,17 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('choice_pattern')
+                    ->defaultValue(ProjectHelper::PATTERN_NAME)
+                ->end()
                 ->booleanNode('copy_teams_on_create')
                     ->defaultValue(false)
+                ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{pc,4}')
+                ->end()
+                ->booleanNode('allow_duplicate_number')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
@@ -132,8 +144,17 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('choice_pattern')
+                    ->defaultValue(ActivityHelper::PATTERN_NAME)
+                ->end()
                 ->booleanNode('allow_inline_create')
                     ->defaultValue(false)
+                ->end()
+                ->scalarNode('number_format')
+                    ->defaultValue('{ac,4}')
+                ->end()
+                ->booleanNode('allow_duplicate_number')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
@@ -531,7 +552,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
                 ->integerNode('password_reset_retry_ttl')
-                    ->defaultValue(7200)
+                    ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)
@@ -551,6 +572,9 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('choice_pattern')
+                    ->defaultValue(CustomerHelper::PATTERN_NAME)
+                ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{cc,4}')
                 ->end()

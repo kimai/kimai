@@ -24,7 +24,7 @@ final class TimesheetDeactivated extends TimesheetConstraint
 
     public string $message = 'This timesheet has invalid settings.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

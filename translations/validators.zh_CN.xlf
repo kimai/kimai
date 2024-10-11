@@ -98,13 +98,57 @@
         <source>Cannot stop running timesheet</source>
         <target state="translated">你有一个活跃的时间记录不能自动停止。</target>
       </trans-unit>
-      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
-        <source>The given value is not a valid datetime format.</source>
-        <target state="translated">给定的值不是有效的日间格式。</target>
-      </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
         <source>This value is not a valid role name.</source>
         <target state="translated">这不是一个有效的用户角色名称。</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed.">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">今天是公众假期，不允许预订。</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">您的加班时间不足，剩余时间为 {{ value }}。</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">在第一个工作日之前不能预约缺席。</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left.">
+        <source>Not enough holidays left.</source>
+        <target state="translated">假期不够了。</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date.">
+        <source>An absence must have a date.</source>
+        <target state="translated">缺席必须有日期。</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">您最多可同时预订 {{ value }} 天，您当前选择了 {{ selected }}。</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known.">
+        <source>This absence type is not known.</source>
+        <target state="translated">这种缺席类型尚不清楚。</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user.">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">缺席必须分配给用户。</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day.">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">一天内不能有两次此类缺席。</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day.">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">所选日期不是工作日。</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked.">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">所选日期已锁定。</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">缺席时间不得超过年终。</target>
       </trans-unit>
     </body>
   </file>

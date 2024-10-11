@@ -29,14 +29,25 @@ final class TokenAuthenticator extends AbstractAuthenticator
     public const HEADER_USERNAME = 'X-AUTH-USER';
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
 
-    public function __construct(private ApiUserRepository $userProvider, private PasswordHasherFactoryInterface $passwordHasherFactory)
+    public function __construct(
+        private readonly ApiUserRepository $userProvider,
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory
+    )
     {
     }
 
-    public function supports(Request $request): ?bool
+    public function supports(Request $request): bool
     {
         if (str_contains($request->getRequestUri(), '/api/')) {
-            return !str_contains($request->getRequestUri(), '/api/doc');
+            if (str_contains($request->getRequestUri(), '/api/doc')) {
+                return false;
+            }
+
+            if ($request->headers->has(self::HEADER_USERNAME) && $request->headers->has(self::HEADER_TOKEN)) {
+                @trigger_error('You are using deprecated API access, please upgrade your APP to use API tokens instead.', E_USER_DEPRECATED);
+
+                return true;
+            }
         }
 
         return false;
@@ -95,7 +106,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
         return null;
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $data = [
             'message' => $exception instanceof CustomUserMessageAuthenticationException ? $exception->getMessage() : 'Invalid credentials'

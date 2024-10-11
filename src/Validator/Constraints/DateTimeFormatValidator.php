@@ -17,12 +17,11 @@ final class DateTimeFormatValidator extends ConstraintValidator
 {
     /**
      * @param string|mixed|null $value
-     * @param Constraint $constraint
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof DateTimeFormat)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\DateTimeFormat');
+            throw new UnexpectedTypeException($constraint, DateTimeFormat::class);
         }
 
         if (!\is_string($value)) {
@@ -62,7 +61,7 @@ final class DateTimeFormatValidator extends ConstraintValidator
         }
 
         if (false === $valid) {
-            $this->context->buildViolation('The given value is not a valid datetime format.')
+            $this->context->buildViolation(DateTimeFormat::getErrorName(DateTimeFormat::INVALID_FORMAT))
                 ->setTranslationDomain('validators')
                 ->setCode(DateTimeFormat::INVALID_FORMAT)
                 ->addViolation();

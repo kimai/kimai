@@ -2,6 +2,58 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve" approved="yes">
+        <source>project</source>
+        <target state="final">專案</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
+        <source>user</source>
+        <target state="final">使用者</target>
+      </trans-unit>
+      <trans-unit id="_bAHi13" resname="short" xml:space="preserve" approved="yes">
+        <source>short</source>
+        <target state="final">全部（總和為一橫列）</target>
+      </trans-unit>
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve" approved="yes">
+        <source>invoice_calculator</source>
+        <target state="final">收支單的分組</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
+        <source>default</source>
+        <target state="final">預設（每項一橫列）</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price" xml:space="preserve" approved="yes">
+        <source>price</source>
+        <target state="final">費用</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
+        <source>date</source>
+        <target state="final">日期</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
+        <source>activity</source>
+        <target state="final">活動</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve" approved="yes">
+        <source>activity_user</source>
+        <target state="final">活動與使用者</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve" approved="yes">
+        <source>project_user</source>
+        <target state="final">專案與使用者</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly" xml:space="preserve" approved="yes">
+        <source>weekly</source>
+        <target state="final">週</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve" approved="yes">
+        <source>date_user</source>
+        <target state="final">日期與使用者</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve" approved="yes">
+        <source>invoice_calculator.help</source>
+        <target state="final">選擇要用以將收支單分組的欄位</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

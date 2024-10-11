@@ -37,21 +37,23 @@ final class ProjectVoter extends Voter
         'details',
     ];
 
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        return str_contains($subjectType, Project::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!($subject instanceof Project)) {
-            return false;
-        }
-
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
-            return false;
-        }
-
-        return true;
+        return $subject instanceof Project && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -67,7 +69,7 @@ final class ProjectVoter extends Voter
         }
 
         // those cannot be assigned to teams
-        if (\in_array($attribute, ['create', 'delete'])) {
+        if (\in_array($attribute, ['create', 'delete'], true)) {
             return false;
         }
 

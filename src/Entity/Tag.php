@@ -9,8 +9,7 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Utils\Color;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
+#[Serializer\VirtualProperty('ColorSafe', exp: 'object.getColorSafe()', options: [new Serializer\SerializedName('color-safe'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Default'])])]
 class Tag
 {
     /**
@@ -51,17 +51,8 @@ class Tag
 
     use ColorTrait;
 
-    /**
-     * This is ONLY here, so we can count the amount of timesheets.
-     *
-     * @var Collection<Timesheet>
-     */
-    #[ORM\ManyToMany(targetEntity: Timesheet::class, mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
-    private Collection $timesheets;
-
     public function __construct()
     {
-        $this->timesheets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,7 +62,7 @@ class Tag
 
     public function setName(?string $tagName): Tag
     {
-        $this->name = $tagName;
+        $this->name = $tagName !== null ? trim($tagName) : $tagName;
 
         return $this;
     }
@@ -94,5 +85,10 @@ class Tag
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getColorSafe(): string
+    {
+        return $this->getColor() ?? (new Color())->getRandom($this->getName());
     }
 }

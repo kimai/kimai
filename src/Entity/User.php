@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Export\Annotation as Exporter;
 use App\Utils\StringHelper;
 use App\Validator\Constraints as Constraints;
+use App\WorkingTime\Mode\WorkingTimeModeNone;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -128,7 +129,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @var Collection<UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
-    private ?Collection $preferences = null;
+    private ?Collection $preferences;
     /**
      * List of all team memberships.
      *
@@ -209,8 +210,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
+     * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
-    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'totp_secret', type: 'string', length: 255, nullable: true)]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
@@ -297,6 +299,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @deprecated since 2.15
+     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('apiToken')]
     #[Serializer\Groups(['Default'])]
@@ -318,7 +323,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * Read-only list of of all visible user preferences.
+     * Read-only list of all visible user preferences.
      *
      * @internal only for API usage
      * @return UserPreference[]
@@ -334,6 +339,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $skip = [
             UserPreference::TIMEZONE,
             UserPreference::LOCALE,
+            UserPreference::LANGUAGE,
             UserPreference::SKIN,
             'calendar_initial_view',
             'login_initial_view',
@@ -406,13 +412,22 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return null;
     }
 
+    /**
+     * The locale used for formatting number, money, dates and times
+     */
     #[Serializer\VirtualProperty]
-    #[Serializer\SerializedName('language')]
+    #[Serializer\SerializedName('locale')]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
-        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
+        // uses language as fallback, because the language was here before
+        return (string) $this->getPreferenceValue(UserPreference::LOCALE, $this->getLanguage(), false);
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->setPreferenceValue(UserPreference::LOCALE, $locale ?? User::DEFAULT_LANGUAGE);
     }
 
     #[Serializer\VirtualProperty]
@@ -424,17 +439,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
+    /**
+     * The locale used for translations
+     */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('language')]
+    #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getLanguage(): string
     {
-        return $this->getLocale();
+        return (string) $this->getPreferenceValue(UserPreference::LANGUAGE, User::DEFAULT_LANGUAGE, false);
     }
 
     public function setLanguage(?string $language): void
     {
-        if ($language === null) {
-            $language = User::DEFAULT_LANGUAGE;
-        }
-        $this->setPreferenceValue(UserPreference::LOCALE, $language);
+        $this->setPreferenceValue(UserPreference::LANGUAGE, $language ?? User::DEFAULT_LANGUAGE);
     }
 
     public function isFirstDayOfWeekSunday(): bool
@@ -645,11 +664,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\SerializedName('teams')]
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
-    public function getTeams(): iterable
+    public function getTeams(): array
     {
         $teams = [];
         foreach ($this->memberships as $membership) {
-            $teams[] = $membership->getTeam();
+            if ($membership->getTeam() !== null) {
+                $teams[] = $membership->getTeam();
+            }
         }
 
         return $teams;
@@ -965,31 +986,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function markPasswordRequested(): void
     {
-        $this->setPasswordRequestedAt(new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone())));
-    }
-
-    public function markPasswordResetted(): void
-    {
-        $this->setConfirmationToken(null);
-        $this->setPasswordRequestedAt(null);
-    }
-
-    public function setPasswordRequestedAt(?\DateTimeImmutable $date): void
-    {
-        $this->passwordRequestedAt = $date;
-    }
-
-    /**
-     * Gets the timestamp that the user requested a password reset.
-     */
-    public function getPasswordRequestedAt(): ?\DateTimeImmutable
-    {
-        return $this->passwordRequestedAt;
+        $this->passwordRequestedAt = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
     }
 
     public function isPasswordRequestNonExpired(int $seconds): bool
     {
-        $date = $this->getPasswordRequestedAt();
+        $date = $this->passwordRequestedAt;
 
         if (!($date instanceof \DateTimeInterface)) {
             return false;
@@ -1011,7 +1013,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function isEqualTo(UserInterface $user): bool
     {
-        if (!$user instanceof self) {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->id !== $user->getId()) {
             return false;
         }
 
@@ -1020,6 +1026,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         if ($this->username !== $user->getUserIdentifier()) {
+            return false;
+        }
+
+        if ($this->enabled !== $user->isEnabled()) {
             return false;
         }
 
@@ -1089,9 +1099,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             $initial = mb_substr($initial, 0, $length, 'UTF-8');
         }
 
-        $initial = mb_strtoupper($initial);
-
-        return $initial;
+        return mb_strtoupper($initial);
     }
 
     public function getAccountNumber(): ?string
@@ -1132,6 +1140,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setRequiresPasswordReset(bool $require = true): void
     {
         $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+
+        if (!$require) {
+            $this->passwordRequestedAt = null;
+        }
     }
 
     public function hasSeenWizard(string $wizard): bool
@@ -1206,36 +1218,57 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursMonday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_MONDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursTuesday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursWednesday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursThursday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursFriday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursSaturday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, 0);
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursSunday(): int
     {
         return (int) $this->getPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, 0);
@@ -1243,7 +1276,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getWorkStartingDay(): ?\DateTimeInterface
     {
-        $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
+        return $this->getPreferenceDate('work_start_day');
+    }
+
+    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_start_day', $date?->format('Y-m-d'));
+    }
+
+    private function getPreferenceDate(string $prefName): ?\DateTimeInterface
+    {
+        $date = $this->getPreferenceValue($prefName);
 
         if ($date === null) {
             return null;
@@ -1257,9 +1300,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return ($date instanceof \DateTimeInterface) ? $date : null;
     }
 
-    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    public function getLastWorkingDay(): ?\DateTimeInterface
     {
-        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
+        return $this->getPreferenceDate('work_last_day');
+    }
+
+    public function setLastWorkingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_last_day', $date?->format('Y-m-d'));
     }
 
     public function getPublicHolidayGroup(): null|string
@@ -1269,44 +1317,67 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $group === null ? $group : (string) $group;
     }
 
-    public function getHolidaysPerYear(): int
+    public function getHolidaysPerYear(): float
     {
-        return (int) $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0);
+        $holidays = $this->getPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, 0.0);
+
+        return $this->getFormattedHoliday(is_numeric($holidays) ? $holidays : 0.0);
     }
 
-    public function setWorkHoursMonday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursMonday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_MONDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_MONDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursTuesday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursTuesday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_TUESDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursWednesday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursWednesday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_WEDNESDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursThursday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursThursday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_THURSDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursFriday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursFriday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_FRIDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursSaturday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursSaturday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SATURDAY, $seconds ?? 0);
     }
 
-    public function setWorkHoursSunday(int $seconds): void
+    /**
+     * @deprecated since 2.22.0
+     */
+    public function setWorkHoursSunday(?int $seconds): void
     {
-        $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds);
+        $this->setPreferenceValue(UserPreference::WORK_HOURS_SUNDAY, $seconds ?? 0);
     }
 
     public function setPublicHolidayGroup(null|string $group = null): void
@@ -1314,27 +1385,41 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->setPreferenceValue(UserPreference::PUBLIC_HOLIDAY_GROUP, $group);
     }
 
-    public function setHolidaysPerYear(?int $holidays): void
+    public function setHolidaysPerYear(?float $holidays): void
     {
-        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0);
+        if ($holidays !== null) {
+            // makes sure that the number is a multiple of 0.5
+            $holidays = $this->getFormattedHoliday($holidays);
+        }
+
+        $this->setPreferenceValue(UserPreference::HOLIDAYS_PER_YEAR, $holidays ?? 0.0);
     }
 
+    private function getFormattedHoliday(int|float|string|null $holidays): float
+    {
+        if (!is_numeric($holidays)) {
+            $holidays = 0.0;
+        }
+
+        return (float) number_format((round($holidays * 2) / 2), 1);
+    }
+
+    /**
+     * @deprecated since 2.22.0
+     */
     public function hasContractSettings(): bool
     {
-        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0;
+        return $this->hasWorkHourConfiguration() || $this->getHolidaysPerYear() !== 0.0;
     }
 
     public function hasWorkHourConfiguration(): bool
     {
-        return $this->getWorkHoursMonday() !== 0 ||
-            $this->getWorkHoursTuesday() !== 0 ||
-            $this->getWorkHoursWednesday() !== 0 ||
-            $this->getWorkHoursThursday() !== 0 ||
-            $this->getWorkHoursFriday() !== 0 ||
-            $this->getWorkHoursSaturday() !== 0 ||
-            $this->getWorkHoursSunday() !== 0;
+        return $this->getWorkContractMode() !== WorkingTimeModeNone::ID;
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function getWorkHoursForDay(\DateTimeInterface $dateTime): int
     {
         return match ($dateTime->format('N')) {
@@ -1349,6 +1434,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         };
     }
 
+    /**
+     * @deprecated since 2.22.0
+     */
     public function isWorkDay(\DateTimeInterface $dateTime): bool
     {
         return $this->getWorkHoursForDay($dateTime) > 0;
@@ -1367,5 +1455,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setSupervisor(?User $supervisor): void
     {
         $this->supervisor = $supervisor;
+    }
+
+    public function getWorkContractMode(): string
+    {
+        return (string) $this->getPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID);
+    }
+
+    public function setWorkContractMode(string $mode): void
+    {
+        $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
     }
 }

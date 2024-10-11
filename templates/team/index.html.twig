@@ -2,35 +2,23 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block datatable_row %}
-    <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': entry.id}) }}"{% endif %}>
-        <td class="{{ tables.class(dataTable, 'name') }}">
-            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'teamlead') }}">
-            {% for member in entry.members %}
-                {% if member.teamlead %}
-                    {{ widgets.label_user(member.user) }}
-                {% endif %}
-            {% endfor %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'teamlead_avatar') }}">
-            {% for member in entry.members|sort((a, b) => b.teamlead <=> a.teamlead) %}
-                {% set user = member.user %}
-                {% set tooltip = member.teamlead ? ('teamlead'|trans ~ ': ' ~ user.displayName) : null %}
-                {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
-            {% endfor %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'user') }}">
-            {% for member in entry.members %}
-                {% if not member.teamlead %}
-                    {{ widgets.label_user(member.user) }}
-                {% endif %}
-            {% endfor %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">
-            {% set event = actions(app.user, 'team', 'index', {'team': entry}) %}
-            {{ widgets.table_actions(event.actions) }}
-        </td>
-    </tr>
+{% block datatable_row_attr %}
+    {%- if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': entry.id}) }}"{% endif %}
+{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'avatar' %}
+        {% for member in entry.members|sort((a, b) => b.teamlead <=> a.teamlead) %}
+            {% set user = member.user %}
+            {% set tooltip = member.teamlead ? ('teamlead'|trans ~ ': ' ~ user.displayName) : null %}
+            {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
+        {% endfor %}
+    {% elseif column == 'amount' %}
+        {{ widgets.badge_counter(entry.members|length) }}
+    {% elseif column == 'actions' %}
+        {% set event = actions(app.user, 'team', 'index', {'team': entry}) %}
+        {{ widgets.table_actions(event.actions) }}
+    {% endif %}
 {% endblock %}

@@ -39,21 +39,21 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetBasicValidator($configuration);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new NotBlank(), new TimesheetBasic(['message' => 'myMessage']));
     }
 
-    public function testEmptyTimesheet()
+    public function testEmptyTimesheet(): void
     {
         $timesheet = new Timesheet();
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
@@ -70,7 +70,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testFutureBegin()
+    public function testFutureBegin(): void
     {
         $begin = new \DateTime('+10 hour');
         $timesheet = new Timesheet();
@@ -95,7 +95,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testEndBeforeBegin()
+    public function testEndBeforeBegin(): void
     {
         $end = new \DateTime('-10 hour');
         $begin = new \DateTime('-1 hour');
@@ -117,7 +117,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testProjectMismatch()
+    public function testProjectMismatch(): void
     {
         $end = new \DateTime('-1 hour');
         $begin = new \DateTime('-10 hour');
@@ -172,7 +172,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getProjectStartEndTestData
      */
-    public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations)
+    public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime('-10 hour'));
@@ -206,7 +206,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $assertion->assertRaised();
     }
 
-    public function testGetTargets()
+    public function testGetTargets(): void
     {
         $constraint = new TimesheetBasic();
         self::assertEquals('class', $constraint->getTargets());

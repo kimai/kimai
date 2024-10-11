@@ -66,12 +66,11 @@ class XlsxRenderer extends AbstractSpreadsheetRenderer
         // Freeze first row and date & time columns for easier navigation
         $sheet->freezePane('D2');
 
-        /** @var string $column */
-        foreach (range('A', $highestColumn) as $column) {
+        foreach ($sheet->getColumnIterator() as $columnName => $column) {
             // We default to a reasonable auto-width decided by the client,
             // sadly ->getDefaultColumnDimension() is not supported so it needs
             // to be specific about what column should be auto sized.
-            $col = $sheet->getColumnDimension($column);
+            $col = $sheet->getColumnDimension($columnName);
 
             // If no other width is specified (which defaults to -1)
             if ((int) $col->getWidth() === -1) {

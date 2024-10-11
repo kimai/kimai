@@ -11,12 +11,32 @@ namespace App\Event;
 
 use App\Entity\Activity;
 use App\Model\ActivityStatistic;
+use DateTime;
+use DateTimeInterface;
 
 final class ActivityStatisticEvent extends AbstractActivityEvent
 {
-    public function __construct(Activity $activity, private ActivityStatistic $statistic, private ?\DateTime $begin = null, private ?\DateTime $end = null)
+    private readonly ?DateTime $begin;
+    private readonly ?DateTime $end;
+
+    public function __construct(
+        Activity $activity,
+        private readonly ActivityStatistic $statistic,
+        ?DateTimeInterface $begin = null,
+        ?DateTimeInterface $end = null
+    )
     {
         parent::__construct($activity);
+
+        if ($begin !== null) {
+            $begin = DateTime::createFromInterface($begin);
+        }
+        $this->begin = $begin;
+
+        if ($end !== null) {
+            $end = DateTime::createFromInterface($end);
+        }
+        $this->end = $end;
     }
 
     public function getStatistic(): ActivityStatistic
@@ -24,12 +44,12 @@ final class ActivityStatisticEvent extends AbstractActivityEvent
         return $this->statistic;
     }
 
-    public function getBegin(): ?\DateTime
+    public function getBegin(): ?DateTime
     {
         return $this->begin;
     }
 
-    public function getEnd(): ?\DateTime
+    public function getEnd(): ?DateTime
     {
         return $this->end;
     }

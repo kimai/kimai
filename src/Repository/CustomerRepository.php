@@ -16,20 +16,22 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\CustomerLoader;
-use App\Repository\Paginator\LoaderPaginator;
+use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
+use App\Repository\Query\CustomerQueryHydrate;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Customer>
+ * @extends EntityRepository<Customer>
  */
 class CustomerRepository extends EntityRepository
 {
@@ -37,28 +39,30 @@ class CustomerRepository extends EntityRepository
 
     /**
      * @param int[] $customerIDs
-     * @return Customer[]
+     * @return array<Customer>
      */
     public function findByIds(array $customerIDs): array
     {
+        $ids = array_filter(
+            array_unique($customerIDs),
+            function ($value) {
+                return $value > 0;
+            }
+        );
+
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->createQueryBuilder('c');
         $qb
             ->where($qb->expr()->in('c.id', ':id'))
-            ->setParameter('id', $customerIDs)
+            ->setParameter('id', $ids)
         ;
 
-        $customers = $qb->getQuery()->getResult();
-
-        $loader = new CustomerLoader($qb->getEntityManager(), true);
-        $loader->loadResults($customers);
-
-        return $customers;
+        return $this->getCustomers($this->prepareCustomerQuery($qb->getQuery()), new CustomerQuery());
     }
 
-    /**
-     * @param Customer $customer
-     * @throws ORMException
-     */
     public function saveCustomer(Customer $customer): void
     {
         $entityManager = $this->getEntityManager();
@@ -75,7 +79,10 @@ class CustomerRepository extends EntityRepository
         return $this->count([]);
     }
 
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
+    /**
+     * @param array<Team> $teams
+     */
+    public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void
     {
         $permissions = $this->getPermissionCriteria($qb, $user, $teams);
         if ($permissions->count() > 0) {
@@ -83,6 +90,9 @@ class CustomerRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param array<Team> $teams
+     */
     private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
     {
         $andX = $qb->expr()->andX();
@@ -125,8 +135,7 @@ class CustomerRepository extends EntityRepository
     /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
      *
-     * @param CustomerFormTypeQuery $query
-     * @return QueryBuilder
+     * @internal
      */
     public function getQueryBuilderForFormType(CustomerFormTypeQuery $query): QueryBuilder
     {
@@ -170,12 +179,15 @@ class CustomerRepository extends EntityRepository
 
     private function getQueryBuilderForQuery(CustomerQuery $query): QueryBuilder
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->createQueryBuilder('c');
 
-        $qb
-            ->select('c')
-            ->from(Customer::class, 'c')
-        ;
+        if (\count($query->getCustomerIds()) > 0) {
+            $qb->andWhere($qb->expr()->in('c.id', ':id'))->setParameter('id', $query->getCustomerIds());
+        }
+
+        if ($query->getCountry() !== null) {
+            $qb->andWhere($qb->expr()->eq('c.country', ':country'))->setParameter('country', $query->getCountry());
+        }
 
         foreach ($query->getOrderGroups() as $orderBy => $order) {
             switch ($orderBy) {
@@ -190,11 +202,9 @@ class CustomerRepository extends EntityRepository
         }
 
         if ($query->isShowVisible()) {
-            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', true, ParameterType::BOOLEAN);
+            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'))->setParameter('visible', true, ParameterType::BOOLEAN);
         } elseif ($query->isShowHidden()) {
-            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', false, ParameterType::BOOLEAN);
+            $qb->andWhere($qb->expr()->eq('c.visible', ':visible'))->setParameter('visible', false, ParameterType::BOOLEAN);
         }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
@@ -227,6 +237,10 @@ class CustomerRepository extends EntityRepository
         return new Pagination($this->getPaginatorForQuery($query), $query);
     }
 
+    /**
+     * FIXME make this private and remove the widget that this currently uses
+     * @return int<0, max>
+     */
     public function countCustomersForQuery(CustomerQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
@@ -237,36 +251,84 @@ class CustomerRepository extends EntityRepository
             ->select($qb->expr()->countDistinct('c.id'))
         ;
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
-    }
-
-    protected function getPaginatorForQuery(CustomerQuery $query): PaginatorInterface
-    {
-        $counter = $this->countCustomersForQuery($query);
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        return new LoaderPaginator(new CustomerLoader($qb->getEntityManager()), $qb, $counter);
+        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
     /**
-     * @param CustomerQuery $query
+     * @return PaginatorInterface<Customer>
+     */
+    private function getPaginatorForQuery(CustomerQuery $customerQuery): PaginatorInterface
+    {
+        $counter = $this->countCustomersForQuery($customerQuery);
+        $query = $this->createCustomerQuery($customerQuery);
+
+        return new LoaderQueryPaginator(new CustomerLoader($this->getEntityManager(), $customerQuery), $query, $counter);
+    }
+
+    /**
+     * @return Query<Customer>
+     */
+    private function createCustomerQuery(CustomerQuery $customerQuery): Query
+    {
+        $query = $this->getQueryBuilderForQuery($customerQuery)->getQuery();
+        $query = $this->prepareCustomerQuery($query);
+
+        foreach ($customerQuery->getHydrate() as $hydrate) {
+            switch ($hydrate) {
+                case CustomerQueryHydrate::TEAMS:
+                    // does not yet work, see https://github.com/doctrine/orm/pull/8391
+                    // $query->setFetchMode(Customer::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    break;
+
+                case CustomerQueryHydrate::TEAM_MEMBER:
+                    // does not yet work, see https://github.com/doctrine/orm/issues/11254
+                    // $query->setFetchMode(Customer::class, 'teams', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(Team::class, 'members', ClassMetadata::FETCH_EAGER);
+                    // $query->setFetchMode(TeamMember::class, 'user', ClassMetadata::FETCH_EAGER);
+                    break;
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param Query<Customer> $query
+     * @return Query<Customer>
+     */
+    public function prepareCustomerQuery(Query $query): Query
+    {
+        $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
+
+        $query->setFetchMode(Customer::class, 'meta', ClassMetadata::FETCH_EAGER);
+
+        return $query;
+    }
+
+    /**
      * @return Customer[]
      */
-    public function getCustomersForQuery(CustomerQuery $query): iterable
+    public function getCustomersForQuery(CustomerQuery $customerQuery): array
     {
-        // this is using the paginator internally, as it will load all joined entities into the working unit
-        // do not "optimize" to use the query directly, as it would results in hundreds of additional lazy queries
-        $paginator = $this->getPaginatorForQuery($query);
-
-        return $paginator->getAll();
+        return $this->getCustomers($this->createCustomerQuery($customerQuery), $customerQuery);
     }
 
     /**
-     * @param Customer $delete
-     * @param Customer|null $replace
-     * @throws \Doctrine\ORM\Exception\ORMException
+     * @param Query<Customer> $query
+     * @return Customer[]
      */
-    public function deleteCustomer(Customer $delete, ?Customer $replace = null)
+    public function getCustomers(Query $query, CustomerQuery $customerQuery): array
+    {
+        /** @var array<Customer> $customers */
+        $customers = $query->execute();
+
+        $loader = new CustomerLoader($this->getEntityManager(), $customerQuery);
+        $loader->loadResults($customers);
+
+        return $customers;
+    }
+
+    public function deleteCustomer(Customer $delete, ?Customer $replace = null): void
     {
         $em = $this->getEntityManager();
         $em->beginTransaction();
@@ -293,6 +355,9 @@ class CustomerRepository extends EntityRepository
         }
     }
 
+    /**
+     * @return array<CustomerComment>
+     */
     public function getComments(Customer $customer): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -308,14 +373,14 @@ class CustomerRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function saveComment(CustomerComment $comment)
+    public function saveComment(CustomerComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($comment);
         $entityManager->flush();
     }
 
-    public function deleteComment(CustomerComment $comment)
+    public function deleteComment(CustomerComment $comment): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($comment);

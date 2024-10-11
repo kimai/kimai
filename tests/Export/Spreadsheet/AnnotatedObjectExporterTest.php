@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class AnnotatedObjectExporterTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
         $annotationExtractor = new AnnotationExtractor();
@@ -44,18 +44,18 @@ class AnnotatedObjectExporterTest extends TestCase
         $worksheet = $spreadsheet->getActiveSheet();
 
         $i = 0;
-        self::assertNull($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('test project', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('A customer', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals(1234567890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals(123456.7890, $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('=1234567890/86400', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('month', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertFalse($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
-        self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertNull($worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('test project', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('A customer', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals(1234567890, $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals(123456.7890, $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('=1234567890/86400', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('month', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('#ababab', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertFalse($worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('Lorem Ipsum', $worksheet->getCell([++$i, 2])->getValue());
     }
 }

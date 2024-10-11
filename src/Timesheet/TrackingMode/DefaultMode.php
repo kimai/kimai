@@ -65,7 +65,7 @@ final class DefaultMode extends AbstractTrackingMode
 
         $this->rounding->roundBegin($timesheet);
 
-        if (null !== $timesheet->getEnd()) {
+        if (!$timesheet->isRunning()) {
             $this->rounding->roundEnd($timesheet);
 
             if (null !== $timesheet->getDuration()) {

@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,13 +28,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('CustomerName', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Project'])])]
 #[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
-#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Constraints\Project]
-class Project implements EntityWithMetaFields, EntityWithBudget
+class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique Project ID
@@ -59,7 +62,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotNull]
-    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
@@ -167,11 +170,18 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $globalActivities = true;
+    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[Assert\Length(max: 10)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'project_number')]
+    private ?string $number = null;
 
     public function __construct()
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
@@ -447,6 +457,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         $this->invoiceText = $invoiceText;
     }
 
+    public function setNumber(?string $number): void
+    {
+        $this->number = $number;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
     public function __toString(): string
     {
         return $this->getName();
@@ -454,9 +474,11 @@ class Project implements EntityWithMetaFields, EntityWithBudget
 
     public function __clone()
     {
-        if ($this->id) {
+        if ($this->id !== null) {
             $this->id = null;
         }
+
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
@@ -465,6 +487,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ProjectMeta $meta */

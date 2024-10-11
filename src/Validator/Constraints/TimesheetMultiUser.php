@@ -22,7 +22,7 @@ final class TimesheetMultiUser extends Constraint
 
     public string $message = 'This form has invalid settings.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

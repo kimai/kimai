@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GoogleSourceTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $sut = new GoogleSource('0815', 'askdjfhlaksjdhflaksjhdflkjasdlkfjh', '#fffccc');
 

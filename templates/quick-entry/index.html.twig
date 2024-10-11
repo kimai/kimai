@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'page_setup.html.twig' %}
 
 {% block page_class %}quick-entry-page{% endblock %}
 
@@ -6,14 +6,19 @@
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
+        {% block box_class %}mt-2{% endblock %}
         {% block box_before %}
             {{ form_start(form, {attr: {id: 'quick-entries-form', class: 'form-dataTable quick-entries'}}) }}
             {{ form_widget(form._token) }}
-        {% endblock %}
-        {% block box_after %}{{ form_end(form) }}{% endblock %}
-        {% block box_title %}
-            {{ form_widget(form.date) }}
             {{ form_errors(form) }}
+        {% endblock %}
+        {% block box_after %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
+                {{ icon('create', true) }}
+                {{ 'action.add'|trans }}
+            </button>
+            {{ form_end(form) }}
         {% endblock %}
         {# "table-responsive" does not work, because that would render dropdowns at the bottom behind the container #}
         {% block box_body_class %}p-0 maybe-table-responsive{% endblock %}
@@ -45,13 +50,6 @@
                     </tr>
                 </tfoot>
             </table>
-        {% endblock %}
-        {% block box_footer %}
-            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
-                {{ icon('create', true) }}
-                {{ 'action.add'|trans }}
-            </button>
         {% endblock %}
     {% endembed %}
 {% endblock %}
@@ -107,10 +105,6 @@
                 }
             };
             recalculateTotals();
-
-            document.getElementById('{{ form.date.vars.id }}').addEventListener('change', function(ev) {
-                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', ev.target.value);
-            });
 
             document.getElementById('quick-entries-form').addEventListener('click', recalculateTotals);
             document.getElementById('quick-entries-form').addEventListener('change', recalculateTotals);

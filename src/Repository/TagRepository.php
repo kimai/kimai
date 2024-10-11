@@ -10,7 +10,8 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
-use App\Repository\Paginator\QueryBuilderPaginator;
+use App\Entity\Timesheet;
+use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
 use App\Utils\Pagination;
@@ -19,15 +20,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Tag>
+ * @extends EntityRepository<Tag>
  */
 class TagRepository extends EntityRepository
 {
-    /**
-     * See KimaiFormSelect.js (maxOptions) as well.
-     */
-    public const MAX_AMOUNT_SELECT = 500;
-
     public function saveTag(Tag $tag): void
     {
         $entityManager = $this->getEntityManager();
@@ -64,18 +60,11 @@ class TagRepository extends EntityRepository
         return $this->findOneBy(['name' => $tagName, 'visible' => $visible]);
     }
 
-    /**
-     * Find all visible tag names in alphabetical order.
-     *
-     * @return array<string>
-     */
-    public function findAllTagNames(?string $filter = null): array
+    private function findAllTagsQuery(?string $filter = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('t');
 
-        $qb
-            ->select('t.name')
-            ->addOrderBy('t.name', 'ASC');
+        $qb->addOrderBy('t.name', 'ASC');
 
         $qb->andWhere($qb->expr()->eq('t.visible', ':visible'));
         $qb->setParameter('visible', true, ParameterType::BOOLEAN);
@@ -85,7 +74,27 @@ class TagRepository extends EntityRepository
             $qb->setParameter('filter', '%' . $filter . '%');
         }
 
-        return array_column($qb->getQuery()->getScalarResult(), 'name');
+        return $qb;
+    }
+
+    /**
+     * Find all visible tag names in alphabetical order.
+     *
+     * @return array<Tag>
+     */
+    public function findAllTags(?string $filter = null): array
+    {
+        return $this->findAllTagsQuery($filter)->getQuery()->getResult();
+    }
+
+    /**
+     * Find all visible tag names in alphabetical order.
+     *
+     * @return array<string>
+     */
+    public function findAllTagNames(?string $filter = null): array
+    {
+        return array_column($this->findAllTagsQuery($filter)->select('t.name')->getQuery()->getScalarResult(), 'name');
     }
 
     /**
@@ -107,9 +116,10 @@ class TagRepository extends EntityRepository
             ->resetDQLPart('orderBy')
             ->select($qb->expr()->count('tag.id'))
         ;
+        /** @var int<0, max> $counter */
         $counter = (int) $qb->getQuery()->getSingleScalarResult();
 
-        $paginator = new QueryBuilderPaginator($qb1, $counter);
+        $paginator = new QueryPaginator($qb1->getQuery(), $counter);
 
         $pager = new Pagination($paginator);
         $pager->setMaxPerPage($query->getPageSize());
@@ -122,7 +132,12 @@ class TagRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('tag');
 
-        $qb->select('tag.id, tag.name, tag.color, tag.visible, SIZE(tag.timesheets) as amount');
+        $qb1 = $this->getEntityManager()->createQueryBuilder();
+        $qb1->from(Timesheet::class, 't')->select('COUNT(tags)')->innerJoin('t.tags', 'tags')->where('tags.id = tag.id');
+
+        $dql = $qb1->getDQL(); // see https://github.com/phpstan/phpstan-doctrine/issues/606
+        $qb->select('tag.id, tag.name, tag.color, tag.visible');
+        $qb->addSelect('(' . $dql . ') as amount');
 
         $orderBy = $query->getOrderBy();
         $orderBy = match ($orderBy) {
@@ -140,8 +155,8 @@ class TagRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        if ($query->hasSearchTerm()) {
-            $searchTerm = $query->getSearchTerm();
+        $searchTerm = $query->getSearchTerm();
+        if ($searchTerm !== null) {
             $searchAnd = $qb->expr()->andX();
 
             if ($searchTerm->hasSearchTerm()) {

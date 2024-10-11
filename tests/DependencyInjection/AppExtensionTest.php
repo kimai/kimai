@@ -30,7 +30,7 @@ class AppExtensionTest extends TestCase
     private function getContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
-        $container->setParameter('app_locales', 'de|en|he|tr|zh_CN');
+        $container->setParameter('kimai_locales', ['de', 'en', 'he', 'tr', 'zh_CN']);
         $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
         $container->setParameter('security.role_hierarchy.roles', [
             'ROLE_TEAMLEAD' => ['ROLE_USER'],
@@ -71,26 +71,31 @@ class AppExtensionTest extends TestCase
                     'date' => 'M/d/yy',
                     'time' => 'h:mm a',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'de' => [
                     'date' => 'dd.MM.yy',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
                     'time' => 'H:mm',
                     'rtl' => true,
+                    'translation' => true,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
                     'time' => 'HH:mm',
                     'rtl' => false,
+                    'translation' => true,
                 ],
             ],
             'kimai.invoice.documents' => [

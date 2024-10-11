@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\TimesheetTeamSubscriber;
  */
 class TimesheetTeamSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(TimesheetTeamSubscriber::class, 'timesheet_team');
     }

@@ -126,9 +126,8 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(2, $entries);
-        $this->assertEquals(378.02, $entries[0]->getRate());
-        $this->assertEquals(2143.1, $entries[1]->getRate());
-        self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate());
+        $this->assertEquals(378.02, $entries[1]->getRate());
+        $this->assertEquals(2143.1, $entries[0]->getRate());
     }
 
     public function testDescriptionByTimesheet(): void

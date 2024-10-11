@@ -18,6 +18,26 @@
         <source>service-date</source>
         <target>Freelancer</target>
       </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+        <source>help.upload</source>
+        <target state="translated">Advarsel: eksisterende filer bliver overskrevet. Tilladte filtyper er: %extensions%.</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Du kan hente flere templates/skabeloner her</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
+        <source>programmatic</source>
+        <target state="translated">Til yderligere bearbejdning</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve">
+        <source>text</source>
+        <target state="translated">Tekst</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+        <source>Invoice</source>
+        <target state="translated">Faktura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

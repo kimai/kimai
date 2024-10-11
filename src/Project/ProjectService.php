@@ -20,6 +20,7 @@ use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
 use App\Repository\ProjectRepository;
 use App\Utils\Context;
+use App\Utils\NumberGenerator;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -30,13 +31,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 final class ProjectService
 {
-    public function __construct(private SystemConfiguration $configuration, private ProjectRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
+    public function __construct(
+        private readonly ProjectRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ValidatorInterface $validator
+    )
     {
     }
 
     public function createNewProject(?Customer $customer = null): Project
     {
         $project = new Project();
+        $project->setNumber($this->calculateNextProjectNumber());
 
         if ($customer !== null) {
             $project->setCustomer($customer);
@@ -98,5 +105,42 @@ final class ProjectService
     public function findProjectByName(string $name): ?Project
     {
         return $this->repository->findOneBy(['name' => $name]);
+    }
+
+    public function findProjectByNumber(string $number): ?Project
+    {
+        return $this->repository->findOneBy(['number' => $number]);
+    }
+
+    public function calculateNextProjectNumber(): ?string
+    {
+        $format = $this->configuration->find('project.number_format');
+        if (empty($format) || !\is_string($format)) {
+            return null;
+        }
+
+        // we cannot use max(number) because a varchar column returns unexpected results
+        $start = $this->repository->countProject();
+        $i = 0;
+
+        do {
+            $start++;
+
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+                return match ($format) {
+                    'pc' => $start + $increaseBy,
+                    default => $originalFormat,
+                };
+            });
+
+            $number = $numberGenerator->getNumber();
+            $project = $this->findProjectByNumber($number);
+        } while ($project !== null && $i++ < 100);
+
+        if ($project !== null) {
+            return null;
+        }
+
+        return $number;
     }
 }

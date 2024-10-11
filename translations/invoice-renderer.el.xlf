@@ -10,12 +10,10 @@
         <source>help.upload</source>
         <target state="translated">Προσοχή: τα υπάρχοντα αρχεία θα αντικατασταθούν. Επιτρεπόμενοι τύποι αρχείων είναι: %extensions%.</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">Για περαιτέρω επεξεργασία</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Τιμολόγιο</target>

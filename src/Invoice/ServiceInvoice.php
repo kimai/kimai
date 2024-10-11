@@ -212,11 +212,11 @@ final class ServiceInvoice
         }
 
         if (mb_strlen($filename) >= 150) {
-            throw new \Exception(sprintf('Invoice filename "%s" is too long, max. 150 characters allowed', $filename));
+            throw new \Exception(\sprintf('Invoice filename "%s" is too long, max. 150 characters allowed', $filename));
         }
 
         if (is_file($invoiceDirectory . $filename)) {
-            throw new \Exception(sprintf('Invoice "%s" already exists', $filename));
+            throw new \Exception(\sprintf('Invoice "%s" already exists', $filename));
         }
 
         if ($response instanceof BinaryFileResponse) {
@@ -303,7 +303,7 @@ final class ServiceInvoice
         }
 
         throw new \Exception(
-            sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
+            \sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
         );
     }
 
@@ -354,7 +354,7 @@ final class ServiceInvoice
         }
 
         throw new \Exception(
-            sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
+            \sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
         );
     }
 

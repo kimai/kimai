@@ -1,9 +1,12 @@
 {% extends 'page_setup.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block main %}
+{% block form_addon %}
+    {% set event = actions(app.user, 'contract_links', 'index', {year: year, user: user}) %}
+    {{ widgets.actions(event.actions, {button_class: '', large: false}) }}
+{% endblock %}
 
-    {% set withWorkHourConfiguration = user.hasWorkHourConfiguration() %}
+{% block main %}
 
     {% if not withWorkHourConfiguration %}
         {% set warningMsg %}
@@ -87,56 +90,8 @@
         {% endembed %}
     {% endif %}
 
-    {% if withWorkHourConfiguration %}
-        {% set expectedWeekTimes = user.workHoursMonday + user.workHoursTuesday + user.workHoursWednesday + user.workHoursThursday + user.workHoursFriday + user.workHoursSaturday + user.workHoursSunday %}
-
-        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed}  %}
-            {% from "macros/status.html.twig" import status_duration %}
-            {% block box_title %}
-                {{ 'work_times_should'|trans }}
-                {{ status_duration(expectedWeekTimes|duration) }}
-            {% endblock %}
-            {% block box_body %}
-                <div class="datagrid">
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'agendaWeek'|trans }}</div>
-                        <div class="datagrid-content">{{ expectedWeekTimes|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Monday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursMonday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Tuesday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursTuesday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Wednesday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursWednesday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Thursday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursThursday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Friday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursFriday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Saturday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursSaturday|duration }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'Sunday'|trans({}, 'system-configuration') }}</div>
-                        <div class="datagrid-content">{{ user.workHoursSunday|duration }}</div>
-                    </div>
-                </div>
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
-
     {% if year is defined %}
-        {% embed '@theme/embeds/card.html.twig' with {'collapsed': box_configuration.collapsed, 'id': 'working_time_detail_box', 'fullsize': true} %}
+        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'working_time_detail_box', border: false, item: {options: {bodyExtraClass: 'border-top', open: true}, bodyClasses: 'p-0 table-responsive'}} %}
             {% set yearShould = 0 %}
             {% set yearIs = 0 %}
             {% set approved = 0 %}
@@ -154,17 +109,14 @@
             {% endfor %}
             {% from "macros/widgets.html.twig" import work_times_result, table_actions, card_tool_button, username %}
             {% from "macros/status.html.twig" import status_count %}
-            {% block box_title %}
+            {% block title %}
                 {{ 'work_times'|trans }}
                 {% if withWorkHourConfiguration %}
+                    &nbsp;
                     {{ status_count(approved ~ '/' ~ year.months|length) }}
                 {% endif %}
             {% endblock %}
-            {% block box_body_classes %}card-table table-responsive{% endblock %}
-            {% block box_tools %}
-                {# {{ card_tool_button('visibility', {'onclick': "toggleDays(); return false;", 'id': 'toggleDaysIcon'}) }} #}
-            {% endblock %}
-            {% block box_body %}
+            {% block body %}
                 <table id="working_times_details" class="table table-vcenter table-hover dataTable">
                     <thead>
                     <tr>
@@ -173,8 +125,8 @@
                         {% endif %}
                         <th>{{ 'month'|trans }}</th>
                         <th class="text-end total">{{ 'sum.total'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_should'|trans }}</th>
-                        <th class="text-end">{{ 'work_times_is'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_should'|trans }}</th>
+                        <th class="text-end hw-min">{{ 'work_times_is'|trans }}</th>
                         {% for day in 1..31 %}
                         <th class="text-end contractDay">{% if day < 10 %}0{% endif %}{{ day }}</th>
                         {% endfor %}
@@ -213,7 +165,7 @@
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
                                 {% set class = 'text-end contractDay text-nowrap' %}
-                                {% if day.day is weekend(user) %}
+                                {% if day.workingTime.expectedTime == 0 %}
                                     {% set class = class ~ ' weekend' %}
                                 {% endif %}
                                 {% if day.workingTime.expectedTime > 0 and day.workingTime.actualTime == 0 and now > day.day %}

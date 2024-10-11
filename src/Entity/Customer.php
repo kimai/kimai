@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,14 +25,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: 'App\Repository\CustomerRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
 #[Constraints\Customer]
-class Customer implements EntityWithMetaFields, EntityWithBudget
+class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     public const DEFAULT_CURRENCY = 'EUR';
 
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
@@ -41,7 +44,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     private ?int $id = null;
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
@@ -146,6 +149,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Timezone]
     #[Assert\Length(max: 64)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -190,6 +194,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         $this->name = $name;
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
@@ -474,9 +479,11 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
 
     public function __clone()
     {
-        if ($this->id) {
+        if ($this->id !== null) {
             $this->id = null;
         }
+
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
@@ -485,6 +492,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var CustomerMeta $meta */

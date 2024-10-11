@@ -24,7 +24,7 @@ class BillableCalculatorTest extends TestCase
     /**
      * @dataProvider getTestData
      */
-    public function testCalculate(bool $billable, string $mode, bool $expected, ?Customer $customer, ?Project $project, ?Activity $activity)
+    public function testCalculate(bool $billable, string $mode, bool $expected, ?Customer $customer, ?Project $project, ?Activity $activity): void
     {
         $sut = new BillableCalculator();
 

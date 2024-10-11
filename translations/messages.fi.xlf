@@ -2,11 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
         <target state="translated">Työajanseuranta</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
@@ -77,9 +74,6 @@
         <source>rates.title</source>
         <target state="translated">Hinnat</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Salasana</target>
@@ -108,9 +102,6 @@
         <source>login_required</source>
         <target state="translated">Puuttuvat oikeudet. Uudelleen ohjataanko kirjautumiseen?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">Ohjauspaneeli</target>
@@ -175,9 +166,6 @@
         <source>Doctor</source>
         <target state="translated">Järjestelmän kunto</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">Valituilla suodattimilla ei löytynyt merkintöjä.</target>
@@ -186,9 +174,6 @@
         <source>error.no_comments_found</source>
         <target state="translated">Kommentteja ei ole vielä lähetetty.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Päivämäärä</target>
@@ -237,9 +222,9 @@
         <source>budget</source>
         <target state="translated">Budjetti</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Aika budjetti</target>
+        <target state="needs-translation">Aika budjetti</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -313,9 +298,6 @@
         <source>billable</source>
         <target state="translated">Laskutettava</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">Toiminnot</target>
@@ -340,16 +322,10 @@
         <source>action.close</source>
         <target state="translated">Sulje</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target state="translated">Ohjauspaneeli</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">Näytä valikko</target>
@@ -366,9 +342,6 @@
         <source>progress</source>
         <target state="translated">Edistyminen</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target state="translated">Omat ajat</target>
@@ -405,17 +378,14 @@
         <source>color</source>
         <target state="translated">Väri</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target state="translated">Vaihda</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target state="translated">Lisää</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">Käyttäjäprofiili</target>
@@ -424,9 +394,9 @@
         <source>profile.about_me</source>
         <target state="translated">Tietoa minusta</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Työskennellyt alkaen</target>
+        <target state="translated">Ensimmäinen työpäivä</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -464,7 +434,6 @@
         <source>lastLogin</source>
         <target state="translated">Viimeksi kirjautunut</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">Kuukausi</target>
@@ -485,19 +454,10 @@
         <source>export_decimal</source>
         <target state="translated">Käytä desimaalitarkkuutta viennissä</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target state="translated">Kalenteri</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target state="translated">Projektin aloitus</target>
@@ -506,9 +466,6 @@
         <source>project_end</source>
         <target state="translated">Projektin lopetus</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">Tili</target>
@@ -561,9 +518,6 @@
         <source>currency</source>
         <target state="translated">Valuutta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target state="translated">Nimi</target>
@@ -596,16 +550,10 @@
         <source>Allowed character: A-Z and _</source>
         <target state="translated">Sallitut merkit: A-Z and _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target state="translated">Versio</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">Järjestelmän ylläpitäjä</target>
@@ -622,9 +570,6 @@
         <source>ROLE_USER</source>
         <target state="translated">Käyttäjä</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target state="translated">Tänään, %day%</target>
@@ -733,9 +678,6 @@
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% käytetty (%left% on vielä auki)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">Lasku malli</target>
@@ -924,9 +866,6 @@
         <source>export.date_copyright</source>
         <target state="translated">Luotu %date% sovelluksella %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target state="translated">Sinun aktiiviset ajan mittaukset</target>
@@ -935,13 +874,10 @@
         <source>recent.activities</source>
         <target state="translated">Aloita uudelleen yksi viimeisimmistä työtehtävistäsi</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="translated">Luo uusi aikamerkintä</target>
+        <target state="translated">Aloita ajan seuranta</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">Sivun koko</target>
@@ -1042,12 +978,12 @@
         <source>stats.durationFinancialYear</source>
         <target>Työaika tällä tilikaudella</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Tulot</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Työaika</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
@@ -1066,9 +1002,9 @@
         <source>error.too_many_entries</source>
         <target>Pyyntöä ei voitu toteuttaa. Liikaa tuloksia.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Sähköposti lähetetty. Palauta salasanasi klikkaamalla linkkiä. Huom: Voit pyytää salasanan palauttamista vain %tokenLifetime% tunnin välein. Jos sähköposti ei saavu perille, tarkista roskapostikansio tai yritä uudelleen.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="translated">Sähköpostiin on lähetetty linkki salasanan vaihtoon. Huomautus: Voit pyytää uutta salasanaa vain kerran %tokenLifetime% tunnin välein. Jos et saa sähköpostia, tarkista roskapostikansiosi tai yritä uudelleen.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1270,9 +1206,9 @@
         <source>day_full</source>
         <target state="translated">Koko päivä</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="translated">Käyttöliittymän kielen lisäksi tämä asetus vaikuttaa ajan, päivämäärän sekä valuutan muotoon.</target>
+        <target state="translated">Tämä asetus on vastuussa ohjelmiston kääntämisestä</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -1298,9 +1234,9 @@
         <source>stats.userDurationToday</source>
         <target state="translated">Työtuntini tänään</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">Vahvista kuukausi</target>
+        <target state="translated">Lukitse kuukausi</target>
       </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
@@ -1334,9 +1270,9 @@
         <source>sickness</source>
         <target state="translated">Sairas</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API salasanaa käytetään Kimain ja sinun sovelluksesi väliseen tiedonsiirtoon</target>
+        <target state="translated">Täällä voit hallita API-tunnuksiasi, joita käytetään sovelluksesi todentamiseen Kimaille.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1357,10 +1293,6 @@
       <trans-unit id="KgBw0BS" resname="skin">
         <source>skin</source>
         <target state="translated">Design</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Et ole vielä syöttänyt API salasanaa. Turvallisuussyistä et voi käyttää API:a ennen salasanan tallentamista.</target>
       </trans-unit>
       <trans-unit id="WOAx9yz" resname="modal.columns.profile">
         <source>modal.columns.profile</source>
@@ -1434,9 +1366,9 @@
         <source>public_holiday</source>
         <target state="translated">Kansallinen vapaapäivä</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Kuukauden vahvistamisen jälkeen käyttäjä ei enää pysty lisäämään tai muokkaamaan kyseisen jakson aikoja.</target>
+        <target state="translated">Tämä lukitsee kaikki päivät vuodesta ennen valittua päivämäärää. Käyttäjä ei voi enää luoda tai muokata aikoja lukitulle ajanjaksolle.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1573,6 +1505,274 @@
       <trans-unit id="o0hsx2H" resname="mark_as_open">
         <source>mark_as_open</source>
         <target state="translated">Merkitse avoimeksi</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Dokumentit</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Tuki</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Lahjoitus</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Päivämäärä</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Määritetty muoto</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">Laskunumero Generaattori</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">Yleiskatsaus</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Tuottoni tänään</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Tuottoni tänä vuonna</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal" xml:space="preserve">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Tuotot yhteensä</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">Menot</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Sukulaisen sairaus</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">Käännökset</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">Käännös</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Tuottoni tällä viikolla</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Tuottoni tässä kuussa</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Projektinumero</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">Maksamattomat lomat</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">Katogoriat</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">Kategoria</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">Käyttäjän tunnus</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">Päivät</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Tunteja päivässä</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Tunteja viikossa</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Tunteja kuukaudessa</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Työpäiviä</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Työajan laskeminen</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Viimeisin työpäivä</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve">
+        <source>help.invoiceLabel</source>
+        <target state="translated">Tämä teksti korvaa objektin nimen, mikä mahdollistaa yksityiskohtaisemmat tarrat laskutuotteille.</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
+        <source>help.visible</source>
+        <target state="translated">Jos asetus on pois päältä, objektia ei näytetä pudotusvalikoissa ja luettelonäkymissä.</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Tämä asiakirja toimii todisteena työtuneista.</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Lopeta ajan seuranta</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields" xml:space="preserve">
+        <source>Meta fields</source>
+        <target state="translated">Mukauta kentät</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">Tarkastuslokit</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Salli aikamerkinnät vain sellaisille päiville, joille odotettavissa olevat tunnit on määritelty työsopimuksessa</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve">
+        <source>help.globalActivities</source>
+        <target state="translated">Jos asetus on pois päältä, aikoja voidaan tallentaa vain hankekohtaisilla toimilla.</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
+        <source>includeWithBudget</source>
+        <target state="translated">Näytä merkinnät budjetilla</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity" xml:space="preserve">
+        <source>no_activity</source>
+        <target state="translated">Ilman toimintaa</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
+        <source>help_locales</source>
+        <target state="translated">Tässä on esimerkkejä tuettujen kielten muotoilusäännöistä</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">Työaikatilisi saldo on %hours% tuntia.</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
+        <source>help.billable</source>
+        <target state="translated">Jos asetus on pois päältä, kaikki tulevaisuudessa tallennetut aikamerkinnät merkitään "ei laskutettavaksi".</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off" xml:space="preserve">
+        <source>time_off</source>
+        <target state="translated">Vapaa-aika</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
+        <source>help.globalActivity</source>
+        <target state="translated">Jos et valitse hanketta, tästä toiminnasta tulee globaali ja se voidaan yhdistää mihin tahansa hankkeihin. Jos valitset projektin, aktiviteettia voidaan käyttää vain kyseisen hankkeen kanssa. Asetusta ei voi muuttaa myöhemmin.</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve">
+        <source>system_account</source>
+        <target state="translated">Järjestelmä-tili</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help" xml:space="preserve">
+        <source>active.help</source>
+        <target state="translated">Käyttäjät, joiden aktivointi kytketään pois, eivät voi enää kirjautua sisään, ja heidät piilotetaan raportteihin ja valintaruutuihin</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve">
+        <source>system_account.help</source>
+        <target state="translated">Piilotetaan raporteissa ja pudotusvalikoissa</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
+        <source>Custom content</source>
+        <target state="translated">Mukauta sisältöä</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Toiminnan numero</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Kytke aktivointi pois</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktivoi</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Viimeinen voimassaolopäivä</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Viimeisin käyttö</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Tämä on ainoa kerta, kun tämä avain näytetään! Pidä se siis turvassa ja varmista, että olet kopioinut sen ennen tämän ikkunan sulkemista.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API-salasanat ovat vanhentuneet: käytä sen sijaan API-tunnuksia.</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">Odotetut tunnit</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">Tälle käyttäjälle ei ole määritetty tavoitetunteja työsopimusasetuksissa.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">Tunteja työskennelty</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">Yksilöllistä käyttäjätunnusta käytetään todentamiseen ja viennissä</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve">
+        <source>Absence calendar</source>
+        <target state="translated">Poissaolokalenteri</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">Tuoja</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Luotu</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Hyväksy</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Pyydä</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Päivitetty</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">Aika, päivämäärä ja valuuttamuoto</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Poissaolo: Kommentti on pakollinen kenttä</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Haun suodatin</target>
       </trans-unit>
     </body>
   </file>

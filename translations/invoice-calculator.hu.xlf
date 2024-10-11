@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target>Felhasználónként csoportosítva - egy bejegyzés felhasználónként</target>
+        <target state="translated">Felhasználó</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target>Projekt: projektenként egy nevezés</target>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
@@ -33,6 +33,14 @@
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
         <target>Hetente: heti egy bejegyzés (a kezdési dátumot használja)</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Válassza ki, hogy a számlatételek mely mezők szerint legyenek csoportosítva</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Tevékenység és felhasználó</target>
       </trans-unit>
     </body>
   </file>

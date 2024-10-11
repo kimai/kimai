@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectInactiveQueryTest extends TestCase
 {
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $user = new User();
         $date = new \DateTime();
@@ -28,7 +28,7 @@ class ProjectInactiveQueryTest extends TestCase
         self::assertSame($user, $sut->getUser());
     }
 
-    public function testSetterGetter()
+    public function testSetterGetter(): void
     {
         $user = new User();
         $date = new \DateTime();

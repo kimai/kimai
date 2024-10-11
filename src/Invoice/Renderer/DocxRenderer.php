@@ -57,7 +57,12 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
             $i++;
         }
 
-        $cacheFile = $template->save();
+        $cacheFile = @tempnam(sys_get_temp_dir(), 'kimai-invoice-docx');
+        if (false === $cacheFile) {
+            throw new \Exception('Could not open temporary file');
+        }
+
+        $template->saveAs($cacheFile);
 
         clearstatcache(true, $cacheFile);
 

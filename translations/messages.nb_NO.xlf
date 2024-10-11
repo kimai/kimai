@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nb-NO" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target>Ja</target>
@@ -77,9 +74,6 @@
         <source>file</source>
         <target>Fil</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target state="translated">Passord</target>
@@ -108,9 +102,6 @@
         <source>login_required</source>
         <target state="translated">Manglende tillatelse. Videresend til innlogging?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Administrasjon</target>
@@ -163,9 +154,9 @@
         <source>budget</source>
         <target>Budsjett</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Tidsbudsjett</target>
+        <target state="needs-translation">Tidsbudsjett</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -207,9 +198,6 @@
         <source>action.close</source>
         <target>Lukk</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Vis meny</target>
@@ -234,9 +222,6 @@
         <source>color</source>
         <target>Farge</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Brukerprofil</target>
@@ -269,7 +254,6 @@
         <source>lastLogin</source>
         <target>Siste innlogging</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Måned</target>
@@ -282,9 +266,6 @@
         <source>agendaDay</source>
         <target>Dag</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
@@ -297,9 +278,6 @@
         <source>project_end</source>
         <target>Prosjektslutt</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Konto</target>
@@ -344,9 +322,6 @@
         <source>currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Navn</target>
@@ -367,16 +342,10 @@
         <source>user_role.title</source>
         <target>Brukerrolle</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versjon</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Administrator</target>
@@ -389,11 +358,8 @@
         <source>ROLE_USER</source>
         <target>Bruker</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Arbeidstid</target>
       </trans-unit>
       <trans-unit id="t5eIWp8" resname="stats.userTotal">
@@ -452,9 +418,9 @@
         <source>menu.homepage</source>
         <target state="translated">Dashbord</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Tidsregistrering</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tidsregistrering</target>
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
@@ -464,9 +430,9 @@
         <source>admin_entity.delete_confirm</source>
         <target state="translated">Denne dataen vil også bli slettet! Alternativt kan du velge en oppføring hvor all data vil bli overført til:</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>En e-post har blitt sendt. Den inneholder en lenke du må klikke for å tilbakestille passordet ditt. Merk: Du kan kun forespørre nytt passord én gang i løpet av %tokenLifetime% timer. Hvis du ikke får en e-post kan du sjekke søppelposten eller prøve igjen.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">En e-post har blitt sendt. Den inneholder en lenke du må klikke for å tilbakestille passordet ditt. Merk: Du kan kun forespørre nytt passord én gang i løpet av %tokenLifetime% timer. Hvis du ikke får en e-post kan du sjekke søppelposten eller prøve igjen.</target>
       </trans-unit>
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
@@ -644,9 +610,9 @@
         <source>help.fixedRate</source>
         <target state="translated">Hver tidsoppføring får samme verdi, uavhengig av varighet</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeidet siden</target>
+        <target state="needs-translation">Arbeidet siden</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -680,8 +646,8 @@
         <source>stats.workingTimeWeek</source>
         <target>Kalenderuke %week%</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Inntekter</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
@@ -954,7 +920,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Opprett ny tidsregistrering</target>
+        <target state="needs-translation">Opprett ny tidsregistrering</target>
       </trans-unit>
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
@@ -1304,9 +1270,9 @@
         <source>login.2fa_intro</source>
         <target state="translated">Skriv inn bekreftelseskode for å fullføre innloggingsprosessen.</target>
       </trans-unit>
-      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve">
         <source>notifications.welcome</source>
-        <target state="translated">Takk for at du samtykker til merknader.</target>
+        <target state="translated">Takk for at du samtykker til merknader!</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>
@@ -1368,9 +1334,9 @@
         <source>skin.dark</source>
         <target state="translated">Mørk</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API-passord brukes for kommunikasjon mellom Kimai og dine programmer</target>
+        <target state="needs-translation">API-passord brukes for kommunikasjon mellom Kimai og dine programmer</target>
       </trans-unit>
       <trans-unit id="5NugIxO" resname="includeWithBudget">
         <source>includeWithBudget</source>
@@ -1395,10 +1361,6 @@
       <trans-unit id="3WHV.yf" resname="activated">
         <source>Activated</source>
         <target state="translated">Aktivert</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Du har ikke skrevet inn et API-passord enda. Av sikkerhetshensyn kan du ikke bruke API-et til du har lagret et passord.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1430,11 +1392,11 @@
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">I tillegg til å oversette grensesnittet avgjør denne innstillingen tid-, dato- og valutaformater.</target>
+        <target state="needs-translation">I tillegg til å oversette grensesnittet avgjør denne innstillingen tid-, dato- og valutaformater.</target>
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Støttede språk med formateringsregler</target>
+        <target state="needs-translation">Støttede språk med formateringsregler</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1443,6 +1405,30 @@
       <trans-unit id="NOEx3FF" resname="invoice_date.help">
         <source>invoice_date.help</source>
         <target state="translated">Du kan endre fakturadato her</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentasjon</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Forum</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Doner</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Dato</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target>Oppsatt format</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Fakturanummer-generator</target>
       </trans-unit>
     </body>
   </file>

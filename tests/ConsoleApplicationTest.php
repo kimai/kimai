@@ -19,12 +19,12 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class ConsoleApplicationTest extends TestCase
 {
-    public function testVersion()
+    public function testVersion(): void
     {
         $kernel = $this->createMock(KernelInterface::class);
         $sut = new ConsoleApplication($kernel);
         self::assertEquals(Constants::SOFTWARE, $sut->getName());
         self::assertEquals(Constants::VERSION, $sut->getVersion());
-        self::assertEquals(sprintf('%s <info>%s</info> (env: <comment></>, debug: <comment>false</>)', Constants::SOFTWARE, Constants::VERSION), $sut->getLongVersion());
+        self::assertEquals(\sprintf('%s <info>%s</info> (env: <comment></>, debug: <comment>false</>)', Constants::SOFTWARE, Constants::VERSION), $sut->getLongVersion());
     }
 }

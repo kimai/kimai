@@ -30,7 +30,7 @@ class BaseQuery
     /** @var array<string, string|int|null|bool|array<mixed>|DateRange> */
     private array $defaults = [
         'page' => 1,
-        'pageSize' => self::DEFAULT_PAGESIZE,
+        'size' => self::DEFAULT_PAGESIZE,
         'orderBy' => 'id',
         'order' => self::ORDER_ASC,
         'searchTerm' => null,
@@ -137,13 +137,27 @@ class BaseQuery
         return $this;
     }
 
+    public function getSize(): int
+    {
+        return $this->getPageSize();
+    }
+
+    public function setSize(?int $size): void
+    {
+        $this->setPageSize($size);
+    }
+
     public function getOrderBy(): string
     {
         return $this->orderBy;
     }
 
-    public function setOrderBy(string $orderBy): self
+    public function setOrderBy(?string $orderBy): self
     {
+        if ($orderBy === null) {
+            $orderBy = (string) $this->defaults['orderBy']; // @phpstan-ignore-line
+        }
+
         $this->orderBy = $orderBy;
 
         return $this;
@@ -154,8 +168,12 @@ class BaseQuery
         return $this->order;
     }
 
-    public function setOrder(string $order): self
+    public function setOrder(?string $order): self
     {
+        if ($order === null) {
+            $order = (string) $this->defaults['order']; // @phpstan-ignore-line
+        }
+
         if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
@@ -267,7 +285,7 @@ class BaseQuery
         return $this;
     }
 
-    public function setBookmark(Bookmark $bookmark): void
+    public function setBookmark(?Bookmark $bookmark): void
     {
         $this->bookmark = $bookmark;
     }
@@ -298,7 +316,13 @@ class BaseQuery
         return array_pop($shortClass);
     }
 
-    public function copyTo(BaseQuery $query): BaseQuery
+    /**
+     * @template T of BaseQuery
+     * @param T $query
+     * @return T
+     * @internal
+     */
+    final public function copyTo(BaseQuery $query): BaseQuery
     {
         $query->setDefaults($this->defaults);
         if (null !== $this->getCurrentUser()) {
@@ -318,7 +342,13 @@ class BaseQuery
             $query->setVisibility($this->getVisibility());
         }
 
+        $query->copyFrom($this);
+
         return $query;
+    }
+
+    protected function copyFrom(BaseQuery $query): void
+    {
     }
 
     public function isDefaultFilter(string $filter): bool

@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Time tracking</source>
-        <target state="translated">Uppföljning av tid</target>
+        <target state="translated">Tidrapport</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -14,9 +14,9 @@
         <source>theme.markdown_content</source>
         <target state="translated">Tillåt markdown-formatting i beskrivningar och kommentarer</target>
       </trans-unit>
-      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
         <source>timesheet.mode</source>
-        <target state="translated">Tidsredovisningsläge</target>
+        <target state="translated">Tidtagningsläge</target>
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>
@@ -122,9 +122,9 @@
         <source>invoice.number_format</source>
         <target>Format för fakturanummer</target>
       </trans-unit>
-      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
         <source>timesheet.default_begin</source>
-        <target>Standard starttid (används inte i alla tidsrapporteringslägen)</target>
+        <target state="translated">Standard starttid (används inte i alla tidrapporteringslägen)</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
@@ -258,9 +258,9 @@
         <source>timesheet.rules.lockdown_grace_period</source>
         <target>Avslutningsperiodens slut (PHP relativt datum till slutet av spärrperiod)</target>
       </trans-unit>
-      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration" xml:space="preserve">
         <source>timesheet.rules.allow_zero_duration</source>
-        <target state="translated">Tillåt tidsredovisningar med saknad varaktighet</target>
+        <target state="translated">Tillåt tidrapporter utan längd</target>
       </trans-unit>
       <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities">
         <source>quick_entry.recent_activities</source>
@@ -278,9 +278,9 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Visning av kalenderradernas rubriker</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="translated">Kundnummer Format</target>
+        <target state="translated">Kundnummer, format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>
@@ -294,13 +294,25 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Kopierar data vid tillägg via dra och släpp</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
         <source>activity.allow_inline_create</source>
-        <target state="translated">Tillåt skapande av aktiviteter i tidsspårningsform</target>
+        <target state="translated">Tillåt skapande av aktiviteter i tidtagningsform</target>
       </trans-unit>
-      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
-        <target state="translated">Ta över team från den inloggade användaren när du skapar nya poster</target>
+        <target state="translated">Använd grupp från den inloggade användaren när nya poster skapas</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Aktivitetsreferens, format</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Tillåt fler förekomster av samma referens</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Projektreferens, format</target>
       </trans-unit>
     </body>
   </file>

@@ -11,21 +11,42 @@ namespace App\Tests\Repository\Loader;
 
 use App\Entity\Customer;
 use App\Repository\Loader\CustomerLoader;
+use App\Repository\Query\CustomerQuery;
 
 /**
  * @covers \App\Repository\Loader\CustomerLoader
  */
 class CustomerLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
-        $em = $this->getEntityManagerMock(2);
+        $em = $this->getEntityManagerMock(0);
 
-        $sut = new CustomerLoader($em);
+        $query = new CustomerQuery();
+        $query->loadTeams();
+
+        $sut = new CustomerLoader($em, $query);
 
         $entity = $this->createMock(Customer::class);
-        $entity->expects($this->once())->method('getId')->willReturn(1);
 
-        $sut->loadResults([$entity, 4711]);
+        $sut->loadResults([$entity]);
+    }
+
+    public function testLoadResultsWithMocks(): void
+    {
+        $em = $this->getEntityManagerMock(1);
+
+        $query = new CustomerQuery();
+        $query->loadTeams();
+
+        $sut = new CustomerLoader($em, $query);
+
+        $entity = $this->createMock(Customer::class);
+        $entity->method('getId')->willReturn(1);
+
+        $entity2 = $this->createMock(Customer::class);
+        $entity->method('getId')->willReturn(2);
+
+        $sut->loadResults([$entity, $entity2]);
     }
 }

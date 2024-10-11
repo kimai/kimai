@@ -9,42 +9,56 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use App\Form\Type\DurationType;
+use App\Form\Model\UserContractModel;
+use App\WorkingTime\Mode\WorkingTimeMode;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
- * @extends AbstractType<User>
+ * @extends AbstractType<UserContractModel>
  */
 final class UserContractType extends AbstractType
 {
+    public function __construct(private readonly WorkingTimeModeFactory $contractModeService)
+    {
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['workContractModes'] = $this->contractModeService->getAll();
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $dayOptions = [
-            'translation_domain' => 'system-configuration',
-            'constraints' => [
-                new GreaterThanOrEqual(0)
-            ],
-        ];
+        $sorted = $this->contractModeService->getAll();
 
-        $builder
-            ->add('workHoursMonday', DurationType::class, array_merge(['label' => 'Monday'], $dayOptions))
-            ->add('workHoursTuesday', DurationType::class, array_merge(['label' => 'Tuesday'], $dayOptions))
-            ->add('workHoursWednesday', DurationType::class, array_merge(['label' => 'Wednesday'], $dayOptions))
-            ->add('workHoursThursday', DurationType::class, array_merge(['label' => 'Thursday'], $dayOptions))
-            ->add('workHoursFriday', DurationType::class, array_merge(['label' => 'Friday'], $dayOptions))
-            ->add('workHoursSaturday', DurationType::class, array_merge(['label' => 'Saturday'], $dayOptions))
-            ->add('workHoursSunday', DurationType::class, array_merge(['label' => 'Sunday'], $dayOptions))
-        ;
+        usort($sorted, function (WorkingTimeMode $a, WorkingTimeMode $b) {
+            return $a->getOrder() <=> $b->getOrder();
+        });
+
+        $modes = [];
+        foreach ($sorted as $mode) {
+            $modes[$mode->getName()] = $mode->getId();
+        }
+
+        if (\count($modes) > 1) {
+            $builder->add('workContractMode', ChoiceType::class, ['label' => 'work_hours_mode', 'choices' => $modes]);
+        }
+
+        foreach ($modes as $mode) {
+            $this->contractModeService->getMode($mode)->buildForm($builder, $options); // @phpstan-ignore-line
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => UserContractModel::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_contract',

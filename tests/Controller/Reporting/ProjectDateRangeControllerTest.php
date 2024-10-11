@@ -23,12 +23,12 @@ use App\Timesheet\DateTimeFactory;
  */
 class ProjectDateRangeControllerTest extends ControllerBaseTest
 {
-    public function testReportIsSecure()
+    public function testReportIsSecure(): void
     {
         $this->assertUrlIsSecured('/reporting/project_daterange');
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 

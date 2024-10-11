@@ -63,7 +63,7 @@ final class ConfigureMainMenuEvent extends Event
 
     public function getInvoiceMenu(): ?MenuItemModel
     {
-        return $this->menu->getChild('invoice');
+        return $this->menu->getChild('invoices');
     }
 
     public function getReportingMenu(): ?MenuItemModel
@@ -71,6 +71,9 @@ final class ConfigureMainMenuEvent extends Event
         return $this->menu->getChild('reporting');
     }
 
+    /**
+     * @deprecated since 2.22 - use getMenu() or getAdminMenu() instead
+     */
     public function getAppsMenu(): MenuItemModel
     {
         return $this->apps;

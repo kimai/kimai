@@ -42,7 +42,7 @@ final class Version20230126002049 extends AbstractMigration
 
         $users = $schema->getTable('kimai2_users');
         if (!$users->hasColumn('totp_secret')) {
-            $users->addColumn('totp_secret', 'string', ['notnull' => false, 'default' => null]);
+            $users->addColumn('totp_secret', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
             $users->addColumn('totp_enabled', 'boolean', ['notnull' => true, 'default' => false]);
         }
         if (!$users->hasColumn('system_account')) {
@@ -85,7 +85,7 @@ final class Version20230126002049 extends AbstractMigration
         $this->addSql("UPDATE kimai2_configuration SET `value` = '15' WHERE `name` = 'timesheet.time_increment' and `value` = '0'");
         $this->addSql("UPDATE kimai2_configuration SET `value` = '5' WHERE `name` = 'timesheet.time_increment' and `value` IN ('1', '2', '3', '4')");
         $this->addSql("UPDATE kimai2_configuration SET `value` = '0' WHERE `name` = 'user.registration'");
-        $this->addSql("UPDATE kimai2_roles SET `name` = UPPER(`name`)");
+        $this->addSql('UPDATE kimai2_roles SET `name` = UPPER(`name`)');
         $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'service-date' WHERE `renderer` = 'freelancer'");
         $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'invoice' WHERE `renderer` = 'default'");
         $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'default' WHERE `renderer` = 'default-pdf'");

@@ -19,11 +19,7 @@ final class Util
     }
 
     /**
-     * Calculates the rate for a hourly rate and a given duration in seconds.
-     *
-     * @param float $hourlyRate
-     * @param int $seconds
-     * @return float
+     * Calculates the rate by an hourly rate and a given duration in seconds.
      */
     public static function calculateRate(float $hourlyRate, int $seconds): float
     {

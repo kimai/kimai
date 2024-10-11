@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class NotFoundExceptionTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $sut = new NotFoundException();
         self::assertEquals('Not found', $sut->getMessage());

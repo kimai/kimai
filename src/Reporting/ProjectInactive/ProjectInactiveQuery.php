@@ -15,15 +15,13 @@ use DateTime;
 final class ProjectInactiveQuery
 {
     private DateTime $lastChange;
-    private User $user;
 
-    public function __construct(DateTime $lastChange, User $user)
+    public function __construct(DateTime $lastChange, private User $user)
     {
         $this->lastChange = clone $lastChange;
-        $this->user = $user;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

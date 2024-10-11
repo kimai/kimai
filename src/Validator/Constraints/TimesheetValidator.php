@@ -10,7 +10,8 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Validator\Constraints\Timesheet as TimesheetConstraint;
+use App\Validator\Constraints\Timesheet as TimesheetEntityConstraint;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -18,24 +19,23 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetValidator extends ConstraintValidator
 {
     /**
-     * @param Constraint[] $constraints
+     * @param TimesheetConstraint[] $constraints
      */
-    public function __construct(private iterable $constraints)
+    public function __construct(
+        #[TaggedIterator(TimesheetConstraint::class)]
+        private iterable $constraints
+    )
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate(mixed $timesheet, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!($constraint instanceof TimesheetConstraint)) {
-            throw new UnexpectedTypeException($constraint, Timesheet::class);
+        if (!($constraint instanceof TimesheetEntityConstraint)) {
+            throw new UnexpectedTypeException($constraint, TimesheetEntityConstraint::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
         $groups = [Constraint::DEFAULT_GROUP];
@@ -47,7 +47,7 @@ final class TimesheetValidator extends ConstraintValidator
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $innerConstraint, $groups);
+                ->validate($value, $innerConstraint, $groups);
         }
     }
 }

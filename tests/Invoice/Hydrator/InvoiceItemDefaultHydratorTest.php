@@ -20,27 +20,41 @@ class InvoiceItemDefaultHydratorTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testHydrate()
+    public function testHydrate(): void
     {
         $model = $this->getInvoiceModel();
 
         $sut = new InvoiceItemDefaultHydrator();
         $sut->setInvoiceModel($model);
 
-        $result = $sut->hydrate($model->getCalculator()->getEntries()[0]);
-        $metaFields = ['entry.meta.foo-timesheet'];
-        $this->assertEntryStructure($result, $metaFields);
+        $expected = [
+            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => '== jhg ljhg ', 'description_safe' => '== jhg ljhg '],
+            ['meta_fields' => ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], 'description' => '', 'description_safe' => 'activity description'],
+            ['meta_fields' => ['entry.meta.foo-timesheet'], 'description' => '', 'description_safe' => 'activity description'],
+            ['meta_fields' => ['entry.meta.foo-timesheet3']],
+            ['meta_fields' => []],
+        ];
 
-        $result = $sut->hydrate($model->getCalculator()->getEntries()[1]);
-        $metaFields = ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'];
-        $this->assertEntryStructure($result, $metaFields);
+        $i = 0;
+        foreach ($model->getCalculator()->getEntries() as $entry) {
+            $result = $sut->hydrate($entry);
+            $exp = $expected[$i++];
+            $this->assertEntryStructure($result, $exp['meta_fields']);
+            if (\array_key_exists('description', $exp)) {
+                $this->assertEquals($exp['description'], $result['entry.description']);
+            }
+            if (\array_key_exists('description_safe', $exp)) {
+                $this->assertEquals($exp['description_safe'], $result['entry.description_safe']);
+            }
+        }
     }
 
-    protected function assertEntryStructure(array $model, array $metaFields)
+    public function assertEntryStructure(array $model, array $metaFields): void
     {
         $keys = [
             'entry.row',
             'entry.description',
+            'entry.description_safe',
             'entry.amount',
             'entry.rate',
             'entry.rate_nc',
@@ -63,6 +77,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.end_time',
             'entry.end_timestamp',
             'entry.date',
+            'entry.date_process',
             'entry.week',
             'entry.weekyear',
             'entry.user_id',
@@ -86,7 +101,9 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.tags',
         ];
 
-        $keys = array_merge($keys, $metaFields);
+        if (\count($metaFields) > 0) {
+            $keys = array_merge($keys, $metaFields);
+        }
 
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $model);

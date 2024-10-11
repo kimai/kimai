@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "8.1.*||8.2.*",
+        "php": "8.1.*||8.2.*||8.3.*",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -35,14 +35,14 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
         "jms/serializer-bundle": "^5.0",
-        "kevinpapst/tabler-bundle": "^1.0",
+        "kevinpapst/tabler-bundle": "^1.4",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^4.0",
         "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^4.0",
         "pagerfanta/pagerfanta": "^3.0",
-        "phpoffice/phpspreadsheet": "^1.16",
+        "phpoffice/phpspreadsheet": "^2.0",
         "phpoffice/phpword": "^1.0",
         "psr/container": "^2.0",
         "psr/log": "^3.0",
@@ -79,11 +79,12 @@
     },
     "require-dev": {
         "ext-simplexml": "*",
-        "dama/doctrine-test-bundle": "^7.0",
+        "dama/doctrine-test-bundle": "^8.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.15",
         "friendsofphp/php-cs-fixer": "^3.3",
         "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/phpstan-strict-rules": "^1.0",
@@ -170,10 +171,10 @@
             "@tests-integration"
         ],
         "linting": [
-            "composer validate --strict",
             "bin/console lint:container",
             "bin/console lint:yaml config --parse-tags",
             "bin/console lint:twig templates --show-deprecations",
+            "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction",
             "bin/console lint:xliff translations"
         ],
         "tests": "vendor/bin/phpunit tests/",
@@ -196,13 +197,10 @@
         "symfony/symfony": "*"
     },
     "extra": {
-        "branch-alias": {
-            "dev-main": "2.0.x-dev"
-        },
         "symfony": {
             "id": "01C3FWRDJJEX9K6Y3A4XDFXPBR",
             "allow-contrib": true,
-            "require": "6.3.*"
+            "require": "6.4.*"
         }
     }
 }

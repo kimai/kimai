@@ -16,13 +16,15 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Model\MonthlyStatistic;
 use App\Reporting\YearlyUserList\YearlyUserList;
 use App\Reporting\YearlyUserList\YearlyUserListForm;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\Query\UserQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/reporting/users')]
@@ -59,9 +61,11 @@ final class ReportUsersYearController extends AbstractController
         $dateTimeFactory = $this->getDateTimeFactory();
 
         $defaultDate = $dateTimeFactory->createStartOfYear();
+        $isFinancialYear = false;
 
         if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
             $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
+            $isFinancialYear = true;
         }
 
         $values = new YearlyUserList();
@@ -70,11 +74,13 @@ final class ReportUsersYearController extends AbstractController
         $form = $this->createFormForGetRequest(YearlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
+            'show_range' => $isFinancialYear,
         ]);
 
         $form->submit($request->query->all(), false);
 
         $query = new UserQuery();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
 
@@ -105,7 +111,9 @@ final class ReportUsersYearController extends AbstractController
         $hasData = true;
 
         if (!empty($allUsers)) {
-            $monthStats = $statisticService->getMonthlyStats($start, $end, $allUsers);
+            $statsQuery = new TimesheetStatisticQuery($start, $end, $allUsers);
+            $statsQuery->setProject($values->getProject());
+            $monthStats = $statisticService->getMonthlyStats($statsQuery);
         }
 
         if (empty($monthStats)) {

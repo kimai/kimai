@@ -16,7 +16,7 @@ use App\Form\Model\DateRange;
 /**
  * Query for created invoices.
  */
-class InvoiceArchiveQuery extends BaseQuery
+class InvoiceArchiveQuery extends BaseQuery implements DateRangeInterface
 {
     use DateRangeTrait;
 

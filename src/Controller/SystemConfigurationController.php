@@ -22,13 +22,13 @@ use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
-use App\Form\Type\LanguageType;
 use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\ProjectTypePatternType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
+use App\Form\Type\UserLanguageType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -45,7 +45,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -469,7 +469,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('customer.rules.allow_duplicate_number'))
-                        ->setLabel('customer.allow_duplicate_number')
+                        ->setLabel('allow_duplicate_number')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
@@ -482,12 +482,32 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('copy_teams_on_create')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('project.number_format'))
+                        ->setLabel('project.number_format')
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}']])
+                        ->setRequired(false)
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('project.allow_duplicate_number'))
+                        ->setLabel('allow_duplicate_number')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('activity'))
                 ->setConfiguration([
                     (new Configuration('activity.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(ActivityTypePatternType::class),
+                    (new Configuration('activity.number_format'))
+                        ->setLabel('activity.number_format')
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}']])
+                        ->setRequired(false)
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('activity.allow_duplicate_number'))
+                        ->setLabel('allow_duplicate_number')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                     // TODO see DependencyInjection/Configuration::getActivityNode()
                     /*
                     (new Configuration('activity.allow_inline_create'))
@@ -504,7 +524,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.language'))
                         ->setLabel('language')
-                        ->setType(LanguageType::class)
+                        ->setType(UserLanguageType::class)
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')

@@ -30,7 +30,7 @@ class TimesheetMetaTest extends AbstractMetaEntityTest
         return new TimesheetMeta();
     }
 
-    public function testSetEntityThrowsException()
+    public function testSetEntityThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Expected instanceof Timesheet, received "App\Entity\Project"');

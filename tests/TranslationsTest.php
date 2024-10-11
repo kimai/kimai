@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TranslationsTest extends TestCase
 {
-    public function testForWrongFileExtension()
+    public function testForWrongFileExtension(): void
     {
         $files = glob(__DIR__ . '/../translations/*.*');
         foreach ($files as $file) {
@@ -24,7 +24,7 @@ class TranslationsTest extends TestCase
         }
     }
 
-    public function testForEmptyStrings()
+    public function testForEmptyStrings(): void
     {
         $files = glob(__DIR__ . '/../translations/*.xlf');
         foreach ($files as $file) {
@@ -36,7 +36,7 @@ class TranslationsTest extends TestCase
             foreach ($body->children() as $transUnit) {
                 self::assertNotEmpty(
                     (string) $transUnit->target,
-                    sprintf(
+                    \sprintf(
                         'Found empty translation in language "%s" and file "%s" for key "%s"',
                         $xml->file->attributes()['target-language'],
                         basename($file),
@@ -47,7 +47,7 @@ class TranslationsTest extends TestCase
         }
     }
 
-    public function testReplacerWereNotTranslated()
+    public function testReplacerWereNotTranslated(): void
     {
         $englishFiles = glob(__DIR__ . '/../translations/*.en.xlf');
         foreach ($englishFiles as $englishFile) {
@@ -58,7 +58,7 @@ class TranslationsTest extends TestCase
 
             foreach ($body->children() as $transUnit) {
                 preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
-                if (!empty($matches) && !empty($matches[0])) {
+                if (!empty($matches[0])) {
                     asort($matches[0]);
                     $trans[(string) $transUnit->source] = array_values($matches[0]);
                 }
@@ -88,14 +88,14 @@ class TranslationsTest extends TestCase
                         // some special cases, which don't work properly - base translation should be changed
                         preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
                         asort($matches[0]);
-                        self::assertEquals($transLang[$key], array_values($matches[0]), sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
+                        self::assertEquals($transLang[$key], array_values($matches[0]), \sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
                         $counter++;
                         unset($transLang[$key]);
                     }
                 }
 
                 $counter += \count($transLang);
-                self::assertEquals($expectedCounter, $counter, sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
+                self::assertEquals($expectedCounter, $counter, \sprintf('Missing replacer in "%s", did not find translation keys: %s', basename($file), implode(', ', array_keys($transLang))));
             }
         }
     }

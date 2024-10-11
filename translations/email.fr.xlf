@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Si le bouton ne fonctionne pas, veuillez copier-coller l'URL suivante dans votre navigateur : %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Ceci est un courriel généré automatiquement. Merci de ne pas répondre ; l’adresse ne sera pas lue.</target>
@@ -26,21 +22,41 @@
         <source>registration.intro</source>
         <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Veuillez activer votre compte dans les prochaines heures, avant que le lien expire.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Réinitialiser le mot de passe</target>
+        <target state="needs-translation">Réinitialiser le mot de passe</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>Cela peut arriver…</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Vous avez oublié votre mot de passe ?</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Réinitialiser le mot de passe</target>
+        <target state="needs-translation">Réinitialiser le mot de passe</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… donc vous avez oublié votre mot de passe ? Ne vous inquiétez pas : Kimai vous aidera à en créer un nouveau :</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">Ne vous inquiétez pas, Kimai vous aidera à en créer un nouveau !</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nouvelle absence | %absence_user% | %absence_type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Une nouvelle absence a été créée pour %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Veuillez les examiner à l'adresse suivante : %approval_url%</target>
       </trans-unit>
     </body>
   </file>

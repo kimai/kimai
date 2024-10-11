@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace DoctrineMigrations;
 
 use App\Doctrine\AbstractMigration;
@@ -27,10 +34,5 @@ final class Version20230606125948 extends AbstractMigration
     {
         $tags = $schema->getTable('kimai2_tags');
         $tags->dropColumn('visible');
-    }
-
-    public function isTransactional(): bool
-    {
-        return false;
     }
 }

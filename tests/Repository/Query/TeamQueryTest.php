@@ -29,7 +29,7 @@ class TeamQueryTest extends BaseQueryTest
         $this->assertResetByFormError(new TeamQuery(), 'name');
     }
 
-    protected function assertUsers(TeamQuery $sut)
+    public function assertUsers(TeamQuery $sut): void
     {
         $this->assertEmpty($sut->getUsers());
 

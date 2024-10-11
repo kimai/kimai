@@ -2,6 +2,70 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="tasks.en.xlf">
     <body>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
+        <source>tasks.pending</source>
+        <target state="translated">Ожидающие задачи</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
+        <source>tasks.my</source>
+        <target state="translated">Мои задачи</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
+        <source>task.help.user</source>
+        <target state="translated">Назначить эту задачу пользователю</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка времени</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
+        <source>task.help.title</source>
+        <target state="translated">Краткое описание задачи</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
+        <source>task.create</source>
+        <target state="translated">Создать задачу</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
+        <source>task.help.estimation</source>
+        <target state="translated">Примерное время, необходимое для выполнения задачи, в чч:мм</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
+        <source>task_todo</source>
+        <target state="needs-translation">Описание</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
+        <source>task.help.end</source>
+        <target state="translated">Задача должна быть выполнена до этой даты</target>
+      </trans-unit>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+        <source>report_tasks_assigned</source>
+        <target state="translated">Задачи по пользователям</target>
+      </trans-unit>
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
+        <source>Tasks</source>
+        <target state="translated">Задачи</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
+        <source>task.help.team</source>
+        <target state="translated">Назначить эту задачу команде</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+        <source>report_tasks_teams</source>
+        <target state="translated">Задачи команды</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">Начать обработку</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">Приостановить обработку</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+        <source>task.assign</source>
+        <target state="translated">Назначить себе</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

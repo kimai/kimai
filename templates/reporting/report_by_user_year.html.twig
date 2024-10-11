@@ -1,7 +1,7 @@
 {% extends 'reporting/report_by_user_layout.html.twig' %}
 
 {% block report_content %}
-    {% embed 'reporting/report_by_user_data.html.twig' %}
+    {% embed 'reporting/report_by_user_data.html.twig' with {with_links: true} %}
         {% block period_name %}
             <th class="text-center text-nowrap">
                 <a href="{{ path('report_user_month', {'date': column|report_date, 'sumType': dataType, 'user': user.id}) }}">

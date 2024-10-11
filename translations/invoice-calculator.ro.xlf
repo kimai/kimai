@@ -14,21 +14,21 @@
         <source>short</source>
         <target>Ore: se adună înregistrările, o intrare în total</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target>Utilizator: o intrare pentru fiecare utilizator</target>
+        <target state="translated">Utilizator</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Activitate: o intrare pentru fiecare activitate</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target>Proiect: o intrare pentru fiecare proiect</target>
+        <target state="translated">Proiect</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Data: câte o intrare pe zi (se folosește data de pornire)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>

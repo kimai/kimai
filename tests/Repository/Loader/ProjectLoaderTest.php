@@ -18,20 +18,20 @@ use App\Repository\Loader\ProjectLoader;
  */
 class ProjectLoaderTest extends AbstractLoaderTest
 {
-    public function testLoadResults()
+    public function testLoadResults(): void
     {
         $customer = $this->createMock(Customer::class);
         $customer->expects($this->once())->method('getId')->willReturn(13);
 
         $entity = $this->createMock(Project::class);
         $entity->expects($this->once())->method('getId')->willReturn(1);
-        $entity->expects($this->once())->method('getCustomer')->willReturn($customer);
+        $entity->expects($this->exactly(2))->method('getCustomer')->willReturn($customer);
 
         $results = [$entity];
 
-        $em = $this->getEntityManagerMock(4, $results);
+        $em = $this->getEntityManagerMock(2, $results);
 
         $sut = new ProjectLoader($em);
-        $sut->loadResults([$entity, 4711]);
+        $sut->loadResults([$entity]);
     }
 }

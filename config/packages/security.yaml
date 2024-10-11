@@ -18,6 +18,10 @@ security:
             security: false
 
         api:
+            access_token:
+                token_handler: App\API\Authentication\AccessTokenHandler
+                success_handler: App\API\Authentication\AccessTokenSuccessHandler
+                remember_me: false
             request_matcher: App\API\Authentication\ApiRequestMatcher
             user_checker: App\Security\UserChecker
             stateless: true
@@ -35,7 +39,6 @@ security:
             entry_point: form_login
 
             custom_authenticators:
-                - App\API\Authentication\SessionAuthenticator
                 - App\Saml\SamlAuthenticator
 
             remember_me:
@@ -60,7 +63,7 @@ security:
             logout:
                 path: logout
                 target: homepage
-                enable_csrf: true
+                enable_csrf: false
 
             login_throttling:
                 max_attempts: 5
@@ -69,10 +72,11 @@ security:
             login_link:
                 check_route: link_login_check
                 signature_properties: ['id']
-                lifetime: 300
-                max_uses: 1
+                lifetime: 900
+                max_uses: 3
 
     access_decision_manager:
+        # only grants access if there is no voter denying access
         strategy: unanimous
         allow_if_all_abstain: false
 
@@ -85,13 +89,13 @@ security:
     access_control:
         - { path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: '^/auth', roles: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)$', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/auth', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/login', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/register', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/resetting', role: PUBLIC_ACCESS }
-        - { path: '^/(%app_locales%)/', roles: ROLE_USER }
-        - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: '^/{_locale}$', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/auth', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/login', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/register', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/resetting', role: PUBLIC_ACCESS }
+        - { path: '^/{_locale}/', roles: ROLE_USER }
+        - { path: '^/api', roles: IS_AUTHENTICATED }
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
@@ -104,7 +108,3 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
-
-        firewalls:
-            secured_area:
-                http_basic: ~

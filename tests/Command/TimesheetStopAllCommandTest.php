@@ -21,10 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class TimesheetStopAllCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    protected $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -37,13 +34,13 @@ class TimesheetStopAllCommandTest extends KernelTestCase
         $this->application->add(new TimesheetStopAllCommand($service));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $command = $this->application->find('kimai:timesheet:stop-all');
         self::assertInstanceOf(TimesheetStopAllCommand::class, $command);
     }
 
-    public function testRun()
+    public function testRun(): void
     {
         $command = $this->application->find('kimai:timesheet:stop-all');
         $commandTester = new CommandTester($command);

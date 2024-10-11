@@ -33,7 +33,7 @@ class BooleanFormatterTest extends AbstractFormatterTest
         return false;
     }
 
-    public function testFormattedValueWithInvalidValue()
+    public function testFormattedValueWithInvalidValue(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unsupported value given, only boolean is supported');

@@ -2,9 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="de" target-language="de-CH" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
         <target>Schliessen</target>
@@ -99,7 +96,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Neue Zeitmessung starten</target>
+        <target state="needs-translation">Neue Zeitmessung starten</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
@@ -561,9 +558,9 @@
         <source>profile.registration_date</source>
         <target>Registriert am</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeitet seit</target>
+        <target state="needs-translation">Arbeitet seit</target>
       </trans-unit>
       <trans-unit id="HWKJZ0T" resname="profile.about_me">
         <source>profile.about_me</source>
@@ -573,11 +570,11 @@
         <source>profile.title</source>
         <target>Benutzerprofil</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target>Hinzufügen</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Ersetzen</target>
       </trans-unit>
@@ -737,9 +734,9 @@
         <source>activity</source>
         <target>Tätigkeit</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Zeit-Budget</target>
+        <target state="needs-translation">Zeit-Budget</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
@@ -941,9 +938,9 @@
         <source>yes</source>
         <target>Ja</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Zeiterfassung</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
@@ -1029,20 +1026,20 @@
         <source>registration.check_email</source>
         <target>Eine E-Mail wurde an %email% gesendet. Diese enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Arbeitszeit</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Einnahmen</target>
       </trans-unit>
       <trans-unit id="4Ndj7Xo" resname="budgetType">
@@ -1164,6 +1161,30 @@
       <trans-unit id="3rJ5QDP" resname="help.teams">
         <source>help.teams</source>
         <target state="translated">Sichtbarkeit auf ausgewählte Teams einschränken.</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Dokumentation</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>Support</source>
+        <target state="translated">Support</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Spenden</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Datum</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Konfiguriertes Format</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target state="translated">Rechnungsnummern-Generator</target>
       </trans-unit>
     </body>
   </file>

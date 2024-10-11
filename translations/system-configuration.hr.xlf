@@ -30,9 +30,9 @@
         <source>timesheet.mode_duration_fixed_begin</source>
         <target>[Trajanje] podesivo fiksno vrijeme početka, promijeniti se može samo trajanje</target>
       </trans-unit>
-      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve">
         <source>timesheet.mode_punch</source>
-        <target state="translated">Korisnik [kontrolnog sata] može pokrenuti i prekinuti snimanja, ali ne može mijenjati vremena niti trajanje</target>
+        <target state="translated">Korisnik [kontrolnog sata] može pokrenuti i prekinuti snimanja, ali ne može mijenjati vremena ili trajanje</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
@@ -42,29 +42,29 @@
         <source>timesheet.rules.allow_overbooking_budget</source>
         <target>Dozvoli prekoraćenje rezerviranja spremljenih budžeta</target>
       </trans-unit>
-      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve">
         <source>timesheet.rules.allow_overlapping_records</source>
-        <target>Dozvoli preklapajuće unose vremena</target>
+        <target state="translated">Dozvoli unose vremena koja se preklapaju</target>
       </trans-unit>
-      <trans-unit id="tuPXa0S" resname="lockdown_period">
+      <trans-unit id="tuPXa0S" resname="lockdown_period" xml:space="preserve">
         <source>lockdown_period</source>
-        <target>Zaključano razdoblje</target>
+        <target state="translated">Razdoblje zaključenja</target>
       </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>Vremenska zona (ako je polje prazno, koristi se vremenska zona dotičnog korisnika)</target>
       </trans-unit>
-      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_start</source>
-        <target>Početak zaključanog razdoblja (relativni PHP datum u odnosu na sada)</target>
+        <target state="translated">Početak razdoblja zaključenja (relativni PHP datum u odnosu na sada)</target>
       </trans-unit>
-      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_end</source>
-        <target>Kraj zaključanog razdoblja (relativni PHP datum u odnosu na sada)</target>
+        <target state="translated">Kraj razdoblja zaključenja (relativni PHP datum u odnosu na sada)</target>
       </trans-unit>
-      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve">
         <source>timesheet.rules.lockdown_grace_period</source>
-        <target>Kraj dodatnog zaključanog razdoblja (relativni PHP datum u odnosu na kraj zaključanog razdoblja)</target>
+        <target state="translated">Kraj dodatnog razdoblja zaključenja (relativni PHP datum u odnosu na kraj zaključanog razdoblja)</target>
       </trans-unit>
       <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
         <source>timesheet.active_entries.hard_limit</source>
@@ -294,13 +294,25 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Dozvoli stvaranje aktivnosti u obrascu za evidentiranje vremena</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
         <target state="translated">Format broja kupca</target>
       </trans-unit>
       <trans-unit id="IZY5kqL" resname="allowed_replacer">
         <source>allowed_replacer</source>
         <target state="translated">Dozvoljena zamjena: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Format broja projekta</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Format broja aktivnosti</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Dozvoli višestruko korištenje istog broja</target>
       </trans-unit>
     </body>
   </file>

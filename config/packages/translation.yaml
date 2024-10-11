@@ -1,4 +1,6 @@
 framework:
+    # https://symfony.com/doc/current/reference/configuration/framework.html#enabled-locales
+    enabled_locales: '%kimai_locales%'
     default_locale: '%locale%'
     translator:
         default_path: '%kernel.project_dir%/translations'

@@ -13,9 +13,21 @@ use App\Repository\Loader\LoaderInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
+/**
+ * @template T
+ * @implements PaginatorInterface<T>
+ */
 final class LoaderPaginator implements PaginatorInterface
 {
-    public function __construct(private LoaderInterface $loader, private QueryBuilder $query, private int $results)
+    /**
+     * @param LoaderInterface<T> $loader
+     * @param int<0, max> $results
+     */
+    public function __construct(
+        private readonly LoaderInterface $loader,
+        private readonly QueryBuilder $queryBuilder,
+        private readonly int $results
+    )
     {
     }
 
@@ -25,12 +37,20 @@ final class LoaderPaginator implements PaginatorInterface
     }
 
     /**
-     * @return iterable<array-key, iterable<mixed>>
+     * @return Query<null, T>
+     */
+    private function getQuery(): Query
+    {
+        return $this->queryBuilder->getQuery(); // @phpstan-ignore-line
+    }
+
+    /**
+     * @return iterable<array-key, T>
      */
     public function getSlice(int $offset, int $length): iterable
     {
-        $query = $this->query
-            ->getQuery()
+        /** @var Query<null, T> $query */
+        $query = $this->getQuery()
             ->setFirstResult($offset)
             ->setMaxResults($length);
 
@@ -38,20 +58,24 @@ final class LoaderPaginator implements PaginatorInterface
     }
 
     /**
-     * @param Query<null, mixed> $query
-     * @return iterable<array-key, iterable<mixed>>
+     * @param Query<null, T> $query
+     * @return array<array-key, T>
      */
-    private function getResults(Query $query)
+    private function getResults(Query $query): array
     {
+        /** @var array<array-key, T> $results */
         $results = $query->execute();
 
         $this->loader->loadResults($results);
 
-        return $results; // @phpstan-ignore-line
+        return $results;
     }
 
+    /**
+     * @return iterable<array-key, T>
+     */
     public function getAll(): iterable
     {
-        return $this->getResults($this->query->getQuery());
+        return $this->getResults($this->getQuery());
     }
 }

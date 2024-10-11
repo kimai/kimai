@@ -33,6 +33,8 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\TeamQuery;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -41,7 +43,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -52,7 +54,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/customer')]
 final class CustomerController extends AbstractController
 {
-    public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
+    public function __construct(
+        private readonly CustomerRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher
+    )
     {
     }
 
@@ -62,10 +67,11 @@ final class CustomerController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new CustomerQuery();
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
-        $form = $this->getToolbarForm($query);
+        $form = $this->getToolbarForm($query, $request);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('admin_customer');
         }
@@ -124,7 +130,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerQuery $query
      * @return MetaTableTypeInterface[]
      */
     private function findMetaColumns(CustomerQuery $query): array
@@ -183,13 +188,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.delete_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.delete_comment');
+        $csrfTokenManager->refreshToken('comment.delete');
 
         try {
             $this->repository->deleteComment($comment);
@@ -226,13 +231,13 @@ final class CustomerController extends AbstractController
     {
         $customerId = $comment->getCustomer()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.pin_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken('customer.pin_comment');
+        $csrfTokenManager->refreshToken('comment.pin');
 
         $comment->setPinned(!$comment->isPinned());
         try {
@@ -307,6 +312,15 @@ final class CustomerController extends AbstractController
         $rates = [];
         $now = $this->getDateTimeFactory()->createDateTime();
 
+        $exportUrl = null;
+        $invoiceUrl = null;
+        if ($this->isGranted('create_export')) {
+            $exportUrl = $this->generateUrl('export', ['customers[]' => $customer->getId(), 'projects[]' => '', 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'preview' => true, 'billable' => true]);
+        }
+        if ($this->isGranted('view_invoice')) {
+            $invoiceUrl = $this->generateUrl('invoice', ['customers[]' => $customer->getId(), 'projects[]' => '', 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'billable' => true]);
+        }
+
         if ($this->isGranted('edit', $customer)) {
             if ($this->isGranted('create_team')) {
                 $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
@@ -314,7 +328,7 @@ final class CustomerController extends AbstractController
             $rates = $rateRepository->getRatesForCustomer($customer);
         }
 
-        if (null !== $customer->getTimezone()) {
+        if ($customer->getTimezone() !== null && $customer->getTimezone() !== '') {
             $timezone = new \DateTimeZone($customer->getTimezone());
         }
 
@@ -328,7 +342,9 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $customer) || $this->isGranted('details', $customer) || $this->isGranted('view_team')) {
-            $teams = $customer->getTeams();
+            $query = new TeamQuery();
+            $query->addCustomer($customer);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins
@@ -353,7 +369,9 @@ final class CustomerController extends AbstractController
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
             'now' => $now,
-            'boxes' => $boxes
+            'boxes' => $boxes,
+            'export_url' => $exportUrl,
+            'invoice_url' => $invoiceUrl,
         ]);
     }
 
@@ -458,7 +476,7 @@ final class CustomerController extends AbstractController
         $query = new CustomerQuery();
         $query->setCurrentUser($this->getUser());
 
-        $form = $this->getToolbarForm($query);
+        $form = $this->getToolbarForm($query, $request);
         $form->setData($query);
         $form->submit($request->query->all(), false);
 
@@ -511,12 +529,12 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerQuery $query
      * @return FormInterface<CustomerQuery>
      */
-    private function getToolbarForm(CustomerQuery $query): FormInterface
+    private function getToolbarForm(CustomerQuery $query, Request $request): FormInterface
     {
         return $this->createSearchForm(CustomerToolbarForm::class, $query, [
+            'locale' => $request->getLocale(),
             'action' => $this->generateUrl('admin_customer', [
                 'page' => $query->getPage(),
             ])
@@ -524,8 +542,7 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param CustomerComment $comment
-     * @return FormInterface<CustomerComment>
+     * @return FormInterface<mixed>
      */
     private function getCommentForm(CustomerComment $comment): FormInterface
     {
@@ -540,7 +557,6 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @param Customer $customer
      * @return FormInterface<Customer>
      */
     private function createEditForm(Customer $customer): FormInterface

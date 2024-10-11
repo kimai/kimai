@@ -22,7 +22,7 @@ class DocxRendererTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function testSupports()
+    public function testSupports(): void
     {
         $sut = $this->getAbstractRenderer(DocxRenderer::class);
 
@@ -34,7 +34,7 @@ class DocxRendererTest extends TestCase
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         /** @var DocxRenderer $sut */
         $sut = $this->getAbstractRenderer(DocxRenderer::class);
@@ -48,7 +48,7 @@ class DocxRendererTest extends TestCase
         $this->assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response->headers->get('Content-Type'));
         $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
-        $this->assertTrue(file_exists($file->getRealPath()));
+        $this->assertTrue(file_exists($file->getPathname()));
 
         ob_start();
         $response->sendContent();

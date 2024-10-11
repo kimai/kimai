@@ -11,15 +11,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\UserPasswordType;
 use App\User\UserService;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/wizard')]
@@ -27,14 +28,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class WizardController extends AbstractController
 {
     #[Route(path: '/{wizard}', name: 'wizard', methods: ['GET', 'POST'])]
-    #[IsGranted('view_own_timesheet')]
     public function wizard(Request $request, UserService $userService, string $wizard): Response
     {
         $user = $this->getUser();
 
         if ($wizard === 'intro') {
             $user->setWizardAsSeen('intro');
-            $userService->updateUser($user);
+            $userService->saveUser($user);
 
             return $this->render('wizard/intro.html.twig', [
                 'percent' => 0,
@@ -44,14 +44,16 @@ final class WizardController extends AbstractController
 
         if ($wizard === 'profile') {
             $data = [
-                UserPreference::LOCALE => $request->getLocale(),
+                UserPreference::LANGUAGE => $user->getPreferenceValue(UserPreference::LANGUAGE, $request->getLocale(), false),
+                UserPreference::LOCALE => $user->getPreferenceValue(UserPreference::LOCALE, $request->getLocale(), false),
                 UserPreference::TIMEZONE => $user->getTimezone(),
                 UserPreference::SKIN => $user->getSkin(),
                 'reload' => '0',
             ];
 
             $form = $this->createFormBuilder($data)
-                ->add(UserPreference::LOCALE, LanguageType::class)
+                ->add(UserPreference::LANGUAGE, UserLanguageType::class)
+                ->add(UserPreference::LOCALE, UserLocaleType::class, ['help' => null])
                 ->add(UserPreference::TIMEZONE, TimezoneType::class)
                 ->add(UserPreference::SKIN, SkinType::class)
                 ->add('reload', HiddenType::class)
@@ -69,16 +71,17 @@ final class WizardController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var array<string, string> $data */
                 $data = $form->getData();
-                $user->setLanguage($data[UserPreference::LOCALE]);
+                $user->setLanguage($data[UserPreference::LANGUAGE]);
+                $user->setLocale($data[UserPreference::LOCALE]);
                 $user->setTimezone($data[UserPreference::TIMEZONE]);
                 $user->setPreferenceValue(UserPreference::SKIN, $data[UserPreference::SKIN]);
                 $user->setWizardAsSeen('profile');
-                $userService->updateUser($user);
+                $userService->saveUser($user);
 
                 if ($data['reload'] === '1') {
-                    return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $data['language']]);
+                    return $this->redirectToRoute('wizard', ['wizard' => 'profile', '_locale' => $user->getLanguage()]);
                 } else {
-                    return $this->redirectToRoute('wizard', ['wizard' => $next, '_locale' => $data['language']]);
+                    return $this->redirectToRoute('wizard', ['wizard' => $next, '_locale' => $user->getLanguage()]);
                 }
             }
 
@@ -100,7 +103,7 @@ final class WizardController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setRequiresPasswordReset(false);
-                $userService->updateUser($user);
+                $userService->saveUser($user);
 
                 return $this->redirectToRoute('wizard', ['wizard' => 'done']);
             }

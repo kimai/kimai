@@ -130,6 +130,6 @@ abstract class AbstractWidget implements WidgetInterface
     {
         $name = (new \ReflectionClass($this))->getShortName();
 
-        return sprintf('widget/widget-%s.html.twig', strtolower($name));
+        return \sprintf('widget/widget-%s.html.twig', strtolower($name));
     }
 }

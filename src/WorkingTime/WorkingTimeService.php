@@ -17,18 +17,33 @@ use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
+use App\WorkingTime\Mode\WorkingTimeMode;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Model\Month;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @internal this API and the entire namespace is instable: you should expect changes!
+ * @internal this API and the entire namespace is experimental: expect changes!
  */
 final class WorkingTimeService
 {
-    public function __construct(private TimesheetRepository $timesheetRepository, private WorkingTimeRepository $workingTimeRepository, private EventDispatcherInterface $eventDispatcher)
+    /** @var array<string, WorkingTime|null> */
+    private array $latestApprovals = [];
+
+    public function __construct(
+        private readonly TimesheetRepository $timesheetRepository,
+        private readonly WorkingTimeRepository $workingTimeRepository,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly WorkingTimeModeFactory $contractModeService
+    )
     {
+    }
+
+    public function getContractMode(User $user): WorkingTimeMode
+    {
+        return $this->contractModeService->getModeForUser($user);
     }
 
     public function getYearSummary(Year $year, \DateTimeInterface $until): YearPerUserSummary
@@ -43,7 +58,36 @@ final class WorkingTimeService
 
     public function getLatestApproval(User $user): ?WorkingTime
     {
-        return $this->workingTimeRepository->getLatestApproval($user);
+        if ($user->getId() === null) {
+            return null;
+        }
+
+        $key = 'u_' . $user->getId();
+
+        if (!\array_key_exists($key, $this->latestApprovals)) {
+            $this->latestApprovals[$key] = $this->workingTimeRepository->getLatestApproval($user);
+        }
+
+        return $this->latestApprovals[$key];
+    }
+
+    public function isApproved(User $user, \DateTimeInterface $dateTime): bool
+    {
+        $latestApproval = $this->getLatestApproval($user);
+        if ($latestApproval === null) {
+            return false;
+        }
+
+        $latestApprovalDate = $latestApproval->getDate();
+
+        $begin = \DateTimeImmutable::createFromInterface($dateTime);
+        $begin = $begin->setTime(0, 0, 0);
+
+        if ($begin > $latestApprovalDate) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getYear(User $user, \DateTimeInterface $yearDate, \DateTimeInterface $until): Year
@@ -58,6 +102,8 @@ final class WorkingTimeService
 
         $stats = null;
         $firstDay = $user->getWorkStartingDay();
+        $lastDay = $user->getLastWorkingDay();
+        $calculator = $this->getContractMode($user)->getCalculator($user);
 
         foreach ($year->getMonths() as $month) {
             foreach ($month->getDays() as $day) {
@@ -74,8 +120,8 @@ final class WorkingTimeService
                 $dayDate = $day->getDay();
                 $result = new WorkingTime($user, $dayDate);
 
-                if ($firstDay === null || $firstDay <= $dayDate) {
-                    $result->setExpectedTime($user->getWorkHoursForDay($dayDate));
+                if (($firstDay === null || $firstDay <= $dayDate) && ($lastDay === null || $lastDay >= $dayDate)) {
+                    $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
                 }
 
                 if (\array_key_exists($key, $stats)) {
@@ -100,7 +146,7 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
-    public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approver): void
+    public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
             $workingTime = $day->getWorkingTime();
@@ -116,7 +162,7 @@ final class WorkingTimeService
                 continue;
             }
 
-            $workingTime->setApprovedBy($approver);
+            $workingTime->setApprovedBy($approvedBy);
             // FIXME see calling method
             $workingTime->setApprovedAt(\DateTimeImmutable::createFromInterface($approvalDate));
             $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
@@ -124,7 +170,12 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
-        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approver));
+        $key = 'u_' . $user->getId();
+        if (\array_key_exists($key, $this->latestApprovals)) {
+            unset($this->latestApprovals[$key]);
+        }
+
+        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
     }
 
     /**
@@ -144,10 +195,10 @@ final class WorkingTimeService
             ->select('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('DATE(t.date) as day')
             ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->eq('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $user->getId())
             ->addGroupBy('day')
         ;

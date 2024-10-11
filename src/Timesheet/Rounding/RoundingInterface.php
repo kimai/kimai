@@ -10,10 +10,12 @@
 namespace App\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 /**
  * Apply rounding rules to the given timesheet.
  */
+#[AutoconfigureTag]
 interface RoundingInterface
 {
     public function roundBegin(Timesheet $record, int $minutes): void;

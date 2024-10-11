@@ -60,10 +60,10 @@ class LdapManager
         $filters[] = $params['filter'];
         foreach ($criteria as $key => $value) {
             $value = ldap_escape($value, '', LDAP_ESCAPE_FILTER);
-            $filters[] = sprintf('(%s=%s)', $key, $value);
+            $filters[] = \sprintf('(%s=%s)', $key, $value);
         }
 
-        return sprintf('(%s%s)', $condition, implode($filters));
+        return \sprintf('(%s%s)', $condition, implode($filters));
     }
 
     public function bind(string $dn, string $password): bool
@@ -84,7 +84,7 @@ class LdapManager
         // always look up the users current DN first, as the current user might be upgraded from local to LDAP
         $userFresh = $this->findUserByUsername($user->getUserIdentifier());
         if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap_dn'))) {
-            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
+            throw new LdapDriverException(\sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
         $user->setPreferenceValue('ldap_dn', $baseDn);
 
@@ -128,7 +128,7 @@ class LdapManager
 
         return $this->driver->search(
             $roleParameter['baseDn'],
-            sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, '', LDAP_ESCAPE_FILTER)),
+            \sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, '', LDAP_ESCAPE_FILTER)),
             [$roleParameter['nameAttribute']]
         );
     }
@@ -200,7 +200,7 @@ class LdapManager
             }
 
             if (!$mapped) {
-                $roleName = sprintf('ROLE_%s', self::slugify($roleName));
+                $roleName = \sprintf('ROLE_%s', self::slugify($roleName));
             }
 
             if (!\in_array($roleName, $allowedRoles, true)) {

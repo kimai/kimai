@@ -36,6 +36,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries(): void
     {
+        $date = new \DateTime();
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
@@ -67,7 +68,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-18'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84.75)
@@ -77,7 +78,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet3 = new Timesheet();
         $timesheet3
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(1800)
             ->setRate(111.11)
@@ -87,7 +88,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet4 = new Timesheet();
         $timesheet4
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-29'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(1947.99)
@@ -97,7 +98,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5 = new Timesheet();
         $timesheet5
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-18'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -107,7 +108,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet5a = new Timesheet();
         $timesheet5a
-            ->setBegin(new \DateTime())
+            ->setBegin(new \DateTime('2018-11-08'))
             ->setEnd(new \DateTime())
             ->setDuration(400)
             ->setRate(84)
@@ -117,7 +118,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet6 = new Timesheet();
         $timesheet6
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(0)
             ->setRate(0)
@@ -126,7 +127,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet7 = new Timesheet();
         $timesheet7
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(0)
             ->setRate(0)
@@ -136,7 +137,7 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $timesheet8 = new Timesheet();
         $timesheet8
-            ->setBegin(new \DateTime())
+            ->setBegin(clone $date)
             ->setEnd(new \DateTime())
             ->setDuration(0)
             ->setRate(0)
@@ -163,12 +164,19 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
 
         $entries = $sut->getEntries();
         self::assertCount(6, $entries);
-        $this->assertEquals(404.38, $entries[0]->getRate());
+        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-18', $entries[1]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals('2018-11-18', $entries[2]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[4]->getBegin()?->format('Y-m-d'));
+        $this->assertEquals($date->format('Y-m-d'), $entries[5]->getBegin()?->format('Y-m-d'));
+
+        $this->assertEquals(404.38, $entries[5]->getRate());
         $this->assertEquals(2032.74, $entries[1]->getRate());
         $this->assertEquals(84.0, $entries[2]->getRate());
-        $this->assertEquals(84.0, $entries[3]->getRate());
+        $this->assertEquals(84.0, $entries[0]->getRate());
         $this->assertEquals(0, $entries[4]->getRate());
-        $this->assertEquals(0, $entries[5]->getRate());
+        $this->assertEquals(0, $entries[3]->getRate());
     }
 
     public function testDescriptionByActivity(): void

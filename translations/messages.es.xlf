@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Control de tiempo</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Control de tiempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -57,9 +54,6 @@
         <source>my.profile</source>
         <target>Mi perfil</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Contraseña</target>
@@ -88,9 +82,6 @@
         <source>login_required</source>
         <target>Sin permisos. ¿Volver al inicio de sesión?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Página principal</target>
@@ -111,9 +102,9 @@
         <source>my_times</source>
         <target>Mis horas</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
         <source>all_times</source>
-        <target>Partes de horas</target>
+        <target state="translated">Todo el tiempo</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -151,16 +142,10 @@
         <source>Doctor</source>
         <target>Doctor</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>No se encontraron registros en función de los filtros seleccionados.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Fecha</target>
@@ -209,9 +194,9 @@
         <source>budget</source>
         <target>Presupuesto</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Bolsa de horas</target>
+        <target state="needs-translation">Presupuesto de tiempo</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -257,9 +242,6 @@
         <source>teamlead</source>
         <target>Supervisor</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Acciones</target>
@@ -284,16 +266,10 @@
         <source>action.close</source>
         <target>Cerrar</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Página principal</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Mostrar menú</target>
@@ -310,9 +286,6 @@
         <source>progress</source>
         <target>Progreso</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Mis horas</target>
@@ -345,9 +318,6 @@
         <source>color</source>
         <target>Color</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Perfil de usuario</target>
@@ -356,9 +326,9 @@
         <source>profile.about_me</source>
         <target>Acerca de mí</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Activo desde</target>
+        <target state="translated">Primer día laborable</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -388,7 +358,6 @@
         <source>login_initial_view</source>
         <target>Vista inicial al entrar</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mes</target>
@@ -405,19 +374,10 @@
         <source>daily_stats</source>
         <target>Mostrar estadísticas diarias en los partes de horas</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Calendario</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Cuenta</target>
@@ -466,9 +426,6 @@
         <source>currency</source>
         <target>Moneda</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Nombre</target>
@@ -489,16 +446,10 @@
         <source>roles</source>
         <target>Rol</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Versión</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Administrador del sistema</target>
@@ -515,9 +466,6 @@
         <source>ROLE_USER</source>
         <target>Usuario</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Horas trabajadas hoy</target>
@@ -610,9 +558,6 @@
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% usado (%left% aún está abierto)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Plantilla de factura</target>
@@ -737,9 +682,6 @@
         <source>invoice_bank_account</source>
         <target>Cuenta bancaria</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Exportar</target>
@@ -772,9 +714,6 @@
         <source>export.date_copyright</source>
         <target>Creado el %date% con %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Los cálculos de su tiempo activo</target>
@@ -785,11 +724,8 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Crear nuevo registro</target>
+        <target state="translated">Empezar a controlar el tiempo</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Tamaño de página</target>
@@ -878,13 +814,13 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve">
         <source>rates.title</source>
-        <target>Honorarios</target>
+        <target state="translated">Precios</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
         <source>rates.empty</source>
-        <target state="translated">Aún no se han configurado tarifas por hora.</target>
+        <target state="translated">No se han configurado los precios.</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
@@ -902,15 +838,15 @@
         <source>export_decimal</source>
         <target>Utilizar duración decimal al exportar</target>
       </trans-unit>
-      <trans-unit id="HcWuW2g" resname="layout">
+      <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve">
         <source>layout</source>
-        <target>Vista: disposición</target>
+        <target state="translated">Pantalla:diseño</target>
       </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target>Situación</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Reemplazar</target>
       </trans-unit>
@@ -918,9 +854,9 @@
         <source>recalculate_rates</source>
         <target>Recalcular tarifas</target>
       </trans-unit>
-      <trans-unit id="5ofAsOs" resname="internalRate">
+      <trans-unit id="5ofAsOs" resname="internalRate" xml:space="preserve">
         <source>internalRate</source>
-        <target>Tasa interna</target>
+        <target state="translated">Tarifa interna</target>
       </trans-unit>
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
@@ -1058,9 +994,9 @@
         <source>asc</source>
         <target>Ascendente</target>
       </trans-unit>
-      <trans-unit id="DUDrvjk" resname="remove_default">
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve">
         <source>remove_default</source>
-        <target>Eliminar favorito de búsqueda</target>
+        <target state="translated">Eliminar búsqueda de favorito</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -1086,21 +1022,21 @@
         <source>stats.percentUsed_month</source>
         <target state="translated">%percent%% usado este mes</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Ingresos</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Tiempo laborable</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>No se pudo procesar la solicitud; se encontraron demasiados resultados.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
-        <target state="translated">Se ha enviado un correo electrónico. Contiene un enlace en el que debes hacer clic para restablecer tu contraseña. Nota: Sólo puedes solicitar una nueva contraseña una vez en un plazo de %tokenLifetime% horas. Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="final">Se ha enviado un correo electrónico. Contiene un enlace en el que debes hacer clic para restablecer tu contraseña. Nota: Sólo puedes solicitar una nueva contraseña una vez en un plazo de %tokenLifetime% horas. Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
@@ -1186,9 +1122,9 @@
         <source>automatic</source>
         <target>Automático</target>
       </trans-unit>
-      <trans-unit id="OJ.wI1U" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
         <source>invoiceText</source>
-        <target state="translated">Texto de la factura</target>
+        <target state="translated">Información de factura</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
@@ -1202,9 +1138,9 @@
         <source>mark_as_open</source>
         <target state="translated">Marcar como abierta</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">La contraseña de la aplicación se utiliza para la comunicación entre Kimai y sus aplicaciones</target>
+        <target state="translated">Aquí puedes gestionar tus tokens de la API, que se utilizan para autenticar tu aplicación en Kimai.</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">
         <source>help.visible</source>
@@ -1254,9 +1190,9 @@
         <source>pagination</source>
         <target state="translated">Muestra las entradas %start% a %end% de %total%.</target>
       </trans-unit>
-      <trans-unit id="1MfS6X5" resname="remove_filter">
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
         <source>remove_filter</source>
-        <target state="translated">Restablecer el filtro de la búsqueda</target>
+        <target state="translated">Restablecer el filtro de búsqueda</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -1278,9 +1214,9 @@
         <source>help.teams</source>
         <target state="translated">Restringe la visibilidad a los equipos seleccionados.</target>
       </trans-unit>
-      <trans-unit id="aOJITgv" resname="help.invoiceText">
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
-        <target state="translated">Este texto se utiliza en los documentos de facturación y puede utilizarse, por ejemplo, para indicar otras condiciones de entrega.</target>
+        <target state="translated">Este texto se utiliza en los documentos de factura y puede utilizarse, por ejemplo, para indicar otras condiciones de entrega.</target>
       </trans-unit>
       <trans-unit id="IDDfzoR" resname="invoiceLabel">
         <source>invoiceLabel</source>
@@ -1398,9 +1334,9 @@
         <source>includeWithBudget</source>
         <target state="translated">Mostrar los registros del presupuesto</target>
       </trans-unit>
-      <trans-unit id="mjKOAgQ" resname="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
-        <target state="translated">Claro</target>
+        <target state="translated">Brillante</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
@@ -1409,10 +1345,6 @@
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target state="translated">No se puede usar la aplicación</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Aún no ha ingresado una contraseña para la aplicación. Por razones de seguridad, no puede usar la aplicación hasta que haya guardado una contraseña.</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1442,9 +1374,9 @@
         <source>Activated</source>
         <target state="translated">Activado</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="translated">Idiomas admitidos con reglas de formato</target>
+        <target state="translated">A continuación se muestran ejemplos de reglas de formato para los idiomas admitidos</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>
@@ -1454,9 +1386,9 @@
         <source>hour_24</source>
         <target state="translated">24 horas</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="translated">Además de traducir la interfaz, esta configuración también es responsable de los formatos de hora, fecha y moneda.</target>
+        <target state="translated">Esta configuración es responsable de la traducción del software</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1490,21 +1422,17 @@
         <source>created_at</source>
         <target state="translated">Creado en</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
-        <target state="translated">El mes completo</target>
+        <target state="translated">Mes completo</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation">
         <source>evaluation</source>
         <target state="translated">Evaluación</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target state="translated">Horas de objetivo</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Los valores configurados aquí se utilizan para calcular las horas.</target>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">Horas previstas</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1514,9 +1442,9 @@
         <source>work_contract</source>
         <target state="translated">Contrato laboral</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Una vez finalizado el mes, el usuario ya no podrás crear ni editar los horarios para ese periodo.</target>
+        <target state="translated">Esto bloqueará todos los días del año anteriores a la fecha elegida. El usuario ya no podrá crear o editar horas para el periodo bloqueado.</target>
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>Review</source>
@@ -1548,7 +1476,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Por defecto</target>
+        <target state="translated">Predeterminado</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
@@ -1646,15 +1574,15 @@
         <source>status.requested</source>
         <target state="translated">Solicitado</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Horario</target>
+        <target state="translated">Horas trabajadas</target>
       </trans-unit>
       <trans-unit id="iaJj4va" resname="work_times_account">
         <source>Account working times</source>
         <target state="translated">Horario de atención al público</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target state="translated">Adjuntar</target>
       </trans-unit>
@@ -1669,6 +1597,198 @@
       <trans-unit id="0bKwA0k" resname="force_password_change_help">
         <source>force_password_change_help</source>
         <target state="translated">La próxima vez que el usuario se conecte, deberá introducir una nueva contraseña.</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">Categoría</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">Gastos</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">Registros de la auditoría</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">Traducción</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">Calendario de ausencias</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">Campos personalizados</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">Descripción general</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">Importador</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">Traducciones</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Categorías</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">Contenido personalizado</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Enfermedad de un familiar</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">Permiso parental</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">Días</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">Vacaciones no retribuidas</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">ID de usuario</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">El id de usuario único se utiliza para la autenticación y en las exportaciones</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Documentación</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Foro</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Donar</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Fecha</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">formato configurado</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Generador de número de factura</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter">
+        <source>Search filter</source>
+        <target state="translated">Filtro de búsqueda</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop">
+        <source>timesheet.stop</source>
+        <target state="translated">Detener el seguimiento del tiempo</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Añadir entrada a la lista de actualización por lotes</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Seleccionar todas las entradas para la lista de actualización por lotes</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Time, date and currency format</source>
+        <target state="translated">Formato de hora, fecha y moneda</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">El comentario es obligatorio</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Número del proyecto</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Número de la actividad</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Vencimiento</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">Las contraseñas de la API están obsoletas: en su lugar, utilice los tokens de la API.</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Usado por última vez</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Esta es la única vez que se mostrará esta clave. Así que guárdala bien y asegúrate de haberla copiado antes de cerrar esta ventana.</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Desactivar</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Activar</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Permitir las entradas únicamente en los días en que está establecido por el contrato de trabajo por el tiempo y las horas definidas</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Aprobar</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Creado</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Pedido</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Actualizado</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Horas semanales</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Horas mensuales</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Días laborables</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Cálculo de la jornada laboral</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Último día laborable</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Horas diarias</target>
       </trans-unit>
     </body>
   </file>

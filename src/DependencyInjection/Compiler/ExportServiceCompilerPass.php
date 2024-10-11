@@ -9,8 +9,10 @@
 
 namespace App\DependencyInjection\Compiler;
 
+use App\Export\ExportRepositoryInterface;
+use App\Export\RendererInterface;
 use App\Export\ServiceExport;
-use App\Kernel;
+use App\Export\TimesheetExportInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -24,17 +26,17 @@ final class ExportServiceCompilerPass implements CompilerPassInterface
     {
         $definition = $container->findDefinition(ServiceExport::class);
 
-        $taggedRenderer = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_RENDERER);
+        $taggedRenderer = $container->findTaggedServiceIds(RendererInterface::class);
         foreach ($taggedRenderer as $id => $tags) {
             $definition->addMethodCall('addRenderer', [new Reference($id)]);
         }
 
-        $taggedExporter = $container->findTaggedServiceIds(Kernel::TAG_TIMESHEET_EXPORTER);
+        $taggedExporter = $container->findTaggedServiceIds(TimesheetExportInterface::class);
         foreach ($taggedExporter as $id => $tags) {
             $definition->addMethodCall('addTimesheetExporter', [new Reference($id)]);
         }
 
-        $taggedRepository = $container->findTaggedServiceIds(Kernel::TAG_EXPORT_REPOSITORY);
+        $taggedRepository = $container->findTaggedServiceIds(ExportRepositoryInterface::class);
         foreach ($taggedRepository as $id => $tags) {
             $definition->addMethodCall('addExportRepository', [new Reference($id)]);
         }

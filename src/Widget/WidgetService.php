@@ -41,7 +41,7 @@ class WidgetService
     public function getWidget(string $id): WidgetInterface
     {
         if (!$this->hasWidget($id)) {
-            throw new \InvalidArgumentException(sprintf('Cannot find widget: %s', $id));
+            throw new \InvalidArgumentException(\sprintf('Cannot find widget: %s', $id));
         }
 
         return $this->widgets[$id];

@@ -1,7 +1,22 @@
+
 @include color-mode(dark, true) {
+    $dark-font-opacity: 0.6;
+
+    /*
+    --tblr-body-bg: #1e222b;
+    --tblr-bg-surface-tertiary: #1e222b;
+    --tblr-bg-surface: #1e222b;
+    --tblr-bg-surface-secondary: #17202b;
+    //--tblr-muted: #d9dcdf;
+    */
+
+    .table thead th {
+        color: inherit;
+        opacity: $dark-font-opacity;
+    }
     table.dataTable {
-        th.today {
-            color: var(--tblr-muted);
+        thead .sorting:after {
+            opacity: $dark-font-opacity;
         }
     }
 
@@ -11,5 +26,17 @@
         > .fas {
             color: var(--tblr-white);
         }
+    }
+    /* Fix tabs pills (e.g. user profile) */
+    .nav {
+        --tblr-nav-link-color: inherit;
+        opacity: $dark-font-opacity;
+    }
+    .datagrid-title {
+        color: inherit;
+        opacity: $dark-font-opacity;
+    }
+    .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        color: inherit;
     }
 }

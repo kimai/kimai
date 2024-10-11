@@ -36,15 +36,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
      */
     protected function importFixtureForUser(string $role, int $amount = 10): array
     {
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount($amount)
-            ->setUser($this->getUserByRole($role))
-            ->setAllowEmptyDescriptions(false)
-            ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole($role), $amount);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setAllowEmptyDescriptions(false);
+        $fixture->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1));
 
         return $this->importFixture($fixture);
     }
@@ -91,14 +87,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
         $query = ['user' => 2];
@@ -126,19 +118,62 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
-    public function testGetCollectionForAllUser(): void
+    public function testGetCollectionForAllUserIsSecure(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_ADMIN))
-            ->setStartDate(new \DateTime('-10 days'))
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertEmpty($result);
+        self::assertEquals(0, \count($result));
+    }
+
+    public function testGetCollectionForAllUserIsSecureForUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
+        $this->importFixture($fixture);
+
+        $query = ['user' => 'all'];
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(10, \count($result));
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+    }
+
+    public function testGetCollectionForAllUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importFixtureForUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_SUPER_ADMIN), 7);
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
         $query = ['user' => 'all'];
@@ -262,14 +297,10 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setExported(true)
-            ->setAmount(7)
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate(new \DateTime('first day of this month'))
-            ->setAllowEmptyDescriptions(false)
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 7);
+        $fixture->setExported(true);
+        $fixture->setStartDate(new \DateTime('first day of this month'));
+        $fixture->setAllowEmptyDescriptions(false);
         $this->importFixture($fixture);
 
         $begin = new \DateTime('first day of this month');
@@ -388,7 +419,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         ];
 
         foreach ($expected as $key => $value) {
-            self::assertEquals($value, $result[$key], sprintf('Field %s has invalid value', $key));
+            self::assertEquals($value, $result[$key], \sprintf('Field %s has invalid value', $key));
         }
     }
 
@@ -417,7 +448,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetEntityNotFound(): void
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Timesheet object not found by the @ParamConverter annotation.');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/timesheets/' . PHP_INT_MAX);
     }
 
     public function testPostAction(): void
@@ -434,7 +465,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'hourlyRate' => 127,
             'billable' => false
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -463,7 +496,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'hourlyRate' => 127,
             'billable' => true
         ];
-        $this->request($client, '/api/timesheets?full=true', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets?full=true', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -495,7 +530,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -540,7 +577,60 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime())->format('Y-m-d H:m:s'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project']);
+    }
+
+    public function testPostActionWithUnknownActivity(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $this->getEntityManager();
+        $customer = new Customer('foo-bar-1');
+        $customer->setVisible(false);
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+        $project = new Project();
+        $project->setName('foo-bar-2');
+        $project->setVisible(true);
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $data = [
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
+            'project' => $project->getId(),
+            'activity' => 99,
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project']);
+    }
+
+    public function testPostActionWithNonExistingProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $em = $this->getEntityManager();
+        $activity = new Activity();
+        $activity->setName('foo-bar-3');
+        $activity->setVisible(true);
+        $em->persist($activity);
+        $em->flush();
+
+        $data = [
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
+            'project' => 99,
+            'activity' => $activity->getId(),
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertApiCallValidationError($client->getResponse(), ['project']);
     }
 
@@ -574,7 +664,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime())->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
     }
 
@@ -604,7 +696,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime())->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -643,7 +737,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'billable' => true,
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -669,7 +765,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'billable' => false,
         ];
-        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -708,7 +806,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'exported' => true,
         ];
-        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], $json);
         $response = $client->getResponse();
         $this->assertApiResponseAccessDenied($response);
     }
@@ -730,7 +830,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => (new \DateTime('- 1 hours'))->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
-        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], $json);
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
@@ -864,15 +966,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $start = new \DateTime('-10 days');
 
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setFixedRate(true)
-            ->setHourlyRate(true)
-            ->setAmount(0)
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setStartDate($start)
-            ->setAmountRunning(3)
-        ;
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER));
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate($start);
+        $fixture->setAmountRunning(3);
         $this->importFixture($fixture);
 
         $this->request($client, '/api/timesheets/active');
@@ -989,7 +1087,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setUser($this->getUserByRole(User::ROLE_USER))
             ->setStartDate(new \DateTime('-10 days'))
             ->setAllowEmptyDescriptions(false)
-            ->setUseTags(true)
             ->setTags(['Test', 'Administration']);
         $this->importFixture($fixture);
 
@@ -1040,7 +1137,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'tags' => ['another', 'testing', 'bar']
         ];
-        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $json);
 
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -1074,7 +1173,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'description' => 'foo',
             'tags' => ['another', 'testing', 'bar']
         ];
-        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $json);
 
         $begin = new \DateTime('2019-11-27 13:55:00');
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
@@ -1185,7 +1286,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'fixedRate' => 2016,
             'hourlyRate' => 127
         ];
-        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -1317,7 +1420,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'name' => 'metatestmock',
             'value' => 'another,testing,bar'
         ];
-        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], json_encode($data));
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $json);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 

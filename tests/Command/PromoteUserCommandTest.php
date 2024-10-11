@@ -25,10 +25,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class PromoteUserCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -42,7 +39,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $this->application->add(new PromoteUserCommand($userService));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
@@ -50,7 +47,7 @@ class PromoteUserCommandTest extends KernelTestCase
         self::assertInstanceOf(PromoteUserCommand::class, $command);
     }
 
-    protected function callCommand(?string $username, ?string $role, bool $super = false)
+    protected function callCommand(?string $username, ?string $role, bool $super = false): CommandTester
     {
         $command = $this->application->find('kimai:user:promote');
         $input = [
@@ -75,7 +72,7 @@ class PromoteUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testPromoteRole()
+    public function testPromoteRole(): void
     {
         $commandTester = $this->callCommand('john_user', 'ROLE_TEAMLEAD');
 
@@ -90,7 +87,7 @@ class PromoteUserCommandTest extends KernelTestCase
         self::assertTrue($user->hasTeamleadRole());
     }
 
-    public function testPromoteSuper()
+    public function testPromoteSuper(): void
     {
         $commandTester = $this->callCommand('john_user', null, true);
 
@@ -105,7 +102,7 @@ class PromoteUserCommandTest extends KernelTestCase
         self::assertTrue($user->isSuperAdmin());
     }
 
-    public function testPromoteSuperFailsOnSuperAdmin()
+    public function testPromoteSuperFailsOnSuperAdmin(): void
     {
         $commandTester = $this->callCommand('susan_super', null, true);
 
@@ -113,7 +110,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[WARNING] User "susan_super" does already have the super administrator role.', $output);
     }
 
-    public function testPromoteTeamleadFailsOnTeamlead()
+    public function testPromoteTeamleadFailsOnTeamlead(): void
     {
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_TEAMLEAD', false);
 
@@ -121,7 +118,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[WARNING] User "tony_teamlead" did already have "ROLE_TEAMLEAD" role.', $output);
     }
 
-    public function testPromoteRoleAndSuperFails()
+    public function testPromoteRoleAndSuperFails(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('You can pass either the role or the --super option (but not both simultaneously).');
@@ -129,7 +126,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $this->callCommand('john_user', 'ROLE_TEAMLEAD', true);
     }
 
-    public function testWithMissingUsername()
+    public function testWithMissingUsername(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');

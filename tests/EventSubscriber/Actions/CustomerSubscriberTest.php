@@ -16,7 +16,7 @@ use App\EventSubscriber\Actions\CustomerSubscriber;
  */
 class CustomerSubscriberTest extends AbstractActionsSubscriberTest
 {
-    public function testEventName()
+    public function testEventName(): void
     {
         $this->assertGetSubscribedEvent(CustomerSubscriber::class, 'customer');
     }

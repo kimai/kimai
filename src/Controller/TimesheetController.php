@@ -16,11 +16,18 @@ use App\Form\TimesheetEditForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * No permission check on controller level, only for single routes.
+ *
+ * There was "view_own_timesheet" here once, but it is a bug, as some companies (rarely, but existing) want their
+ * employees to enter time, but not to see it afterward.
+ *
+ * It is legit to only own "create_own_timesheet" without "view_own_timesheet".
+ */
 #[Route(path: '/timesheet')]
-#[IsGranted('view_own_timesheet')]
 final class TimesheetController extends TimesheetAbstractController
 {
     #[Route(path: '/', defaults: ['page' => 1], name: 'timesheet', methods: ['GET'])]

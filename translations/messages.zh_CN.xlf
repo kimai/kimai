@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>时间追踪</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">时间追踪</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -61,9 +58,6 @@
         <source>update_multiple</source>
         <target>%action% %count% 条目?</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target>密码</target>
@@ -92,9 +86,6 @@
         <source>login_required</source>
         <target>无许可。重新登录？</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>控制主页</target>
@@ -155,16 +146,10 @@
         <source>Doctor</source>
         <target>医生</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>基于您所选的筛选项未找到相应条目。</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>日期</target>
@@ -213,9 +198,9 @@
         <source>budget</source>
         <target>预算</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>时间预算</target>
+        <target state="needs-translation">时间预算</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -261,9 +246,6 @@
         <source>teamlead</source>
         <target state="translated">团队负责人</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>行动</target>
@@ -288,16 +270,10 @@
         <source>action.close</source>
         <target>关闭</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>控制主页</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>展示菜单</target>
@@ -314,9 +290,6 @@
         <source>progress</source>
         <target>进展</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>我的时间</target>
@@ -349,9 +322,6 @@
         <source>color</source>
         <target>颜色</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>用户资料</target>
@@ -360,9 +330,9 @@
         <source>profile.about_me</source>
         <target>关于我</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>自什么时候开始工作</target>
+        <target state="needs-translation">自什么时候开始工作</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -392,7 +362,6 @@
         <source>login_initial_view</source>
         <target>登录后初始查看</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>月</target>
@@ -409,19 +378,10 @@
         <source>daily_stats</source>
         <target>在时间表中展示每日状态</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>日历</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">账户</target>
@@ -474,9 +434,6 @@
         <source>currency</source>
         <target>货币</target>
       </trans-unit>
-      <!--
-              Admin: Users
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>名字</target>
@@ -509,16 +466,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>可用字母: A-Z 以及 _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>版本</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>系统-管理</target>
@@ -535,9 +486,6 @@
         <source>ROLE_USER</source>
         <target>用户</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>今日工作时长</target>
@@ -630,9 +578,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% 已用 (%left% 仍然可用)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>发票模板</target>
@@ -761,9 +706,6 @@
         <source>invoice_bank_account</source>
         <target state="translated">银行账户</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>输出</target>
@@ -796,9 +738,6 @@
         <source>export.date_copyright</source>
         <target>创建了 %date% 与 %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>您的活跃时间测量</target>
@@ -807,13 +746,10 @@
         <source>recent.activities</source>
         <target>重启一项您的最后活动</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target>创建新的时间记录</target>
+        <target state="translated">开始时间跟踪</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>页面大小</target>
@@ -982,16 +918,16 @@
         <source>rates.empty</source>
         <target>尚未配置小时费率。</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>工作时间</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
         <target>本财政年度工作时间</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>收入</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
@@ -1054,9 +990,9 @@
         <source>error.too_many_entries</source>
         <target>无法处理请求，找到太多结果。</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>一封电子邮件已经发送。它包含一个您必须单击才能重置密码的链接。注意:您只能在%tokenLifetime%小时内请求一次新密码。如果没有收到电子邮件，请检查垃圾邮件文件夹或重试。</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="translated">已发送一封内含重置密码链接的电子邮件。注意：您只能每隔 %tokenLifetime% 小时申请一次新密码。如果您没有收到电子邮件，请检查您的垃圾邮件文件夹或重试。</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1402,13 +1338,9 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">选定/突出显示的用户是团队负责人。</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API 密码用于 Kimai 和您的应用程序之间的通信</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">您尚未输入 API 密码。出于安全原因，您必须先保存密码才能使用 API。</target>
+        <target state="translated">您可以在这里管理用于向 Kimai 验证应用程序的 API Token。</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1438,9 +1370,9 @@
         <source>Activated</source>
         <target state="translated">激活的</target>
       </trans-unit>
-      <trans-unit id="i_XOmN4" resname="help_locales">
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
-        <target state="translated">支持的语言与格式化规则</target>
+        <target state="translated">以下是受支持语言的格式规则示例</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1450,9 +1382,9 @@
         <source>time</source>
         <target state="translated">时间</target>
       </trans-unit>
-      <trans-unit id="JmkKf48" resname="user.language.help">
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
         <source>user.language.help</source>
-        <target state="translated">除了翻译界面外，该设置还负责时间、日期和货币格式。</target>
+        <target state="translated">此设置负责软件的翻译</target>
       </trans-unit>
       <trans-unit id="F7xeAn4" resname="invoice_date">
         <source>invoice_date</source>
@@ -1498,13 +1430,9 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">在雇佣合同设置中未为此用户配置目标工时。</target>
       </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">这里配置的数值用于计算每小时的账户。</target>
-      </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">完成该月后，用户将无法再创建或编辑该时间段的时间。</target>
+        <target state="translated">这将锁定所选日期之前一年中的所有日期。 用户将无法再创建或编辑锁定期间的时间。</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1514,9 +1442,9 @@
         <source>work_contract</source>
         <target state="translated">劳动合同</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">完整的月份</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">锁定月份</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
@@ -1530,13 +1458,13 @@
         <source>work_times</source>
         <target state="translated">工作时间</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target state="translated">目标小时数</target>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="needs-translation">期望小时数</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">是-小时</target>
+        <target state="needs-translation">是-小时</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1653,6 +1581,190 @@
       <trans-unit id="yXrOTI." resname="review">
         <source>Review</source>
         <target state="translated">审查</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation">
+        <source>Translation</source>
+        <target state="translated">翻译</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content">
+        <source>Custom content</source>
+        <target state="translated">自定义内容</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields">
+        <source>Meta fields</source>
+        <target state="translated">自定义字段</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append">
+        <source>append</source>
+        <target state="translated">添加</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change">
+        <source>force_password_change</source>
+        <target state="translated">请求新密码</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace">
+        <source>replace</source>
+        <target state="translated">替换</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations">
+        <source>Translations</source>
+        <target state="translated">翻译</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help">
+        <source>force_password_change_help</source>
+        <target state="translated">下一次用户们登录，他们必须输入密码。</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target state="translated">类别</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses">
+        <source>Expenses</source>
+        <target state="translated">费用</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs">
+        <source>Audit logs</source>
+        <target state="translated">审计日志</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar">
+        <source>Absence calendar</source>
+        <target state="translated">缺勤日历</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview">
+        <source>Overview</source>
+        <target state="translated">概述</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer">
+        <source>Importer</source>
+        <target state="translated">输入者</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">类别</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days">
+        <source>days</source>
+        <target state="translated">天</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">亲属生病</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation">
+        <source>unpaid_vacation</source>
+        <target state="translated">无薪假期</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental">
+        <source>parental</source>
+        <target state="translated">育儿假</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>文件</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">论坛</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">捐款</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>日期</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">配置的格式</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>发票数字生成器</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier">
+        <source>user_identifier</source>
+        <target state="translated">用户 ID</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help">
+        <source>user_identifier.help</source>
+        <target state="translated">唯一的用户标识符用于身份验证和导出</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">搜索过滤器</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">将条目添加到批量更新列表</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">选择批量更新列表的所有条目</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">缺席：注释为必填字段</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve">
+        <source>Time, date and currency format</source>
+        <target state="translated">时间、日期和货币的格式</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">停止时间跟踪</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">项目编号</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">停用</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">启用</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">截止日期</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">最后一次使用</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">这是该密码唯一一次显示！ 因此，请确保其安全，并确保在关闭此窗口之前已将其复制下来。</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">API 密码已过期：请改用 API 令牌。</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">活跃次数</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">创建</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">支持</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">请求</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">更新</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">只允许在雇用合同中输入预期的工作时长</target>
       </trans-unit>
     </body>
   </file>

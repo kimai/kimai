@@ -45,7 +45,7 @@ class PaginationExtensionTest extends TestCase
         return new PaginationExtension($this->getUrlGenerator());
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $functions = ['pagination'];
         $sut = $this->getSut();
@@ -59,7 +59,7 @@ class PaginationExtensionTest extends TestCase
         }
     }
 
-    public function testRenderPaginationWithoutTemplateName()
+    public function testRenderPaginationWithoutTemplateName(): void
     {
         $sut = $this->getSut();
 
@@ -73,7 +73,7 @@ class PaginationExtensionTest extends TestCase
         $this->assertPaginationHtml($result);
     }
 
-    protected function assertPaginationHtml($result)
+    public function assertPaginationHtml($result): void
     {
         // this makes sure that we show the correct amount of pagination links!
         $expected =
@@ -92,7 +92,7 @@ class PaginationExtensionTest extends TestCase
         self::assertEquals($expected, $result);
     }
 
-    public function testRenderPagination()
+    public function testRenderPagination(): void
     {
         $sut = $this->getSut();
 
@@ -106,7 +106,7 @@ class PaginationExtensionTest extends TestCase
         $this->assertPaginationHtml($result);
     }
 
-    public function testRenderPaginationWithoutRouteName()
+    public function testRenderPaginationWithoutRouteName(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Pagination is missing the "routeName" option');

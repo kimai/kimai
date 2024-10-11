@@ -12,24 +12,26 @@ namespace App\Timesheet;
 use App\Entity\User;
 use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
+use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TimesheetRepository;
-use DateTime;
 use DateTimeInterface;
 
 final class TimesheetStatisticService
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
     /**
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
-     * @param User[] $users
      * @return DailyStatistic[]
      */
-    public function getDailyStatistics(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getDailyStatistics(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+        $project = $query->getProject();
+
         /** @var DailyStatistic[] $stats */
         $stats = [];
 
@@ -50,11 +52,11 @@ final class TimesheetStatisticService
             ->addSelect('DAY(t.date) as day')
             ->addSelect('MONTH(t.date) as month')
             ->addSelect('YEAR(t.date) as year')
-            ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $users)
             ->groupBy('year')
             ->addGroupBy('month')
@@ -62,6 +64,13 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        if ($project !== null) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+        }
 
         $results = $qb->getQuery()->getResult();
 
@@ -115,11 +124,11 @@ final class TimesheetStatisticService
             ->addSelect('IDENTITY(t.project) as project')
             ->addSelect('IDENTITY(t.activity) as activity')
             ->addSelect('DATE(t.date) as date')
-            ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $users)
             ->groupBy('date')
             ->addGroupBy('project')
@@ -164,8 +173,6 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
      * @param User[] $users
      * @return array
      */
@@ -193,11 +200,11 @@ final class TimesheetStatisticService
             ->addSelect('IDENTITY(t.activity) as activity')
             ->addSelect('YEAR(t.date) as year')
             ->addSelect('MONTH(t.date) as month')
-            ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $users)
             ->groupBy('year')
             ->addGroupBy('month')
@@ -241,10 +248,10 @@ final class TimesheetStatisticService
         return $stats;
     }
 
-    public function findFirstRecordDate(User $user): ?DateTime
+    public function findFirstRecordDate(User $user): ?\DateTimeImmutable
     {
         $result = $this->repository->createQueryBuilder('t')
-            ->select('MIN(t.begin)')
+            ->select('MIN(t.date)')
             ->where('t.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
@@ -254,19 +261,19 @@ final class TimesheetStatisticService
             return null;
         }
 
-        return new DateTime((string) $result, new \DateTimeZone($user->getTimezone()));
+        return new \DateTimeImmutable((string) $result, new \DateTimeZone($user->getTimezone()));
     }
 
     /**
-     * Returns an array of Year statistics.
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @param User[] $users
      * @return MonthlyStatistic[]
      */
-    public function getMonthlyStats(DateTime $begin, DateTime $end, array $users): array
+    public function getMonthlyStats(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+        $project = $query->getProject();
+
         /** @var MonthlyStatistic[] $stats */
         $stats = [];
 
@@ -285,17 +292,24 @@ final class TimesheetStatisticService
             ->addSelect('MONTH(t.date) as month')
             ->addSelect('YEAR(t.date) as year')
             ->addSelect('IDENTITY(t.user) as user')
-            ->where($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->between('t.date', ':begin', ':end'))
             ->andWhere($qb->expr()->in('t.user', ':user'))
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
+            ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->setParameter('begin', $begin->format('Y-m-d'))
+            ->setParameter('end', $end->format('Y-m-d'))
             ->setParameter('user', $users)
             ->groupBy('year')
             ->addGroupBy('month')
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        if ($project !== null) {
+            $qb
+                ->andWhere($qb->expr()->eq('t.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+        }
 
         $results = $qb->getQuery()->getResult();
 

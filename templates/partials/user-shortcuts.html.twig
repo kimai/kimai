@@ -1,0 +1,36 @@
+{% set user_shortcuts = user_shortcuts(app.user) %}
+{% if user_shortcuts|length > 0 %}
+    <div class="nav-item dropdown d-flex me-1 user-shortcuts">
+        <a class="btn btn-icon px-0 user-shortcuts-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true" title="{{ 'favorite_routes'|trans }}">
+            {{ icon('far fa-bookmark', true) }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow dropdown-menu-card" data-bs-popper="static">
+            <div class="card">
+                <div class="card-header text-nowrap">{{ 'favorite_routes'|trans }}</div>
+                <div class="card-body user-shortcuts-list scrollable-container p-0 pb-2">
+                    <div class="row overflow-visible g-0">
+                        {% for menu in user_shortcuts %}
+                                {% if not loop.first and loop.index0 % 2 == 0 %}
+                    </div>
+                    <div class="row overflow-visible g-0">
+                                {% endif %}
+                            <div class="text-center pt-3 px-3 col">
+                                <a href="{{ path(menu.route) }}" class="text-decoration-none">
+                                    <span class="user-shortcuts-icon rounded-circle mb-2">
+                                      <i class="{{ menu.icon|icon }} fs-2"></i>
+                                    </span>
+                                </a>
+                                <a href="{{ path(menu.route) }}" class="nav-link">
+                                    {{- menu.label|trans -}}
+                                </a>
+                            </div>
+                        {% endfor %}
+                        {% if user_shortcuts|length > 1 and user_shortcuts|length % 2 == 1 %}
+                            <div class="pt-3 px-3 col"></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

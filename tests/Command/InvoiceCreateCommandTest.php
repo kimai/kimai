@@ -35,7 +35,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    protected Application $application;
+    private Application $application;
 
     private function clearInvoiceFiles(): void
     {
@@ -84,7 +84,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
      * Allowed option: exported
      * Allowed option: by-customer
      * Allowed option: by-project
-     * Allowed option: set-exported
      * Allowed option: template-meta
      *
      * @param array $options
@@ -169,7 +168,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $fixture = new InvoiceTemplateFixtures();
         $this->importFixture($fixture);
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--set-exported' => null, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Created 1 invoice(s)', $output);

@@ -9,7 +9,10 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,12 +29,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('ProjectName', exp: 'object.getProject() === null ? null : object.getProject().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Activity'])])]
 #[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Activity', 'Team', 'Not_Expanded'])])]
-#[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
-class Activity implements EntityWithMetaFields, EntityWithBudget
+#[Constraints\Activity]
+class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique activity ID
@@ -54,7 +59,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
@@ -109,11 +114,18 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     private Collection $teams;
     #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
+    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[Assert\Length(max: 10)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'activity_number')]
+    private ?string $number = null;
 
     public function __construct()
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
@@ -269,6 +281,16 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         $this->invoiceText = $invoiceText;
     }
 
+    public function setNumber(?string $number): void
+    {
+        $this->number = $number;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
     public function __toString(): string
     {
         return $this->getName();
@@ -276,9 +298,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
 
     public function __clone()
     {
-        if ($this->id) {
+        if ($this->id !== null) {
             $this->id = null;
         }
+
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
@@ -287,6 +311,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ActivityMeta $meta */

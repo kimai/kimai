@@ -6,17 +6,17 @@
         <source>warning</source>
         <target state="translated">Varning</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target state="translated">Tidsredovisningen har stoppats</target>
+        <target state="translated">Tidsmätningen har stoppats</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target state="translated">Tidsredovisningen kunde inte stoppas</target>
+        <target state="translated">Tidsmätningen kunde inte stoppas</target>
       </trans-unit>
-      <trans-unit id="CCUoZga" resname="timesheet.start.success">
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
         <source>timesheet.start.success</source>
-        <target state="translated">Tidsredovisningen har startat</target>
+        <target state="translated">Tidsmätningen har startat</target>
       </trans-unit>
       <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>

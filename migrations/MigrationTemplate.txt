@@ -1,0 +1,38 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace DoctrineMigrations;
+
+use App\Doctrine\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
+
+/**
+ * @version 2.x
+ */
+final class <className> extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        $this->abortIf(true, 'Migration was auto-generated, adapt to your needs before running it.');
+
+<up>
+    }
+
+    public function down(Schema $schema): void
+    {
+        $this->abortIf(true, 'Migration was auto-generated, adapt to your needs before running it.');
+
+<down>
+    }<override>
+}

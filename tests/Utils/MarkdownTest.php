@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MarkdownTest extends TestCase
 {
-    public function testMarkdownToHtml()
+    public function testMarkdownToHtml(): void
     {
         $sut = new Markdown();
         $this->assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
@@ -65,7 +65,7 @@ class MarkdownTest extends TestCase
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
 
-    public function testDuplicateIds()
+    public function testDuplicateIds(): void
     {
         $sut = new Markdown();
 
@@ -85,7 +85,7 @@ class MarkdownTest extends TestCase
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
 
-    public function testLinksAreSanitized()
+    public function testLinksAreSanitized(): void
     {
         $sut = new Markdown();
 

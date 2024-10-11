@@ -15,6 +15,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -37,17 +39,36 @@ class DatePickerType extends AbstractType
                     return null;
                 }
 
-                if ($reverseTransform instanceof \DateTime && $options['force_time']) {
+                if ($reverseTransform instanceof \DateTimeInterface && $options['force_time'] !== null) {
                     if ($options['force_time'] === 'start') {
-                        $reverseTransform->setTime(0, 0, 0);
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
+                        $reverseTransform = $reverseTransform->setTime(0, 0, 0);
                     } elseif ($options['force_time'] === 'end') {
-                        $reverseTransform->setTime(23, 59, 59);
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
+                        $reverseTransform = $reverseTransform->setTime(23, 59, 59);
+                    } elseif (\is_string($options['force_time'])) {
+                        $reverseTransform = \DateTime::createFromInterface($reverseTransform);
+                        $reverseTransform = $reverseTransform->modify($options['force_time']);
                     }
                 }
 
                 return $reverseTransform;
             }
         ));
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        if ($options['min_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'min' => (\is_string($options['min_day']) ? $options['min_day'] : $options['min_day']->format('Y-m-d')), // @phpstan-ignore-line
+            ]);
+        }
+        if ($options['max_day'] !== null) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'max' => (\is_string($options['max_day']) ? $options['max_day'] : $options['max_day']->format('Y-m-d')), // @phpstan-ignore-line
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -63,8 +84,13 @@ class DatePickerType extends AbstractType
             'format' => $formFormat,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
-            'force_time' => null,
+            'force_time' => null, // one of: null, string (start, end) or a string working as argument for DateTime->modify() or null
+            'min_day' => null,
+            'max_day' => null,
         ]);
+
+        $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
+        $resolver->addAllowedTypes('max_day', ['null', 'string', \DateTimeInterface::class]);
     }
 
     public function getParent(): string

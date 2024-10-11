@@ -9,9 +9,12 @@
 
 namespace App\Invoice;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
 /**
  * CalculatorInterface defines all methods for any invoice price calculator.
  */
+#[AutoconfigureTag]
 interface CalculatorInterface
 {
     /**

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sk" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Pokiaľ tlačidlo nefunguje, prosím skopírujte &amp; vložte náslodovnú web adresu do Vášho prehliadača: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Toto je automaticky generovaný email. Prosím neodpovedajte na neho, adresa nebude prečítaná.</target>
@@ -26,21 +22,21 @@
         <source>registration.intro</source>
         <target>Prihlásili ste sa do Kimai sledovanie času s emailom %email%. Teraz si musíte Váš účet aktivovať v priebeh niekoľkých hodín predtým než vyprší platnosť linku.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Resetujte si heslo</target>
+        <target state="needs-translation">Resetujte si heslo</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>To sa môže stať…</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">To sa môže stať…</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Resetovať heslo</target>
+        <target state="needs-translation">Resetovať heslo</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>…zabudli ste Vaše heslo? Bez obáv: Kimai Vám pomôže vytvoriť nové:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">…zabudli ste Vaše heslo? Bez obáv: Kimai Vám pomôže vytvoriť nové:</target>
       </trans-unit>
     </body>
   </file>

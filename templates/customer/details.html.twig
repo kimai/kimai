@@ -8,7 +8,7 @@
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="customer_details_box"{% endblock %}
         {% block box_title %}
-            {{ widgets.label_customer(customer) }}
+            {{ widgets.label_dot(customer.name, customer.color) }}
             {% if customer.company is not empty %} &ndash; {{ customer.company }}{% endif %}
         {% endblock %}
         {% block box_tools %}
@@ -147,7 +147,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete', 'csrf_delete': 'customer.delete_comment', 'csrf_pin': 'customer.pin_comment'}) %}
+            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}

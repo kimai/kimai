@@ -11,6 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\QuickEntryTimesheet as QuickEntryTimesheetConstraint;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -18,9 +19,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class QuickEntryTimesheetValidator extends ConstraintValidator
 {
     /**
-     * @param Constraint[] $constraints
+     * @param TimesheetConstraint[] $constraints
      */
-    public function __construct(private iterable $constraints)
+    public function __construct(
+        #[TaggedIterator(TimesheetConstraint::class)]
+        private iterable $constraints
+    )
     {
     }
 
@@ -34,9 +38,7 @@ final class QuickEntryTimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        $timesheet = $value;
-
-        if ($timesheet->getId() === null && $timesheet->getDuration(false) === null) {
+        if ($value->getId() === null && $value->getDuration(false) === null) {
             return;
         }
 
@@ -45,7 +47,7 @@ final class QuickEntryTimesheetValidator extends ConstraintValidator
                 ->getValidator()
                 ->inContext($this->context)
                 ->atPath('duration')
-                ->validate($timesheet, $innerConstraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($value, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }

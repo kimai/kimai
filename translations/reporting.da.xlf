@@ -6,6 +6,50 @@
         <source>report_user_week</source>
         <target>Ugevisning for en bruger</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
+        <source>report_user_year</source>
+        <target state="translated">Årligt overblik for 1 bruger</target>
+      </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users" xml:space="preserve">
+        <source>report_weekly_users</source>
+        <target state="translated">Ugentligt overblik for alle brugere</target>
+      </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
+        <source>report_user_month</source>
+        <target state="translated">Månedligt overblik for 1 bruger</target>
+      </trans-unit>
+      <trans-unit id="zk30bmP" resname="report_monthly_users" xml:space="preserve">
+        <source>report_monthly_users</source>
+        <target state="translated">Månedligt overblik for alle brugere</target>
+      </trans-unit>
+      <trans-unit id="VD98UBN" resname="report_yearly_users" xml:space="preserve">
+        <source>report_yearly_users</source>
+        <target state="translated">Årligt overblik for alle brugere</target>
+      </trans-unit>
+      <trans-unit id="R.9yUkf" resname="report_project_view" xml:space="preserve">
+        <source>report_project_view</source>
+        <target state="translated">Projekt overblik</target>
+      </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange" xml:space="preserve">
+        <source>report_project_daterange</source>
+        <target state="translated">Månedlig rapport</target>
+      </trans-unit>
+      <trans-unit id="1gBKwGH" resname="report_inactive_project" xml:space="preserve">
+        <source>report_inactive_project</source>
+        <target state="translated">Inaktive projekter</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects" xml:space="preserve">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">Projekt pr. måned, aktivitet og bruger</target>
+      </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Kunde overblik</target>
+      </trans-unit>
+      <trans-unit id="518eY_l" resname="report_project_details" xml:space="preserve">
+        <source>report_project_details</source>
+        <target state="translated">Projekt detaljer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

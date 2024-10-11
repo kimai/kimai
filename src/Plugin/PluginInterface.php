@@ -9,6 +9,9 @@
 
 namespace App\Plugin;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag]
 interface PluginInterface
 {
     public function getName(): string;

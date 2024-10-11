@@ -59,7 +59,7 @@ class ContextTest extends TestCase
         ];
     }
 
-    public function testIsModalRequest()
+    public function testIsModalRequest(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
         self::assertFalse($sut->isModalRequest());
@@ -71,7 +71,7 @@ class ContextTest extends TestCase
         self::assertTrue($sut->isModalRequest());
     }
 
-    public function testIsJavascriptRequest()
+    public function testIsJavascriptRequest(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
         self::assertFalse($sut->isJavascriptRequest());

@@ -6,6 +6,18 @@
         <source>wizard.intro.title</source>
         <target state="translated">Selamat Datang di Kimai</target>
       </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description">
+        <source>wizard.intro.description</source>
+        <target state="translated">Wizard ini akan membantu Anda menyesuaikan Kimai dengan kebutuhan Anda.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Pengaturan anda</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">Profil anda</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

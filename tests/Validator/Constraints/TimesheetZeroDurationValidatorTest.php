@@ -44,18 +44,18 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetZeroDurationValidator($config);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
     }
 
     private function prepareTimesheet()
@@ -70,7 +70,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         return $timesheet;
     }
 
-    public function testZeroDurationIsDisallowed()
+    public function testZeroDurationIsDisallowed(): void
     {
         $timesheet = $this->prepareTimesheet();
 
@@ -82,7 +82,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testZeroDurationIsAllowed()
+    public function testZeroDurationIsAllowed(): void
     {
         $this->validator = $this->createMyValidator(true);
         $this->validator->initialize($this->context);

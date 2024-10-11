@@ -10,12 +10,10 @@
         <source>help.upload</source>
         <target state="translated">Atenção: os ficheiros já existentes serão substituídos. Os tipos de ficheiros permitidos são: %extensions%.</target>
       </trans-unit>
-      <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">Para processamento posterior</target>
       </trans-unit>
-      <!-- Renderer -->
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Fatura</target>
@@ -28,13 +26,13 @@
         <source>text</source>
         <target state="translated">Texto</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target state="translated">Quadro de horários</target>
+        <target state="translated">Folha de ponto</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
         <source>download_invoice_renderer</source>
-        <target state="translated">Você pode baixar mais modelos aqui</target>
+        <target state="translated">Pode descarregar outros modelos aqui</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>

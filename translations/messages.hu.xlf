@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Időrögzítő</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Időrögzítő</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -49,9 +46,6 @@
         <source>confirm</source>
         <target>Alkalmaz</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Jelszó</target>
@@ -76,9 +70,6 @@
         <source>api_token_repeat</source>
         <target>API jelszó ismétlese</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Kezdőlap</target>
@@ -131,16 +122,10 @@
         <source>tags</source>
         <target>Címkék</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Nem található bejegyzés a kiválasztott szűrők alapján.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Dátum</target>
@@ -158,8 +143,8 @@
         <target>Időtartam</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Felhasználó</target>
+        <source>User</source>
+        <target state="translated">Felhasználó</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -189,17 +174,17 @@
         <source>budget</source>
         <target>Költségvetés</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Meghatározott időkeret</target>
+        <target state="needs-translation">Meghatározott időkeret</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Tevékenység</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Projekt</target>
+        <source>Project</source>
+        <target state="translated">Projekt</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
@@ -229,9 +214,6 @@
         <source>email</source>
         <target>E-mail</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target>Műveletek</target>
@@ -252,23 +234,14 @@
         <source>action.close</source>
         <target>Bezárás</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Kezdőlap</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Menü megjelenítése</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Rögzített órák</target>
@@ -301,9 +274,6 @@
         <source>color</source>
         <target>Szín</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Felhasználói profil</target>
@@ -312,9 +282,9 @@
         <source>profile.about_me</source>
         <target>Rólam</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Munka kezdete</target>
+        <target state="needs-translation">Munka kezdete</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -344,7 +314,6 @@
         <source>login_initial_view</source>
         <target>Bejelentkezés után megjelenített nézet</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Hónap</target>
@@ -361,19 +330,10 @@
         <source>daily_stats</source>
         <target>Napi statisztika megjelenítése a rögzített óráknál</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Naptár</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Adószám</target>
@@ -422,9 +382,6 @@
         <source>currency</source>
         <target>Pénznem</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Név</target>
@@ -445,16 +402,10 @@
         <source>roles</source>
         <target>Szerepkör</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Verzió</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Rendszer adminisztrátor</target>
@@ -471,9 +422,6 @@
         <source>ROLE_USER</source>
         <target>Felhasználó</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Mai munkaórák</target>
@@ -558,9 +506,6 @@
         <source>stats.customerTotal</source>
         <target>Ügyfél</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Számla sablon</target>
@@ -673,9 +618,6 @@
         <source>invoice_bank_account</source>
         <target>Bankszámlaszám</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Exportálás</target>
@@ -704,9 +646,6 @@
         <source>export.date_copyright</source>
         <target>Készült: %date% A %kimai% segítségével</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Jelenleg futó rögzítéseid</target>
@@ -717,11 +656,8 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Új rögzítés indítása</target>
+        <target state="needs-translation">Új rögzítés indítása</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Oldalméret</target>
@@ -1058,16 +994,16 @@
         <source>stats.activeUsersFinancialYear</source>
         <target>Aktív felhasználók ebben a pénzügyi évben</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>E-mail üzenet elküldve. Ebben az üzenetben található a jelszó visszaállító link, amivel visszaállíthatod a jelszavadat. Megjegyzés: új jelszó csak egyszer kérhető minden %tokenLifetime% órában. Ha nem érkezett meg az e-mail, ellenőrizze a spam mappában is.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">E-mail üzenet elküldve. Ebben az üzenetben található a jelszó visszaállító link, amivel visszaállíthatod a jelszavadat. Megjegyzés: új jelszó csak egyszer kérhető minden %tokenLifetime% órában. Ha nem érkezett meg az e-mail, ellenőrizze a spam mappában is.</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
         <target>Munkaidő</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Bevétel</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
@@ -1217,6 +1153,34 @@
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
         <target state="translated">Táblázat oszlopai</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Súgó</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Támogatás</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Támogasd</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Dátum</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target>Konfigurált formátum</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Számlaszám-generátor</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target state="translated">Alapértelmezett</target>
       </trans-unit>
     </body>
   </file>

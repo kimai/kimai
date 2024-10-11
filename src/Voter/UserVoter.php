@@ -35,24 +35,27 @@ final class UserVoter extends Voter
         'hourly-rate',
         'view_team_member',
         'contract',
+        'hours',
         'supervisor',
     ];
 
-    public function __construct(private RolePermissionManager $permissionManager)
+    public function __construct(private readonly RolePermissionManager $permissionManager)
     {
+    }
+
+    public function supportsAttribute(string $attribute): bool
+    {
+        return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
+    }
+
+    public function supportsType(string $subjectType): bool
+    {
+        return str_contains($subjectType, User::class);
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!($subject instanceof User)) {
-            return false;
-        }
-
-        if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
-            return false;
-        }
-
-        return true;
+        return $subject instanceof User && $this->supportsAttribute($attribute);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -100,6 +103,10 @@ final class UserVoter extends Voter
         if ($attribute === '2fa') {
             // can only be activated by the logged-in user for himself or by a super-admin
             return $subject->getId() === $user->getId() || $user->isSuperAdmin();
+        }
+
+        if ($attribute === 'supervisor' && $subject->getId() === $user->getId()) {
+            return $user->isSuperAdmin();
         }
 
         $permission = $attribute;

@@ -17,12 +17,12 @@ final class Customer extends Constraint
     public const CUSTOMER_NUMBER_EXISTING = 'kimai-customer-00';
 
     protected const ERROR_NAMES = [
-        self::CUSTOMER_NUMBER_EXISTING => 'The account number %number% is already used.',
+        self::CUSTOMER_NUMBER_EXISTING => 'The number %number% is already used.',
     ];
 
     public string $message = 'This customer has invalid settings.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

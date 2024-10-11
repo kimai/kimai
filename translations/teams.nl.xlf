@@ -30,6 +30,10 @@
         <source>team.visibility_global</source>
         <target>Zichtbaar voor iedereen, want er was nog geen team toegewezen.</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">Lid</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

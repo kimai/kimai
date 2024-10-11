@@ -30,6 +30,10 @@
         <source>team.activity_visibility_inherited</source>
         <target state="translated">Hoạt động có quyền truy cập bị giới hạn, vì quyền của nhóm được đặt cho dự án và/hoặc khách hàng.</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">Thành viên</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

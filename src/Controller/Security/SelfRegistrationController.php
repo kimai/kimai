@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -69,7 +69,7 @@ final class SelfRegistrationController extends AbstractController
 
             $request->getSession()->set('confirmation_email_address', $user->getEmail());
 
-            $this->userService->saveNewUser($user);
+            $this->userService->saveUser($user);
 
             return $this->redirectToRoute('user_registration_check_email');
         }
@@ -126,7 +126,7 @@ final class SelfRegistrationController extends AbstractController
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
 
-        $this->userService->updateUser($user);
+        $this->userService->saveUser($user);
 
         $response = $this->redirectToRoute('registration_confirmed');
         $loginManager->logInUser($user, $response);
@@ -164,7 +164,7 @@ final class SelfRegistrationController extends AbstractController
             return null;
         }
 
-        $key = sprintf('_security.%s.target_path', $token->getProviderKey());
+        $key = \sprintf('_security.%s.target_path', $token->getProviderKey());
 
         if ($session->has($key)) {
             return $session->get($key);

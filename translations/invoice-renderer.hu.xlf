@@ -34,6 +34,10 @@
         <source>text</source>
         <target>Szöveg</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">További sablonokat innen tölthet le</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

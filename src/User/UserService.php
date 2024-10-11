@@ -37,11 +37,11 @@ class UserService
     private array $cache = [];
 
     public function __construct(
-        private UserRepository $repository,
-        private EventDispatcherInterface $dispatcher,
-        private ValidatorInterface $validator,
-        private SystemConfiguration $configuration,
-        private UserPasswordHasherInterface $passwordHasher
+        private readonly UserRepository $repository,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ValidatorInterface $validator,
+        private readonly SystemConfiguration $configuration,
+        private readonly UserPasswordHasherInterface $passwordHasher
     ) {
     }
 
@@ -60,6 +60,7 @@ class UserService
     {
         $user = new User();
         $user->setEnabled(true);
+        $user->setRoles([User::DEFAULT_ROLE]);
         $user->setTimezone($this->configuration->getUserDefaultTimezone());
         $user->setLanguage($this->configuration->getUserDefaultLanguage());
         $user->setPreferenceValue(UserPreference::SKIN, $this->configuration->getUserDefaultTheme());
@@ -70,6 +71,18 @@ class UserService
         return $user;
     }
 
+    public function saveUser(User $user): User
+    {
+        if ($user->getId() === null) {
+            return $this->saveNewUser($user);
+        } else {
+            return $this->updateUser($user);
+        }
+    }
+
+    /**
+     * @internal will be made private soon
+     */
     public function saveNewUser(User $user): User
     {
         if (null !== $user->getId()) {
@@ -80,6 +93,7 @@ class UserService
 
         $this->hashPassword($user);
         $this->hashApiToken($user);
+        $user->eraseCredentials();
 
         $this->dispatcher->dispatch(new UserCreatePreEvent($user)); // @CloudRequired
         $this->repository->saveUser($user);
@@ -108,6 +122,7 @@ class UserService
 
         $this->hashPassword($user);
         $this->hashApiToken($user);
+        $user->eraseCredentials();
 
         $this->dispatcher->dispatch(new UserUpdatePreEvent($user));
         $this->repository->saveUser($user);
@@ -121,13 +136,13 @@ class UserService
         $user = $this->findUserByName($username);
 
         if ($user === null) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(\sprintf('User identified by "%s" username does not exist.', $username));
         }
 
         return $user;
     }
 
-    public function findUserByUsernameOrEmail(string $usernameOrEmail): ?User
+    public function findUserByUsernameOrEmail(string $usernameOrEmail): User
     {
         return $this->repository->loadUserByIdentifier($usernameOrEmail);
     }
@@ -167,7 +182,6 @@ class UserService
 
         $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setPassword($password);
-        $user->eraseCredentials();
     }
 
     private function hashApiToken(User $user): void
@@ -180,7 +194,6 @@ class UserService
 
         $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setApiToken($password);
-        $user->eraseCredentials();
     }
 
     public function deleteUser(User $delete, ?User $replace = null): void

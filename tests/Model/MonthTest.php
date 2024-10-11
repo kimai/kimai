@@ -23,9 +23,9 @@ class MonthTest extends TestCase
         foreach($months as $key => $days) {
             $index = ++$key;
             $monthKey = ($index < 10) ? '0' . $index : $index;
-            $date = new \DateTimeImmutable(sprintf('2020-%s-25 13:00:00', $monthKey));
+            $date = new \DateTimeImmutable(\sprintf('2020-%s-25 13:00:00', $monthKey));
             $month = new Month($date);
-            self::assertEquals(sprintf('2020-%s-25', $monthKey), $month->getMonth()->format('Y-m-d'));
+            self::assertEquals(\sprintf('2020-%s-25', $monthKey), $month->getMonth()->format('Y-m-d'));
             self::assertCount($days, $month->getDays());
         }
     }

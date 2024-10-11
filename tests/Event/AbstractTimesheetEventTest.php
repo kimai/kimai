@@ -18,7 +18,7 @@ abstract class AbstractTimesheetEventTest extends TestCase
 {
     abstract protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent;
 
-    public function testGetterAndSetter()
+    public function testGetterAndSetter(): void
     {
         $timesheet = new Timesheet();
         $sut = $this->createTimesheetEvent($timesheet);

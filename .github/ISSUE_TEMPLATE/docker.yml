@@ -28,11 +28,9 @@ body:
                     - Docker compose version: [e.g. 1.21.0]
                     
                 Docker compose file:
-                ```yaml
-                version: '3.5'
-                services:
-                    image: ...
-                ```
+                    version: '3.5'
+                    services:
+                        image: ...
         validations:
             required: true
     -   type: input

@@ -18,17 +18,17 @@
         <source>user</source>
         <target state="translated">Użytkownik: jedna pozycja na użytkownika</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Aktywność: jedna pozycja na aktywność</target>
+        <target state="translated">Aktywność</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
         <target state="translated">Projekt: jedna pozycja na projekt</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Domyślnie: jeden wpis na dzień (używa daty rozpoczęcia)</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
@@ -37,6 +37,22 @@
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
         <target state="translated">Co tydzień: jeden wpis na tydzień (używa daty rozpoczęcia)</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Aktywność i użytkownik</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Projekt i użytkownik</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Data i użytkownik</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Wybierz wg. których pól pozycje faktur powinny być grupowane</target>
       </trans-unit>
     </body>
   </file>

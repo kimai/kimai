@@ -23,7 +23,7 @@ use Doctrine\Common\Collections\Collection;
  */
 class ProjectTest extends AbstractEntityTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new Project();
         self::assertNull($sut->getId());
@@ -48,12 +48,12 @@ class ProjectTest extends AbstractEntityTest
         self::assertTrue($sut->isVisibleAtDate(new \DateTime()));
     }
 
-    public function testBudgets()
+    public function testBudgets(): void
     {
         $this->assertBudget(new Project());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new Project();
 
@@ -110,7 +110,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertFalse($sut->isGlobalActivities());
     }
 
-    public function testMetaFields()
+    public function testMetaFields(): void
     {
         $sut = new Project();
         $meta = new ProjectMeta();
@@ -138,7 +138,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertCount(2, $sut->getVisibleMetaFields());
     }
 
-    public function testTeams()
+    public function testTeams(): void
     {
         $sut = new Project();
         $team = new Team('foo');
@@ -161,7 +161,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertCount(0, $team->getProjects());
     }
 
-    public function testExportAnnotations()
+    public function testExportAnnotations(): void
     {
         $sut = new AnnotationExtractor();
 
@@ -184,6 +184,7 @@ class ProjectTest extends AbstractEntityTest
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['project_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -201,7 +202,7 @@ class ProjectTest extends AbstractEntityTest
         }
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $customer = new Customer('prj-customer');
         $customer->setVatId('DE-0123456789');
@@ -241,7 +242,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertEquals('prj-customer', $clone->getCustomer()->getName());
     }
 
-    public function testIsVisibleAtDateTime()
+    public function testIsVisibleAtDateTime(): void
     {
         $now = new \DateTime();
 

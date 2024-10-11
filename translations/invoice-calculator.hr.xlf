@@ -10,9 +10,9 @@
         <source>default</source>
         <target state="translated">Standardno (jedan redak za svaki unos)</target>
       </trans-unit>
-      <trans-unit id="_bAHi13" resname="short">
+      <trans-unit id="_bAHi13" resname="short" xml:space="preserve">
         <source>short</source>
-        <target state="translated">Sve (ukupno jedan unos)</target>
+        <target state="translated">Sve (jedan unos za ukupno)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
@@ -38,9 +38,9 @@
         <source>price</source>
         <target state="translated">Cijena</target>
       </trans-unit>
-      <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
         <source>invoice_calculator.help</source>
-        <target state="translated">Odaberi poljia za grupiranje stavki računa</target>
+        <target state="translated">Odaberi polja za grupiranje stavki računa</target>
       </trans-unit>
       <trans-unit id="oRa0mkz" resname="activity_user">
         <source>activity_user</source>

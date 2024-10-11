@@ -17,7 +17,7 @@ use DateTime;
  */
 class StatisticDateTest extends AbstractTimesheetTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $dateTime = new \DateTime('-8 hours');
         $sut = new StatisticDate($dateTime);
@@ -28,14 +28,14 @@ class StatisticDateTest extends AbstractTimesheetTest
         self::assertEquals($dateTime->getTimestamp(), $sut->getDate()->getTimestamp());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new StatisticDate($date);
         $this->assertSetter($sut);
     }
 
-    public function testAdditionalMethods()
+    public function testAdditionalMethods(): void
     {
         $date = new DateTime('-8 hours');
         $sut = new StatisticDate($date);

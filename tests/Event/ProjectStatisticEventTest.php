@@ -25,7 +25,7 @@ class ProjectStatisticEventTest extends AbstractProjectEventTest
         return new ProjectStatisticEvent($project, new ProjectStatistic());
     }
 
-    public function testStatistic()
+    public function testStatistic(): void
     {
         $project = new Project();
         $statistic = new ProjectStatistic();
@@ -36,8 +36,8 @@ class ProjectStatisticEventTest extends AbstractProjectEventTest
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
 
-        $begin = new \DateTime('2020-08-08 12:34:56');
-        $end = new \DateTime('2020-09-08 12:34:56');
+        $begin = new \DateTimeImmutable('2020-08-08 12:34:56');
+        $end = new \DateTimeImmutable('2020-09-08 12:34:56');
         $sut = new ProjectStatisticEvent($project, $statistic, $begin, $end);
         self::assertSame($begin, $sut->getBegin());
         self::assertSame($end, $sut->getEnd());

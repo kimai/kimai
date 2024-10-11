@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use App\Entity\Tag;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
-use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,78 +27,51 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class TagsSelectType extends AbstractType
 {
-    public function __construct(private TagRepository $tagRepository)
+    public function __construct(
+        private readonly TagRepository $tagRepository
+    )
     {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
-            if (!$options['allow_create']) {
-                return;
-            }
+            /** @var array<string> $tagIds */
             $tagIds = $event->getData();
+
+            // this is mainly here, because the link from tags index page uses the non-array syntax
+            if (\is_string($tagIds) || \is_int($tagIds)) {
+                $tagIds = array_filter(array_unique(array_map('trim', explode(',', $tagIds))));
+            }
+
             if (!\is_array($tagIds)) {
                 return;
             }
-            $ids = array_filter($tagIds, function ($tagId) {
+
+            $tags = [];
+            foreach ($tagIds as $tagId) {
+                $tag = null;
+
                 if (is_numeric($tagId)) {
-                    return true;
+                    $tag = $this->tagRepository->find($tagId);
                 }
 
-                return false;
-            });
+                if ($tag === null) {
+                    $tag = $this->tagRepository->findTagByName($tagId);
+                }
 
-            // get the current tags and find the new ones that should be created
-            $tags = $this->tagRepository->findBy(['id' => $ids]);
+                if ($options['allow_create'] && $tag === null) {
+                    $tag = new Tag();
+                    $tag->setName($tagId);
+                    $this->tagRepository->saveTag($tag);
+                }
 
-            $foundIds = [];
-            foreach ($tags as $tag) {
-                $foundIds[] = (string) $tag->getId();
-            }
-
-            $newData = [];
-            /** @var array<string> $newNames */
-            $newNames = [];
-            foreach ($tagIds as $tag) {
-                if (!\in_array($tag, $foundIds, true)) {
-                    $newNames[] = $tag;
-                } else {
-                    $newData[] = $tag;
+                if ($tag !== null) {
+                    $tags[] = $tag->getId();
                 }
             }
 
-            // 1. in case someone is using tags like "1234" this can interfere with the ID
-            // 2. if we would load only visible tags, we would try to create new ones below
-            //    and that would trigger the unique constraint
-            $tags = $this->tagRepository->findTagsByName($newNames, null);
-            $foundTagNames = [];
-            foreach ($tags as $tag) {
-                $newData[] = (string) $tag->getId();
-                $foundTagNames[] = $tag->getName();
-            }
-
-            /** @var array<string> $newNamesCreate */
-            $newNamesCreate = array_udiff($newNames, $foundTagNames, function (mixed $userTag, mixed $existingTag) {
-                if (!\is_string($userTag) || !\is_string($existingTag)) {
-                    return -1;
-                }
-
-                if (mb_strtolower($userTag) === mb_strtolower($existingTag)) {
-                    return 0;
-                }
-
-                return strcmp($userTag, $existingTag);
-            });
-
-            foreach ($newNamesCreate as $name) {
-                $tag = new Tag();
-                $tag->setName(mb_substr($name, 0, 100));
-                $this->tagRepository->saveTag($tag);
-                $newData[] = $tag->getId();
-            }
-
-            $event->setData($newData);
+            $event->setData($tags);
         }, 1000);
     }
 
@@ -110,18 +82,15 @@ final class TagsSelectType extends AbstractType
             'class' => Tag::class,
             'label' => 'tag',
             'allow_create' => false,
+            'choice_value' => function (Tag $tag) {
+                return $tag->getId();
+            },
             'choice_attr' => function (Tag $tag) {
-                $color = $tag->getColor();
-                if ($color === null) {
-                    $color = (new Color())->getRandom($tag->getName());
-                }
-
-                return ['data-color' => $color];
+                return ['data-color' => $tag->getColorSafe()];
             },
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();
             },
-            'attr' => ['data-renderer' => 'color'],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -132,6 +101,8 @@ final class TagsSelectType extends AbstractType
                 return $repo->getQueryBuilderForFormType($query);
             };
         });
+
+        $resolver->setAllowedTypes('allow_create', 'bool');
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -141,6 +112,10 @@ final class TagsSelectType extends AbstractType
                 'data-create' => 'post_tag',
             ]);
         }
+
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-renderer' => 'color',
+        ]);
     }
 
     public function getParent(): string

@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProjectDetailsModelTest extends TestCase
 {
-    public function testDefaults()
+    public function testDefaults(): void
     {
         $project = new Project();
         $sut = new ProjectDetailsModel($project);
@@ -35,7 +35,7 @@ class ProjectDetailsModelTest extends TestCase
         self::assertNull($sut->getUserYear('2999', new User()));
     }
 
-    public function testGetYearsSorted()
+    public function testGetYearsSorted(): void
     {
         $project = new Project();
         $sut = new ProjectDetailsModel($project);

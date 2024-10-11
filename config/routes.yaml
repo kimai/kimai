@@ -2,8 +2,6 @@ controllers:
     resource: ../src/Controller/
     type: attribute
     prefix: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
 
@@ -31,8 +29,6 @@ security:
     resource: ../src/Controller/Security/
     type: attribute
     prefix: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
 
@@ -49,8 +45,6 @@ home:
 
 homeLocale:
     path: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         _locale: '%locale%'

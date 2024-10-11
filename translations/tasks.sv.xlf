@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
-        <target state="translated">Team-uppgifter</target>
+        <target state="translated">Gruppuppgifter</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
         <source>task.help.team</source>
-        <target state="translated">Tilldela denna uppgift till ett team</target>
+        <target state="translated">Tilldela denna uppgift till en grupp</target>
       </trans-unit>
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
-        <target state="translated">Dessa taggar kommer att kopieras till varje tidrapport</target>
+        <target state="translated">Dessa etiketter kommer att kopieras till varje tidrapport</target>
       </trans-unit>
       <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
         <source>task_no_estimation</source>
@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Uppgiftsbeskrivning</target>
+        <target state="translated">Uppgift</target>
       </trans-unit>
     </body>
   </file>

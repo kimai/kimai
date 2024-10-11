@@ -6,6 +6,18 @@
         <source>plugin.none_installed</source>
         <target state="translated">Sinulla ei ole asennettuja liitännäisiä.</target>
       </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">Lisää laajennuksia</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Osta nyt</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">Saatavilla olevat lisäosat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

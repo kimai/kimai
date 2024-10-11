@@ -23,13 +23,13 @@ class RolePermissionVoterTest extends AbstractVoterTest
     /**
      * @dataProvider getTestData
      */
-    public function testVote(User $user, $subject, $attribute, $result)
+    public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(RolePermissionVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);
-        $this->assertEquals($result, $actual, sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
+        $this->assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
     public function getTestData()

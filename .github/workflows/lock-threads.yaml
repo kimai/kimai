@@ -1,0 +1,29 @@
+name: 'Lock Threads'
+
+on:
+    schedule:
+        - cron: '17 1 * * *'
+    workflow_dispatch:
+
+permissions:
+    issues: write
+    pull-requests: write
+
+concurrency:
+    group: lock-threads
+
+jobs:
+    action:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: dessant/lock-threads@v5
+              with:
+                  process-only: 'issues, prs'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  issue-inactive-days: '90'
+                  issue-comment: >
+                    This thread has been automatically locked since there has not been any recent activity after it was closed. 
+                    Please share your experience with the community and [leave a testimonial](https://love.kimai.org/) to support Kimai.
+                  issue-lock-reason: 'resolved'
+                  pr-inactive-days: '180'
+                  log-output: true

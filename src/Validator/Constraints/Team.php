@@ -22,7 +22,7 @@ final class Team extends Constraint
 
     public string $message = 'The team has invalid settings.';
 
-    public function getTargets(): string|array
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

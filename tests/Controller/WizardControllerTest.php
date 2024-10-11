@@ -16,7 +16,7 @@ use App\Entity\User;
  */
 class WizardControllerTest extends ControllerBaseTest
 {
-    public function testUnknownWizard()
+    public function testUnknownWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -24,21 +24,21 @@ class WizardControllerTest extends ControllerBaseTest
         $this->assertRouteNotFound($client);
     }
 
-    public function testIntroWizard()
+    public function testIntroWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->assertAccessIsGranted($client, '/wizard/intro');
     }
 
-    public function testProfileWizard()
+    public function testProfileWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->assertAccessIsGranted($client, '/wizard/profile');
     }
 
-    public function testDoneWizard()
+    public function testDoneWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 

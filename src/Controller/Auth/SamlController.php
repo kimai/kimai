@@ -12,15 +12,19 @@ namespace App\Controller\Auth;
 use App\Configuration\SamlConfigurationInterface;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 #[Route(path: '/saml')]
 final class SamlController extends AbstractController
 {
-    public function __construct(private SamlAuthFactory $authFactory, private SamlConfigurationInterface $samlConfiguration)
+    public function __construct(
+        private readonly SamlAuthFactory $authFactory,
+        private readonly SamlConfigurationInterface $samlConfiguration
+    )
     {
     }
 
@@ -32,7 +36,7 @@ final class SamlController extends AbstractController
         }
 
         $session = $request->getSession();
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
+        $authErrorKey = SecurityRequestAttributes::AUTHENTICATION_ERROR;
 
         $error = null;
 
@@ -43,7 +47,7 @@ final class SamlController extends AbstractController
             $session->remove($authErrorKey);
         }
 
-        if ($error) {
+        if ($error !== null) {
             if (\is_object($error) && method_exists($error, 'getMessage')) {
                 $error = $error->getMessage();
             }
@@ -51,13 +55,17 @@ final class SamlController extends AbstractController
         }
 
         // this does set headers and exit as $stay is not set to true
-        $url = $this->authFactory->create()->login($session->get('_security.main.target_path'));
+        $redirectTarget = $session->get('_security.main.target_path');
+        if ($redirectTarget === null || $redirectTarget === '') {
+            $redirectTarget = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
 
         if ($url === null) {
             throw new \RuntimeException('SAML login failed');
         }
 
-        // this line is not (yet) reached, as the previous call will exit
         return $this->redirect($url);
     }
 

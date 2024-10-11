@@ -9,7 +9,10 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-if (isset($_ENV['BOOTSTRAP_RESET_DATABASE']) && $_ENV['BOOTSTRAP_RESET_DATABASE'] == true) {
+// TODO remove once PARTIAL usage was replaced entirely
+\Doctrine\Deprecations\Deprecation::ignoreDeprecations('https://github.com/doctrine/orm/issues/8471');
+
+if (isset($_ENV['BOOTSTRAP_RESET_DATABASE']) && (bool) $_ENV['BOOTSTRAP_RESET_DATABASE'] === true) {
     echo 'Re-Installing test database ...' . PHP_EOL;
 
     exec(sprintf(

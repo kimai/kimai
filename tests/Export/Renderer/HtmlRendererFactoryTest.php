@@ -22,7 +22,7 @@ use Twig\Environment;
  */
 class HtmlRendererFactoryTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $sut = new HtmlRendererFactory(
             $this->createMock(Environment::class),

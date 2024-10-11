@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Tíðarfylgjan</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tíðarfylgjan</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -81,19 +78,13 @@
         <source>Doctor</source>
         <target>Lækni</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Ongar viðmerkingar eru sendar út enn.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Dato</target>
+        <target state="translated">Dato</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -107,9 +98,9 @@
         <source>duration</source>
         <target>Tíðarlongd</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Brúkari</target>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
+        <target state="translated">Brúkari</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -139,17 +130,17 @@
         <source>budget</source>
         <target>Fíggjarætlan</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Tíðarætlan</target>
+        <target state="needs-translation">Tíðarætlan</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Virksemi</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>Verkætlan</target>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
+        <target state="translated">Verkætlan</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
@@ -493,7 +484,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Upprætta eina nýggja tíðarinntøppan</target>
+        <target state="needs-translation">Upprætta eina nýggja tíðarinntøppan</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -751,19 +742,19 @@
         <source>profile.registration_date</source>
         <target>Skrásett tann</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Arbeitt síðan</target>
+        <target state="needs-translation">Arbeitt síðan</target>
       </trans-unit>
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Brúkara vangi</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target>Legg aftrat</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Útskift</target>
       </trans-unit>
@@ -919,9 +910,9 @@
         <source>type</source>
         <target>Slag</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>

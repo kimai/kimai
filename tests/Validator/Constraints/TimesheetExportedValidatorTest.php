@@ -48,21 +48,21 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetExportedValidator($auth);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testInvalidValueThrowsException()
+    public function testInvalidValueThrowsException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetExported(['message' => 'myMessage'])); // @phpstan-ignore-line
+        $this->validator->validate(new NotBlank(), new TimesheetExported(['message' => 'myMessage']));
     }
 
-    public function testTriggersOnMissingPermission()
+    public function testTriggersOnMissingPermission(): void
     {
         $this->validator = $this->createMyValidator(false);
         $this->validator->initialize($this->context);
@@ -79,7 +79,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testNotTriggersOnNewTimesheet()
+    public function testNotTriggersOnNewTimesheet(): void
     {
         $this->validator = $this->createMyValidator(false);
         $this->validator->initialize($this->context);
@@ -93,7 +93,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testDoesNotTriggerWithPermission()
+    public function testDoesNotTriggerWithPermission(): void
     {
         $this->validator = $this->createMyValidator(true);
         $this->validator->initialize($this->context);
@@ -106,7 +106,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testDoesNotTriggerIfNotExported()
+    public function testDoesNotTriggerIfNotExported(): void
     {
         $this->validator = $this->createMyValidator(false);
         $this->validator->initialize($this->context);
@@ -119,7 +119,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testGetTargets()
+    public function testGetTargets(): void
     {
         $constraint = new TimesheetExported();
         self::assertEquals('class', $constraint->getTargets());

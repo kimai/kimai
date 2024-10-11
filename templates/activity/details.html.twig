@@ -14,7 +14,7 @@
         {% import "project/actions.html.twig" as projectActions %}
         {% block box_attributes %}id="activity_details_box"{% endblock %}
         {% block box_title %}
-            {{ widgets.label_name(activity.name, activity.color) }}
+            {{ widgets.label_dot(activity.name, activity.color) }}
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
@@ -68,6 +68,14 @@
                         </td>
                         <td class="actions">
                             {{ projectActions.project(activity.project, 'custom') }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if activity.number is not empty %}
+                    <tr>
+                        <th>{{ 'activity_number'|trans }}</th>
+                        <td colspan="3">
+                            {{ activity.number }}
                         </td>
                     </tr>
                 {% endif %}

@@ -100,14 +100,14 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService, $auth, $localeService);
     }
 
-    public function testConstraintIsInvalid()
+    public function testConstraintIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate(new Timesheet(), new NotBlank());
     }
 
-    public function testConstraintWithPreExistingViolation()
+    public function testConstraintWithPreExistingViolation(): void
     {
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
@@ -117,14 +117,14 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->buildViolation('FOOOOOOOOO')->assertRaised();
     }
 
-    public function testTargetIsInvalid()
+    public function testTargetIsInvalid(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new TimesheetBudgetUsed()); // @phpstan-ignore-line
+        $this->validator->validate('foo', new TimesheetBudgetUsed());
     }
 
-    public function testWithMissingEnd()
+    public function testWithMissingEnd(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new DateTime());
@@ -133,7 +133,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testWithMissingUser()
+    public function testWithMissingUser(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new DateTime());
@@ -143,7 +143,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testWithMissingProject()
+    public function testWithMissingProject(): void
     {
         $timesheet = new Timesheet();
         $timesheet->setBegin(new DateTime());
@@ -154,7 +154,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testWithoutBudget()
+    public function testWithoutBudget(): void
     {
         $project = new Project();
         $project->setCustomer(new Customer('foo'));
@@ -169,7 +169,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testWithAllowedOverbooking()
+    public function testWithAllowedOverbooking(): void
     {
         $this->validator = $this->createValidator(true);
         $this->validator->initialize($this->context);

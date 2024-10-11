@@ -15,10 +15,11 @@ export default class KimaiReducedClickHandler extends KimaiPlugin {
 
     /**
      * No _underscore naming for now, as it would be mangled otherwise
-     * @param selector
-     * @param callback
+     * @param {string} selector
+     * @param {callback} callback
+     * @param {array<string>} stopSelector
      */
-    addClickHandler(selector, callback) {
+    addClickHandler(selector, callback, stopSelector) {
         document.body.addEventListener('click', (event) => {
             // event.currentTarget is ALWAYS the body
 
@@ -38,6 +39,12 @@ export default class KimaiReducedClickHandler extends KimaiPlugin {
                     return;
                 }
 
+                for (let x of stopSelector) {
+                    if (target.matches(x)) {
+                        return;
+                    }
+                }
+
                 target = target.parentNode;
             }
 
@@ -52,6 +59,12 @@ export default class KimaiReducedClickHandler extends KimaiPlugin {
 
             if (!target.matches(selector)) {
                 return;
+            }
+
+            for (let x of stopSelector) {
+                if (target.matches(x)) {
+                    return;
+                }
             }
 
             event.preventDefault();

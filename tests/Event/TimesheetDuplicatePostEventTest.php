@@ -23,7 +23,7 @@ class TimesheetDuplicatePostEventTest extends AbstractTimesheetEventTest
         return new TimesheetDuplicatePostEvent($timesheet, new Timesheet());
     }
 
-    public function testGetOriginalTimesheet()
+    public function testGetOriginalTimesheet(): void
     {
         $newTimesheet = new Timesheet();
         $originalTimesheet = new Timesheet();

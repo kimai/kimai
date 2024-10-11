@@ -2,12 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sk" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <trans-unit id="N7mikjJ" resname="time_tracking">
-        <source>time_tracking</source>
-        <target>Sledovanie času</target>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Sledovanie času</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -65,9 +62,6 @@
         <source>attachments</source>
         <target>Prílohy</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Heslo</target>
@@ -96,9 +90,6 @@
         <source>login_required</source>
         <target>Nedostatočné oprávnenia. Presmerovať na prihlásenie?</target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Prehľad</target>
@@ -159,9 +150,6 @@
         <source>Doctor</source>
         <target>Sys-Doktor</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Neboli nájdené žiadne položky.</target>
@@ -170,9 +158,6 @@
         <source>error.no_comments_found</source>
         <target>Nebolí nájdené žiadne komentáre.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Dátum</target>
@@ -221,9 +206,9 @@
         <source>budget</source>
         <target>Rozpočet</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Časový rozpočet</target>
+        <target state="needs-translation">Časový rozpočet</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -269,9 +254,6 @@
         <source>teamlead</source>
         <target>Teamleader</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">Akcie</target>
@@ -296,16 +278,10 @@
         <source>action.close</source>
         <target>Zavrieť</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Prehľad</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
       <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target>Zobraziť menu</target>
@@ -322,9 +298,6 @@
         <source>progress</source>
         <target>Stav postupu</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Moje časy</target>
@@ -357,17 +330,14 @@
         <source>color</source>
         <target>Farba</target>
       </trans-unit>
-      <trans-unit id="tl01EdS" resname="replace">
+      <trans-unit id="erN3h3b" resname="replace">
         <source>replace</source>
         <target>Zmeniť</target>
       </trans-unit>
-      <trans-unit id="ICpl9sx" resname="append">
+      <trans-unit id="rlJLVNm" resname="append">
         <source>append</source>
         <target>Pridať</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Užívateľský profil</target>
@@ -376,9 +346,9 @@
         <source>profile.about_me</source>
         <target>O mne</target>
       </trans-unit>
-      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target>Pracuje u nás od</target>
+        <target state="needs-translation">Pracuje u nás od</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -408,7 +378,6 @@
         <source>login_initial_view</source>
         <target>Počiatočné zobrazenie po prihlásení</target>
       </trans-unit>
-      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mesiac</target>
@@ -425,19 +394,10 @@
         <source>daily_stats</source>
         <target>Zobraziť denné štatistiky v prehľade</target>
       </trans-unit>
-      <!--
-              User timesheet calendar
-            -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendár</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target>Začiatok projektu</target>
@@ -446,9 +406,6 @@
         <source>project_end</source>
         <target>Koniec projektu</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target>Účet</target>
@@ -501,9 +458,6 @@
         <source>currency</source>
         <target>Mena</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target>Meno</target>
@@ -536,16 +490,10 @@
         <source>Allowed character: A-Z and _</source>
         <target>Povolené znaky: A-Z a _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target>Verzia</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -562,9 +510,6 @@
         <source>ROLE_USER</source>
         <target>User</target>
       </trans-unit>
-      <!--
-            Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Pracovný čas dnes</target>
@@ -653,9 +598,6 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% minutých (%left% zostáva)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Šablóna faktúry</target>
@@ -776,9 +718,6 @@
         <source>invoice_bank_account</source>
         <target>Bankový účet</target>
       </trans-unit>
-      <!--
-              Export
-            -->
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Export</target>
@@ -811,9 +750,6 @@
         <source>export.date_copyright</source>
         <target>Vytvorené %date% - %kimai%</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
@@ -824,11 +760,8 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Vytvoriť nový časový záznam</target>
+        <target state="needs-translation">Vytvoriť nový časový záznam</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target>Veľkosť stránky</target>
@@ -1025,9 +958,9 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">Zobrazenie poloziek vo vybere</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target state="translated">Bol vám zaslaný email. Obsahuje odkaz, na ktory musite kliknúť pre obnovu hesla. Poznámka : O nové heslo môžete požidat raz za %tokenLifetime% hodín. V prípade ak vám email nepríde, skontrolujte si spamovú poštu.</target>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="needs-translation">Bol vám zaslaný email. Obsahuje odkaz, na ktory musite kliknúť pre obnovu hesla. Poznámka : O nové heslo môžete požidat raz za %tokenLifetime% hodín. V prípade ak vám email nepríde, skontrolujte si spamovú poštu.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -1045,9 +978,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target state="translated">Finančný rok</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime">
-        <source>stats.workingTime</source>
-        <target state="translated">Pracovná doba</target>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
+        <source>Working hours</source>
+        <target>Pracovná doba</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
@@ -1073,8 +1006,8 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target state="translated">Tržby</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
@@ -1149,9 +1082,9 @@
         <source>skin.dark</source>
         <target state="translated">Tmavý</target>
       </trans-unit>
-      <trans-unit id="31dFXhR" resname="work_times_is">
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="translated">Je-hodín</target>
+        <target state="needs-translation">Je-hodín</target>
       </trans-unit>
       <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no">
         <source>Holidays per year</source>
@@ -1196,10 +1129,6 @@
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target state="translated">API sa nedá použiť</target>
-      </trans-unit>
-      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
-        <source>api_password.missing_description</source>
-        <target state="translated">Nezadali ste API heslo. Kvôli bezpečnostným dôvodom nemôžete používať API kým nenastavíte heslo.</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
@@ -1273,13 +1202,13 @@
         <source>team.add_user.help</source>
         <target state="translated">Výberom zo zoznamu pridajte do tímu nového používateľa. Potom môžete rozhodnúť, či se má používateľ stať vedúcim tímu.</target>
       </trans-unit>
-      <trans-unit id="JSBReoa" resname="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="translated">API heslo sa používa pre komunikáciu medzi Kimai a vašimi aplikáciami</target>
+        <target state="needs-translation">API heslo sa používa pre komunikáciu medzi Kimai a vašimi aplikáciami</target>
       </trans-unit>
       <trans-unit id="JmkKf48" resname="user.language.help">
         <source>user.language.help</source>
-        <target state="translated">Okrem prekladov tohoto rozhrania, toto nastavenie ovplyvňuje tiež formát čas, dátumu a meny.</target>
+        <target state="needs-translation">Okrem prekladov tohoto rozhrania, toto nastavenie ovplyvňuje tiež formát čas, dátumu a meny.</target>
       </trans-unit>
       <trans-unit id="o0hsx2H" resname="mark_as_open">
         <source>mark_as_open</source>
@@ -1357,13 +1286,9 @@
         <source>help.invoiceTemplate</source>
         <target state="translated">Táto faktúra je generovaná s touto šablónou.</target>
       </trans-unit>
-      <trans-unit id="1btzNDa" resname="work_times_should">
-        <source>work_times_should</source>
-        <target state="translated">Cieľové hodiny</target>
-      </trans-unit>
-      <trans-unit id="PE2iiaW" resname="work_times_should.help">
-        <source>work_times_should.help</source>
-        <target state="translated">Nakonfigurované hodnoty se používajú k výpočtu hodinového účtu.</target>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="needs-translation">Cieľové hodiny</target>
       </trans-unit>
       <trans-unit id="gcFtM3o" resname="holiday">
         <source>holiday</source>
@@ -1443,7 +1368,7 @@
       </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales">
         <source>help_locales</source>
-        <target state="translated">Podporované jazyky s formátovaním</target>
+        <target state="needs-translation">Podporované jazyky s formátovaním</target>
       </trans-unit>
       <trans-unit id="ulgdXdi" resname="hour_24">
         <source>hour_24</source>
@@ -1549,9 +1474,9 @@
         <source>dashboard.edit_mode</source>
         <target state="translated">Widgety môžete preskladať pomocou funkcie drag &amp; drop (potiahni &amp; pusti). Pridaním widgetov sa uložia čakajúce zmeny.</target>
       </trans-unit>
-      <trans-unit id="4lrfIsZ" resname="complete_month">
-        <source>complete_month</source>
-        <target state="translated">Ukončený mesiac</target>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="needs-translation">Ukončený mesiac</target>
       </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
@@ -1569,9 +1494,9 @@
         <source>profile.2fa_confirmation</source>
         <target state="translated">Prosím potvrďte kód z vašej dvojstupňovej aplikácie, ktorý aktivuje dvojstupňové overenie pre tento účet.</target>
       </trans-unit>
-      <trans-unit id="W8XQTkJ" resname="complete_month.help">
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="translated">Po dokončení mesiaca, uživateľ nebude môcť ďalej vytvárať alebo editovať časy pre toto obdobie.</target>
+        <target state="needs-translation">Po dokončení mesiaca, uživateľ nebude môcť ďalej vytvárať alebo editovať časy pre toto obdobie.</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1604,6 +1529,30 @@
       <trans-unit id="mS4SSmt" resname="work_times">
         <source>work_times</source>
         <target state="translated">Pracovná doba</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target>Dokumentácia</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target>Podpora</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target>Podporte</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
+        <source>invoice_number_generator.date</source>
+        <target>Dátum</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Nastavený formát</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
+        <target>Generátor čísiel faktúr</target>
       </trans-unit>
     </body>
   </file>

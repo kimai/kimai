@@ -9,7 +9,7 @@
 
 namespace App\DependencyInjection\Compiler;
 
-use App\Kernel;
+use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -24,7 +24,7 @@ final class WidgetCompilerPass implements CompilerPassInterface
     {
         $definition = $container->findDefinition(WidgetService::class);
 
-        $taggedRenderer = $container->findTaggedServiceIds(Kernel::TAG_WIDGET);
+        $taggedRenderer = $container->findTaggedServiceIds(WidgetInterface::class);
         foreach ($taggedRenderer as $id => $tags) {
             $definition->addMethodCall('registerWidget', [new Reference($id)]);
         }

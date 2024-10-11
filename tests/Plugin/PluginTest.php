@@ -11,7 +11,6 @@ namespace App\Tests\Plugin;
 
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
-use App\Plugin\PluginMetadata;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,22 +18,10 @@ use PHPUnit\Framework\TestCase;
  */
 class PluginTest extends TestCase
 {
-    public function testEmptyObject()
+    public function testEmptyObject(): void
     {
         $plugin = new Plugin($this->createMock(PluginInterface::class));
         $this->assertEquals('', $plugin->getId());
-        $this->assertEquals('', $plugin->getName());
         $this->assertEquals('', $plugin->getPath());
-        $this->assertNull($plugin->getMetadata());
-    }
-
-    public function testGetterAndSetter()
-    {
-        $metadata = new PluginMetadata();
-
-        $plugin = new Plugin($this->createMock(PluginInterface::class));
-        $plugin->setMetadata($metadata);
-
-        $this->assertEquals($metadata, $plugin->getMetadata());
     }
 }

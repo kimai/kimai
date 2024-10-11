@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
@@ -219,16 +220,7 @@ class ProfileControllerTest extends ControllerBaseTest
         // cannot follow redirect here, because the password was changed and the user/password registered in the client
         // are the old ones, so following the redirect would fail with "Unauthorized".
 
-        $this->tearDown();
-        $client = self::createClient([], [
-            'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
-            'PHP_AUTH_PW' => 'test1234',
-        ]);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
         $user = $this->getUserByRole(User::ROLE_USER);
-
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
         $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test1234'));
     }
@@ -251,6 +243,9 @@ class ProfileControllerTest extends ControllerBaseTest
         );
     }
 
+    /**
+     * @group legacy
+     */
     public function testApiTokenAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -265,9 +260,9 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
-        $form = $client->getCrawler()->filter('form[name=user_api_token]')->form();
+        $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
         $client->submit($form, [
-            'user_api_token' => [
+            'user_api_password' => [
                 'plainApiToken' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
@@ -292,16 +287,16 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_USER,
             '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
-            'form[name=user_api_token]',
+            'form[name=user_api_password]',
             [
-                'user_api_token' => [
+                'user_api_password' => [
                     'plainApiToken' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
                     ]
                 ]
             ],
-            ['#user_api_token_plainApiToken_first']
+            ['#user_api_password_plainApiToken_first']
         );
     }
 
@@ -422,7 +417,8 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $data = [
             UserPreference::TIMEZONE => ['value' => 'America/Creston'],
-            UserPreference::LOCALE => ['value' => 'ar'],
+            UserPreference::LANGUAGE => ['value' => 'ar'],
+            UserPreference::LOCALE => ['value' => 'ru'],
             UserPreference::FIRST_WEEKDAY => ['value' => 'sunday'],
             UserPreference::SKIN => ['value' => 'dark'],
         ];
@@ -453,9 +449,10 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertEquals('America/Creston', $user->getPreferenceValue(UserPreference::TIMEZONE));
         $this->assertEquals('America/Creston', $user->getTimezone());
-        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LOCALE));
+        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LANGUAGE));
+        $this->assertEquals('ru', $user->getPreferenceValue(UserPreference::LOCALE));
+        $this->assertEquals('ru', $user->getLocale());
         $this->assertEquals('ar', $user->getLanguage());
-        $this->assertEquals('ar', $user->getLocale());
         $this->assertEquals('dark', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
         $this->assertEquals('sunday', $user->getFirstDayOfWeek());
@@ -556,14 +553,15 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByRole(User::ROLE_USER);
+        $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(0, $user->getWorkHoursMonday());
-        $this->assertEquals(0, $user->getWorkHoursTuesday());
-        $this->assertEquals(0, $user->getWorkHoursWednesday());
-        $this->assertEquals(0, $user->getWorkHoursThursday());
-        $this->assertEquals(0, $user->getWorkHoursFriday());
-        $this->assertEquals(0, $user->getWorkHoursSaturday());
-        $this->assertEquals(0, $user->getWorkHoursSunday());
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
 
         $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
 
@@ -584,13 +582,14 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
+        $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(3600, $user->getWorkHoursMonday());
-        $this->assertEquals(7200, $user->getWorkHoursTuesday());
-        $this->assertEquals(10800, $user->getWorkHoursWednesday());
-        $this->assertEquals(16200, $user->getWorkHoursThursday());
-        $this->assertEquals(18720, $user->getWorkHoursFriday());
-        $this->assertEquals(25140, $user->getWorkHoursSaturday());
-        $this->assertEquals(60, $user->getWorkHoursSunday());
+        $this->assertEquals(3600, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        $this->assertEquals(7200, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        $this->assertEquals(10800, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        $this->assertEquals(16200, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        $this->assertEquals(18720, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        $this->assertEquals(25140, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        $this->assertEquals(60, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
     }
 }

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nb-NO" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Hvis knappen ikke virker, kopier og lim inn følgende nettadresse i nettleseren din: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Dette er en auto-generert e-post. Ikke svar, siden ingen av disse leses.</target>
@@ -26,21 +22,21 @@
         <source>registration.intro</source>
         <target>Du har registrert deg på Kimai-tidssporer med e-posten %email%. Aktiver kontoen din i løpet av de neste timene før lenken utløper.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Tilbakestill passordet</target>
+        <target state="needs-translation">Tilbakestill passordet</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target>Det kan skje …</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Det kan skje …</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Tilbakestill passordet</target>
+        <target state="needs-translation">Tilbakestill passordet</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target>… glemt passordet? Kimai hjelper deg å lage et nytt:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">… glemt passordet? Kimai hjelper deg å lage et nytt:</target>
       </trans-unit>
     </body>
   </file>

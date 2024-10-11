@@ -45,7 +45,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
     /**
      * @dataProvider getTestData
      */
-    public function testSubmitValidData($value, $expectedDuration)
+    public function testSubmitValidData($value, $expectedDuration): void
     {
         $data = ['duration' => $value];
 
@@ -72,7 +72,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         return $model;
     }
 
-    public function testPresetPopulatesView()
+    public function testPresetPopulatesView(): void
     {
         $view = $this->factory->create(QuickEntryTimesheetType::class, $this->createDefaultModel(), [
             'duration_minutes' => 15,
@@ -87,7 +87,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         self::assertEquals('4:45', $vars['duration_presets'][18]);
     }
 
-    public function testPresetsAreNotGeneratedOnMissingHours()
+    public function testPresetsAreNotGeneratedOnMissingHours(): void
     {
         $view = $this->factory->create(QuickEntryTimesheetType::class, $this->createDefaultModel())->createView();
 
@@ -96,7 +96,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $vars);
     }
 
-    public function testPresetsAreNotGeneratedOnMissingMinutes()
+    public function testPresetsAreNotGeneratedOnMissingMinutes(): void
     {
         $view = $this->factory->create(QuickEntryTimesheetType::class, $this->createDefaultModel(), [
             'duration_hours' => 5,
@@ -107,7 +107,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $vars);
     }
 
-    public function testPresetsAreNotGeneratedOnNegativeMinutes()
+    public function testPresetsAreNotGeneratedOnNegativeMinutes(): void
     {
         $view = $this->factory->create(QuickEntryTimesheetType::class, $this->createDefaultModel(), [
             'duration_minutes' => -1,
@@ -119,7 +119,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         self::assertArrayNotHasKey('duration_presets', $vars);
     }
 
-    public function testPresetsAreNotGeneratedOnNegativeHours()
+    public function testPresetsAreNotGeneratedOnNegativeHours(): void
     {
         $view = $this->factory->create(QuickEntryTimesheetType::class, $this->createDefaultModel(), [
             'duration_minutes' => 5,

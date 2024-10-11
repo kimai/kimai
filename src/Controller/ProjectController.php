@@ -36,6 +36,8 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Repository\Query\TeamQuery;
+use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Utils\Context;
 use App\Utils\DataTable;
@@ -45,7 +47,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -56,7 +58,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/project')]
 final class ProjectController extends AbstractController
 {
-    public function __construct(private ProjectRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ProjectService $projectService)
+    public function __construct(
+        private readonly ProjectRepository $repository,
+        private readonly SystemConfiguration $configuration,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectService $projectService
+    )
     {
     }
 
@@ -66,6 +73,7 @@ final class ProjectController extends AbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = new ProjectQuery();
+        $query->loadTeams();
         $query->setCurrentUser($this->getUser());
         $query->setPage($page);
 
@@ -86,6 +94,7 @@ final class ProjectController extends AbstractController
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('customer', ['class' => 'd-none']);
         $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+        $table->addColumn('number', ['class' => 'd-none w-min', 'title' => 'project_number']);
         $table->addColumn('orderNumber', ['class' => 'd-none']);
         $table->addColumn('orderDate', ['class' => 'd-none']);
         $table->addColumn('project_start', ['class' => 'd-none']);
@@ -210,13 +219,13 @@ final class ProjectController extends AbstractController
     {
         $projectId = $comment->getProject()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.delete_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('project_details', ['id' => $projectId]);
         }
 
-        $csrfTokenManager->refreshToken('project.delete_comment');
+        $csrfTokenManager->refreshToken('comment.delete');
 
         try {
             $this->repository->deleteComment($comment);
@@ -253,13 +262,13 @@ final class ProjectController extends AbstractController
     {
         $projectId = $comment->getProject()->getId();
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.pin_comment', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('project_details', ['id' => $projectId]);
         }
 
-        $csrfTokenManager->refreshToken('project.pin_comment');
+        $csrfTokenManager->refreshToken('comment.pin');
 
         $comment->setPinned(!$comment->isPinned());
         try {
@@ -334,6 +343,15 @@ final class ProjectController extends AbstractController
         $rates = [];
         $now = $this->getDateTimeFactory()->createDateTime();
 
+        $exportUrl = null;
+        $invoiceUrl = null;
+        if ($this->isGranted('create_export') && $project->getCustomer() !== null) {
+            $exportUrl = $this->generateUrl('export', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'preview' => true, 'billable' => true]);
+        }
+        if ($this->isGranted('view_invoice') && $project->getCustomer() !== null) {
+            $invoiceUrl = $this->generateUrl('invoice', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'daterange' => '', 'exported' => TimesheetQuery::STATE_NOT_EXPORTED, 'billable' => true]);
+        }
+
         if ($this->isGranted('edit', $project)) {
             if ($this->isGranted('create_team')) {
                 $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
@@ -351,7 +369,9 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {
-            $teams = $project->getTeams();
+            $query = new TeamQuery();
+            $query->addProject($project);
+            $teams = $teamRepository->getTeamsForQuery($query);
         }
 
         // additional boxes by plugins
@@ -375,7 +395,9 @@ final class ProjectController extends AbstractController
             'teams' => $teams,
             'rates' => $rates,
             'now' => $now,
-            'boxes' => $boxes
+            'boxes' => $boxes,
+            'export_url' => $exportUrl,
+            'invoice_url' => $invoiceUrl,
         ]);
     }
 
@@ -464,11 +486,17 @@ final class ProjectController extends AbstractController
 
         $csrfTokenManager->refreshToken('project.duplicate');
 
-        $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
+        try {
+            $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
+            $this->flashSuccess('action.update.success');
 
-        $this->flashSuccess('action.update.success');
+            return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
+        } catch (\Exception $ex) {
+            $this->logException($ex);
+            $this->flashError('action.update.error', 'Failed to copy project: ' . $ex->getMessage());
+        }
 
-        return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
+        return $this->redirectToRoute('admin_project');
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_project_delete', methods: ['GET', 'POST'])]

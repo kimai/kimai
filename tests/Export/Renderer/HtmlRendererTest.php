@@ -28,7 +28,7 @@ use Twig\Environment;
  */
 class HtmlRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = new HtmlRenderer(
             $this->createMock(Environment::class),
@@ -42,7 +42,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $this->assertEquals('print', $sut->getIcon());
     }
 
-    public function testRender()
+    public function testRender(): void
     {
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');

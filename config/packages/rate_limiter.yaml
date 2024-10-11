@@ -1,0 +1,21 @@
+framework:
+    rate_limiter:
+        session_prediction:
+            policy: 'fixed_window'
+            limit: 250
+            interval: '1 hour'
+            lock_factory: null
+        reset_password:
+            policy: 'fixed_window'
+            limit: 10
+            interval: '1 hour'
+            lock_factory: null
+
+when@test:
+    framework:
+        rate_limiter:
+            reset_password:
+                policy: 'fixed_window'
+                limit: 100
+                interval: '1 minute'
+                lock_factory: null

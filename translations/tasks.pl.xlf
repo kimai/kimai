@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Opis zadania</target>
+        <target state="translated">Zadanie</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>

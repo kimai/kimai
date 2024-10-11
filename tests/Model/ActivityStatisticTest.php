@@ -17,22 +17,22 @@ use App\Model\ActivityStatistic;
  */
 class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTest
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertDefaultValues(new ActivityStatistic());
     }
 
-    public function testSetter()
+    public function testSetter(): void
     {
         $this->assertSetter(new ActivityStatistic());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertJsonSerialize(new ActivityStatistic());
     }
 
-    public function testAdditionalSetter()
+    public function testAdditionalSetter(): void
     {
         $sut = new ActivityStatistic();
         self::assertNull($sut->getActivity());

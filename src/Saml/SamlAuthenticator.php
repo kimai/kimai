@@ -35,12 +35,12 @@ class SamlAuthenticator extends AbstractAuthenticator
     ];
 
     public function __construct(
-        private HttpUtils $httpUtils,
-        private SamlAuthenticationSuccessHandler $successHandler,
-        private SamlAuthenticationFailureHandler $failureHandler,
-        private SamlAuthFactory $samlAuthFactory,
-        private SamlProvider $samlProvider,
-        private SamlConfigurationInterface $configuration
+        private readonly HttpUtils $httpUtils,
+        private readonly SamlAuthenticationSuccessHandler $successHandler,
+        private readonly SamlAuthenticationFailureHandler $failureHandler,
+        private readonly SamlAuthFactory $samlAuthFactory,
+        private readonly SamlProvider $samlProvider,
+        private readonly SamlConfigurationInterface $configuration
     ) {
     }
 
@@ -98,7 +98,7 @@ class SamlAuthenticator extends AbstractAuthenticator
 
         if (isset($this->options['username_attribute'])) {
             if (!\array_key_exists($this->options['username_attribute'], $attributes)) {
-                throw new \Exception(sprintf("Attribute '%s' not found in SAML data", $this->options['username_attribute']));
+                throw new \Exception(\sprintf("Attribute '%s' not found in SAML data", $this->options['username_attribute']));
             }
 
             $username = $attributes[$this->options['username_attribute']][0];

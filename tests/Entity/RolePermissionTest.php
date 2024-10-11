@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RolePermissionTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $sut = new RolePermission();
         self::assertNull($sut->getId());
@@ -27,7 +27,7 @@ class RolePermissionTest extends TestCase
         self::assertFalse($sut->isAllowed());
     }
 
-    public function testSetterAndGetter()
+    public function testSetterAndGetter(): void
     {
         $sut = new RolePermission();
 

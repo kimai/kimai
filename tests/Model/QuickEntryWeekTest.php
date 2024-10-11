@@ -9,6 +9,7 @@
 
 namespace App\Tests\Model;
 
+use App\Entity\User;
 use App\Model\QuickEntryModel;
 use App\Model\QuickEntryWeek;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +28,7 @@ class QuickEntryWeekTest extends TestCase
         self::assertEquals([], $sut->getRows());
 
         $rows = [
-            new QuickEntryModel()
+            new QuickEntryModel(new User())
         ];
 
         $sut->setRows($rows);

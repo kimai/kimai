@@ -20,9 +20,9 @@ use Twig\TwigFunction;
  */
 class RuntimeExtensionsTest extends TestCase
 {
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
-        $expected = ['md2html', 'desc2html', 'comment2html', 'comment1line', 'colorize', 'icon'];
+        $expected = ['md2html', 'desc2html', 'comment2html', 'comment1line', 'colorize', 'icon', 'sanitize_dde'];
         $i = 0;
 
         $sut = new RuntimeExtensions();
@@ -35,7 +35,7 @@ class RuntimeExtensionsTest extends TestCase
         }
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $expected = [
             'trigger',
@@ -50,6 +50,7 @@ class RuntimeExtensionsTest extends TestCase
             'render_widget',
             'icon',
             'qr_code_data_uri',
+            'user_shortcuts',
         ];
 
         $i = 0;
@@ -65,7 +66,7 @@ class RuntimeExtensionsTest extends TestCase
         }
     }
 
-    public function testGetFilterDefinition()
+    public function testGetFilterDefinition(): void
     {
         $sut = new RuntimeExtensions();
         $filters = $sut->getFilters();

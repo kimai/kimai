@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
 final class SamlBadge implements BadgeInterface
 {
-    public function __construct(private SamlLoginAttributes $samlToken)
+    public function __construct(private readonly SamlLoginAttributes $samlToken)
     {
     }
 

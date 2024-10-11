@@ -15,9 +15,12 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 /**
- * A listener to make sure all Timesheet entries will be calculated properly (e.g. duration and rates).
+ * A listener to make sure all Timesheet entries will be calculated properly.
+ *
+ * E.g. updates timesheet records and applies configured rate & rounding rules.
  */
 #[AsDoctrineListener(event: Events::onFlush, priority: 50)]
 final class TimesheetSubscriber implements EventSubscriber, DataSubscriberInterface
@@ -30,7 +33,10 @@ final class TimesheetSubscriber implements EventSubscriber, DataSubscriberInterf
     /**
      * @param CalculatorInterface[] $calculators
      */
-    public function __construct(private iterable $calculators)
+    public function __construct(
+        #[TaggedIterator(CalculatorInterface::class)]
+        private readonly iterable $calculators
+    )
     {
     }
 

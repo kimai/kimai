@@ -12,7 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Repository\TagRepository;
+use App\Form\Type\TagsType;
 use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
@@ -72,7 +72,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'state' => 1,
             'users' => [$user->getId()],
-            'pageSize' => 25,
+            'size' => 25,
             'daterange' => $dateRange,
             'customers' => [],
         ]);
@@ -194,7 +194,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/create_mu');
@@ -272,7 +272,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/' . $id . '/edit');
@@ -355,7 +355,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $fixture = new TagFixtures();
-        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $fixture->importAmount(TagsType::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/team/timesheet/');

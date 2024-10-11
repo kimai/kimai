@@ -49,7 +49,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
 
         $timesheet2 = new Timesheet();
         $timesheet2->setDescription('foo 2');
-        $timesheet2->setBegin(clone $date);
+        $timesheet2->setBegin(new \DateTime('2018-11-18'));
         $timesheet2->setDuration(400);
         $timesheet2->setRate(84);
         $timesheet2->setActivity(new Activity());

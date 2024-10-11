@@ -48,16 +48,16 @@ final class PluginCommand extends Command
 
         $rows = [];
         foreach ($plugins as $plugin) {
-            $this->plugins->loadMetadata($plugin);
             $meta = $plugin->getMetadata();
             $rows[] = [
+                $plugin->getId(),
                 $plugin->getName(),
                 $meta->getVersion(),
                 $meta->getKimaiVersion(),
                 $plugin->getPath(),
             ];
         }
-        $io->table(['Name', 'Version', 'Requires', 'Directory'], $rows);
+        $io->table(['Id', 'Name', 'Version', 'Requires', 'Directory'], $rows);
 
         return Command::SUCCESS;
     }

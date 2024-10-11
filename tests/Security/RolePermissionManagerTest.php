@@ -21,7 +21,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
  */
 class RolePermissionManagerTest extends TestCase
 {
-    public function testWithEmptyRepository()
+    public function testWithEmptyRepository(): void
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([]);
@@ -34,7 +34,7 @@ class RolePermissionManagerTest extends TestCase
         self::assertFalse($sut->hasPermission('TEST_ROLE', 'foo'));
     }
 
-    public function testWithRepositoryData()
+    public function testWithRepositoryData(): void
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([
@@ -57,7 +57,7 @@ class RolePermissionManagerTest extends TestCase
         self::assertTrue($sut->hasPermission('USER_ROLE', 'bar'));
     }
 
-    public function testWithConfigData()
+    public function testWithConfigData(): void
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([]);
@@ -76,7 +76,7 @@ class RolePermissionManagerTest extends TestCase
         self::assertTrue($sut->hasPermission('USER_ROLE', 'bar'));
     }
 
-    public function testWithMixedData()
+    public function testWithMixedData(): void
     {
         $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
         $repository->method('getAllAsArray')->willReturn([

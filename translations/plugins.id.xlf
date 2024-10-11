@@ -6,6 +6,14 @@
         <source>plugin.none_installed</source>
         <target state="translated">Anda tidak memiliki plugin yang diinstal.</target>
       </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>Available plugins</source>
+        <target state="translated">Plugin yang tersedia</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">Beli sekarang</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

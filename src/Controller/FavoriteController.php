@@ -12,7 +12,7 @@ namespace App\Controller;
 use App\Entity\Timesheet;
 use App\Timesheet\FavoriteRecordService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/favorite')]
@@ -32,7 +32,7 @@ final class FavoriteController extends AbstractController
     {
         $favoriteRecordService->addFavorite($timesheet);
 
-        return $this->render('favorite/index.html.twig');
+        return $this->redirectToRoute('favorites_timesheets');
     }
 
     #[Route(path: '/timesheet/remove/{id}', name: 'favorites_timesheets_remove', methods: ['GET'])]
@@ -41,6 +41,6 @@ final class FavoriteController extends AbstractController
     {
         $favoriteRecordService->removeFavorite($timesheet);
 
-        return $this->render('favorite/index.html.twig');
+        return $this->redirectToRoute('favorites_timesheets');
     }
 }

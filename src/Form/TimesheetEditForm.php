@@ -10,7 +10,9 @@
 namespace App\Form;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\Customer;
 use App\Entity\Timesheet;
+use App\Form\Type\CustomerType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
@@ -23,6 +25,7 @@ use App\Form\Type\TimesheetBillableType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
+use App\Repository\Query\CustomerFormTypeQuery;
 use App\Timesheet\Calculator\BillableCalculator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -49,7 +52,6 @@ class TimesheetEditForm extends AbstractType
         $project = null;
         $customer = null;
         $currency = false;
-        $customerCount = $this->customers->countCustomer(true);
         $timezone = $options['timezone'];
         $isNew = true;
 
@@ -100,15 +102,33 @@ class TimesheetEditForm extends AbstractType
             $this->addDuration($builder, $options, (!$options['allow_begin_datetime'] || !$options['allow_end_datetime']), $isNew);
         }
 
+        // -----------------------------------------------------
+        $query = new CustomerFormTypeQuery($customer);
+        $query->setUser($options['user']); // @phpstan-ignore-line
+        $qb = $this->customers->getQueryBuilderForFormType($query);
+        /** @var array<Customer> $customers */
+        $customers = $qb->getQuery()->getResult();
+        $customerCount = \count($customers);
+
         if ($this->showCustomer($options, $isNew, $customerCount)) {
-            $this->addCustomer($builder, $customer);
+            $builder->add('customer', CustomerType::class, [
+                'choices' => $customers,
+                'data' => $customer,
+                'required' => false,
+                'placeholder' => '',
+                'mapped' => false,
+                'project_enabled' => true,
+            ]);
         }
 
-        $allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
-
+        // TODO pre-select if only one exists
         $this->addProject($builder, $isNew, $project, $customer);
+
+        // TODO make creation possible
+        //$allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
         $this->addActivity($builder, $activity, $project, [
-            'allow_create' => $allowCreate && $options['create_activity'],
+            'allow_create' => false,
+            // 'allow_create' => $allowCreate && $options['create_activity'],
         ]);
 
         $descriptionOptions = ['required' => false];
@@ -295,7 +315,7 @@ class TimesheetEditForm extends AbstractType
             function (FormEvent $event) {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
-                if (null === $timesheet || null === $timesheet->getEnd()) {
+                if (null === $timesheet || $timesheet->isRunning()) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }
@@ -320,7 +340,7 @@ class TimesheetEditForm extends AbstractType
 
                 // only apply the duration, if the end is not yet set
                 // without that check, the end would be overwritten and the real end time would be lost
-                if (($forceApply && $duration > 0) || ($duration > 0 && null === $timesheet->getEnd())) {
+                if (($forceApply && $duration > 0) || ($duration > 0 && $timesheet->isRunning())) {
                     $end = clone $timesheet->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
                     $timesheet->setEnd($end);
@@ -394,7 +414,7 @@ class TimesheetEditForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $maxMinutes = $this->systemConfiguration->getTimesheetLongRunningDuration();
-        $maxHours = 8;
+        $maxHours = 10;
         if ($maxMinutes > 0) {
             $maxHours = (int) ($maxMinutes / 60);
         }

@@ -15,27 +15,25 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Event\PageActionsEvent;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/actions')]
-#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+#[IsGranted('API')]
 #[OA\Tag(name: 'Actions')]
 final class ActionsController extends BaseApiController
 {
     public function __construct(
-        private ViewHandlerInterface $viewHandler,
-        private EventDispatcherInterface $dispatcher,
-        private TranslatorInterface $translator
+        private readonly ViewHandlerInterface $viewHandler,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly TranslatorInterface $translator
     ) {
     }
 
@@ -73,9 +71,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
-    #[Rest\Get(path: '/timesheet/{id}/{view}/{locale}', name: 'get_timesheet_actions', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/timesheet/{id}/{view}/{locale}', name: 'get_timesheet_actions', requirements: ['id' => '\d+'])]
     public function getTimesheetActions(Timesheet $timesheet, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['timesheet' => $timesheet], 'timesheet', $view);
@@ -93,9 +89,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
-    #[Rest\Get(path: '/activity/{id}/{view}/{locale}', name: 'get_activity_actions', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/activity/{id}/{view}/{locale}', name: 'get_activity_actions', requirements: ['id' => '\d+'])]
     public function getActivityActions(Activity $activity, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['activity' => $activity], 'activity', $view);
@@ -113,9 +107,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
-    #[Rest\Get(path: '/project/{id}/{view}/{locale}', name: 'get_project_actions', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/project/{id}/{view}/{locale}', name: 'get_project_actions', requirements: ['id' => '\d+'])]
     public function getProjectActions(Project $project, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['project' => $project], 'project', $view);
@@ -133,9 +125,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
-    #[Rest\Get(path: '/customer/{id}/{view}/{locale}', name: 'get_customer_actions', requirements: ['id' => '\d+'])]
-    #[ApiSecurity(name: 'apiUser')]
-    #[ApiSecurity(name: 'apiToken')]
+    #[Route(methods: ['GET'], path: '/customer/{id}/{view}/{locale}', name: 'get_customer_actions', requirements: ['id' => '\d+'])]
     public function getCustomerActions(Customer $customer, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['customer' => $customer], 'customer', $view);

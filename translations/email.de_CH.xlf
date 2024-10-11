@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de-CH" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Wenn die Schaltfläche nicht funktioniert, kopieren Sie bitte die folgende URL und fügen sie in Ihren Browser ein: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target state="translated">Dies ist eine automatisch generierte E-Mail. Bitte nicht antworten, E-Mails an diese Adresse werden nicht gelesen.</target>
@@ -26,21 +22,21 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="translated">Sie haben sich mit der E-Mail-Adresse %email% bei der Kimai-Zeiterfassung angemeldet. Bitte aktivieren Sie Ihr Konto in den nächsten Stunden, bevor der Link abläuft.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Passwort zurücksetzen</target>
+        <target state="needs-translation">Passwort zurücksetzen</target>
       </trans-unit>
-      <trans-unit id="G2mhn_2" resname="reset.title">
-        <source>reset.title</source>
-        <target state="translated">Das kann passieren…</target>
+      <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
+        <source>Forgot your password?</source>
+        <target state="needs-translation">Das kann passieren…</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Passwort zurücksetzen</target>
+        <target state="needs-translation">Passwort zurücksetzen</target>
       </trans-unit>
-      <trans-unit id="rhkMAep" resname="reset.intro">
-        <source>reset.intro</source>
-        <target state="translated">... Sie haben also Ihr Passwort vergessen? Keine Sorge: Kimai hilft Ihnen, ein neues zu erstellen:</target>
+      <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
+        <source>Don't worry, Kimai will help you create a new one!</source>
+        <target state="needs-translation">... Sie haben also Ihr Passwort vergessen? Keine Sorge: Kimai hilft Ihnen, ein neues zu erstellen:</target>
       </trans-unit>
     </body>
   </file>

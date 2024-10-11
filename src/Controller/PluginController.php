@@ -12,7 +12,7 @@ namespace App\Controller;
 use App\Plugin\PluginManager;
 use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -28,7 +28,6 @@ final class PluginController extends AbstractController
         $installed = [];
         $plugins = $manager->getPlugins();
         foreach ($plugins as $plugin) {
-            $manager->loadMetadata($plugin);
             $installed[] = $plugin->getId();
         }
 
@@ -46,21 +45,28 @@ final class PluginController extends AbstractController
     private function getPluginInformation(HttpClientInterface $client, CacheInterface $cache): array
     {
         return $cache->get('kimai.marketplace_extensions', function (ItemInterface $item) use ($client) {
-            $response = $client->request('GET', 'https://www.kimai.org/plugins.json');
+            try {
+                $response = $client->request('GET', 'https://www.kimai.org/plugins.json');
 
-            if ($response->getStatusCode() !== 200) {
-                return [];
+                if ($response->getStatusCode() !== 200) {
+                    return [];
+                }
+
+                $json = json_decode($response->getContent(), true);
+
+                if ($json === null) {
+                    return [];
+                }
+
+                $item->expiresAfter(86400); // one day
+
+                return $response->toArray();
+            } catch (\Throwable $exception) {
+                $this->logException($exception);
+                $this->flashError('Could not download plugin information');
             }
 
-            $json = json_decode($response->getContent(), true);
-
-            if ($json === null) {
-                return [];
-            }
-
-            $item->expiresAfter(86400); // one day
-
-            return $response->toArray();
+            return [];
         });
     }
 }

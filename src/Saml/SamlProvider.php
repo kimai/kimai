@@ -11,17 +11,22 @@ namespace App\Saml;
 
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\User\UserService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class SamlProvider
 {
+    /**
+     * @param UserProviderInterface<User> $userProvider
+     */
     public function __construct(
-        private UserRepository $repository,
-        private UserProviderInterface $userProvider,
-        private SamlConfigurationInterface $configuration
+        private readonly UserService $userService,
+        private readonly UserProviderInterface $userProvider,
+        private readonly SamlConfigurationInterface $configuration,
+        private readonly LoggerInterface $logger
     ) {
     }
 
@@ -30,37 +35,28 @@ final class SamlProvider
         $user = null;
 
         try {
-            /** @var User $user */
-            $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
-        } catch (UserNotFoundException $e) {
+            if ($token->getUserIdentifier() !== null) {
+                /** @var User $user */
+                $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
+            }
+        } catch (UserNotFoundException $ex) {
+            // this is expected for new users
+            $this->logger->debug('User is not existing: ' . $token->getUserIdentifier());
         }
 
         try {
             if (null === $user) {
-                $user = $this->createUser($token);
-            } else {
-                $this->hydrateUser($user, $token);
+                $user = $this->userService->createNewUser();
+                $user->setUserIdentifier($token->getUserIdentifier());
             }
-
-            $this->repository->saveUser($user);
+            $this->hydrateUser($user, $token);
+            $this->userService->saveUser($user);
         } catch (\Exception $ex) {
+            $this->logger->error($ex->getMessage());
             throw new AuthenticationException(
-                sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
+                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
             );
         }
-
-        return $user;
-    }
-
-    private function createUser(SamlLoginAttributes $token): User
-    {
-        // Not using UserService: user settings should be set via SAML attributes
-        $user = new User();
-        $user->setEnabled(true);
-        $user->setUserIdentifier($token->getUserIdentifier());
-        $user->setPassword('');
-
-        $this->hydrateUser($user, $token);
 
         return $user;
     }
@@ -105,20 +101,23 @@ final class SamlProvider
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
             } else {
-                throw new \RuntimeException('Invalid mapping field given: ' . $field);
+                // this should never happen, because it is validated when the container is built
+                throw new \RuntimeException('Invalid SAML mapping field: ' . $field);
             }
         }
 
-        // fill them after hydrating account, so they can't be overwritten
-        // by the mapping attributes
+        // change after hydrating account, so it can't be overwritten by mapping attributes
         if ($user->getId() === null) {
+            // set a plain password to satisfy the validator
+            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
             $user->setPassword('');
         }
+
         $user->setUserIdentifier($token->getUserIdentifier());
         $user->setAuth(User::AUTH_SAML);
     }
 
-    private function getPropertyValue(SamlLoginAttributes $token, $attribute)
+    private function getPropertyValue(SamlLoginAttributes $token, $attribute): string
     {
         $results = [];
         $attributes = $token->getAttributes();
@@ -131,7 +130,7 @@ final class SamlProvider
             if ($part[0] === '$') {
                 $key = substr($part, 1);
                 if (!\array_key_exists($key, $attributes)) {
-                    throw new \RuntimeException('Missing user attribute: ' . $key);
+                    throw new \RuntimeException('Missing SAML attribute in response: ' . $key);
                 }
 
                 if (\is_array($attributes[$key]) && isset($attributes[$key][0])) {

@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetExtensionTest extends TestCase
 {
-    public function testActiveEntries()
+    public function testActiveEntries(): void
     {
         $entries = [new Timesheet(), new Timesheet()];
 
@@ -36,7 +36,7 @@ class TimesheetExtensionTest extends TestCase
         self::assertEquals($entries, $sut->activeEntries(new User()));
     }
 
-    public function testRecentEntries()
+    public function testRecentEntries(): void
     {
         $timesheet1 = $this->createMock(Timesheet::class);
         $timesheet1->method('getId')->willReturn(1);

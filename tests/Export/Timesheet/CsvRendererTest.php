@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  */
 class CsvRendererTest extends AbstractRendererTest
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 
@@ -38,7 +38,7 @@ class CsvRendererTest extends AbstractRendererTest
     /**
      * @dataProvider getTestModel
      */
-    public function testRender($totalDuration, $totalRate, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3)
+    public function testRender($totalDuration, $totalRate, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 
@@ -74,39 +74,40 @@ class CsvRendererTest extends AbstractRendererTest
         }
 
         $expected = [
-            0 => '2019-06-16',
-            1 => '12:00',
-            2 => '12:06',
-            3 => '400',
-            4 => '0',
-            5 => '',
-            6 => 'kevin',
-            7 => 'kevin',
-            8 => 'Customer Name',
-            9 => 'project name',
-            10 => 'activity description',
-            11 => '',
-            12 => '',
-            13 => '',
-            14 => 'foo,bar',
-            15 => '',
-            16 => ' EUR 84.00 ',
-            17 => 'meta-bar',
-            18 => 'meta-bar2',
-            19 => 'customer-bar',
-            20 => '',
-            21 => 'project-foo2',
-            22 => 'activity-bar',
-            23 => 'timesheet',
-            24 => 'work',
-            25 => 'A-0123456789',
-            26 => 'DE-9876543210',
-            27 => 'ORDER-123',
+            '2019-06-16',
+            '12:00',
+            '12:06',
+            '400',
+            '0',
+            '',
+            'kevin',
+            'kevin',
+            '',
+            'Customer Name',
+            'project name',
+            'activity description',
+            '',
+            '',
+            '',
+            'foo,bar',
+            '',
+            ' EUR 84.00 ',
+            'meta-bar',
+            'meta-bar2',
+            'customer-bar',
+            '',
+            'project-foo2',
+            'activity-bar',
+            'timesheet',
+            'work',
+            'A-0123456789',
+            'DE-9876543210',
+            'ORDER-123',
         ];
 
         self::assertEquals(6, \count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][14]);
+        self::assertEquals('foo', $all[4][15]);
     }
 }

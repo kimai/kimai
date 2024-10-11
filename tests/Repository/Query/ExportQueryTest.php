@@ -24,7 +24,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, ExportQuery::ORDER_ASC);
+        $this->assertOrder($sut);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);
@@ -36,15 +36,15 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertMarkAsExported($sut);
     }
 
-    protected function assertMarkAsExported(ExportQuery $sut)
+    public function assertMarkAsExported(ExportQuery $sut): void
     {
-        $this->assertTrue($sut->isMarkAsExported());
-
-        $sut->setMarkAsExported(false);
         $this->assertFalse($sut->isMarkAsExported());
+
+        $sut->setMarkAsExported(true);
+        $this->assertTrue($sut->isMarkAsExported());
     }
 
-    protected function assertRenderer(ExportQuery $sut)
+    public function assertRenderer(ExportQuery $sut): void
     {
         $this->assertNull($sut->getRenderer());
 

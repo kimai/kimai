@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimesheetSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $sut = new TimesheetSubscriber([]);
         $events = $sut->getSubscribedEvents();
