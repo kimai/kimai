@@ -78,8 +78,8 @@ RUN apk add --no-cache \
 
 # apache debian php extension base
 FROM php:8.3-apache-bookworm AS apache-php-ext-base
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
         libldap2-dev \
         libicu-dev \
         libpng-dev \
@@ -165,7 +165,8 @@ RUN apt-get update && \
         libpng16-16 \
         libzip4 \
         libxslt1.1 \
-        libfreetype6 && \
+        libfreetype6 \
+        unzip && \
     echo "Listen 8001" > /etc/apache2/ports.conf && \
     a2enmod rewrite && \
     touch /use_apache
@@ -264,7 +265,6 @@ ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serve
 ENV APP_SECRET=change_this_to_something_unique
 # The default container name for nginx is nginx
 ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
-ENV TRUSTED_HOSTS=nginx,localhost,127.0.0.1
 ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=
