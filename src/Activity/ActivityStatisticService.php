@@ -273,19 +273,17 @@ class ActivityStatisticService
         $activities = $qb->getQuery()->getResult();
 
         // pre-cache project objects instead of joining them
-        $loader = new ActivityLoader($this->activityRepository->createQueryBuilder('a')->getEntityManager(), false, false, false);
+        $loader = new ActivityLoader($this->activityRepository->createQueryBuilder('a')->getEntityManager());
         $loader->loadResults($activities);
 
         return $activities;
     }
 
     /**
-     * @param User $user
      * @param Activity[] $activities
-     * @param DateTime $today
      * @return ActivityViewModel[]
      */
-    public function getActivityView(User $user, array $activities, DateTime $today): array
+    public function getActivityView(User $user, array $activities, DateTimeInterface $today): array
     {
         $factory = DateTimeFactory::createByUser($user);
         $today = clone $today;
@@ -315,12 +313,13 @@ class ActivityStatisticService
             ->addSelect('COALESCE(SUM(t.rate), 0) AS rate')
             ->andWhere($tplQb->expr()->in('t.activity', ':activity'))
             ->groupBy('t.activity')
-            ->setParameter('activity', array_values($activityIds))
+            ->setParameter('activity', $activityIds)
         ;
 
         $qb = clone $tplQb;
         $qb->addSelect('MAX(t.date) as lastRecord');
 
+        /** @var array<int, array{id: int, amount: int, duration: int, rate: float, lastRecord: string}> $result */
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             $activityView[$row['id']]->setDurationTotal($row['duration']);
@@ -339,6 +338,7 @@ class ActivityStatisticService
             ->setParameter('start_date', $today, Types::DATETIME_MUTABLE)
         ;
 
+        /** @var array<int, array{id: int, amount: int, duration: int, rate: float}> $result */
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             $activityView[$row['id']]->setDurationDay($row['duration'] ?? 0);
@@ -352,6 +352,7 @@ class ActivityStatisticService
             ->setParameter('end_date', $endOfWeek, Types::DATETIME_MUTABLE)
         ;
 
+        /** @var array<int, array{id: int, amount: int, duration: int, rate: float}> $result */
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             $activityView[$row['id']]->setDurationWeek($row['duration']);
@@ -365,6 +366,7 @@ class ActivityStatisticService
             ->setParameter('end_date', $endMonth, Types::DATETIME_MUTABLE)
         ;
 
+        /** @var array<int, array{id: int, amount: int, duration: int, rate: float}> $result */
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             $activityView[$row['id']]->setDurationMonth($row['duration']);
@@ -377,6 +379,8 @@ class ActivityStatisticService
             ->addGroupBy('t.exported')
             ->addGroupBy('t.billable')
         ;
+
+        /** @var array<int, array{id: int, amount: int, duration: int, rate: float, exported: bool, billable: bool}> $result */
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
             /** @var ActivityViewModel $view */
