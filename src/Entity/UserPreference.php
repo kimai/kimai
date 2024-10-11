@@ -47,7 +47,6 @@ class UserPreference
     public const WORK_HOURS_SATURDAY = WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY;
     /** @deprecated since 2.22*/
     public const WORK_HOURS_SUNDAY = WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY;
-    public const WORK_STARTING_DAY = 'work_start_day';
     public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     public const HOLIDAYS_PER_YEAR = 'holidays';
     public const WORK_CONTRACT_TYPE = 'work_contract_type';

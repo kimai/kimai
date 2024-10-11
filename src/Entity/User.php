@@ -1276,7 +1276,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getWorkStartingDay(): ?\DateTimeInterface
     {
-        $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
+        return $this->getPreferenceDate('work_start_day');
+    }
+
+    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_start_day', $date?->format('Y-m-d'));
+    }
+
+    private function getPreferenceDate(string $prefName): ?\DateTimeInterface
+    {
+        $date = $this->getPreferenceValue($prefName);
 
         if ($date === null) {
             return null;
@@ -1290,9 +1300,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return ($date instanceof \DateTimeInterface) ? $date : null;
     }
 
-    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    public function getLastWorkingDay(): ?\DateTimeInterface
     {
-        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
+        return $this->getPreferenceDate('work_last_day');
+    }
+
+    public function setLastWorkingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_last_day', $date?->format('Y-m-d'));
     }
 
     public function getPublicHolidayGroup(): null|string

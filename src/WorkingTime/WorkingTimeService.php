@@ -102,6 +102,7 @@ final class WorkingTimeService
 
         $stats = null;
         $firstDay = $user->getWorkStartingDay();
+        $lastDay = $user->getLastWorkingDay();
         $calculator = $this->getContractMode($user)->getCalculator($user);
 
         foreach ($year->getMonths() as $month) {
@@ -119,7 +120,7 @@ final class WorkingTimeService
                 $dayDate = $day->getDay();
                 $result = new WorkingTime($user, $dayDate);
 
-                if ($firstDay === null || $firstDay <= $dayDate) {
+                if (($firstDay === null || $firstDay <= $dayDate) && ($lastDay === null || $lastDay >= $dayDate)) {
                     $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
                 }
 
