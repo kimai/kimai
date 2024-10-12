@@ -169,11 +169,8 @@ class Kernel extends BaseKernel
             $routes->import($configDir . '/routes/' . $this->environment . '/*.yaml');
         }
 
-        // load application routes
-        $routes->import($configDir . '/routes.yaml');
-
         foreach ($this->getBundles() as $bundle) {
-            if (str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
+            if ($bundle instanceof PluginInterface || str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
                 if (is_dir($bundle->getPath() . '/Resources/config/')) {
                     $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS);
                 } elseif (is_dir($bundle->getPath() . '/config/')) {
@@ -181,5 +178,8 @@ class Kernel extends BaseKernel
                 }
             }
         }
+
+        // load application routes as last one, so bundles cannot override application ones
+        $routes->import($configDir . '/routes.yaml');
     }
 }
