@@ -1,6 +1,5 @@
 .docker export-ignore
 .github export-ignore
-.github export-ignore
 assets export-ignore
 tests export-ignore
 .codecov.yml export-ignore
