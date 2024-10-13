@@ -13,57 +13,79 @@ use App\Constants;
 
 class PluginMetadata
 {
-    private ?string $version = null;
-    private ?int $kimaiVersion = null;
-    private ?string $homepage = null;
-    private ?string $description = null;
-    private ?string $name = null;
+    private string $package;
+    private string $version;
+    private int $kimaiVersion;
+    private string $homepage;
+    private string $description;
+    private string $name;
 
-    /**
-     * @throws \Exception
-     */
-    public function __construct(string $path)
+    public static function createFromPath(string $path): self
     {
         if (!is_dir($path) || !is_readable($path)) {
             throw new \Exception(\sprintf('Bundle directory "%s" cannot be accessed.', $path));
         }
 
-        $pluginName = basename($path);
         $composer = $path . '/composer.json';
 
         if (!file_exists($composer) || !is_readable($composer)) {
-            throw new \Exception(\sprintf('Bundle "%s" does not ship composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception('Bundle does not ship composer.json, which is required since 2.0.');
         }
 
+        /** @var array<mixed>|null $json */
         $json = json_decode(file_get_contents($composer), true);
 
+        if ($json === null) {
+            throw new \Exception('Could not parse composer.json, invalid JSON?');
+        }
+
+        return self::createFromArray($json);
+    }
+
+    /**
+     * @param array<mixed> $json
+     */
+    public static function createFromArray(array $json): self
+    {
         if (!\array_key_exists('extra', $json)) {
-            throw new \Exception(\sprintf('Bundle "%s" does not define an "extra" node in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception('Bundle "%s" does not define an "extra" node in composer.json, which is required since 2.0.');
         }
 
         if (!\array_key_exists('kimai', $json['extra'])) {
-            throw new \Exception(\sprintf('Bundle "%s" does not define the "extra.kimai" node in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception('Bundle does not define the "extra.kimai" node in composer.json, which is required since 2.0.');
         }
 
         if (!\array_key_exists('require', $json['extra']['kimai'])) {
-            throw new \Exception(\sprintf('Bundle "%s" does not define the minimum Kimai version in "extra.kimai.required" in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception('Bundle does not define the minimum Kimai version in "extra.kimai.required" in composer.json, which is required since 2.0.');
         }
 
         if (!\array_key_exists('name', $json['extra']['kimai'])) {
-            throw new \Exception(\sprintf('Bundle "%s" does not define its name in "extra.kimai.name" in composer.json, which is required since 2.0.', $pluginName));
+            throw new \Exception('Bundle does not define its name in "extra.kimai.name" in composer.json, which is required since 2.0.');
         }
 
         if (!\is_int($json['extra']['kimai']['require'])) {
-            throw new \Exception(\sprintf('Bundle "%s" defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.', $pluginName));
+            throw new \Exception('Bundle defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.');
         }
 
-        $this->description = $json['description'] ?? '';
-        $this->homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
-        $this->name = $json['extra']['kimai']['name'];
-        $this->kimaiVersion = $json['extra']['kimai']['require'];
+        $meta = new self();
+
+        $meta->package = $json['name'] ?? '';
+        $meta->description = $json['description'] ?? '';
+        $meta->homepage = $json['homepage'] ?? Constants::HOMEPAGE . '/store/';
+        $meta->name = $json['extra']['kimai']['name'];
+        $meta->kimaiVersion = $json['extra']['kimai']['require'];
 
         // the version field is required if we use composer to install a plugin via var/packages/
-        $this->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
+        $meta->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
+
+        return $meta;
+    }
+
+    private function __construct() {}
+
+    public function getPackage(): string
+    {
+        return $this->package;
     }
 
     public function getDescription(): ?string
@@ -71,22 +93,22 @@ class PluginMetadata
         return $this->description;
     }
 
-    public function getVersion(): ?string
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    public function getKimaiVersion(): ?int
+    public function getKimaiVersion(): int
     {
         return $this->kimaiVersion;
     }
 
-    public function getHomepage(): ?string
+    public function getHomepage(): string
     {
         return $this->homepage;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
