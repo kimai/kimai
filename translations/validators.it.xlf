@@ -110,9 +110,9 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="final">Non hai abbastanza straordinari, ti restano {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="no" xml:space="preserve">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes" xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
+        <target state="final">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." approved="yes">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,10 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="yes">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="final">Prova a inviare nuovamente il modulo. Se il problema persiste, aggiorna il browser.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="final">Un congedo non può essere prenotato dopo l'ultimo giorno lavorativo.</target>
       </trans-unit>
     </body>
   </file>
