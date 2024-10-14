@@ -1798,6 +1798,10 @@
         <source>costs</source>
         <target state="translated">Custos</target>
       </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve" approved="no">
+        <source>break</source>
+        <target state="translated">Intervalo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
