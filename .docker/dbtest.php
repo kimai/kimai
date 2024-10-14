@@ -13,20 +13,19 @@ try {
     ]);
 } catch(\Exception $ex) {
     switch ($ex->getCode()) {
-        // we can immediately stop startup here and show the error message
         case 1045:
+            // we can immediately stop here and show the error message
             echo 'Access denied (1045)';
             die(1);
-        // we can immediately stop startup here and show the error message
         case 1049:
-            echo 'Unknown database (1049)';
-            die(2);
+            // error "Unknown database (1049)" can be ignored, the database will be created by Kimai
+            return;
         // a lot of errors share the same meaningless error code zero
         case 0:
             // this error includes the database name, so we can only search for the static part of the error message
             if (stripos($ex->getMessage(), 'SQLSTATE[HY000] [1049] Unknown database') !== false) {
-                echo 'Unknown database (0-1049)';
-                die(3);
+                // error "Unknown database (1049)" can be ignored, the database will be created by Kimai
+                return;
             }
             switch ($ex->getMessage()) {
                 // eg. no response (fw) - the startup script should retry it a couple of times

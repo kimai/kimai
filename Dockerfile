@@ -218,20 +218,18 @@ COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20230831
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 ###########################
-# Shared tools
+# fetch Kimai sources
 ###########################
 
-# full kimai source
-FROM alpine:latest AS git-dev
+FROM alpine:latest AS git-prod
 ARG KIMAI
 ARG TIMEZONE
-RUN apk add --no-cache git && \
-    git clone --depth 1 --branch ${KIMAI} https://github.com/kimai/kimai.git /opt/kimai
-
-# production kimai source
-FROM git-dev AS git-prod
-WORKDIR /opt/kimai
-RUN rm -r tests
+# the convention in the Kimai repository is: tags are always version numbers, branch names always start with a letter
+# if the KIMAI variable starts with a number (e.g. 2.24.0) we assume its a tag, otherwise its a branch
+RUN [[ $KIMAI =~ ^[0-9] ]] && export REF='tags' || export REF='heads' && \
+    wget -O "/opt/kimai.tar.gz" "https://github.com/kimai/kimai/archive/refs/${REF}/${KIMAI}.tar.gz" && \
+    tar -xpzf /opt/kimai.tar.gz -C /opt/ && \
+    mv /opt/kimai-${KIMAI} /opt/kimai
 
 ###########################
 # global base build
@@ -286,10 +284,9 @@ CMD [ "/entrypoint.sh" ]
 # development build
 FROM base AS dev
 # copy kimai develop source
-COPY --from=git-dev --chown=www-data:www-data /opt/kimai /opt/kimai
+COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
-RUN echo \$PATH
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --optimize-autoloader && \
@@ -305,7 +302,7 @@ ENV APP_ENV=dev
 ENV DATABASE_URL=
 ENV memory_limit=512M
 
-# production build
+# the "prod" stage (production build) is configured as last stage in the file, as this is the default target in BuildKit
 FROM base AS prod
 # copy kimai production source
 COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai

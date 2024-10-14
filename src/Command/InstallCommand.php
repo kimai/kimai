@@ -93,7 +93,7 @@ final class InstallCommand extends Command
 
     private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
     {
-        $io->text('Rebuilding your cache ...');
+        $io->text('Rebuilding cache ...');
 
         $command = $this->getApplication()->find('cache:clear');
         try {
@@ -122,15 +122,7 @@ final class InstallCommand extends Command
 
     private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
-        try {
-            if (!$this->connection->createSchemaManager()->tablesExist(['migration_versions'])) {
-                throw new \RuntimeException('Migration table does not exist');
-            }
-        } catch (\Exception $ex) {
-            $io->error(['Failed to detect migration status, aborting update.', $ex->getMessage()]);
-
-            return;
-        }
+        $io->text('Creating database ...');
 
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
@@ -146,12 +138,11 @@ final class InstallCommand extends Command
     {
         try {
             if ($this->connection->isConnected()) {
-                $io->note(\sprintf('Database is existing and connection could be established'));
-
+                // database exists: we can skip this step
                 return;
             }
         } catch (\Exception $ex) {
-            // this likely means that the database does not exist and the connection failed
+            // this means the database does not exist and the connection failed
         }
 
         $command = $this->getApplication()->find('doctrine:database:create');
