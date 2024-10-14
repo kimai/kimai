@@ -27,9 +27,9 @@ function update_kimai() {
     git checkout "$VERSION"
     $KIMAI_PHP "$KIMAI_COMPOSER" install --no-dev --optimize-autoloader
 
-    install_plugins
-
     $KIMAI_PHP bin/console kimai:install
+
+    install_plugins
 
     if [[ -z "${KIMAI_NO_PERMS}" ]]; then
         set_permission
@@ -37,13 +37,12 @@ function update_kimai() {
 }
 
 function install_plugins() {
-    # detect if we have additional plugins that we need to install
+    # detect if there are additional plugins that we need to install
     packages="$($PHP bin/console kimai:plugin --composer)"
     export PACKAGES=$packages
     if [ -n "$PACKAGES" ]; then
         $KIMAI_PHP "$KIMAI_COMPOSER" require "$PACKAGES"
-    else
-        echo "No packages found."
+        $KIMAI_PHP bin/console kimai:plugins --install
     fi
 }
 
