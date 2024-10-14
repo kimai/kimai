@@ -18,6 +18,7 @@
 # for keeping empty directories
 /config/packages/local.yaml
 /config/bundles-local.php
+/var/dev/*
 /var/data/*
 /var/cache/*
 /var/invoices*

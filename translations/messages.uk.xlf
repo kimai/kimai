@@ -1426,9 +1426,9 @@
         <source>deleted</source>
         <target state="translated">Видалено</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Типово</target>
+        <target state="translated">За замовчуванням</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>

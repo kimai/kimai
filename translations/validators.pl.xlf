@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Nieobecność nie może być zaksięgowana przed Twoim pierwszym dniem roboczym.</target>
+        <target state="needs-translation">Nieobecność nie może być zaksięgowana przed Twoim pierwszym dniem roboczym.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
         <source>Not enough holidays left.</source>

@@ -730,11 +730,6 @@ parameters:
             path: Command/PromoteUserCommandTest.php
 
         -
-            message: "#^Cannot call method getConnection\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/UpdateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/VersionCommandTest.php

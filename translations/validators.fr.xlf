@@ -118,9 +118,9 @@
         <source>An absence must have a date.</source>
         <target state="translated">Une absence doit avoir une date.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Une absence ne peut être programmée avant votre première journée de travail.</target>
+        <target state="needs-translation">Une absence ne peut être programmée avant votre première journée de travail.</target>
       </trans-unit>
       <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed.">
         <source>This is a public holiday, booking not allowed.</source>

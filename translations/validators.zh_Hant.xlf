@@ -22,9 +22,9 @@
         <source>An absence must have a date.</source>
         <target state="final">缺勤必須指定日期。</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="no">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="final">不能在您的第一個工作日之前預定缺勤時間。</target>
+        <target state="needs-translation">不能在您的第一個工作日之前預定缺勤時間。</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve" approved="yes">
         <source>Not enough holidays left.</source>

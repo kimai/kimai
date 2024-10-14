@@ -330,16 +330,6 @@ parameters:
             path: src/Command/InstallCommand.php
 
         -
-            message: "#^Cannot call method get\\(\\) on Symfony\\\\Component\\\\Console\\\\Helper\\\\HelperSet\\|null\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\InstallCommand\\:\\:askConfirmation\\(\\) should return bool but returns mixed\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
             message: "#^Binary operation \"\\.\" between non\\-empty\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
@@ -553,11 +543,6 @@ parameters:
             message: "#^Parameter \\#2 \\$namespace of method DOMXPath\\:\\:registerNamespace\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php
-
-        -
-            message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 3
-            path: src/Command/UpdateCommand.php
 
         -
             message: "#^Method App\\\\Configuration\\\\LdapConfiguration\\:\\:getConnectionParameters\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3666,11 +3651,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Plugin/PluginMetadata.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
             count: 1
             path: src/Plugin/PluginMetadata.php
 

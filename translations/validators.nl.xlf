@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Een afwezigheid kan niet worden geboekt voor je eerste werkdag.</target>
+        <target state="needs-translation">Een afwezigheid kan niet worden geboekt voor je eerste werkdag.</target>
       </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
         <source>Validation Failed</source>
