@@ -1,1 +1,1 @@
-This directory can store as Kimai plugin/bundle folder.
+Put your Kimai plugin ZIP files in this directory and run "./kimai.sh plugins"
