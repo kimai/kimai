@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -27,7 +28,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:install', description: 'Kimai installation command', aliases: ['kimai:update'])]
 final class InstallCommand extends Command
 {
-    public function __construct(private readonly Connection $connection, private readonly string $kernelEnvironment)
+    public function __construct(private readonly Connection $connection)
     {
         parent::__construct();
     }
@@ -45,6 +46,10 @@ final class InstallCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->text('Start installation ...');
+
+        /** @var Application $application */
+        $application = $this->getApplication();
+        $environment = $application->getKernel()->getEnvironment();
 
         try {
             // creates the database if it is not yet existing
@@ -66,22 +71,18 @@ final class InstallCommand extends Command
 
         if (!$input->getOption('no-cache')) {
             // show manual steps in case this fails
-            $cacheResult = $this->rebuildCaches($this->kernelEnvironment, $io, $input, $output);
+            $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
 
             if ($cacheResult !== Command::SUCCESS) {
                 $io->warning(
                     [
                         'Please run the cache commands manually:',
-                        'bin/console cache:clear --env=' . $this->kernelEnvironment . PHP_EOL .
-                        'bin/console cache:warmup --env=' . $this->kernelEnvironment
+                        'bin/console cache:clear --env=' . $environment . PHP_EOL .
+                        'bin/console cache:warmup --env=' . $environment
                     ]
                 );
             }
         }
-
-        $io->success('Installed database 👍');
-
-        // TODO search local plugins and install them via composer
 
         $io->success(
             \sprintf('Successfully installed %s version %s 🎉', Constants::SOFTWARE, Constants::VERSION)
