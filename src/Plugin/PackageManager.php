@@ -41,8 +41,8 @@ final class PackageManager
         $directory = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $iterator = new \RecursiveIteratorIterator($directory);
         $regex = new \RegexIterator($iterator, '/^.+\.zip$/i');
+        /** @var \SplFileInfo $file */
         foreach ($regex as $file) {
-            /* @var $file \SplFileInfo */
             if (!$file->isFile()) {
                 continue;
             }
@@ -53,7 +53,7 @@ final class PackageManager
             }
 
             $content = json_decode($package, true);
-            if (\JSON_ERROR_NONE !== json_last_error()) {
+            if (\JSON_ERROR_NONE !== json_last_error() || !\is_array($content)) {
                 throw new \RuntimeException('Failed to parse composer.json file in: ' . $file->getPathname());
             }
 
@@ -88,10 +88,15 @@ final class PackageManager
 
         $content = null;
         $configurationFileName = $zip->getNameIndex($foundFileIndex);
-        $stream = $zip->getStream($configurationFileName);
+        if ($configurationFileName !== false) {
+            $stream = $zip->getStream($configurationFileName);
 
-        if (false !== $stream) {
-            $content = stream_get_contents($stream);
+            if (false !== $stream) {
+                $content = stream_get_contents($stream);
+                if ($content === false) {
+                    $content = null;
+                }
+            }
         }
 
         $zip->close();
@@ -113,6 +118,9 @@ final class PackageManager
         $topLevelPaths = [];
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $name = $zip->getNameIndex($i);
+            if ($name === false) {
+                continue;
+            }
             $dirname = \dirname($name);
 
             // ignore OSX specific resource fork folder
