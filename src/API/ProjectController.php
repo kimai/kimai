@@ -68,14 +68,13 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ProjectQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
+        $this->prepareQuery($query, $paramFetcher);
 
         $order = $paramFetcher->get('order');
         if (\is_string($order) && $order !== '') {
@@ -142,9 +141,9 @@ final class ProjectController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getProjectsForQuery($query);
-        $view = new View($data, 200);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createPaginatedView($pagination);
+
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
