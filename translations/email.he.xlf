@@ -2,17 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>אם הכפתור לא עובד, אנא העתק והדבק את הכתובת הבאה בדפדפן שלך: %url%</target>
-      </trans-unit>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
-        <target>זהו מייל שנוצר אוטומטית. נא לא להשיב למייל זה.</target>
+        <target state="final">זאת הודעת דוא״ל שנוצרת אוטומטית. נא לא להשיב לה, אף אחד לא ייקרא את זה.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
         <source>registration.subject</source>
-        <target>הפעל את החשבון שלך</target>
+        <target state="final">הפעלת החשבון שלך</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
@@ -26,21 +22,21 @@
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
         <target state="translated">נרשמת למערכת דיווח השעות Kimai עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="yes">
         <source>reset.subject</source>
-        <target state="translated">איפוס הסיסמה שלך</target>
+        <target state="final">כניסה ל־Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="yes">
         <source>Forgot your password?</source>
-        <target state="final">שכחת את הסיסמה שלך?</target>
+        <target state="final">כניסה לחשבון שלך</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="yes">
         <source>reset.button</source>
-        <target state="final">איפוס הסיסמה שלך</target>
+        <target state="final">כניסה</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="yes">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="final">אל דאגה, Kimai יעזור לך ליצור סיסמה חדשה!</target>
+        <target state="final">הקישור הזה יהיה תקף למשך 15 הדקות הקרובות בלבד.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
         <source>absence_created_supervisor_subject</source>

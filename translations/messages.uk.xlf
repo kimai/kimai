@@ -242,9 +242,9 @@
         <source>budget</source>
         <target state="translated">Бюджет</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Бюджет часу</target>
+        <target state="needs-translation">Бюджет часу</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -442,8 +442,8 @@
         <source>Working hours</source>
         <target>Робочий час</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target state="translated">Доходи</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
@@ -1426,9 +1426,9 @@
         <source>deleted</source>
         <target state="translated">Видалено</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Типово</target>
+        <target state="translated">За замовчуванням</target>
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>

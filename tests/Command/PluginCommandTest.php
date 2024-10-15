@@ -10,6 +10,7 @@
 namespace App\Tests\Command;
 
 use App\Command\PluginCommand;
+use App\Plugin\PackageManager;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -41,7 +42,7 @@ class PluginCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new PluginCommand(new PluginManager($plugins)));
+        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager(__DIR__ . '/../../')));
 
         $command = $this->application->find('kimai:plugins');
         $commandTester = new CommandTester($command);

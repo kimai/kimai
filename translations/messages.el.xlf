@@ -258,9 +258,9 @@
         <source>budget</source>
         <target>Προϋπολογισμός</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Χρονικός Προϋπολογισμός</target>
+        <target state="needs-translation">Χρονικός Προϋπολογισμός</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1006,8 +1006,8 @@
         <source>stats.durationFinancialYear</source>
         <target>Ώρες εργασίας κατά το τρέχον οικονομικό έτος</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Εισπράξεις</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">

@@ -174,9 +174,9 @@
         <source>budget</source>
         <target>Budget</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Budget temps</target>
+        <target state="needs-translation">Budget temps</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1030,8 +1030,8 @@
         <source>registration.check_email</source>
         <target>Un courriel a été envoyé à %email%. Il contient un lien d'activation sur lequel vous devez cliquer pour activer votre compte.</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Revenus</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">

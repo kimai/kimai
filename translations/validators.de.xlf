@@ -122,9 +122,9 @@
         <source>An absence must have a date.</source>
         <target>Eine Abwesenheit muss ein Datum haben.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target>Eine Abwesenheit kann nicht vor dem ersten Arbeitstag gebucht werden.</target>
+        <target state="needs-translation">Eine Abwesenheit kann nicht vor dem ersten Arbeitstag gebucht werden.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,10 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target>Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie die bitte die Seite neu.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day.">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target>Eine Abwesenheit kann nicht nach dem letzten Arbeitstag gebucht werden.</target>
       </trans-unit>
     </body>
   </file>

@@ -122,9 +122,9 @@
         <source>An absence must have a date.</source>
         <target state="translated">Nepřítomnost musí mít datum.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Absenci nelze rezervovat před prvním pracovním dnem.</target>
+        <target state="needs-translation">Absenci nelze rezervovat před prvním pracovním dnem.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -149,6 +149,10 @@
       <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target state="translated">Doba nepřítomnosti nesmí přesáhnout přelom roku.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Zkuste formulář odeslat znovu. Pokud problém přetrvává, obnovte stránku v prohlížeči.</target>
       </trans-unit>
     </body>
   </file>

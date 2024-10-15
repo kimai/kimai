@@ -5,7 +5,5 @@ twig:
         - 'form/vertical.html.twig'
     exception_controller: null
     paths:
-        # used in templates/emails/layout.html.twig
-        '%kernel.project_dir%/assets/css': css
         '%kernel.project_dir%/templates/bundles/TablerBundle': theme
         '%kernel.project_dir%/vendor/kevinpapst/tabler-bundle/templates': theme

@@ -33,10 +33,7 @@ final class SystemConfiguration
     }
 
     /**
-     * Set an array item to a given value using "dot" notation.
-     * If no key is given to the method, the entire array will be replaced.
-     *
-     * @internal
+     * Set a new or replace an existing system configuration.
      */
     public function set(string $key, mixed $value): void
     {
@@ -454,6 +451,11 @@ final class SystemConfiguration
     public function getQuickEntriesRecentAmount(): int
     {
         return $this->getIncrement('quick_entry.recent_activities', 5, 0);
+    }
+
+    public function isBreakTimeEnabled(): bool
+    {
+        return (bool) $this->find('timesheet.rules.break_time_active');
     }
 
     // ========== Company configurations ==========

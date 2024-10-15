@@ -19,7 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:user:list', description: 'List all users')]
 final class ListUserCommand extends Command
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private readonly UserRepository $repository)
     {
         parent::__construct();
     }
@@ -35,12 +35,12 @@ final class ListUserCommand extends Command
                 $user->getUserIdentifier(),
                 $user->getEmail(),
                 implode(', ', $user->getRoles()),
-                $user->isEnabled() ? 'X' : '',
-                $user->getPasswordRequestedAt()?->format('Y-m-d H:i:s')
+                $user->isEnabled() ? 'Yes' : '-',
+                $user->getAuth() ?? '',
             ];
         }
 
-        $header = ['Username', 'Email', 'Roles', 'Active', 'PW Reset'];
+        $header = ['Username', 'Email', 'Roles', 'Active', 'Authenticator'];
 
         $output->table($header, $data);
 

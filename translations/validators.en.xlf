@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
         <source>An absence cannot be booked before your first working day.</source>
-        <target>An absence cannot be booked before your first working day.</target>
+        <target>An absence cannot be booked before the first working day.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,10 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target>Please try to resubmit the form. If the problem persists, refresh your browser.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day.">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target>An absence cannot be booked after the last working day.</target>
       </trans-unit>
     </body>
   </file>

@@ -1,4 +1,5 @@
 {%- set with_avatar = avatar is defined ? avatar : true -%}
+{%- set show_empty_rows = true -%}
 {%- set absoluteDuration = 0 -%}
 {%- set absoluteInternalRate = 0 -%}
 {%- set absoluteRate = 0 -%}
@@ -38,7 +39,7 @@
         {% set usersTotalDuration = 0 %}
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
-        {% for period in attribute(userPeriod, period_attribute) %}
+        {% for period in userPeriod.data %}
             {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
             {% set absoluteDuration = absoluteDuration + period.totalDuration %}
             {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
@@ -50,7 +51,7 @@
             {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
             {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
         {% endfor %}
-        {% if userPeriod.user.enabled or usersTotalDuration != 0 %}
+        {% if (show_empty_rows and userPeriod.user.enabled) or usersTotalDuration != 0 %}
         <tr class="user">
             {% if with_avatar %}
                 <td class="w-avatar">
@@ -73,7 +74,7 @@
                     {% block total_duration_user %}{% endblock %}
                 {% endif %}
             </td>
-            {% for period in attribute(userPeriod, period_attribute) %}
+            {% for period in userPeriod.data %}
                 <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}"{% block period_cell_attribute %}{% endblock %}>
                     {% if period.totalDuration != 0 or period.totalRate != 0 or period.totalInternalRate != 0 %}
                         {% if dataType == 'rate' %}

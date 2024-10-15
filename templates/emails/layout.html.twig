@@ -1,29 +1,15 @@
-{% apply inky_to_html|inline_css(source('@css/emails.css')) %}
-    <style type="text/css">
-        body, html, .body {
-            background: #f3f3f3 !important;
-        }
-        .container.header {
-            background: #f3f3f3;
-        }
-    </style>
+{% apply inky_to_html|inline_css(source('emails/css/emails.css')) %}
 
     <spacer size="32"></spacer>
 
-    <container class="header">
-        <row>
-            <columns>
-                <h1 class="text-center">{% block title %}{% endblock %}</h1>
-            </columns>
-        </row>
-    </container>
+    <h5>{% block title %}{% endblock %}</h5>
 
-    <container class="body-border">
-        <row>
-            <columns>
-                <spacer size="32"></spacer>
-                {% block body %}{% endblock %}
-            </columns>
-        </row>
-    </container>
+    <spacer size="32"></spacer>
+
+    {% block body %}{% endblock %}
+
+    <spacer size="32"></spacer>
+
+    <p><small>{{ 'automated_email_dont_answer'|trans({}, 'email') }}</small></p>
+
 {% endapply %}

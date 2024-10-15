@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Et fravær kan ikke bookes før din første arbejdsdag.</target>
+        <target state="needs-translation">Et fravær kan ikke bookes før din første arbejdsdag.</target>
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
         <source>You can book a maximum of {{ value }} days at once.</source>

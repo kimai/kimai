@@ -1,15 +1,16 @@
 # Contributing
 
-Kimai is an open source project, contributions made by the community are welcome. 
+Kimai is an open source project, contributions made by the community are welcome.
+But we can only accept contributions with a signed CLA (Contributor License Agreement) to prevent issues in the future (you will see a link when opening a PR).
+
 Send your ideas, code reviews, pull requests and feature requests to help to improve this project.
 
 ## Pull request rules
 
+- Make your changes in a new git branch, based on the latest code in `main`
 - Apply our code-style by running `composer codestyle-fix`
 - Run the static code analysis with `composer phpstan`
-- Verify everything still works with `composer tests-unit` and `composer tests-integration`
+- Verify everything still works with `composer tests-unit` 
 - Add tests for your changes
-- When sending in a PR, you must accept that your contributions/code will be published under MIT license (see the [LICENSE](LICENSE) file as well), otherwise your PR will be closed
-- If one of the PR checks/builds fails, fix it before asking for a review
 
 Further documentation can be found in the [developer documentation](https://www.kimai.org/documentation/developers.html).

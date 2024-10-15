@@ -986,31 +986,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function markPasswordRequested(): void
     {
-        $this->setPasswordRequestedAt(new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone())));
-    }
-
-    public function markPasswordResetted(): void
-    {
-        $this->setConfirmationToken(null);
-        $this->setPasswordRequestedAt(null);
-    }
-
-    public function setPasswordRequestedAt(?\DateTimeImmutable $date): void
-    {
-        $this->passwordRequestedAt = $date;
-    }
-
-    /**
-     * Gets the timestamp that the user requested a password reset.
-     */
-    public function getPasswordRequestedAt(): ?\DateTimeImmutable
-    {
-        return $this->passwordRequestedAt;
+        $this->passwordRequestedAt = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
     }
 
     public function isPasswordRequestNonExpired(int $seconds): bool
     {
-        $date = $this->getPasswordRequestedAt();
+        $date = $this->passwordRequestedAt;
 
         if (!($date instanceof \DateTimeInterface)) {
             return false;
@@ -1159,6 +1140,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setRequiresPasswordReset(bool $require = true): void
     {
         $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+
+        if (!$require) {
+            $this->passwordRequestedAt = null;
+        }
     }
 
     public function hasSeenWizard(string $wizard): bool
@@ -1291,7 +1276,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getWorkStartingDay(): ?\DateTimeInterface
     {
-        $date = $this->getPreferenceValue(UserPreference::WORK_STARTING_DAY);
+        return $this->getPreferenceDate('work_start_day');
+    }
+
+    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_start_day', $date?->format('Y-m-d'));
+    }
+
+    private function getPreferenceDate(string $prefName): ?\DateTimeInterface
+    {
+        $date = $this->getPreferenceValue($prefName);
 
         if ($date === null) {
             return null;
@@ -1305,9 +1300,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return ($date instanceof \DateTimeInterface) ? $date : null;
     }
 
-    public function setWorkStartingDay(?\DateTimeInterface $date): void
+    public function getLastWorkingDay(): ?\DateTimeInterface
     {
-        $this->setPreferenceValue(UserPreference::WORK_STARTING_DAY, $date?->format('Y-m-d'));
+        return $this->getPreferenceDate('work_last_day');
+    }
+
+    public function setLastWorkingDay(?\DateTimeInterface $date): void
+    {
+        $this->setPreferenceValue('work_last_day', $date?->format('Y-m-d'));
     }
 
     public function getPublicHolidayGroup(): null|string

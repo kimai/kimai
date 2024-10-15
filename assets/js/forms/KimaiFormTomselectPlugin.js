@@ -44,7 +44,7 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     let item = '<div class="list-group-item border-0 p-1 ps-2 text-nowrap">';
                     // if no color is set, do NOT add an empty placeholder
                     if (data.color !== undefined) {
-                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item me-2">&nbsp;</span>';
                     }
                     item += escape(data.text) + '</div>';
                     return item;
@@ -53,7 +53,7 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     let item = '<div class="text-nowrap">';
                     // if no color is set, do NOT add an empty placeholder
                     if (data.color !== undefined) {
-                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item me-2">&nbsp;</span>';
                     }
                     item += escape(data.text) + '</div>';
                     return item;

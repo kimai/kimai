@@ -9,6 +9,8 @@
 
 namespace App\Doctrine;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\ModifiedAt;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -36,11 +38,17 @@ final class ModifiedSubscriber implements EventSubscriber, DataSubscriberInterfa
             if ($entity instanceof ModifiedAt) {
                 $entity->setModifiedAt($now);
             }
+            if ($entity instanceof CreatedAt && $entity->getCreatedAt() === null) {
+                $entity->setCreatedAt($now);
+            }
         }
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof ModifiedAt) {
                 $entity->setModifiedAt($now);
+            }
+            if ($entity instanceof CreatedAt && $entity->getCreatedAt() === null) {
+                $entity->setCreatedAt($now);
             }
         }
     }

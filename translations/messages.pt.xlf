@@ -174,9 +174,9 @@
         <source>budget</source>
         <target>Orçamento</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Orçamento de tempo</target>
+        <target state="needs-translation">Orçamento de tempo</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1022,8 +1022,8 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Exercício financeiro</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Receitas</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">

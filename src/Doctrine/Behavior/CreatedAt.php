@@ -7,9 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Doctrine;
+namespace App\Doctrine\Behavior;
 
-interface ModifiedAt
+/**
+ * @internal
+ */
+interface CreatedAt
 {
-    public function setModifiedAt(\DateTimeImmutable $dateTime): void;
+    public function getCreatedAt(): ?\DateTimeImmutable;
+
+    public function setCreatedAt(\DateTimeImmutable $dateTime): void;
 }

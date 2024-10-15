@@ -129,18 +129,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     }
 
     /**
-     * @return array<int>
-     */
-    public function getActivityIds(): array
-    {
-        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
-            return $activity->getId();
-        }, $this->activities)), function ($id) {
-            return $id !== null;
-        }));
-    }
-
-    /**
      * @return array<Activity>
      */
     public function getActivities(): array

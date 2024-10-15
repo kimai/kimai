@@ -26,7 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class AbstractResetCommand extends Command
 {
-    public function __construct(private string $kernelEnvironment)
+    public function __construct(private readonly string $kernelEnvironment)
     {
         parent::__construct();
     }

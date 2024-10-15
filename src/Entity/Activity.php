@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,10 +32,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 #[Constraints\Activity]
-class Activity implements EntityWithMetaFields, EntityWithBudget
+class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique activity ID
@@ -122,6 +125,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
@@ -298,6 +302,8 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->id = null;
         }
 
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
         /** @var Team $team */
@@ -305,6 +311,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ActivityMeta $meta */

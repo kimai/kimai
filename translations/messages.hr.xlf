@@ -270,9 +270,9 @@
         <source>budget</source>
         <target>Budžet</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target>Vremenski budžet</target>
+        <target state="needs-translation">Vremenski budžet</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -650,8 +650,8 @@
         <source>Working hours</source>
         <target>Radno vrijeme</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue">
+        <source>revenue</source>
         <target>Prihodi</target>
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">

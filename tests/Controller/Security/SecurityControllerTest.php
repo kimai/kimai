@@ -12,6 +12,7 @@ namespace App\Tests\Controller\Security;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Controller\Security\SecurityController;
+use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\ControllerBaseTest;
@@ -46,8 +47,8 @@ class SecurityControllerTest extends ControllerBaseTest
         $content = $response->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('<form action="/en/login_check" method="post"', $content);
-        $this->assertStringContainsString('<input type="text" id="username" name="_username"', $content);
-        $this->assertStringContainsString('<input id="password" name="_password" type="password"', $content);
+        $this->assertStringContainsString('<input autocomplete="username" type="text" id="username" name="_username"', $content);
+        $this->assertStringContainsString('<input autocomplete="new-password" id="password" name="_password" type="password"', $content);
         $this->assertStringContainsString('">Log in</button>', $content);
         $this->assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
         $this->assertStringNotContainsString('<a href="/en/register/"', $content);
@@ -63,8 +64,8 @@ class SecurityControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('body form')->form();
         $client->submit($form, [
-            '_username' => 'susan_super',
-            '_password' => 'kitten'
+            '_username' => UserFixtures::USERNAME_SUPER_ADMIN,
+            '_password' => UserFixtures::DEFAULT_PASSWORD
         ]);
 
         $this->assertIsRedirect($client); // redirect to root URL
