@@ -70,7 +70,7 @@ final class PluginCommand extends Command
             }
 
             // using getApplication()->find('doctrine:migrations:migrate') does NOT work here
-            // because the DOctrine command can only be executed once
+            // because the Doctrine command can only be executed once
             // if run more than once it fails with a "Container is frozen" exception
 
             $process = new PhpSubprocess([
@@ -80,7 +80,7 @@ final class PluginCommand extends Command
                 '--no-interaction',
                 '--configuration=' . $config
             ]);
-            $result = $process->run();
+            $process->run();
 
             if (!$process->isSuccessful()) {
                 $io->error('Failed to install bundle database: ' . PHP_EOL . $config);
