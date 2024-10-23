@@ -61,6 +61,7 @@
         "symfony/mailer": "^6.0",
         "symfony/mime": "^6.0",
         "symfony/monolog-bundle": "^3.4",
+        "symfony/process": "^6.0",
         "symfony/rate-limiter": "^6.0",
         "symfony/runtime": "^6.0",
         "symfony/security-bundle": "^6.0",
