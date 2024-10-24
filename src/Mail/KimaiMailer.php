@@ -13,6 +13,7 @@ use App\Configuration\MailConfiguration;
 use App\Entity\User;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
 
@@ -31,7 +32,7 @@ final class KimaiMailer implements MailerInterface
         }
 
         if (\count($message->getFrom()) === 0) {
-            $message->from($this->configuration->getFromAddress());
+            $message->from(new Address($this->configuration->getFromAddress(), 'Kimai'));
         }
 
         $this->mailer->send($message);
