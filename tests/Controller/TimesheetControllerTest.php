@@ -291,8 +291,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
-        $this->assertFalse($form->has('hourlyRate'));
-        $this->assertFalse($form->has('fixedRate'));
+        $this->assertFalse($form->has('timesheet_edit_form[hourlyRate]'));
+        $this->assertFalse($form->has('timesheet_edit_form[fixedRate]'));
     }
 
     public function testCreateActionWithFromAndToValues(): void
