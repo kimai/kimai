@@ -211,7 +211,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
      */
-    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = []): void
+    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = [], array $expectedFields = [], array $missingFields = []): void
     {
         self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
@@ -231,6 +231,18 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         self::assertArrayHasKey('children', $result['errors']);
         $data = $result['errors']['children'];
+
+        if (\count($expectedFields) > 0) {
+            foreach ($expectedFields as $expectedField) {
+                $this->assertArrayHasKey($expectedField, $data, 'Expected field is missing: ' . $expectedField);
+            }
+        }
+
+        if (\count($missingFields) > 0) {
+            foreach ($missingFields as $missingField) {
+                $this->assertArrayNotHasKey($missingField, $data, 'Expected missing field is available: ' . $missingField);
+            }
+        }
 
         $foundErrors = [];
 

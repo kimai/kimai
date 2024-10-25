@@ -14,6 +14,7 @@ use App\Timesheet\TrackingMode\DefaultMode;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
 use App\Timesheet\TrackingMode\PunchInOutMode;
 use App\Timesheet\TrackingModeService;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class TrackingModeServiceFactory extends AbstractMockFactory
 {
@@ -26,12 +27,13 @@ class TrackingModeServiceFactory extends AbstractMockFactory
         $loader = new TestConfigLoader([]);
 
         $configuration = SystemConfigurationFactory::create($loader, ['timesheet' => ['mode' => $mode]]);
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
 
         if (null === $modes) {
             $modes = [
                 new DefaultMode((new RoundingServiceFactory($this->getTestCase()))->create()),
-                new PunchInOutMode(),
-                new DurationFixedBeginMode($configuration),
+                new PunchInOutMode($auth),
+                new DurationFixedBeginMode($configuration, $auth),
             ];
         }
 

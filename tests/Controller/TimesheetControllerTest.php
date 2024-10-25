@@ -295,6 +295,33 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('fixedRate'));
     }
 
+    public function getTrackingModeTestData(): array
+    {
+        return [
+            ['duration_fixed_begin', User::ROLE_USER, false, false],
+            ['duration_fixed_begin', User::ROLE_SUPER_ADMIN, false, false],
+            ['punch', User::ROLE_USER, false, false],
+            ['punch', User::ROLE_SUPER_ADMIN, false, false],
+            ['default', User::ROLE_USER, true, true],
+            ['default', User::ROLE_SUPER_ADMIN, true, true],
+        ];
+    }
+
+    /**
+     * @dataProvider getTrackingModeTestData
+     */
+    public function testCreateActionWithTrackingModeHasFieldsForUser(string $trackingMode, string $user, bool $showBeginTime, bool $showEndTime): void
+    {
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $this->request($client, '/timesheet/create');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $this->assertEquals($showBeginTime, $form->has('timesheet_edit_form[begin_time]'));
+        $this->assertEquals($showEndTime, $form->has('timesheet_edit_form[end_time]'));
+    }
+
     public function testCreateActionWithFromAndToValues(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
