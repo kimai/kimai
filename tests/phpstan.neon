@@ -3350,16 +3350,6 @@ parameters:
             path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\TrackingMode\\\\DurationFixedBeginModeTest\\:\\:createSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\TrackingMode\\\\DurationFixedBeginModeTest\\:\\:createSut\\(\\) has parameter \\$default with no type specified\\.$#"
-            count: 1
-            path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\UtilTest\\:\\:getRateCalculationData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/UtilTest.php
