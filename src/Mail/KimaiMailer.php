@@ -32,7 +32,11 @@ final class KimaiMailer implements MailerInterface
         }
 
         if (\count($message->getFrom()) === 0) {
-            $message->from(new Address($this->configuration->getFromAddress(), 'Kimai'));
+            $fallback = $this->configuration->getFromAddress();
+            if ($fallback === null) {
+                throw new \RuntimeException('Missing email "from" address');
+            }
+            $message->from(new Address($fallback, 'Kimai'));
         }
 
         $this->mailer->send($message);

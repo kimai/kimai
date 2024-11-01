@@ -3560,11 +3560,6 @@ parameters:
             path: src/Ldap/LdapUserProvider.php
 
         -
-            message: "#^Parameter \\#1 \\.\\.\\.\\$addresses of method Symfony\\\\Component\\\\Mime\\\\Email\\:\\:from\\(\\) expects string\\|Symfony\\\\Component\\\\Mime\\\\Address, string\\|null given\\.$#"
-            count: 1
-            path: src/Mail/KimaiMailer.php
-
-        -
             message: "#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
             count: 1
             path: src/Model/ActivityStatistic.php
