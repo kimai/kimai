@@ -832,7 +832,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%count% %action% 항목?</target>
+        <target>%count% %action% 항목</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>

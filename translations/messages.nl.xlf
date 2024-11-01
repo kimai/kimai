@@ -848,7 +848,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% boekingen?</target>
+        <target>%action% %count% boekingen</target>
       </trans-unit>
       <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>

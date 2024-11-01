@@ -796,7 +796,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% poster?</target>
+        <target>%action% %count% poster</target>
       </trans-unit>
       <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>

@@ -856,7 +856,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% innlegg?</target>
+        <target>%action% %count% innlegg</target>
       </trans-unit>
       <trans-unit id="DUDrvjk" resname="remove_default">
         <source>remove_default</source>

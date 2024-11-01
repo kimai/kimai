@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% 条目?</target>
+        <target>%action% %count% 条目</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password">
         <source>password</source>

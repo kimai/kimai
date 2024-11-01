@@ -896,7 +896,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%count% kaydı %action%?</target>
+        <target>%count% kaydı %action%</target>
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>

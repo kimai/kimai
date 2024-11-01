@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% tapahtumaa?</target>
+        <target state="translated">%action% %count% tapahtumaa</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>

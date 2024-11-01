@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% bejegyzést?</target>
+        <target>%action% %count% bejegyzést</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>

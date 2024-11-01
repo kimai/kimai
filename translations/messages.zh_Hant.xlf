@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
-        <target state="final">是否要%action% %count% 條項目？</target>
+        <target state="final">是否要%action% %count% 條項目</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
         <source>attachments</source>
