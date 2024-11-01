@@ -1586,10 +1586,6 @@
         <source>sickness</source>
         <target state="translated">Maladie</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Envoyer</target>
-      </trans-unit>
       <trans-unit id="2SmKENG" resname="other">
         <source>other</source>
         <target state="translated">Autre</target>

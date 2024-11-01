@@ -1546,10 +1546,6 @@
         <source>other</source>
         <target state="final">אחר</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve" approved="yes">
-        <source>button.request</source>
-        <target state="final">הגשה</target>
-      </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro">
         <source>sickness.intro</source>
         <target state="translated">חולי, ביקור אצל הרופא, טיפול בקרובי משפחה ועוד.</target>

@@ -1538,10 +1538,6 @@
         <source>public_holiday.group</source>
         <target state="final">Gruppo ferie</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" approved="yes">
-        <source>button.request</source>
-        <target state="final">Invia</target>
-      </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report" approved="yes">
         <source>button.report</source>
         <target state="final">Rapporto</target>

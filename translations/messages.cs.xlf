@@ -1538,10 +1538,6 @@
         <source>other</source>
         <target state="translated">Jiné</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Odeslat</target>
-      </trans-unit>
       <trans-unit id="_WlU8Fp" resname="sickness">
         <source>sickness</source>
         <target state="translated">Nemoc</target>

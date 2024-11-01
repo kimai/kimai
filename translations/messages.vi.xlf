@@ -1366,10 +1366,6 @@
         <source>please_choose</source>
         <target state="translated">Vui lòng chọn</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
-        <source>button.request</source>
-        <target state="translated">Nộp</target>
-      </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
         <source>button.report</source>
         <target state="translated">Báo cáo</target>

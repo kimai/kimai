@@ -1542,10 +1542,6 @@
         <source>other</source>
         <target state="translated">Інше</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Надіслати</target>
-      </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report">
         <source>button.report</source>
         <target state="translated">Повідомити</target>

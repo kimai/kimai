@@ -1510,10 +1510,6 @@
         <source>other</source>
         <target state="translated">Diğer</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Gönder</target>
-      </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report">
         <source>button.report</source>
         <target state="translated">Rapor et</target>

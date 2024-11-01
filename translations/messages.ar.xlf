@@ -1422,10 +1422,6 @@
         <source>other</source>
         <target state="translated">ٱخرى</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">أرسل</target>
-      </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
         <target state="translated">عَقد العمل</target>

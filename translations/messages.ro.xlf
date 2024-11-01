@@ -1698,10 +1698,6 @@
         <source>default</source>
         <target state="translated">Implicit</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
-        <source>button.request</source>
-        <target state="translated">Trimite</target>
-      </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
         <source>day_half</source>
         <target state="translated">Jumătate de zi</target>

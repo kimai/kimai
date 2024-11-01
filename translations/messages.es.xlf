@@ -1522,10 +1522,6 @@
         <source>absence_other.intro</source>
         <target state="translated">Eventos familiares, mudanza, caos meterorológico etc.</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Enviar</target>
-      </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro">
         <source>manual_bookings.work_contract_intro</source>
         <target state="translated">¡Las reservas manuales no pueden cambiar o borrar posteriormente!</target>

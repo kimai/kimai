@@ -1554,10 +1554,6 @@
         <source>day_half</source>
         <target state="translated">Metade do dia</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Enviar</target>
-      </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro">
         <source>holiday.intro</source>
         <target state="translated">Você tirou %used% dos seus %days% dias de férias disponíveis até agora.</target>

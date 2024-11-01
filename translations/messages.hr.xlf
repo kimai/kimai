@@ -1542,10 +1542,6 @@
         <source>other</source>
         <target state="translated">Drugo</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Pošalji</target>
-      </trans-unit>
       <trans-unit id="Od3xvQK" resname="button.report">
         <source>button.report</source>
         <target state="translated">Izvještaj</target>

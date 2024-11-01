@@ -1334,10 +1334,6 @@
         <source>stats.userDurationWeek</source>
         <target state="translated">Työtuntini tällä viikolla</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Lähetä</target>
-      </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
         <target state="translated">Työsopimus</target>

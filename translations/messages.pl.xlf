@@ -1714,10 +1714,6 @@
         <source>Sickness of a relative</source>
         <target state="needs-translation">Choroba dziecka</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
-        <source>button.request</source>
-        <target state="translated">Zatwierdź</target>
-      </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
         <source>public_holiday.group</source>
         <target state="translated">Urlop grupowy</target>

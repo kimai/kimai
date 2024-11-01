@@ -1230,10 +1230,6 @@
         <source>export.clear_all</source>
         <target state="final">是否要將所有紀錄標示為未處理？</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve" approved="yes">
-        <source>button.request</source>
-        <target state="final">送出</target>
-      </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve" approved="yes">
         <source>work_contract</source>
         <target state="final">聘僱合約</target>

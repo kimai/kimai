@@ -1530,10 +1530,6 @@
         <source>absence</source>
         <target state="translated">Afwezigheid</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request">
-        <source>button.request</source>
-        <target state="translated">Versturen</target>
-      </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro">
         <source>sickness.intro</source>
         <target state="translated">Ziekte, doktersbezoek, zorg voor naaste familieleden, enz.</target>
