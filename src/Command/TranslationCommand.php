@@ -50,6 +50,7 @@ final class TranslationCommand extends Command
             ->addOption('move-resname', null, InputOption::VALUE_REQUIRED, 'Move a resname from one file to another (needs "source" and "target" options)')
             ->addOption('move-all', null, InputOption::VALUE_NONE, 'Move all keys from one file to another (needs "source" and "target" options)')
             ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Single source file to use')
+            ->addOption('only-core', null, InputOption::VALUE_NONE, 'Do not include plugin and theme directories')
             ->addOption('target', null, InputOption::VALUE_REQUIRED, 'Single target file to use')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
@@ -69,9 +70,12 @@ final class TranslationCommand extends Command
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
-            'theme' => $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf',
         ];
+
+        if (!$input->getOption('only-core')) {
+            $bases['plugins'] = $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf';
+            $bases['theme'] = $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf';
+        }
 
         $sources = [];
         if ($input->getOption('source') !== null) {
@@ -151,7 +155,7 @@ final class TranslationCommand extends Command
         // Move all keys from source to target
         // ==========================================================================
         if ($input->getOption('move-all')) {
-            if (\count($sources) === 0 || \count($targets) === 0 ) {
+            if (\count($sources) === 0 || \count($targets) === 0) {
                 $io->error('Moving all keys only works with one source and one target file');
 
                 return Command::FAILURE;
