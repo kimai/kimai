@@ -34,7 +34,7 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
         $isListingView = $event->isIndexView() || $event->isCustomView();
 
         if (!$event->isView('customer_details') && $canView) {
-            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('customer_details', ['id' => $customer->getId()])]);
+            $event->addAction('details', ['title' => 'details', 'url' => $this->path('customer_details', ['id' => $customer->getId()])]);
         }
 
         if ($this->isGranted('edit', $customer)) {
@@ -43,7 +43,7 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('permissions', $customer)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_customer_permissions', ['id' => $customer->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'url' => $this->path('admin_customer_permissions', ['id' => $customer->getId()]), 'class' => $class]);
         }
 
         if ($isListingView) {
@@ -61,15 +61,15 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_project') || $this->isGranted('view_teamlead_project') || $this->isGranted('view_team_project')) {
-            $event->addActionToSubmenu('filter', 'project', ['title' => 'project.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'project', ['title' => 'project.filter', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId()])]);
         }
 
         if ($event->hasSubmenu('filter')) {

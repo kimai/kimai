@@ -49,9 +49,9 @@
                                 <h3 class="card-title">{{ widget.title|trans({}, widget.translationDomain) }}</h3>
                                 <div class="card-actions">
                                     {% if widget.hasForm() %}
-                                        {{ card_tool_button('configuration', {'title': 'settings', 'translation_domain': 'actions', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}
+                                        {{ card_tool_button('configuration', {'title': 'settings', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}
                                     {% endif %}
-                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'translation_domain': 'actions', 'url': '#', 'onclick': "removeWidget(this, '" ~ widget.id ~ "'); return false;"}) }}
+                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'url': '#', 'onclick': "removeWidget(this, '" ~ widget.id ~ "'); return false;"}) }}
                                 </div>
                             </div>
                             <div class="card-body p-0">

@@ -29,7 +29,7 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
             }
 
             if (!$timesheet->isRunning() && $this->isGranted('start', $timesheet)) {
-                $event->addAction('repeat', ['title' => 'repeat', 'translation_domain' => 'actions', 'url' => $this->path('restart_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link dd-ts-repeat', 'attr' => ['data-payload' => '{"copy": "all"}', 'data-event' => 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.start.error', 'data-msg-success' => 'timesheet.start.success']]);
+                $event->addAction('repeat', ['title' => 'repeat', 'url' => $this->path('restart_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link dd-ts-repeat', 'attr' => ['data-payload' => '{"copy": "all"}', 'data-event' => 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.start.error', 'data-msg-success' => 'timesheet.start.success']]);
             }
 
             if ($this->isGranted('edit', $timesheet)) {
@@ -38,7 +38,7 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
 
             if ($this->isGranted('duplicate', $timesheet)) {
                 $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-                $event->addAction('copy', ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path($routeDuplicate, ['id' => $timesheet->getId()]), 'class' => $class . ' dd-ts-duplicate']);
+                $event->addAction('copy', ['title' => 'copy', 'url' => $this->path($routeDuplicate, ['id' => $timesheet->getId()]), 'class' => $class . ' dd-ts-duplicate']);
             }
 
             if ($event->countActions() > 0) {
@@ -49,7 +49,6 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
                 $event->addAction('trash', [
                     'url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]),
                     'class' => 'api-link text-red dd-ts-trash',
-                    'translation_domain' => 'actions',
                     'attr' => [
                         'data-event' => 'kimai.timesheetDelete',
                         'data-method' => 'DELETE',

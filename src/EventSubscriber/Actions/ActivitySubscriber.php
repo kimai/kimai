@@ -31,7 +31,7 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
         }
 
         if (!$event->isView('activity_details') && $this->isGranted('view', $activity)) {
-            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('activity_details', ['id' => $activity->getId()])]);
+            $event->addAction('details', ['title' => 'details', 'url' => $this->path('activity_details', ['id' => $activity->getId()])]);
         }
 
         if ($this->isGranted('edit', $activity)) {
@@ -40,7 +40,7 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('permissions', $activity)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity_permissions', ['id' => $activity->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'url' => $this->path('admin_activity_permissions', ['id' => $activity->getId()]), 'class' => $class]);
         }
 
         if ($event->countActions() > 0) {
@@ -53,7 +53,7 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
                 $parameters['customers[]'] = $activity->getProject()->getCustomer()->getId();
                 $parameters['projects[]'] = $activity->getProject()->getId();
             }
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', $parameters)]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', $parameters)]);
         }
 
         if ($event->hasSubmenu('filter')) {
@@ -65,7 +65,7 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
             if (!$activity->isGlobal()) {
                 $parameters['project'] = $activity->getProject()->getId();
             }
-            $event->addAction('create-timesheet', ['title' => 'create-timesheet', 'translation_domain' => 'actions', 'icon' => 'start', 'url' => $this->path('admin_timesheet_create', $parameters), 'class' => 'modal-ajax-form']);
+            $event->addAction('create-timesheet', ['title' => 'create-timesheet', 'icon' => 'start', 'url' => $this->path('admin_timesheet_create', $parameters), 'class' => 'modal-ajax-form']);
         }
 
         if (($event->isIndexView() || $event->isView('project_details')) && $this->isGranted('delete', $activity)) {

@@ -63,7 +63,7 @@
             {% if values.children is defined and values.children|length > 0 %}
                 <div class="dropdown">
                     <button type="button" class="btn {{ btnClasses }} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
+                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans }}{% endif %}
                     </button>
                     <div class="dropdown-menu">
                         {%- for icon, values in values.children %}

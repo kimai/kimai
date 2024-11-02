@@ -157,7 +157,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addQuickImport(string $url): void
     {
-        $this->addAction('import', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'import', 'icon' => 'upload', 'translation_domain' => 'actions']);
+        $this->addAction('import', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'import', 'icon' => 'upload']);
     }
 
     public function addQuickExport(string $url): void
@@ -172,7 +172,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addEdit(string $url, bool $modal = true, string $class = ''): void
     {
-        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' . ($class === '' ? '' : ' ' . $class) : $class), 'translation_domain' => 'actions', 'title' => 'edit']);
+        $this->addAction('edit', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' . ($class === '' ? '' : ' ' . $class) : $class), 'title' => 'edit']);
     }
 
     /**
@@ -180,20 +180,20 @@ class PageActionsEvent extends ThemeEvent
      */
     public function addSettings(string $url): void
     {
-        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions', 'accesskey' => 'h']);
+        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'accesskey' => 'h']);
     }
 
     public function addConfig(string $url): void
     {
-        $this->addAction('settings', ['url' => $url, 'title' => 'settings', 'translation_domain' => 'actions']);
+        $this->addAction('settings', ['url' => $url, 'title' => 'settings']);
     }
 
     public function addDelete(string $url, bool $remoteConfirm = true): void
     {
         if ($remoteConfirm) {
-            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red', 'translation_domain' => 'actions', 'title' => 'trash']);
+            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red', 'title' => 'trash']);
         } else {
-            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete'], 'translation_domain' => 'actions', 'title' => 'trash']);
+            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete'], 'title' => 'trash']);
         }
     }
 
