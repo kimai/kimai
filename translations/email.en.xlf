@@ -40,23 +40,23 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
-        <target>New absence | %absence_user% | %absence_type%</target>
+        <target>New absence: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%type% - %comment%
 
-%absence_list%
+%list%
 
-Please review them at: %approval_url%</source>
-        <target state="translated">A new absence was created for %absence_user%.
+Please review them at: %url%</source>
+        <target state="translated">A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%type% - %comment%
 
-%absence_list%
+%list%
 
-Please review them at: %approval_url%</target>
+Please review them at: %url%</target>
       </trans-unit>
     </body>
   </file>
