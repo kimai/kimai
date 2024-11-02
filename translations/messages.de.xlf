@@ -1270,6 +1270,14 @@
         <source>request</source>
         <target>Beantragen</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected">
+        <source>status.rejected</source>
+        <target>Abgelehnt</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject">
+        <source>reject</source>
+        <target>Ablehnen</target>
+      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>

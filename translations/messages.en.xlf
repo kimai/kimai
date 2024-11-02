@@ -1270,6 +1270,14 @@
         <source>request</source>
         <target>Request</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected">
+        <source>status.rejected</source>
+        <target>Rejcted</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject">
+        <source>reject</source>
+        <target>Reject</target>
+      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>Skipped preview of %rows% more rows …</source>
         <target state="translated">Skipped preview of %rows% more rows …</target>
