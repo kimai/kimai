@@ -135,6 +135,7 @@
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-mbstring": "*",
         "symfony/polyfill-intl": "*",
+        "symfony/polyfill-intl-icu": "*",
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php81": "*",
         "symfony/polyfill-php80": "*",
