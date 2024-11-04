@@ -624,11 +624,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
         return $this;
     }
 
-    public function createCopy(?Timesheet $timesheet = null): Timesheet
+    public function createCopy(): Timesheet
     {
-        if (null === $timesheet) {
-            $timesheet = new Timesheet();
-        }
+        $timesheet = new Timesheet();
 
         $values = get_object_vars($this);
         foreach ($values as $k => $v) {
@@ -639,7 +637,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
         /** @var TimesheetMeta $meta */
         foreach ($this->meta as $meta) {
-            $timesheet->setMetaField(clone $meta);
+            $tmp = clone $meta;
+            $tmp->setEntity($timesheet);
+            $timesheet->setMetaField($tmp);
         }
 
         $timesheet->tags = new ArrayCollection();
