@@ -154,7 +154,23 @@ class UserPreference
      */
     public function setValue($value): UserPreference
     {
-        $this->value = $value;
+        // unchecked checkboxes / false bool would save an empty string in the database
+        // those cannot be searched in the database
+        switch ($this->type) {
+            case YesNoType::class:
+            case CheckboxType::class:
+                if ($value === false || $value === '' || !\is_scalar($value)) {
+                    $value = 0;
+                } else {
+                    $value = 1;
+                }
+        }
+
+        if ($value === null) {
+            $this->value = $value;
+        } elseif (\is_scalar($value)) {
+            $this->value = (string) $value;
+        }
 
         return $this;
     }
