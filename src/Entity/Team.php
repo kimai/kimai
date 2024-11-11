@@ -178,13 +178,13 @@ class Team
     }
 
     /**
-     * @return User[]
+     * @return list<User>
      */
     public function getTeamleads(): array
     {
         $leads = [];
         foreach ($this->members as $member) {
-            if ($member->isTeamlead()) {
+            if ($member->isTeamlead() && $member->getUser() !== null) {
                 $leads[] = $member->getUser();
             }
         }
@@ -273,13 +273,15 @@ class Team
     /**
      * Returns all users in the team, both teamlead and normal member.
      *
-     * @return User[]
+     * @return list<User>
      */
     public function getUsers(): array
     {
         $users = [];
         foreach ($this->members as $member) {
-            $users[] = $member->getUser();
+            if ($member->getUser() !== null) {
+                $users[] = $member->getUser();
+            }
         }
 
         return $users;

@@ -21,12 +21,12 @@ parameters:
         booleansInConditions: false
         uselessCast: true
         requireParentConstructorCall: true
-        disallowedConstructs: false
+#        disallowedConstructs: false
         overwriteVariablesWithLoop: true
         closureUsesThis: true
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
-        strictCalls: false
+#        strictCalls: false
         switchConditionsMatchingType: true
         noVariableVariables: false
     paths:
@@ -315,7 +315,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, array\\<int, string\\>\\|string given\\.$#"
+            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, list\\<string\\>\\|string given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -465,7 +465,7 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Argument of an invalid type list\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 4
             path: src/Command/TranslationCommand.php
 
@@ -1295,16 +1295,6 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getTeamleads\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getUsers\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
             message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$activities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Team.php
@@ -1465,7 +1455,7 @@ parameters:
             path: src/Entity/UserPreference.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -1805,11 +1795,6 @@ parameters:
             path: src/Export/Spreadsheet/EntityWithMetaFieldsExporter.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should return array\\<App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\> but returns array\\<int, App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\|null\\>\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
-
-        -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
@@ -2000,7 +1985,7 @@ parameters:
             path: src/Form/Helper/ActivityHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
 
@@ -2015,7 +2000,7 @@ parameters:
             path: src/Form/Helper/CustomerHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/CustomerHelper.php
 
@@ -2030,7 +2015,7 @@ parameters:
             path: src/Form/Helper/ProjectHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/ProjectHelper.php
 
@@ -3360,7 +3345,7 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
@@ -3390,7 +3375,7 @@ parameters:
             path: src/Invoice/Renderer/DocxRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, mixed given\\.$#"
             count: 2
             path: src/Invoice/Renderer/DocxRenderer.php
 
@@ -3566,11 +3551,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYear\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Model/MonthlyStatistic.php
-
-        -
-            message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYears\\(\\) should return array\\<string\\> but returns array\\<int, int\\|string\\>\\.$#"
             count: 1
             path: src/Model/MonthlyStatistic.php
 

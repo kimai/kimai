@@ -24,7 +24,7 @@ final class UTCDateTimeImmutableType extends DateTimeImmutableType
     /**
      * @param T $value
      * @return (T is null ? null : string)
-     * @template T<\DateTimeImmutable>
+     * @template T
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
