@@ -136,7 +136,15 @@ final class RegenerateLocalesCommand extends Command
             $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
 
             $settings['date'] = $shortDate->getPattern();
+            if ($settings['date'] === false) {
+                $io->error('Invalid date pattern for locale: ' . $locale);
+                continue;
+            }
             $settings['time'] = $shortTime->getPattern();
+            if ($settings['time'] === false) {
+                $io->error('Invalid time pattern for locale: ' . $locale);
+                continue;
+            }
 
             // see https://github.com/kimai/kimai/issues/4402 - Korean time format failed parsing
             // special case when time pattern starts with A / a => this will lead to an error

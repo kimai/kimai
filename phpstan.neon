@@ -290,7 +290,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$locale of static method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
+            message: "#^Parameter \\#1 \\$locale of static method Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -1476,11 +1476,6 @@ parameters:
 
         -
             message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/UserPreference.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -4445,7 +4440,7 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns string\\|false\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
@@ -4455,17 +4450,17 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
+            count: 2
+            path: src/Utils/LocaleFormatter.php
+
+        -
+            message: "#^Parameter \\#1 \\$num of method NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Parameter \\#1 \\$num of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#2 \\$currency of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
