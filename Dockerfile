@@ -163,12 +163,14 @@ FROM prod AS fpm
 ARG PHP_VERSION
 
 RUN apk add \
-    php-${PHP_VERSION}-fpm \
-    php-${PHP_VERSION}-config
+    fcgi \
+    php${PHP_VERSION}-fpm \
+    php${PHP_VERSION}-cgi && \
+    ln -s /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm
 
-#RUN \
-#    sed -i "s/;ping.path/ping.path/g" /etc/php-fpm.d/www.conf && \
-#    sed -i "s/;access.suppress_path\[\] = \/ping/access.suppress_path\[\] = \/ping/g" /etc/php-fpm.d/www.conf
+RUN \
+    sed -i "s/;ping.path/ping.path/g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
+    sed -i "s/;access.suppress_path\[\] = \/ping/access.suppress_path\[\] = \/ping/g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf
 
 EXPOSE 9000
 
@@ -179,4 +181,4 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
     REQUEST_METHOD=GET \
     cgi-fcgi -bind -connect 127.0.0.1:9000 || exit 1
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]
