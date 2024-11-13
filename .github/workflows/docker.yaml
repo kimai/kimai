@@ -54,8 +54,7 @@ jobs:
                   file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
-                      BASE=fpm
-                  target: prod
+                  target: fpm
                   platforms: linux/amd64,linux/arm64
                   tags: |
                       kimai/kimai2:latest
@@ -70,24 +69,9 @@ jobs:
                   file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
-                      BASE=apache
-                  target: prod
+                  target: apache
                   platforms: linux/amd64,linux/arm64
                   tags: |
                       kimai/kimai2:apache
                       kimai/kimai2:apache-${{ env.kimai_version }}
-                  push: true
-
-            - name: Development image
-              uses: docker/build-push-action@v5
-              with:
-                  context: .
-                  file: Dockerfile
-                  build-args: |
-                      KIMAI=${{ env.kimai_version }}
-                      BASE=apache
-                  target: dev
-                  platforms: linux/amd64,linux/arm64
-                  tags: |
-                      kimai/kimai2:dev
                   push: true

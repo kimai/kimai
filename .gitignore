@@ -28,6 +28,7 @@
 /var/packages/*
 /var/plugins*
 /var/plugins/*/*.disabled
+/var/installed
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -62,3 +63,6 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
+
+docker-compose.override.yaml
+docker-compose.override.yml
