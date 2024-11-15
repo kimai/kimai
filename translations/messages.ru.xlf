@@ -1352,7 +1352,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Предполагаемое количество часов</target>
+        <target state="translated">Предполагаемые часы</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result">
         <source>work_times_result</source>
@@ -1625,6 +1625,110 @@
       <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
         <source>includeWithBudget</source>
         <target state="needs-translation">Показать входы с бюджетом</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">Категория</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
+        <source>user.language.help</source>
+        <target state="translated">Эта настройка отвечает за перевод ПО</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve">
+        <source>time</source>
+        <target state="translated">Время</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to" xml:space="preserve">
+        <source>send_to</source>
+        <target state="translated">Отправить %name%</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve">
+        <source>public_holiday</source>
+        <target state="translated">Нерабочий день</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">По умолчанию</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Болезнь родственника</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">Дни</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
+        <source>receive_from</source>
+        <target state="translated">Получить от %name%</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve">
+        <source>hour_24</source>
+        <target state="translated">Круглосуточный</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve">
+        <source>Absence calendar</source>
+        <target state="translated">Календарь пропусков</target>
+      </trans-unit>
+      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
+        <source>button.request</source>
+        <target state="translated">Отправить</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
+        <source>button.report</source>
+        <target state="translated">Сообщить</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
+        <source>day_full</source>
+        <target state="translated">Полный день</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
+        <source>day_half</source>
+        <target state="translated">Половина дня</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
+        <source>force_password_change</source>
+        <target state="translated">Запросить новый пароль</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">Категории</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">Неоплачиваемые отпуска</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Создано</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Одобрить</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Запрос</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Обновлено</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
+        <source>force_password_change_help</source>
+        <target state="translated">В следующий раз при входе нужно использовать новый пароль.</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">Обзор</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">Перевод</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">Контрольный журнал</target>
       </trans-unit>
     </body>
   </file>
