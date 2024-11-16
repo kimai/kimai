@@ -38,18 +38,6 @@ class ActivityRepository extends EntityRepository
     use RepositorySearchTrait;
 
     /**
-     * @param Project $project
-     * @return array<Activity>
-     */
-    public function findByProject(Project $project): array
-    {
-        $query = new ActivityQuery();
-        $query->addProject($project);
-
-        return $this->getActivitiesForQuery($query);
-    }
-
-    /**
      * @param int[] $activityIds
      * @return array<Activity>
      */
