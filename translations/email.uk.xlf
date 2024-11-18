@@ -24,19 +24,39 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Скинути пароль</target>
+        <target state="translated">Увійти в Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Таке може статися …</target>
+        <target state="translated">Увійдіть у свій обліковий запис</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Скинути пароль</target>
+        <target state="translated">Увійти</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">... що Ви забули свій пароль? Не хвилюйтеся: Kimai допоможе вам створити новий:</target>
+        <target state="translated">Це посилання буде дійсне лише 15 наступних хвилин.</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %absence_user%.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Please review them at: %approval_url%</source>
+        <target state="translated">Для користувача %absence_user% створена нова відсутність.
+
+%absence_type% - %absence_comment%
+
+%absence_list%
+
+Перевірте, будь ласка, тут: %approval_url%</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Нова відсутність | %absence_user% | %absence_type%</target>
       </trans-unit>
     </body>
   </file>

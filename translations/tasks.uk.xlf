@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="needs-translation">Опис завдання</target>
+        <target state="translated">Завдання</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>

@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve" approved="no">
         <source>reset.button</source>
-        <target state="needs-translation">重設您的密碼</target>
+        <target state="translated">登入</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
         <source>registration.subject</source>
@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="no">
         <source>reset.subject</source>
-        <target state="needs-translation">重設您的密碼</target>
+        <target state="translated">登入 Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
         <source>Forgot your password?</source>
-        <target state="needs-translation">忘記密碼了嗎？</target>
+        <target state="translated">登入您的帳號</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
         <source>registration.button</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">別擔心，Kimai 將協助您設定新的密碼！</target>
+        <target state="translated">此連結僅在接下來的15分鐘內有效。</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
