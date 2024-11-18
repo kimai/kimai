@@ -1794,6 +1794,10 @@
         <source>break</source>
         <target state="translated">休息</target>
       </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">利潤</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

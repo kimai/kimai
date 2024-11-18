@@ -544,7 +544,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Waktu bekerja nyata</target>
+        <target state="translated">Waktu-kerja nyata</target>
       </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
         <source>manual_bookings.duration_help</source>
@@ -744,7 +744,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Anggaran waktu</target>
+        <target state="translated">Kuota per jam</target>
       </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours" xml:space="preserve">
         <source>hours</source>
@@ -957,6 +957,18 @@
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN" xml:space="preserve">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">Admin Sistem</target>
+      </trans-unit>
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER" xml:space="preserve">
+        <source>ROLE_USER</source>
+        <target state="translated">Pengguna</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="no">
+        <source>Working hours</source>
+        <target state="translated">Waktu bekerja</target>
+      </trans-unit>
+      <trans-unit id="Nx9_QiO" resname="revenue" xml:space="preserve">
+        <source>revenue</source>
+        <target state="translated">Pendapatan</target>
       </trans-unit>
     </body>
   </file>

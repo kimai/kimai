@@ -874,7 +874,7 @@
         <source>entryState</source>
         <target state="final">Registrazioni</target>
       </trans-unit>
-      <trans-unit id="Qn2ouiL" resname="exported" approved="yes">
+      <trans-unit id="Qn2ouiL" resname="exported" approved="yes" xml:space="preserve">
         <source>exported</source>
         <target state="final">Esportate</target>
       </trans-unit>
