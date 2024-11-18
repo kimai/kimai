@@ -752,6 +752,48 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($result['billable']);
     }
 
+    public function getTrackingModeTestData(): array
+    {
+        return [
+            ['duration_fixed_begin', User::ROLE_USER, false],
+            ['duration_fixed_begin', User::ROLE_ADMIN, true],
+            ['duration_fixed_begin', User::ROLE_SUPER_ADMIN, true],
+            ['punch', User::ROLE_USER, false],
+            ['punch', User::ROLE_ADMIN, true],
+            ['punch', User::ROLE_SUPER_ADMIN, true],
+            ['default', User::ROLE_USER, true],
+            ['default', User::ROLE_ADMIN, true],
+            ['default', User::ROLE_SUPER_ADMIN, true]
+        ];
+    }
+
+    /**
+     * @dataProvider getTrackingModeTestData
+     */
+    public function testCreateActionWithTrackingModeHasFieldsForUser(string $trackingMode, string $user, bool $showTimes): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $response = $client->getResponse();
+
+        if ($showTimes) {
+            $this->assertTrue($response->isSuccessful());
+        } else {
+            $this->assertApiCallValidationError($response, [], true, [], [], ['begin', 'end']);
+        }
+    }
+
     public function testPatchAction(): void
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));

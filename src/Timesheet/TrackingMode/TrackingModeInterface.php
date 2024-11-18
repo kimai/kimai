@@ -23,61 +23,44 @@ use Symfony\Component\HttpFoundation\Request;
 interface TrackingModeInterface
 {
     /**
-     * Set default values on this new timesheet entity,
-     * before form data is rendered/processed.
-     *
-     * @param Timesheet $timesheet
-     * @param Request|null $request
+     * Set default values on this new timesheet entity, before form data is rendered/processed.
      */
     public function create(Timesheet $timesheet, ?Request $request = null): void;
 
     /**
      * Whether the user can edit the begin datetime.
-     *
-     * @return bool
      */
     public function canEditBegin(): bool;
 
     /**
      * Whether the user can edit the end datetime.
-     *
-     * @return bool
      */
     public function canEditEnd(): bool;
 
     /**
      * Whether the user can edit the duration.
-     * If this is true, the result of canEditEnd() will be ignored.
      *
-     * @return bool
+     * If this is true, the result of canEditEnd() will be ignored.
      */
     public function canEditDuration(): bool;
 
     /**
      * Whether the API can be used to manipulate the start and end times.
-     *
-     * @return bool
      */
     public function canUpdateTimesWithAPI(): bool;
 
     /**
      * Returns the edit template path for this tracking mode for regular user mode.
-     *
-     * @return string
      */
     public function getEditTemplate(): string;
 
     /**
      * Whether the real begin and end times are shown in the user timesheet.
-     *
-     * @return bool
      */
     public function canSeeBeginAndEndTimes(): bool;
 
     /**
      * Returns a unique identifier for this tracking mode.
-     *
-     * @return string
      */
     public function getId(): string;
 }

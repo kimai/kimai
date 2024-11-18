@@ -154,6 +154,10 @@
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">נא לנסות להגיש את הקובץ שוב. אם הבעיה חוזרת על עצמה, מוטב לרענן את הדפדפן.</target>
       </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="final">אי אפשר לתעד העדרות אחרי יום העבודה האחרון.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

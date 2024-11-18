@@ -1918,6 +1918,10 @@
         <source>Synchronization</source>
         <target state="translated">Eşzamanlama</target>
       </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve" approved="no">
+        <source>break</source>
+        <target state="translated">Ara ver</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
