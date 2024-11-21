@@ -12,7 +12,6 @@ namespace App\Tests\Entity;
 use App\Entity\UserPreference;
 use App\Form\Type\YesNoType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
