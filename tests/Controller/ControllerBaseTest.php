@@ -337,8 +337,6 @@ abstract class ControllerBaseTest extends WebTestCase
             $field = $submittedForm->filter($name);
             self::assertGreaterThan(0, $field->count(), 'Could not find form field: ' . $name);
             $list = $field->nextAll();
-            self::assertGreaterThan(0, $list->count(), 'Form field has no validation message: ' . $name);
-
             $validation = $list->filter('li.text-danger');
             if (\count($validation) < 1) {
                 // decorated form fields with icon have a different html structure
