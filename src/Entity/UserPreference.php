@@ -150,7 +150,6 @@ class UserPreference
      * integer, float, string, boolean or null
      *
      * @param mixed $value
-     * @return UserPreference
      */
     public function setValue($value): UserPreference
     {
