@@ -21,12 +21,10 @@ parameters:
         booleansInConditions: false
         uselessCast: true
         requireParentConstructorCall: true
-#        disallowedConstructs: false
         overwriteVariablesWithLoop: true
         closureUsesThis: true
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
-#        strictCalls: false
         switchConditionsMatchingType: true
         noVariableVariables: false
     paths:
