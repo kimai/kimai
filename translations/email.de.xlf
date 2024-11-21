@@ -40,23 +40,55 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Neue Abwesenheit | %absence_user% | %absence_type%</target>
+        <target state="translated">Neue Abwesenheit: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">Für %user% wurde eine neue Abwesenheit angelegt.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">Für %absence_user% wurde eine neue Abwesenheit angelegt.
+%list%
 
-%absence_type% - %absence_comment%
+Bitte überprüfen Sie diese unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Freigabe beantragt: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Für %user% wurde eine Freigabe beantragt.
 
-%absence_list%
+%list%
 
-Bitte überprüfen Sie diese unter: %approval_url%</target>
+Bitte überprüfen Sie diese unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde abgelehnt</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde von %user% abgelehnt.
+
+%list%
+
+Bitte überprüfen Sie ihre Anfragen unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde bestätigt</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Ihre Anfrage wurde von %user% genehmigt.
+
+%list%
+
+Sie finden alle Ihre Anfragen unter: %url%</target>
       </trans-unit>
     </body>
   </file>

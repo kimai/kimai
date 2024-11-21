@@ -58,6 +58,9 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
+        $this->assertIsArray($data);
+        $this->assertIsArray($data['model']);
+
         $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
         $this->assertEquals($expectedRows, \count($rows));

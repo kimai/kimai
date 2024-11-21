@@ -19,7 +19,6 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
@@ -105,7 +104,6 @@ class SamlControllerTest extends TestCase
         $sut = new SamlController($factory, $this->getSamlConfiguration());
         $result = $sut->metadataAction();
 
-        self::assertInstanceOf(Response::class, $result);
         self::assertEquals('xml', $result->headers->get('Content-Type'));
 
         $expected = new \DOMDocument();

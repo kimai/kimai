@@ -16,6 +16,7 @@ use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,6 +29,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
@@ -80,8 +82,10 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function loadUserFromDatabase(string $username): User
     {
+        /** @var Registry $doctrine */
+        $doctrine = self::getContainer()->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier($username);
         self::assertInstanceOf(User::class, $user);
 
@@ -331,10 +335,8 @@ abstract class ControllerBaseTest extends WebTestCase
 
         foreach ($fieldNames as $name) {
             $field = $submittedForm->filter($name);
-            self::assertNotNull($field, 'Could not find form field: ' . $name);
+            self::assertGreaterThan(0, $field->count(), 'Could not find form field: ' . $name);
             $list = $field->nextAll();
-            self::assertNotNull($list, 'Form field has no validation message: ' . $name);
-
             $validation = $list->filter('li.text-danger');
             if (\count($validation) < 1) {
                 // decorated form fields with icon have a different html structure
@@ -488,8 +490,12 @@ abstract class ControllerBaseTest extends WebTestCase
     {
         $request = new Request();
         $request->setSession(new Session(new MockArraySessionStorage()));
-        self::getContainer()->get(RequestStack::class)->push($request);
+        /** @var RequestStack $stack */
+        $stack = self::getContainer()->get(RequestStack::class);
+        $stack->push($request);
+        /** @var CsrfTokenManager $tokenManager */
+        $tokenManager = self::getContainer()->get('security.csrf.token_manager');
 
-        return self::getContainer()->get('security.csrf.token_manager')->getToken($name);
+        return $tokenManager->getToken($name);
     }
 }

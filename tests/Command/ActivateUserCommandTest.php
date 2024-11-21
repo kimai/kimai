@@ -13,6 +13,7 @@ use App\Command\ActivateUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -33,6 +34,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
+        /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
         $this->application->add(new ActivateUserCommand($userService));
@@ -71,8 +73,10 @@ class ActivateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
 
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('chris_user');
         self::assertInstanceOf(User::class, $user);
         self::assertTrue($user->isEnabled());

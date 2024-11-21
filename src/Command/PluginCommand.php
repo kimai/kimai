@@ -15,11 +15,11 @@ use App\Plugin\Plugin;
 use App\Plugin\PluginManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\PhpSubprocess;
 
 #[AsCommand(name: 'kimai:plugins', description: 'Manage Kimai plugins')]
 final class PluginCommand extends Command
@@ -69,14 +69,28 @@ final class PluginCommand extends Command
                 }
             }
 
-            $command = $this->getApplication()?->find('doctrine:migrations:migrate');
-            if ($command === null) {
-                throw new \RuntimeException('Failed finding doctrine migrations command');
-            }
-            $cmdInput = new ArrayInput(['--allow-no-migration' => true, '--configuration' => $config]);
-            $cmdInput->setInteractive(false);
-            if (0 !== $command->run($cmdInput, $output)) {
-                $io->error('Failed to install bundle database: ' . $config);
+            // using getApplication()->find('doctrine:migrations:migrate') does NOT work here
+            // because the Doctrine command can only be executed once
+            // if run more than once it fails with a "Container is frozen" exception
+
+            $process = new PhpSubprocess([
+                'bin/console',
+                'doctrine:migrations:migrate',
+                '--allow-no-migration',
+                '--no-interaction',
+                '--configuration=' . $config
+            ]);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                $io->error('Failed to install bundle database: ' . PHP_EOL . $config);
+                $io->error($process->getErrorOutput());
+            } else {
+                if ($io->isVerbose()) {
+                    $io->write($process->getOutput());
+                } else {
+                    $io->success('Successfully installed: ' . $plugin->getName());
+                }
             }
         }
 

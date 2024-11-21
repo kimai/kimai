@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @group integration
@@ -274,7 +275,9 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser();
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
         $this->request($client, '/timesheet/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -291,8 +294,8 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
-        $this->assertFalse($form->has('hourlyRate'));
-        $this->assertFalse($form->has('fixedRate'));
+        $this->assertFalse($form->has('timesheet_edit_form[hourlyRate]'));
+        $this->assertFalse($form->has('timesheet_edit_form[fixedRate]'));
     }
 
     public function getTrackingModeTestData(): array

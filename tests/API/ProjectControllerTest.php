@@ -21,6 +21,7 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -105,6 +106,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
     }
 
@@ -219,6 +221,7 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
+            self::assertIsArray($project);
             self::assertApiResponseTypeStructure('ProjectCollection', $project);
             if ($customerId !== null) {
                 $this->assertEquals($customerId, $project['customer']);
@@ -579,7 +582,9 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

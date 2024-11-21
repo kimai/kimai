@@ -22,7 +22,7 @@ final class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
     {
         if ($this->isGranted('create_other_timesheet')) {
             $event->addAction('create', ['title' => 'create', 'url' => $this->path('admin_timesheet_create'), 'class' => 'create-ts modal-ajax-form']);
-            $event->addAction('multi-user', ['title' => 'create-timesheet-multiuser', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet_create_multiuser'), 'class' => 'create-ts-mu modal-ajax-form', 'icon' => 'fas fa-user-plus']);
+            $event->addAction('multi-user', ['title' => 'create-timesheet-multiuser', 'url' => $this->path('admin_timesheet_create_multiuser'), 'class' => 'create-ts-mu modal-ajax-form', 'icon' => 'fas fa-user-plus']);
         }
 
         if ($this->isGranted('export_other_timesheet')) {

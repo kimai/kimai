@@ -225,7 +225,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         if (\count($globalError) > 0) {
             self::assertArrayHasKey('errors', $result['errors']);
             foreach ($globalError as $err) {
-                self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err);
+                self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
             }
         }
 

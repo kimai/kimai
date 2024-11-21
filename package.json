@@ -24,9 +24,9 @@
   ],
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
-    "@babel/core": "^7.19",
+    "@babel/core": "^7.26",
     "@babel/eslint-parser": "^7.19",
-    "@babel/preset-env": "^7.19",
+    "@babel/preset-env": "^7.26",
     "@fortawesome/fontawesome-free": "^6.5",
     "@fullcalendar/bootstrap5": "^5.11",
     "@fullcalendar/core": "^5.11",
@@ -47,7 +47,10 @@
     "sass": "^1.62",
     "sass-loader": "^13.2",
     "tom-select": "^2.2",
-    "webpack": "^5.91",
+    "webpack": "^5.96",
     "webpack-cli": "^4.10"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3"
   }
 }

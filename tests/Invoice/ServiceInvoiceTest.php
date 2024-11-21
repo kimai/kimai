@@ -81,10 +81,6 @@ class ServiceInvoiceTest extends TestCase
 
         $actual = $sut->getDocuments();
         $this->assertNotEmpty($actual);
-        foreach ($actual as $document) {
-            $this->assertInstanceOf(InvoiceDocument::class, $document);
-        }
-
         $actual = $sut->getDocumentByName('default');
         $this->assertInstanceOf(InvoiceDocument::class, $actual);
     }

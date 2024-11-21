@@ -9,8 +9,6 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Widget\Type\AbstractWidgetType;
-
 /**
  * @covers \App\Tests\Widget\Type\More
  */
@@ -35,8 +33,6 @@ class MoreTest extends AbstractWidgetTypeTest
     public function testData(): void
     {
         $sut = $this->createSut();
-
-        self::assertInstanceOf(AbstractWidgetType::class, $sut->setData(''));
 
         $sut->setData('slkudfhalksjdhfkljsahdf');
         self::assertEquals('slkudfhalksjdhfkljsahdf', $sut->getData());

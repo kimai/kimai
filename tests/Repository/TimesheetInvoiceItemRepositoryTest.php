@@ -33,7 +33,7 @@ class TimesheetInvoiceItemRepositoryTest extends TestCase
 
         $sut->setExported([new Timesheet(), null, new \stdClass(), new Timesheet(), new Activity()]);
         // test else for empty array
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         $sut->setExported([new Customer('foo'), new Project()]);
     }
 }

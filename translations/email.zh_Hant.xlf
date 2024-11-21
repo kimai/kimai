@@ -40,23 +40,19 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve" approved="yes">
         <source>absence_created_supervisor_subject</source>
-        <target state="final">新缺勤紀錄 | %absence_user% | %absence_type%</target>
+        <target state="final">新缺勤紀錄 | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="final">已為 %user% 建立新缺勤紀錄。
 
-Please review them at: %approval_url%</source>
-        <target state="final">已為 %absence_user% 建立新缺勤紀錄。
+%list%
 
-%absence_type%：%absence_comment%
-
-%absence_list%
-
-請在此審核：%approval_url%</target>
+請在此審核：%url%</target>
       </trans-unit>
     </body>
   </file>

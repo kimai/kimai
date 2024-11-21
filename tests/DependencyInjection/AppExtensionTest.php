@@ -185,6 +185,12 @@ class AppExtensionTest extends TestCase
 
         $config = $container->getParameter('kimai.config');
 
+        $this->assertIsArray($config);
+        $this->assertArrayHasKey('ldap.user.baseDn', $config);
+        $this->assertArrayHasKey('ldap.user.filter', $config);
+        $this->assertArrayHasKey('ldap.user.usernameAttribute', $config);
+        $this->assertArrayHasKey('ldap.connection.baseDn', $config);
+        $this->assertArrayHasKey('ldap.connection.accountFilterFormat', $config);
         $this->assertEquals('123123123', $config['ldap.user.baseDn']);
         $this->assertEquals('(..........)', $config['ldap.user.filter']);
         $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
@@ -209,6 +215,7 @@ class AppExtensionTest extends TestCase
 
         $config = $container->getParameter('kimai.config');
 
+        $this->assertIsArray($config);
         $this->assertEquals('123123123', $config['ldap.user.baseDn']);
         $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
         $this->assertEquals('123123123', $config['ldap.connection.baseDn']);
@@ -234,6 +241,7 @@ class AppExtensionTest extends TestCase
         $this->extension->load($minConfig, $container = $this->getContainer());
 
         $config = $container->getParameter('kimai.config');
+        $this->assertIsArray($config);
 
         $this->assertEquals('123123123', $config['ldap.user.baseDn']);
         $this->assertEquals('zzzz', $config['ldap.user.usernameAttribute']);

@@ -27,7 +27,7 @@
             {% endblock %}
             {% block box_footer %}
                 <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
-                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
+                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'back'|trans }}</a>
             {% endblock %}
         {% endembed %}
     {% elseif upload_error is not null %}

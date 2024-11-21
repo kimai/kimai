@@ -56,7 +56,7 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
         $allowDelete = $this->isGranted('delete_invoice');
         if (!$invoice->isCanceled()) {
             $id = $allowDelete ? 'invoice.cancel' : 'trash';
-            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel', 'translation_domain' => 'actions']);
+            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel']);
         }
 
         if ($this->isGranted('delete_invoice')) {

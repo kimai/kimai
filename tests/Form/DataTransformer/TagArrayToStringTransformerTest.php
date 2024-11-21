@@ -34,9 +34,9 @@ class TagArrayToStringTransformerTest extends TestCase
 
         $this->assertEquals('', $sut->transform([]));
         $this->assertEquals('', $sut->transform(null));
-        $this->assertEquals('', $sut->transform(new \stdClass())); // @phpstan-ignore-line
+        $this->assertEquals('', $sut->transform(new \stdClass())); // @phpstan-ignore argument.type
 
-        $actual = $sut->transform($results); // @phpstan-ignore-line
+        $actual = $sut->transform($results); // @phpstan-ignore argument.type
 
         $this->assertEquals('foo,test,bar', $actual);
     }
@@ -53,7 +53,7 @@ class TagArrayToStringTransformerTest extends TestCase
         $repository = $this->getMockBuilder(TagRepository::class)->disableOriginalConstructor()->getMock();
 
         $sut = new TagArrayToStringTransformer($repository, true);
-        $sut->transform($results); // @phpstan-ignore-line
+        $sut->transform($results); // @phpstan-ignore argument.type
     }
 
     public function testReverseTransform(): void

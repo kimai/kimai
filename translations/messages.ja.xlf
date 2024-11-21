@@ -716,7 +716,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="translated">%count%個のエントリーを%action%しますか？</target>
+        <target state="translated">%count%個のエントリーを%action%しますか</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>

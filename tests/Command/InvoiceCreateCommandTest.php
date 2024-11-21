@@ -43,6 +43,9 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         if (is_dir($path)) {
             $files = glob($path . '*');
+            if ($files === false) {
+                return;
+            }
             foreach ($files as $file) {
                 unlink($file);
             }
@@ -64,12 +67,12 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $container = self::getContainer();
 
         $this->application->add(new InvoiceCreateCommand(
-            $container->get(ServiceInvoice::class),
-            $container->get(CustomerRepository::class),
-            $container->get(ProjectRepository::class),
-            $container->get(InvoiceTemplateRepository::class),
-            $container->get(UserRepository::class),
-            $container->get('event_dispatcher')
+            $container->get(ServiceInvoice::class), // @phpstan-ignore argument.type
+            $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
+            $container->get(ProjectRepository::class), // @phpstan-ignore argument.type
+            $container->get(InvoiceTemplateRepository::class), // @phpstan-ignore argument.type
+            $container->get(UserRepository::class), // @phpstan-ignore argument.type
+            $container->get('event_dispatcher') // @phpstan-ignore argument.type
         ));
     }
 

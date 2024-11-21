@@ -22,7 +22,7 @@ class DemoFull
     #[Exporter\Expose(name: 'fake-name', label: 'Protected-Property', type: 'boolean')]
     protected bool $protectedProperty = false;
     #[Exporter\Expose(label: 'Private-Property', type: 'integer', translationDomain: 'test')]
-    private int $privateProperty = 123; // @phpstan-ignore-line
+    private int $privateProperty = 123; // @phpstan-ignore property.onlyWritten
 
     #[Exporter\Expose(label: 'Public-Method')]
     public function publicMethod(): string
@@ -47,7 +47,7 @@ class DemoFull
         return 12345;
     }
 
-    // @phpstan-ignore-next-line
+    // @phpstan-ignore method.unused
     #[Exporter\Expose(name: 'fake-method', label: 'Private-Method', type: 'boolean', translationDomain: 'bar')]
     private function privateMethod(): bool
     {

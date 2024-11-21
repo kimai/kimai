@@ -31,7 +31,7 @@ final class LocaleFormatter
     private ?NumberFormatter $moneyFormatter = null;
     private ?NumberFormatter $moneyFormatterNoCurrency = null;
 
-    public function __construct(private LocaleService $localeService, private string $locale)
+    public function __construct(private readonly LocaleService $localeService, private readonly string $locale)
     {
     }
 

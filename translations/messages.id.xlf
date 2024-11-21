@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% entri?</target>
+        <target state="translated">%action% %count% entri</target>
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination">
         <source>pagination</source>
@@ -957,6 +957,18 @@
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN" xml:space="preserve">
         <source>ROLE_SUPER_ADMIN</source>
         <target state="translated">Admin Sistem</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target state="translated">Berhenti</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">Muat ulang</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back" xml:space="preserve">
+        <source>back</source>
+        <target state="translated">Kembali</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER" xml:space="preserve">
         <source>ROLE_USER</source>

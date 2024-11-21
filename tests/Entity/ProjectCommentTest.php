@@ -22,10 +22,4 @@ class ProjectCommentTest extends AbstractCommentEntityTest
     {
         return new ProjectComment(new Project());
     }
-
-    public function testEntitySpecificMethods(): void
-    {
-        $sut = $this->getEntity();
-        self::assertNotNull($sut->getProject());
-    }
 }

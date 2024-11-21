@@ -60,11 +60,13 @@ class ActionsControllerTest extends APIControllerBaseTest
 
             $this->assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
@@ -110,11 +112,13 @@ class ActionsControllerTest extends APIControllerBaseTest
 
             $this->assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
@@ -159,11 +163,13 @@ class ActionsControllerTest extends APIControllerBaseTest
 
             $this->assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
@@ -204,11 +210,13 @@ class ActionsControllerTest extends APIControllerBaseTest
 
             $this->assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }

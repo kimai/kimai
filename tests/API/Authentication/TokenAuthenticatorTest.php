@@ -20,7 +20,6 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
-use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * @covers \App\API\Authentication\TokenAuthenticator
@@ -118,7 +117,6 @@ class TokenAuthenticatorTest extends TestCase
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-USER' => 'foo2', 'HTTP_X-AUTH-TOKEN' => 'bar']);
         $passport = $sut->authenticate($request);
-        self::assertInstanceOf(Passport::class, $passport);
         $badge = $passport->getBadge(UserBadge::class);
         self::assertInstanceOf(UserBadge::class, $badge);
         self::assertEquals('foo2', $badge->getUserIdentifier());

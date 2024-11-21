@@ -22,10 +22,4 @@ class CustomerCommentTest extends AbstractCommentEntityTest
     {
         return new CustomerComment(new Customer('foo'));
     }
-
-    public function testEntitySpecificMethods(): void
-    {
-        $sut = $this->getEntity();
-        self::assertNotNull($sut->getCustomer());
-    }
 }

@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% intrări?</target>
+        <target>%action% %count% intrări</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -1698,10 +1698,6 @@
         <source>default</source>
         <target state="translated">Implicit</target>
       </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve">
-        <source>button.request</source>
-        <target state="translated">Trimite</target>
-      </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
         <source>day_half</source>
         <target state="translated">Jumătate de zi</target>
@@ -1745,6 +1741,122 @@
       <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
         <source>Last usage</source>
         <target state="translated">Ultima utilizare</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target>Stop</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target>Înapoi</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>Editează</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash">
+        <source>trash</source>
+        <target>Șterge</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report">
+        <source>report</source>
+        <target>Raport</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target>Repetă</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats">
+        <source>profile-stats</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings">
+        <source>settings</source>
+        <target>Preferințe</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter">
+        <source>Filter timesheets</source>
+        <target>Fișe de pontaj</target>
+      </trans-unit>
+      <trans-unit id="xY9_cU2" resname="customer.filter">
+        <source>Filter customers</source>
+        <target>Filtrează clienții</target>
+      </trans-unit>
+      <trans-unit id="UFgOnc6" resname="project.filter">
+        <source>Filter projects</source>
+        <target>Filtrează proiectele</target>
+      </trans-unit>
+      <trans-unit id="5G3QNHA" resname="activity.filter">
+        <source>Filter activities</source>
+        <target>Filtrează activitățile</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy">
+        <source>copy</source>
+        <target>Copiază</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target>Pagina de pornire</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project">
+        <source>create-project</source>
+        <target>Creează un proiect</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity">
+        <source>create-activity</source>
+        <target>Creează o activitate</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
+        <source>create-timesheet</source>
+        <target>Creează un pontaj</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions">
+        <source>permissions</source>
+        <target>Permisiunile echipei</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details">
+        <source>details</source>
+        <target>Detalii</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
+        <source>invoice.paid</source>
+        <target>Factură achitată</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
+        <source>invoice.pending</source>
+        <target>Se așteaptă plata</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target state="translated">Descarcă</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>Pentru mai mulți utilizatori</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target>Filtrează datele</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Anulare factură</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard">
+        <source>vcard</source>
+        <target state="translated">Carte de vizită</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add">
+        <source>Add widget</source>
+        <target state="translated">Adăugați widget</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove">
+        <source>Remove widget</source>
+        <target state="translated">Eliminați widget-ul</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload">
+        <source>reload</source>
+        <target state="translated">activat</target>
       </trans-unit>
     </body>
   </file>

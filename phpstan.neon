@@ -21,12 +21,10 @@ parameters:
         booleansInConditions: false
         uselessCast: true
         requireParentConstructorCall: true
-        disallowedConstructs: false
         overwriteVariablesWithLoop: true
         closureUsesThis: true
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
-        strictCalls: false
         switchConditionsMatchingType: true
         noVariableVariables: false
     paths:
@@ -290,7 +288,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$locale of static method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
+            message: "#^Parameter \\#1 \\$locale of static method Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -315,7 +313,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, array\\<int, string\\>\\|string given\\.$#"
+            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, list\\<string\\>\\|string given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -465,7 +463,7 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Argument of an invalid type list\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 4
             path: src/Command/TranslationCommand.php
 
@@ -1295,16 +1293,6 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getTeamleads\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getUsers\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
             message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$activities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Team.php
@@ -1465,7 +1453,7 @@ parameters:
             path: src/Entity/UserPreference.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -1476,11 +1464,6 @@ parameters:
 
         -
             message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/UserPreference.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -1810,11 +1793,6 @@ parameters:
             path: src/Export/Spreadsheet/EntityWithMetaFieldsExporter.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should return array\\<App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\> but returns array\\<int, App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\|null\\>\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
-
-        -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
@@ -2005,7 +1983,7 @@ parameters:
             path: src/Form/Helper/ActivityHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
 
@@ -2020,7 +1998,7 @@ parameters:
             path: src/Form/Helper/CustomerHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/CustomerHelper.php
 
@@ -2035,7 +2013,7 @@ parameters:
             path: src/Form/Helper/ProjectHelper.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Form/Helper/ProjectHelper.php
 
@@ -3365,7 +3343,7 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
@@ -3395,7 +3373,7 @@ parameters:
             path: src/Invoice/Renderer/DocxRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, mixed given\\.$#"
             count: 2
             path: src/Invoice/Renderer/DocxRenderer.php
 
@@ -3560,11 +3538,6 @@ parameters:
             path: src/Ldap/LdapUserProvider.php
 
         -
-            message: "#^Parameter \\#1 \\.\\.\\.\\$addresses of method Symfony\\\\Component\\\\Mime\\\\Email\\:\\:from\\(\\) expects string\\|Symfony\\\\Component\\\\Mime\\\\Address, string\\|null given\\.$#"
-            count: 1
-            path: src/Mail/KimaiMailer.php
-
-        -
             message: "#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
             count: 1
             path: src/Model/ActivityStatistic.php
@@ -3576,11 +3549,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYear\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Model/MonthlyStatistic.php
-
-        -
-            message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYears\\(\\) should return array\\<string\\> but returns array\\<int, int\\|string\\>\\.$#"
             count: 1
             path: src/Model/MonthlyStatistic.php
 
@@ -4450,7 +4418,7 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns string\\|false\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
@@ -4460,17 +4428,17 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
+            count: 2
+            path: src/Utils/LocaleFormatter.php
+
+        -
+            message: "#^Parameter \\#1 \\$num of method NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Parameter \\#1 \\$num of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#2 \\$currency of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 

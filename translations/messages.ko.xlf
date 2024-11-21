@@ -832,7 +832,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%count% %action% 항목?</target>
+        <target>%count% %action% 항목</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
@@ -1221,6 +1221,106 @@
       <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
         <target state="needs-translation">이 텍스트는 송장 문서에서 사용되며 추가적인 배송 조건을 기록하는 데 사용될 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target state="translated">중지</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target state="translated">뒤로</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target state="translated">편집</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash">
+        <source>trash</source>
+        <target state="translated">삭제</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report">
+        <source>report</source>
+        <target state="translated">보고</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target state="translated">다시 시작</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats">
+        <source>profile-stats</source>
+        <target state="translated">프로필</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings">
+        <source>settings</source>
+        <target state="translated">기본 설정</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter">
+        <source>Filter timesheets</source>
+        <target state="translated">타임시트 필터링</target>
+      </trans-unit>
+      <trans-unit id="xY9_cU2" resname="customer.filter">
+        <source>Filter customers</source>
+        <target state="translated">고객 필터링</target>
+      </trans-unit>
+      <trans-unit id="UFgOnc6" resname="project.filter">
+        <source>Filter projects</source>
+        <target state="translated">프로젝트 필터링</target>
+      </trans-unit>
+      <trans-unit id="5G3QNHA" resname="activity.filter">
+        <source>Filter activities</source>
+        <target state="translated">활동 필터링</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy">
+        <source>copy</source>
+        <target state="translated">사본 만들기</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target state="translated">홈페이지</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project">
+        <source>create-project</source>
+        <target state="translated">프로젝트 만들기</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity">
+        <source>create-activity</source>
+        <target state="translated">활동 만들기</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
+        <source>create-timesheet</source>
+        <target state="translated">타임시트 만들기</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions">
+        <source>permissions</source>
+        <target state="translated">팀 승인</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
+        <source>invoice.paid</source>
+        <target>청구서 지불</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
+        <source>invoice.pending</source>
+        <target>결제 대기 중</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details">
+        <source>details</source>
+        <target>표시</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target state="translated">다운로드</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>여러 사용자의 경우</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target>데이터 필터링</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>청구서 취소</target>
       </trans-unit>
     </body>
   </file>

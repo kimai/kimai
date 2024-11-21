@@ -49,3 +49,14 @@ fieldset:empty {
         --litepicker-is-in-range-color: var(--tblr-primary-text-emphasis);
     }
 }
+
+/* fixes contrast of batch-update checkboxes - https://github.com/kimai/kimai/issues/5146 */
+.multiupdater[type=checkbox]
+{
+    --tblr-border-color-translucent: rgba(4, 32, 69, .2);
+}
+
+/* fixes height for long tags https://github.com/kimai/kimai/issues/5169 */
+.tag {
+    --tblr-tag-height: unset;
+}

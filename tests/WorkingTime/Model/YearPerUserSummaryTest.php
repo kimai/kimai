@@ -60,6 +60,5 @@ class YearPerUserSummaryTest extends TestCase
         self::assertEquals(371358, $sut->getExpectedTime());
         self::assertEquals(1, $sut->count());
         self::assertEquals([$summary], $sut->getSummaries());
-        self::assertInstanceOf(\Traversable::class, $sut->getIterator());
     }
 }

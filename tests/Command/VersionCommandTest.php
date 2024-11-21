@@ -42,7 +42,7 @@ class VersionCommandTest extends KernelTestCase
         $this->assertEquals($result . PHP_EOL, $output);
     }
 
-    public function getTestData(): array // @phpstan-ignore-line
+    public function getTestData(): array // @phpstan-ignore missingType.iterableValue
     {
         return [
             [[], 'Kimai ' . Constants::VERSION . ' by Kevin Papst.'],

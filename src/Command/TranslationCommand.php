@@ -48,7 +48,9 @@ final class TranslationCommand extends Command
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
             ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty keys and files which have no translated key at all')
             ->addOption('move-resname', null, InputOption::VALUE_REQUIRED, 'Move a resname from one file to another (needs "source" and "target" options)')
+            ->addOption('move-all', null, InputOption::VALUE_NONE, 'Move all keys from one file to another (needs "source" and "target" options)')
             ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Single source file to use')
+            ->addOption('only-core', null, InputOption::VALUE_NONE, 'Do not include plugin and theme directories')
             ->addOption('target', null, InputOption::VALUE_REQUIRED, 'Single target file to use')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
@@ -68,9 +70,12 @@ final class TranslationCommand extends Command
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
-            'theme' => $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf',
         ];
+
+        if (!$input->getOption('only-core')) {
+            $bases['plugins'] = $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf';
+            $bases['theme'] = $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf';
+        }
 
         $sources = [];
         if ($input->getOption('source') !== null) {
@@ -144,6 +149,19 @@ final class TranslationCommand extends Command
             }
 
             return $this->moveResname($io, $moveResname, $sources, $targets);
+        }
+
+        // ==========================================================================
+        // Move all keys from source to target
+        // ==========================================================================
+        if ($input->getOption('move-all')) {
+            if (\count($sources) === 0 || \count($targets) === 0) {
+                $io->error('Moving all keys only works with one source and one target file');
+
+                return Command::FAILURE;
+            }
+
+            return $this->moveAll($io, $sources, $targets);
         }
 
         // ==========================================================================
@@ -630,6 +648,68 @@ final class TranslationCommand extends Command
                 $xmlDocument->loadXML($targetDocument->saveXML()); // @phpstan-ignore-line
                 file_put_contents($target, $xmlDocument->saveXML());
             }
+        }
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @param array<string> $sources
+     * @param array<string> $targets
+     */
+    private function moveAll(SymfonyStyle $io, array $sources, array $targets): int
+    {
+        foreach ($sources as $source) {
+            $tmp = basename($source);
+            $pos = strpos($tmp, '.');
+            if ($pos === false) {
+                $io->error('Unexpected filename: ' . $source);
+
+                return Command::FAILURE;
+            }
+            $suffix = substr($tmp, $pos);
+            $target = null;
+            foreach ($targets as $t) {
+                if (str_ends_with($t, $suffix)) {
+                    $target = $t;
+                }
+            }
+
+            if ($target === null) {
+                $io->error('Cannot find translation target file for source: ' . $source);
+
+                return Command::FAILURE;
+            }
+
+            $sourceDocument = new \DOMDocument('1.0');
+            $sourceDocument->load($source);
+
+            $targetDocument = new \DOMDocument('1.0');
+            $targetDocument->load($target);
+            $removeNodes = [];
+
+            /** @var \DOMElement $element */
+            foreach ($sourceDocument->getElementsByTagName('trans-unit') as $element) {
+                $newNode = $targetDocument->importNode($element, true);
+                $targetDocument->documentElement->firstElementChild->firstElementChild->appendChild($newNode); // @phpstan-ignore-line
+                $removeNodes[] = $element;
+            }
+
+            foreach ($removeNodes as $node) {
+                $sourceDocument->documentElement->firstElementChild->firstElementChild->removeChild($node); // @phpstan-ignore-line
+            }
+
+            $xmlDocument = new \DOMDocument('1.0');
+            $xmlDocument->preserveWhiteSpace = false;
+            $xmlDocument->formatOutput = true;
+            $xmlDocument->loadXML($sourceDocument->saveXML()); // @phpstan-ignore-line
+            file_put_contents($source, $xmlDocument->saveXML());
+
+            $xmlDocument = new \DOMDocument('1.0');
+            $xmlDocument->preserveWhiteSpace = false;
+            $xmlDocument->formatOutput = true;
+            $xmlDocument->loadXML($targetDocument->saveXML()); // @phpstan-ignore-line
+            file_put_contents($target, $xmlDocument->saveXML());
         }
 
         return Command::SUCCESS;

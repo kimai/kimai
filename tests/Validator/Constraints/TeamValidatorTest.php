@@ -34,7 +34,7 @@ class TeamValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore-line
+        $this->validator->validate('foo', new NotBlank()); // @phpstan-ignore argument.type
     }
 
     public function testMissingTeamlead(): void
