@@ -50,8 +50,6 @@
 Please review them at: %url%</source>
         <target state="translated">Stvorena je nova odsutnost za %user%.
 
-%type% – %comment%
-
 %list%
 
 Pregledaj ih na: %url%</target>

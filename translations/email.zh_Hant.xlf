@@ -50,8 +50,6 @@
 Please review them at: %url%</source>
         <target state="final">已為 %user% 建立新缺勤紀錄。
 
-%type%：%comment%
-
 %list%
 
 請在此審核：%url%</target>
