@@ -41,14 +41,10 @@
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
         <source>A new absence was created for %user%.
 
-%type% - %comment%
-
 %list%
 
 Please review them at: %url%</source>
         <target state="translated">Для користувача %user% створена нова відсутність.
-
-%type% - %comment%
 
 %list%
 
@@ -56,7 +52,7 @@ Please review them at: %url%</source>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Нова відсутність | %absence_user% | %absence_type%</target>
+        <target state="translated">Нова відсутність | %user% | %type%</target>
       </trans-unit>
     </body>
   </file>

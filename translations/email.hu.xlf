@@ -41,14 +41,10 @@
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
         <source>A new absence was created for %user%.
 
-%type% - %comment%
-
 %list%
 
 Please review them at: %url%</source>
         <target state="translated">Új távollét jött létre %user%.
-
-%type% - %comment%
 
 %list%
 
