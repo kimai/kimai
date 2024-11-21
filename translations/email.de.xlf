@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 Bitte überprüfen Sie diese unter: %url%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Freigabe beantragt: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Für %user% wurde eine Freigabe beantragt.
+
+%list%
+
+Bitte überprüfen Sie diese unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde abgelehnt</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde von %user% abgelehnt.
+
+%list%
+
+Bitte überprüfen Sie ihre Anfragen unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde bestätigt</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Ihre Anfrage wurde von %user% genehmigt.
+
+%list%
+
+Sie finden alle Ihre Anfragen unter: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
