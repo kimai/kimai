@@ -1921,6 +1921,7 @@
       <trans-unit id="2UL2SIZ" resname="import">
         <source>import</source>
         <target state="translated">Importar</target>
-      </trans-unit>    </body>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
