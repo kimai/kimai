@@ -5,111 +5,30 @@
  * file that was distributed with this source code.
  */
 
-body {
-    font-family: sans-serif;
-    font-size: 10pt;
-    margin: 4px;
-    padding: 0;
-}
-table, tr, td, th, p, h1, h2, h3, h4, h5 {
-    padding: 0;
-    margin: 0;
-}
-th {
-    border: none;
-    text-align: left;
-}
-td {
-    vertical-align: top;
-}
-p {
-    margin-bottom: 12px;
-}
-.text-small {
-    font-size: 7pt;
-}
-.padding-left {
-    padding-left: 15px;
-}
-.text-center {
-    text-align: center;
-}
-.text-left, .text-begin {
-    text-align: left;
-}
-.text-right, .text-end {
-    text-align: right;
-}
-.text-nowrap {
-    white-space: nowrap;
-}
-.date {
-    font-size: 80%;
-    text-align: right;
-    padding-top: 6px;
-}
-table {
-    width: 100%;
-    border-spacing: 0;
-}
-table.addresses, p {
-    line-height: 14pt;
-}
-/* The address table */
-table.addresses {
-    margin-bottom: 30px;
-}
-/* The PDF header */
-table.header {
-    padding-bottom: 4px;
-    border-bottom: 1px solid #999;
-}
-table.header .title {
-    font-weight: normal;
-    font-size: 140%;
-}
-/* The PDF footer */
-table.footer {
-    border-top: 1px solid #999;
-    font-size: 80%;
-    padding-top: 8px;
-    line-height: 14px;
-}
-table.footer td {
-    vertical-align: top;
-}
-/* The invoice items list */
-table.items {
-    border-collapse: collapse;
-    margin-top: 50px;
-    margin-bottom: 60px;
-}
-table.items thead th,
-table.items tbody td {
-    border-bottom: 1px solid #ccc;
-}
-table.items thead th.first,
-table.items tbody td.first {
-    padding-left: 0;
-}
-table.items thead th.last,
-table.items tbody td.last,
-table.items tfoot td.last {
-    padding-right: 0;
-}
-
-table.items td,
-table.items th {
-    padding: 8px 6px;
-}
-table.items tfoot td,
-table.items tfoot th {
-    padding: 20px 0 0 0;
-    line-height: 1px;
-}
-table.items tfoot td.last {
-    padding-left: 10px;
-}
-table.items tr.odd {
-    background-color: #f5f5f5;
-}
+body { font-family: sans-serif; font-size: 10pt; margin: 4px; padding: 0; }
+table, tr, td, th, p, h1, h2, h3, h4, h5 { padding: 0; margin: 0;}
+th { border: none; text-align: left; }
+td { vertical-align: top; }
+p { margin-bottom: 12px; }
+.text-small { font-size: 7pt; }
+.padding-left { padding-left: 15px; }
+.text-center { text-align: center; }
+.text-left, .text-begin { text-align: left; }
+.text-right, .text-end { text-align: right; }
+.text-nowrap { white-space: nowrap; }
+.date { font-size: 80%; text-align: right; padding-top: 6px; }
+table { width: 100%; border-spacing: 0; }
+table.addresses, p { line-height: 14pt; }
+table.addresses { margin-bottom: 30px; }
+table.header { padding-bottom: 4px; border-bottom: 1px solid #999; }
+table.header .title { font-weight: normal; font-size: 140%; }
+table.footer { border-top: 1px solid #999; font-size: 80%; padding-top: 8px; line-height: 14px; }
+table.footer td { vertical-align: top; }
+table.items { border-collapse: collapse; margin-top: 50px; margin-bottom: 60px; }
+table.items thead th, table.items tbody td { border-bottom: 1px solid #ccc; }
+table.items thead th.first, table.items tbody td.first { padding-left: 0; }
+table.items thead th.last, table.items tbody td.last, table.items tfoot td.last { padding-right: 0; }
+table.items td, table.items th { padding: 8px 6px; }
+table.items tfoot td, table.items tfoot th { padding: 20px 0 0 0; line-height: 1px; }
+table.items tfoot td.last { padding-left: 10px; }
+table.items tr.odd { background-color: #f5f5f5; }
