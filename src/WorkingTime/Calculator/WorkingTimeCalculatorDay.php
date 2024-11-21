@@ -28,13 +28,13 @@ final class WorkingTimeCalculatorDay implements WorkingTimeCalculator
     public function getWorkHoursForDay(\DateTimeInterface $dateTime): int
     {
         return (int) match ($dateTime->format('N')) {
-            '1' => $this->user->getPreferenceValue(self::WORK_HOURS_MONDAY, 0),
-            '2' => $this->user->getPreferenceValue(self::WORK_HOURS_TUESDAY, 0),
-            '3' => $this->user->getPreferenceValue(self::WORK_HOURS_WEDNESDAY, 0),
-            '4' => $this->user->getPreferenceValue(self::WORK_HOURS_THURSDAY, 0),
-            '5' => $this->user->getPreferenceValue(self::WORK_HOURS_FRIDAY, 0),
-            '6' => $this->user->getPreferenceValue(self::WORK_HOURS_SATURDAY, 0),
-            '7' => $this->user->getPreferenceValue(self::WORK_HOURS_SUNDAY, 0),
+            '1' => $this->user->getPreferenceValue(self::WORK_HOURS_MONDAY, 0, false),
+            '2' => $this->user->getPreferenceValue(self::WORK_HOURS_TUESDAY, 0, false),
+            '3' => $this->user->getPreferenceValue(self::WORK_HOURS_WEDNESDAY, 0, false),
+            '4' => $this->user->getPreferenceValue(self::WORK_HOURS_THURSDAY, 0, false),
+            '5' => $this->user->getPreferenceValue(self::WORK_HOURS_FRIDAY, 0, false),
+            '6' => $this->user->getPreferenceValue(self::WORK_HOURS_SATURDAY, 0, false),
+            '7' => $this->user->getPreferenceValue(self::WORK_HOURS_SUNDAY, 0, false),
             default => throw new \Exception('Unknown day: ' . $dateTime->format('Y-m-d'))
         };
     }

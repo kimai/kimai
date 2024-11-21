@@ -3,7 +3,7 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': (activity.id is null ? 'create-activity'|trans({}, 'actions') : 'edit'|trans({}, 'actions')),
+        'title': (activity.id is null ? 'create-activity'|trans : 'edit'|trans),
         'form': form,
         'back': path('admin_activity')
     } %}

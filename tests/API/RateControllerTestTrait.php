@@ -150,7 +150,13 @@ trait RateControllerTestTrait
         $this->assertEquals(\count($expectedRates), \count($result));
 
         foreach ($result as $rate) {
-            $this->assertRateStructure($rate, ($rate['user'] === null ? null : $rate['user']['id']));
+            $this->assertIsArray($rate);
+            if ($rate['user'] === null) {
+                $this->assertRateStructure($rate);
+            } else {
+                $this->assertIsArray($rate['user']);
+                $this->assertRateStructure($rate, $rate['user']['id']);
+            }
         }
     }
 

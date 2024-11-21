@@ -29,7 +29,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
     private function getSystemConfiguration(): SystemConfiguration
     {
-        return static::getContainer()->get(SystemConfiguration::class);
+        return static::getContainer()->get(SystemConfiguration::class); // @phpstan-ignore return.type
     }
 
     public function testIndexAction(): void
@@ -72,7 +72,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('POST', $form->getMethod());
     }
 
-    public function getTestDataForms()
+    /**
+     * @return array<array<string>>
+     */
+    public function getTestDataForms(): array
     {
         return [
             ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],

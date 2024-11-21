@@ -21,13 +21,12 @@ class DefaultModeTest extends AbstractTrackingModeTest
     public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNotNull($timesheet->getBegin());
-        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
     }
 
     /**
      * @return DefaultMode
      */
-    protected function createSut()
+    protected function createSut(): DefaultMode
     {
         return new DefaultMode((new RoundingServiceFactory($this))->create());
     }

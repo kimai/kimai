@@ -28,12 +28,18 @@ class SpreadsheetExporterTest extends TestCase
         $sut->registerCellFormatter('foo', new class() implements CellFormatterInterface {
             public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
             {
+                if (!\is_scalar($value)) {
+                    throw new \InvalidArgumentException('Only scalar values are supported');
+                }
                 $sheet->setCellValue([$column, $row], '##' . $value . '##');
             }
         });
         $sut->registerCellFormatter('bar', new class() implements CellFormatterInterface {
             public function setFormattedValue(Worksheet $sheet, int $column, int $row, $value): void
             {
+                if (!\is_scalar($value)) {
+                    throw new \InvalidArgumentException('Only scalar values are supported');
+                }
                 $sheet->setCellValue([$column, $row], '~' . $value . '~');
             }
         });

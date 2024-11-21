@@ -51,6 +51,7 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(10, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
 
@@ -72,6 +73,7 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
 
@@ -91,6 +93,7 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(4, \count($result));
         $this->assertPagination($client->getResponse(), 2, 4, 5, 20);
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
 

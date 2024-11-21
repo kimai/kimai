@@ -18,7 +18,7 @@ use App\Model\Month as BaseMonth;
  */
 final class Month extends BaseMonth
 {
-    public function __construct(\DateTimeImmutable $month, private User $user)
+    public function __construct(\DateTimeImmutable $month, private readonly User $user)
     {
         parent::__construct($month);
     }

@@ -21,6 +21,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -335,7 +336,9 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/customer/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

@@ -108,8 +108,6 @@ final class TimesheetService
     }
 
     /**
-     * @param Timesheet $timesheet
-     * @return Timesheet
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
      * @throws AccessDeniedException if user is not allowed to start timesheet
@@ -233,11 +231,10 @@ final class TimesheetService
     }
 
     /**
-     * @param Timesheet $timesheet
      * @param string[] $groups
      * @throws ValidationFailedException
      */
-    private function validateTimesheet(Timesheet $timesheet, array $groups = []): void
+    public function validateTimesheet(Timesheet $timesheet, array $groups = []): void
     {
         $errors = $this->validator->validate($timesheet, null, $groups);
 

@@ -40,23 +40,19 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" approved="yes">
         <source>absence_created_supervisor_subject</source>
-        <target state="final">Nuovo congedo | %absence_user% | %absence_type%</target>
+        <target state="final">Nuovo congedo | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve" approved="yes">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="final">È stato creato un nuovo congedo per %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="final">È stato creato un nuovo congedo per %absence_user%.
+%list%
 
-%absence_type% - %absence_comment%
-
-%absence_list%
-
-Controllali qui: %approval_url%</target>
+Controllali qui: %url%</target>
       </trans-unit>
     </body>
   </file>

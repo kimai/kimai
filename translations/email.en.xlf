@@ -40,23 +40,55 @@
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
-        <target>New absence | %absence_user% | %absence_type%</target>
+        <target>New absence: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">A new absence was created for %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">A new absence was created for %absence_user%.
+%list%
 
-%absence_type% - %absence_comment%
+Please review them at: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Approval requested: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">An approval for %user% was requested.
 
-%absence_list%
+%list%
 
-Please review them at: %approval_url%</target>
+Please review them at: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Your request has been rejected</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Your authorisation request has been rejected by %user%.
+
+%list%
+
+Please review your requests at: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Your request has been approved</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Your request has been approved by %user%.
+
+%list%
+
+You can find all your enquiries under: %url%</target>
       </trans-unit>
     </body>
   </file>

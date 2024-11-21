@@ -22,10 +22,7 @@ class TeamQueryTest extends BaseQueryTest
         $sut = new TeamQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(TeamQuery::class, $sut);
-
         $this->assertUsers($sut);
-
         $this->assertResetByFormError(new TeamQuery(), 'name');
     }
 

@@ -38,6 +38,8 @@ final class ActivityType extends AbstractType
     public function groupBy(Activity $activity, $key, $index): string
     {
         if (null === $activity->getProject()) {
+            // this creates a optgroup with an empty title. previously this was null, which resulted in options without optgroup
+            // and those are ordered by Tomselect at the top - so globals always came first, see #4674
             return '';
         }
 

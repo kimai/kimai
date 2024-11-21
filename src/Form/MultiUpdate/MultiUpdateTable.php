@@ -29,6 +29,7 @@ final class MultiUpdateTable extends AbstractType
 
         $builder->add('entities', HiddenType::class, [
             'required' => false,
+            'attr' => ['class' => 'multi_update_ids']
         ]);
 
         $builder->get('entities')->addModelTransformer(

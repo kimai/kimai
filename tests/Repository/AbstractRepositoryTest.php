@@ -10,6 +10,7 @@
 namespace App\Tests\Repository;
 
 use App\Tests\KernelTestTrait;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -21,35 +22,24 @@ abstract class AbstractRepositoryTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    /**
-     * @var ObjectManager|null
-     */
-    private $entityManager;
+    private ?ObjectManager $entityManager = null;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $kernel = self::bootKernel();
 
-        $this->entityManager = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        /** @var Registry $doctrine */
+        $doctrine = $kernel->getContainer()->get('doctrine');
+
+        $this->entityManager = $doctrine->getManager();
     }
 
-    /**
-     * @return ObjectManager
-     */
-    protected function getEntityManager()
+    protected function getEntityManager(): ObjectManager
     {
         return $this->entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         parent::tearDown();

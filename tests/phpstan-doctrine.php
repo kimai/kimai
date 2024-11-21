@@ -14,10 +14,10 @@ require __DIR__ . '/../vendor/autoload.php';
 
 (new Dotenv())->loadEnv(dirname(__DIR__) . '/.env');
 
-$env = $_SERVER['APP_ENV'] ?? 'prod';
+$env = is_string($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : 'prod';
 $debug = (bool) ($_SERVER['APP_DEBUG'] ?? (in_array($env, ['dev', 'test'])));
 
 $kernel = new Kernel($env, $debug);
 $kernel->boot();
 
-return $kernel->getContainer()->get('doctrine')->getManager(); // @phpstan-ignore-line
+return $kernel->getContainer()->get('doctrine')->getManager(); // @phpstan-ignore method.notFound

@@ -115,11 +115,7 @@ class ProjectServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ProjectMetaDefinitionEvent) {
-                self::assertInstanceOf(Project::class, $event->getEntity());
-            } elseif ($event instanceof ProjectCreateEvent) {
-                self::assertInstanceOf(Project::class, $event->getProject());
-            } else {
+            if (!$event instanceof ProjectMetaDefinitionEvent && !$event instanceof ProjectCreateEvent) {
                 $this->fail('Invalid event received');
             }
 
@@ -138,11 +134,7 @@ class ProjectServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ProjectCreatePreEvent) {
-                self::assertInstanceOf(Project::class, $event->getProject());
-            } elseif ($event instanceof ProjectCreatePostEvent) {
-                self::assertInstanceOf(Project::class, $event->getProject());
-            } else {
+            if (!$event instanceof ProjectCreatePreEvent && !$event instanceof ProjectCreatePostEvent) {
                 $this->fail('Invalid event received');
             }
 

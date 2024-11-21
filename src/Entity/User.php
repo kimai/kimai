@@ -752,9 +752,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * This method should not be called by plugins and returns true on success or false on a failure.
      *
      * @internal immutable property that cannot be set by plugins
-     * @param bool $canSeeAllData
-     * @return bool
-     * @throws Exception
      */
     public function initCanSeeAllData(bool $canSeeAllData): bool
     {

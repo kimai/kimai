@@ -109,16 +109,14 @@ trait MetaTableTypeTrait
 
         // unchecked checkboxes / false bool would save an empty string in the database
         // those cannot be searched in the database
-        if (null !== $value) {
-            switch ($this->type) {
-                case YesNoType::class:
-                case CheckboxType::class:
-                    if (!\is_int($value) && !\is_bool($value) && !\is_string($value)) {
-                        throw new \InvalidArgumentException('Failed converting meta-field bool value');
-                    } else {
-                        $value = (string) $value;
-                    }
-            }
+        switch ($this->type) {
+            case YesNoType::class:
+            case CheckboxType::class:
+                if ($value === false || $value === '' || !\is_scalar($value)) {
+                    $value = 0;
+                } else {
+                    $value = 1;
+                }
         }
 
         if ($value === null) {

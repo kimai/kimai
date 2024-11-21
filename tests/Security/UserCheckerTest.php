@@ -28,7 +28,7 @@ class UserCheckerTest extends TestCase
         } catch (\Exception $ex) {
             $this->fail('UserChecker should not throw exception in checkPreAuth(), ' . $ex->getMessage());
         }
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testCheckPostAuthReturnsOnUnknownUserClass(): void
@@ -40,7 +40,7 @@ class UserCheckerTest extends TestCase
         } catch (\Exception $ex) {
             $this->fail('UserChecker should not throw exception in checkPostAuth(), ' . $ex->getMessage());
         }
-        $this->assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testDisabledCannotLoginInCheckPreAuth(): void

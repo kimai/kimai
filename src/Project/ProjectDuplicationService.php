@@ -13,6 +13,7 @@ use App\Entity\Project;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
+use App\Repository\Query\ActivityQuery;
 
 final class ProjectDuplicationService
 {
@@ -53,7 +54,11 @@ final class ProjectDuplicationService
             $this->projectRateRepository->saveRate($newRate);
         }
 
-        $allActivities = $this->activityRepository->findByProject($project);
+        $query = new ActivityQuery();
+        $query->addProject($project);
+        $query->setExcludeGlobals(true);
+
+        $allActivities = $this->activityRepository->getActivitiesForQuery($query);
         foreach ($allActivities as $activity) {
             $newActivity = clone $activity;
             $newActivity->setProject($newProject);

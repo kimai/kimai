@@ -12,7 +12,6 @@ namespace App\Tests\Plugin;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
-use App\Plugin\PluginMetadata;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 use App\Tests\Plugin\Fixtures\TestPlugin2\TestPlugin2;
 use PHPUnit\Framework\TestCase;
@@ -61,7 +60,6 @@ class PluginManagerTest extends TestCase
         $this->assertInstanceOf(Plugin::class, $test);
         $this->assertEquals('TestPlugin', $test->getId());
         $this->assertEquals('TestPlugin from composer.json', $test->getName());
-        $this->assertInstanceOf(PluginMetadata::class, $test->getMetadata());
 
         $meta = $test->getMetadata();
         $this->assertEquals(10000, $meta->getKimaiVersion());

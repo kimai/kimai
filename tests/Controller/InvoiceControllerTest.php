@@ -40,6 +40,9 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         if (is_dir($path)) {
             $files = glob($path . '*');
+            if ($files === false) {
+                return;
+            }
             foreach ($files as $file) {
                 unlink($file);
             }

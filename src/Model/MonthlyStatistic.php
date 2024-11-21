@@ -17,7 +17,7 @@ use DateTimeInterface;
 final class MonthlyStatistic implements DateStatisticInterface
 {
     /**
-     * @var array<string|int, array<int<1, 12>, StatisticDate>>
+     * @var array<string, array<int<1, 12>, StatisticDate>>
      */
     private array $years = [];
     private DateTimeInterface $begin;
@@ -50,7 +50,7 @@ final class MonthlyStatistic implements DateStatisticInterface
         $day = (int) $begin->format('d');
 
         while ($tmp < $this->end) {
-            $curYear = $tmp->format('Y');
+            $curYear = (string) $tmp->format('Y');
             if (!isset($years[$curYear])) {
                 $year = [];
                 for ($i = 1; $i < 13; $i++) {
@@ -67,7 +67,7 @@ final class MonthlyStatistic implements DateStatisticInterface
             }
             $tmp->modify('+1 month');
         }
-        $this->years = $years;
+        $this->years = $years; // @phpstan-ignore assign.propertyType
     }
 
     /**

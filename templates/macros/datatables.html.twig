@@ -224,7 +224,7 @@
 
                             {% else %}
                                 {% if headerOptions.batchUpdate is defined %}
-                                    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
+                                    <input type="checkbox" id="multi_update_all_{{ tableName }}" class="multi_update_all multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
                                 {% endif %}
                                 {{ headerTitle }}
                                 {% if headerOptions.html_after is defined %}
@@ -250,7 +250,7 @@
     {% if (route is not empty and entries is not null) or multi_update_form is not null %}
     <div class="card-footer d-flex align-items-center">
         {% if multi_update_form is not null %}
-            {{ form_start(multi_update_form, {'attr': {'id': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
+            {{ form_start(multi_update_form, {'attr': {'class': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
                 {% for formChild in multi_update_form.children %}
                     {{ form_widget(formChild) }}
                 {% endfor %}

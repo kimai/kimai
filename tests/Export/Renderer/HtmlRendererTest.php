@@ -16,6 +16,7 @@ use App\Project\ProjectStatisticService;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
@@ -62,6 +63,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $app = $twig->getGlobals()['app'];
         $twig->addGlobal('app', $app);
         $app->setTokenStorage($tokenStorage);
+        /** @var RequestStack $stack */
         $stack = self::getContainer()->get('request_stack');
         $request = new Request();
         $request->setLocale('en');

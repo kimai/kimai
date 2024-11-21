@@ -25,7 +25,7 @@ final class UTCDateTimeType extends DateTimeType
      * @param T $value
      * @param AbstractPlatform $platform
      * @return (T is null ? null : string)
-     * @template T<\DateTime>
+     * @template T
      * @throws ConversionException
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string

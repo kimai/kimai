@@ -15,10 +15,21 @@ parameters:
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true
+    treatPhpDocTypesAsCertain: false
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
         - identifier: missingType.iterableValue
+
+        -
+            message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
+
+        -
+            message: "#^Call to method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
+
+        -
+            message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
+
         -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
@@ -126,7 +137,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 2
+            count: 3
             path: API/APIControllerBaseTest.php
 
         -
@@ -138,11 +149,6 @@ parameters:
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 4
             path: API/ActionsControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
@@ -245,11 +251,6 @@ parameters:
             path: API/ApiDocControllerTest.php
 
         -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 2
             path: API/CustomerControllerTest.php
@@ -293,11 +294,6 @@ parameters:
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
@@ -388,40 +384,9 @@ parameters:
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 3
             path: API/TagControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'activities' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'customers' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 35
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'members' on mixed\\.$#"
-            count: 2
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'projects' on mixed\\.$#"
-            count: 4
-            path: API/TeamControllerTest.php
-
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 38
-            path: API/TeamControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-            count: 14
             path: API/TeamControllerTest.php
 
         -
@@ -435,32 +400,7 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Cannot access offset 'description' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'metaFields' on mixed\\.$#"
-            count: 2
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'tags' on mixed\\.$#"
-            count: 3
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot access offset 0 on mixed\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
 
@@ -495,11 +435,6 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$result of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) expects array, mixed given\\.$#"
-            count: 6
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot access offset 'enabled' on mixed\\.$#"
             count: 1
             path: API/UserControllerTest.php
@@ -515,39 +450,14 @@ parameters:
             path: API/UserControllerTest.php
 
         -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\ActivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/ActivateUserCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$command of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Console\\\\Application\\:\\:add\\(\\) expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, object given\\.$#"
             count: 1
             path: Command/BundleInstallerCommandTest.php
 
         -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\ChangePasswordCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has parameter \\$email with no type specified\\.$#"
@@ -568,36 +478,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has parameter \\$username with no type specified\\.$#"
             count: 1
             path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\CreateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\DeactivateUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/DeactivateUserCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 2
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\DemoteUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/DemoteUserCommandTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -625,46 +505,6 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Parameter \\#1 \\$serviceExport of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Export\\\\ServiceExport, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$customerRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\CustomerRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#3 \\$projectRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\ProjectRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#4 \\$teamRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\TeamRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$userRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\UserRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#6 \\$translator of class App\\\\Command\\\\ExportCreateCommand constructor expects Symfony\\\\Contracts\\\\Translation\\\\TranslatorInterface, object\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
-            message: "#^Cannot call method getConnection\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Command/InstallCommandTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
@@ -680,36 +520,6 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Parameter \\#1 \\$serviceInvoice of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Invoice\\\\ServiceInvoice, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$customerRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\CustomerRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#3 \\$projectRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\ProjectRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#4 \\$invoiceTemplateRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\InvoiceTemplateRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$userRepository of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Repository\\\\UserRepository, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#6 \\$eventDispatcher of class App\\\\Command\\\\InvoiceCreateCommand constructor expects Psr\\\\EventDispatcher\\\\EventDispatcherInterface, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/PluginCommandTest.php
@@ -718,16 +528,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Command\\\\PluginCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$plugins with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/PluginCommandTest.php
-
-        -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 2
-            path: Command/PromoteUserCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$userService of class App\\\\Command\\\\PromoteUserCommand constructor expects App\\\\User\\\\UserService, object\\|null given\\.$#"
-            count: 1
-            path: Command/PromoteUserCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\VersionCommandTest\\:\\:getCommandTester\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -788,11 +588,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
             count: 1
             path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ActivityControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
@@ -865,21 +660,6 @@ parameters:
             path: Controller/CalendarControllerTest.php
 
         -
-            message: "#^Cannot call method getRepository\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Cannot call method getToken\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessIsGranted\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
@@ -933,11 +713,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 10
             path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/CustomerControllerTest.php
 
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
@@ -1003,11 +778,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/ExportControllerTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Controller/InvoiceControllerTest.php
 
         -
             message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertHasValidationError\\(\\) expects string, string\\|null given\\.$#"
@@ -1113,11 +883,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
             path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
@@ -1295,16 +1060,6 @@ parameters:
             path: Controller/Security/SelfRegistrationControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\SystemConfigurationControllerTest\\:\\:getSystemConfiguration\\(\\) should return App\\\\Configuration\\\\SystemConfiguration but returns object\\|null\\.$#"
-            count: 1
-            path: Controller/SystemConfigurationControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\SystemConfigurationControllerTest\\:\\:getTestDataForms\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/SystemConfigurationControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
             count: 2
             path: Controller/TagControllerTest.php
@@ -1318,11 +1073,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/TeamControllerTest.php
-
-        -
-            message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
 
         -
             message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
@@ -1452,26 +1202,6 @@ parameters:
         -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.connection…' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 6
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user\\.baseDn' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user\\.filter' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Cannot access offset 'ldap\\.user…' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 3
             path: DependencyInjection/AppExtensionTest.php
 
         -
@@ -1818,11 +1548,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Export/Renderer/HtmlRendererTest.php
 
         -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
@@ -2210,41 +1935,6 @@ parameters:
             path: Invoice/Renderer/DebugRenderer.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'entries' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'invoice\\.first' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'invoice\\.last' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'model' on mixed\\.$#"
-            count: 5
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'query\\.begin_day' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Cannot access offset 'query\\.begin_month…' on mixed\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: Invoice/Renderer/DebugRendererTest.php
@@ -2330,32 +2020,7 @@ parameters:
             path: Invoice/Renderer/DebugRendererTest.php
 
         -
-            message: "#^Method class@anonymous/Invoice/Renderer/DebugRendererTest\\.php\\:35\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Method class@anonymous/Invoice/Renderer/DebugRendererTest\\.php\\:47\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:assertEntryStructure\\(\\) expects array, mixed given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$model of method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:assertModelStructure\\(\\) expects array, mixed given\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
             count: 1
             path: Invoice/Renderer/DebugRendererTest.php
 
@@ -2403,11 +2068,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
             count: 1
             path: Invoice/Renderer/OdsRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\PdfRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
@@ -2580,71 +2240,6 @@ parameters:
             path: Mocks/TrackingModeServiceFactory.php
 
         -
-            message: "#^Cannot access offset 'amount' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount'\\|'amount_billable'\\|'amount_exported'\\|'duration'\\|'duration_billable'\\|'duration_billable…'\\|'duration_exported'\\|'rate'\\|'rate_billable'\\|'rate_exported'\\|'rate_internal' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'amount_exported' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_billable…' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'duration_exported' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_billable' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_billable…' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Cannot access offset 'rate_internal' on mixed\\.$#"
-            count: 1
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 2
-            path: Model/AbstractTimesheetCountedStatisticTest.php
-
-        -
             message: "#^Cannot access offset 'color' on mixed\\.$#"
             count: 1
             path: Model/ActivityStatisticTest.php
@@ -2713,11 +2308,6 @@ parameters:
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: Reporting/ProjectDateRange/ProjectDateRangeQueryTest.php
-
-        -
-            message: "#^Cannot call method getManager\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTest\\:\\:getEntityManager\\(\\) should return Doctrine\\\\Persistence\\\\ObjectManager but returns Doctrine\\\\Persistence\\\\ObjectManager\\|null\\.$#"
@@ -3353,11 +2943,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\UtilTest\\:\\:getRateCalculationData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/UtilTest.php
-
-        -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-            count: 4
-            path: TranslationsTest.php
 
         -
             message: "#^Cannot access property \\$file on SimpleXMLElement\\|false\\.$#"

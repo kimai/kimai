@@ -19,7 +19,6 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
@@ -27,7 +26,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class TimesheetVoterTest extends AbstractVoterTest
 {
-    protected function getVoter(string $voterClass): Voter
+    protected function getVoter(string $voterClass): TimesheetVoter
     {
         return $this->getLockdownVoter();
     }
@@ -204,7 +203,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         return $user;
     }
 
-    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): Voter
+    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -217,9 +216,6 @@ class TimesheetVoterTest extends AbstractVoterTest
             ]
         ]);
 
-        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
-        self::assertInstanceOf(Voter::class, $voter);
-
-        return $voter;
+        return new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
     }
 }

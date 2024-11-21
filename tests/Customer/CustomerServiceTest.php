@@ -125,11 +125,7 @@ class CustomerServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof CustomerMetaDefinitionEvent) {
-                self::assertInstanceOf(Customer::class, $event->getEntity());
-            } elseif ($event instanceof CustomerCreateEvent) {
-                self::assertInstanceOf(Customer::class, $event->getCustomer());
-            } else {
+            if (!$event instanceof CustomerMetaDefinitionEvent && !$event instanceof CustomerCreateEvent) {
                 $this->fail('Invalid event received');
             }
 
@@ -140,7 +136,6 @@ class CustomerServiceTest extends TestCase
 
         $customer = $sut->createNewCustomer('');
 
-        self::assertInstanceOf(Customer::class, $customer);
         self::assertEquals('Europe/Vienna', $customer->getTimezone());
         self::assertEquals('IN', $customer->getCountry());
         self::assertEquals('RUB', $customer->getCurrency());
@@ -150,11 +145,7 @@ class CustomerServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof CustomerCreatePreEvent) {
-                self::assertInstanceOf(Customer::class, $event->getCustomer());
-            } elseif ($event instanceof CustomerCreatePostEvent) {
-                self::assertInstanceOf(Customer::class, $event->getCustomer());
-            } else {
+            if (!$event instanceof CustomerCreatePreEvent && !$event instanceof CustomerCreatePostEvent) {
                 $this->fail('Invalid event received');
             }
 

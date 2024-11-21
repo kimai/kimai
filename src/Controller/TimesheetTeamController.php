@@ -111,6 +111,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
                     $tags[] = $tag;
                 }
 
+                $newTimesheets = [];
                 foreach ($allUsers as $user) {
                     $newTimesheet = $entry->createCopy();
                     $newTimesheet->setUser($user);
@@ -118,6 +119,11 @@ final class TimesheetTeamController extends TimesheetAbstractController
                         $newTimesheet->addTag($tag);
                     }
                     $this->service->prepareNewTimesheet($newTimesheet, $request);
+                    $this->service->validateTimesheet($newTimesheet);
+                    $newTimesheets[] = $newTimesheet;
+                }
+
+                foreach ($newTimesheets as $newTimesheet) {
                     $this->service->saveNewTimesheet($newTimesheet);
                 }
 

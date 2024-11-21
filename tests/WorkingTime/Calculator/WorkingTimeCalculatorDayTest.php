@@ -28,6 +28,24 @@ class WorkingTimeCalculatorDayTest extends TestCase
         $saturday = $friday->modify('+1 day');
         $sunday = $saturday->modify('+1 day');
 
+        // verify not nullable
+        $sut = new WorkingTimeCalculatorDay(new User());
+        self::assertFalse($sut->isWorkDay($monday));
+        self::assertFalse($sut->isWorkDay($tuesday));
+        self::assertFalse($sut->isWorkDay($wednesday));
+        self::assertFalse($sut->isWorkDay($thursday));
+        self::assertFalse($sut->isWorkDay($friday));
+        self::assertFalse($sut->isWorkDay($saturday));
+        self::assertFalse($sut->isWorkDay($sunday));
+
+        self::assertEquals(0, $sut->getWorkHoursForDay($monday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($tuesday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($wednesday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($thursday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($friday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($saturday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($sunday));
+
         $user = new User();
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, 0);
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY, 3600);

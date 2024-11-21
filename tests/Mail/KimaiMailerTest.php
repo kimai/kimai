@@ -45,6 +45,6 @@ class KimaiMailerTest extends TestCase
 
         $mailer->send($message);
 
-        self::assertEquals([new Address('zippel@example.com')], $message->getFrom());
+        self::assertEquals([new Address('zippel@example.com', 'Kimai')], $message->getFrom());
     }
 }

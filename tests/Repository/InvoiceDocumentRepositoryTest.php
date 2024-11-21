@@ -9,7 +9,6 @@
 
 namespace App\Tests\Repository;
 
-use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -78,7 +77,7 @@ class InvoiceDocumentRepositoryTest extends TestCase
         foreach (self::$testDocuments as $document) {
             $all[] = substr($document, 0, strpos($document, '.'));
         }
-        $all = array_unique(array_values($all));
+        $all = array_unique($all);
         self::assertCount(\count($all), $sut->findAll());
 
         self::assertEquals($path, $sut->getUploadDirectory());
@@ -98,7 +97,6 @@ class InvoiceDocumentRepositoryTest extends TestCase
             $filename = substr($filename, 0, strpos($filename, '.'));
             $actual = $sut->findByName($filename);
             $this->assertNotNull($actual);
-            $this->assertInstanceOf(InvoiceDocument::class, $actual);
         }
     }
 }
