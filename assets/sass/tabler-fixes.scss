@@ -55,3 +55,8 @@ fieldset:empty {
 {
     --tblr-border-color-translucent: rgba(4, 32, 69, .2);
 }
+
+/* fixes height for long tags https://github.com/kimai/kimai/issues/5169 */
+.tag {
+    --tblr-tag-height: unset;
+}
