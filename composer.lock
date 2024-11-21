@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ff34e70d1bdec7cd8735c63697379f4",
+    "content-hash": "9fb3c44d9d057eaca308bc27cb107f13",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2322,16 +2322,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "1.5.3",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "ab9f32312a16cd4dc16d52d32a79178f5c7881f5"
+                "reference": "25b2e8f6f244bff5964057f2d7825f0c81ca0e2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/ab9f32312a16cd4dc16d52d32a79178f5c7881f5",
-                "reference": "ab9f32312a16cd4dc16d52d32a79178f5c7881f5",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/25b2e8f6f244bff5964057f2d7825f0c81ca0e2e",
+                "reference": "25b2e8f6f244bff5964057f2d7825f0c81ca0e2e",
                 "shasum": ""
             },
             "require": {
@@ -2351,9 +2351,11 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "knplabs/knp-menu-bundle": "^3.0",
-                "phpstan/phpstan": "^1.0",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-symfony": "^1.0",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
                 "phpunit/phpunit": "^9.0",
                 "symfony/framework-bundle": "^6.0 || ^7.0"
             },
@@ -2379,7 +2381,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.5.3"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.6.0"
             },
             "funding": [
                 {
@@ -2391,7 +2393,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-01T21:16:00+00:00"
+            "time": "2024-11-21T17:37:07+00:00"
         },
         {
             "name": "league/csv",
@@ -13714,7 +13716,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "8.1.*||8.2.*||8.3.*",
+        "php": "8.1.*||8.2.*||8.3.*||8.4.*",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
