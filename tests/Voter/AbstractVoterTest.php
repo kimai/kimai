@@ -19,22 +19,17 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 abstract class AbstractVoterTest extends TestCase
 {
-    protected function getVoter(string $voterClass): Voter
+    protected function getVoter(string $voterClass): Voter // @phpstan-ignore missingType.generics
     {
         $class = new \ReflectionClass($voterClass);
         /** @var Voter $voter */
-        $voter = $class->newInstance($this->getRolePermissionManager());
+        $voter = $class->newInstance($this->getRolePermissionManager()); // @phpstan-ignore missingType.generics
         self::assertInstanceOf(Voter::class, $voter);
 
         return $voter;
     }
 
-    /**
-     * @param int $id
-     * @param string|null $role
-     * @return User
-     */
-    protected function getUser(int $id, ?string $role)
+    protected function getUser(int $id, ?string $role): User
     {
         $roles = [];
         if (!empty($role)) {
@@ -55,8 +50,6 @@ abstract class AbstractVoterTest extends TestCase
 
     /**
      * @param array<string, array<string>> $permissions
-     * @param bool $overwrite
-     * @return RolePermissionManager
      */
     protected function getRolePermissionManager(array $permissions = [], bool $overwrite = false): RolePermissionManager
     {

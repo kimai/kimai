@@ -10,6 +10,7 @@
 namespace App\Tests\Command;
 
 use App\Command\InstallCommand;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -27,9 +28,11 @@ class InstallCommandTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
 
         $this->application->add(new InstallCommand(
-            $container->get('doctrine')->getConnection()
+            $doctrine->getConnection() // @phpstan-ignore argument.type
         ));
     }
 

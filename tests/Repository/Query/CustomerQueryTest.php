@@ -10,7 +10,6 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\CustomerQuery;
-use App\Repository\Query\VisibilityInterface;
 
 /**
  * @covers \App\Repository\Query\CustomerQuery
@@ -22,8 +21,6 @@ class CustomerQueryTest extends BaseQueryTest
         $sut = new CustomerQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityInterface::class, $sut);
-
         $this->assertResetByFormError(new CustomerQuery(), 'name');
     }
 }

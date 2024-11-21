@@ -174,7 +174,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertHasValidationError($client, '/register/', 'form[name=user_registration_form]', $formData, $validationFields);
     }
 
-    public function getValidationTestData(): array // @phpstan-ignore-line
+    public function getValidationTestData(): array // @phpstan-ignore missingType.iterableValue
     {
         return [
             [

@@ -13,6 +13,7 @@ use App\Command\CreateUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -31,10 +32,9 @@ class CreateUserCommandTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
-
-        $this->application->add(new CreateUserCommand(
-            $container->get(UserService::class),
-        ));
+        /** @var UserService $userService */
+        $userService = $container->get(UserService::class);
+        $this->application->add(new CreateUserCommand($userService));
     }
 
     public function testCreateUserFailsForShortPassword(): void
@@ -53,11 +53,12 @@ class CreateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('MyTestUser');
         self::assertInstanceOf(User::class, $user);
-        self::assertNotNull($user);
     }
 
     protected function createUser($username, $email, $role, $password): CommandTester

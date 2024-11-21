@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -203,7 +204,6 @@ class ActivityControllerTest extends ControllerBaseTest
         ]);
 
         $location = $this->assertIsModalRedirect($client, '/details');
-        self::assertNotNull($location);
         $this->requestPure($client, $location);
 
         $this->assertDetailsPage($client);
@@ -221,7 +221,9 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        $eventDispatcher = self::getContainer()->get('event_dispatcher');
+        static::assertInstanceOf(EventDispatcher::class, $eventDispatcher);
+        $eventDispatcher->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

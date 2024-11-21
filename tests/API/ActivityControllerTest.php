@@ -21,6 +21,7 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @group integration
@@ -179,6 +180,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         for ($i = 0; $i < \count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
+            self::assertIsArray($activity);
             self::assertApiResponseTypeStructure('ActivityCollection', $activity);
             if ($hasProject && $projectId !== null) {
                 $this->assertEquals($projectId, $activity['project']);
@@ -219,6 +221,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(5, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
         $this->assertEquals($imports[0]->getId(), $result[4]['project']);
         $this->assertEquals($imports[1]->getId(), $result[3]['project']);
@@ -429,7 +432,9 @@ class ActivityControllerTest extends APIControllerBaseTest
     public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

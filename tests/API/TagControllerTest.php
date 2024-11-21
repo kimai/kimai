@@ -66,6 +66,7 @@ class TagControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(3, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('TagEntity', $result[0]);
     }
 

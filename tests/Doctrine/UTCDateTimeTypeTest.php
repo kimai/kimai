@@ -25,7 +25,6 @@ class UTCDateTimeTypeTest extends TestCase
     public function testGetUtc(): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
-        /** @var UTCDateTimeType $type */
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $this->assertInstanceOf(UTCDateTimeType::class, $type);

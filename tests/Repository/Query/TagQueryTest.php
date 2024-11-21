@@ -21,8 +21,6 @@ class TagQueryTest extends BaseQueryTest
         $sut = new TagQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(TagQuery::class, $sut);
-
         $this->assertResetByFormError(new TagQuery(), 'name');
     }
 }

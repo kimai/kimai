@@ -12,7 +12,6 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\DailyWorkingTimeChart;
-use App\Widget\WidgetInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,7 +34,6 @@ class DailyWorkingTimeChartTest extends TestCase
     public function testDefaultValues(): void
     {
         $sut = $this->createSut();
-        self::assertInstanceOf(WidgetInterface::class, $sut);
         self::assertEquals('DailyWorkingTimeChart', $sut->getId());
         self::assertEquals('stats.yourWorkingHours', $sut->getTitle());
         $options = $sut->getOptions();

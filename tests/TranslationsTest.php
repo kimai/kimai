@@ -19,6 +19,7 @@ class TranslationsTest extends TestCase
     public function testForWrongFileExtension(): void
     {
         $files = glob(__DIR__ . '/../translations/*.*');
+        $this->assertIsArray($files);
         foreach ($files as $file) {
             self::assertStringEndsWith('.xlf', $file);
         }
@@ -27,6 +28,7 @@ class TranslationsTest extends TestCase
     public function testForEmptyStrings(): void
     {
         $files = glob(__DIR__ . '/../translations/*.xlf');
+        $this->assertIsArray($files);
         foreach ($files as $file) {
             $xml = simplexml_load_file($file);
 
@@ -50,6 +52,7 @@ class TranslationsTest extends TestCase
     public function testReplacerWereNotTranslated(): void
     {
         $englishFiles = glob(__DIR__ . '/../translations/*.en.xlf');
+        $this->assertIsArray($englishFiles);
         foreach ($englishFiles as $englishFile) {
             $english = simplexml_load_file($englishFile);
             $trans = [];
@@ -70,6 +73,7 @@ class TranslationsTest extends TestCase
 
             $expectedCounter = \count($trans);
             $files = glob(__DIR__ . '/../translations/' . str_replace('.en.xlf', '', basename($englishFile)) . '*.xlf');
+            $this->assertIsArray($files);
             foreach ($files as $file) {
                 if ($englishFile === $file) {
                     continue;

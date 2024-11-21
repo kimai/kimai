@@ -113,11 +113,7 @@ class ActivityServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ActivityMetaDefinitionEvent) {
-                self::assertInstanceOf(Activity::class, $event->getEntity());
-            } elseif ($event instanceof ActivityCreateEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } else {
+            if (!$event instanceof ActivityMetaDefinitionEvent && !$event instanceof ActivityCreateEvent) {
                 $this->fail('Invalid event received');
             }
 
@@ -136,11 +132,7 @@ class ActivityServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event) {
-            if ($event instanceof ActivityCreatePreEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } elseif ($event instanceof ActivityCreatePostEvent) {
-                self::assertInstanceOf(Activity::class, $event->getActivity());
-            } else {
+            if (!$event instanceof ActivityCreatePreEvent && !$event instanceof ActivityCreatePostEvent) {
                 $this->fail('Invalid event received');
             }
 

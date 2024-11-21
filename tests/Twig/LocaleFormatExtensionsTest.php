@@ -139,7 +139,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, \DateTime|string|null>>
-     * @throws \Exception
      */
     public function getDateShortData(): array
     {
@@ -196,7 +195,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, string|bool>>
-     * @throws \Exception
      */
     public function getDayNameTestData(): array
     {
@@ -219,7 +217,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, string|bool>>
-     * @throws \Exception
      */
     public function getMonthNameTestData(): array
     {
@@ -296,7 +293,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, string|null|int|float>>
-     * @throws \Exception
      */
     public function getMoneyNoCurrencyData(): array
     {
@@ -331,7 +327,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, null|string|float|int>>
-     * @throws \Exception
      */
     public function getMoneyData(): array
     {
@@ -365,7 +360,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, null|int|string|float>>
-     * @throws \Exception
      */
     public function getAmountData(): array
     {
@@ -397,7 +391,6 @@ class LocaleFormatExtensionsTest extends TestCase
 
     /**
      * @return array<int, array<int, string|float>>
-     * @throws \Exception
      */
     public function getMoneyData62_1(): array
     {

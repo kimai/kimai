@@ -62,7 +62,7 @@ class UserPreferenceExtractorTest extends TestCase
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('UserPreferenceExtractor needs a UserPreferenceDisplayEvent instance for work');
 
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         $sut->extract(new \stdClass());
     }
 }

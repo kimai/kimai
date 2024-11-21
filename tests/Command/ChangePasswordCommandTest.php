@@ -13,6 +13,7 @@ use App\Command\ChangePasswordCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -35,6 +36,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
+        /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
         $this->application->add(new ChangePasswordCommand($userService));
@@ -86,8 +88,10 @@ class ChangePasswordCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
 
+        /** @var Registry $doctrine */
+        $doctrine = self::getContainer()->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('john_user');
         self::assertInstanceOf(User::class, $user);
 

@@ -11,7 +11,6 @@ namespace App\Tests\WorkingTime\Model;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
-use App\WorkingTime\Model\Day;
 use App\WorkingTime\Model\Month;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +38,6 @@ class MonthTest extends TestCase
             self::assertNull($month->getLockDate());
             self::assertNull($month->getLockedBy());
             foreach ($month->getDays() as $day) {
-                self::assertInstanceOf(Day::class, $day);
                 self::assertNull($day->getWorkingTime());
 
                 $duration = rand(0, 28000);

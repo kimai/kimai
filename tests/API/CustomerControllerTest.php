@@ -21,6 +21,7 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @group integration
@@ -104,6 +105,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
@@ -120,6 +122,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
@@ -372,7 +375,9 @@ class CustomerControllerTest extends APIControllerBaseTest
     public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

@@ -10,7 +10,6 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\ProjectQuery;
-use App\Repository\Query\VisibilityInterface;
 
 /**
  * @covers \App\Repository\Query\ProjectQuery
@@ -23,10 +22,7 @@ class ProjectQueryTest extends BaseQueryTest
         $sut = new ProjectQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityInterface::class, $sut);
-
         $this->assertCustomer($sut);
-
         $this->assertResetByFormError(new ProjectQuery(), 'name');
 
         self::assertNull($sut->getProjectStart());

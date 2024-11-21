@@ -15,6 +15,7 @@ use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Event\ThemeJavascriptTranslationsEventTest;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -72,7 +73,7 @@ class ThemeEventExtensionTest extends TestCase
     {
         $mock = $this->getMockBuilder(UsernamePasswordToken::class)->onlyMethods(['getUser'])->disableOriginalConstructor()->getMock();
         $mock->method('getUser')->willReturn(new User());
-        /** @var UsernamePasswordToken $token */
+        /** @var UsernamePasswordToken&MockObject $token */
         $token = $mock;
 
         $tokenStorage = new TokenStorage();

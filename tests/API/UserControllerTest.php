@@ -53,6 +53,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
         foreach ($result as $user) {
+            $this->assertIsArray($user);
             self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
@@ -70,6 +71,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(7, \count($result));
         foreach ($result as $user) {
+            $this->assertIsArray($user);
             self::assertApiResponseTypeStructure('UserEntity', $user);
         }
     }
@@ -86,6 +88,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(1, \count($result));
         foreach ($result as $user) {
+            $this->assertIsArray($user);
             self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
@@ -102,6 +105,7 @@ class UserControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result);
         $this->assertEquals(8, \count($result));
         foreach ($result as $user) {
+            $this->assertIsArray($user);
             self::assertApiResponseTypeStructure('UserCollection', $user);
         }
     }
@@ -283,7 +287,9 @@ class UserControllerTest extends APIControllerBaseTest
                 'ROLE_TEAMLEAD',
             ],
         ];
-        $this->request($client, '/api/users/' . $result['id'], 'PATCH', [], json_encode($data));
+        $id = $result['id'];
+        self::assertIsNumeric($id);
+        $this->request($client, '/api/users/' . $id, 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();

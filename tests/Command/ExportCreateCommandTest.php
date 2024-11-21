@@ -45,6 +45,9 @@ class ExportCreateCommandTest extends KernelTestCase
 
         if (is_dir($path)) {
             $files = glob($path . '*');
+            if ($files === false) {
+                return;
+            }
             foreach ($files as $file) {
                 unlink($file);
             }
@@ -71,12 +74,12 @@ class ExportCreateCommandTest extends KernelTestCase
         $container = self::getContainer();
 
         $application->add(new ExportCreateCommand(
-            $container->get(ServiceExport::class),
-            $container->get(CustomerRepository::class),
-            $container->get(ProjectRepository::class),
-            $container->get(TeamRepository::class),
-            $container->get(UserRepository::class),
-            $container->get(TranslatorInterface::class),
+            $container->get(ServiceExport::class), // @phpstan-ignore argument.type
+            $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
+            $container->get(ProjectRepository::class), // @phpstan-ignore argument.type
+            $container->get(TeamRepository::class), // @phpstan-ignore argument.type
+            $container->get(UserRepository::class), // @phpstan-ignore argument.type
+            $container->get(TranslatorInterface::class), // @phpstan-ignore argument.type
             $mailer ?? $container->get(KimaiMailer::class),
         ));
 
