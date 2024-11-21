@@ -19,6 +19,7 @@ use App\Utils\LocaleFormatter;
 use DateTime;
 use DateTimeInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Twig\DeprecatedCallableInfo;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -41,7 +42,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
             // cannot be deleted right now, needs to be kept for invoice and export templates
-            new TwigFilter('date_full', [$this, 'dateTime'], ['deprecated' => true, 'alternative' => 'date_time']),
+            new TwigFilter('date_full', [$this, 'dateTime'], ['deprecation_info' => new DeprecatedCallableInfo('Kimai', '2.0', 'date_time')]),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
