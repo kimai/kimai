@@ -1922,6 +1922,14 @@
         <source>break</source>
         <target state="final">הפסקה</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="yes">
+        <source>status.rejected</source>
+        <target state="final">נדחה</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="yes">
+        <source>reject</source>
+        <target state="final">דחייה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

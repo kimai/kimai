@@ -1922,6 +1922,14 @@
         <source>import</source>
         <target state="translated">Importar</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>status.rejected</source>
+        <target state="translated">Rejeitado</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="no">
+        <source>reject</source>
+        <target state="translated">Rejeitar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

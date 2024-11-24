@@ -54,6 +54,42 @@ Please review them at: %url%</source>
         <source>absence_created_supervisor_subject</source>
         <target state="translated">Нова відсутність | %user% | %type%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Запит на схвалення: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Для користувача %user% отриманий запит на схвалення.
+
+%list%
+
+Перегляньте, будь ласка: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ваш запит схвалений</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ваш запит на авторизацію %user% скасовує.
+
+%list%
+
+Перегляньте свій запит: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ваш запит відхилений</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">%user% схвалює Ваш запит.
+
+%list%
+
+Ви можете знайти усі свої запити за адресою: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
