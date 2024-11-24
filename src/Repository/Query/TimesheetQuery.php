@@ -42,6 +42,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
      * @var array<User>
      */
     private array $users = [];
+    /**
+     * @var array<TimesheetQueryHint>
+     */
+    private array $queryHints = [];
 
     public function __construct(bool $resetTimes = true)
     {
@@ -57,6 +61,16 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
+    }
+
+    public function addQueryHint(TimesheetQueryHint $hint): void
+    {
+        $this->queryHints[] = $hint;
+    }
+
+    public function hasQueryHint(TimesheetQueryHint $hint): bool
+    {
+        return \in_array($hint, $this->queryHints, true);
     }
 
     protected function copyFrom(BaseQuery $query): void
