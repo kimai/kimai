@@ -108,6 +108,24 @@ final class TimesheetLoader implements LoaderInterface
             }
         }
 
+        if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
+            $userIds = array_filter(array_map(function (Timesheet $timesheet) {
+                return $timesheet->getUser()?->getId();
+            }, $results), function ($id): bool {
+                return $id !== null;
+            });
+
+            if (\count($userIds) > 0) {
+                $qb = $em->createQueryBuilder();
+                $qb->select('PARTIAL u.{id}', 'preferences')
+                    ->from(User::class, 'u')
+                    ->leftJoin('u.preferences', 'preferences')
+                    ->andWhere($qb->expr()->in('u.id', $userIds))
+                    ->getQuery()
+                    ->execute();
+            }
+        }
+
         $qb = $em->createQueryBuilder();
         $qb->select('PARTIAL t.{id}', 'tags')
             ->from(Timesheet::class, 't')
