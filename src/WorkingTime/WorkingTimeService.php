@@ -89,15 +89,15 @@ final class WorkingTimeService
 
     public function isApproved(User $user, \DateTimeInterface $dateTime): bool
     {
-        $latestApproval = $this->getLatestApprovalDate($user);
-        if ($latestApproval === null) {
+        $latestApprovalDate = $this->getLatestApprovalDate($user);
+        if ($latestApprovalDate === null) {
             return false;
         }
 
         $begin = \DateTimeImmutable::createFromInterface($dateTime);
         $begin = $begin->setTime(0, 0, 0);
 
-        if ($begin > $latestApproval) {
+        if ($begin > $latestApprovalDate) {
             return false;
         }
 

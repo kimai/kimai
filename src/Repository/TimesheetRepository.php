@@ -938,29 +938,6 @@ class TimesheetRepository extends EntityRepository
         $query->setFetchMode(Timesheet::class, 'project', ClassMetadata::FETCH_EAGER);
         $query->setFetchMode(Timesheet::class, 'user', ClassMetadata::FETCH_EAGER);
 
-        /*
-        // not yet supported by Doctrine
-        $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
-
-        if ($timesheetQuery !== null) {
-            if ($timesheetQuery->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS)) {
-                $query->setFetchMode(Activity::class, 'meta', ClassMetadata::FETCH_EAGER);
-            }
-            if ($timesheetQuery->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS)) {
-                $query->setFetchMode(Project::class, 'meta', ClassMetadata::FETCH_EAGER);
-            }
-            if ($timesheetQuery->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS)) {
-                $query->setFetchMode(Customer::class, 'meta', ClassMetadata::FETCH_EAGER);
-            }
-            if ($timesheetQuery->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
-                $query->setFetchMode(User::class, 'preferences', ClassMetadata::FETCH_EAGER);
-            }
-        }
-
-        // ManyToMany not supported by Doctrine yet
-        // $query->setFetchMode(Timesheet::class, 'tags', ClassMetadata::FETCH_EAGER);
-        */
-
         return $query;
     }
 }

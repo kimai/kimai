@@ -37,6 +37,9 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $result = $repository->getPagerfantaForQuery($query);
         $this->assertInstanceOf(Pagination::class, $result);
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
 
         $result = $repository->getTimesheetsForQuery($query, true);
 
