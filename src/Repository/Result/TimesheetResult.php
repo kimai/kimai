@@ -84,7 +84,7 @@ final class TimesheetResult
             /** @var array<Timesheet> $results */
             $results = $this->query->getResult();
 
-            $loader = new TimesheetLoader($this->entityManager, true);
+            $loader = new TimesheetLoader($this->entityManager, $this->timesheetQuery);
             $loader->loadResults($results);
 
             $this->resultCache = $results;
@@ -95,7 +95,7 @@ final class TimesheetResult
 
     public function getPagerfanta(): Pagination
     {
-        $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager), $this->query, $this->getStatistic()->getCount());
+        $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager, $this->timesheetQuery), $this->query, $this->getStatistic()->getCount());
 
         $paginator = new Pagination($loader);
         $paginator->setMaxPerPage($this->timesheetQuery->getPageSize());

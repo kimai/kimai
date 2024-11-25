@@ -15,6 +15,7 @@ use App\Event\WorkingTimeApproveMonthEvent;
 use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
 use App\WorkingTime\Mode\WorkingTimeMode;
@@ -29,14 +30,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  */
 final class WorkingTimeService
 {
-    /** @var array<string, WorkingTime|null> */
-    private array $latestApprovals = [];
+    private const LATEST_APPROVAL_PREF = '_latest_approval';
+    private const LATEST_APPROVAL_FORMAT = 'Y-m-d H:i:s';
 
     public function __construct(
         private readonly TimesheetRepository $timesheetRepository,
         private readonly WorkingTimeRepository $workingTimeRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly WorkingTimeModeFactory $contractModeService
+        private readonly WorkingTimeModeFactory $contractModeService,
+        private readonly UserRepository $userRepository,
     )
     {
     }
@@ -56,29 +58,41 @@ final class WorkingTimeService
         return $yearPerUserSummary;
     }
 
-    public function getLatestApproval(User $user): ?WorkingTime
+    public function getLatestApprovalDate(User $user): ?\DateTimeInterface
     {
         if ($user->getId() === null) {
             return null;
         }
 
-        $key = 'u_' . $user->getId();
+        $date = $user->getPreferenceValue(self::LATEST_APPROVAL_PREF, false);
 
-        if (!\array_key_exists($key, $this->latestApprovals)) {
-            $this->latestApprovals[$key] = $this->workingTimeRepository->getLatestApproval($user);
+        // false means = there is no setting existing: let's calculate it
+        // null means = there is no approval existing yet
+        if ($date === false) {
+            $date = $this->workingTimeRepository->getLatestApprovalDate($user);
+
+            // let's store the approval always: we can later detect if an approval exists
+            // or not based on the existence of the preference, which saves DB queries
+            $value = ($date !== null) ? $date->format(self::LATEST_APPROVAL_FORMAT) : null;
+            $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $value);
+            $this->userRepository->saveUser($user);
+
+            return $date;
         }
 
-        return $this->latestApprovals[$key];
+        if (\is_string($date)) {
+            return new \DateTimeImmutable($date, new \DateTimeZone($user->getTimezone()));
+        }
+
+        return null;
     }
 
     public function isApproved(User $user, \DateTimeInterface $dateTime): bool
     {
-        $latestApproval = $this->getLatestApproval($user);
-        if ($latestApproval === null) {
+        $latestApprovalDate = $this->getLatestApprovalDate($user);
+        if ($latestApprovalDate === null) {
             return false;
         }
-
-        $latestApprovalDate = $latestApproval->getDate();
 
         $begin = \DateTimeImmutable::createFromInterface($dateTime);
         $begin = $begin->setTime(0, 0, 0);
@@ -170,10 +184,8 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
-        $key = 'u_' . $user->getId();
-        if (\array_key_exists($key, $this->latestApprovals)) {
-            unset($this->latestApprovals[$key]);
-        }
+        $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
+        $this->userRepository->saveUser($user);
 
         $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
     }
