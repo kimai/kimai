@@ -11,11 +11,12 @@ namespace App\Export;
 
 use App\Entity\Timesheet;
 use App\Repository\Query\ExportQuery;
+use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 
 final class TimesheetExportRepository implements ExportRepositoryInterface
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
@@ -41,7 +42,12 @@ final class TimesheetExportRepository implements ExportRepositoryInterface
 
     public function getExportItemsForQuery(ExportQuery $query): iterable
     {
-        return $this->repository->getTimesheetsForQuery($query, true);
+        $query->addQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::USER_PREFERENCES);
+
+        return $this->repository->getTimesheetResult($query)->getResults();
     }
 
     public function getType(): string

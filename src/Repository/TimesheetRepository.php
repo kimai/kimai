@@ -24,6 +24,7 @@ use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\Result\TimesheetResult;
 use App\Utils\Pagination;
 use DateInterval;
@@ -472,12 +473,11 @@ class TimesheetRepository extends EntityRepository
         $counter = $this->countTimesheetsForQuery($timesheetQuery);
         $query = $this->createTimesheetQuery($timesheetQuery);
 
-        return new LoaderQueryPaginator(new TimesheetLoader($this->getEntityManager()), $query, $counter);
+        return new LoaderQueryPaginator(new TimesheetLoader($this->getEntityManager(), $timesheetQuery), $query, $counter);
     }
 
     /**
-     * When switching $fullyHydrated to true, the call gets even more expensive.
-     * You normally don't need this, unless you want to access deeply nested attributes for many entries.
+     * TODO @deprecated since 2.25 - use getTimesheetResult() with TimesheetQueryHint instead
      *
      * @return Timesheet[]
      */
@@ -485,7 +485,13 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+        if ($fullyHydrated) {
+            $query->addQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS);
+            $query->addQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS);
+            $query->addQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS);
+        }
+
+        return $this->getHydratedResultsByQuery($qb, $query);
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
@@ -501,16 +507,16 @@ class TimesheetRepository extends EntityRepository
     /**
      * @return Timesheet[]
      */
-    private function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false): array
+    private function getHydratedResultsByQuery(QueryBuilder $qb, ?TimesheetQuery $timesheetQuery = null): array
     {
         /** @var Query<Timesheet> $query */
         $query = $qb->getQuery();
-        $query = $this->prepareTimesheetQuery($query);
+        $query = $this->prepareTimesheetQuery($query, $timesheetQuery);
 
         /** @var array<Timesheet> $timesheets */
         $timesheets = $query->getResult();
 
-        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader = new TimesheetLoader($qb->getEntityManager(), $timesheetQuery);
         $loader->loadResults($timesheets);
 
         return $timesheets;
@@ -914,7 +920,7 @@ class TimesheetRepository extends EntityRepository
     private function createTimesheetQuery(TimesheetQuery $timesheetQuery): Query
     {
         $query = $this->getQueryBuilderForQuery($timesheetQuery)->getQuery();
-        $query = $this->prepareTimesheetQuery($query);
+        $query = $this->prepareTimesheetQuery($query, $timesheetQuery);
 
         return $query;
     }
@@ -923,7 +929,7 @@ class TimesheetRepository extends EntityRepository
      * @param Query<Timesheet> $query
      * @return Query<Timesheet>
      */
-    public function prepareTimesheetQuery(Query $query): Query
+    public function prepareTimesheetQuery(Query $query, ?TimesheetQuery $timesheetQuery = null): Query
     {
         $this->getEntityManager()->getConfiguration()->setEagerFetchBatchSize(300);
 
@@ -931,15 +937,6 @@ class TimesheetRepository extends EntityRepository
         $query->setFetchMode(Timesheet::class, 'activity', ClassMetadata::FETCH_EAGER);
         $query->setFetchMode(Timesheet::class, 'project', ClassMetadata::FETCH_EAGER);
         $query->setFetchMode(Timesheet::class, 'user', ClassMetadata::FETCH_EAGER);
-
-        // not yet supported by Doctrine
-        // $query->setFetchMode(Activity::class, 'meta', ClassMetadata::FETCH_EAGER);
-        // $query->setFetchMode(Project::class, 'customer', ClassMetadata::FETCH_EAGER);
-        // $query->setFetchMode(Project::class, 'meta', ClassMetadata::FETCH_EAGER);
-        // $query->setFetchMode(Customer::class, 'meta', ClassMetadata::FETCH_EAGER);
-
-        // ManyToMany not supported by Doctrine yet
-        // $query->setFetchMode(Timesheet::class, 'tags', ClassMetadata::FETCH_EAGER);
 
         return $query;
     }
