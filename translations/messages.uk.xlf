@@ -1922,6 +1922,14 @@
         <source>import</source>
         <target state="translated">Імпорт</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Відхилено</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Відхилити</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

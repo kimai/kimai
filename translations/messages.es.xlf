@@ -782,9 +782,9 @@
         <source>upload</source>
         <target state="translated">Cargar</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">¿%action% %count% entradas?</target>
+        <target state="translated">%action% %count% entradas</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
@@ -1866,9 +1866,9 @@
         <source>create-timesheet</source>
         <target>Crear parte de horas</target>
       </trans-unit>
-      <trans-unit id="T_PN1AT" resname="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve">
         <source>permissions</source>
-        <target>Permisos del equipo</target>
+        <target state="translated">Permisos</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
@@ -1921,6 +1921,14 @@
       <trans-unit id="5vJvarK" resname="syncronisation">
         <source>Synchronization</source>
         <target state="translated">Sincronización</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Rechazar</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Rechazado</target>
       </trans-unit>
     </body>
   </file>

@@ -82,9 +82,9 @@
         <source>my.profile</source>
         <target>Το προφίλ μου</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target>%action% %count% καταχωρήσεων;</target>
+        <target state="needs-translation">%action% %count% καταχωρήσεων;</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>

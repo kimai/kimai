@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 Controllali qui: %url%</target>
       </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve" approved="yes">
+        <source>approval_rejected_subject</source>
+        <target state="final">La tua richiesta è stata rifiutata</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve" approved="yes">
+        <source>approval_requested_subject</source>
+        <target state="final">Approvazione richiesta: %user%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve" approved="yes">
+        <source>approval_approved_message</source>
+        <target state="final">La tua richiesta è stata approvata da %user%.
+
+%list%
+
+Puoi trovare tutte le tue richieste qui: %url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve" approved="yes">
+        <source>approval_rejected_message</source>
+        <target state="final">La tua richiesta di autorizzazione è stata rifiutata da %user%.
+
+%list%
+
+Rivedi le tue richieste qui: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve" approved="yes">
+        <source>approval_approved_subject</source>
+        <target state="final">La tua richiesta è stata approvata</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve" approved="yes">
+        <source>approval_requested_message</source>
+        <target state="final">È stata richiesta un'approvazione per %user%.
+
+%list%
+
+Rivedile qui: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
