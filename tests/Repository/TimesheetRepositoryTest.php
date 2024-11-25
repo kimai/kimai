@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
 
@@ -36,8 +37,15 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $result = $repository->getPagerfantaForQuery($query);
         $this->assertInstanceOf(Pagination::class, $result);
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
+        self::assertFalse($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
 
-        $result = $repository->getTimesheetsForQuery($query);
+        $result = $repository->getTimesheetsForQuery($query, true);
+
+        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
+        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
+        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
         $this->assertIsArray($result);
     }
 

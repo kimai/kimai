@@ -19,6 +19,7 @@ use App\Form\Model\MultiUserTimesheet;
 use App\Form\TimesheetAdminEditForm;
 use App\Form\TimesheetMultiUserEditForm;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\TimesheetQueryHint;
 use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormInterface;
@@ -180,6 +181,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
     protected function prepareQuery(TimesheetQuery $query): void
     {
         $query->setCurrentUser($this->getUser());
+        $query->addQueryHint(TimesheetQueryHint::USER_PREFERENCES); // e.g. for latest approval
     }
 
     protected function getCreateForm(Timesheet $entry): FormInterface
