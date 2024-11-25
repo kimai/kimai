@@ -58,9 +58,9 @@
         <source>my.profile</source>
         <target>پروفایل من</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% ورودی ها؟</target>
+        <target state="needs-translation">%action% %count% ورودی ها؟</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>

@@ -1922,6 +1922,14 @@
         <source>vcard</source>
         <target state="final">Biglietto da visita</target>
       </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="yes">
+        <source>status.rejected</source>
+        <target state="final">Rifiutato</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="yes">
+        <source>reject</source>
+        <target state="final">Rifiuta</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

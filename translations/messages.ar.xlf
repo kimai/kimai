@@ -974,9 +974,9 @@
         <source>calendar_initial_view</source>
         <target state="translated">المظهر الإفتراضي للتقويم</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% إدخالات؟</target>
+        <target state="needs-translation">%action% %count% إدخالات؟</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>

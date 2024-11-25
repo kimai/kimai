@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 Revise-os em: %url%</target>
       </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve" approved="no">
+        <source>approval_requested_message</source>
+        <target state="translated">Foi solicitada uma aprovação pelo %user%.
+
+%list%
+
+Favor revisá-los em: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve" approved="no">
+        <source>approval_requested_subject</source>
+        <target state="translated">Aprovação solicitada: %user%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve" approved="no">
+        <source>approval_approved_subject</source>
+        <target state="translated">Sua solicitação foi aprovada</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve" approved="no">
+        <source>approval_approved_message</source>
+        <target state="translated">Sua solicitação foi aprovada pelo %user%.
+
+%list%
+
+Você pode encontrar todas as suas solicitações em: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve" approved="no">
+        <source>approval_rejected_subject</source>
+        <target state="translated">A sua solicitação foi recusada</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve" approved="no">
+        <source>approval_rejected_message</source>
+        <target state="translated">Sua solicitação de autorização foi recusada pelo %user%.
+
+%list%
+
+Por favor, revise suas solicitações em: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
