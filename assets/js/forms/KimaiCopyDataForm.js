@@ -48,10 +48,10 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
                 if (element.dataset.event !== undefined) {
                     for (const event of element.dataset.event.split(' ')) {
                         target.dispatchEvent(new Event(event));
-                    }
-                } else if (element.dataset.eventBubbles !== undefined) {
-                    for (const event of element.dataset.eventBubbles.split(' ')) {
-                        target.dispatchEvent(new Event(event, {bubbles: true}));
+                        const form = target.closest('form');
+                        if (form !== null) {
+                            form.dispatchEvent(new Event(event));
+                        }
                     }
                 }
                 event.preventDefault();
