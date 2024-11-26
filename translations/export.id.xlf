@@ -14,6 +14,10 @@
         <source>With internal rates</source>
         <target state="translated">Dengan tarif internal</target>
       </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Lembar Waktu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
