@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Reset kata sandi Anda</target>
+        <target state="translated">Masuk</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Reset kata sandi Anda</target>
+        <target state="translated">Daftar ke Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Itu bisa terjadi …</target>
+        <target state="translated">Masuk ke akun kamu</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
@@ -32,11 +32,63 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">Jadi, Anda lupa kata sandi Anda? Jangan khawatir: Kimai akan membantu Anda membuat yang baru:</target>
+        <target state="translated">Tautan ini hanya akan berlaku selama 15 menit ke depan.</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target state="translated">Ini adalah email yang dibuat secara otomatis. Tolong jangan balas, alamat ini tidak akan dibaca.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Ketidakhadiran baru: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Ketidakhadiran baru telah dibuat untuk %user%.
+
+%list%
+
+Silakan tinjau di: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Persetujuan diminta: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Persetujuan untuk %user% telah diminta.
+
+%list%
+
+Silakan tinjau di: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Permintaan Anda telah ditolak</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Permintaan otorisasi Anda telah ditolak oleh %user%.
+
+%list%
+
+Silakan tinjau permintaan Anda di: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Permintaan Anda telah disetujui</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Permintaan Anda telah disetujui oleh %user%.
+
+%list%
+
+Anda dapat menemukan semua pertanyaan Anda di bawah: %url%</target>
       </trans-unit>
     </body>
   </file>
