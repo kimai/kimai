@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Event\ProjectCreateEvent;
 use App\Event\ProjectCreatePostEvent;
 use App\Event\ProjectCreatePreEvent;
+use App\Event\ProjectDeleteEvent;
 use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
@@ -77,8 +78,13 @@ final class ProjectService
         return $project;
     }
 
+    public function deleteProject(Project $project): void
+    {
+        $this->dispatcher->dispatch(new ProjectDeleteEvent($project));
+        $this->repository->deleteProject($project);
+    }
+
     /**
-     * @param Project $project
      * @param string[] $groups
      * @throws ValidationFailedException
      */

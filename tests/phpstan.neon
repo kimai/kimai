@@ -336,36 +336,6 @@ parameters:
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:loadProjectTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$customer with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$expected with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$parameters with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has parameter \\$url with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Entity\\\\Team\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 15
             path: API/ProjectControllerTest.php
