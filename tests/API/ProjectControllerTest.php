@@ -22,7 +22,8 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -608,5 +609,58 @@ class ProjectControllerTest extends APIControllerBaseTest
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------- [DELETE] -------------------------------
+
+    public function testDeleteActionWithUnknownTimesheet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/projects/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/projects/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithoutAuthorization(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $imports = $this->loadProjectTestData();
+
+        $this->request($client, '/api/projects/' . $imports[2]->getId(), Request::METHOD_DELETE);
+
+        $response = $client->getResponse();
+        $this->assertApiResponseAccessDenied($response);
+    }
+
+    public function testDeleteAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $imports = $this->loadProjectTestData();
+        $getUrl = '/api/projects/' . $imports[2]->getId();
+        $this->assertAccessIsGranted($client, $getUrl);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertNotEmpty($result['id']);
+        self::assertIsNumeric($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/projects/' . $id, Request::METHOD_DELETE);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        $this->request($client, $getUrl);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
     }
 }
