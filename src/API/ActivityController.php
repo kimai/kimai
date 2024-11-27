@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\User;
@@ -46,7 +47,8 @@ final class ActivityController extends BaseApiController
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly ActivityRateRepository $activityRateRepository
+        private readonly ActivityRateRepository $activityRateRepository,
+        private readonly ActivityService $activityService
     ) {
     }
 
@@ -204,6 +206,25 @@ final class ActivityController extends BaseApiController
 
         $view = new View($activity, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete an existing activity
+     *
+     * [DANGER] This will also delete ALL linked timesheets.
+     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     */
+    #[IsGranted('delete', 'activity')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]
+    #[OA\Parameter(name: 'id', description: 'Activity ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_activity', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteAction(Activity $activity): Response
+    {
+        $this->activityService->deleteActivity($activity);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
 
         return $this->viewHandler->handle($view);
     }

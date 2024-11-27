@@ -22,6 +22,8 @@ use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
@@ -86,6 +88,45 @@ class CustomerControllerTest extends APIControllerBaseTest
         $rateRepository->saveRate($rate2);
 
         return [$rate1, $rate2];
+    }
+
+    /**
+     * @return array{0: Customer, 1: Customer}
+     */
+    private function loadCustomerData(): array
+    {
+        /** @var CustomerRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
+
+        $customer1 = new Customer('foooo');
+        $customer1->setCountry('DE');
+        $customer1->setTimezone('Europe/Paris');
+        $repository->saveCustomer($customer1);
+
+        $customer2 = new Customer('baaaaar');
+        $customer2->setCountry('RU');
+        $customer2->setTimezone('Europe/Moscow');
+        $repository->saveCustomer($customer2);
+
+        $rate1 = new CustomerRate();
+        $rate1->setCustomer($customer1);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new CustomerRate();
+        $rate2->setCustomer($customer1);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$customer1, $customer2];
     }
 
     public function testIsSecure(): void
@@ -391,5 +432,63 @@ class CustomerControllerTest extends APIControllerBaseTest
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------- [DELETE] -------------------------------
+
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/customers/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithUnknownTimesheet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/customers/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/customers/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithoutAuthorization(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $imports = $this->loadCustomerData();
+
+        $this->request($client, '/api/customers/' . $imports[1]->getId(), Request::METHOD_DELETE);
+
+        $response = $client->getResponse();
+        $this->assertApiResponseAccessDenied($response);
+    }
+
+    public function testDeleteAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $imports = $this->loadCustomerData();
+        $getUrl = '/api/customers/' . $imports[0]->getId();
+        $this->assertAccessIsGranted($client, $getUrl);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
+        self::assertNotEmpty($result['id']);
+        self::assertIsNumeric($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/customers/' . $id, Request::METHOD_DELETE);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        $this->assertEmpty($client->getResponse()->getContent());
+
+        $this->request($client, $getUrl);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
     }
 }

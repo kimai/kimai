@@ -241,6 +241,25 @@ final class ProjectController extends BaseApiController
     }
 
     /**
+     * Delete an existing project
+     *
+     * [DANGER] This will also delete ALL linked activities and timesheets.
+     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     */
+    #[IsGranted('delete', 'project')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
+    #[OA\Parameter(name: 'id', description: 'Project ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_project', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteAction(Project $project): Response
+    {
+        $this->projectService->deleteProject($project);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
      * Sets the value of a meta-field for an existing project
      */
     #[IsGranted('edit', 'project')]
