@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Event\ActivityCreateEvent;
 use App\Event\ActivityCreatePostEvent;
 use App\Event\ActivityCreatePreEvent;
+use App\Event\ActivityDeleteEvent;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityUpdatePostEvent;
 use App\Event\ActivityUpdatePreEvent;
@@ -69,8 +70,13 @@ class ActivityService
         return $activity;
     }
 
+    public function deleteActivity(Activity $activity): void
+    {
+        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity));
+        $this->repository->deleteActivity($activity);
+    }
+
     /**
-     * @param Activity $activity
      * @param string[] $groups
      * @throws ValidationFailedException
      */
