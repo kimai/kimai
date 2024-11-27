@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Event\CustomerCreateEvent;
 use App\Event\CustomerCreatePostEvent;
 use App\Event\CustomerCreatePreEvent;
+use App\Event\CustomerDeleteEvent;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
@@ -71,6 +72,12 @@ final class CustomerService
         $this->dispatcher->dispatch(new CustomerCreatePostEvent($customer));
 
         return $customer;
+    }
+
+    public function deleteCustomer(Customer $customer): void
+    {
+        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer));
+        $this->repository->deleteCustomer($customer);
     }
 
     /**
