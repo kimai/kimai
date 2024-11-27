@@ -110,10 +110,14 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
     }
 
-    protected function loadProjectTestData(HttpKernelBrowser $client)
+    /**
+     * @return array{0: Project, 1: Project, 2: Project, 3: Project, 4: Project}
+     */
+    protected function loadProjectTestData(): array
     {
         $em = $this->getEntityManager();
 
+        /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $customer2 = new Customer('first one');
@@ -127,49 +131,49 @@ class ProjectControllerTest extends APIControllerBaseTest
         $customer3->setTimezone('Europe/Vienna');
         $em->persist($customer3);
 
-        $project = new Project();
-        $project->setName('first');
-        $project->setVisible(false);
-        $project->setCustomer($customer2);
-        $em->persist($project);
+        $project1 = new Project();
+        $project1->setName('first');
+        $project1->setVisible(false);
+        $project1->setCustomer($customer2);
+        $em->persist($project1);
 
-        $project = new Project();
-        $project->setName('second');
-        $project->setVisible(false);
-        $project->setCustomer($customer);
-        $em->persist($project);
+        $project2 = new Project();
+        $project2->setName('second');
+        $project2->setVisible(false);
+        $project2->setCustomer($customer);
+        $em->persist($project2);
 
-        $project = new Project();
-        $project->setName('third');
-        $project->setVisible(true);
-        $project->setCustomer($customer2);
-        $em->persist($project);
+        $project3 = new Project();
+        $project3->setName('third');
+        $project3->setVisible(true);
+        $project3->setCustomer($customer2);
+        $em->persist($project3);
 
-        $project = new Project();
-        $project->setName('fourth');
-        $project->setVisible(true);
-        $project->setCustomer($customer3);
-        $em->persist($project);
+        $project4 = new Project();
+        $project4->setName('fourth');
+        $project4->setVisible(true);
+        $project4->setCustomer($customer3);
+        $em->persist($project4);
 
-        $project = new Project();
-        $project->setName('fifth');
-        $project->setVisible(true);
-        $project->setCustomer($customer);
+        $project5 = new Project();
+        $project5->setName('fifth');
+        $project5->setVisible(true);
+        $project5->setCustomer($customer);
 
         // add meta fields
         $meta = new ProjectMeta();
         $meta->setName('bar')->setValue('foo')->setIsVisible(false);
-        $project->setMetaField($meta);
+        $project5->setMetaField($meta);
         $meta = new ProjectMeta();
         $meta->setName('foo')->setValue('bar')->setIsVisible(true);
-        $project->setMetaField($meta);
-        $em->persist($project);
+        $project5->setMetaField($meta);
+        $em->persist($project5);
 
         // and a team
         $team = new Team('Testing project team');
         $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
-        $team->addProject($project);
+        $team->addProject($project5);
         $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $em->persist($team);
 
@@ -178,18 +182,24 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $em->flush();
 
-        return [$customer, $customer2, $customer3];
+        return [
+            $project1,
+            $project2,
+            $project3,
+            $project4,
+            $project5,
+        ];
     }
 
     /**
      * @dataProvider getCollectionTestData
      */
-    public function testGetCollectionWithParams($url, $customer, $parameters, $expected): void
+    public function testGetCollectionWithParams(string $url, ?int $project, array $parameters, array $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $imports = $this->loadProjectTestData($client);
+        $imports = $this->loadProjectTestData();
 
-        $customerId = $customer !== null ? $imports[$customer]->getId() : null;
+        $customerId = $project !== null ? $imports[$project]->getCustomer()?->getId() : null;
 
         if ($customerId !== null) {
             if (\array_key_exists('customer', $parameters)) {
@@ -236,19 +246,19 @@ class ProjectControllerTest extends APIControllerBaseTest
     {
         // if you wonder why: case-sensitive ordering feels strange ... "Title" > "fifth”
         yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];
-        yield ['/api/projects', 0, ['customer' => '1'], [[true, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1'], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
         // customer is invisible => query only returns results for VisibilityInterface::SHOW_BOTH
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'customers' => ['2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customer' => '2', 'customers' => ['2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customers' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
     }
 
     public function testGetEntityIsSecure(): void
