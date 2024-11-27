@@ -454,6 +454,11 @@ class ActivityControllerTest extends APIControllerBaseTest
 
     // ------------------------------- [DELETE] -------------------------------
 
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/activities/1', Request::METHOD_DELETE);
+    }
+
     public function testDeleteActionWithUnknownTimesheet(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

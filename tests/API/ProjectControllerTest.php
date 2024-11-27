@@ -613,6 +613,11 @@ class ProjectControllerTest extends APIControllerBaseTest
 
     // ------------------------------- [DELETE] -------------------------------
 
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/projects/1', Request::METHOD_DELETE);
+    }
+
     public function testDeleteActionWithUnknownTimesheet(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
