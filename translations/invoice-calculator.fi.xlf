@@ -38,6 +38,22 @@
         <source>price</source>
         <target state="translated">Hinta: yksi merkintä per hinta</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Valitse, minkä kenttien mukaan laskun kohteet ryhmitellään</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Toiminta ja käyttäjä</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Hanke ja käyttäjä</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Päivämäärä ja käyttäjä</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
