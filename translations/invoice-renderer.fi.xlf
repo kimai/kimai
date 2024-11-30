@@ -34,6 +34,10 @@
         <source>service-date</source>
         <target state="translated">Freelancer</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Voit ladata lisää malleja täältä</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
