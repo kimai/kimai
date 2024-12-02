@@ -32,6 +32,8 @@ final class WorkingTimeService
 {
     private const LATEST_APPROVAL_PREF = '_latest_approval';
     private const LATEST_APPROVAL_FORMAT = 'Y-m-d H:i:s';
+    /** @var array<string, WorkingTime|null> */
+    private array $latestApprovals = [];
 
     public function __construct(
         private readonly TimesheetRepository $timesheetRepository,
@@ -56,6 +58,24 @@ final class WorkingTimeService
         $this->eventDispatcher->dispatch($summaryEvent);
 
         return $yearPerUserSummary;
+    }
+
+    /**
+     * @deprecated since 2.25.0 - kept for BC with old plugin versions
+     */
+    public function getLatestApproval(User $user): ?WorkingTime
+    {
+        if ($user->getId() === null) {
+            return null;
+        }
+
+        $key = 'u_' . $user->getId();
+
+        if (!\array_key_exists($key, $this->latestApprovals)) {
+            $this->latestApprovals[$key] = $this->workingTimeRepository->getLatestApproval($user);
+        }
+
+        return $this->latestApprovals[$key];
     }
 
     public function getLatestApprovalDate(User $user): ?\DateTimeInterface
