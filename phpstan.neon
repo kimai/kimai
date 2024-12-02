@@ -698,11 +698,6 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Parameter \\#1 \\$returnTo of method OneLogin\\\\Saml2\\\\Auth\\:\\:login\\(\\) expects string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
-
-        -
             message: "#^Cannot access offset 'user' on mixed\\.$#"
             count: 1
             path: src/Controller/CalendarController.php
@@ -3971,11 +3966,6 @@ parameters:
             message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
             count: 1
             path: src/Saml/Security/SamlAuthenticationFailureHandler.php
-
-        -
-            message: "#^Method App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:determineTargetUrl\\(\\) should return string but returns mixed\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationSuccessHandler.php
 
         -
             message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
