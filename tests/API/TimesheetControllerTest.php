@@ -1173,18 +1173,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
-        $query = ['tags' => ['Nothing-2-see', 'here']];
-        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-
-        self::assertIsArray($result);
-        self::assertNotEmpty($result);
-        self::assertEquals(20, \count($result));
-        $this->assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        $query = ['tags' => ['Nothing-2-see', 'not-existing-here']];
+        $this->request($client, '/api/timesheets', 'GET', $query);
+        $this->assertBadRequestResponse($client->getResponse());
     }
 
     public function testRestartAction(): void

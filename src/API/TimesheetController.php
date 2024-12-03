@@ -37,6 +37,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -181,8 +182,11 @@ final class TimesheetController extends BaseApiController
         /** @var array<string> $tags */
         $tags = $paramFetcher->get('tags');
         if (\is_array($tags) && \count($tags) > 0) {
-            $tags = $this->tagRepository->findTagsByName($tags, true);
-            foreach ($tags as $tag) {
+            $tagsByName = $this->tagRepository->findTagsByName($tags, true);
+            if (\count($tagsByName) === 0) {
+                throw new BadRequestHttpException('Given tags were not found');
+            }
+            foreach ($tagsByName as $tag) {
                 $query->addTag($tag);
             }
         }
