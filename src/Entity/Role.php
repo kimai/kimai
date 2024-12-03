@@ -9,13 +9,14 @@
 
 namespace App\Entity;
 
+use App\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_roles')]
 #[ORM\UniqueConstraint(name: 'roles_name', columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\RoleRepository')]
+#[ORM\Entity(repositoryClass: RoleRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 class Role

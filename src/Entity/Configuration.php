@@ -9,13 +9,14 @@
 
 namespace App\Entity;
 
+use App\Repository\ConfigurationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_configuration')]
 #[ORM\UniqueConstraint(columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\ConfigurationRepository')]
+#[ORM\Entity(repositoryClass: ConfigurationRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 class Configuration

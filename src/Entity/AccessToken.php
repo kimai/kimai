@@ -9,12 +9,13 @@
 
 namespace App\Entity;
 
+use App\Repository\AccessTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_access_token')]
-#[ORM\Entity(repositoryClass: 'App\Repository\AccessTokenRepository')]
+#[ORM\Entity(repositoryClass: AccessTokenRepository::class)]
 #[ORM\UniqueConstraint(columns: ['token'])]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity(fields: ['token'])]

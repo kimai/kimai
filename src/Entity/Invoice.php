@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
+use App\Repository\InvoiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'kimai2_invoices')]
 #[ORM\UniqueConstraint(columns: ['invoice_number'])]
 #[ORM\UniqueConstraint(columns: ['invoice_filename'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\InvoiceRepository')]
+#[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('invoiceNumber')]
 #[UniqueEntity('invoiceFilename')]

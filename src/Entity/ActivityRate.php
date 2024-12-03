@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ActivityRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_activities_rates')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'activity_id'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\ActivityRateRepository')]
+#[ORM\Entity(repositoryClass: ActivityRateRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity(['user', 'activity'], ignoreNull: false)]
 #[Serializer\ExclusionPolicy('all')]

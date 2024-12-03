@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Doctrine\Behavior\ModifiedAt;
 use App\Doctrine\Behavior\ModifiedTrait;
+use App\Repository\TimesheetRepository;
 use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
@@ -37,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['end_time', 'user', 'start_time'], name: 'IDX_TIMESHEET_TICKTAC')]
 #[ORM\Index(columns: ['user', 'project_id', 'activity_id'], name: 'IDX_TIMESHEET_RECENT_ACTIVITIES')]
 #[ORM\Index(columns: ['user', 'id', 'duration'], name: 'IDX_TIMESHEET_RESULT_STATS')]
-#[ORM\Entity(repositoryClass: 'App\Repository\TimesheetRepository')]
+#[ORM\Entity(repositoryClass: TimesheetRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[ORM\HasLifecycleCallbacks]
 #[Serializer\ExclusionPolicy('all')]

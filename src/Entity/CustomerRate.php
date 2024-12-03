@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\CustomerRateRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_customers_rates')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'customer_id'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\CustomerRateRepository')]
+#[ORM\Entity(repositoryClass: CustomerRateRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity(['user', 'customer'], ignoreNull: false)]
 #[Serializer\ExclusionPolicy('all')]
