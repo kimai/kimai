@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Attributes as OA;
 
 #[ORM\Table(name: 'kimai2_invoices')]
 #[ORM\UniqueConstraint(columns: ['invoice_number'])]
@@ -66,12 +67,14 @@ class Invoice implements EntityWithMetaFields
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/Customer')]
     private ?Customer $customer = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     #[Assert\NotNull]
