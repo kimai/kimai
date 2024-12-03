@@ -600,11 +600,6 @@ parameters:
             path: Controller/Auth/SamlControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getDefaultSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Auth/SamlControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getSystemConfigurationMock\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/Auth/SamlControllerTest.php
