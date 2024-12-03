@@ -290,6 +290,7 @@ class ConfigurationTest extends TestCase
                     'break_warning_duration' => 0,
                     'long_running_duration' => 0,
                     'require_activity' => true,
+                    'break_time_active' => false,
                 ],
                 'duration_increment' => 15,
                 'time_increment' => 15,
