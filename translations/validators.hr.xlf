@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Odsutnost se ne može rezervirati prije prvog radnog dana.</target>
+        <target state="translated">Odsutnost se ne može rezervirati prije prvog radnog dana.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,10 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Pokušaj ponovo poslati obrazac. Ako problem ne nestane, aktualiziraj prikaz preglednika.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Odsutnost se ne može rezervirati nakon zadnjeg radnog dana.</target>
       </trans-unit>
     </body>
   </file>
