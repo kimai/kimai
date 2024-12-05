@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Doctrine\Behavior\CreatedAt;
 use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
+use App\Repository\CustomerRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_customers')]
 #[ORM\Index(columns: ['visible'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\CustomerRepository')]
+#[ORM\Entity(repositoryClass: CustomerRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
 #[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]

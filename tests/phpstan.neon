@@ -600,11 +600,6 @@ parameters:
             path: Controller/Auth/SamlControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getDefaultSettings\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Auth/SamlControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Auth\\\\SamlControllerTest\\:\\:getSystemConfigurationMock\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/Auth/SamlControllerTest.php
@@ -2363,51 +2358,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Saml\\\\SamlProviderTest\\:\\:getSamlProvider\\(\\) has parameter \\$mapping with no value type specified in iterable type array\\.$#"
             count: 1
             path: Saml/SamlProviderTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$default with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$handler with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getOption\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has parameter \\$path with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getRequest\\(\\) has parameter \\$relayState with no type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getSamlToken\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandlerTest\\:\\:getUrlGenerator\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Saml/Security/SamlAuthenticationSuccessHandlerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\BillableCalculatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"

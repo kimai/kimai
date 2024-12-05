@@ -11,17 +11,19 @@ namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
+use App\Repository\InvoiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_invoices')]
 #[ORM\UniqueConstraint(columns: ['invoice_number'])]
 #[ORM\UniqueConstraint(columns: ['invoice_filename'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\InvoiceRepository')]
+#[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('invoiceNumber')]
 #[UniqueEntity('invoiceFilename')]
@@ -65,12 +67,14 @@ class Invoice implements EntityWithMetaFields
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/Customer')]
     private ?Customer $customer = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     #[Assert\NotNull]

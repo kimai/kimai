@@ -50,6 +50,10 @@ class SamlAuthenticator extends AbstractAuthenticator
             return false;
         }
 
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return false;
+        }
+
         if (!$this->httpUtils->checkRequestPath($request, $this->options['check_path'])) {
             return false;
         }
@@ -81,7 +85,7 @@ class SamlAuthenticator extends AbstractAuthenticator
 
         // file_put_contents(__DIR__ . '/../../var/log/saml.xml', $oneLoginAuth->getLastResponseXML());
 
-        if ($oneLoginAuth->getErrors()) {
+        if (\count($oneLoginAuth->getErrors()) > 0) {
             throw new AuthenticationException($oneLoginAuth->getLastErrorReason());
         }
 

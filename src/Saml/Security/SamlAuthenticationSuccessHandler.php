@@ -24,15 +24,12 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
 
     protected function determineTargetUrl(Request $request): string
     {
-        if ($this->options['always_use_default_target_path']) {
-            return $this->options['default_target_path'];
-        }
-
         $relayState = $request->get('RelayState');
-        $loginUrl = $this->httpUtils->generateUri($request, $this->options['login_path']);
-
-        if ($relayState !== null && $relayState !== '' && $relayState !== $loginUrl) {
-            return $relayState;
+        if (\is_scalar($relayState)) {
+            $relayState = (string) $relayState;
+            if ($relayState !== $this->httpUtils->generateUri($request, (string) $this->options['login_path'])) {
+                return $relayState;
+            }
         }
 
         return parent::determineTargetUrl($request);

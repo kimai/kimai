@@ -253,7 +253,6 @@ final class DoctorController extends AbstractController
             'max_execution_time',
             'date.timezone',
             'allow_url_fopen',
-            'allow_url_include',
             'default_charset',
             'default_mimetype',
             'display_errors',

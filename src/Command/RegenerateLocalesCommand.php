@@ -26,7 +26,7 @@ use Symfony\Component\Intl\Locales;
  *
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'kimai:reset:locales')]
+#[AsCommand(name: 'kimai:reset:locales', description: 'Regenerate the locale definition file')]
 final class RegenerateLocalesCommand extends Command
 {
     /**
@@ -64,11 +64,6 @@ final class RegenerateLocalesCommand extends Command
     public function isEnabled(): bool
     {
         return $this->kernelEnvironment !== 'prod';
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Regenerate the locale definition file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

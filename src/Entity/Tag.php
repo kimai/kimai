@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\TagRepository;
 use App\Utils\Color;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_tags')]
 #[ORM\UniqueConstraint(columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\TagRepository')]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
