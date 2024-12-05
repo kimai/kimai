@@ -1930,6 +1930,14 @@
         <source>import</source>
         <target>Import</target>
       </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions">
+        <source>Sessions</source>
+        <target>Sitzungen</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout">
+        <source>Log out of all devices</source>
+        <target>Von allen Geräten abmelden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

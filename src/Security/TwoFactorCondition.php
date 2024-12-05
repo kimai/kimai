@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TwoFactorCondition implements TwoFactorConditionInterface
 {
-    public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker)
     {
     }
 

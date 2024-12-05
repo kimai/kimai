@@ -188,6 +188,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
+    protected function assertBadRequestResponse(Response $response): void
+    {
+        $this->assertApiException($response, [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message = 'Forbidden'): void
     {
         $this->request($client, $url);

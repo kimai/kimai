@@ -88,13 +88,12 @@ final class DataTable implements \Countable, \IteratorAggregate
 
     /**
      * @param FormInterface<MultiUpdateTableDTO>|null $batchForm
-     * @return void
      */
     public function setBatchForm(?FormInterface $batchForm): void
     {
         $this->batchForm = $batchForm;
 
-        if (!\array_key_exists('id', $this->columns)) {
+        if ($batchForm !== null && !\array_key_exists('id', $this->columns)) {
             $this->addColumn('id', [
                 'class' => 'alwaysVisible multiCheckbox',
                 'orderBy' => false,
