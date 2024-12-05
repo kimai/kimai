@@ -174,7 +174,7 @@
         <source>error.no_comments_found</source>
         <target state="translated">Kommentteja ei ole vielä lähetetty.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
         <target state="translated">Päivämäärä</target>
       </trans-unit>
@@ -190,8 +190,8 @@
         <source>duration</source>
         <target state="translated">Kesto</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
         <target state="translated">Käyttäjä</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
@@ -224,14 +224,14 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Aika budjetti</target>
+        <target state="translated">Tuntikiintiö</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target state="translated">Työtehtävä</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
         <target state="translated">Projekti</target>
       </trans-unit>
       <trans-unit id="KhBzpuZ" resname="tag">
@@ -1576,7 +1576,7 @@
       </trans-unit>
       <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
         <source>Categories</source>
-        <target state="translated">Katogoriat</target>
+        <target state="translated">Kategoriat</target>
       </trans-unit>
       <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
         <source>Category</source>
@@ -1893,6 +1893,42 @@
       <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
         <source>Synchronization</source>
         <target state="translated">Synkronointi</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">Kesto voi olla joko positiivinen (lisäys on-aikaan) tai negatiivinen (vähennys on-aikaan).</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
+        <source>parental</source>
+        <target state="translated">Vanhemmuusvapaa</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Lisää merkintä massapäivityslistaan</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Valitse kaikki merkinnät massapäivityslistaan</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Tauko</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Voitto</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Kulut</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Hylätty</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Hylätä</target>
       </trans-unit>
     </body>
   </file>
