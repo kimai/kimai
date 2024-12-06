@@ -2,7 +2,6 @@
   "name": "kimai2",
   "homepage": "https://github.com/kimai/kimai",
   "license": "MIT",
-  "type": "module",
   "maintainers": [
     {
       "name": "Kevin Papst",
@@ -29,6 +28,7 @@
     "@babel/eslint-parser": "^7",
     "@babel/plugin-syntax-dynamic-import": "^7",
     "@babel/preset-env": "^7",
+    "@eslint/js": "^9",
     "@fortawesome/fontawesome-free": "^6",
     "@fullcalendar/bootstrap5": "^5",
     "@fullcalendar/core": "^5",
