@@ -69,7 +69,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
     _getModal()
     {
-        return Modal.getOrCreateInstance(this._getModalElement())
+        return Modal.getOrCreateInstance(this._getModalElement());
     }
 
     /**

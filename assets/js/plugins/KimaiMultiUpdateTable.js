@@ -64,7 +64,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
      */
     _toggleForm(table)
     {
-        const card = table.closest('div.card.data_table')
+        const card = table.closest('div.card.data_table');
 
         let ids = [];
         for (const box of table.querySelectorAll('input.multi_update_single:checked')) {
