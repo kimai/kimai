@@ -58,8 +58,6 @@ Encore
             */
         }
     })
-
-    .enableEslintPlugin()
 ;
 
 module.exports = Encore.getWebpackConfig();
