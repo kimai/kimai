@@ -1807,7 +1807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.8":
+"@popperjs/core@npm:^2, @popperjs/core@npm:^2.11.8":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: 10/ddd16090cde777aaf102940f05d0274602079a95ad9805bd20bc55dcc7c3a2ba1b99dd5c73e5cc2753c3d31250ca52a67d58059459d7d27debb983a9f552936c
@@ -2585,7 +2585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:5.3.3":
+"bootstrap@npm:5.3.3, bootstrap@npm:^5.3":
   version: 5.3.3
   resolution: "bootstrap@npm:5.3.3"
   peerDependencies:
@@ -4234,8 +4234,10 @@ __metadata:
     "@fullcalendar/icalendar": "npm:^5"
     "@fullcalendar/interaction": "npm:^5"
     "@fullcalendar/timegrid": "npm:^5"
+    "@popperjs/core": "npm:^2"
     "@symfony/webpack-encore": "npm:^5"
     "@tabler/core": "npm:1.0.0-beta21"
+    bootstrap: "npm:^5.3"
     chart.js: "npm:^4"
     core-js: "npm:^3"
     eslint: "npm:^9"
