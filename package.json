@@ -16,9 +16,8 @@
     "dev-server": "yarn encore dev-server",
     "dev": "yarn encore dev",
     "watch": "yarn encore dev --watch",
-    "build": "yarn encore production",
-    "prod": "yarn encore production",
-    "lint": "yarn eslint assets/js/"
+    "lint": "yarn eslint assets/js/",
+    "build": "yarn encore production"
   },
   "browserslist": [
     "defaults"
