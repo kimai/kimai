@@ -242,7 +242,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         // append the ones with no parent at the end (e.g. global activities)
         const optGroupEmpty = this._createOptgroup('');
         emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
-        node.appendChild(optGroupEmpty)
+        node.appendChild(optGroupEmpty);
 
         // if available, re-select the previous selected option (mostly usable for global activities)
         node.value = selectedValue;
@@ -440,7 +440,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                     targetSelect.dataset['reloading'] = '0';
                     targetSelect.disabled = false;
                 });
-            }
+            };
 
             document.addEventListener('change', this._eventHandlerApiSelects);
         }
@@ -476,14 +476,14 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                             newValue = [...targetField.selectedOptions].map(o => o.value);
                         } else if (newValue !== '') {
                             if (targetField.type === 'date') {
-                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeId = targetField.id.replace('_date', '_time');
                                 const timeElement = document.getElementById(timeId);
                                 const time = timeElement === null ? '12:00:00' : timeElement.value;
                                 // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
                                 const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
                                 newValue = this.getDateUtils().formatForAPI(newDate, false);
                             } else if (targetField.type === 'text' && targetField.name.includes('date')) {
-                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeId = targetField.id.replace('_date', '_time');
                                 const timeElement = document.getElementById(timeId);
                                 // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
                                 let time = '12:00:00';

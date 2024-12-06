@@ -61,7 +61,7 @@ export default class KimaiPaginatedBoxWidget {
         // and this event will hide it afterwards
         const hideOverlay = () => {
             document.dispatchEvent(new Event('kimai.reloadedContent'));
-        }
+        };
 
         window.kimai.getPlugin('fetch').fetch(url)
             .then(response => {

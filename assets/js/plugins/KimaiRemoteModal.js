@@ -34,7 +34,7 @@ export default class KimaiRemoteModal extends KimaiPlugin {
             this._showModal(event.currentTarget);
             event.stopPropagation();
             event.preventDefault();
-        }
+        };
 
         for (let link of document.querySelectorAll(this._selector)) {
             link.addEventListener('click', this.handle);
