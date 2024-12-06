@@ -1938,6 +1938,10 @@
         <source>Log out of all devices</source>
         <target>Von allen Geräten abmelden</target>
       </trans-unit>
+      <trans-unit id="9qIU96X" resname="result">
+        <source>result</source>
+        <target>Ergebnis</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
