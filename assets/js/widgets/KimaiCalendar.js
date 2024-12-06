@@ -568,7 +568,7 @@ export default class KimaiCalendar {
                 color = apiItem.project.customer.color;
             }
         }
-        if (color == null) {
+        if (color === null) {
             color = defaultColor;
         }
 
