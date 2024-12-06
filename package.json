@@ -37,7 +37,7 @@
     "@fullcalendar/icalendar": "^5",
     "@fullcalendar/interaction": "^5",
     "@fullcalendar/timegrid": "^5",
-    "@symfony/webpack-encore": "^4.0",
+    "@symfony/webpack-encore": "^5",
     "@tabler/core": "1.0.0-beta21",
     "chart.js": "^4",
     "core-js": "^3",
@@ -47,10 +47,10 @@
     "litepicker": "^2",
     "luxon": "^3",
     "sass": "^1",
-    "sass-loader": "^13",
+    "sass-loader": "^16",
     "tom-select": "^2",
     "webpack": "^5",
-    "webpack-cli": "^4"
+    "webpack-cli": "^5"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
