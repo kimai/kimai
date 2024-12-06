@@ -4,7 +4,7 @@ assets export-ignore
 tests export-ignore
 .codecov.yml export-ignore
 .editorconfig export-ignore
-.eslintrc.js export-ignore
+eslint.config.js export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 php-cs-fixer.dist.php export-ignore
