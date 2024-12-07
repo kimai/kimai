@@ -29,8 +29,7 @@ function handleStartup() {
   if [ -z "$memory_limit" ]; then
     memory_limit=512M
   fi
-  sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /usr/local/etc/php/php.ini
-  cp /assets/monolog.yaml /opt/kimai/config/packages/monolog.yaml
+  sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /etc/php"${PHP_VERSION}"/php.ini
 
   if [ -z "$USER_ID" ]; then
     USER_ID=$(id -u www-data)
@@ -55,22 +54,10 @@ function handleStartup() {
     pwconv
   fi
 
-  if [ -e /use_apache ]; then
-    export APACHE_RUN_USER=$(id -nu "$USER_ID")
-    # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
-    export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
-    export APACHE_PID_FILE=/var/run/apache2/apache2.pid
-    export APACHE_RUN_DIR=/var/run/apache2
-    export APACHE_LOCK_DIR=/var/lock/apache2
-    export APACHE_LOG_DIR=/var/log/apache2
-    export LANG=C
-  elif [ -e /use_fpm ]; then
-    sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    echo "Setting fpm to run as ${USER_ID}:${GROUP_ID}"
-  else
-    echo "Error, unknown server type"
-  fi
+  export APACHE_RUN_USER=$(id -nu "$USER_ID")
+  # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
+  export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
+
 }
 
 function prepareKimai() {
@@ -81,22 +68,13 @@ function prepareKimai() {
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
-}
-
-function runServer() {
-  # Just while I'm fixing things
   /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
   chown -R $USER_ID:$GROUP_ID /opt/kimai/var
-  if [ -e /use_apache ]; then
-    exec /usr/sbin/apache2 -D FOREGROUND
-  elif [ -e /use_fpm ]; then
-    exec php-fpm
-  else
-    echo "Error, unknown server type"
-  fi
 }
 
 waitForDB
 handleStartup
 prepareKimai
-runServer
+
+echo ""
+exec "$@"
