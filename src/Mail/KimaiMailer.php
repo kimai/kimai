@@ -10,6 +10,7 @@
 namespace App\Mail;
 
 use App\Configuration\MailConfiguration;
+use App\Constants;
 use App\Entity\User;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\MailerInterface;
@@ -36,7 +37,7 @@ final class KimaiMailer implements MailerInterface
             if ($fallback === null) {
                 throw new \RuntimeException('Missing email "from" address');
             }
-            $message->from(new Address($fallback, 'Kimai'));
+            $message->from(new Address($fallback, Constants::SOFTWARE));
         }
 
         $this->mailer->send($message);
