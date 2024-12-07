@@ -650,10 +650,6 @@
         <source>work_times_is</source>
         <target>Hours worked</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target>Hours worked</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target>Confirmed by %user% at %date%</target>

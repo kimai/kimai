@@ -1410,10 +1410,6 @@
         <source>unit_price</source>
         <target state="final">單價</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve" approved="yes">
-        <source>work_times_result</source>
-        <target state="final">工作時數</target>
-      </trans-unit>
       <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve" approved="yes">
         <source>parental</source>
         <target state="final">育嬰假</target>

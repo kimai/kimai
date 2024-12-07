@@ -1498,10 +1498,6 @@
         <source>manual_bookings.work_contract_intro</source>
         <target state="translated">Les réservations manuelles ne peuvent être ni modifiées ni supprimées !</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Heures travaillées</target>
-      </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
         <target state="translated">Invisible</target>

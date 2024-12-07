@@ -650,10 +650,6 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">Tidak ada target jam yang ditetapkan pada pengguna ini dalam setelan kontrak pekerjaan.</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
-        <source>work_times_result</source>
-        <target state="translated">Jam bekerja</target>
-      </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve">
         <source>profile.registration_date</source>
         <target state="translated">Teregistrasi di</target>

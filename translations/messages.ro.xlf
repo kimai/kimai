@@ -1406,10 +1406,6 @@
         <source>work_times_is</source>
         <target state="needs-translation">Timpul de lucru este</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
-        <source>work_times_result</source>
-        <target state="translated">Ore lucrate</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
         <target state="translated">Confirmat de %user% la %date%</target>
