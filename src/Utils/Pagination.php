@@ -20,8 +20,8 @@ final class Pagination extends Pagerfanta
     {
         parent::__construct($adapter);
 
-        if ($adapter instanceof ArrayAdapter) {
-            $this->setMaxPerPage(count($adapter->getNbResults()));
+        if ($adapter instanceof ArrayAdapter && ($size = $adapter->getNbResults()) > 0) {
+            $this->setMaxPerPage($size);
         }
 
         if ($query === null || !$query->isApiCall()) {
