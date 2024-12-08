@@ -1434,10 +1434,6 @@
         <source>confirmed_by_at</source>
         <target state="translated">Bekräftad %date% av %user%</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Timmar arbetade</target>
-      </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
         <target state="translated">Godkänd</target>
