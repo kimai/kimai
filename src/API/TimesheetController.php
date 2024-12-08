@@ -97,7 +97,7 @@ final class TimesheetController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
-        $query->setCurrentUser($this->getUser());
+        $this->prepareQuery($query, $paramFetcher);
         $seeAll = false;
 
         if ($this->isGranted('view_other_timesheet')) {
@@ -167,16 +167,6 @@ final class TimesheetController extends BaseApiController
                 throw $this->createNotFoundException('Unknown activity: ' . $activity);
             }
             $query->addActivity($activity);
-        }
-
-        $page = $paramFetcher->get('page');
-        if (\is_string($page) && $page !== '') {
-            $query->setPage((int) $page);
-        }
-
-        $size = $paramFetcher->get('size');
-        if (\is_string($size) && $size !== '') {
-            $query->setPageSize((int) $size);
         }
 
         /** @var array<string> $tags */
@@ -252,12 +242,8 @@ final class TimesheetController extends BaseApiController
             $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
-        $query->setIsApiCall(true);
-        $data = $this->repository->getPagerfantaForQuery($query);
-        $results = (array) $data->getCurrentPageResults();
-
-        $view = new View($results, 200);
-        $this->addPagination($view, $data);
+        $pagination = $this->repository->getPagerfantaForQuery($query);
+        $view = $this->createPaginatedView($pagination);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
