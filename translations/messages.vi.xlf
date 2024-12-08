@@ -1310,10 +1310,6 @@
         <source>evaluation</source>
         <target state="translated">Đánh giá</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
-        <source>work_times_result</source>
-        <target state="translated">Số giờ làm việc</target>
-      </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
         <target state="needs-translation">Giờ làm việc thực tế</target>

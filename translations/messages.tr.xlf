@@ -1470,10 +1470,6 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">İş sözleşmesi ayarlarında bu kullanıcı için herhangi bir hedef saat yapılandırılmamış.</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Çalışılan saatler</target>
-      </trans-unit>
       <trans-unit id="znIJiOw" resname="manual_bookings.duration_help">
         <source>manual_bookings.duration_help</source>
         <target state="translated">Süre hem pozitif (is-time artması) hem de negatif (is-time azalması) olabilir.</target>

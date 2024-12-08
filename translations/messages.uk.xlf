@@ -1438,10 +1438,6 @@
         <source>Expected number of hours</source>
         <target state="translated">Очікувані години</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Відпрацьовані години</target>
-      </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target state="translated">Ручне бронювання</target>

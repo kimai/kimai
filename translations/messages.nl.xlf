@@ -1430,10 +1430,6 @@
         <source>work_times_is</source>
         <target state="translated">Gewerkte uren</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Gewerkte uren</target>
-      </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target state="translated">Handmatige boekingen</target>
