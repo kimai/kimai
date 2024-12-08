@@ -1591,8 +1591,8 @@
         <target state="translated">Bệnh, đi khám bác sĩ, chăm sóc người nhà, v.v.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Bạn đã nghỉ %used% trong số %days% ngày nghỉ tính đến nay.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Bạn đã nghỉ %used% trong số %days% ngày nghỉ tính đến nay.</target>
       </trans-unit>
       <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
         <source>Custom content</source>
