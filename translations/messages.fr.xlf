@@ -1695,8 +1695,8 @@
         <target state="translated">Votre compte temps de travail a un solde de %hours% heures.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Jusqu’à présent, vous avez pris %used% de vos %days% jours de vacances disponibles.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Jusqu’à présent, vous avez pris %used% de vos %days% jours de vacances disponibles.</target>
       </trans-unit>
       <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
         <source>user_identifier</source>

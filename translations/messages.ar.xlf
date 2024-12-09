@@ -1430,9 +1430,9 @@
         <source>Review</source>
         <target state="translated">مراجعة</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">لقد أخذت %used% من %days% أيام العطلة المتاحة لديك حتى الآن.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">لقد أخذت %used% من %days% أيام العطلة المتاحة لديك حتى الآن.</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>

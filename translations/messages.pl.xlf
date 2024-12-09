@@ -1535,8 +1535,8 @@
         <target state="translated">Choroba, wizyta u lekarza, opieka nad bliskimi itp.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Do tej pory wykorzystałeś %used% z %days% dostępnych dni urlopu.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Do tej pory wykorzystałeś %used% z %days% dostępnych dni urlopu.</target>
       </trans-unit>
       <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
         <source>force_password_change_help</source>
