@@ -1554,9 +1554,9 @@
         <source>day_half</source>
         <target state="translated">Metade do dia</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Você tirou %used% dos seus %days% dias de férias disponíveis até agora.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Você encaminhou %used% dos seus %days% dias de férias disponíveis até agora.</target>
       </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
@@ -1929,6 +1929,14 @@
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="no">
         <source>reject</source>
         <target state="translated">Rejeitar</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Sessões</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Fazer logout de todos os dispositivos</target>
       </trans-unit>
     </body>
   </file>

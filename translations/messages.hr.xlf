@@ -1566,9 +1566,9 @@
         <source>sickness</source>
         <target state="translated">Bolovanje</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Do sada si iskoristio/la %used% od raspoloživih %days% dana godišnjeg odmora.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Do sada si iskoristio/la %used% od raspoloživih %days% dana godišnjeg odmora.</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half">
         <source>day_half</source>
