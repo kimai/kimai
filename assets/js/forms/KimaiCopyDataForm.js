@@ -29,7 +29,7 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
     /**
      * @param {HTMLFormElement} form
      */
-    activateForm(form) // eslint-disable-line no-unused-vars
+    activateForm(form)
     {
         if (this._eventHandler === undefined) {
             this._eventHandler = (event) => {
@@ -63,7 +63,7 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
     /**
      * @param {HTMLFormElement} form
      */
-    destroyForm(form) // eslint-disable-line no-unused-vars
+    destroyForm(form)
     {
         form.removeEventListener('click', this._eventHandler);
     }

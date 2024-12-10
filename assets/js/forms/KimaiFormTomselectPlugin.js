@@ -28,12 +28,12 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     return null;
                 }
                 const tpl = this.translate('select.search.create');
-                const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>')
+                const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>');
                 return '<div class="create">' + tplReplaced + '</div>';
             },
             no_results: (data, escape) => {
                 const tpl = this.translate('select.search.notfound');
-                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
                 return '<div class="no-results">' + tplReplaced + '</div>';
             },
         };

@@ -208,7 +208,7 @@ export default class KimaiAlert extends KimaiPlugin {
         const toast = new Toast(element);
         element.addEventListener('hidden.bs.toast', function () {
             container.removeChild(element);
-        })
+        });
         toast.show();
     }
 

@@ -14,7 +14,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import bootstrap5Plugin, { BootstrapTheme } from '@fullcalendar/bootstrap5';
 import googlePlugin from '@fullcalendar/google-calendar';
-import iCalendarPlugin from '@fullcalendar/icalendar'
+import iCalendarPlugin from '@fullcalendar/icalendar';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import arLocale from '@fullcalendar/core/locales/ar';
 import csLocale from '@fullcalendar/core/locales/cs';
@@ -264,7 +264,7 @@ export default class KimaiCalendar {
                             contextMenu.createFromApi(jsEvent, result);
                         }, (e) => { console.log('Failed to load actions for context menu', e); });
                     }
-                })
+                });
             },
         };
 
@@ -409,13 +409,13 @@ export default class KimaiCalendar {
                         this.hidePopover(info.el);
                     },
                     eventDrop: (eventDropInfo) => {
-                        this.changeHandler(eventDropInfo)
+                        this.changeHandler(eventDropInfo);
                     },
                     eventResizeStart: (info) => {
                         this.hidePopover(info.el);
                     },
                     eventResize: (eventResizeInfo) => {
-                        this.changeHandler(eventResizeInfo)
+                        this.changeHandler(eventResizeInfo);
                     },
                 }};
             }
@@ -568,7 +568,7 @@ export default class KimaiCalendar {
                 color = apiItem.project.customer.color;
             }
         }
-        if (color == null) {
+        if (color === null) {
             color = defaultColor;
         }
 
