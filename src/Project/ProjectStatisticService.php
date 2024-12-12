@@ -199,7 +199,7 @@ class ProjectStatisticService
         $stats->setStatisticTotal($this->getProjectStatistics($project));
 
         $begin = null;
-        $end = $today;
+        $end = DateTimeImmutable::createFromInterface($today);
 
         if ($project->isMonthlyBudget()) {
             $dateFactory = new DateTimeFactory($today->getTimezone());
