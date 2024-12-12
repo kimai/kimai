@@ -17,14 +17,14 @@ use PHPUnit\Framework\TestCase;
  */
 class LdapBadgeTest extends TestCase
 {
-    public function markResolvedSetsResolvedToTrue(): void
+    public function testMarkResolvedSetsResolvedToTrue(): void
     {
         $badge = new LdapBadge();
         $badge->markResolved();
         self::assertTrue($badge->isResolved());
     }
 
-    public function isResolvedReturnsFalseInitially(): void
+    public function testIsResolvedReturnsFalseInitially(): void
     {
         $badge = new LdapBadge();
         self::assertFalse($badge->isResolved());
