@@ -773,16 +773,6 @@ abstract class AbstractSpreadsheetRenderer
         return $this->getFileResponse($file, $filename->getFilename() . $this->getFileExtension());
     }
 
-    /**
-     * @return string
-     */
-    abstract public function getFileExtension(): string;
-
-    /**
-     * @param string $file
-     * @param string $filename
-     * @return BinaryFileResponse
-     */
     protected function getFileResponse(string $file, string $filename): BinaryFileResponse
     {
         $response = new BinaryFileResponse($file);
@@ -795,15 +785,9 @@ abstract class AbstractSpreadsheetRenderer
         return $response;
     }
 
-    /**
-     * @return string
-     */
+    abstract public function getFileExtension(): string;
+
     abstract protected function getContentType(): string;
 
-    /**
-     * @param Spreadsheet $spreadsheet
-     * @return string
-     * @throws \Exception
-     */
     abstract protected function saveSpreadsheet(Spreadsheet $spreadsheet): string;
 }
