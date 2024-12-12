@@ -65,6 +65,7 @@ class PaginationExtensionTest extends TestCase
 
         $values = array_fill(0, 151, 'blub');
         $pagerfanta = new Pagination(new ArrayAdapter($values));
+        $pagerfanta->setMaxPerPage(10);
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
@@ -98,12 +99,33 @@ class PaginationExtensionTest extends TestCase
 
         $values = array_fill(0, 151, 'blub');
         $pagerfanta = new Pagination(new ArrayAdapter($values));
+        $pagerfanta->setMaxPerPage(10);
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]
         ]);
         $this->assertPaginationHtml($result);
+    }
+
+    public function testRenderPaginationWithoutPageSize(): void
+    {
+        $sut = $this->getSut();
+
+        $values = array_fill(0, 151, 'blub');
+        $pagerfanta = new Pagination(new ArrayAdapter($values));
+        $result = $sut->renderPagination($pagerfanta, [
+            'css_container_class' => 'pagination pagination-sm inline',
+            'routeName' => 'project_activities',
+            'routeParams' => ['id' => 137]
+        ]);
+
+        $expected =
+            '<ul class="pagination pagination-sm inline"><li class="page-item  disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-left"></i></span></li>' .
+            '<li class="page-item active"><a class="page-link pagination-link" href="project_activities?id=137&page=1">1</a></li>' .
+            '<li class="page-item  disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-right"></i></span></li></ul>';
+
+        self::assertEquals($expected, $result);
     }
 
     public function testRenderPaginationWithoutRouteName(): void
