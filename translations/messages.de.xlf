@@ -1938,6 +1938,10 @@
         <source>result</source>
         <target>Ergebnis</target>
       </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training">
+        <source>training</source>
+        <target>Fortbildung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
