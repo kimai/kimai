@@ -45,11 +45,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
-//            'dropdown-item action-xlsx-spout toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx-spout'),
-//            'dropdown-item action-csv toolbar-action' => $this->createUrl('/team/timesheet/export/csv'),
-//            'dropdown-item action-print toolbar-action' => $this->createUrl('/team/timesheet/export/print'),
-//            'dropdown-item action-pdf toolbar-action' => $this->createUrl('/team/timesheet/export/pdf'),
-//            'dropdown-item action-xlsx toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx'),
+            'dropdown-item action-xlsx-spout toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx-spout'),
+            'dropdown-item action-csv toolbar-action' => $this->createUrl('/team/timesheet/export/csv'),
+            'dropdown-item action-print toolbar-action' => $this->createUrl('/team/timesheet/export/print'),
+            'dropdown-item action-pdf toolbar-action' => $this->createUrl('/team/timesheet/export/pdf'),
+            'dropdown-item action-xlsx toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx'),
         ]);
     }
 
