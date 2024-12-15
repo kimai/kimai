@@ -160,7 +160,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param array<string, string> $parameter
      */
-    protected function addFlashTranslated(string $type, string $message, array $parameter = [], string $domain = 'flashmessages'): void
+    private function addFlashTranslated(string $type, string $message, array $parameter = [], string $domain = 'flashmessages'): void
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
