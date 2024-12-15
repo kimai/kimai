@@ -233,11 +233,6 @@ final class TimesheetTeamController extends TimesheetAbstractController
         return 'admin_timesheet_edit';
     }
 
-    protected function getExportRoute(): string
-    {
-        return 'admin_timesheet_export';
-    }
-
     protected function getMultiUpdateRoute(): string
     {
         return 'admin_timesheet_multi_update';

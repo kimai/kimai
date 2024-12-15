@@ -241,9 +241,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $exporter = $serviceExport->getTimesheetExporterById($type);
 
         if (null === $exporter) {
-            $this->flashError('Invalid timesheet exporter given');
-
-            return $this->redirectToRoute($this->getTimesheetRoute());
+            throw $this->createNotFoundException();
         }
 
         $query = $this->createDefaultQuery();
@@ -591,11 +589,6 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getMultiDeleteRoute(): string
     {
         return 'timesheet_multi_delete';
-    }
-
-    protected function getExportRoute(): string
-    {
-        return 'timesheet_export';
     }
 
     protected function canSeeStartEndTime(): bool
