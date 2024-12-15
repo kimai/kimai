@@ -27,7 +27,6 @@ class CsvRendererTest extends AbstractRendererTest
 
         $this->assertEquals('csv', $sut->getId());
         $this->assertEquals('csv', $sut->getTitle());
-        $this->assertEquals('csv', $sut->getIcon());
     }
 
     public function getTestModel()

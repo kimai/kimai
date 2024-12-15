@@ -40,7 +40,6 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $this->assertEquals('html', $sut->getId());
         $this->assertEquals('print', $sut->getTitle());
-        $this->assertEquals('print', $sut->getIcon());
     }
 
     public function testRender(): void

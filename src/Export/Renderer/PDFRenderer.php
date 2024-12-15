@@ -14,11 +14,6 @@ use App\Export\ExportRendererInterface;
 
 final class PDFRenderer extends BasePDFRenderer implements ExportRendererInterface
 {
-    public function getIcon(): string
-    {
-        return 'pdf';
-    }
-
     public function getTitle(): string
     {
         return 'pdf';

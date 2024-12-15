@@ -14,11 +14,6 @@ use App\Export\ExportRendererInterface;
 
 final class HtmlRenderer extends BaseHtmlRenderer implements ExportRendererInterface
 {
-    public function getIcon(): string
-    {
-        return 'print';
-    }
-
     public function getTitle(): string
     {
         return 'print';

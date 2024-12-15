@@ -36,7 +36,6 @@ class PdfRendererTest extends AbstractRendererTest
 
         $this->assertEquals('pdf', $sut->getId());
         $this->assertEquals('pdf', $sut->getTitle());
-        $this->assertEquals('pdf', $sut->getIcon());
         $this->assertEquals([], $sut->getPdfOptions());
 
         $sut->setPdfOption('foo', 'bar');

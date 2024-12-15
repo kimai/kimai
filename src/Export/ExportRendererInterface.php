@@ -30,10 +30,5 @@ interface ExportRendererInterface
     /**
      * @return string
      */
-    public function getIcon(): string;
-
-    /**
-     * @return string
-     */
     public function getTitle(): string;
 }

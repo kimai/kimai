@@ -19,13 +19,10 @@ interface TimesheetExportInterface
 {
     /**
      * @param Timesheet[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
      */
     public function render(array $timesheets, TimesheetQuery $query): Response;
 
-    /**
-     * @return string
-     */
     public function getId(): string;
+
+    public function getTitle(): string;
 }

@@ -19,10 +19,12 @@ final class HtmlRenderer extends BaseHtmlRenderer implements TimesheetExportInte
         return 'timesheet/export.html.twig';
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
+    {
+        return 'print';
+    }
+
+    public function getTitle(): string
     {
         return 'print';
     }
