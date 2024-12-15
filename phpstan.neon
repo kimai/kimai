@@ -988,11 +988,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Parameter \\#1 \\$id of method App\\\\Export\\\\ServiceExport\\:\\:getTimesheetExporterById\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^PHPDoc tag @var for variable \\$teams contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Controller/TimesheetTeamController.php
