@@ -42,7 +42,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'dropdown-item action-xlsx-spout toolbar-action' => $this->createUrl('/timesheet/export/xlsx-spout'),
             'dropdown-item action-csv toolbar-action' => $this->createUrl('/timesheet/export/csv'),
             'dropdown-item action-print toolbar-action' => $this->createUrl('/timesheet/export/print'),
             'dropdown-item action-pdf toolbar-action' => $this->createUrl('/timesheet/export/pdf'),
