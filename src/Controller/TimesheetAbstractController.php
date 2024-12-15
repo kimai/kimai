@@ -23,7 +23,6 @@ use App\Form\MultiUpdate\TimesheetMultiUpdate;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
 use App\Form\TimesheetPreCreateForm;
-use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -34,7 +33,6 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -237,19 +235,22 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function export(Request $request, ServiceExport $serviceExport): Response
+    protected function export(string $type, Request $request, ServiceExport $serviceExport): Response
     {
+        $exporter = $serviceExport->getTimesheetExporterById($type);
+
+        if (null === $exporter) {
+            throw $this->createNotFoundException();
+        }
+
         $query = $this->createDefaultQuery();
         $query->setOrder(BaseQuery::ORDER_ASC);
 
-        $form = $this->getExportForm($query);
-
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $request->query->set('performSearch', true);
-        }
+        $form = $this->getToolbarForm($query);
+        $request->query->set('performSearch', true);
 
         if ($this->handleSearch($form, $request)) {
-            return $this->redirectToRoute($this->getExportRoute());
+            return $this->redirectToRoute($this->getTimesheetRoute());
         }
 
         $this->prepareQuery($query);
@@ -263,29 +264,8 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         $entries = $this->repository->getTimesheetResult($query);
-        $stats = $entries->getStatistic();
 
-        // perform the real export
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $type = $request->request->get('exporter');
-            if (null !== $type) {
-                $exporter = $serviceExport->getTimesheetExporterById($type);
-
-                if (null === $exporter) {
-                    $form->addError(new FormError('Invalid timesheet exporter given'));
-                } else {
-                    return $exporter->render($entries->getResults(), $query);
-                }
-            }
-        }
-
-        return $this->render('timesheet/layout-export.html.twig', [
-            'page_setup' => new PageSetup('export'),
-            'form' => $form->createView(),
-            'route_back' => $this->getTimesheetRoute(),
-            'exporter' => $serviceExport->getTimesheetExporter(),
-            'stats' => $stats,
-        ]);
+        return $exporter->render($entries->getResults(), $query);
     }
 
     protected function multiUpdate(Request $request): Response
@@ -548,16 +528,6 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    private function getExportForm(TimesheetQuery $query): FormInterface
-    {
-        return $this->createSearchForm(TimesheetExportToolbarForm::class, $query, [
-            'action' => $this->generateUrl($this->getExportRoute()),
-            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'method' => Request::METHOD_POST,
-            'include_user' => $this->includeUserInForms('toolbar'),
-        ]);
-    }
-
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_own_timesheet';
@@ -609,11 +579,6 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getMultiDeleteRoute(): string
     {
         return 'timesheet_multi_delete';
-    }
-
-    protected function getExportRoute(): string
-    {
-        return 'timesheet_export';
     }
 
     protected function canSeeStartEndTime(): bool

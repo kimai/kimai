@@ -14,11 +14,6 @@ use App\Export\RendererInterface;
 
 final class XlsxRenderer extends BaseXlsxRenderer implements RendererInterface
 {
-    public function getIcon(): string
-    {
-        return 'xlsx';
-    }
-
     public function getTitle(): string
     {
         return 'xlsx';

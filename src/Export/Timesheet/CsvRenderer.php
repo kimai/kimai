@@ -14,4 +14,8 @@ use App\Export\TimesheetExportInterface;
 
 final class CsvRenderer extends BaseCsvRenderer implements TimesheetExportInterface
 {
+    public function getTitle(): string
+    {
+        return 'csv';
+    }
 }

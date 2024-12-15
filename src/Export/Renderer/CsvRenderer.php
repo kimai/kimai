@@ -14,11 +14,6 @@ use App\Export\RendererInterface;
 
 final class CsvRenderer extends BaseCsvRenderer implements RendererInterface
 {
-    public function getIcon(): string
-    {
-        return 'csv';
-    }
-
     public function getTitle(): string
     {
         return 'csv';

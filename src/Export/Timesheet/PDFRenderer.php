@@ -14,4 +14,8 @@ use App\Export\TimesheetExportInterface;
 
 final class PDFRenderer extends BasePDFRenderer implements TimesheetExportInterface
 {
+    public function getTitle(): string
+    {
+        return 'pdf';
+    }
 }
