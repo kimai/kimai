@@ -26,6 +26,7 @@ class XlsxRendererTest extends AbstractRendererTest
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
         $this->assertEquals('xlsx', $sut->getId());
+        $this->assertEquals('xlsx', $sut->getTitle());
     }
 
     public function testRender(): void

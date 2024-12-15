@@ -35,6 +35,7 @@ class PdfRendererTest extends AbstractRendererTest
         );
 
         $this->assertEquals('pdf', $sut->getId());
+        $this->assertEquals('pdf', $sut->getTitle());
     }
 
     public function testRender(): void
