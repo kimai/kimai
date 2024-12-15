@@ -43,9 +43,13 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'download modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
             'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
+//            'dropdown-item action-xlsx-spout toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx-spout'),
+//            'dropdown-item action-csv toolbar-action' => $this->createUrl('/team/timesheet/export/csv'),
+//            'dropdown-item action-print toolbar-action' => $this->createUrl('/team/timesheet/export/print'),
+//            'dropdown-item action-pdf toolbar-action' => $this->createUrl('/team/timesheet/export/pdf'),
+//            'dropdown-item action-xlsx toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx'),
         ]);
     }
 
@@ -136,12 +140,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/team/timesheet/export/');
+        $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
-        $client->submitForm('export-btn-print', [
+        $form = $client->getCrawler()->filter('form.searchform')->form();
+        $form->getNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
+        $client->submit($form, [
             'state' => 1,
             'daterange' => $dateRange,
             'customers' => [],
