@@ -50,11 +50,11 @@ final class TimesheetTeamController extends TimesheetAbstractController
         return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
-    #[Route(path: '/export/', name: 'admin_timesheet_export', methods: ['GET', 'POST'])]
+    #[Route(path: '/export/{exporter}', name: 'admin_timesheet_export', methods: ['GET', 'POST'])]
     #[IsGranted('export_other_timesheet')]
-    public function exportAction(Request $request, ServiceExport $serviceExport): Response
+    public function exportAction(string $exporter, Request $request, ServiceExport $serviceExport): Response
     {
-        return $this->export($request, $serviceExport);
+        return $this->export($exporter, $request, $serviceExport);
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_timesheet_edit', methods: ['GET', 'POST'])]
@@ -231,11 +231,6 @@ final class TimesheetTeamController extends TimesheetAbstractController
     protected function getEditRoute(): string
     {
         return 'admin_timesheet_edit';
-    }
-
-    protected function getExportRoute(): string
-    {
-        return 'admin_timesheet_export';
     }
 
     protected function getMultiUpdateRoute(): string

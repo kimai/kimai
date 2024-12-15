@@ -14,4 +14,8 @@ use App\Export\TimesheetExportInterface;
 
 final class XlsxRenderer extends BaseXlsxRenderer implements TimesheetExportInterface
 {
+    public function getTitle(): string
+    {
+        return 'xlsx';
+    }
 }

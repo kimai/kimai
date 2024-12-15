@@ -41,8 +41,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
-            'download modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
+            'dropdown-item action-csv toolbar-action' => $this->createUrl('/timesheet/export/csv'),
+            'dropdown-item action-print toolbar-action' => $this->createUrl('/timesheet/export/print'),
+            'dropdown-item action-pdf toolbar-action' => $this->createUrl('/timesheet/export/pdf'),
+            'dropdown-item action-xlsx toolbar-action' => $this->createUrl('/timesheet/export/xlsx'),
         ]);
     }
 
@@ -155,12 +158,14 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/timesheet/export/');
+        $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
-        $client->submitForm('export-btn-print', [
+        $form = $client->getCrawler()->filter('form.searchform')->form();
+        $form->getNode()->setAttribute('action', $this->createUrl('/timesheet/export/print'));
+        $client->submit($form, [
             'state' => 1,
             'daterange' => $dateRange,
             'customers' => [],
@@ -175,6 +180,13 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $result = $node->filter('section.invoice table.table tbody tr');
         $this->assertEquals(5, \count($result));
+    }
+
+    public function testExporterNotFoundAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/timesheet/export/notfound');
+        $this->assertRouteNotFound($client);
     }
 
     public function testCreateAction(): void

@@ -41,11 +41,11 @@ final class TimesheetController extends TimesheetAbstractController
         return $this->index($query, $request, 'timesheet', 'timesheet_paginated', TimesheetMetaDisplayEvent::TIMESHEET);
     }
 
-    #[Route(path: '/export/', name: 'timesheet_export', methods: ['GET', 'POST'])]
+    #[Route(path: '/export/{exporter}', name: 'timesheet_export', methods: ['GET', 'POST'])]
     #[IsGranted('export_own_timesheet')]
-    public function exportAction(Request $request, ServiceExport $serviceExport): Response
+    public function exportAction(string $exporter, Request $request, ServiceExport $serviceExport): Response
     {
-        return $this->export($request, $serviceExport);
+        return $this->export($exporter, $request, $serviceExport);
     }
 
     #[Route(path: '/{id}/edit', name: 'timesheet_edit', methods: ['GET', 'POST'])]
