@@ -182,6 +182,13 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(5, \count($result));
     }
 
+    public function testExporterNotFoundAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/timesheet/export/notfound');
+        $this->assertRouteNotFound($client);
+    }
+
     public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
