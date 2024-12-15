@@ -172,9 +172,7 @@ class ExportControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/export/data', 'POST');
-
-        $response = $client->getResponse();
-        $this->assert404($response, 'Missing export renderer');
+        $this->assertRouteNotFound($client);
     }
 
     public function testExportActionWithInvalidRenderer(): void
@@ -193,8 +191,7 @@ class ExportControllerTest extends ControllerBaseTest
             'renderer' => 'default'
         ]);
 
-        $response = $client->getResponse();
-        $this->assert404($response, 'Unknown export renderer');
+        $this->assertRouteNotFound($client);
     }
 
     public function testExportAction(): void
