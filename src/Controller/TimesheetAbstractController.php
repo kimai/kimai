@@ -23,7 +23,6 @@ use App\Form\MultiUpdate\TimesheetMultiUpdate;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Form\TimesheetEditForm;
 use App\Form\TimesheetPreCreateForm;
-use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -247,7 +246,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $query = $this->createDefaultQuery();
         $query->setOrder(BaseQuery::ORDER_ASC);
 
-        $form = $this->getExportForm($query);
+        $form = $this->getToolbarForm($query);
         $request->query->set('performSearch', true);
 
         if ($this->handleSearch($form, $request)) {
@@ -525,15 +524,6 @@ abstract class TimesheetAbstractController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'include_user' => $this->includeUserInForms('toolbar'),
-        ]);
-    }
-
-    private function getExportForm(TimesheetQuery $query): FormInterface
-    {
-        return $this->createSearchForm(TimesheetExportToolbarForm::class, $query, [
-            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'method' => Request::METHOD_GET,
             'include_user' => $this->includeUserInForms('toolbar'),
         ]);
     }
