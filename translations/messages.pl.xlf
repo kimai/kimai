@@ -208,7 +208,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Budżet czasu</target>
+        <target state="translated">Godzinową kwota</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -352,7 +352,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Utworzony</target>
+        <target state="translated">Pierwszy dzień pracy</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1456,7 +1456,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Oczekiwana liczba godzin</target>
+        <target state="translated">Oczekiwane godziny</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1535,8 +1535,8 @@
         <target state="translated">Choroba, wizyta u lekarza, opieka nad bliskimi itp.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Do tej pory wykorzystałeś %used% z %days% dostępnych dni urlopu.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Do tej pory zaproponowałeś %used% z %days% dostępnych dni urlopu.</target>
       </trans-unit>
       <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
         <source>force_password_change_help</source>
@@ -1572,7 +1572,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Czas-Pracy</target>
+        <target state="translated">Przepracowane godziny</target>
       </trans-unit>
       <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
         <source>work_times_result</source>
@@ -1712,7 +1712,7 @@
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>
-        <target state="needs-translation">Choroba dziecka</target>
+        <target state="translated">Choroba krewnego</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
         <source>public_holiday.group</source>
@@ -1873,6 +1873,70 @@
       <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
         <source>import</source>
         <target state="translated">Importuj</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Godziny dziennie</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Godziny miesięcznie</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Dni robocze</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Kalkulacja czasu pracy</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Ostatni dzień roboczy</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Godziny tygodniowo</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Zezwalaj na wpisy czasu tylko dla dni, dla których przewidywane godziny pracy są określone w umowie o pracę</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Odrzucone</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Zysk</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Przerwa</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Sesje</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Wyloguj ze wszystkich urządzeń</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Zatwierdź</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Zapytaj</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Odrzuć</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Koszt</target>
       </trans-unit>
     </body>
   </file>

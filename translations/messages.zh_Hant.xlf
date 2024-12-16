@@ -1426,9 +1426,9 @@
         <source>Overview</source>
         <target state="final">總覽</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
-        <source>holiday.intro</source>
-        <target state="final">您共有 %days% 天的可用假日，已使用 %used% 天。</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">您共有 %days% 天的可用假日，已使用 %used% 天。</target>
       </trans-unit>
       <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve" approved="yes">
         <source>export_decimal</source>

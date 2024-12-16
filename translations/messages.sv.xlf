@@ -1491,8 +1491,8 @@
         <target state="translated">Sjukdom, läkarbesök, ta hand om familjemedlemmar, etc.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Du har använt %used% av %days% semesterdagar.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Du har använt %used% av %days% semesterdagar.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
