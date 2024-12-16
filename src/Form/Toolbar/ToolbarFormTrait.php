@@ -266,7 +266,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($name, $multiProject, $activityOptions) {
+            function (FormEvent $event) use ($name, $multiProject, $activityOptions, $options) {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ActivityType::class, array_merge($activityOptions, [
@@ -299,7 +299,7 @@ trait ToolbarFormTrait
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
-                ]));
+                ], $options));
             }
         );
     }

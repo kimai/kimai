@@ -1474,10 +1474,6 @@
         <source>completed_month_pdf</source>
         <target state="translated">PDF do mês concluído</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Horas trabalhadas</target>
-      </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
         <target state="translated">Nenhuma hora-alvo foi configurada para esse usuário nas configurações do contrato de trabalho.</target>

@@ -11,6 +11,7 @@ namespace App\Utils;
 
 use App\Repository\Query\BaseQuery;
 use Pagerfanta\Adapter\AdapterInterface;
+use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
 final class Pagination extends Pagerfanta
@@ -18,6 +19,10 @@ final class Pagination extends Pagerfanta
     public function __construct(AdapterInterface $adapter, ?BaseQuery $query = null)
     {
         parent::__construct($adapter);
+
+        if ($adapter instanceof ArrayAdapter && ($size = $adapter->getNbResults()) > 0) {
+            $this->setMaxPerPage($size);
+        }
 
         if ($query === null || !$query->isApiCall()) {
             $this->setNormalizeOutOfRangePages(true);

@@ -1478,10 +1478,6 @@
         <source>manual_bookings.duration_help</source>
         <target state="translated">持续时间既可以是正的（增加的是时间）也可以是负的（减少的是时间）。</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">工作时间</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target state="translated">由 %user% 在 %date% 确认</target>

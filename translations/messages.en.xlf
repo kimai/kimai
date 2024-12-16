@@ -650,10 +650,6 @@
         <source>work_times_is</source>
         <target>Hours worked</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target>Hours worked</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target>Confirmed by %user% at %date%</target>
@@ -1937,6 +1933,14 @@
       <trans-unit id="f0kKHXR" resname="sessions_logout">
         <source>Log out of all devices</source>
         <target>Log out of all devices</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result">
+        <source>result</source>
+        <target>Result</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training">
+        <source>training</source>
+        <target>Training</target>
       </trans-unit>
     </body>
   </file>
