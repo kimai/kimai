@@ -17,10 +17,10 @@ use Twig\Environment;
 final class HtmlRendererFactory
 {
     public function __construct(
-        private Environment $twig,
-        private EventDispatcherInterface $dispatcher,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        private readonly Environment $twig,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService
     ) {
     }
 

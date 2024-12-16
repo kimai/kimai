@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 interface TimesheetExportInterface
 {
     /**
-     * @param Timesheet[] $timesheets
+     * @param Timesheet[] $exportItems
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response;
+    public function render(array $exportItems, TimesheetQuery $query): Response;
 
     public function getId(): string;
 
