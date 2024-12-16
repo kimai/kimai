@@ -1546,9 +1546,9 @@
         <source>button.report</source>
         <target state="translated">Повідомити</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Ви використали %used% з доступних %days% днів відпустки.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Ви подали %used% з Ваших доступних %days% днів відпустки.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1929,6 +1929,14 @@
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
         <target state="translated">Відхилити</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve" approved="no">
+        <source>Sessions</source>
+        <target state="translated">Сеанси</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve" approved="no">
+        <source>Log out of all devices</source>
+        <target state="translated">Вийти з усіх пристроїв</target>
       </trans-unit>
     </body>
   </file>
