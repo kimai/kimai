@@ -198,9 +198,9 @@
         <source>tags</source>
         <target>Ετικέτες</target>
       </trans-unit>
-      <trans-unit id="JGaf9IK" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
-        <target>Διαγνώσεις</target>
+        <target state="translated">Διαγνωστικά</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
@@ -1261,6 +1261,14 @@
       <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
         <target>Ακύρωση τιμολογίου</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Φίλτρο αναζήτησης</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
+        <source>remove_filter</source>
+        <target state="translated">Επαναφορά φίλτρου αναζήτησης</target>
       </trans-unit>
     </body>
   </file>

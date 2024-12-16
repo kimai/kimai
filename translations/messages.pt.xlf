@@ -1434,9 +1434,9 @@
         <source>sickness.intro</source>
         <target state="translated">Doença, consulta médica, cuidado de parentes próximos, etc.</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Você tirou %used% dos seus %days% dias de férias disponíveis até agora.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Você tirou %used% dos seus %days% dias de férias disponíveis até agora.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>

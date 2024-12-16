@@ -1566,9 +1566,9 @@
         <source>button.report</source>
         <target state="translated">דוח</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">ניצלת %used% מתוך %days% ימי החופשה העומדים לרשותך עד כה.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="final">ניצלת %used% מתוך %days% ימי החופשה העומדים לרשותך עד כה.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
