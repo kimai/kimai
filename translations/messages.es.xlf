@@ -1538,9 +1538,9 @@
         <source>work_times_result</source>
         <target state="translated">Horas trabajadas</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Has utilizado %used% de tus %days% días de vacaciones disponibles.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Has utilizado %used% de tus %days% días disponibles de vacaciones.</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
@@ -1929,6 +1929,14 @@
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
         <source>status.rejected</source>
         <target state="translated">Rechazado</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Cerrar sesión en todos los dispositivos</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Sesiones</target>
       </trans-unit>
     </body>
   </file>

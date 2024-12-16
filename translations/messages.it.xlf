@@ -1562,8 +1562,8 @@
         <source>other</source>
         <target state="final">Altro</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro" approved="yes">
-        <source>holiday.intro</source>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" approved="yes" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
         <target state="final">Finora hai usato %used% dei tuoi %days% giorni di ferie disponibili.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" approved="yes">
@@ -1929,6 +1929,14 @@
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="yes">
         <source>reject</source>
         <target state="final">Rifiuta</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve" approved="yes">
+        <source>Log out of all devices</source>
+        <target state="final">Disconnettersi da tutti i dispositivi</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve" approved="yes">
+        <source>Sessions</source>
+        <target state="final">Sessioni</target>
       </trans-unit>
     </body>
   </file>
