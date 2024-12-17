@@ -54,6 +54,7 @@ body:
             label: Which PHP version are you using?
             options:
                 - "8.1"
+                - "8.3"
                 - Unknown
                 - "8.2"
                 - "8.0"
