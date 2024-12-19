@@ -33,25 +33,18 @@ class HtmlRenderer
 {
     use RendererTrait;
 
-    /**
-     * @var string
-     */
-    private $id = 'html';
-    /**
-     * @var string
-     */
-    private $template = 'default.html.twig';
+    private string $id = 'html';
+    private string $template = 'default.html.twig';
 
     public function __construct(
-        protected Environment $twig,
-        protected EventDispatcherInterface $dispatcher,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        protected readonly Environment $twig,
+        protected readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService
     ) {
     }
 
     /**
-     * @param MetaDisplayEventInterface $event
      * @return MetaTableTypeInterface[]
      */
     protected function findMetaColumns(MetaDisplayEventInterface $event): array
@@ -75,11 +68,6 @@ class HtmlRenderer
 
     /**
      * @param ExportableItem[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
@@ -123,18 +111,14 @@ class HtmlRenderer
         return '@export/' . $this->template;
     }
 
-    public function setTemplate(string $filename): HtmlRenderer
+    public function setTemplate(string $filename): void
     {
         $this->template = $filename;
-
-        return $this;
     }
 
-    public function setId(string $id): HtmlRenderer
+    public function setId(string $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     public function getId(): string
