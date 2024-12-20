@@ -1506,9 +1506,9 @@
         <source>other</source>
         <target state="translated">Anders</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Je hebt %used% van je beschikbare %days% vakantiedagen tot nu toe opgenomen.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Je hebt %used% van je beschikbare %days% vakantiedagen tot nu toe opgenomen.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
         <source>time_off.intro</source>
