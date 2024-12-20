@@ -7,41 +7,60 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Export\Base;
 
-use App\Export\Renderer\CsvRenderer;
+use App\Entity\User;
+use App\Export\Base\CsvRenderer;
+use App\Export\Base\SpreadsheetRenderer;
+use App\Tests\Export\Renderer\AbstractRendererTest;
+use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @covers \App\Export\Base\CsvRenderer
- * @covers \App\Export\Base\AbstractSpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\CsvRenderer
  * @group integration
  */
 class CsvRendererTest extends AbstractRendererTest
 {
+    protected function getAbstractRenderer(): CsvRenderer
+    {
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('isGranted')->willReturn(true);
+
+        $translator = $this->createMock(TranslatorInterface::class);
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+
+        return new CsvRenderer(new SpreadsheetRenderer($translator, $dispatcher, $security));
+    }
+
     public function testConfiguration(): void
     {
-        $sut = $this->getAbstractRenderer(CsvRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         $this->assertEquals('csv', $sut->getId());
         $this->assertEquals('csv', $sut->getTitle());
     }
 
-    public function getTestModel()
+    public function getTestModel(): array
     {
         return [
-            ['400', '2437.12', ' EUR 1,947.99 ', 7, 6, 1, 2, 2]
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2]
         ];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender($totalDuration, $totalRate, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
+    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3): void
     {
-        $sut = $this->getAbstractRenderer(CsvRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
@@ -53,17 +72,19 @@ class CsvRendererTest extends AbstractRendererTest
 
         $this->assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());
+        self::assertIsString($content);
 
-        $this->assertStringContainsString('"' . $expectedRate . '"', $content);
+        $this->assertStringContainsString($expectedRate, $content);
         $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
-        $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
-        $this->assertEquals($expectedUser1, substr_count($content, ',"kevin",'));
-        $this->assertEquals($expectedUser3, substr_count($content, ',"hello-world",'));
-        $this->assertEquals($expectedUser2, substr_count($content, ',"foo-bar",'));
+        $this->assertEquals($expectedDescriptions, substr_count($content, '"activity description"'));
+        $this->assertEquals($expectedUser1, substr_count($content, ',kevin,'));
+        $this->assertEquals($expectedUser3, substr_count($content, ',hello-world,'));
+        $this->assertEquals($expectedUser2, substr_count($content, ',foo-bar,'));
 
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
+        self::assertIsString($content2);
 
         $this->assertEquals($content, $content2);
         $this->assertFalse(file_exists($file->getRealPath()));
@@ -71,6 +92,7 @@ class CsvRendererTest extends AbstractRendererTest
         $all = [];
         $rows = str_getcsv($content2, PHP_EOL);
         foreach ($rows as $row) {
+            self::assertIsString($row);
             $all[] = str_getcsv($row);
         }
 
@@ -78,70 +100,70 @@ class CsvRendererTest extends AbstractRendererTest
             '2019-06-16',
             '12:00',
             '12:06',
-            '400',
+            '0.11',
+            'EUR',
             '0',
-            '',
-            'kevin',
+            '0',
+            '0',
+            '84',
             'kevin',
             '',
             'Customer Name',
             'project name',
             'activity description',
             '',
+            '1',
+            'foo, bar',
+            'timesheet',
+            'work',
+            'A-0123456789',
             '',
-            '',
-            'foo,bar',
-            '',
-            ' EUR 84.00 ',
+            'DE-9876543210',
+            'ORDER-123',
             'meta-bar',
             'meta-bar2',
             'customer-bar',
             '',
             'project-foo2',
             'activity-bar',
-            'timesheet',
-            'work',
-            'A-0123456789',
-            'DE-9876543210',
-            'ORDER-123',
         ];
 
         $expected2 = [
             '2019-06-16',
             '12:00',
             '12:06',
-            '400',
+            '0.11',
+            'EUR',
             '0',
-            '',
-            'nivek',
+            '0',
+            '0',
+            '-100.92',
             'nivek',
             '',
             'Customer Name',
             'project name',
             'activity description',
             '',
+            '1',
             '',
+            'timesheet',
+            'work',
+            'A-0123456789',
             '',
-            '',
-            '',
-            ' EUR -100.92',
+            'DE-9876543210',
+            'ORDER-123',
             '',
             '',
             'customer-bar',
             '',
             'project-foo2',
             'activity-bar',
-            'timesheet',
-            'work',
-            'A-0123456789',
-            'DE-9876543210',
-            'ORDER-123',
         ];
 
         self::assertEquals(7, \count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals($expected2, $all[6]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][15]);
+        self::assertEquals('foo', $all[4][16]);
     }
 }

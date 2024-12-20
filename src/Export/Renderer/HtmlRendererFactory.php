@@ -10,6 +10,7 @@
 namespace App\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
+use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;

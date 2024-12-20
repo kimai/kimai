@@ -9,6 +9,7 @@
 
 namespace App\Export\Renderer;
 
+use App\Export\Base\PDFRenderer;
 use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
 use Twig\Environment;

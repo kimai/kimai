@@ -18,6 +18,7 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportRendererInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
@@ -29,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class HtmlRenderer
+class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;
 
@@ -124,5 +125,10 @@ class HtmlRenderer
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return 'print';
     }
 }
