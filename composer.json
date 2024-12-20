@@ -41,6 +41,7 @@
         "nelmio/api-doc-bundle": "^4.0",
         "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^4.0",
+        "openspout/openspout": "^4.0",
         "pagerfanta/pagerfanta": "^3.0",
         "phpoffice/phpspreadsheet": "^2.0",
         "phpoffice/phpword": "^1.0",
