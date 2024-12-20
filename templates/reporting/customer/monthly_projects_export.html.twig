@@ -10,21 +10,21 @@
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
     {% block project_activity %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
     {% block project_total %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
             {{ value|money(currency) }}
         {% else %}
-            {{ value / 3600 }}
+            {{ value|duration(true) }}
         {% endif %}
     {% endblock %}
 {% endembed %}

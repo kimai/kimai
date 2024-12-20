@@ -9,16 +9,16 @@
         {{ userPeriod.user.displayName|sanitize_dde }}
     {% endblock %}
     {% block duration -%}
-        {{ period.totalDuration / 3600 }}
+        {{ period.totalDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration -%}
-        {{ absoluteDuration / 3600 }}
+        {{ absoluteDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration_user -%}
-        {{ usersTotalDuration / 3600 }}
+        {{ usersTotalDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration_period -%}
-        {{ total / 3600 }}
+        {{ total|duration(true) }}
     {%- endblock %}
     {% block rate %}
         {{ period.totalRate }}
