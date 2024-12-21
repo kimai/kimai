@@ -1,10 +1,4 @@
 {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'decimal': true, 'stats': stats, 'dataType': dataType} only %}
-    {% set dataTypeFormat = null %}
-    {% if dataType == 'rate' or dataType == 'internalRate' %}
-        {% set dataTypeFormat = '#,##0.00;-#,##0.00' %}
-    {% elseif dataType == 'duration' %}
-        {% set dataTypeFormat = '#0.00' %}
-    {% endif %}
     {% set rowspanStyle = 'vertical-align:center' %}
     {% block user_activity %}
         {% if dataType == 'rate' or dataType == 'internalRate' %}
