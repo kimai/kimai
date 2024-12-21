@@ -72,7 +72,7 @@ Silakan tinjau di: %url%</target>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
         <source>approval_rejected_message</source>
-        <target state="translated">Permintaan otorisasi Anda telah ditolak oleh %user%.
+        <target state="translated">Permintaan otorisasi Anda telah ditolak oleh %created_by%.
 
 %list%
 
@@ -84,7 +84,7 @@ Silakan tinjau permintaan Anda di: %url%</target>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
         <source>approval_approved_message</source>
-        <target state="translated">Permintaan Anda telah disetujui oleh %user%.
+        <target state="translated">Permintaan Anda telah disetujui oleh %created_by%.
 
 %list%
 

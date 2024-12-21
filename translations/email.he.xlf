@@ -68,7 +68,7 @@ Please review them at: %url%</source>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve" approved="yes">
         <source>approval_rejected_message</source>
-        <target state="final">בקשת האימות נדחתה על ידי המשתמש %user%.
+        <target state="final">בקשת האימות נדחתה על ידי המשתמש %created_by%.
 
 %list%
 
@@ -84,7 +84,7 @@ Please review them at: %url%</source>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve" approved="yes">
         <source>approval_approved_message</source>
-        <target state="final">הבקשה שלך אושרה על ידי %user%.
+        <target state="final">הבקשה שלך אושרה על ידי %created_by%.
 
 %list%
 

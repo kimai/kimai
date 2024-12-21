@@ -459,7 +459,7 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->resetDQLPart('select')
             ->resetDQLPart('orderBy')
-            ->select($qb->expr()->count('t.id'))
+            ->select($qb->expr()->count('t'))
         ;
 
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
@@ -868,7 +868,7 @@ class TimesheetRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
-            ->select($qb->expr()->count('t.id'))
+            ->select($qb->expr()->count('t'))
             ->from(Timesheet::class, 't')
         ;
 

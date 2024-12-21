@@ -64,7 +64,7 @@ Por favor revísalos en: %url%</target>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve" approved="no">
         <source>approval_rejected_message</source>
-        <target state="translated">Su solicitud de autorización ha sido rechazada por %user%.
+        <target state="translated">Su solicitud de autorización ha sido rechazada por %created_by%.
 
 %list%
 
@@ -80,7 +80,7 @@ Por favor revise sus solicitudes en: %url%</target>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve" approved="no">
         <source>approval_approved_message</source>
-        <target state="translated">Su solicitud ha sido aprobada por %user%.
+        <target state="translated">Su solicitud ha sido aprobada por %created_by%.
 
 %list%
 
