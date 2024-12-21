@@ -22,6 +22,6 @@ class ActivityMetaDefinitionEventTest extends TestCase
     {
         $activity = new Activity();
         $sut = new ActivityMetaDefinitionEvent($activity);
-        $this->assertSame($activity, $sut->getEntity());
+        self::assertSame($activity, $sut->getEntity());
     }
 }

@@ -29,6 +29,6 @@ class CustomerDetailControllerEventTest extends AbstractCustomerEventTestCase
         /** @var CustomerDetailControllerEvent $event */
         $event = $this->createCustomerEvent(new Customer('foo'));
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

@@ -31,12 +31,12 @@ abstract class AbstractActionsSubscriberTestCase extends TestCase
 
     public function assertGetSubscribedEvent(string $className, string $name): void
     {
-        $this->assertTrue(method_exists($className, 'getSubscribedEvents'));
+        self::assertTrue(method_exists($className, 'getSubscribedEvents'));
         $events = $className::getSubscribedEvents();
         $actionName = array_keys($events)[0];
         $config = $events[$actionName];
-        $this->assertEquals('actions.' . $name, $actionName);
-        $this->assertTrue(method_exists($className, $config[0]));
-        $this->assertEquals(1000, $config[1]);
+        self::assertEquals('actions.' . $name, $actionName);
+        self::assertTrue(method_exists($className, $config[0]));
+        self::assertEquals(1000, $config[1]);
     }
 }

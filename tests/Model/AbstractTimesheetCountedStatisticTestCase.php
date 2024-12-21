@@ -34,7 +34,7 @@ abstract class AbstractTimesheetCountedStatisticTestCase extends TestCase
         self::assertSame(0, $sut->getCounterExported());
 
         $json = $sut->jsonSerialize();
-        $this->assertIsArray($json);
+        self::assertIsArray($json);
 
         $expected = [
             'duration' => 0,
@@ -122,7 +122,7 @@ abstract class AbstractTimesheetCountedStatisticTestCase extends TestCase
         $sut->setInternalRateExported(27.15);
 
         $json = $sut->jsonSerialize();
-        $this->assertIsArray($json);
+        self::assertIsArray($json);
         foreach (['duration', 'duration_billable', 'duration_exported', 'rate', 'rate_billable', 'rate_billable_exported', 'rate_exported', 'rate_internal', 'amount', 'amount_billable', 'amount_exported'] as $key) {
             self::assertArrayHasKey($key, $json);
         }

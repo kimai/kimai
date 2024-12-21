@@ -89,6 +89,6 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals($keys, $givenKeys);
+        self::assertEquals($keys, $givenKeys);
     }
 }

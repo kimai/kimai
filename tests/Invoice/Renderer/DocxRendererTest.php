@@ -26,12 +26,12 @@ class DocxRendererTest extends TestCase
     {
         $sut = $this->getAbstractRenderer(DocxRenderer::class);
 
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('company.docx', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
+        self::assertTrue($sut->supports($this->getInvoiceDocument('company.docx', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
     public function testRender(): void
@@ -45,16 +45,16 @@ class DocxRendererTest extends TestCase
 
         $filename = $model->getInvoiceNumber() . '-customer_with_special_name.docx';
         $file = $response->getFile();
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
-        $this->assertTrue(file_exists($file->getPathname()));
+        self::assertTrue(file_exists($file->getPathname()));
 
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
-        $this->assertNotEmpty($content2);
+        self::assertNotEmpty($content2);
 
-        $this->assertFalse(file_exists($file->getRealPath()));
+        self::assertFalse(file_exists($file->getRealPath()));
     }
 }

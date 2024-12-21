@@ -90,14 +90,14 @@ class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCa
         $this->assertAccessIsGranted($client, '/reporting/customer/monthly_projects/export');
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         // temporary file!
         $file = $response->getFile();
         self::assertFileDoesNotExist($response->getFile());
 
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
     }
 }

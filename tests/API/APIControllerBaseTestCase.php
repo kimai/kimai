@@ -50,15 +50,15 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
     protected function assertPagination(Response $response, int $page, int $pageSize, int $totalPages, int $totalResults): void
     {
-        $this->assertTrue($response->headers->has('X-Page'), 'Missing "X-Page" header');
-        $this->assertTrue($response->headers->has('X-Total-Count'), 'Missing "X-Total-Count" header');
-        $this->assertTrue($response->headers->has('X-Total-Pages'), 'Missing "X-Total-Pages" header');
-        $this->assertTrue($response->headers->has('X-Per-Page'), 'Missing "X-Per-Page" header');
+        self::assertTrue($response->headers->has('X-Page'), 'Missing "X-Page" header');
+        self::assertTrue($response->headers->has('X-Total-Count'), 'Missing "X-Total-Count" header');
+        self::assertTrue($response->headers->has('X-Total-Pages'), 'Missing "X-Total-Pages" header');
+        self::assertTrue($response->headers->has('X-Per-Page'), 'Missing "X-Per-Page" header');
 
-        $this->assertEquals($page, $response->headers->get('X-Page'));
-        $this->assertEquals($totalResults, $response->headers->get('X-Total-Count'));
-        $this->assertEquals($totalPages, $response->headers->get('X-Total-Pages'));
-        $this->assertEquals($pageSize, $response->headers->get('X-Per-Page'));
+        self::assertEquals($page, $response->headers->get('X-Page'));
+        self::assertEquals($totalResults, $response->headers->get('X-Total-Count'));
+        self::assertEquals($totalPages, $response->headers->get('X-Total-Pages'));
+        self::assertEquals($pageSize, $response->headers->get('X-Per-Page'));
     }
 
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
@@ -242,7 +242,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
         if (\count($expectedFields) > 0) {
             foreach ($expectedFields as $expectedField) {
-                $this->assertArrayHasKey($expectedField, $data, 'Expected field is missing: ' . $expectedField);
+                self::assertArrayHasKey($expectedField, $data, 'Expected field is missing: ' . $expectedField);
             }
         }
 

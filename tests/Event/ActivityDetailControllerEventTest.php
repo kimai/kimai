@@ -29,6 +29,6 @@ class ActivityDetailControllerEventTest extends AbstractActivityEventTestCase
         /** @var ActivityDetailControllerEvent $event */
         $event = $this->createActivityEvent(new Activity());
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

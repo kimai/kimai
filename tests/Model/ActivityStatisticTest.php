@@ -41,7 +41,7 @@ class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 
         $activity = new Activity();
         $sut->setActivity($activity);
-        $this->assertEquals($activity, $sut->getActivity());
+        self::assertEquals($activity, $sut->getActivity());
 
         self::assertNull($sut->getColor());
         self::assertNull($sut->getName());

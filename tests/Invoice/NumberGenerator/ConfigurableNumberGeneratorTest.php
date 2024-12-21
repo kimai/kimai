@@ -203,8 +203,8 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $model->setUser($user);
         $sut->setModel($model);
 
-        $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
-        $this->assertEquals('default', $sut->getId());
+        self::assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
+        self::assertEquals('default', $sut->getId());
     }
 
     /**

@@ -25,7 +25,7 @@ class DashboardEventTest extends TestCase
 
         $sut = new DashboardEvent($user);
 
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
 
         $sut->addWidget('test');
         $sut->addWidget('test2', 5);
@@ -33,6 +33,6 @@ class DashboardEventTest extends TestCase
         $sut->addWidget('test4', 10);
         $sut->addWidget('test5', 5);
 
-        $this->assertSame([0 => 'test', 5 => 'test2', 6 => 'test5', 10 => 'test4', 45 => 'test3'], $sut->getWidgets());
+        self::assertSame([0 => 'test', 5 => 'test2', 6 => 'test5', 10 => 'test4', 45 => 'test3'], $sut->getWidgets());
     }
 }

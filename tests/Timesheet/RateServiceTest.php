@@ -53,7 +53,7 @@ class RateServiceTest extends TestCase
 
         $sut = new RateService([], $this->getRateRepositoryMock());
         $rate = $sut->calculate($record);
-        $this->assertEquals(50, $rate->getRate());
+        self::assertEquals(50, $rate->getRate());
     }
 
     public function testCalculateWithTimesheetFixedRate(): void
@@ -69,7 +69,7 @@ class RateServiceTest extends TestCase
 
         $sut = new RateService([], $this->getRateRepositoryMock());
         $rate = $sut->calculate($record);
-        $this->assertEquals(10, $rate->getRate());
+        self::assertEquals(10, $rate->getRate());
     }
 
     public static function getRateTestData()
@@ -180,8 +180,8 @@ class RateServiceTest extends TestCase
 
         $sut = new RateService([], $this->getRateRepositoryMock($rates));
         $rate = $sut->calculate($timesheet);
-        $this->assertEquals($expectedRate, $rate->getRate());
-        $this->assertEquals($expectedInternalRate, $rate->getInternalRate());
+        self::assertEquals($expectedRate, $rate->getRate());
+        self::assertEquals($expectedInternalRate, $rate->getInternalRate());
     }
 
     protected function getTestUser($rate = 75, $internalRate = 75)
@@ -205,11 +205,11 @@ class RateServiceTest extends TestCase
         $record->setHourlyRate(100);
         $record->setActivity(new Activity());
 
-        $this->assertEquals(0, $record->getRate());
+        self::assertEquals(0, $record->getRate());
 
         $sut = new RateService([], $this->getRateRepositoryMock());
         $rate = $sut->calculate($record);
-        $this->assertEquals(0, $rate->getRate());
+        self::assertEquals(0, $rate->getRate());
     }
 
     /**
@@ -229,14 +229,14 @@ class RateServiceTest extends TestCase
         $record->setDuration($duration);
         $record->setActivity(new Activity());
 
-        $this->assertEquals(0, $record->getRate());
+        self::assertEquals(0, $record->getRate());
 
         $record->setEnd($end);
 
         $sut = new RateService($rules, $this->getRateRepositoryMock());
         $rate = $sut->calculate($record);
 
-        $this->assertEquals($expectedRate, $rate->getRate());
+        self::assertEquals($expectedRate, $rate->getRate());
     }
 
     public static function getRuleDefinitions()

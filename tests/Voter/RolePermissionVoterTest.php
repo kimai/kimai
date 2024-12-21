@@ -29,7 +29,7 @@ class RolePermissionVoterTest extends AbstractVoterTestCase
         $sut = $this->getVoter(RolePermissionVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);
-        $this->assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
+        self::assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
     public static function getTestData()

@@ -28,7 +28,7 @@ class TeamQueryTest extends BaseQueryTest
 
     public function assertUsers(TeamQuery $sut): void
     {
-        $this->assertEmpty($sut->getUsers());
+        self::assertEmpty($sut->getUsers());
 
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(1);

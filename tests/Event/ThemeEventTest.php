@@ -21,9 +21,9 @@ class ThemeEventTest extends TestCase
     public function testEmpty(): void
     {
         $sut = new ThemeEvent();
-        $this->assertNull($sut->getUser());
-        $this->assertIsArray($sut->getPayload());
-        $this->assertEquals('', $sut->getContent());
+        self::assertNull($sut->getUser());
+        self::assertIsArray($sut->getPayload());
+        self::assertEquals('', $sut->getContent());
     }
 
     public function testDefaultValues(): void
@@ -33,7 +33,7 @@ class ThemeEventTest extends TestCase
 
         $sut = new ThemeEvent($user);
 
-        $this->assertSame($user, $sut->getUser());
+        self::assertSame($user, $sut->getUser());
     }
 
     public function testGetterAndSetter(): void
@@ -44,14 +44,14 @@ class ThemeEventTest extends TestCase
         $payload = ['foo' => null, '' => '', 'test' => 'test', 'class' => new \stdClass()];
 
         $sut = new ThemeEvent($user, $payload);
-        $this->assertEquals($payload, $sut->getPayload());
+        self::assertEquals($payload, $sut->getPayload());
 
         $sut = new ThemeEvent($user);
         $sut->addContent('foo');
-        $this->assertEquals('foo', $sut->getContent());
+        self::assertEquals('foo', $sut->getContent());
 
         $sut->addContent('<script>');
-        $this->assertEquals('foo<script>', $sut->getContent());
+        self::assertEquals('foo<script>', $sut->getContent());
     }
 
     /**
@@ -65,6 +65,6 @@ class ThemeEventTest extends TestCase
         $payload = ['foo' => null, '' => '', 'test' => 'test', 'class' => new \stdClass()];
 
         $sut = new ThemeEvent($user, $payload);
-        $this->assertEquals($payload, $sut->getPayload());
+        self::assertEquals($payload, $sut->getPayload());
     }
 }

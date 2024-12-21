@@ -21,14 +21,14 @@ class GoogleSourceTest extends TestCase
     {
         $sut = new GoogleSource('0815', 'askdjfhlaksjdhflaksjhdflkjasdlkfjh', '#fffccc');
 
-        $this->assertEquals('0815', $sut->getId());
-        $this->assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
-        $this->assertEquals('#fffccc', $sut->getColor());
+        self::assertEquals('0815', $sut->getId());
+        self::assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
+        self::assertEquals('#fffccc', $sut->getColor());
 
         $sut = new GoogleSource('0815', 'askdjfhlaksjdhflaksjhdflkjasdlkfjh', null);
 
-        $this->assertEquals('0815', $sut->getId());
-        $this->assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
-        $this->assertNull($sut->getColor());
+        self::assertEquals('0815', $sut->getId());
+        self::assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
+        self::assertNull($sut->getColor());
     }
 }

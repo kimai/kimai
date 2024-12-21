@@ -35,8 +35,8 @@ class DatatableExtensionsTest extends TestCase
         self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         foreach ($twigFunctions as $function) {
-            $this->assertInstanceOf(TwigFunction::class, $function);
-            $this->assertEquals($functions[$i++], $function->getName());
+            self::assertInstanceOf(TwigFunction::class, $function);
+            self::assertEquals($functions[$i++], $function->getName());
         }
     }
 }

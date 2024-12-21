@@ -44,8 +44,8 @@ class DurationTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expected, $model);
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expected, $model);
     }
 
     public function testPresetPopulatesView(): void

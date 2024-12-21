@@ -39,7 +39,7 @@ class VersionCommandTest extends KernelTestCase
     {
         $commandTester = $this->getCommandTester($options);
         $output = $commandTester->getDisplay();
-        $this->assertEquals($result . PHP_EOL, $output);
+        self::assertEquals($result . PHP_EOL, $output);
     }
 
     public static function getTestData(): array // @phpstan-ignore missingType.iterableValue

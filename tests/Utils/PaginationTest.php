@@ -22,18 +22,18 @@ class PaginationTest extends TestCase
     public function testDefaults(): void
     {
         $sut = new Pagination(new ArrayAdapter([]));
-        $this->assertEquals(1, $sut->getCurrentPage());
-        $this->assertEquals(10, $sut->getMaxPerPage());
-        $this->assertTrue($sut->getNormalizeOutOfRangePages());
+        self::assertEquals(1, $sut->getCurrentPage());
+        self::assertEquals(10, $sut->getMaxPerPage());
+        self::assertTrue($sut->getNormalizeOutOfRangePages());
     }
 
     public function testDefaultQuery(): void
     {
         $query = new TimesheetQuery();
         $sut = new Pagination(new ArrayAdapter([]), $query);
-        $this->assertEquals(1, $sut->getCurrentPage());
-        $this->assertEquals(50, $sut->getMaxPerPage());
-        $this->assertTrue($sut->getNormalizeOutOfRangePages());
+        self::assertEquals(1, $sut->getCurrentPage());
+        self::assertEquals(50, $sut->getMaxPerPage());
+        self::assertTrue($sut->getNormalizeOutOfRangePages());
     }
 
     public function testWithParams(): void
@@ -43,8 +43,8 @@ class PaginationTest extends TestCase
         $query->setPageSize(1);
         $query->setIsApiCall(true);
         $sut = new Pagination(new ArrayAdapter([1, 2, 3, 4, 5]), $query);
-        $this->assertFalse($sut->getNormalizeOutOfRangePages());
-        $this->assertEquals(1, $sut->getMaxPerPage());
-        $this->assertEquals(3, $sut->getCurrentPage());
+        self::assertFalse($sut->getNormalizeOutOfRangePages());
+        self::assertEquals(1, $sut->getMaxPerPage());
+        self::assertEquals(3, $sut->getCurrentPage());
     }
 }

@@ -35,7 +35,7 @@ class FavoriteControllerTest extends AbstractControllerBaseTestCase
         $this->importFixture($fixture);
 
         $this->request($client, '/favorite/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);

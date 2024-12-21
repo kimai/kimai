@@ -122,7 +122,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $commandTester = $this->createExport($options);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] ' . $errorMessage, $output);
+        self::assertStringContainsString('[ERROR] ' . $errorMessage, $output);
     }
 
     protected function assertCommandResult(array $options = [], string $message = ''): void
@@ -130,7 +130,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $commandTester = $this->createExport($options);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] ' . $message, $output);
+        self::assertStringContainsString('[OK] ' . $message, $output);
     }
 
     public function testCreateWithUnknownExportFilter(): void
@@ -179,7 +179,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $commandTester = $this->createExport($options);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] No entries found, skipping', $output);
+        self::assertStringContainsString('[OK] No entries found, skipping', $output);
     }
 
     /**
@@ -217,7 +217,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $commandTester = $this->createExport(['--template' => 'csv', '--customer' => [$data[0]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d'), '--username' => UserFixtures::USERNAME_SUPER_ADMIN]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Saved export to: ', $output);
+        self::assertStringContainsString('Saved export to: ', $output);
     }
 
     public function testCreateExportByProject(): void
@@ -230,7 +230,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $commandTester = $this->createExport(['--template' => 'csv', '--project' => [$data[1][0]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Saved export to: ', $output);
+        self::assertStringContainsString('Saved export to: ', $output);
     }
 
     public function testCreateExportWithEmail(): void
@@ -252,7 +252,7 @@ class ExportCreateCommandTest extends KernelTestCase
         ]));
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Send email with report to: foo@example.com', $output);
-        $this->assertStringContainsString('Send email with report to: foo2@example.com', $output);
+        self::assertStringContainsString('Send email with report to: foo@example.com', $output);
+        self::assertStringContainsString('Send email with report to: foo2@example.com', $output);
     }
 }

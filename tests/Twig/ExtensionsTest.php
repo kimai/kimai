@@ -50,8 +50,8 @@ class ExtensionsTest extends TestCase
         $i = 0;
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($filters[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($filters[$i++], $filter->getName());
         }
 
         $id = array_search('nl2str', $filters);
@@ -71,8 +71,8 @@ class ExtensionsTest extends TestCase
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($functions[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($functions[$i++], $filter->getName());
         }
     }
 
@@ -87,8 +87,8 @@ class ExtensionsTest extends TestCase
 
         /** @var TwigTest $test */
         foreach ($twigTests as $test) {
-            $this->assertInstanceOf(TwigTest::class, $test);
-            $this->assertEquals($tests[$i++], $test->getName());
+            self::assertInstanceOf(TwigTest::class, $test);
+            self::assertEquals($tests[$i++], $test->getName());
         }
     }
 
@@ -104,20 +104,20 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut();
         foreach ($data as $input => $expected) {
             $result = $sut->documentationLink($input);
-            $this->assertEquals($expected, $result);
+            self::assertEquals($expected, $result);
         }
     }
 
     public function testGetClassName(): void
     {
         $sut = $this->getSut();
-        $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
-        $this->assertEquals('stdClass', $sut->getClassName(new \stdClass()));
+        self::assertEquals('DateTime', $sut->getClassName(new \DateTime()));
+        self::assertEquals('stdClass', $sut->getClassName(new \stdClass()));
         /* @phpstan-ignore argument.type */
-        $this->assertNull($sut->getClassName(''));
+        self::assertNull($sut->getClassName(''));
         /* @phpstan-ignore argument.type */
-        $this->assertNull($sut->getClassName(null));
-        $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
+        self::assertNull($sut->getClassName(null));
+        self::assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
 
     public static function getMultilineTestData()

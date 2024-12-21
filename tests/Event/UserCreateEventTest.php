@@ -26,6 +26,6 @@ class UserCreateEventTest extends TestCase
 
         $sut = new UserCreateEvent($user);
 
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
     }
 }

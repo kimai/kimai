@@ -21,8 +21,8 @@ class UserDetailsSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = UserDetailsSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(UserDetailsEvent::class, $events);
+        self::assertArrayHasKey(UserDetailsEvent::class, $events);
         $methodName = $events[UserDetailsEvent::class][0];
-        $this->assertTrue(method_exists(UserDetailsSubscriber::class, $methodName));
+        self::assertTrue(method_exists(UserDetailsSubscriber::class, $methodName));
     }
 }

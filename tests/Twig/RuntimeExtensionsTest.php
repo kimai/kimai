@@ -30,8 +30,8 @@ class RuntimeExtensionsTest extends TestCase
         self::assertCount(\count($expected), $twigFilters);
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 
@@ -61,8 +61,8 @@ class RuntimeExtensionsTest extends TestCase
 
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 

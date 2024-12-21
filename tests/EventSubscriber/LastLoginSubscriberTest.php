@@ -29,13 +29,13 @@ class LastLoginSubscriberTest extends TestCase
     {
         $events = LastLoginSubscriber::getSubscribedEvents();
 
-        $this->assertArrayHasKey(UserInteractiveLoginEvent::class, $events);
+        self::assertArrayHasKey(UserInteractiveLoginEvent::class, $events);
         $methodName = $events[UserInteractiveLoginEvent::class];
-        $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
+        self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
 
-        $this->assertArrayHasKey(LoginSuccessEvent::class, $events);
+        self::assertArrayHasKey(LoginSuccessEvent::class, $events);
         $methodName = $events[LoginSuccessEvent::class];
-        $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
+        self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
     public function testOnImplicitLogin(): void

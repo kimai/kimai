@@ -50,7 +50,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
      */
     public function testTransform($expected, $transform): void
     {
-        $this->assertEquals($expected, $this->sut->transform($transform));
+        self::assertEquals($expected, $this->sut->transform($transform));
     }
 
     /**
@@ -59,7 +59,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     public function testInvalidTransformThrowsException($transform): void
     {
         $value = $this->sut->transform($transform);
-        $this->assertNull($value);
+        self::assertNull($value);
     }
 
     /**
@@ -99,7 +99,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
      */
     public function testReverseTransform($transform, $expected): void
     {
-        $this->assertEquals($expected, $this->sut->reverseTransform($transform));
+        self::assertEquals($expected, $this->sut->reverseTransform($transform));
     }
 
     /**

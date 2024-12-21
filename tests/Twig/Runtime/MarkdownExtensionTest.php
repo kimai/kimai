@@ -25,9 +25,9 @@ class MarkdownExtensionTest extends TestCase
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
-        $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
-        $this->assertEquals('<h1>foobar</h1>', $sut->markdownToHtml('# foobar'));
-        $this->assertEquals(
+        self::assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
+        self::assertEquals('<h1>foobar</h1>', $sut->markdownToHtml('# foobar'));
+        self::assertEquals(
             '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
             $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')
         );
@@ -38,23 +38,23 @@ class MarkdownExtensionTest extends TestCase
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => false]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
-        $this->assertEquals(
+        self::assertEquals(
             "- test<br />\n- foo",
             $sut->timesheetContent("- test\n- foo")
         );
-        $this->assertEquals('', $sut->timesheetContent(null));
-        $this->assertEquals('', $sut->timesheetContent(''));
-        $this->assertEquals('# foobar', $sut->timesheetContent('# foobar'));
-        $this->assertEquals('## foobar', $sut->timesheetContent('## foobar'));
-        $this->assertEquals('### foobar', $sut->timesheetContent('### foobar'));
+        self::assertEquals('', $sut->timesheetContent(null));
+        self::assertEquals('', $sut->timesheetContent(''));
+        self::assertEquals('# foobar', $sut->timesheetContent('# foobar'));
+        self::assertEquals('## foobar', $sut->timesheetContent('## foobar'));
+        self::assertEquals('### foobar', $sut->timesheetContent('### foobar'));
 
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
-        $this->assertEquals(
+        self::assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
         );
-        $this->assertEquals(
+        self::assertEquals(
             '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
             $sut->timesheetContent('[XSS](javascript:alert(`XSS`))')
         );
@@ -65,11 +65,11 @@ class MarkdownExtensionTest extends TestCase
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => false]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
-        $this->assertEquals(
+        self::assertEquals(
             "<p>- test<br />\n- foo</p>",
             $sut->commentContent("- test\n- foo", true)
         );
-        $this->assertEquals(
+        self::assertEquals(
             "- test\n- foo",
             $sut->commentContent("- test\n- foo", false)
         );
@@ -77,24 +77,24 @@ class MarkdownExtensionTest extends TestCase
         $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.';
         $loremIpsumShort = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l &hellip;';
 
-        $this->assertEquals('', $sut->commentContent(null));
-        $this->assertEquals('', $sut->commentContent(''));
-        $this->assertEquals('# foobar', $sut->commentContent('# foobar', false));
-        $this->assertEquals('<p># foobar</p>', $sut->commentContent('# foobar', true));
-        $this->assertEquals('<p># foobar</p>', $sut->commentContent('# foobar'));
-        $this->assertEquals('## foobar', $sut->commentContent('## foobar', false));
-        $this->assertEquals('### foobar', $sut->commentContent('### foobar', false));
-        $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum, true));
-        $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum));
-        $this->assertEquals($loremIpsumShort, $sut->commentContent($loremIpsum, false));
+        self::assertEquals('', $sut->commentContent(null));
+        self::assertEquals('', $sut->commentContent(''));
+        self::assertEquals('# foobar', $sut->commentContent('# foobar', false));
+        self::assertEquals('<p># foobar</p>', $sut->commentContent('# foobar', true));
+        self::assertEquals('<p># foobar</p>', $sut->commentContent('# foobar'));
+        self::assertEquals('## foobar', $sut->commentContent('## foobar', false));
+        self::assertEquals('### foobar', $sut->commentContent('### foobar', false));
+        self::assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum, true));
+        self::assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum));
+        self::assertEquals($loremIpsumShort, $sut->commentContent($loremIpsum, false));
 
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
-        $this->assertEquals(
+        self::assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->commentContent("- test\n- foo\n\nfoo __bar__")
         );
-        $this->assertEquals(
+        self::assertEquals(
             '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
             $sut->commentContent('[XSS](javascript:alert(`XSS`))')
         );
@@ -108,42 +108,42 @@ class MarkdownExtensionTest extends TestCase
 
         $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.';
 
-        $this->assertEquals('', $sut->commentOneLiner(null));
-        $this->assertEquals('', $sut->commentOneLiner(''));
-        $this->assertEquals('', $sut->commentOneLiner(null, false));
-        $this->assertEquals('', $sut->commentOneLiner('', true));
+        self::assertEquals('', $sut->commentOneLiner(null));
+        self::assertEquals('', $sut->commentOneLiner(''));
+        self::assertEquals('', $sut->commentOneLiner(null, false));
+        self::assertEquals('', $sut->commentOneLiner('', true));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing &hellip;',
             $sut->commentOneLiner($loremIpsum, false)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. &hellip;',
             $sut->commentOneLiner(implode(PHP_EOL, [$loremIpsum, $loremIpsum, $loremIpsum]), true)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing &hellip;',
             $sut->commentOneLiner(implode(PHP_EOL, [$loremIpsum, $loremIpsum, $loremIpsum]), false)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']), true)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']), true)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']))
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
             $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']))
         );

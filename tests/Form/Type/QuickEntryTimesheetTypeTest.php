@@ -55,9 +55,9 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expectedDuration, $model->getDuration());
-        $this->assertEquals($expectedDuration, $model->getDuration(true));
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expectedDuration, $model->getDuration());
+        self::assertEquals($expectedDuration, $model->getDuration(true));
     }
 
     private function createDefaultModel(): Timesheet

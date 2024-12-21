@@ -36,7 +36,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
     public function testVote(): void

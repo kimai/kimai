@@ -28,7 +28,7 @@ class UserVoterTest extends AbstractVoterTestCase
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
     public static function getTestData()
@@ -120,7 +120,7 @@ class UserVoterTest extends AbstractVoterTestCase
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
-        $this->assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
-        $this->assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
     }
 }

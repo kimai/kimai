@@ -61,12 +61,12 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertIsArray($data);
-        $this->assertIsArray($data['model']);
+        self::assertIsArray($data);
+        self::assertIsArray($data['model']);
 
         $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
-        $this->assertEquals($expectedRows, \count($rows));
+        self::assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
@@ -260,7 +260,7 @@ class DebugRendererTest extends TestCase
         sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals($keys, $givenKeys);
+        self::assertEquals($keys, $givenKeys);
     }
 
     protected function assertEntryStructure(array $model, array $metaFields): void
@@ -319,7 +319,7 @@ class DebugRendererTest extends TestCase
         $keys = array_merge($keys, $metaFields);
 
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $model);
+            self::assertArrayHasKey($key, $model);
         }
 
         $expectedKeys = array_merge([], $keys);
@@ -327,7 +327,7 @@ class DebugRendererTest extends TestCase
         $givenKeys = array_keys($model);
         sort($givenKeys);
 
-        $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(\count($keys), \count($givenKeys));
+        self::assertEquals($expectedKeys, $givenKeys);
+        self::assertEquals(\count($keys), \count($givenKeys));
     }
 }

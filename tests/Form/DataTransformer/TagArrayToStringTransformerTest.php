@@ -32,13 +32,13 @@ class TagArrayToStringTransformerTest extends TestCase
 
         $sut = new TagArrayToStringTransformer($repository, true);
 
-        $this->assertEquals('', $sut->transform([]));
-        $this->assertEquals('', $sut->transform(null));
-        $this->assertEquals('', $sut->transform(new \stdClass())); // @phpstan-ignore argument.type
+        self::assertEquals('', $sut->transform([]));
+        self::assertEquals('', $sut->transform(null));
+        self::assertEquals('', $sut->transform(new \stdClass())); // @phpstan-ignore argument.type
 
         $actual = $sut->transform($results); // @phpstan-ignore argument.type
 
-        $this->assertEquals('foo,test,bar', $actual);
+        self::assertEquals('foo,test,bar', $actual);
     }
 
     public function testTransformFails(): void
@@ -70,11 +70,11 @@ class TagArrayToStringTransformerTest extends TestCase
 
         $sut = new TagArrayToStringTransformer($repository, true);
 
-        $this->assertEquals([], $sut->reverseTransform(''));
-        $this->assertEquals([], $sut->reverseTransform(null));
+        self::assertEquals([], $sut->reverseTransform(''));
+        self::assertEquals([], $sut->reverseTransform(null));
 
         $actual = $sut->reverseTransform('foo, bar  , hello ');
 
-        $this->assertEquals(array_merge($results, [(new Tag())->setName('hello')]), $actual);
+        self::assertEquals(array_merge($results, [(new Tag())->setName('hello')]), $actual);
     }
 }

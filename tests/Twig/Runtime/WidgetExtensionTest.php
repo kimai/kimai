@@ -89,7 +89,7 @@ class WidgetExtensionTest extends TestCase
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($this->getEnvironment(), 'test', $options);
         $data = json_decode($result, true);
-        $this->assertEquals($options, $data);
+        self::assertEquals($options, $data);
     }
 
     public function testRenderWidgetObject(): void
@@ -99,6 +99,6 @@ class WidgetExtensionTest extends TestCase
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($this->getEnvironment(), $widget, $options);
         $data = json_decode($result, true);
-        $this->assertEquals($options, $data);
+        self::assertEquals($options, $data);
     }
 }

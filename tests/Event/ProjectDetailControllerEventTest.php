@@ -29,6 +29,6 @@ class ProjectDetailControllerEventTest extends AbstractProjectEventTestCase
         /** @var ProjectDetailControllerEvent $event */
         $event = $this->createProjectEvent(new Project());
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

@@ -86,7 +86,7 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
         $this->request($client, \sprintf('%s?date=12999119191&sumType=%s', $this->getReportExportUrl(), $dataType));
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));

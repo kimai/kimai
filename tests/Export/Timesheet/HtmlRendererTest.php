@@ -32,8 +32,8 @@ class HtmlRendererTest extends AbstractRendererTestCase
             $this->createMock(ActivityStatisticService::class)
         );
 
-        $this->assertEquals('print', $sut->getId());
-        $this->assertEquals('print', $sut->getTitle());
+        self::assertEquals('print', $sut->getId());
+        self::assertEquals('print', $sut->getTitle());
     }
 
     public function testRender(): void
@@ -58,6 +58,6 @@ class HtmlRendererTest extends AbstractRendererTestCase
 
         $content = $response->getContent();
 
-        $this->assertStringContainsString('>1:50<', $content);
+        self::assertStringContainsString('>1:50<', $content);
     }
 }
