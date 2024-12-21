@@ -51,8 +51,8 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('<input autocomplete="new-password" id="password" name="_password" type="password"', $content);
         self::assertStringContainsString('">Log in</button>', $content);
         self::assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
-        $this->assertStringNotContainsString('<a href="/en/register/"', $content);
-        $this->assertStringNotContainsString('Register a new account', $content);
+        self::assertStringNotContainsString('<a href="/en/register/"', $content);
+        self::assertStringNotContainsString('Register a new account', $content);
     }
 
     public function testLoginPositive(): void

@@ -57,9 +57,9 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->will($this->returnCallback(function ($name) {
+            ->willReturnCallback(function ($name) {
                 return (string) $name;
-            }))
+            })
         ;
 
         return $urlGenerator;
