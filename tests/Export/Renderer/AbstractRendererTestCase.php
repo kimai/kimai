@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Timesheet;
+namespace App\Tests\Export\Renderer;
 
 use App\Configuration\LocaleService;
 use App\Entity\Activity;
@@ -25,6 +25,7 @@ use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ExportRendererInterface;
 use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
@@ -36,25 +37,22 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-abstract class AbstractRendererTest extends KernelTestCase
+abstract class AbstractRendererTestCase extends KernelTestCase
 {
     /**
      * @param class-string $classname
      */
-    protected function getAbstractRenderer(string $classname): TimesheetExportInterface
+    protected function getAbstractRenderer(string $classname): ExportRendererInterface|TimesheetExportInterface
     {
         $languages = [
             'en' => LocaleService::DEFAULT_SETTINGS
         ];
 
-        $user = new User();
-        $user->setUserIdentifier('ssdf');
-
         $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn($user);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
-        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $translator = $this->createMock(TranslatorInterface::class);
         $dateExtension = new LocaleFormatExtensions(new LocaleService($languages));
 
         $dispatcher = new EventDispatcher();
@@ -63,7 +61,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         return new $classname($translator, $dateExtension, $dispatcher, $security);
     }
 
-    protected function render(TimesheetExportInterface $renderer): Response
+    protected function render(ExportRendererInterface $renderer): Response
     {
         $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
@@ -96,7 +94,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setDuration(3600)
+            ->setDuration(3600) // 60 minutes
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
@@ -132,6 +130,7 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setDuration(400)
             ->setRate(1947.99)
             ->setUser($user2)
+            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime())
@@ -139,14 +138,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->addTag((new Tag())->setName('foo'))
         ;
 
-        $user = new User();
-        $user->setUserIdentifier('kevin');
+        $userKevin = new User();
+        $userKevin->setUserIdentifier('kevin');
 
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser($user)
+            ->setUser($userKevin)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))
@@ -157,7 +156,21 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
         ;
 
-        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
+        $userNivek = new User();
+        $userNivek->setUserIdentifier('nivek');
+
+        $timesheet6 = new Timesheet();
+        $timesheet6
+            ->setDuration(400)
+            ->setFixedRate(-100.92)
+            ->setUser($userNivek)
+            ->setActivity($activity)
+            ->setProject($project)
+            ->setBegin(new \DateTime('2019-06-16 12:00:00'))
+            ->setEnd(new \DateTime('2019-06-16 12:06:40'))
+        ;
+
+        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);

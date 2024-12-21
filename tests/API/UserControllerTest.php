@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class UserControllerTest extends APIControllerBaseTest
+class UserControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

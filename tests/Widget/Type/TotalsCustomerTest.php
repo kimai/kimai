@@ -17,7 +17,7 @@ use App\Widget\Type\TotalsCustomer;
 /**
  * @covers \App\Widget\Type\TotalsCustomer
  */
-class TotalsCustomerTest extends AbstractWidgetTest
+class TotalsCustomerTest extends AbstractWidgetTestCase
 {
     /** @var User */
     private $user;

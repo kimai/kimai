@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class CustomerControllerTest extends ControllerBaseTest
+class CustomerControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

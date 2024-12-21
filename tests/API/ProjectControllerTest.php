@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class ProjectControllerTest extends APIControllerBaseTest
+class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 

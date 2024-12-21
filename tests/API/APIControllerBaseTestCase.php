@@ -11,7 +11,7 @@ namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use PHPUnit\Framework\Constraint\IsType;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * Adds some useful functions for writing API integration tests.
  */
-abstract class APIControllerBaseTest extends ControllerBaseTest
+abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 {
     /**
      * @return array<string, string>

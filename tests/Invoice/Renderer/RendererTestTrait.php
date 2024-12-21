@@ -77,7 +77,6 @@ trait RendererTestTrait
 
     protected function getInvoiceModel(): InvoiceModel
     {
-
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');

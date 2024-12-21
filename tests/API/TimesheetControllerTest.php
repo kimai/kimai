@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class TimesheetControllerTest extends APIControllerBaseTest
+class TimesheetControllerTest extends APIControllerBaseTestCase
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
     public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';

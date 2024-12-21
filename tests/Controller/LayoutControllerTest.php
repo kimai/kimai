@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class LayoutControllerTest extends ControllerBaseTest
+class LayoutControllerTest extends AbstractControllerBaseTestCase
 {
     public function testNavigationMenus(): void
     {

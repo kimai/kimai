@@ -28,7 +28,7 @@ use DateTime;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
+class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {

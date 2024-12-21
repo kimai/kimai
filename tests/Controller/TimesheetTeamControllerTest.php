@@ -21,7 +21,7 @@ use App\Timesheet\Util;
 /**
  * @group integration
  */
-class TimesheetTeamControllerTest extends ControllerBaseTest
+class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

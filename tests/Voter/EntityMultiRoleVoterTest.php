@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\EntityMultiRoleVoter
  */
-class EntityMultiRoleVoterTest extends AbstractVoterTest
+class EntityMultiRoleVoterTest extends AbstractVoterTestCase
 {
     /**
      * @dataProvider getTestData

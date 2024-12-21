@@ -15,7 +15,7 @@ use App\Controller\Security\SecurityController;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -24,7 +24,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  *
  * @group integration
  */
-class SecurityControllerTest extends ControllerBaseTest
+class SecurityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testRootUrlIsRedirectedToLogin(): void
     {

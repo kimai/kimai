@@ -26,7 +26,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class UserInvoiceCalculatorTest extends AbstractCalculatorTest
+class UserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {

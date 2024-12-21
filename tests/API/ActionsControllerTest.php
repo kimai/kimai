@@ -18,7 +18,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class ActionsControllerTest extends APIControllerBaseTest
+class ActionsControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

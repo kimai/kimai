@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 /**
  * @group integration
  */
-class InvoiceControllerTest extends ControllerBaseTest
+class InvoiceControllerTest extends AbstractControllerBaseTestCase
 {
     protected function setUp(): void
     {

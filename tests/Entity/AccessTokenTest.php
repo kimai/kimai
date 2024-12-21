@@ -15,7 +15,7 @@ use App\Entity\User;
 /**
  * @covers \App\Entity\AccessToken
  */
-class AccessTokenTest extends AbstractEntityTest
+class AccessTokenTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {

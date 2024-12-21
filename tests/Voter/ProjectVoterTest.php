@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\ProjectVoter
  */
-class ProjectVoterTest extends AbstractVoterTest
+class ProjectVoterTest extends AbstractVoterTestCase
 {
     public function assertVote(User $user, $subject, $attribute, $result): void
     {

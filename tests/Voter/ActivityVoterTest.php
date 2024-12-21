@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\ActivityVoter
  */
-class ActivityVoterTest extends AbstractVoterTest
+class ActivityVoterTest extends AbstractVoterTestCase
 {
     /**
      * @dataProvider getTestData

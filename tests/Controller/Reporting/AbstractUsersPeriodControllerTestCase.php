@@ -10,16 +10,16 @@
 namespace App\Tests\Controller\Reporting;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @group integration
  */
-abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
+abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerBaseTestCase
 {
-    protected function importReportingFixture(string $role)
+    protected function importReportingFixture(string $role): void
     {
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(50);

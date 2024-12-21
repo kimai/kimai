@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class TeamControllerTest extends ControllerBaseTest
+class TeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

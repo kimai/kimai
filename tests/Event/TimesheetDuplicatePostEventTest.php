@@ -16,7 +16,7 @@ use App\Event\TimesheetDuplicatePostEvent;
 /**
  * @covers \App\Event\TimesheetDuplicatePostEvent
  */
-class TimesheetDuplicatePostEventTest extends AbstractTimesheetEventTest
+class TimesheetDuplicatePostEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

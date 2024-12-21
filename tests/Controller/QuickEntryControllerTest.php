@@ -14,7 +14,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class QuickEntryControllerTest extends ControllerBaseTest
+class QuickEntryControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

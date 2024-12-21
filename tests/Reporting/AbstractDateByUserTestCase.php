@@ -9,20 +9,23 @@
 
 namespace App\Tests\Reporting;
 
-use App\Reporting\AbstractUserList;
+use App\Entity\User;
+use App\Reporting\DateByUser;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Reporting\AbstractUserList
+ * @covers \App\Reporting\DateByUser
  */
-abstract class AbstractUserListTest extends TestCase
+abstract class AbstractDateByUserTestCase extends TestCase
 {
-    abstract protected function createSut(): AbstractUserList;
+    abstract protected function createSut(): DateByUser;
 
     public function testEmptyObject(): void
     {
         $sut = $this->createSut();
         self::assertNull($sut->getDate());
+        self::assertNull($sut->getUser());
         self::assertEquals('duration', $sut->getSumType());
         self::assertFalse($sut->isDecimal());
     }
@@ -30,11 +33,15 @@ abstract class AbstractUserListTest extends TestCase
     public function testSetter(): void
     {
         $date = new \DateTime('2019-05-27');
+        $user = new User();
+        $user->setAlias('sdfsdfdsdf');
 
         $sut = $this->createSut();
         $sut->setDate($date);
+        $sut->setUser($user);
 
         self::assertSame($date, $sut->getDate());
+        self::assertSame($user, $sut->getUser());
 
         $sut->setSumType('rate');
         self::assertEquals('rate', $sut->getSumType());

@@ -10,20 +10,20 @@
 namespace App\Tests\Event;
 
 use App\Entity\Timesheet;
-use App\Event\AbstractTimesheetEvent;
+use App\Event\AbstractTimesheetMultipleEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\Event;
 
-abstract class AbstractTimesheetEventTest extends TestCase
+abstract class AbstractTimesheetMultipleEventTestCase extends TestCase
 {
-    abstract protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent;
+    abstract protected function createTimesheetMultipleEvent(array $timesheets): AbstractTimesheetMultipleEvent;
 
     public function testGetterAndSetter(): void
     {
-        $timesheet = new Timesheet();
-        $sut = $this->createTimesheetEvent($timesheet);
+        $timesheets = [new Timesheet(), new Timesheet()];
+        $sut = $this->createTimesheetMultipleEvent($timesheets);
 
         self::assertInstanceOf(Event::class, $sut);
-        self::assertSame($timesheet, $sut->getTimesheet());
+        self::assertSame($timesheets, $sut->getTimesheets());
     }
 }

@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\PluginSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\PluginSubscriber
  */
-class PluginSubscriberTest extends AbstractActionsSubscriberTest
+class PluginSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

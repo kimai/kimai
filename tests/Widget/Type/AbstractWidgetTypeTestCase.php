@@ -14,7 +14,7 @@ use App\Widget\Type\AbstractWidgetType;
 /**
  * @covers \App\Widget\Type\AbstractWidgetType
  */
-abstract class AbstractWidgetTypeTest extends AbstractWidgetTest
+abstract class AbstractWidgetTypeTestCase extends AbstractWidgetTestCase
 {
     abstract public function createSut(): AbstractWidgetType;
 

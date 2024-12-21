@@ -15,7 +15,7 @@ use DateTime;
 /**
  * @covers \App\Model\Statistic\StatisticDate
  */
-class StatisticDateTest extends AbstractTimesheetTest
+class StatisticDateTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void
     {

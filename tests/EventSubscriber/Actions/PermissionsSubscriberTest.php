@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\PermissionsSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\PermissionsSubscriber
  */
-class PermissionsSubscriberTest extends AbstractActionsSubscriberTest
+class PermissionsSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

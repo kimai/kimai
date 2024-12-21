@@ -12,7 +12,7 @@ namespace App\Tests\Controller;
 /**
  * @group integration
  */
-class DashboardControllerTest extends ControllerBaseTest
+class DashboardControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

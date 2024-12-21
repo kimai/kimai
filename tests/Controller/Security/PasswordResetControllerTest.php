@@ -9,12 +9,12 @@
 
 namespace App\Tests\Controller\Security;
 
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 
 /**
  * @group integration
  */
-class PasswordResetControllerTest extends ControllerBaseTest
+class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 {
     private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET'): void
     {

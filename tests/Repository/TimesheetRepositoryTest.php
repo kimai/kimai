@@ -25,7 +25,7 @@ use App\Utils\Pagination;
  * @covers \App\Repository\TimesheetRepository
  * @group integration
  */
-class TimesheetRepositoryTest extends AbstractRepositoryTest
+class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 {
     public function testResultTypeForQueryState(): void
     {

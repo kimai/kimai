@@ -10,13 +10,13 @@
 namespace App\Tests\Controller\Security;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
  * @group integration
  */
-class SelfRegistrationControllerTest extends ControllerBaseTest
+class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
 {
     private function assertRegisterActionWithDeactivatedFeature(string $route): void
     {

@@ -17,7 +17,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class PermissionControllerTest extends ControllerBaseTest
+class PermissionControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

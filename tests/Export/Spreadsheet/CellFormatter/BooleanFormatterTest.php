@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\BooleanFormatter
  */
-class BooleanFormatterTest extends AbstractFormatterTest
+class BooleanFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface
     {

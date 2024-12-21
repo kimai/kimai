@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\TimesheetVoter
  */
-class TimesheetVoterTest extends AbstractVoterTest
+class TimesheetVoterTest extends AbstractVoterTestCase
 {
     protected function getVoter(string $voterClass): TimesheetVoter
     {
@@ -43,9 +43,7 @@ class TimesheetVoterTest extends AbstractVoterTest
     {
         foreach ($this->getTestData() as $row) {
             $this->assertVote($row[0], $row[1], $row[2], $row[3]);
-
         }
-
     }
 
     public function getTestData()

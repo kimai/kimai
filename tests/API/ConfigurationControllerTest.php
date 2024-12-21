@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class ConfigurationControllerTest extends APIControllerBaseTest
+class ConfigurationControllerTest extends APIControllerBaseTestCase
 {
     public function testIsTimesheetSecure(): void
     {

@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractFormatterTest extends TestCase
+abstract class AbstractFormatterTestCase extends TestCase
 {
     abstract protected function getFormatter(): CellFormatterInterface;
 

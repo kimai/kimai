@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group legacy
  * @group integration
  */
-class AuthenticationTest extends APIControllerBaseTest
+class AuthenticationTest extends APIControllerBaseTestCase
 {
     public function testPinIsSecure(): void
     {

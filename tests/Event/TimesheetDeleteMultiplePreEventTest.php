@@ -16,7 +16,7 @@ use App\Event\TimesheetDeleteMultiplePreEvent;
  * @covers \App\Event\AbstractTimesheetMultipleEvent
  * @covers \App\Event\TimesheetDeleteMultiplePreEvent
  */
-class TimesheetDeleteMultiplePreEventTest extends AbstractTimesheetMultipleEventTest
+class TimesheetDeleteMultiplePreEventTest extends AbstractTimesheetMultipleEventTestCase
 {
     protected function createTimesheetMultipleEvent(array $timesheets): AbstractTimesheetMultipleEvent
     {

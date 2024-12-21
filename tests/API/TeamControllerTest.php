@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class TeamControllerTest extends APIControllerBaseTest
+class TeamControllerTest extends APIControllerBaseTestCase
 {
     /**
      * @return Team[]

@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Repository\Query\BaseQuery
  */
-abstract class BaseFormTypeQueryTest extends TestCase
+abstract class AbstractBaseFormTypeQueryTestCase extends TestCase
 {
     public function assertBaseQuery(BaseFormTypeQuery $sut): void
     {

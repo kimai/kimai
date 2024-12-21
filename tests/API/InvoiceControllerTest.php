@@ -16,7 +16,7 @@ use App\Tests\DataFixtures\InvoiceFixtures;
 /**
  * @group integration
  */
-class InvoiceControllerTest extends APIControllerBaseTest
+class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**
      * @return Invoice[]

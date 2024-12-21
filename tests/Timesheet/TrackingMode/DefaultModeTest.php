@@ -16,7 +16,7 @@ use App\Timesheet\TrackingMode\DefaultMode;
 /**
  * @covers \App\Timesheet\TrackingMode\DefaultMode
  */
-class DefaultModeTest extends AbstractTrackingModeTest
+class DefaultModeTest extends AbstractTrackingModeTestCase
 {
     public function assertDefaultBegin(Timesheet $timesheet): void
     {
@@ -26,7 +26,7 @@ class DefaultModeTest extends AbstractTrackingModeTest
     /**
      * @return DefaultMode
      */
-    protected function createSut(): DefaultMode
+    protected function createSut(string $default = '13:47', bool $allowApiTimes = false): DefaultMode
     {
         return new DefaultMode((new RoundingServiceFactory($this))->create());
     }

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Renderer\XlsxRenderer
  * @group integration
  */
-class XlsxRendererTest extends AbstractRendererTest
+class XlsxRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {

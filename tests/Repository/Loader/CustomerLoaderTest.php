@@ -16,7 +16,7 @@ use App\Repository\Query\CustomerQuery;
 /**
  * @covers \App\Repository\Loader\CustomerLoader
  */
-class CustomerLoaderTest extends AbstractLoaderTest
+class CustomerLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void
     {

@@ -31,7 +31,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class ProjectControllerTest extends ControllerBaseTest
+class ProjectControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

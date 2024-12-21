@@ -22,7 +22,7 @@ use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractCalculatorTest extends TestCase
+abstract class AbstractCalculatorTestCase extends TestCase
 {
     abstract protected function getCalculator(): CalculatorInterface;
 

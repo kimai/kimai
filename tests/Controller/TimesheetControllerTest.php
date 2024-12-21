@@ -25,7 +25,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * @group integration
  */
-class TimesheetControllerTest extends ControllerBaseTest
+class TimesheetControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

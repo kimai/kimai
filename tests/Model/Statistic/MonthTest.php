@@ -15,7 +15,7 @@ use InvalidArgumentException;
 /**
  * @covers \App\Model\Statistic\Month
  */
-class MonthTest extends AbstractTimesheetTest
+class MonthTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void
     {

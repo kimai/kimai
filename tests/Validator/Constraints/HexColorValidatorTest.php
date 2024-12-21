@@ -83,10 +83,10 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($color, $constraint);
 
-        if ($parameterType !== null) {
-            $expectedFormat = $parameterType;
+        if (\is_string($color)) {
+            $expectedFormat = '"' . $color . '"';
         } else {
-            $expectedFormat = \is_string($color) ? '"' . $color . '"' : $color;
+            $expectedFormat = $parameterType ?? '';
         }
 
         $this->buildViolation('The given value is not a valid hexadecimal color.')

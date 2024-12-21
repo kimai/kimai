@@ -15,7 +15,7 @@ use App\Model\ActivityStatistic;
 /**
  * @covers \App\Model\ActivityStatistic
  */
-class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTest
+class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void
     {

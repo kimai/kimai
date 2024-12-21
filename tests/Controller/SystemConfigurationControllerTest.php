@@ -15,7 +15,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class SystemConfigurationControllerTest extends ControllerBaseTest
+class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -73,7 +73,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     }
 
     /**
-     * @return array<array<string>>
+     * @return array<array<non-empty-string>>
      */
     public function getTestDataForms(): array
     {

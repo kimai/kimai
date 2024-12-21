@@ -12,7 +12,7 @@ namespace App\Tests\Widget\Type;
 /**
  * @covers \App\Tests\Widget\Type\More
  */
-class MoreTest extends AbstractWidgetTypeTest
+class MoreTest extends AbstractWidgetTypeTestCase
 {
     public function createSut(): More
     {

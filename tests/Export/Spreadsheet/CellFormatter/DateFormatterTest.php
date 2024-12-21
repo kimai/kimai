@@ -19,7 +19,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\DateFormatter
  */
-class DateFormatterTest extends AbstractFormatterTest
+class DateFormatterTest extends AbstractFormatterTestCase
 {
     private $date;
 

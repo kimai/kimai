@@ -17,7 +17,7 @@ use App\Event\TimesheetCreatePostEvent;
  * @covers \App\Event\AbstractTimesheetEvent
  * @covers \App\Event\TimesheetCreatePostEvent
  */
-class TimesheetCreatePostEventTest extends AbstractTimesheetEventTest
+class TimesheetCreatePostEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

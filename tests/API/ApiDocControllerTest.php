@@ -10,12 +10,12 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 
 /**
  * @group integration
  */
-class ApiDocControllerTest extends ControllerBaseTest
+class ApiDocControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

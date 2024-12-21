@@ -17,7 +17,7 @@ use App\Tests\DataFixtures\TagFixtures;
  * @covers \App\Repository\TagRepository
  * @group integration
  */
-class TagRepositoryTest extends AbstractRepositoryTest
+class TagRepositoryTest extends AbstractRepositoryTestCase
 {
     protected function setUp(): void
     {

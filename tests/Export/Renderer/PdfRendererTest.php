@@ -24,7 +24,7 @@ use Twig\Environment;
  * @covers \App\Export\Renderer\PDFRenderer
  * @group integration
  */
-class PdfRendererTest extends AbstractRendererTest
+class PdfRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {

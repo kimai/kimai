@@ -12,7 +12,7 @@ namespace App\Tests\Model\Statistic;
 use App\Model\Statistic\Timesheet;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractTimesheetTest extends TestCase
+abstract class AbstractTimesheetTestCase extends TestCase
 {
     public function assertDefaultValues(Timesheet $sut): void
     {

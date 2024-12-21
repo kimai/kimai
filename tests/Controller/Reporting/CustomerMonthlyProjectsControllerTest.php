@@ -11,7 +11,7 @@ namespace App\Tests\Controller\Reporting;
 
 use App\Entity\Project;
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
+class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {

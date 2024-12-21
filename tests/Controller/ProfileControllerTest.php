@@ -22,7 +22,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 /**
  * @group integration
  */
-class ProfileControllerTest extends ControllerBaseTest
+class ProfileControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

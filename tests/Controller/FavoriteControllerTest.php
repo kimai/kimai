@@ -15,7 +15,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class FavoriteControllerTest extends ControllerBaseTest
+class FavoriteControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

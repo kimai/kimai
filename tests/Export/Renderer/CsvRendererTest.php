@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Renderer\CsvRenderer
  * @group integration
  */
-class CsvRendererTest extends AbstractRendererTest
+class CsvRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {

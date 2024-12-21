@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
  */
-abstract class AbstractActionsSubscriberTest extends TestCase
+abstract class AbstractActionsSubscriberTestCase extends TestCase
 {
     protected function createSubscriber(string $className, ...$grants): AbstractActionsSubscriber
     {

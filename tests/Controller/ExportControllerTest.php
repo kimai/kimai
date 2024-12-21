@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * @group integration
  */
-class ExportControllerTest extends ControllerBaseTest
+class ExportControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

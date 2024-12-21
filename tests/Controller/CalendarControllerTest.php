@@ -18,7 +18,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 /**
  * @group integration
  */
-class CalendarControllerTest extends ControllerBaseTest
+class CalendarControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

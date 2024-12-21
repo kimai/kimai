@@ -18,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\StringFormatter
  */
-class StringFormatterTest extends AbstractFormatterTest
+class StringFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface
     {

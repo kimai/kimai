@@ -12,7 +12,7 @@ namespace App\Tests\Entity;
 use App\Entity\EntityWithBudget;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractEntityTest extends TestCase
+abstract class AbstractEntityTestCase extends TestCase
 {
     public function assertBudget(EntityWithBudget $entityWithBudget): void
     {

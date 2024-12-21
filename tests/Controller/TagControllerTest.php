@@ -16,7 +16,7 @@ use App\Tests\DataFixtures\TagFixtures;
 /**
  * @group integration
  */
-class TagControllerTest extends ControllerBaseTest
+class TagControllerTest extends AbstractControllerBaseTestCase
 {
     /**
      * @return Tag[]

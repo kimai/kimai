@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class TagControllerTest extends APIControllerBaseTest
+class TagControllerTest extends APIControllerBaseTestCase
 {
     /**
      * @return Tag[]

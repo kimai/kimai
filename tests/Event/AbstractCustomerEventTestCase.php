@@ -14,7 +14,7 @@ use App\Event\AbstractCustomerEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\Event;
 
-abstract class AbstractCustomerEventTest extends TestCase
+abstract class AbstractCustomerEventTestCase extends TestCase
 {
     abstract protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent;
 
