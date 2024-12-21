@@ -61,26 +61,26 @@
                             &ndash;
                         {% endif %}
                     {% elseif name == 'today' %}
-                        {{ entry.durationDay|duration }}
+                        {{ entry.durationDay|duration(true) }}
                     {% elseif name == 'week' %}
-                        {{ entry.durationWeek|duration }}
+                        {{ entry.durationWeek|duration(true) }}
                     {% elseif name == 'month' %}
-                        {{ entry.durationMonth|duration }}
+                        {{ entry.durationMonth|duration(true) }}
                     {% elseif name == 'timeBudget' %}
                         {% if showTimeBudget %}
-                            {{ budgetStatisticModel.getTimeBudget()|duration }}
+                            {{ budgetStatisticModel.getTimeBudget()|duration(true) }}
                         {% else %}
                             &ndash;
                         {% endif %}
                     {% elseif name == 'durationTotal' %}
-                        {{ entry.durationTotal|duration }}
+                        {{ entry.durationTotal|duration(true) }}
                     {% elseif name == 'billableTime' %}
                         {% if canSeeTimeBudget %}
-                            {{ budgetStatisticModel.getTimeBudgetSpent()|duration }}
+                            {{ budgetStatisticModel.getTimeBudgetSpent()|duration(true) }}
                         {% endif %}
                     {% elseif name == 'exported' %}
                         {% if canSeeTimeBudget %}
-                            {{ entry.notExportedDuration|duration }}
+                            {{ entry.notExportedDuration|duration(true) }}
                         {% endif %}
                     {% elseif name == 'budget' %}
                         {% if showMoneyBudget %}

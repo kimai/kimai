@@ -1430,81 +1430,6 @@ parameters:
             path: EventSubscriber/WizardSubscriberTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface but returns object\\.$#"
-            count: 1
-            path: Export/Renderer/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedDescriptions with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRows with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser1 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser2 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalDuration with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Renderer\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalRate with no type specified\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
-            count: 5
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$renderer of method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:render\\(\\) expects App\\\\Export\\\\ExportRendererInterface, App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|null given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Renderer/CsvRendererTest.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
             count: 6
             path: Export/Renderer/HtmlRendererTest.php
@@ -1513,11 +1438,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 7
             path: Export/Renderer/HtmlRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$renderer of method App\\\\Tests\\\\Export\\\\Renderer\\\\AbstractRendererTest\\:\\:render\\(\\) expects App\\\\Export\\\\ExportRendererInterface, App\\\\Export\\\\ExportRendererInterface\\|App\\\\Export\\\\TimesheetExportInterface given\\.$#"
-            count: 1
-            path: Export/Renderer/XlsxRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\AbstractFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
@@ -1618,76 +1538,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Export/Spreadsheet/Writer/BinaryFileResponseWriterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\AbstractRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Export\\\\TimesheetExportInterface but returns object\\.$#"
-            count: 1
-            path: Export/Timesheet/AbstractRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedDescriptions with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRate with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedRows with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser1 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser2 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$expectedUser3 with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalDuration with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Timesheet\\\\CsvRendererTest\\:\\:testRender\\(\\) has parameter \\$totalRate with no type specified\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
-            count: 5
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_getcsv expects string, string\\|null given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/CsvRendererTest.php
 
         -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"

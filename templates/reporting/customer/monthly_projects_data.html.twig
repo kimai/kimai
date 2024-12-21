@@ -51,7 +51,7 @@
                     {% if project.activities[activity.id] is defined and i <= project.activities[activity.id]['users']|length %}
                         {% set user = project.activities[activity.id]['users']|slice(-i) %}
                         <td>{{ user.0.name }}</td>
-                        <td class="text-center"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                        <td class="text-center">
                             {% set value = user.0[dataType] %}
                             {% block user_activity %}
                                 {% if dataType == 'rate' or dataType == 'internalRate' %}
@@ -62,7 +62,7 @@
                             {% endblock %}
                         </td>
                         {% if loop.parent.loop.first %}
-                            <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                            <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %} class="text-center text-nowrap">
                                 {% set value = project.activities[activity.id][dataType] %}
                                 {% block project_activity %}
                                     {% if dataType == 'rate' or dataType == 'internalRate' %}
@@ -82,7 +82,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if loop.first %}
-                    <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                    <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %} class="text-center text-nowrap">
                         {% set value = project[dataType] %}
                         {% block project_total %}
                             {% if dataType == 'rate' or dataType == 'internalRate' %}

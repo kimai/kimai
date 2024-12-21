@@ -10,8 +10,8 @@
 namespace App\Tests\Export;
 
 use App\Activity\ActivityStatisticService;
+use App\Export\Base\HtmlRenderer;
 use App\Export\ExportRepositoryInterface;
-use App\Export\Renderer\HtmlRenderer;
 use App\Export\ServiceExport;
 use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
 use App\Project\ProjectStatisticService;

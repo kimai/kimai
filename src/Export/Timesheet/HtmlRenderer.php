@@ -23,9 +23,4 @@ final class HtmlRenderer extends BaseHtmlRenderer implements TimesheetExportInte
     {
         return 'print';
     }
-
-    public function getTitle(): string
-    {
-        return 'print';
-    }
 }

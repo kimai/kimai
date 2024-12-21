@@ -10,7 +10,7 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
-use App\Export\Renderer\HtmlRenderer;
+use App\Export\Base\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Project\ProjectStatisticService;
 use PHPUnit\Framework\TestCase;
@@ -35,5 +35,6 @@ class HtmlRendererFactoryTest extends TestCase
 
         self::assertInstanceOf(HtmlRenderer::class, $renderer);
         self::assertEquals('foo', $renderer->getId());
+        self::assertEquals('print', $renderer->getTitle());
     }
 }

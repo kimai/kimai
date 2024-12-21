@@ -39,7 +39,7 @@ final class UserYearController extends AbstractUserReportController
     #[Route(path: '/year_export', name: 'report_user_year_export', methods: ['GET', 'POST'])]
     public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
-        $data = $this->getData($request, $systemConfiguration);
+        $data = $this->getData($request, $systemConfiguration, true);
 
         $content = $this->renderView('reporting/report_by_user_year_export.html.twig', $data);
 
@@ -51,13 +51,14 @@ final class UserYearController extends AbstractUserReportController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function getData(Request $request, SystemConfiguration $systemConfiguration): array
+    private function getData(Request $request, SystemConfiguration $systemConfiguration, bool $export = false): array
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
         $canChangeUser = $this->canSelectUser();
 
         $values = new YearByUser();
+        $values->setDecimal($export);
         $values->setUser($currentUser);
 
         $defaultDate = $dateTimeFactory->createStartOfYear();

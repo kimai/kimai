@@ -7,23 +7,42 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Timesheet;
+namespace App\Tests\Export\Base;
 
-use App\Export\Timesheet\XlsxRenderer;
+use App\Entity\User;
+use App\Export\Base\SpreadsheetRenderer;
+use App\Export\Base\XlsxRenderer;
+use App\Tests\Export\Renderer\AbstractRendererTest;
+use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @covers \App\Export\Base\XlsxRenderer
- * @covers \App\Export\Base\AbstractSpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Timesheet\XlsxRenderer
  * @group integration
  */
 class XlsxRendererTest extends AbstractRendererTest
 {
+    protected function getAbstractRenderer(): XlsxRenderer
+    {
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('isGranted')->willReturn(true);
+
+        $translator = $this->createMock(TranslatorInterface::class);
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+
+        return new XlsxRenderer(new SpreadsheetRenderer($translator, $dispatcher, $security));
+    }
+
     public function testConfiguration(): void
     {
-        $sut = $this->getAbstractRenderer(XlsxRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         $this->assertEquals('xlsx', $sut->getId());
         $this->assertEquals('xlsx', $sut->getTitle());
@@ -31,7 +50,7 @@ class XlsxRendererTest extends AbstractRendererTest
 
     public function testRender(): void
     {
-        $sut = $this->getAbstractRenderer(XlsxRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
