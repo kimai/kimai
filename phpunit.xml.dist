@@ -68,7 +68,4 @@
     <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
   </extensions>
 
-  <listeners>
-    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
-  </listeners>
 </phpunit>
