@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
@@ -60,10 +60,6 @@
     </exclude>
   </coverage>
 
-  <!--
-      wrap tests inside database transactions, so tests can safely manipulate contents without
-      affecting other tests. @see https://github.com/dmaicher/doctrine-test-bundle
-  -->
   <extensions>
     <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
   </extensions>
