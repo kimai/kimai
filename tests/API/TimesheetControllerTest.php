@@ -764,7 +764,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertTrue($result['billable']);
     }
 
-    public function getTrackingModeTestData(): array
+    public static function getTrackingModeTestData(): array
     {
         return [
             ['duration_fixed_begin', User::ROLE_USER, false],

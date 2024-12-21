@@ -262,7 +262,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals('Testing is fun!', $timesheet->getDescription());
     }
 
-    public function getTestDataForDurationValues(): \Generator
+    public static function getTestDataForDurationValues(): \Generator
     {
         // duration is ignored, because end is set and the duration might come from a rounding rule (by default seconds are rounded down with 1)
         yield ['12/31/2018', '12:00 AM', '02:10 AM', '01:00', 7800, '2018-12-31 02:10:00'];
@@ -310,7 +310,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('timesheet_edit_form[fixedRate]'));
     }
 
-    public function getTrackingModeTestData(): array
+    public static function getTrackingModeTestData(): array
     {
         return [
             ['duration_fixed_begin', User::ROLE_USER, false, false],

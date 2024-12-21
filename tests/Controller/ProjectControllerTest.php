@@ -595,7 +595,7 @@ class ProjectControllerTest extends ControllerBaseTest
         );
     }
 
-    public function getValidationTestData()
+    public static function getValidationTestData()
     {
         return [
             [

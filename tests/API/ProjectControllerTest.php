@@ -243,7 +243,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getCollectionTestData(): iterable
+    public static function getCollectionTestData(): iterable
     {
         // if you wonder why: case-sensitive ordering feels strange ... "Title" > "fifth”
         yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];

@@ -39,7 +39,7 @@ class TeamControllerTest extends APIControllerBaseTest
     /**
      * @return array<int, array<int, string>>
      */
-    public function getRoleTestData(): array
+    public static function getRoleTestData(): array
     {
         return [
             [User::ROLE_USER],

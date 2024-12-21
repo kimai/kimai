@@ -193,7 +193,7 @@ class ActivityControllerTest extends APIControllerBaseTest
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getCollectionTestData(): iterable
+    public static function getCollectionTestData(): iterable
     {
         yield ['/api/activities', null, [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
         //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];

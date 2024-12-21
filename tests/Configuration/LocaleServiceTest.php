@@ -159,7 +159,7 @@ class LocaleServiceTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function getNearestTranslationLocaleData(): array
+    public static function getNearestTranslationLocaleData(): array
     {
         return [
             ['de', 'de'], // registered and translated: use it

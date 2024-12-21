@@ -32,7 +32,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         return new RoleValidator($roleService);
     }
 
-    public function getValidRoles()
+    public static function getValidRoles()
     {
         return [
             [User::ROLE_USER],
@@ -51,9 +51,8 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidRoles
-     * @param string $role
      */
-    public function testConstraintWithValidRole($role): void
+    public function testConstraintWithValidRole(string $role): void
     {
         $constraint = new Role();
         $this->validator->validate($role, $constraint);
@@ -70,7 +69,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function getInvalidRoles()
+    public static function getInvalidRoles()
     {
         return [
             ['foo'],
@@ -84,9 +83,8 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidRoles
-     * @param mixed $role
      */
-    public function testValidationError($role): void
+    public function testValidationError(mixed $role): void
     {
         $constraint = new Role([
             'message' => 'myMessage',

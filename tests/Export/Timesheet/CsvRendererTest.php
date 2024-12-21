@@ -29,7 +29,7 @@ class CsvRendererTest extends AbstractRendererTest
         $this->assertEquals('csv', $sut->getTitle());
     }
 
-    public function getTestModel()
+    public static function getTestModel()
     {
         return [
             ['400', '2437.12', ' EUR 1,947.99 ', 6, 5, 1, 2, 2]

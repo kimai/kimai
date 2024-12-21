@@ -88,7 +88,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function getProblemPattern()
+    public static function getProblemPattern()
     {
         yield ["yy-MM-dd HH 'h' mm", '2009-08-06 17 h 45'];
     }

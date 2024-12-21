@@ -109,7 +109,7 @@ class ThemeEventExtensionTest extends TestCase
         self::assertCount(ThemeJavascriptTranslationsEventTest::COUNTER, $values);
     }
 
-    public function getProgressbarColors()
+    public static function getProgressbarColors()
     {
         yield ['bg-red', 100, false];
         yield ['bg-red', 91, false];

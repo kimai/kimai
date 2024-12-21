@@ -37,7 +37,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured($this->getReportUrl());
     }
 
-    public function getTestData(): array
+    public static function getTestData(): array
     {
         return [
             [4, 'duration', 'Working hours total'],

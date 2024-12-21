@@ -68,7 +68,7 @@ class RateCalculatorTest extends TestCase
         $this->assertEquals(10, $record->getRate());
     }
 
-    public function getRateTestData()
+    public static function getRateTestData()
     {   //             expected, expInt, durat, userH,  userIn, timeH,  timeF,  actH,   actIn,  actF,    proH,   proIn,  proFi,   custH,  custIn, custF
         yield 'a0' => [0.0,     0.0,    0,      0,      0,      null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
         yield 'a2' => [0.0,     0.0,    0,      0,      null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   false];
@@ -235,7 +235,7 @@ class RateCalculatorTest extends TestCase
         $this->assertEquals($expectedRate, $record->getRate());
     }
 
-    public function getRuleDefinitions()
+    public static function getRuleDefinitions()
     {
         $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $day = $start->format('l');

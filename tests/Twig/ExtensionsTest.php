@@ -120,7 +120,7 @@ class ExtensionsTest extends TestCase
         $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
 
-    public function getMultilineTestData()
+    public static function getMultilineTestData()
     {
         return [
             ['    ', null, ['']],
@@ -200,7 +200,7 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals(1, $sut->getIsoDayByName('sdfgsdf'));
     }
 
-    public function getTestDataReplaceNewline()
+    public static function getTestDataReplaceNewline()
     {
         yield [',', new \stdClass(), new \stdClass()];
         yield [',', null, null];

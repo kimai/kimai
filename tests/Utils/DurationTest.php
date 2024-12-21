@@ -43,7 +43,7 @@ class DurationTest extends TestCase
         $this->assertEquals($expected, $sut->parseDuration($duration, $mode));
     }
 
-    public function getParseDurationTestData()
+    public static function getParseDurationTestData()
     {
         return [
             [3600, 1, Duration::FORMAT_DECIMAL],
@@ -80,7 +80,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    public function getParseDurationInvalidData()
+    public static function getParseDurationInvalidData()
     {
         return [
             // invalid input

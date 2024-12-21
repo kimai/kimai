@@ -32,11 +32,11 @@ class CustomerVoterTest extends AbstractVoterTest
 
     public function testVote(): void
     {
-        $userNoRole = $this->getUser(0, 'foo');
-        $userStandard = $this->getUser(1, User::ROLE_USER);
-        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $userAdmin = $this->getUser(3, User::ROLE_ADMIN);
-        $userSuperAdmin = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $userNoRole = self::getUser(0, 'foo');
+        $userStandard = self::getUser(1, User::ROLE_USER);
+        $userTeamlead = self::getUser(2, User::ROLE_TEAMLEAD);
+        $userAdmin = self::getUser(3, User::ROLE_ADMIN);
+        $userSuperAdmin = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $result = VoterInterface::ACCESS_GRANTED;
         foreach ([$userAdmin, $userSuperAdmin] as $user) {
@@ -55,7 +55,7 @@ class CustomerVoterTest extends AbstractVoterTest
             $team->removeCustomer($customer);
         }
 
-        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
+        $userTeamlead = self::getUser(2, User::ROLE_TEAMLEAD);
 
         $result = VoterInterface::ACCESS_DENIED;
         foreach ([$userNoRole, $userStandard] as $user) {

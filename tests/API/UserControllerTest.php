@@ -24,7 +24,7 @@ class UserControllerTest extends APIControllerBaseTest
     /**
      * @return array<array<string>>
      */
-    public function getRoleTestData(): array
+    public static function getRoleTestData(): array
     {
         return [
             [User::ROLE_USER],

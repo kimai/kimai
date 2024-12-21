@@ -36,17 +36,20 @@ class OdsRendererTest extends TestCase
         $this->assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
-    public function getTestModel()
+    public static function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
+    public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
+        /** @var InvoiceModel $model */
+        $model = $invoiceModel($this); // FIXME
+
         /** @var OdsRenderer $sut */
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
         $model = $this->getInvoiceModel();

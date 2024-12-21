@@ -98,7 +98,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<div class="datagrid-content">' . $username . '</div>', $content);
     }
 
-    public function getTabTestData(): array
+    public static function getTabTestData(): array
     {
         return [
             [User::ROLE_USER, UserFixtures::USERNAME_USER],
@@ -384,7 +384,7 @@ class ProfileControllerTest extends ControllerBaseTest
         self::assertCount(1, $user->getTeams());
     }
 
-    public function getPreferencesTestData(): array
+    public static function getPreferencesTestData(): array
     {
         return [
             // assert that the user doesn't have the "hourly-rate_own_profile" permission

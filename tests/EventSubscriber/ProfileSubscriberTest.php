@@ -84,7 +84,7 @@ class ProfileSubscriberTest extends TestCase
         self::assertEquals(ProfileManager::PROFILE_MOBILE, $manager->getProfileFromSession($session));
     }
 
-    public function getInvalidCookies()
+    public static function getInvalidCookies()
     {
         return [
             ['MOBILE'],

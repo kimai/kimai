@@ -140,7 +140,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, \DateTime|string|null>>
      */
-    public function getDateShortData(): array
+    public static function getDateShortData(): array
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
 
@@ -171,7 +171,7 @@ class LocaleFormatExtensionsTest extends TestCase
      * @return array<int, array<int, \DateTime|string|null>>
      * @throws \Exception
      */
-    public function getDateTimeData(): array
+    public static function getDateTimeData(): array
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
 
@@ -196,7 +196,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|bool>>
      */
-    public function getDayNameTestData(): array
+    public static function getDayNameTestData(): array
     {
         return [
             ['de', '2020-07-09 12:00:00', 'Donnerstag', false],
@@ -218,7 +218,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|bool>>
      */
-    public function getMonthNameTestData(): array
+    public static function getMonthNameTestData(): array
     {
         return [
             ['de', '2020-07-09 23:59:59', 'Juli', false],
@@ -294,7 +294,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|null|int|float>>
      */
-    public function getMoneyNoCurrencyData(): array
+    public static function getMoneyNoCurrencyData(): array
     {
         return [
             ['0,00', null, 'EUR', 'de'],
@@ -328,7 +328,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, null|string|float|int>>
      */
-    public function getMoneyData(): array
+    public static function getMoneyData(): array
     {
         return [
             ["0,00\u{a0}€", null, 'EUR', 'de'],
@@ -361,7 +361,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, null|int|string|float>>
      */
-    public function getAmountData(): array
+    public static function getAmountData(): array
     {
         return [
             ['0', null, 'de'],
@@ -392,7 +392,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|float>>
      */
-    public function getMoneyData62_1(): array
+    public static function getMoneyData62_1(): array
     {
         return [
             ["RUB\u{a0}13.50", 13.50, 'RUB', 'en'],

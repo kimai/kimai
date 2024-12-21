@@ -25,7 +25,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
         $this->sut = new DurationStringToSecondsTransformer();
     }
 
-    public function getValidTestDataTransform(): array
+    public static function getValidTestDataTransform(): array
     {
         return [
             ['0:00', '0'],
@@ -37,7 +37,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
         ];
     }
 
-    public function getInvalidTestDataTransform(): array
+    public static function getInvalidTestDataTransform(): array
     {
         return [
             [''],
@@ -65,7 +65,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @return array<int, array<int, string|int|float|null>>
      */
-    public function getValidTestDataReverseTransform(): array
+    public static function getValidTestDataReverseTransform(): array
     {
         return [
             ['2h3s', 7203],
@@ -81,7 +81,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @return array<int, array<int, string|int>>
      */
-    public function getInvalidTestDataReverseTransform(): array
+    public static function getInvalidTestDataReverseTransform(): array
     {
         return [
             ['xxx'],

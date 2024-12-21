@@ -42,7 +42,7 @@ class FloorRoundingTest extends TestCase
         $this->assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

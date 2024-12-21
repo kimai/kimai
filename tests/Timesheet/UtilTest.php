@@ -25,7 +25,7 @@ class UtilTest extends TestCase
         $this->assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
     }
 
-    public function getRateCalculationData()
+    public static function getRateCalculationData()
     {
         yield [0, 0, 0];
         yield [1, 100, 0.0278];

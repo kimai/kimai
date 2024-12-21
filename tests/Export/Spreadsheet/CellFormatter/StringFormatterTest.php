@@ -59,8 +59,7 @@ class StringFormatterTest extends AbstractFormatterTest
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
 
-        $test = new StringHelperTest();
-        foreach ($test->getDdeAttackStrings() as $attackString) {
+        foreach (StringHelperTest::getDdeAttackStrings() as $attackString) {
             $value = $attackString[0];
             // PHPOffice converts that, so simply skip it
             if (!str_contains($value, "\r")) {

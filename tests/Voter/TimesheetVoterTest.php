@@ -39,12 +39,13 @@ class TimesheetVoterTest extends AbstractVoterTest
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    /**
-     * @dataProvider getTestData
-     */
-    public function testVote(User $user, $subject, $attribute, $result): void
+    public function testVote(): void
     {
-        $this->assertVote($user, $subject, $attribute, $result);
+        foreach ($this->getTestData() as $row) {
+            $this->assertVote($row[0], $row[1], $row[2], $row[3]);
+
+        }
+
     }
 
     public function getTestData()
@@ -115,7 +116,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         self::assertEquals($expected, $sut->vote($token, $timesheet, [$permission]));
     }
 
-    public function getLockDownTestData()
+    public static function getLockDownTestData()
     {
         yield ['view', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
         yield ['start', VoterInterface::ACCESS_DENIED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];

@@ -98,7 +98,7 @@ class UTCDateTimeTypeTest extends TestCase
     /**
      * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
      */
-    public function getPlatforms(): array
+    public static function getPlatforms(): array
     {
         return [
             [new MySQLPlatform()],

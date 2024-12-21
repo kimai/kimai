@@ -34,7 +34,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         ];
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];

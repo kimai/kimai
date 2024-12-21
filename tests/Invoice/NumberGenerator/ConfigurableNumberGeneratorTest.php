@@ -58,7 +58,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
     /**
      * @return array<int, array<int, string|\DateTime|int>>
      */
-    public function getTestData(): array
+    public static function getTestData(): array
     {
         $invoiceDate = new \DateTime();
         $invoiceDateFixed = new \DateTime('2021-03-07');
@@ -210,7 +210,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
     /**
      * @return array<int, array<int, string|\DateTime>>
      */
-    public function getInvalidTestData(): array
+    public static function getInvalidTestData(): array
     {
         $invoiceDate = new \DateTime();
 
@@ -251,7 +251,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function getMissingFieldTestData(): array
+    public static function getMissingFieldTestData(): array
     {
         return [
             ['{Y}/{cnumber}_{ccy,3}', 'Customer has no number, replacer {cnumber} failed evaluation'],

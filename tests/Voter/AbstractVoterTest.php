@@ -29,7 +29,7 @@ abstract class AbstractVoterTest extends TestCase
         return $voter;
     }
 
-    protected function getUser(int $id, ?string $role): User
+    protected static function getUser(int $id, ?string $role): User
     {
         $roles = [];
         if (!empty($role)) {

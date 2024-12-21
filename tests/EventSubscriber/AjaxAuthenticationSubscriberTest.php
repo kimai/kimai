@@ -38,7 +38,7 @@ class AjaxAuthenticationSubscriberTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function getTestHeader(): array
+    public static function getTestHeader(): array
     {
         return [
             ['XMLHttpRequest'],

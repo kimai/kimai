@@ -21,7 +21,7 @@ class DateTimeFactoryTest extends TestCase
 {
     public const TEST_TIMEZONE = 'Europe/London';
 
-    protected function createDateTimeFactory(?string $timezone = null, bool $sunday = false): DateTimeFactory
+    protected static function createDateTimeFactory(?string $timezone = null, bool $sunday = false): DateTimeFactory
     {
         if (null === $timezone) {
             return new DateTimeFactory(null, $sunday);
@@ -72,11 +72,11 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function getStartOfWeekData()
+    public static function getStartOfWeekData()
     {
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE), 'Monday', 23, 1];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, false), 'Monday', 23, 1];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Monday', 23, 1];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Monday', 23, 1];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
     }
 
     /**
@@ -109,11 +109,11 @@ class DateTimeFactoryTest extends TestCase
         $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function getEndOfWeekData()
+    public static function getEndOfWeekData()
     {
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE), 'Sunday', 29, 7];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, false), 'Sunday', 29, 7];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Sunday', 29, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Sunday', 29, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
     }
 
     /**
