@@ -39,7 +39,7 @@ class UserQueryTest extends BaseQueryTest
         $this->assertIsArray($sut->getSearchTeams());
         $this->assertEmpty($sut->getSearchTeams());
         $sut->setSearchTeams([$team, new Team('foo')]);
-        $this->assertCount(2, $sut->getSearchTeams());
+        self::assertCount(2, $sut->getSearchTeams());
         $this->assertSame($team, $sut->getSearchTeams()[0]);
     }
 

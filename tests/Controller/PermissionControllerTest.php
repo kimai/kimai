@@ -212,7 +212,7 @@ class PermissionControllerTest extends ControllerBaseTest
         self::assertArrayHasKey('token', $result);
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
-        $this->assertCount(1, $rolePermissions);
+        self::assertCount(1, $rolePermissions);
         $permission = $rolePermissions[0];
         self::assertInstanceOf(RolePermission::class, $permission);
         self::assertEquals('view_user', $permission->getPermission());

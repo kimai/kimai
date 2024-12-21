@@ -46,7 +46,7 @@ class ExtensionsTest extends TestCase
         $filters = ['report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(\count($filters), $twigFilters);
+        self::assertCount(\count($filters), $twigFilters);
         $i = 0;
 
         foreach ($twigFilters as $filter) {
@@ -67,7 +67,7 @@ class ExtensionsTest extends TestCase
         $functions = ['report_date', 'class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
@@ -83,7 +83,7 @@ class ExtensionsTest extends TestCase
 
         $sut = $this->getSut();
         $twigTests = $sut->getTests();
-        $this->assertCount(\count($tests), $twigTests);
+        self::assertCount(\count($tests), $twigTests);
 
         /** @var TwigTest $test */
         foreach ($twigTests as $test) {

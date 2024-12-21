@@ -84,7 +84,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
-        //$this->assertCount(\count($filters), $twigFilters);
+        //self::assertCount(\count($filters), $twigFilters);
 
         foreach ($twigFilters as $filter) {
             $this->assertInstanceOf(TwigFilter::class, $filter);
@@ -99,7 +99,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
 
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
@@ -115,7 +115,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigTests = $sut->getTests();
-        $this->assertCount(\count($tests), $twigTests);
+        self::assertCount(\count($tests), $twigTests);
 
         /** @var TwigTest $test */
         foreach ($twigTests as $test) {

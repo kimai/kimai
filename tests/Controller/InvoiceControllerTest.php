@@ -214,7 +214,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertCount(20, $timesheets);
+        self::assertCount(20, $timesheets);
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
             $this->assertTrue($timesheet->isExported());

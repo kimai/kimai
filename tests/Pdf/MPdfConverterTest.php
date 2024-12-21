@@ -29,6 +29,6 @@ class MPdfConverterTest extends KernelTestCase
         // Yeah, thats not a real test, I know ;-)
         $this->assertNotEmpty($result);
         preg_match('/\/Creator \((.*)\)/', $result, $matches);
-        $this->assertCount(2, $matches);
+        self::assertCount(2, $matches);
     }
 }

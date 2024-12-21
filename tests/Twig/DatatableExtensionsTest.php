@@ -32,7 +32,7 @@ class DatatableExtensionsTest extends TestCase
         $functions = ['initialize_datatable', 'datatable_column_class'];
         $sut = $this->getSut('de');
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         foreach ($twigFunctions as $function) {
             $this->assertInstanceOf(TwigFunction::class, $function);

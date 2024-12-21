@@ -32,7 +32,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $expectedKeys = ['activeEntriesHardLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
-        $this->assertCount(\count($expectedKeys), $result);
+        self::assertCount(\count($expectedKeys), $result);
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);
@@ -84,7 +84,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
             'Rose' => '#ffe4e1',
             'Lavender' => '#E6E6FA',
         ];
-        $this->assertCount(\count($expected), $actual);
+        self::assertCount(\count($expected), $actual);
 
         $this->assertEquals($expected, $actual, 'Color structure does not match');
     }

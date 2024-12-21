@@ -47,6 +47,6 @@ class TeamQueryTest extends BaseQueryTest
         $sut->addUser($user);
         $sut->removeUser($user);
 
-        $this->assertCount(2, $sut->getUsers());
+        self::assertCount(2, $sut->getUsers());
     }
 }

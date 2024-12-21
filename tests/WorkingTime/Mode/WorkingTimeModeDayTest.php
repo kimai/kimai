@@ -29,6 +29,6 @@ class WorkingTimeModeDayTest extends TestCase
         $this->assertEquals('hours_per_day', $sut->getName());
         $this->assertInstanceOf(WorkingTimeCalculatorDay::class, $sut->getCalculator($user));
         $fields = $sut->getFormFields();
-        $this->assertCount(7, $fields);
+        self::assertCount(7, $fields);
     }
 }

@@ -440,7 +440,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
         $timesheets = $this->importFixtureForUser(User::ROLE_ADMIN);
-        $this->assertCount(10, $timesheets);
+        self::assertCount(10, $timesheets);
 
         $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheets[0]->getId(), 'Access denied.');
     }

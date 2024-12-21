@@ -231,7 +231,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $em = $this->getEntityManager();
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertCount(2, $timesheets);
+        self::assertCount(2, $timesheets);
         foreach ($timesheets as $timesheet) {
             $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
             $this->assertNull($timesheet->getEnd());

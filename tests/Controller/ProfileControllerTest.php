@@ -381,7 +381,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertCount(1, $user->getTeams());
+        self::assertCount(1, $user->getTeams());
     }
 
     public function getPreferencesTestData(): array
