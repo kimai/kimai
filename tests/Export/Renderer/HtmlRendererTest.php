@@ -11,7 +11,7 @@ namespace App\Tests\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
 use App\Entity\User;
-use App\Export\Renderer\HtmlRenderer;
+use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -24,7 +24,6 @@ use Twig\Environment;
 /**
  * @covers \App\Export\Base\HtmlRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\HtmlRenderer
  * @group integration
  */
 class HtmlRendererTest extends AbstractRendererTestCase

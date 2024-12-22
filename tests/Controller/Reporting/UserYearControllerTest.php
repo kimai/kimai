@@ -19,6 +19,11 @@ class UserYearControllerTest extends AbstractUserPeriodControllerTestCase
         return '/reporting/user/year';
     }
 
+    protected function getExportUrl(): string
+    {
+        return '/reporting/user/year_export';
+    }
+
     protected function getBoxId(): string
     {
         return 'user-year-reporting-box';

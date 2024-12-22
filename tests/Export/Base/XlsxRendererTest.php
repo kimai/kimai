@@ -7,23 +7,44 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export\Renderer;
+namespace App\Tests\Export\Base;
 
-use App\Export\Renderer\XlsxRenderer;
+use App\Entity\User;
+use App\Export\Base\SpreadsheetRenderer;
+use App\Export\Base\XlsxRenderer;
+use App\Tests\Export\Renderer\AbstractRendererTestCase;
+use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @covers \App\Export\Base\XlsxRenderer
- * @covers \App\Export\Base\AbstractSpreadsheetRenderer
+ * @covers \App\Export\Base\SpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\XlsxRenderer
+ * @covers \App\Export\Package\SpoutSpreadsheet
  * @group integration
  */
 class XlsxRendererTest extends AbstractRendererTestCase
 {
+    protected function getAbstractRenderer(): XlsxRenderer
+    {
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('isGranted')->willReturn(true);
+
+        $translator = $this->createMock(TranslatorInterface::class);
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+
+        return new XlsxRenderer(new SpreadsheetRenderer($translator, $dispatcher, $security));
+    }
+
     public function testConfiguration(): void
     {
-        $sut = $this->getAbstractRenderer(XlsxRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         self::assertEquals('xlsx', $sut->getId());
         self::assertEquals('xlsx', $sut->getTitle());
@@ -31,7 +52,7 @@ class XlsxRendererTest extends AbstractRendererTestCase
 
     public function testRender(): void
     {
-        $sut = $this->getAbstractRenderer(XlsxRenderer::class);
+        $sut = $this->getAbstractRenderer();
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);

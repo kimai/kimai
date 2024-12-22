@@ -25,6 +25,7 @@ services:
             - '../src/Doctrine/Extensions/'
             - '../src/Entity/'
             - '../src/Event/'
+            - '../src/Export/Package/'
             - '../src/Form/Model/'
             - '../src/Model/'
             - '../src/Repository/Loader/'

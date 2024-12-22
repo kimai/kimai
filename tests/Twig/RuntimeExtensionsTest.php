@@ -11,7 +11,7 @@ namespace App\Tests\Twig;
 
 use App\Twig\RuntimeExtensions;
 use PHPUnit\Framework\TestCase;
-use Twig\Node\Node;
+use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -80,20 +80,20 @@ class RuntimeExtensionsTest extends TestCase
             switch ($filter->getName()) {
                 case 'md2html':
                     self::assertEquals('html', $filters[0]->getPreEscape());
-                    self::assertEquals(['html'], $filters[0]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[0]->getSafe(new TextNode('', 10)));
                     $found_md2html = true;
                     break;
                 case 'desc2html':
-                    self::assertEquals(['html'], $filters[1]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[1]->getSafe(new TextNode('', 10)));
                     $found_desc2html = true;
                     break;
                 case 'comment2html':
-                    self::assertEquals(['html'], $filters[2]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[2]->getSafe(new TextNode('', 10)));
                     $found_comment2html = true;
                     break;
                 case 'comment1line':
                     self::assertEquals('html', $filters[3]->getPreEscape());
-                    self::assertEquals(['html'], $filters[3]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[3]->getSafe(new TextNode('', 10)));
                     $found_comment1line = true;
                     break;
             }

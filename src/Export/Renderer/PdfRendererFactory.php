@@ -9,6 +9,7 @@
 
 namespace App\Export\Renderer;
 
+use App\Export\Base\PDFRenderer;
 use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
 use Twig\Environment;
@@ -16,9 +17,9 @@ use Twig\Environment;
 final class PdfRendererFactory
 {
     public function __construct(
-        private Environment $twig,
-        private HtmlToPdfConverter $converter,
-        private ProjectStatisticService $projectStatisticService
+        private readonly Environment $twig,
+        private readonly HtmlToPdfConverter $converter,
+        private readonly ProjectStatisticService $projectStatisticService
     ) {
     }
 

@@ -27,7 +27,7 @@ if [[ -n $1 ]]; then
 	elif [ "$1" == 'core' ]; then
 		vendor/bin/phpstan analyse -c phpstan.neon ${ARGS}
 		exit
-	elif [ "$1" == 'test' ]; then
+	elif [ "$1" == 'test' ] || [ "$1" == 'tests' ]; then
 		vendor/bin/phpstan analyse -c tests/phpstan.neon ${ARGS}
 		exit
 	else
