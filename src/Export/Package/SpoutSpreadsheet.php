@@ -26,14 +26,6 @@ class SpoutSpreadsheet implements SpreadsheetPackage
     public function __construct(private readonly WriterInterface $writer)
     {
         $this->writer->setCreator(Constants::SOFTWARE);
-
-        if ($this->writer instanceof AbstractWriterMultiSheets) {
-            $sheetView = new SheetView();
-            $sheetView->setFreezeColumn('D');
-            $sheetView->setFreezeRow(2);
-
-            $this->writer->getCurrentSheet()->setSheetView($sheetView);
-        }
     }
 
     /**
@@ -85,6 +77,14 @@ class SpoutSpreadsheet implements SpreadsheetPackage
     public function open(string $filename): void
     {
         $this->writer->openToFile($filename);
+
+        if ($this->writer instanceof AbstractWriterMultiSheets) {
+            $sheetView = new SheetView();
+            $sheetView->setFreezeColumn('D');
+            $sheetView->setFreezeRow(2);
+
+            $this->writer->getCurrentSheet()->setSheetView($sheetView);
+        }
     }
 
     public function save(): void
