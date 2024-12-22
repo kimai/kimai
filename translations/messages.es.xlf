@@ -1534,10 +1534,6 @@
         <source>receive_from</source>
         <target state="translated">Recibir de %name%</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Horas trabajadas</target>
-      </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
         <target state="translated">Has utilizado %used% de tus %days% días disponibles de vacaciones.</target>

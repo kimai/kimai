@@ -1354,10 +1354,6 @@
         <source>Expected number of hours</source>
         <target state="translated">Предполагаемые часы</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
-        <source>work_times_result</source>
-        <target state="translated">Отработанные часы</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
         <target state="needs-translation">Подтверждено %user% в %date%</target>

@@ -1574,10 +1574,6 @@
         <source>work_times_is</source>
         <target state="translated">Przepracowane godziny</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
-        <source>work_times_result</source>
-        <target state="translated">Przepracowane godziny</target>
-      </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
         <target state="translated">Potwierdzone przez %user% dnia %date%</target>

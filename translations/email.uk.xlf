@@ -72,7 +72,7 @@ Please review them at: %url%</source>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
         <source>approval_rejected_message</source>
-        <target state="translated">Ваш запит на авторизацію %user% скасовує.
+        <target state="translated">Ваш запит на авторизацію %created_by% скасовує.
 
 %list%
 
@@ -84,7 +84,7 @@ Please review them at: %url%</source>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
         <source>approval_approved_message</source>
-        <target state="translated">%user% схвалює Ваш запит.
+        <target state="translated">%created_by% схвалює Ваш запит.
 
 %list%
 
