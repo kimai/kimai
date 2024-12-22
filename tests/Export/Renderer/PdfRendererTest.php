@@ -9,7 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Export\Renderer\PDFRenderer;
+use App\Export\Base\PDFRenderer;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
@@ -21,7 +21,6 @@ use Twig\Environment;
 /**
  * @covers \App\Export\Base\PDFRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Renderer\PDFRenderer
  * @group integration
  */
 class PdfRendererTest extends AbstractRendererTestCase

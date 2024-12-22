@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Configuration\LocaleService;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -26,41 +25,14 @@ use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ExportRendererInterface;
-use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\LocaleFormatExtensions;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTestCase extends KernelTestCase
 {
-    /**
-     * @param class-string $classname
-     */
-    protected function getAbstractRenderer(string $classname): ExportRendererInterface|TimesheetExportInterface
-    {
-        $languages = [
-            'en' => LocaleService::DEFAULT_SETTINGS
-        ];
-
-        $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn(new User());
-        $security->expects($this->any())->method('isGranted')->willReturn(true);
-
-        $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages));
-
-        $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
-
-        return new $classname($translator, $dateExtension, $dispatcher, $security);
-    }
-
     protected function render(ExportRendererInterface $renderer): Response
     {
         $customer = new Customer('Customer Name');

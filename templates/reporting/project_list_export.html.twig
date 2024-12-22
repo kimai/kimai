@@ -1,6 +1,7 @@
 {% set columns = {
     'customer':         {'title': 'customer'|trans},
     'name':             {'title': 'name'|trans},
+    'currency':         {'title': 'currency'|trans},
     'budgetType':       {'title': 'budgetType'|trans},
 } %}
 {% if is_granted('budget_time', 'project') %}
@@ -54,6 +55,8 @@
                         {% endif %}
                     {% elseif name == 'customer' %}
                         {{ project.customer.name }}
+                    {% elseif name == 'currency' %}
+                        {{ currency }}
                     {% elseif name == 'lastRecord' %}
                         {% if entry.lastRecord is not null %}
                             {{ entry.lastRecord|date_short }}
@@ -61,60 +64,56 @@
                             &ndash;
                         {% endif %}
                     {% elseif name == 'today' %}
-                        {{ entry.durationDay|duration }}
+                        {{ entry.durationDay|duration(true) }}
                     {% elseif name == 'week' %}
-                        {{ entry.durationWeek|duration }}
+                        {{ entry.durationWeek|duration(true) }}
                     {% elseif name == 'month' %}
-                        {{ entry.durationMonth|duration }}
+                        {{ entry.durationMonth|duration(true) }}
                     {% elseif name == 'timeBudget' %}
                         {% if showTimeBudget %}
-                            {{ budgetStatisticModel.getTimeBudget()|duration }}
-                        {% else %}
-                            &ndash;
+                            {{ budgetStatisticModel.getTimeBudget()|duration(true) }}
                         {% endif %}
                     {% elseif name == 'durationTotal' %}
-                        {{ entry.durationTotal|duration }}
+                        {{ entry.durationTotal|duration(true) }}
                     {% elseif name == 'billableTime' %}
                         {% if canSeeTimeBudget %}
-                            {{ budgetStatisticModel.getTimeBudgetSpent()|duration }}
+                            {{ budgetStatisticModel.getTimeBudgetSpent()|duration(true) }}
                         {% endif %}
                     {% elseif name == 'exported' %}
                         {% if canSeeTimeBudget %}
-                            {{ entry.notExportedDuration|duration }}
+                            {{ entry.notExportedDuration|duration(true) }}
                         {% endif %}
                     {% elseif name == 'budget' %}
                         {% if showMoneyBudget %}
-                            {{ budgetStatisticModel.getBudget()|money(currency) }}
-                        {% else %}
-                            &ndash;
+                            {{ budgetStatisticModel.getBudget()|money }}
                         {% endif %}
                     {% elseif name == 'amountTotal' %}
                         {% if canSeeMoneyBudget %}
-                            {{ budgetStatisticModel.getStatisticTotal().getRate()|money(currency) }}
+                            {{ budgetStatisticModel.getStatisticTotal().getRate()|money }}
                         {% endif %}
                     {% elseif name == 'billableMoney' %}
                         {% if canSeeMoneyBudget %}
-                            {{ budgetStatisticModel.getBudgetSpent()|money(currency) }}
+                            {{ budgetStatisticModel.getBudgetSpent()|money }}
                         {% endif %}
                     {% elseif name == 'internalRate' %}
                         {% if canSeeMoneyBudget %}
-                            {{ budgetStatisticModel.getInternalRate()|money(currency) }}
+                            {{ budgetStatisticModel.getInternalRate()|money }}
                         {% endif %}
                     {% elseif name == 'revenue' %}
                         {% if canSeeMoneyBudget %}
-                            {{ revenue|money(currency) }}
+                            {{ revenue|money }}
                         {% endif %}
                     {% elseif name == 'hourlyBillable' %}
                         {% if canSeeMoneyBudget and durationTotal > 0 %}
-                            {{ (budgetStatisticModel.getBudgetSpent() / durationTotal)|money(currency) }}
+                            {{ (budgetStatisticModel.getBudgetSpent() / durationTotal)|money }}
                         {% endif %}
                     {% elseif name == 'hourlyTotal' %}
                         {% if canSeeMoneyBudget and durationTotal > 0 %}
-                            {{ (revenue / durationTotal)|money(currency) }}
+                            {{ (revenue / durationTotal)|money }}
                         {% endif %}
                     {% elseif name == 'invoiced' %}
                         {% if canSeeMoneyBudget %}
-                            {{ entry.notExportedRate|money(currency) }}
+                            {{ entry.notExportedRate|money }}
                         {% endif %}
                     {% elseif name == 'projectStart' %}
                         {% if project.start is not null %}{{ project.start|date_short }}{% endif %}

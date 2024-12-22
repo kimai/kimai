@@ -78,11 +78,6 @@ final class ProjectViewController extends AbstractController
     {
         $data = $this->getData($request, $service);
 
-        // Projektübersicht inkl. dem was Projektdetails anzeigen
-        // Budget / Zeitbudget
-        // Abrechenbar
-        // Interner Preis
-
         $content = $this->renderView('reporting/project_list_export.html.twig', $data);
 
         $reader = new Html();

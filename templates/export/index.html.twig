@@ -23,6 +23,7 @@
     'project': {'class': 'd-none d-sm-table-cell', 'orderBy': false},
     'activity': {'class': 'd-none', 'orderBy': false},
     'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
+    'tags': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
     'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
     'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
@@ -228,6 +229,11 @@
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
                         {{ entry.description|desc2html }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">
+                        {% if entry.type == 'timesheet' %}
+                            {{ widgets.tag_list(entry.tags) }}
+                        {% endif %}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
                         {{ rate|money(currency) }}

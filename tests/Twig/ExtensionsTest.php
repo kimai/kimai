@@ -14,7 +14,7 @@ use App\Entity\Activity;
 use App\Entity\User;
 use App\Twig\Extensions;
 use PHPUnit\Framework\TestCase;
-use Twig\Node\Node;
+use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
@@ -59,7 +59,7 @@ class ExtensionsTest extends TestCase
         // make sure that the nl2str filters does proper escaping
         self::assertEquals('nl2str', $twigFilters[$id]->getName());
         self::assertEquals('html', $twigFilters[$id]->getPreEscape());
-        self::assertEquals(['html'], $twigFilters[$id]->getSafe(new Node()));
+        self::assertEquals(['html'], $twigFilters[$id]->getSafe(new TextNode('', 10)));
     }
 
     public function testGetFunctions(): void
