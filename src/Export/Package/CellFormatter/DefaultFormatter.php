@@ -13,6 +13,14 @@ final class DefaultFormatter implements CellFormatterInterface
 {
     public function formatValue(mixed $value): mixed
     {
+        if ($value === null) {
+            return null;
+        }
+
+        if (!\is_scalar($value)) {
+            throw new \InvalidArgumentException('Only scalar values are supported');
+        }
+
         return $value;
     }
 }

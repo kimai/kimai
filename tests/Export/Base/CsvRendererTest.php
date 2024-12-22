@@ -21,7 +21,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @covers \App\Export\Base\CsvRenderer
+ * @covers \App\Export\Base\SpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
+ * @covers \App\Export\Package\SpoutSpreadsheet
  * @group integration
  */
 class CsvRendererTest extends AbstractRendererTestCase

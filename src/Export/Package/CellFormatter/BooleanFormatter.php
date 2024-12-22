@@ -13,6 +13,14 @@ final class BooleanFormatter implements CellFormatterInterface
 {
     public function formatValue(mixed $value): mixed
     {
+        if ($value === null) {
+            return false;
+        }
+
+        if (!\is_scalar($value)) {
+            throw new \InvalidArgumentException('Only scalar values are supported');
+        }
+
         return (bool) $value;
     }
 }

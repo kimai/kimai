@@ -13,10 +13,14 @@ final class RateFormatter implements CellFormatterInterface
 {
     public function formatValue(mixed $value): mixed
     {
-        if (\is_float($value)) {
-            return (float) number_format($value, 2, '.', '');
+        if (is_numeric($value)) {
+            return (float) number_format((float) $value, 2, '.', '');
         }
 
-        return 0.0;
+        if ($value === null) {
+            return 0.0;
+        }
+
+        throw new \InvalidArgumentException('Only numeric values be formatted');
     }
 }
