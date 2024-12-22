@@ -15,31 +15,31 @@ use App\Entity\User;
 /**
  * @covers \App\Entity\AccessToken
  */
-class AccessTokenTest extends AbstractEntityTest
+class AccessTokenTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
         $user = new User();
         $sut = new AccessToken($user, 'foo');
 
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getExpiresAt());
-        $this->assertNull($sut->getLastUsage());
-        $this->assertSame('foo', $sut->getToken());
-        $this->assertSame($user, $sut->getUser());
-        $this->assertTrue($sut->isValid());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getExpiresAt());
+        self::assertNull($sut->getLastUsage());
+        self::assertSame('foo', $sut->getToken());
+        self::assertSame($user, $sut->getUser());
+        self::assertTrue($sut->isValid());
 
         $sut->setName('bar');
-        $this->assertSame('bar', $sut->getName());
+        self::assertSame('bar', $sut->getName());
 
         $dateTime = new \DateTimeImmutable('-1 year');
         $sut->setLastUsage($dateTime);
-        $this->assertSame($dateTime, $sut->getLastUsage());
+        self::assertSame($dateTime, $sut->getLastUsage());
 
         $dateTime = new \DateTimeImmutable('-1 month');
         $sut->setExpiresAt($dateTime);
-        $this->assertSame($dateTime, $sut->getExpiresAt());
+        self::assertSame($dateTime, $sut->getExpiresAt());
     }
 
     public function testIsValid(): void
@@ -47,6 +47,6 @@ class AccessTokenTest extends AbstractEntityTest
         $user = new User();
         $sut = new AccessToken($user, 'foo');
         $sut->setExpiresAt(new \DateTimeImmutable('-1 day'));
-        $this->assertFalse($sut->isValid());
+        self::assertFalse($sut->isValid());
     }
 }

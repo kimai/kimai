@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Widget\Type\AbstractWidget
  */
-abstract class AbstractWidgetTest extends TestCase
+abstract class AbstractWidgetTestCase extends TestCase
 {
     abstract public function createSut(): AbstractWidget;
 

@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\InvoiceSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\InvoiceSubscriber
  */
-class InvoiceSubscriberTest extends AbstractActionsSubscriberTest
+class InvoiceSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

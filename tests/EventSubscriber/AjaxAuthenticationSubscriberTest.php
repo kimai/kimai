@@ -29,16 +29,16 @@ class AjaxAuthenticationSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = AjaxAuthenticationSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $events);
+        self::assertArrayHasKey(KernelEvents::EXCEPTION, $events);
         /** @var string $methodName */
         $methodName = $events[KernelEvents::EXCEPTION][0];
-        $this->assertTrue(method_exists(AjaxAuthenticationSubscriber::class, $methodName));
+        self::assertTrue(method_exists(AjaxAuthenticationSubscriber::class, $methodName));
     }
 
     /**
      * @return array<array<string>>
      */
-    public function getTestHeader(): array
+    public static function getTestHeader(): array
     {
         return [
             ['XMLHttpRequest'],

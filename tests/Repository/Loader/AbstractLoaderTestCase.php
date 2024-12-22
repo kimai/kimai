@@ -15,9 +15,9 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractLoaderTest extends TestCase
+abstract class AbstractLoaderTestCase extends TestCase
 {
-    protected function getEntityManagerMock(int $createQueryBuilderCount, $resultMock = null)
+    protected function getEntityManagerMock(int $createQueryBuilderCount, mixed $resultMock = null): EntityManager
     {
         $em = $this->createMock(EntityManager::class);
         $qb = $this->createMock(QueryBuilder::class);

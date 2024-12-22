@@ -21,8 +21,8 @@ class DurationTest extends TestCase
     {
         $sut = new Duration();
 
-        $this->assertNull($sut->format(null));
-        $this->assertEquals('2:38', $sut->format(9494));
+        self::assertNull($sut->format(null));
+        self::assertEquals('2:38', $sut->format(9494));
     }
 
     /**
@@ -31,7 +31,7 @@ class DurationTest extends TestCase
     public function testParseDurationString($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDurationString($duration));
+        self::assertEquals($expected, $sut->parseDurationString($duration));
     }
 
     /**
@@ -40,10 +40,10 @@ class DurationTest extends TestCase
     public function testParseDuration($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDuration($duration, $mode));
+        self::assertEquals($expected, $sut->parseDuration($duration, $mode));
     }
 
-    public function getParseDurationTestData()
+    public static function getParseDurationTestData()
     {
         return [
             [3600, 1, Duration::FORMAT_DECIMAL],
@@ -80,7 +80,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    public function getParseDurationInvalidData()
+    public static function getParseDurationInvalidData()
     {
         return [
             // invalid input

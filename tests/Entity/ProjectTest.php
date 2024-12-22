@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @covers \App\Entity\Project
  */
-class ProjectTest extends AbstractEntityTest
+class ProjectTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {

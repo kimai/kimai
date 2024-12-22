@@ -15,7 +15,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class StatusControllerTest extends APIControllerBaseTest
+class StatusControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecurePing(): void
     {
@@ -38,8 +38,8 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/ping');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(['message' => 'pong'], $result);
+        self::assertIsArray($result);
+        self::assertEquals(['message' => 'pong'], $result);
     }
 
     public function testVersion(): void
@@ -48,15 +48,15 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/version');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
 
-        $this->assertArrayHasKey('version', $result);
-        $this->assertArrayHasKey('versionId', $result);
-        $this->assertArrayHasKey('copyright', $result);
+        self::assertArrayHasKey('version', $result);
+        self::assertArrayHasKey('versionId', $result);
+        self::assertArrayHasKey('copyright', $result);
 
-        $this->assertSame(Constants::VERSION, $result['version']);
-        $this->assertSame(Constants::VERSION_ID, $result['versionId']);
-        $this->assertEquals(
+        self::assertSame(Constants::VERSION, $result['version']);
+        self::assertSame(Constants::VERSION_ID, $result['versionId']);
+        self::assertEquals(
             'Kimai ' . Constants::VERSION . ' by Kevin Papst.',
             $result['copyright']
         );
@@ -68,7 +68,7 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/plugins');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         // no asserts, as plugins are disabled in tests
     }
 }

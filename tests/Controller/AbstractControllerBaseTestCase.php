@@ -34,7 +34,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
  */
-abstract class ControllerBaseTest extends WebTestCase
+abstract class AbstractControllerBaseTestCase extends WebTestCase
 {
     use KernelTestTrait;
 
@@ -155,6 +155,9 @@ abstract class ControllerBaseTest extends WebTestCase
         return $client;
     }
 
+    /**
+     * @return non-empty-string
+     */
     protected function createUrl(string $url): string
     {
         $prefix = '/' . self::DEFAULT_LANGUAGE;
@@ -404,10 +407,6 @@ abstract class ControllerBaseTest extends WebTestCase
         }
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string $url
-     */
     protected function assertIsRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true): void
     {
         self::assertResponseRedirects();
@@ -431,7 +430,7 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertStringContainsString($expectedMeta, $client->getResponse()->getContent());
 
         if ($url !== null) {
-            if ($endsWith) {
+            if ($endsWith && $url !== '') {
                 self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
             } else {
                 self::assertStringContainsString($url, $location, 'Redirect URL does not match');
@@ -447,7 +446,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $location = $client->getResponse()->headers->get('Location');
         self::assertNotNull($location);
 
-        if ($endsWith) {
+        if ($endsWith && $url !== '') {
             self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
         } else {
             self::assertStringContainsString($url, $location, 'Redirect URL does not match');

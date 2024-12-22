@@ -158,7 +158,7 @@ class TimesheetQueryTest extends BaseQueryTest
             $sut->setExported(2);
         } catch (\InvalidArgumentException $exception) {
             $catched = true;
-            $this->assertEquals('Unknown export state given', $exception->getMessage());
+            self::assertEquals('Unknown export state given', $exception->getMessage());
         }
 
         self::assertTrue($catched);

@@ -26,8 +26,8 @@ class InvoiceArchiveQueryTest extends BaseQueryTest
         $this->assertBaseQuery($sut, 'date', BaseQuery::ORDER_DESC);
         $this->assertDateRangeTrait($sut);
 
-        $this->assertIsArray($sut->getCustomers());
-        $this->assertEmpty($sut->getCustomers());
+        self::assertIsArray($sut->getCustomers());
+        self::assertEmpty($sut->getCustomers());
         self::assertFalse($sut->hasCustomers());
 
         $sut->addCustomer(new Customer('foo'));

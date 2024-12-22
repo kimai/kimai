@@ -16,7 +16,7 @@ use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 /**
  * @group integration
  */
-class PluginControllerTest extends ControllerBaseTest
+class PluginControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

@@ -27,11 +27,11 @@ class RuntimeExtensionsTest extends TestCase
 
         $sut = new RuntimeExtensions();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(\count($expected), $twigFilters);
+        self::assertCount(\count($expected), $twigFilters);
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 
@@ -57,12 +57,12 @@ class RuntimeExtensionsTest extends TestCase
 
         $sut = new RuntimeExtensions();
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($expected), $twigFunctions);
+        self::assertCount(\count($expected), $twigFunctions);
 
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 

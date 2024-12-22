@@ -27,9 +27,9 @@ class PagerfantaExceptionSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = PagerfantaExceptionSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $events);
+        self::assertArrayHasKey(KernelEvents::EXCEPTION, $events);
         $methodName = $events[KernelEvents::EXCEPTION][0];
-        $this->assertTrue(method_exists(PagerfantaExceptionSubscriber::class, $methodName));
+        self::assertTrue(method_exists(PagerfantaExceptionSubscriber::class, $methodName));
     }
 
     public function testWithExceptions(): void

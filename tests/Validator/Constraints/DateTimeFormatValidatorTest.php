@@ -27,7 +27,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         return new DateTimeFormatValidator();
     }
 
-    public function getValidData()
+    public static function getValidData()
     {
         return [
             ['10:00'],
@@ -48,16 +48,15 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidData
-     * @param string $input
      */
-    public function testConstraintWithValidData($input): void
+    public function testConstraintWithValidData(?string $input): void
     {
         $constraint = new DateTimeFormat();
         $this->validator->validate($input, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidData()
+    public static function getInvalidData()
     {
         return [
             ['13-13'],
@@ -70,9 +69,8 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidData
-     * @param mixed $input
      */
-    public function testValidationError($input): void
+    public function testValidationError(?string $input): void
     {
         $constraint = new DateTimeFormat();
 

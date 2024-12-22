@@ -94,7 +94,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield [false, 'end_date', 'default'];
         yield [true, null, 'default'];

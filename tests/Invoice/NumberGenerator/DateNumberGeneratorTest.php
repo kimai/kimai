@@ -45,8 +45,8 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(false, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 
     public function testGetInvoiceNumberWithExisting(): void
@@ -54,8 +54,8 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(true, false);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd-01'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd-01'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 
     public function testGetInvoiceNumberWithManyExisting(): void
@@ -63,7 +63,7 @@ class DateNumberGeneratorTest extends TestCase
         $sut = $this->getSut(true, true);
         $sut->setModel((new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery()));
 
-        $this->assertEquals(date('ymd-99'), $sut->getInvoiceNumber());
-        $this->assertEquals('date', $sut->getId());
+        self::assertEquals(date('ymd-99'), $sut->getInvoiceNumber());
+        self::assertEquals('date', $sut->getId());
     }
 }

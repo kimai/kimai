@@ -16,7 +16,7 @@ use App\Repository\Loader\ProjectLoader;
 /**
  * @covers \App\Repository\Loader\ProjectLoader
  */
-class ProjectLoaderTest extends AbstractLoaderTest
+class ProjectLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void
     {

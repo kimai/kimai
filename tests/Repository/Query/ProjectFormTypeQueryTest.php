@@ -16,7 +16,7 @@ use App\Repository\Query\ProjectFormTypeQuery;
  * @covers \App\Repository\Query\ProjectFormTypeQuery
  * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class ProjectFormTypeQueryTest extends BaseFormTypeQueryTest
+class ProjectFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void
     {

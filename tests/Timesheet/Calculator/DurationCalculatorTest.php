@@ -24,11 +24,11 @@ class DurationCalculatorTest extends TestCase
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create());
         $sut->calculate($record, []);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
     }
 
     /**
@@ -39,14 +39,14 @@ class DurationCalculatorTest extends TestCase
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create($rules));
         $sut->calculate($record, []);
-        $this->assertEquals($expectedDuration, $record->getDuration());
+        self::assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

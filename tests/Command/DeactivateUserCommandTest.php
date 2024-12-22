@@ -69,7 +69,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('john_user');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] User "john_user" has been deactivated.', $output);
+        self::assertStringContainsString('[OK] User "john_user" has been deactivated.', $output);
 
         $container = self::$kernel->getContainer();
         /** @var Registry $doctrine */
@@ -86,7 +86,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('chris_user');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "chris_user" is already deactivated.', $output);
+        self::assertStringContainsString('[WARNING] User "chris_user" is already deactivated.', $output);
     }
 
     public function testWithMissingUsername(): void

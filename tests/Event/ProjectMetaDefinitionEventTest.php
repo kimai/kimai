@@ -22,6 +22,6 @@ class ProjectMetaDefinitionEventTest extends TestCase
     {
         $project = new Project();
         $sut = new ProjectMetaDefinitionEvent($project);
-        $this->assertSame($project, $sut->getEntity());
+        self::assertSame($project, $sut->getEntity());
     }
 }

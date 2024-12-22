@@ -32,12 +32,12 @@ class TwigRendererTest extends KernelTestCase
         $env = new Environment($loader);
         $sut = new TwigRenderer($env);
 
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
+        self::assertTrue($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
+        self::assertTrue($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('company.docx', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
     public function testRender(): void
@@ -66,12 +66,12 @@ class TwigRendererTest extends KernelTestCase
         $content = $response->getContent();
 
         $filename = $model->getInvoiceNumber() . '-customer_with_special_name';
-        $this->assertStringContainsString('<title>' . $filename . '</title>', $content);
-        $this->assertStringContainsString('<span contenteditable="true">a very *long* test invoice / template title with [ßpecial] chäracter</span>', $content);
+        self::assertStringContainsString('<title>' . $filename . '</title>', $content);
+        self::assertStringContainsString('<span contenteditable="true">a very *long* test invoice / template title with [ßpecial] chäracter</span>', $content);
         // 3 timesheets have a description and therefor do not render the activity
         // 2 timesheets have no description and the correct activity assigned
-        $this->assertEquals(2, substr_count($content, 'activity description'));
-        $this->assertStringContainsString(nl2br("foo\n" .
+        self::assertEquals(2, substr_count($content, 'activity description'));
+        self::assertStringContainsString(nl2br("foo\n" .
     "foo\r\n" .
     'foo' . PHP_EOL .
     "bar\n" .
@@ -123,8 +123,8 @@ class TwigRendererTest extends KernelTestCase
             $document = new InvoiceDocument(new \SplFileInfo($filename));
 
             $response = $sut->render($document, $model);
-            $this->assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-Type'));
-            $this->assertNotEmpty($response->getContent());
+            self::assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-Type'));
+            self::assertNotEmpty($response->getContent());
         }
     }
 }

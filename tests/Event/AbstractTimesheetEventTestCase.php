@@ -9,21 +9,21 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\Project;
-use App\Event\AbstractProjectEvent;
+use App\Entity\Timesheet;
+use App\Event\AbstractTimesheetEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\Event;
 
-abstract class AbstractProjectEventTest extends TestCase
+abstract class AbstractTimesheetEventTestCase extends TestCase
 {
-    abstract protected function createProjectEvent(Project $project): AbstractProjectEvent;
+    abstract protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent;
 
     public function testGetterAndSetter(): void
     {
-        $project = new Project();
-        $sut = $this->createProjectEvent($project);
+        $timesheet = new Timesheet();
+        $sut = $this->createTimesheetEvent($timesheet);
 
         self::assertInstanceOf(Event::class, $sut);
-        self::assertSame($project, $sut->getProject());
+        self::assertSame($timesheet, $sut->getTimesheet());
     }
 }

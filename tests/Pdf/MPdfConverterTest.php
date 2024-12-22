@@ -27,8 +27,8 @@ class MPdfConverterTest extends KernelTestCase
         $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
         $result = $sut->convertToPdf('<h1>Test</h1>');
         // Yeah, thats not a real test, I know ;-)
-        $this->assertNotEmpty($result);
+        self::assertNotEmpty($result);
         preg_match('/\/Creator \((.*)\)/', $result, $matches);
-        $this->assertCount(2, $matches);
+        self::assertCount(2, $matches);
     }
 }

@@ -17,7 +17,7 @@ use App\Event\TimesheetStopPreEvent;
  * @covers \App\Event\AbstractTimesheetEvent
  * @covers \App\Event\TimesheetStopPreEvent
  */
-class TimesheetStopPreEventTest extends AbstractTimesheetEventTest
+class TimesheetStopPreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

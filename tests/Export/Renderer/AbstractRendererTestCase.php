@@ -31,7 +31,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractRendererTest extends KernelTestCase
+abstract class AbstractRendererTestCase extends KernelTestCase
 {
     protected function render(ExportRendererInterface $renderer): Response
     {

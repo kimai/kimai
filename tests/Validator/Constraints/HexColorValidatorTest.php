@@ -27,7 +27,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         return new HexColorValidator();
     }
 
-    public function getValidColors()
+    public static function getValidColors()
     {
         yield ['#000'];
         yield ['#aaa'];
@@ -48,16 +48,15 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidColors
-     * @param string $color
      */
-    public function testConstraintWithValidColor($color): void
+    public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new HexColor();
         $this->validator->validate($color, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidColors()
+    public static function getInvalidColors()
     {
         yield ['string'];
         yield ['000'];
@@ -77,18 +76,17 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidColors
-     * @param mixed $color
      */
-    public function testValidationError($color, $parameterType = null): void
+    public function testValidationError(mixed $color, ?string $parameterType = null): void
     {
         $constraint = new HexColor();
 
         $this->validator->validate($color, $constraint);
 
-        if ($parameterType !== null) {
-            $expectedFormat = $parameterType;
+        if (\is_string($color)) {
+            $expectedFormat = '"' . $color . '"';
         } else {
-            $expectedFormat = \is_string($color) ? '"' . $color . '"' : $color;
+            $expectedFormat = $parameterType ?? '';
         }
 
         $this->buildViolation('The given value is not a valid hexadecimal color.')

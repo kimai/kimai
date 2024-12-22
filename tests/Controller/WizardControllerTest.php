@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class WizardControllerTest extends ControllerBaseTest
+class WizardControllerTest extends AbstractControllerBaseTestCase
 {
     public function testUnknownWizard(): void
     {

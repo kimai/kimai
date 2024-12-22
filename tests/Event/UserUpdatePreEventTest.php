@@ -26,6 +26,6 @@ class UserUpdatePreEventTest extends TestCase
 
         $sut = new UserUpdatePreEvent($user);
 
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
     }
 }

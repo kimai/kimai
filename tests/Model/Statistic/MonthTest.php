@@ -15,7 +15,7 @@ use InvalidArgumentException;
 /**
  * @covers \App\Model\Statistic\Month
  */
-class MonthTest extends AbstractTimesheetTest
+class MonthTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void
     {
@@ -29,7 +29,7 @@ class MonthTest extends AbstractTimesheetTest
         self::assertSame(0.0, $sut->getBillableRate());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield ['01', '01', 1];
         yield ['02', '02', 2];
@@ -67,7 +67,7 @@ class MonthTest extends AbstractTimesheetTest
         self::assertEquals($number, $sut->getMonthNumber());
     }
 
-    public function getInvalidTestData()
+    public static function getInvalidTestData()
     {
         yield ['00'];
         yield ['13'];

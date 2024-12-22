@@ -21,7 +21,7 @@ use App\Widget\Type\ActiveUsersYear;
  * @covers \App\Widget\Type\ActiveUsersYear
  * @covers \App\Widget\Type\AbstractCounterYear
  */
-class ActiveUsersYearTest extends AbstractWidgetTypeTest
+class ActiveUsersYearTest extends AbstractWidgetTypeTestCase
 {
     /**
      * @return AbstractCounterYear

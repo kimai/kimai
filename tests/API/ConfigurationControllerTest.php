@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class ConfigurationControllerTest extends APIControllerBaseTest
+class ConfigurationControllerTest extends APIControllerBaseTestCase
 {
     public function testIsTimesheetSecure(): void
     {
@@ -26,18 +26,18 @@ class ConfigurationControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/config/timesheet', 'GET');
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
         $expectedKeys = ['activeEntriesHardLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
-        $this->assertCount(\count($expectedKeys), $result);
+        self::assertCount(\count($expectedKeys), $result);
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);
 
-        $this->assertEquals($expectedKeys, $actual, 'Config structure does not match');
+        self::assertEquals($expectedKeys, $actual, 'Config structure does not match');
     }
 
     public function testIsColorsSecure(): void
@@ -50,11 +50,11 @@ class ConfigurationControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/config/colors', 'GET');
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $actual = json_decode($content, true);
 
-        $this->assertIsArray($actual);
-        $this->assertNotEmpty($actual);
+        self::assertIsArray($actual);
+        self::assertNotEmpty($actual);
         $expected = [
             'Silver' => '#c0c0c0',
             'Gray' => '#808080',
@@ -84,8 +84,8 @@ class ConfigurationControllerTest extends APIControllerBaseTest
             'Rose' => '#ffe4e1',
             'Lavender' => '#E6E6FA',
         ];
-        $this->assertCount(\count($expected), $actual);
+        self::assertCount(\count($expected), $actual);
 
-        $this->assertEquals($expected, $actual, 'Color structure does not match');
+        self::assertEquals($expected, $actual, 'Color structure does not match');
     }
 }

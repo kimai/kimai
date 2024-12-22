@@ -22,7 +22,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @covers \App\Widget\Type\UserAmountYear
  * @covers \App\Widget\Type\AbstractCounterYear
  */
-class UserAmountYearTest extends AbstractWidgetTypeTest
+class UserAmountYearTest extends AbstractWidgetTypeTestCase
 {
     protected function assertDefaultData(AbstractWidgetType $sut): void
     {

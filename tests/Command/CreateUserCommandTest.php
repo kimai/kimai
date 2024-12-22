@@ -42,7 +42,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
     public function testCreateUser(): void
@@ -50,7 +50,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
+        self::assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
         $container = self::$kernel->getContainer();
         /** @var Registry $doctrine */
@@ -80,9 +80,9 @@ class CreateUserCommandTest extends KernelTestCase
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] email: This value should not be blank', $output);
-        $this->assertStringContainsString('[ERROR] plainPassword: This value should not be blank', $output);
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+        self::assertStringContainsString('[ERROR] email: This value should not be blank', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value should not be blank', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
     public function testUserAlreadyExisting(): void
@@ -91,7 +91,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'user2@example.com', 'ROLE_USER', 'foobar123');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] username: The username is already used.', $output);
+        self::assertStringContainsString('[ERROR] username: The username is already used.', $output);
     }
 
     public function testEmailAlreadyExisting(): void
@@ -100,7 +100,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser2', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] email: This e-mail address is already in use.', $output);
+        self::assertStringContainsString('[ERROR] email: This e-mail address is already in use.', $output);
     }
 
     public function testUserEmail(): void
@@ -108,6 +108,6 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar12');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] email: This value is not a valid email address', $output);
+        self::assertStringContainsString('[ERROR] email: This value is not a valid email address', $output);
     }
 }

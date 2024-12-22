@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-abstract class AbstractMetaEntityTest extends TestCase
+abstract class AbstractMetaEntityTestCase extends TestCase
 {
     abstract protected function getEntity(): EntityWithMetaFields;
 

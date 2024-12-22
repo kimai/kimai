@@ -33,9 +33,9 @@ class PluginCommandTest extends KernelTestCase
 
         $commandTester = $this->getCommandTester([$plugin1], []);
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString(__DIR__, $output);
-        $this->assertStringContainsString('Plugin/Fixtures/TestPlugin', $output);
-        $this->assertStringContainsString('TestPlugin from composer.json', $output);
+        self::assertStringContainsString(__DIR__, $output);
+        self::assertStringContainsString('Plugin/Fixtures/TestPlugin', $output);
+        self::assertStringContainsString('TestPlugin from composer.json', $output);
     }
 
     private function getCommandTester(array $plugins, array $options = []): CommandTester

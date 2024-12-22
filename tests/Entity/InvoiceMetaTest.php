@@ -18,7 +18,7 @@ use App\Entity\MetaTableTypeInterface;
 /**
  * @covers \App\Entity\InvoiceMeta
  */
-class InvoiceMetaTest extends AbstractMetaEntityTest
+class InvoiceMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

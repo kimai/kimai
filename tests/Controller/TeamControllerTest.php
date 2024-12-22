@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class TeamControllerTest extends ControllerBaseTest
+class TeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -62,7 +62,7 @@ class TeamControllerTest extends ControllerBaseTest
             'searchTerm' => 'foo',
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_admin_teams', 5);
     }
@@ -73,7 +73,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/teams/create');
         $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
 
-        $this->assertEquals('', $form->get('team_edit_form[name]')->getValue());
+        self::assertEquals('', $form->get('team_edit_form[name]')->getValue());
 
         $values = $form->getPhpValues();
         $values['team_edit_form']['name'] = 'Test Team' . uniqid();
@@ -91,10 +91,10 @@ class TeamControllerTest extends ControllerBaseTest
     protected function assertHasCustomerAndProjectPermissionBoxes(HttpKernelBrowser $client): void
     {
         $content = $client->getResponse()->getContent();
-        $this->assertStringContainsString('Grant access to customers', $content);
-        $this->assertStringContainsString('Grant access to projects', $content);
-        $this->assertEquals(1, $client->getCrawler()->filter('form[name=team_customer_form]')->count());
-        $this->assertEquals(1, $client->getCrawler()->filter('form[name=team_project_form]')->count());
+        self::assertStringContainsString('Grant access to customers', $content);
+        self::assertStringContainsString('Grant access to projects', $content);
+        self::assertEquals(1, $client->getCrawler()->filter('form[name=team_customer_form]')->count());
+        self::assertEquals(1, $client->getCrawler()->filter('form[name=team_project_form]')->count());
     }
 
     public function testEditAction(): void
@@ -116,7 +116,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
         $client->followRedirect();
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
+        self::assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
     }
 
     public function testEditMemberAction(): void
@@ -137,7 +137,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/teams/1/edit'));
         $client->followRedirect();
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
+        self::assertEquals('Test Team 2', $editForm->get('team_edit_form[name]')->getValue());
     }
 
     public function testDuplicateAction(): void
@@ -153,6 +153,6 @@ class TeamControllerTest extends ControllerBaseTest
         $this->requestPure($client, $location);
 
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
-        $this->assertEquals('Test team (1)', $editForm->get('team_edit_form[name]')->getValue());
+        self::assertEquals('Test team (1)', $editForm->get('team_edit_form[name]')->getValue());
     }
 }

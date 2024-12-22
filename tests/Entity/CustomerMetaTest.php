@@ -18,7 +18,7 @@ use App\Entity\MetaTableTypeInterface;
 /**
  * @covers \App\Entity\CustomerMeta
  */
-class CustomerMetaTest extends AbstractMetaEntityTest
+class CustomerMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

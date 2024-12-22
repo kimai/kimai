@@ -22,6 +22,6 @@ class CustomerMetaDefinitionEventTest extends TestCase
     {
         $customer = new Customer('foo');
         $sut = new CustomerMetaDefinitionEvent($customer);
-        $this->assertSame($customer, $sut->getEntity());
+        self::assertSame($customer, $sut->getEntity());
     }
 }

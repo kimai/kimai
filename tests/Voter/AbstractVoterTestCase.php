@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-abstract class AbstractVoterTest extends TestCase
+abstract class AbstractVoterTestCase extends TestCase
 {
     protected function getVoter(string $voterClass): Voter // @phpstan-ignore missingType.generics
     {
@@ -29,7 +29,7 @@ abstract class AbstractVoterTest extends TestCase
         return $voter;
     }
 
-    protected function getUser(int $id, ?string $role): User
+    protected static function getUser(int $id, ?string $role): User
     {
         $roles = [];
         if (!empty($role)) {

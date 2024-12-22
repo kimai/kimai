@@ -14,7 +14,7 @@ use App\Model\TimesheetCountedStatistic;
 /**
  * @covers \App\Model\TimesheetCountedStatistic
  */
-class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTest
+class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void
     {

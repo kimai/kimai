@@ -22,7 +22,7 @@ use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractCalculatorTest extends TestCase
+abstract class AbstractCalculatorTestCase extends TestCase
 {
     abstract protected function getCalculator(): CalculatorInterface;
 
@@ -38,16 +38,16 @@ abstract class AbstractCalculatorTest extends TestCase
     private function assertEmptyModel(CalculatorInterface $sut): void
     {
         $model = $this->getEmptyModel();
-        $this->assertEquals('EUR', $model->getCurrency());
+        self::assertEquals('EUR', $model->getCurrency());
 
         $sut->setModel($model);
 
-        $this->assertEquals(0, $sut->getTotal());
-        $this->assertEquals(0, $sut->getVat());
-        $this->assertEquals(0, $sut->getSubtotal());
-        $this->assertEquals(0, $sut->getTimeWorked());
-        $this->assertEquals(0, \count($sut->getEntries()));
-        $this->assertEquals(0, $sut->getTax());
+        self::assertEquals(0, $sut->getTotal());
+        self::assertEquals(0, $sut->getVat());
+        self::assertEquals(0, $sut->getSubtotal());
+        self::assertEquals(0, $sut->getTimeWorked());
+        self::assertEquals(0, \count($sut->getEntries()));
+        self::assertEquals(0, $sut->getTax());
     }
 
     private function getEmptyModel(): InvoiceModel
@@ -99,16 +99,16 @@ abstract class AbstractCalculatorTest extends TestCase
         $model->addEntries([$timesheet]);
 
         $sut->setModel($model);
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals(1, \count($sut->getEntries()));
 
         /** @var Timesheet $result */
         $result = $sut->getEntries()[0];
         if ($addProject === true) {
-            $this->assertEquals('project description', $result->getDescription());
+            self::assertEquals('project description', $result->getDescription());
         } elseif ($addActivity === true) {
-            $this->assertEquals('activity description', $result->getDescription());
+            self::assertEquals('activity description', $result->getDescription());
         } else {
-            $this->assertEquals('timesheet description', $result->getDescription());
+            self::assertEquals('timesheet description', $result->getDescription());
         }
     }
 }

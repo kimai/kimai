@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class HelpControllerTest extends ControllerBaseTest
+class HelpControllerTest extends AbstractControllerBaseTestCase
 {
     public function testHelpLocalesAction(): void
     {

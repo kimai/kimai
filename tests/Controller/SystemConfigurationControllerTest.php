@@ -15,7 +15,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class SystemConfigurationControllerTest extends ControllerBaseTest
+class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -41,17 +41,17 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $expectedCount = \count($expectedForms) + 1; // the menu is another card
 
         $result = $client->getCrawler()->filter('section.content div.card');
-        $this->assertEquals($expectedCount, \count($result));
+        self::assertEquals($expectedCount, \count($result));
 
         $result = $client->getCrawler()->filter('section.content div.card form');
-        $this->assertEquals(\count($expectedForms), \count($result));
+        self::assertEquals(\count($expectedForms), \count($result));
 
         foreach ($expectedForms as $formConfig) {
             $result = $client->getCrawler()->filter($formConfig[0]);
-            $this->assertEquals(1, \count($result));
+            self::assertEquals(1, \count($result));
             $form = $result->form();
-            $this->assertStringEndsWith($formConfig[1], $form->getUri());
-            $this->assertEquals('POST', $form->getMethod());
+            self::assertStringEndsWith($formConfig[1], $form->getUri());
+            self::assertEquals('POST', $form->getMethod());
         }
     }
 
@@ -61,19 +61,19 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
 
         $result = $client->getCrawler()->filter('section.content div.card');
-        $this->assertEquals(1, \count($result));
+        self::assertEquals(1, \count($result));
 
         $result = $client->getCrawler()->filter('section.content div.card form');
-        $this->assertEquals(1, \count($result));
+        self::assertEquals(1, \count($result));
 
         $result = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]');
-        $this->assertEquals(1, \count($result));
+        self::assertEquals(1, \count($result));
         $form = $result->form();
-        $this->assertEquals('POST', $form->getMethod());
+        self::assertEquals('POST', $form->getMethod());
     }
 
     /**
-     * @return array<array<string>>
+     * @return array<array<non-empty-string>>
      */
     public function getTestDataForms(): array
     {
@@ -100,10 +100,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('default', $configService->find('timesheet.mode'));
-        $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
-        $this->assertTrue($configService->find('timesheet.rules.allow_zero_duration'));
-        $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
+        self::assertEquals('default', $configService->find('timesheet.mode'));
+        self::assertTrue($configService->find('timesheet.rules.allow_future_times'));
+        self::assertTrue($configService->find('timesheet.rules.allow_zero_duration'));
+        self::assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
         $client->submit($form, [
@@ -122,14 +122,14 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('punch', $configService->find('timesheet.mode'));
-        $this->assertFalse($configService->find('timesheet.rules.allow_future_times'));
-        $this->assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
-        $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
+        self::assertEquals('punch', $configService->find('timesheet.mode'));
+        self::assertFalse($configService->find('timesheet.rules.allow_future_times'));
+        self::assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
+        self::assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
     }
 
     public function testUpdateLockdownPeriodConfig(): void
@@ -138,10 +138,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertNull($configService->find('timesheet.rules.lockdown_period_start'));
-        $this->assertNull($configService->find('timesheet.rules.lockdown_period_end'));
-        $this->assertNull($configService->find('timesheet.rules.lockdown_period_timezone'));
-        $this->assertNull($configService->find('timesheet.rules.lockdown_grace_period'));
+        self::assertNull($configService->find('timesheet.rules.lockdown_period_start'));
+        self::assertNull($configService->find('timesheet.rules.lockdown_period_end'));
+        self::assertNull($configService->find('timesheet.rules.lockdown_period_timezone'));
+        self::assertNull($configService->find('timesheet.rules.lockdown_grace_period'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_lockdown_period]')->form();
         $client->submit($form, [
@@ -157,14 +157,14 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('first day of last month 01:23:45', $configService->find('timesheet.rules.lockdown_period_start'));
-        $this->assertEquals('last day of last month 23:01:45', $configService->find('timesheet.rules.lockdown_period_end'));
-        $this->assertEquals('Africa/Bangui', $configService->find('timesheet.rules.lockdown_period_timezone'));
-        $this->assertEquals('+ 12 hours', $configService->find('timesheet.rules.lockdown_grace_period'));
+        self::assertEquals('first day of last month 01:23:45', $configService->find('timesheet.rules.lockdown_period_start'));
+        self::assertEquals('last day of last month 23:01:45', $configService->find('timesheet.rules.lockdown_period_end'));
+        self::assertEquals('Africa/Bangui', $configService->find('timesheet.rules.lockdown_period_timezone'));
+        self::assertEquals('+ 12 hours', $configService->find('timesheet.rules.lockdown_grace_period'));
     }
 
     public function testUpdateTimesheetConfigValidation(): void
@@ -199,9 +199,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertNull($configService->find('defaults.customer.timezone'));
-        $this->assertEquals('DE', $configService->find('defaults.customer.country'));
-        $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
+        self::assertNull($configService->find('defaults.customer.timezone'));
+        self::assertEquals('DE', $configService->find('defaults.customer.country'));
+        self::assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_customer]')->form();
         $client->submit($form, [
@@ -216,13 +216,13 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
-        $this->assertEquals('BB', $configService->find('defaults.customer.country'));
-        $this->assertEquals('GBP', $configService->find('defaults.customer.currency'));
+        self::assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
+        self::assertEquals('BB', $configService->find('defaults.customer.country'));
+        self::assertEquals('GBP', $configService->find('defaults.customer.currency'));
     }
 
     public function testUpdateCustomerConfigWithSingleParam(): void
@@ -244,7 +244,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/edit/customer'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
     }
 
@@ -254,9 +254,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/user');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertNull($configService->find('defaults.user.timezone'));
-        $this->assertEquals('default', $configService->find('defaults.user.theme'));
-        $this->assertEquals('en', $configService->find('defaults.user.language'));
+        self::assertNull($configService->find('defaults.user.timezone'));
+        self::assertEquals('default', $configService->find('defaults.user.theme'));
+        self::assertEquals('en', $configService->find('defaults.user.language'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
         $client->submit($form, [
@@ -271,13 +271,13 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/edit/user'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
-        $this->assertEquals('dark', $configService->find('defaults.user.theme'));
-        $this->assertEquals('ru', $configService->find('defaults.user.language'));
+        self::assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
+        self::assertEquals('dark', $configService->find('defaults.user.theme'));
+        self::assertEquals('ru', $configService->find('defaults.user.language'));
     }
 
     public function testUpdateCustomerConfigValidation(): void
@@ -309,7 +309,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertFalse($configService->find('timesheet.markdown_content'));
+        self::assertFalse($configService->find('timesheet.markdown_content'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
         $client->submit($form, [
@@ -322,11 +322,11 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertTrue($configService->find('timesheet.markdown_content'));
+        self::assertTrue($configService->find('timesheet.markdown_content'));
     }
 
     public function testUpdateThemeConfigValidation(): void
@@ -355,12 +355,12 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $configService = $this->getSystemConfiguration();
-        $this->assertTrue($configService->find('calendar.week_numbers'));
-        $this->assertTrue($configService->find('calendar.weekends'));
-        $this->assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
-        $this->assertEquals('20:00', $configService->find('calendar.businessHours.end'));
-        $this->assertEquals('00:00', $configService->find('calendar.visibleHours.begin'));
-        $this->assertEquals('23:59', $configService->find('calendar.visibleHours.end'));
+        self::assertTrue($configService->find('calendar.week_numbers'));
+        self::assertTrue($configService->find('calendar.weekends'));
+        self::assertEquals('08:00', $configService->find('calendar.businessHours.begin'));
+        self::assertEquals('20:00', $configService->find('calendar.businessHours.end'));
+        self::assertEquals('00:00', $configService->find('calendar.visibleHours.begin'));
+        self::assertEquals('23:59', $configService->find('calendar.visibleHours.end'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_calendar]')->form();
         $client->submit($form, [
@@ -378,16 +378,16 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertFalse($configService->find('calendar.week_numbers'));
-        $this->assertFalse($configService->find('calendar.weekends'));
-        $this->assertEquals('10:00', $configService->find('calendar.businessHours.begin'));
-        $this->assertEquals('16:00', $configService->find('calendar.businessHours.end'));
-        $this->assertEquals('05:17', $configService->find('calendar.visibleHours.begin'));
-        $this->assertEquals('21:43', $configService->find('calendar.visibleHours.end'));
+        self::assertFalse($configService->find('calendar.week_numbers'));
+        self::assertFalse($configService->find('calendar.weekends'));
+        self::assertEquals('10:00', $configService->find('calendar.businessHours.begin'));
+        self::assertEquals('16:00', $configService->find('calendar.businessHours.end'));
+        self::assertEquals('05:17', $configService->find('calendar.visibleHours.begin'));
+        self::assertEquals('21:43', $configService->find('calendar.visibleHours.end'));
     }
 
     public function testUpdateCalendarConfigValidation(): void
