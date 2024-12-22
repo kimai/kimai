@@ -81,8 +81,12 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         $file = $response->getFile();
         self::assertFileDoesNotExist($response->getFile());
 
+        $disposition = $response->headers->get('Content-Disposition');
+        self::assertIsString($disposition);
+        self::assertNotEmpty($disposition);
+
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        self::assertStringContainsString('attachment; filename=kimai-export-user-', $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('attachment; filename=kimai-export-user-', $disposition);
     }
 
     public function testUserPeriodReportAsTeamlead(): void
