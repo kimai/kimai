@@ -272,7 +272,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Vremenski budžet</target>
+        <target state="translated">Satna kvota</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -444,7 +444,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Početak rada</target>
+        <target state="translated">Prvi radni dan</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
@@ -1436,19 +1436,19 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Očekivani broj sati</target>
+        <target state="translated">Očekivani sati</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
         <target state="translated">Ručne rezervacije</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result">
+      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve">
         <source>work_times_result</source>
-        <target state="translated">Radni sati</target>
+        <target state="translated">Odrađeni sati</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Odrađeni sati</target>
+        <target state="translated">Odrađeni sati</target>
       </trans-unit>
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
@@ -1566,9 +1566,9 @@
         <source>sickness</source>
         <target state="translated">Bolovanje</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Do sada si iskoristio/la %used% od raspoloživih %days% dana godišnjeg odmora.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Do sada si zatražio/la %used% od raspoloživih %days% dana godišnjeg odmora.</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half">
         <source>day_half</source>
@@ -1885,6 +1885,58 @@
       <trans-unit id="5vJvarK" resname="syncronisation">
         <source>syncronisation</source>
         <target state="translated">Sinkronizacija</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Sata na dan</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Obračun radnog vremena</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Zadnji radni dan</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Radni dani</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Sata na tjedan</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Odbij</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Pauza</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Sesije</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Odbijeno</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Odjavi se sa svih uređaja</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Sata na mjesec</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Dobit</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Troškovi</target>
       </trans-unit>
     </body>
   </file>

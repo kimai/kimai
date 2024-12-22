@@ -1542,9 +1542,9 @@
         <source>sickness.intro</source>
         <target state="translated">生病、看病、照顾近亲等。</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">到目前为止，您已使用了 %used% 的可用假期，其中有 %days% 个。</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">到目前为止，您已使用了 %used% 的可用假期，其中有 %days% 个。</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
