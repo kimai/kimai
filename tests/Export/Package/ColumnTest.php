@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ColumnTest extends TestCase
 {
-    public function getNameReturnsColumnName(): void
+    public function testGetNameReturnsColumnName(): void
     {
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
@@ -47,7 +47,7 @@ class ColumnTest extends TestCase
         self::assertEquals(123, $column->extract($exportableItem));
     }
 
-    public function extractThrowsExceptionWhenExtractorIsNull(): void
+    public function testExtractThrowsExceptionWhenExtractorIsNull(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing extractor on column: testName');
@@ -58,7 +58,7 @@ class ColumnTest extends TestCase
         $column->extract($exportableItem);
     }
 
-    public function getValueReturnsFormattedValue(): void
+    public function testGetValueReturnsFormattedValue(): void
     {
         $formatter = $this->createMock(CellFormatterInterface::class);
         $formatter->method('formatValue')->willReturn('formattedValue');
@@ -71,7 +71,7 @@ class ColumnTest extends TestCase
         self::assertEquals('formattedValue', $column->getValue($exportableItem));
     }
 
-    public function getHeaderReturnsHeaderWhenSet(): void
+    public function testGetHeaderReturnsHeaderWhenSet(): void
     {
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
@@ -79,7 +79,7 @@ class ColumnTest extends TestCase
         self::assertEquals('testHeader', $column->getHeader());
     }
 
-    public function getHeaderReturnsNameWhenHeaderIsNull(): void
+    public function testGetHeaderReturnsNameWhenHeaderIsNull(): void
     {
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
