@@ -72,7 +72,7 @@ Pregledaj ih na: %url%</target>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
         <source>approval_rejected_message</source>
-        <target state="translated">%user% je odbio/la tvoj zahtjev za autorizaciju.
+        <target state="translated">%created_by% je odbio/la tvoj zahtjev za autorizaciju.
 
 %list%
 
@@ -84,7 +84,7 @@ Pregledaj tvoje zahtjeve na: %url%</target>
       </trans-unit>
       <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
         <source>approval_approved_message</source>
-        <target state="translated">%user% je odobrio/la tvoj zahtjev.
+        <target state="translated">%created_by% je odobrio/la tvoj zahtjev.
 
 %list%
 

@@ -15,10 +15,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Working time for every day of the given year.
  * Will be reflected in the working-time summary row.
+ *
+ * Only to be used with already approved entries.
+ *
+ * Can be locked before, but also can be locked by the system.
  */
 final class WorkingTimeYearEvent extends Event
 {
-    public function __construct(private Year $year, private \DateTimeInterface $until)
+    public function __construct(private readonly Year $year, private readonly \DateTimeInterface $until)
     {
     }
 

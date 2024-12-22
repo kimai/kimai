@@ -1482,10 +1482,6 @@
         <source>confirmed_by_at</source>
         <target state="final">Confermato da %user% il %date%</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" approved="yes">
-        <source>work_times_result</source>
-        <target state="final">Ore lavorate</target>
-      </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings" approved="yes">
         <source>manual_bookings</source>
         <target state="final">Prenotazioni manuali</target>

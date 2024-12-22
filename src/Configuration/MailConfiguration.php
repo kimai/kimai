@@ -11,13 +11,13 @@ namespace App\Configuration;
 
 final class MailConfiguration
 {
-    public function __construct(private string $mailFrom)
+    public function __construct(private readonly string $mailFrom)
     {
     }
 
     public function getFromAddress(): ?string
     {
-        if (empty($this->mailFrom)) {
+        if (trim($this->mailFrom) === '') {
             return null;
         }
 

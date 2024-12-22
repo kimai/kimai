@@ -18,7 +18,7 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 
-    public function __construct(private ActivityStatisticService $activityStatistic)
+    public function __construct(private readonly ActivityStatisticService $activityStatistic)
     {
     }
 
@@ -70,8 +70,9 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
             $prefix . 'invoice_text' => $activity->getInvoiceText() ?? '',
         ];
 
-        if ($model->getQuery()?->getEnd() !== null) {
-            $statistic = $this->activityStatistic->getBudgetStatisticModel($activity, $model->getQuery()->getEnd());
+        $end = $model->getQuery()?->getEnd();
+        if ($end !== null) {
+            $statistic = $this->activityStatistic->getBudgetStatisticModel($activity, $end);
 
             $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
         }

@@ -3033,11 +3033,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
 
         -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
