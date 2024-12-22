@@ -12,7 +12,7 @@ namespace App\Tests\Export\Base;
 use App\Entity\User;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Export\Base\XlsxRenderer;
-use App\Tests\Export\Renderer\AbstractRendererTest;
+use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
