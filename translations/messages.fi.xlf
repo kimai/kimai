@@ -1410,9 +1410,9 @@
         <source>work_times_result</source>
         <target state="translated">Työskennellyt tunnit</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro">
-        <source>holiday.intro</source>
-        <target state="translated">Olet käyttänyt %used% vapaata saatavilla olevista %days% päivästä.</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">Olet käyttänyt %used% vapaata saatavilla olevista %days% päivästä.</target>
       </trans-unit>
       <trans-unit id="BjyLITj" resname="stats.userDurationYear">
         <source>stats.userDurationYear</source>

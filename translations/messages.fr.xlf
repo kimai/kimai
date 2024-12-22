@@ -176,7 +176,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Budget temps</target>
+        <target state="translated">Quota horaire</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Activités suivies depuis</target>
+        <target state="translated">Première journée de travail</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1440,7 +1440,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Nombre d'heures attendues</target>
+        <target state="translated">Heures prévues</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1452,7 +1452,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Après avoir terminé le mois, l'utilisateur ne pourra plus créer ou modifier des heures pour cette période.</target>
+        <target state="translated">Cela verrouillera tous les jours de l'année avant la date choisie. L'utilisateur ne pourra plus créer ou modifier des heures pour la période verrouillée.</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1540,7 +1540,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Heures réelles</target>
+        <target state="translated">Heures travaillées</target>
       </trans-unit>
       <trans-unit id="op76XPd" resname="search_filter">
         <source>Search filter</source>
@@ -1608,7 +1608,7 @@
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>
-        <target state="needs-translation">Maladie d'un enfant</target>
+        <target state="translated">Maladie d'un parent</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
@@ -1695,8 +1695,8 @@
         <target state="translated">Votre compte temps de travail a un solde de %hours% heures.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
-        <source>holiday.intro</source>
-        <target state="translated">Jusqu’à présent, vous avez pris %used% de vos %days% jours de vacances disponibles.</target>
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Jusqu’à présent, vous avez soumis %used% de vos %days% jours de vacances disponibles.</target>
       </trans-unit>
       <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
         <source>user_identifier</source>
@@ -1869,6 +1869,62 @@
       <trans-unit id="5vJvarK" resname="syncronisation">
         <source>Synchronization</source>
         <target state="translated">Synchronisation</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Heures par jour</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Heures par semaine</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Heures par mois</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Dernière journée de travail</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Calcul du temps de travail</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Coûts</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Se déconnecter de tous les appareils</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Approuver</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Demander</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Mis à jour</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
+        <source>status.rejected</source>
+        <target state="translated">Refusé</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Rejeter</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Jours travaillés</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Bénéfices</target>
       </trans-unit>
     </body>
   </file>

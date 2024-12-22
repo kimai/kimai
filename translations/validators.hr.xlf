@@ -62,9 +62,9 @@
         <source>The entered passwords don't match.</source>
         <target>Upisane lozinke se ne poklapaju.</target>
       </trans-unit>
-      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>Timu mora biti dodijeljen barem jedan voditelj.</target>
+        <target state="translated">Timu mora biti dodijeljen barem jedan timski voditelj.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
         <source>An activity needs to be selected.</source>
