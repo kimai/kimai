@@ -103,7 +103,7 @@ class TimesheetTest extends TestCase
         $tag1 = new Tag();
         $tag1->setName('foo');
 
-        $this->assertEmpty($sut->getTags());
+        self::assertEmpty($sut->getTags());
 
         $sut->addTag($tag);
         $sut->addTag($tag1);
@@ -115,7 +115,7 @@ class TimesheetTest extends TestCase
         self::assertEquals([1 => 'foo'], $sut->getTagsAsArray());
 
         $sut->removeTag($tag1);
-        $this->assertEmpty($sut->getTags());
+        self::assertEmpty($sut->getTags());
     }
 
     public function testMetaFields(): void

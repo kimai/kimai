@@ -18,7 +18,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class DurationTypeTest extends TypeTestCase
 {
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];
@@ -44,8 +44,8 @@ class DurationTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expected, $model);
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expected, $model);
     }
 
     public function testPresetPopulatesView(): void

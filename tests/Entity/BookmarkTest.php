@@ -21,32 +21,32 @@ class BookmarkTest extends TestCase
     public function testDefaultValues(): void
     {
         $sut = new Bookmark();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getName());
-        $this->assertIsArray($sut->getContent());
-        $this->assertEquals([], $sut->getContent());
-        $this->assertNull($sut->getType());
-        $this->assertNull($sut->getUser());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertIsArray($sut->getContent());
+        self::assertEquals([], $sut->getContent());
+        self::assertNull($sut->getType());
+        self::assertNull($sut->getUser());
     }
 
     public function testSetterAndGetter(): void
     {
         $sut = new Bookmark();
         $sut->setName('foo-bar');
-        $this->assertEquals('foo-bar', $sut->getName());
+        self::assertEquals('foo-bar', $sut->getName());
 
         $sut->setContent(['test' => 'foo-bar', 'hello' => 'world']);
-        $this->assertEquals(['test' => 'foo-bar', 'hello' => 'world'], $sut->getContent());
+        self::assertEquals(['test' => 'foo-bar', 'hello' => 'world'], $sut->getContent());
 
         $sut->setType('sdsdsd');
-        $this->assertEquals('sdsdsd', $sut->getType());
+        self::assertEquals('sdsdsd', $sut->getType());
 
         $user = new User();
         $sut->setUser($user);
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
 
         $sut2 = clone $sut;
-        $this->assertEquals('sdsdsd', $sut2->getType());
-        $this->assertEquals('foo-bar', $sut2->getName());
+        self::assertEquals('sdsdsd', $sut2->getType());
+        self::assertEquals('foo-bar', $sut2->getName());
     }
 }

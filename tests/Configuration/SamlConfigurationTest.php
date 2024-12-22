@@ -53,31 +53,31 @@ class SamlConfigurationTest extends TestCase
     public function testDefault(): void
     {
         $sut = $this->getSut([]);
-        $this->assertFalse($sut->isActivated());
-        $this->assertEquals('', $sut->getTitle());
-        $this->assertEquals([], $sut->getConnection());
-        $this->assertEquals([], $sut->getRolesMapping());
-        $this->assertEquals('', $sut->getRolesAttribute());
-        $this->assertEquals([], $sut->getAttributeMapping());
-        $this->assertFalse($sut->isRolesResetOnLogin());
+        self::assertFalse($sut->isActivated());
+        self::assertEquals('', $sut->getTitle());
+        self::assertEquals([], $sut->getConnection());
+        self::assertEquals([], $sut->getRolesMapping());
+        self::assertEquals('', $sut->getRolesAttribute());
+        self::assertEquals([], $sut->getAttributeMapping());
+        self::assertFalse($sut->isRolesResetOnLogin());
     }
 
     public function testDefaultSettings(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertTrue($sut->isActivated());
-        $this->assertTrue($sut->isRolesResetOnLogin());
-        $this->assertEquals('SAML title', $sut->getTitle());
-        $this->assertEquals('google', $sut->getProvider());
-        $this->assertEquals([
+        self::assertTrue($sut->isActivated());
+        self::assertTrue($sut->isRolesResetOnLogin());
+        self::assertEquals('SAML title', $sut->getTitle());
+        self::assertEquals('google', $sut->getProvider());
+        self::assertEquals([
             'host' => '1.2.3.4',
         ], $sut->getConnection());
-        $this->assertEquals([
+        self::assertEquals([
             ['saml' => 'Kimai - Admin', 'kimai' => 'ROLE_SUPER_ADMIN'],
             ['saml' => 'Management', 'kimai' => 'ROLE_TEAMLEAD'],
         ], $sut->getRolesMapping());
-        $this->assertEquals('Roles', $sut->getRolesAttribute());
-        $this->assertEquals([
+        self::assertEquals('Roles', $sut->getRolesAttribute());
+        self::assertEquals([
             ['saml' => '$Email', 'kimai' => 'email'],
             ['saml' => '$FirstName $LastName', 'kimai' => 'alias'],
         ], $sut->getAttributeMapping());

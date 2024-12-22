@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * A base test class for AbstractRepository implementations.
  */
-abstract class AbstractRepositoryTest extends KernelTestCase
+abstract class AbstractRepositoryTestCase extends KernelTestCase
 {
     use KernelTestTrait;
 

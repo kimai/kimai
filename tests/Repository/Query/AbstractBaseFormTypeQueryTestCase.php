@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \App\Repository\Query\BaseQuery
  */
-abstract class BaseFormTypeQueryTest extends TestCase
+abstract class AbstractBaseFormTypeQueryTestCase extends TestCase
 {
     public function assertBaseQuery(BaseFormTypeQuery $sut): void
     {
@@ -63,20 +63,20 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $expected->setName('foo-bar');
 
         $sut->addActivity($expected);
-        $this->assertEquals([$expected], $sut->getActivities());
-        $this->assertTrue($sut->hasActivities());
+        self::assertEquals([$expected], $sut->getActivities());
+        self::assertTrue($sut->hasActivities());
 
         $expected2 = new Activity();
         $expected2->setName('foo-bar2');
 
         $sut->addActivity($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getActivities());
+        self::assertEquals([$expected, $expected2], $sut->getActivities());
 
         $sut->setActivities([]);
-        $this->assertEquals([], $sut->getActivities());
-        $this->assertEquals([], $sut->getActivities());
-        $this->assertFalse($sut->hasActivities());
-        $this->assertFalse($sut->hasActivities());
+        self::assertEquals([], $sut->getActivities());
+        self::assertEquals([], $sut->getActivities());
+        self::assertFalse($sut->hasActivities());
+        self::assertFalse($sut->hasActivities());
     }
 
     public function assertCustomer(BaseFormTypeQuery $sut): void
@@ -84,19 +84,19 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $expected = new Customer('foo-bar');
 
         $sut->addCustomer($expected);
-        $this->assertEquals([$expected], $sut->getCustomers());
-        $this->assertTrue($sut->hasCustomers());
+        self::assertEquals([$expected], $sut->getCustomers());
+        self::assertTrue($sut->hasCustomers());
 
         $expected2 = new Customer('foo-bar2');
 
         $sut->addCustomer($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getCustomers());
+        self::assertEquals([$expected, $expected2], $sut->getCustomers());
 
         $sut->setCustomers([]);
-        $this->assertEquals([], $sut->getCustomers());
-        $this->assertEquals([], $sut->getCustomers());
-        $this->assertFalse($sut->hasCustomers());
-        $this->assertFalse($sut->hasCustomers());
+        self::assertEquals([], $sut->getCustomers());
+        self::assertEquals([], $sut->getCustomers());
+        self::assertFalse($sut->hasCustomers());
+        self::assertFalse($sut->hasCustomers());
     }
 
     public function assertProject(BaseFormTypeQuery $sut): void
@@ -105,23 +105,23 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $expected->setName('foo-bar');
 
         $sut->addProject($expected);
-        $this->assertEquals([$expected], $sut->getProjects());
-        $this->assertTrue($sut->hasProjects());
+        self::assertEquals([$expected], $sut->getProjects());
+        self::assertTrue($sut->hasProjects());
 
         $expected2 = new Project();
         $expected2->setName('foo-bar2');
 
         $sut->addProject($expected2);
-        $this->assertEquals([$expected, $expected2], $sut->getProjects());
+        self::assertEquals([$expected, $expected2], $sut->getProjects());
 
         $sut->setProjects([]);
-        $this->assertEquals([], $sut->getProjects());
-        $this->assertEquals([], $sut->getProjects());
-        $this->assertFalse($sut->hasProjects());
-        $this->assertFalse($sut->hasProjects());
+        self::assertEquals([], $sut->getProjects());
+        self::assertEquals([], $sut->getProjects());
+        self::assertFalse($sut->hasProjects());
+        self::assertFalse($sut->hasProjects());
 
         // make sure int is allowed as well
         $sut->setProjects([99]);
-        $this->assertEquals([99], $sut->getProjects());
+        self::assertEquals([99], $sut->getProjects());
     }
 }

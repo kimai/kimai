@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\EntityMultiRoleVoter
  */
-class EntityMultiRoleVoterTest extends AbstractVoterTest
+class EntityMultiRoleVoterTest extends AbstractVoterTestCase
 {
     /**
      * @dataProvider getTestData
@@ -30,16 +30,16 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'foo', $user->getRoles());
         $sut = $this->getVoter(EntityMultiRoleVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUserIdentifier());
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUserIdentifier());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $user0 = $this->getUser(0, null);
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = self::getUser(0, null);
+        $user1 = self::getUser(1, User::ROLE_USER);
+        $user2 = self::getUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getUser(3, User::ROLE_ADMIN);
+        $user4 = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $result = VoterInterface::ACCESS_GRANTED;
         $allPermissions = ['budget_money', 'budget_time', 'budget_any', 'details'];

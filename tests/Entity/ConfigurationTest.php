@@ -20,17 +20,17 @@ class ConfigurationTest extends TestCase
     public function testDefaultValues(): void
     {
         $sut = new Configuration();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getValue());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getValue());
     }
 
     public function testSetterAndGetter(): void
     {
         $sut = new Configuration();
-        $this->assertInstanceOf(Configuration::class, $sut->setName('foo-bar'));
-        $this->assertEquals('foo-bar', $sut->getName());
-        $this->assertInstanceOf(Configuration::class, $sut->setValue('hello world'));
-        $this->assertEquals('hello world', $sut->getValue());
+        self::assertInstanceOf(Configuration::class, $sut->setName('foo-bar'));
+        self::assertEquals('foo-bar', $sut->getName());
+        self::assertInstanceOf(Configuration::class, $sut->setValue('hello world'));
+        self::assertEquals('hello world', $sut->getValue());
     }
 }

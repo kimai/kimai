@@ -31,9 +31,9 @@ class ProfileSubscriberTest extends TestCase
     {
         $events = ProfileSubscriber::getSubscribedEvents();
 
-        $this->assertArrayHasKey(LoginSuccessEvent::class, $events);
+        self::assertArrayHasKey(LoginSuccessEvent::class, $events);
         $methodName = $events[LoginSuccessEvent::class];
-        $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
+        self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
     public function testOnLoginSuccessWithoutProfileSetsDesktop(): void
@@ -84,7 +84,7 @@ class ProfileSubscriberTest extends TestCase
         self::assertEquals(ProfileManager::PROFILE_MOBILE, $manager->getProfileFromSession($session));
     }
 
-    public function getInvalidCookies()
+    public static function getInvalidCookies()
     {
         return [
             ['MOBILE'],

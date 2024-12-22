@@ -45,18 +45,18 @@ class LdapConfigurationTest extends TestCase
     public function testDefault(): void
     {
         $sut = $this->getSut([]);
-        $this->assertFalse($sut->isActivated());
-        $this->assertEquals([], $sut->getUserParameters());
-        $this->assertEquals([], $sut->getRoleParameters());
-        $this->assertEquals([], $sut->getConnectionParameters());
+        self::assertFalse($sut->isActivated());
+        self::assertEquals([], $sut->getUserParameters());
+        self::assertEquals([], $sut->getRoleParameters());
+        self::assertEquals([], $sut->getConnectionParameters());
     }
 
     public function testMapping(): void
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertTrue($sut->isActivated());
-        $this->assertEquals(['foo' => 'bar'], $sut->getUserParameters());
-        $this->assertEquals(['bar' => 'foo'], $sut->getRoleParameters());
-        $this->assertEquals(['host' => '1.2.3.4'], $sut->getConnectionParameters());
+        self::assertTrue($sut->isActivated());
+        self::assertEquals(['foo' => 'bar'], $sut->getUserParameters());
+        self::assertEquals(['bar' => 'foo'], $sut->getRoleParameters());
+        self::assertEquals(['host' => '1.2.3.4'], $sut->getConnectionParameters());
     }
 }

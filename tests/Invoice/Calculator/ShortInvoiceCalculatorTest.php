@@ -28,7 +28,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
+class ShortInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -98,26 +98,26 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(562.28, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(472.5, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(562.28, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(472.5, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         self::assertCount(1, $entries);
         $result = $entries[0];
 
-        $this->assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('', $result->getDescription());
-        $this->assertEquals(293.27, $result->getHourlyRate());
-        $this->assertNull($result->getFixedRate());
-        $this->assertEquals(472.5, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(3, $result->getAmount());
-        $this->assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
+        self::assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
+        self::assertEquals('', $result->getDescription());
+        self::assertEquals(293.27, $result->getHourlyRate());
+        self::assertNull($result->getFixedRate());
+        self::assertEquals(472.5, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(3, $result->getAmount());
+        self::assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
     }
 
     public function testWithMultipleEntriesDifferentRates(): void
@@ -180,22 +180,22 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(581.17, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(581.17, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(488.38, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertNull($result->getDescription());
-        $this->assertEquals(488.38, $result->getHourlyRate());
-        $this->assertEquals(488.38, $result->getFixedRate());
-        $this->assertEquals(488.38, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(1, $result->getAmount());
+        self::assertNull($result->getDescription());
+        self::assertEquals(488.38, $result->getHourlyRate());
+        self::assertEquals(488.38, $result->getFixedRate());
+        self::assertEquals(488.38, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(1, $result->getAmount());
     }
 
     public function testWithMixedRateTypes(): void
@@ -256,22 +256,22 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(581.17, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(581.17, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(488.38, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertNull($result->getDescription());
-        $this->assertEquals(488.38, $result->getHourlyRate());
-        $this->assertEquals(488.38, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(488.38, $result->getFixedRate());
-        $this->assertEquals(1, $result->getAmount());
+        self::assertNull($result->getDescription());
+        self::assertEquals(488.38, $result->getHourlyRate());
+        self::assertEquals(488.38, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(488.38, $result->getFixedRate());
+        self::assertEquals(1, $result->getAmount());
     }
 
     public function testDescriptionByTimesheet(): void

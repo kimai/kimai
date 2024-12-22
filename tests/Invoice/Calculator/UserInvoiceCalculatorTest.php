@@ -26,7 +26,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class UserInvoiceCalculatorTest extends AbstractCalculatorTest
+class UserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -112,18 +112,18 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('user', $sut->getId());
-        $this->assertEquals(3000.13, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2521.12, $sut->getSubtotal());
-        $this->assertEquals(6600, $sut->getTimeWorked());
+        self::assertEquals('user', $sut->getId());
+        self::assertEquals(3000.13, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2521.12, $sut->getSubtotal());
+        self::assertEquals(6600, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals(404.38, $entries[0]->getRate());
-        $this->assertEquals(2032.74, $entries[1]->getRate());
-        $this->assertEquals(84, $entries[2]->getRate());
+        self::assertEquals(404.38, $entries[0]->getRate());
+        self::assertEquals(2032.74, $entries[1]->getRate());
+        self::assertEquals(84, $entries[2]->getRate());
     }
 
     public function testDescriptionByTimesheet(): void

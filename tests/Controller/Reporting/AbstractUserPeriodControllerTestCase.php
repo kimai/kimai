@@ -10,13 +10,13 @@
 namespace App\Tests\Controller\Reporting;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
 /**
  * @group integration
  */
-abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
+abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBaseTestCase
 {
     protected function importReportingFixture(string $role): void
     {
@@ -37,7 +37,7 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured($this->getReportUrl());
     }
 
-    public function getTestData(): array
+    public static function getTestData(): array
     {
         return [
             [4, 'duration', 'Working hours total'],

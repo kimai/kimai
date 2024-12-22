@@ -17,7 +17,7 @@ use App\Event\CustomerCreateEvent;
  * @covers \App\Event\AbstractCustomerEvent
  * @covers \App\Event\CustomerCreateEvent
  */
-class CustomerCreateEventTest extends AbstractCustomerEventTest
+class CustomerCreateEventTest extends AbstractCustomerEventTestCase
 {
     protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent
     {

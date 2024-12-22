@@ -19,14 +19,14 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Renderer\XlsxRenderer
  * @group integration
  */
-class XlsxRendererTest extends AbstractRendererTest
+class XlsxRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(XlsxRenderer::class);
 
-        $this->assertEquals('xlsx', $sut->getId());
-        $this->assertEquals('xlsx', $sut->getTitle());
+        self::assertEquals('xlsx', $sut->getId());
+        self::assertEquals('xlsx', $sut->getTitle());
     }
 
     public function testRender(): void
@@ -38,16 +38,16 @@ class XlsxRendererTest extends AbstractRendererTest
 
         $file = $response->getFile();
         $prefix = date('Ymd');
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.xlsx', $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.xlsx', $response->headers->get('Content-Disposition'));
 
-        $this->assertTrue(file_exists($file->getRealPath()));
+        self::assertTrue(file_exists($file->getRealPath()));
 
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
-        $this->assertNotEmpty($content2);
+        self::assertNotEmpty($content2);
 
-        $this->assertFalse(file_exists($file->getRealPath()));
+        self::assertFalse(file_exists($file->getRealPath()));
     }
 }

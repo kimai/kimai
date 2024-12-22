@@ -17,7 +17,7 @@ use App\Event\ProjectCreatePreEvent;
  * @covers \App\Event\AbstractProjectEvent
  * @covers \App\Event\ProjectCreatePreEvent
  */
-class ProjectCreatePreEventTest extends AbstractProjectEventTest
+class ProjectCreatePreEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent
     {

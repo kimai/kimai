@@ -27,7 +27,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
+class ActivityInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -142,23 +142,23 @@ class ActivityInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('activity', $sut->getId());
-        $this->assertEquals(3000.13, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2521.12, $sut->getSubtotal());
-        $this->assertEquals(6600, $sut->getTimeWorked());
+        self::assertEquals('activity', $sut->getId());
+        self::assertEquals(3000.13, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2521.12, $sut->getSubtotal());
+        self::assertEquals(6600, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(4, $entries);
-        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
+        self::assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
 
-        $this->assertEquals(404.38, $entries[0]->getRate());
-        $this->assertEquals(2032.74, $entries[1]->getRate());
-        $this->assertEquals(84, $entries[2]->getRate());
+        self::assertEquals(404.38, $entries[0]->getRate());
+        self::assertEquals(2032.74, $entries[1]->getRate());
+        self::assertEquals(84, $entries[2]->getRate());
     }
 
     public function testDescriptionByActivity(): void

@@ -16,7 +16,7 @@ use App\Event\TimesheetDuplicatePreEvent;
 /**
  * @covers \App\Event\TimesheetDuplicatePreEvent
  */
-class TimesheetDuplicatePreEventTest extends AbstractTimesheetEventTest
+class TimesheetDuplicatePreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

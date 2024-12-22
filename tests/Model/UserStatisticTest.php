@@ -16,7 +16,7 @@ use App\Model\UserStatistic;
 /**
  * @covers \App\Model\UserStatistic
  */
-class UserStatisticTest extends AbstractTimesheetCountedStatisticTest
+class UserStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     private function getSut(): UserStatistic
     {

@@ -18,7 +18,7 @@ use App\Entity\ProjectMeta;
 /**
  * @covers \App\Entity\ProjectMeta
  */
-class ProjectMetaTest extends AbstractMetaEntityTest
+class ProjectMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

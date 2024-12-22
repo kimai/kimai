@@ -326,7 +326,7 @@ class LdapManagerTest extends TestCase
         self::assertEquals($user->getPreferenceValue('ldap_dn'), 'blub-updated');
     }
 
-    public function getValidConfigsTestData()
+    public static function getValidConfigsTestData()
     {
         return [
             [

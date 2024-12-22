@@ -18,12 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @covers \App\Timesheet\TrackingMode\AbstractTrackingMode
  */
-abstract class AbstractTrackingModeTest extends TestCase
+abstract class AbstractTrackingModeTestCase extends TestCase
 {
     /**
      * @return AbstractTrackingMode
      */
-    abstract protected function createSut();
+    abstract protected function createSut(string $default = '13:47', bool $allowApiTimes = false);
 
     protected function createTimesheet(): Timesheet
     {

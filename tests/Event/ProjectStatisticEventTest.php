@@ -18,7 +18,7 @@ use App\Model\ProjectStatistic;
  * @covers \App\Event\AbstractProjectEvent
  * @covers \App\Event\ProjectStatisticEvent
  */
-class ProjectStatisticEventTest extends AbstractProjectEventTest
+class ProjectStatisticEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent
     {

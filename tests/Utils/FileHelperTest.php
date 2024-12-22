@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FileHelperTest extends TestCase
 {
-    public function getFileTestData()
+    public static function getFileTestData()
     {
         return [
             ['Barss_laolala_ld_ksjf_123_MyAwesome_GmbH', 'Barß / laölala #   ld_ksjf 123 MyAwesome GmbH'],

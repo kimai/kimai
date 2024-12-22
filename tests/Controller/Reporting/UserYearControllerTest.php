@@ -12,7 +12,7 @@ namespace App\Tests\Controller\Reporting;
 /**
  * @group integration
  */
-class UserYearControllerTest extends AbstractUserPeriodControllerTest
+class UserYearControllerTest extends AbstractUserPeriodControllerTestCase
 {
     protected function getReportUrl(): string
     {

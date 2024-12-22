@@ -11,13 +11,13 @@ namespace App\Tests\Reporting\YearByUser;
 
 use App\Reporting\DateByUser;
 use App\Reporting\YearByUser\YearByUser;
-use App\Tests\Reporting\AbstractDateByUserTest;
+use App\Tests\Reporting\AbstractDateByUserTestCase;
 
 /**
  * @covers \App\Reporting\YearByUser\YearByUser
  * @covers \App\Reporting\DateByUser
  */
-class YearByUserTest extends AbstractDateByUserTest
+class YearByUserTest extends AbstractDateByUserTestCase
 {
     protected function createSut(): DateByUser
     {

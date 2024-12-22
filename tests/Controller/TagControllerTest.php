@@ -16,7 +16,7 @@ use App\Tests\DataFixtures\TagFixtures;
 /**
  * @group integration
  */
-class TagControllerTest extends ControllerBaseTest
+class TagControllerTest extends AbstractControllerBaseTestCase
 {
     /**
      * @return Tag[]
@@ -53,14 +53,14 @@ class TagControllerTest extends ControllerBaseTest
         $this->importTags();
 
         $this->request($client, '/admin/tags/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'Support',
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_admin_tags', 2);
     }
@@ -83,7 +83,7 @@ class TagControllerTest extends ControllerBaseTest
 
         $this->request($client, '/admin/tags/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
-        $this->assertEquals('A tAG Name!', $editForm->get('tag_edit_form[name]')->getValue());
+        self::assertEquals('A tAG Name!', $editForm->get('tag_edit_form[name]')->getValue());
     }
 
     public function testEditAction(): void
@@ -102,7 +102,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->request($client, '/admin/tags/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=tag_edit_form]')->form();
-        $this->assertEquals('Test 2 updated', $editForm->get('tag_edit_form[name]')->getValue());
+        self::assertEquals('Test 2 updated', $editForm->get('tag_edit_form[name]')->getValue());
     }
 
     public function testMultiDeleteAction(): void

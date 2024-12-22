@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\TagsSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\TagsSubscriber
  */
-class TagsSubscriberTest extends AbstractActionsSubscriberTest
+class TagsSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

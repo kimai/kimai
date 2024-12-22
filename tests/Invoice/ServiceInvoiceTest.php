@@ -61,18 +61,18 @@ class ServiceInvoiceTest extends TestCase
     {
         $sut = $this->getSut([]);
 
-        $this->assertEmpty($sut->getCalculator());
-        $this->assertIsArray($sut->getCalculator());
-        $this->assertEmpty($sut->getRenderer());
-        $this->assertIsArray($sut->getRenderer());
-        $this->assertEmpty($sut->getNumberGenerator());
-        $this->assertIsArray($sut->getNumberGenerator());
-        $this->assertEmpty($sut->getDocuments());
-        $this->assertIsArray($sut->getDocuments());
+        self::assertEmpty($sut->getCalculator());
+        self::assertIsArray($sut->getCalculator());
+        self::assertEmpty($sut->getRenderer());
+        self::assertIsArray($sut->getRenderer());
+        self::assertEmpty($sut->getNumberGenerator());
+        self::assertIsArray($sut->getNumberGenerator());
+        self::assertEmpty($sut->getDocuments());
+        self::assertIsArray($sut->getDocuments());
 
-        $this->assertNull($sut->getCalculatorByName('default'));
-        $this->assertNull($sut->getDocumentByName('default'));
-        $this->assertNull($sut->getNumberGeneratorByName('default'));
+        self::assertNull($sut->getCalculatorByName('default'));
+        self::assertNull($sut->getDocumentByName('default'));
+        self::assertNull($sut->getNumberGeneratorByName('default'));
     }
 
     public function testWithDocumentDirectory(): void
@@ -80,9 +80,9 @@ class ServiceInvoiceTest extends TestCase
         $sut = $this->getSut(['templates/invoice/renderer/']);
 
         $actual = $sut->getDocuments();
-        $this->assertNotEmpty($actual);
+        self::assertNotEmpty($actual);
         $actual = $sut->getDocumentByName('default');
-        $this->assertInstanceOf(InvoiceDocument::class, $actual);
+        self::assertInstanceOf(InvoiceDocument::class, $actual);
     }
 
     public function testAdd(): void
@@ -94,13 +94,13 @@ class ServiceInvoiceTest extends TestCase
         $twig = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
         $sut->addRenderer(new TwigRenderer($twig));
 
-        $this->assertEquals(1, \count($sut->getCalculator()));
-        $this->assertInstanceOf(DefaultCalculator::class, $sut->getCalculatorByName('default'));
+        self::assertEquals(1, \count($sut->getCalculator()));
+        self::assertInstanceOf(DefaultCalculator::class, $sut->getCalculatorByName('default'));
 
-        $this->assertEquals(1, \count($sut->getNumberGenerator()));
-        $this->assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
+        self::assertEquals(1, \count($sut->getNumberGenerator()));
+        self::assertInstanceOf(DateNumberGenerator::class, $sut->getNumberGeneratorByName('date'));
 
-        $this->assertEquals(1, \count($sut->getRenderer()));
+        self::assertEquals(1, \count($sut->getRenderer()));
     }
 
     public function testCreateModelThrowsOnMissingTemplate(): void

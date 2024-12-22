@@ -26,13 +26,13 @@ class WorkingTimeModeFactoryTest extends TestCase
         $day = new WorkingTimeModeDay();
         $modes = [$none, $day];
         $sut = new WorkingTimeModeFactory($modes);
-        $this->assertEquals($modes, $sut->getAll());
-        $this->assertSame($none, $sut->getMode('none'));
-        $this->assertSame($day, $sut->getMode('day'));
+        self::assertEquals($modes, $sut->getAll());
+        self::assertSame($none, $sut->getMode('none'));
+        self::assertSame($day, $sut->getMode('day'));
 
         $user = new User();
         $user->setWorkContractMode('day');
-        $this->assertSame($day, $sut->getModeForUser($user));
+        self::assertSame($day, $sut->getModeForUser($user));
     }
 
     public function testException(): void

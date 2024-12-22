@@ -195,7 +195,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getViolationTestData()
+    public static function getViolationTestData()
     {
         return [
             // activity: violations ----------------------------------------------------------------------

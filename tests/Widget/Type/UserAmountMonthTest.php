@@ -21,7 +21,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @covers \App\Widget\Type\UserAmountMonth
  * @covers \App\Widget\Type\AbstractUserRevenuePeriod
  */
-class UserAmountMonthTest extends AbstractWidgetTest
+class UserAmountMonthTest extends AbstractWidgetTestCase
 {
     protected function assertDefaultData(AbstractWidget $sut): void
     {

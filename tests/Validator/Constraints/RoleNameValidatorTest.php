@@ -34,7 +34,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<int, string>>
      */
-    public function getValidRoleNames(): array
+    public static function getValidRoleNames(): array
     {
         return [
             ['FOOBAR'],
@@ -54,7 +54,6 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidRoleNames
-     * @param string $role
      */
     public function testConstraintWithValidRole(string $role): void
     {
@@ -76,7 +75,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<string|int>>
      */
-    public function getInvalidRoleNames(): array
+    public static function getInvalidRoleNames(): array
     {
         return [
             ['foo'],

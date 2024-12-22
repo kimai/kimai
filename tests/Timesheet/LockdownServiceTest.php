@@ -103,7 +103,7 @@ class LockdownServiceTest extends TestCase
         }
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         // changing before last dockdown period is not allowed
         yield [false, '-5 days', '+5 days', true];
@@ -140,7 +140,7 @@ class LockdownServiceTest extends TestCase
         }
     }
 
-    public function getConfigTestData()
+    public static function getConfigTestData()
     {
         yield [false, null, null, null, false];
         yield [false, '+5 days', null, null, false];

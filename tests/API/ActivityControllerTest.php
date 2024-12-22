@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class ActivityControllerTest extends APIControllerBaseTest
+class ActivityControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
@@ -173,19 +173,19 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(\count($expected), \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(\count($expected), \count($result));
         for ($i = 0; $i < \count($result); $i++) {
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
             self::assertIsArray($activity);
             self::assertApiResponseTypeStructure('ActivityCollection', $activity);
             if ($hasProject && $projectId !== null) {
-                $this->assertEquals($projectId, $activity['project']);
+                self::assertEquals($projectId, $activity['project']);
             }
         }
     }
@@ -193,7 +193,7 @@ class ActivityControllerTest extends APIControllerBaseTest
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getCollectionTestData(): iterable
+    public static function getCollectionTestData(): iterable
     {
         yield ['/api/activities', null, [], [[false], [true, 2], [true, 2], [null], [true, 1]]];
         //yield ['/api/activities', [], [[false], [false], [true, 2], [true, 1], [true, 2]]];
@@ -217,17 +217,17 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/activities', 'GET', $query);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(5, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(5, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
-        $this->assertEquals($imports[0]->getId(), $result[4]['project']);
-        $this->assertEquals($imports[1]->getId(), $result[3]['project']);
-        $this->assertEquals($imports[1]->getId(), $result[2]['project']);
+        self::assertEquals($imports[0]->getId(), $result[4]['project']);
+        self::assertEquals($imports[1]->getId(), $result[3]['project']);
+        self::assertEquals($imports[1]->getId(), $result[2]['project']);
     }
 
     public function testGetEntityIsSecure(): void
@@ -241,10 +241,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/activities/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
     }
 
@@ -264,15 +264,15 @@ class ActivityControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithLeastFields(): void
@@ -282,15 +282,15 @@ class ActivityControllerTest extends APIControllerBaseTest
             'name' => 'foo',
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -331,15 +331,15 @@ class ActivityControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPatchActionWithNonGlobalActivity(): void
@@ -356,16 +356,16 @@ class ActivityControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/activities/' . $imports[2]->getId(), 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
-        $this->assertNotEmpty($result['id']);
-        $this->assertEquals($imports[1]->getId(), $result['project']);
+        self::assertNotEmpty($result['id']);
+        self::assertEquals($imports[1]->getId(), $result['project']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -398,7 +398,7 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['name']);
     }
 
@@ -444,12 +444,12 @@ class ActivityControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/activities/1/meta', 'PATCH', [], json_encode($data));
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $em = $this->getEntityManager();
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find(1);
-        $this->assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());
+        self::assertEquals('another,testing,bar', $activity->getMetaField('metatestmock')->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------
@@ -499,9 +499,9 @@ class ActivityControllerTest extends APIControllerBaseTest
         $id = $result['id'];
 
         $this->request($client, '/api/activities/' . $id, Request::METHOD_DELETE);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
-        $this->assertEmpty($client->getResponse()->getContent());
+        self::assertEmpty($client->getResponse()->getContent());
 
         $this->request($client, $getUrl);
         $this->assertApiException($client->getResponse(), [

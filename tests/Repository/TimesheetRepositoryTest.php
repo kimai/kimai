@@ -25,7 +25,7 @@ use App\Utils\Pagination;
  * @covers \App\Repository\TimesheetRepository
  * @group integration
  */
-class TimesheetRepositoryTest extends AbstractRepositoryTest
+class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 {
     public function testResultTypeForQueryState(): void
     {
@@ -36,7 +36,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         $query = new TimesheetQuery();
 
         $result = $repository->getPagerfantaForQuery($query);
-        $this->assertInstanceOf(Pagination::class, $result);
+        self::assertInstanceOf(Pagination::class, $result);
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
@@ -46,7 +46,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
         self::assertTrue($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
         self::assertTrue($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
         self::assertTrue($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
     }
 
     public function testSave(): void
@@ -71,9 +71,9 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
             ->setActivity($activity)
             ->setProject($project);
 
-        $this->assertNull($timesheet->getId());
+        self::assertNull($timesheet->getId());
         $repository->save($timesheet);
-        $this->assertNotNull($timesheet->getId());
+        self::assertNotNull($timesheet->getId());
     }
 
     public function testSaveWithTags(): void
@@ -104,13 +104,13 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
             ->addTag($tagOne)
             ->addTag($tagTwo);
 
-        $this->assertNull($timesheet->getId());
+        self::assertNull($timesheet->getId());
         $repository->save($timesheet);
-        $this->assertNotNull($timesheet->getId());
-        $this->assertEquals(2, $timesheet->getTags()->count());
-        $this->assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
-        $this->assertNotNull($timesheet->getTags()->get(0)->getId());
-        $this->assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
-        $this->assertNotNull($timesheet->getTags()->get(1)->getId());
+        self::assertNotNull($timesheet->getId());
+        self::assertEquals(2, $timesheet->getTags()->count());
+        self::assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
+        self::assertNotNull($timesheet->getTags()->get(0)->getId());
+        self::assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
+        self::assertNotNull($timesheet->getTags()->get(1)->getId());
     }
 }

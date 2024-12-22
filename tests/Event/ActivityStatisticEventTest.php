@@ -18,7 +18,7 @@ use App\Model\ActivityStatistic;
  * @covers \App\Event\AbstractActivityEvent
  * @covers \App\Event\ActivityStatisticEvent
  */
-class ActivityStatisticEventTest extends AbstractActivityEventTest
+class ActivityStatisticEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent
     {

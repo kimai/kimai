@@ -10,13 +10,13 @@
 namespace App\Tests\Controller\Security;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
  * @group integration
  */
-class SelfRegistrationControllerTest extends ControllerBaseTest
+class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
 {
     private function assertRegisterActionWithDeactivatedFeature(string $route): void
     {
@@ -53,22 +53,22 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->request($client, '/register/');
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
 
         $content = $response->getContent();
-        $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
-        $this->assertStringContainsString('Register a new account', $content);
-        $this->assertStringContainsString('<form name="user_registration_form" method="post" action="/en/register/"', $content);
-        $this->assertStringContainsString('<input type="email"', $content);
-        $this->assertStringContainsString('id="user_registration_form_email" name="user_registration_form[email]" required="required"', $content);
-        $this->assertStringContainsString('<input type="text"', $content);
-        $this->assertStringContainsString('id="user_registration_form_username" name="user_registration_form[username]" required="required" maxlength="64" pattern="', $content);
-        $this->assertStringContainsString('<input type="password"', $content);
-        $this->assertStringContainsString('id="user_registration_form_plainPassword_first" name="user_registration_form[plainPassword][first]" required="required"', $content);
-        $this->assertStringContainsString('id="user_registration_form_plainPassword_second" name="user_registration_form[plainPassword][second]" required="required"', $content);
-        $this->assertStringContainsString('<input type="hidden"', $content);
-        $this->assertStringContainsString('id="user_registration_form__token" name="user_registration_form[_token]"', $content);
-        $this->assertStringContainsString('>Register</button>', $content);
+        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('Register a new account', $content);
+        self::assertStringContainsString('<form name="user_registration_form" method="post" action="/en/register/"', $content);
+        self::assertStringContainsString('<input type="email"', $content);
+        self::assertStringContainsString('id="user_registration_form_email" name="user_registration_form[email]" required="required"', $content);
+        self::assertStringContainsString('<input type="text"', $content);
+        self::assertStringContainsString('id="user_registration_form_username" name="user_registration_form[username]" required="required" maxlength="64" pattern="', $content);
+        self::assertStringContainsString('<input type="password"', $content);
+        self::assertStringContainsString('id="user_registration_form_plainPassword_first" name="user_registration_form[plainPassword][first]" required="required"', $content);
+        self::assertStringContainsString('id="user_registration_form_plainPassword_second" name="user_registration_form[plainPassword][second]" required="required"', $content);
+        self::assertStringContainsString('<input type="hidden"', $content);
+        self::assertStringContainsString('id="user_registration_form__token" name="user_registration_form[_token]"', $content);
+        self::assertStringContainsString('>Register</button>', $content);
     }
 
     private function createUser(KernelBrowser $client, string $username, string $email, string $password): User
@@ -77,7 +77,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->request($client, '/register/');
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=user_registration_form]')->form();
         $client->submit($form, [
@@ -93,7 +93,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/register/check-email'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         return $this->loadUserFromDatabase($username);
     }
@@ -106,7 +106,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/register/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testRegisterAccount(): void
@@ -115,9 +115,9 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->createUser($client, 'example', 'register@example.com', 'test1234');
 
         $content = $client->getResponse()->getContent();
-        $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
-        $this->assertStringContainsString('An e-mail has been sent to register@example.com. It contains a link you must click to activate your account.', $content);
-        $this->assertStringContainsString('<a href="/en/login">', $content);
+        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('An e-mail has been sent to register@example.com. It contains a link you must click to activate your account.', $content);
+        self::assertStringContainsString('<a href="/en/login">', $content);
     }
 
     public function testConfirmWithInvalidToken(): void
@@ -128,7 +128,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/login'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testConfirmAccount(): void
@@ -143,9 +143,9 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->request($client, '/register/confirm/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/register/confirmed'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
-        $this->assertStringContainsString('Congratulations example, your account is now activated.', $content);
+        self::assertStringContainsString('Congratulations example, your account is now activated.', $content);
 
         $user = $this->loadUserFromDatabase('example');
         self::assertTrue($user->isEnabled());
@@ -160,7 +160,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         // AccessDeniedException redirects to login
         $this->assertIsRedirect($client, $this->createUrl('/login'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     /**
@@ -174,7 +174,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $this->assertHasValidationError($client, '/register/', 'form[name=user_registration_form]', $formData, $validationFields);
     }
 
-    public function getValidationTestData(): array // @phpstan-ignore missingType.iterableValue
+    public static function getValidationTestData(): array // @phpstan-ignore missingType.iterableValue
     {
         return [
             [

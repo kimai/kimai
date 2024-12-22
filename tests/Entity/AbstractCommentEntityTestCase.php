@@ -13,7 +13,7 @@ use App\Entity\CommentInterface;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractCommentEntityTest extends TestCase
+abstract class AbstractCommentEntityTestCase extends TestCase
 {
     abstract protected function getEntity(): CommentInterface;
 

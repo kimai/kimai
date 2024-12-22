@@ -28,7 +28,7 @@ use DateTime;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class DateInvoiceCalculatorTest extends AbstractCalculatorTest
+class DateInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -115,21 +115,21 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('date', $sut->getId());
-        $this->assertEquals(3000.13, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2521.12, $sut->getSubtotal());
-        $this->assertEquals(6600, $sut->getTimeWorked());
+        self::assertEquals('date', $sut->getId());
+        self::assertEquals(3000.13, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2521.12, $sut->getSubtotal());
+        self::assertEquals(6600, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
-        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[1]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[2]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals(378.02, $entries[1]->getRate());
-        $this->assertEquals(195.11, $entries[0]->getRate());
-        $this->assertEquals(1947.99, $entries[2]->getRate());
+        self::assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-29', $entries[1]->getBegin()?->format('Y-m-d'));
+        self::assertEquals($date->format('Y-m-d'), $entries[2]->getBegin()?->format('Y-m-d'));
+        self::assertEquals(378.02, $entries[1]->getRate());
+        self::assertEquals(195.11, $entries[0]->getRate());
+        self::assertEquals(1947.99, $entries[2]->getRate());
         self::assertEquals(2521.12, $entries[0]->getRate() + $entries[1]->getRate() + $entries[2]->getRate());
     }
 

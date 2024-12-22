@@ -11,13 +11,13 @@ namespace App\Tests\Reporting\WeeklyUserList;
 
 use App\Reporting\AbstractUserList;
 use App\Reporting\WeeklyUserList\WeeklyUserList;
-use App\Tests\Reporting\AbstractUserListTest;
+use App\Tests\Reporting\AbstractUserListTestCase;
 
 /**
  * @covers \App\Reporting\WeeklyUserList\WeeklyUserList
  * @covers \App\Reporting\AbstractUserList
  */
-class WeeklyUserListTest extends AbstractUserListTest
+class WeeklyUserListTest extends AbstractUserListTestCase
 {
     protected function createSut(): AbstractUserList
     {

@@ -171,7 +171,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         // changing before last dockdown period is not allowed
         yield [false, false, '-5 days', '+5 days', true];
@@ -219,7 +219,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function getConfigTestData()
+    public static function getConfigTestData()
     {
         yield [false, false, null, null, null, false];
         yield [false, false, '+5 days', null, null, false];

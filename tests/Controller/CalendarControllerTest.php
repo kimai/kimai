@@ -18,7 +18,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 /**
  * @group integration
  */
-class CalendarControllerTest extends ControllerBaseTest
+class CalendarControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -33,13 +33,13 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->importFixture($fixtures);
 
         $this->request($client, '/calendar/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
-        $this->assertEquals(1, $calendar->count());
+        self::assertEquals(1, $calendar->count());
         $dragAndDropBoxes = $crawler->filter('div.card-body.drag-and-drop-source');
-        $this->assertEquals(1, $dragAndDropBoxes->count());
+        self::assertEquals(1, $dragAndDropBoxes->count());
     }
 
     public function testCalendarActionAsSuperAdmin(): void
@@ -60,13 +60,13 @@ class CalendarControllerTest extends ControllerBaseTest
 
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
-        $this->assertEquals(1, $calendar->count());
+        self::assertEquals(1, $calendar->count());
 
         $content = $client->getResponse()->getContent();
-        $this->assertStringContainsString("googleCalendarId: 'de.german#holiday@group.v.calendar.google.com',", $content);
-        $this->assertStringContainsString("name: 'holidays'", $content);
-        $this->assertStringContainsString("googleCalendarId: 'en.german#holiday@group.v.calendar.google.com',", $content);
-        $this->assertStringContainsString("name: 'holidays_en'", $content);
+        self::assertStringContainsString("googleCalendarId: 'de.german#holiday@group.v.calendar.google.com',", $content);
+        self::assertStringContainsString("name: 'holidays'", $content);
+        self::assertStringContainsString("googleCalendarId: 'en.german#holiday@group.v.calendar.google.com',", $content);
+        self::assertStringContainsString("name: 'holidays_en'", $content);
     }
 
     protected function getDefaultSettings(): array
