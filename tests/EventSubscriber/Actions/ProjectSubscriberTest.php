@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\ProjectSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\ProjectSubscriber
  */
-class ProjectSubscriberTest extends AbstractActionsSubscriberTest
+class ProjectSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

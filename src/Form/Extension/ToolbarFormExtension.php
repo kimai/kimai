@@ -12,7 +12,6 @@ namespace App\Form\Extension;
 use App\Form\Helper\ToolbarHelper;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
-use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Form\Toolbar\UserToolbarForm;
 use App\Reporting\MonthlyUserList\MonthlyUserListForm;
@@ -33,7 +32,6 @@ final class ToolbarFormExtension extends AbstractTypeExtension
             InvoiceToolbarForm::class,
             ExportToolbarForm::class,
             TimesheetToolbarForm::class,
-            TimesheetExportToolbarForm::class,
             UserToolbarForm::class,
             WeeklyUserListForm::class,
             MonthlyUserListForm::class,

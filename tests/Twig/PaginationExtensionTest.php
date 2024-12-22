@@ -27,14 +27,14 @@ class PaginationExtensionTest extends TestCase
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->will($this->returnCallback(function ($name, $parameters = []) {
+            ->willReturnCallback(function ($name, $parameters = []) {
                 $params = [];
                 foreach ($parameters as $k => $v) {
                     $params[] = $k . '=' . $v;
                 }
 
                 return (string) $name . '?' . implode('&', $params);
-            }))
+            })
         ;
 
         return $urlGenerator;

@@ -16,7 +16,7 @@ use App\Form\Type\InitialViewType;
 /**
  * @group integration
  */
-class HomepageControllerTest extends ControllerBaseTest
+class HomepageControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {

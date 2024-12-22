@@ -22,6 +22,6 @@ class TimesheetMetaDefinitionEventTest extends TestCase
     {
         $timesheet = new Timesheet();
         $sut = new TimesheetMetaDefinitionEvent($timesheet);
-        $this->assertSame($timesheet, $sut->getEntity());
+        self::assertSame($timesheet, $sut->getEntity());
     }
 }

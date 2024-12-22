@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class AboutControllerTest extends ControllerBaseTest
+class AboutControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIndexAction(): void
     {

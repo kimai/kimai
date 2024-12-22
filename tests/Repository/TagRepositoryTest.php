@@ -17,7 +17,7 @@ use App\Tests\DataFixtures\TagFixtures;
  * @covers \App\Repository\TagRepository
  * @group integration
  */
-class TagRepositoryTest extends AbstractRepositoryTest
+class TagRepositoryTest extends AbstractRepositoryTestCase
 {
     protected function setUp(): void
     {
@@ -35,15 +35,15 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findAllTagNames('2018');
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(6, \count($result));
-        $this->assertEquals('#2018-001', $result[0]);
-        $this->assertEquals('#2018-002', $result[1]);
-        $this->assertEquals('#2018-003', $result[2]);
-        $this->assertEquals('#2018-004', $result[3]);
-        $this->assertEquals('#2018-005', $result[4]);
-        $this->assertEquals('#2018-012', $result[5]);
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(6, \count($result));
+        self::assertEquals('#2018-001', $result[0]);
+        self::assertEquals('#2018-002', $result[1]);
+        self::assertEquals('#2018-003', $result[2]);
+        self::assertEquals('#2018-004', $result[3]);
+        self::assertEquals('#2018-005', $result[4]);
+        self::assertEquals('#2018-012', $result[5]);
     }
 
     public function testFindNoTagNames(): void
@@ -53,8 +53,8 @@ class TagRepositoryTest extends AbstractRepositoryTest
         $repository = $em->getRepository(Tag::class);
 
         $result = $repository->findAllTagNames('Nothing');
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
-        $this->assertEquals(0, \count($result));
+        self::assertIsArray($result);
+        self::assertEmpty($result);
+        self::assertEquals(0, \count($result));
     }
 }

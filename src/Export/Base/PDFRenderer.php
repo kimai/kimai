@@ -11,6 +11,8 @@ namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
+use App\Export\ExportRendererInterface;
+use App\Export\TimesheetExportInterface;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
@@ -21,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class PDFRenderer implements DispositionInlineInterface
+class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface, TimesheetExportInterface
 {
     use RendererTrait;
     use PDFRendererTrait;
@@ -30,8 +32,17 @@ class PDFRenderer implements DispositionInlineInterface
     private string $template = 'default.pdf.twig';
     private array $pdfOptions = [];
 
-    public function __construct(private Environment $twig, private HtmlToPdfConverter $converter, private ProjectStatisticService $projectStatisticService)
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly HtmlToPdfConverter $converter,
+        private readonly ProjectStatisticService $projectStatisticService
+    )
     {
+    }
+
+    public function getTitle(): string
+    {
+        return 'pdf';
     }
 
     protected function getTemplate(): string

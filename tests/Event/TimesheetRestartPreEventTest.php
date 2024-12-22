@@ -16,7 +16,7 @@ use App\Event\TimesheetRestartPreEvent;
 /**
  * @covers \App\Event\TimesheetRestartPreEvent
  */
-class TimesheetRestartPreEventTest extends AbstractTimesheetEventTest
+class TimesheetRestartPreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

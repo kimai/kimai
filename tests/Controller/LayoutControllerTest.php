@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class LayoutControllerTest extends ControllerBaseTest
+class LayoutControllerTest extends AbstractControllerBaseTestCase
 {
     public function testNavigationMenus(): void
     {
@@ -24,7 +24,7 @@ class LayoutControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->request($client, '/dashboard/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasMainHeader($client, $user);
         $this->assertHasNavigation($client);
@@ -34,22 +34,22 @@ class LayoutControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open personal menu"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
-        $this->assertStringContainsString('href="/en/logout', $content);
+        self::assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open personal menu"', $content);
+        self::assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
+        self::assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
+        self::assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
+        self::assertStringContainsString('href="/en/logout', $content);
     }
 
     protected function assertHasNavigation(HttpKernelBrowser $client): void
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('href="/en/dashboard/"', $content);
-        $this->assertStringContainsString('href="/en/timesheet/"', $content);
-        $this->assertStringContainsString('My times', $content);
-        $this->assertStringContainsString('href="/en/calendar/"', $content);
-        $this->assertStringContainsString('Calendar', $content);
+        self::assertStringContainsString('href="/en/dashboard/"', $content);
+        self::assertStringContainsString('href="/en/timesheet/"', $content);
+        self::assertStringContainsString('My times', $content);
+        self::assertStringContainsString('href="/en/calendar/"', $content);
+        self::assertStringContainsString('Calendar', $content);
     }
 
     public function testActiveEntries(): void
@@ -57,10 +57,10 @@ class LayoutControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->request($client, '/dashboard/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<a title="Start time-tracking" href="/en/timesheet/create" class="modal-ajax-form ticktac-start btn', $content);
+        self::assertStringContainsString('<a title="Start time-tracking" href="/en/timesheet/create" class="modal-ajax-form ticktac-start btn', $content);
     }
 }

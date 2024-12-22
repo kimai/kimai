@@ -20,11 +20,11 @@ class TimesheetStatisticTest extends TestCase
     public function testDefaultValues(): void
     {
         $sut = new TimesheetStatistic();
-        $this->assertEquals(0, $sut->getRecordsTotal());
-        $this->assertEquals(0, $sut->getAmountTotal());
-        $this->assertEquals(0, $sut->getAmountThisMonth());
-        $this->assertEquals(0, $sut->getDurationTotal());
-        $this->assertEquals(0, $sut->getDurationThisMonth());
+        self::assertEquals(0, $sut->getRecordsTotal());
+        self::assertEquals(0, $sut->getAmountTotal());
+        self::assertEquals(0, $sut->getAmountThisMonth());
+        self::assertEquals(0, $sut->getDurationTotal());
+        self::assertEquals(0, $sut->getDurationThisMonth());
     }
 
     public function testSetter(): void
@@ -36,10 +36,10 @@ class TimesheetStatisticTest extends TestCase
         $sut->setDurationTotal(13);
         $sut->setDurationThisMonth(200);
 
-        $this->assertEquals(2, $sut->getRecordsTotal());
-        $this->assertEquals(7654.298, $sut->getAmountTotal());
-        $this->assertEquals(826.10, $sut->getAmountThisMonth());
-        $this->assertEquals(13, $sut->getDurationTotal());
-        $this->assertEquals(200, $sut->getDurationThisMonth());
+        self::assertEquals(2, $sut->getRecordsTotal());
+        self::assertEquals(7654.298, $sut->getAmountTotal());
+        self::assertEquals(826.10, $sut->getAmountThisMonth());
+        self::assertEquals(13, $sut->getDurationTotal());
+        self::assertEquals(200, $sut->getDurationThisMonth());
     }
 }

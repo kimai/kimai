@@ -86,7 +86,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('john_user', '0987654321');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
+        self::assertStringContainsString('[OK] Changed password for user "john_user".', $output);
 
         /** @var Registry $doctrine */
         $doctrine = self::getContainer()->get('doctrine');
@@ -105,7 +105,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('john_user', '1');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
     public function testWithMissingUsername(): void
@@ -120,6 +120,6 @@ class ChangePasswordCommandTest extends KernelTestCase
     {
         $commandTester = $this->callCommand('john_user', null);
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
+        self::assertStringContainsString('[OK] Changed password for user "john_user".', $output);
     }
 }

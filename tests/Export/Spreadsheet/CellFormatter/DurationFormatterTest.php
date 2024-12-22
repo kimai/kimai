@@ -18,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\DurationFormatter
  */
-class DurationFormatterTest extends AbstractFormatterTest
+class DurationFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface
     {

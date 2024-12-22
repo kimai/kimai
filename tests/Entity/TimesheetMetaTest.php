@@ -18,7 +18,7 @@ use App\Entity\TimesheetMeta;
 /**
  * @covers \App\Entity\TimesheetMeta
  */
-class TimesheetMetaTest extends AbstractMetaEntityTest
+class TimesheetMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

@@ -18,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 /**
  * @covers \App\Export\Spreadsheet\CellFormatter\DateTimeFormatter
  */
-class DateTimeFormatterTest extends AbstractFormatterTest
+class DateTimeFormatterTest extends AbstractFormatterTestCase
 {
     private $date;
 

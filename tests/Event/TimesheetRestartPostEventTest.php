@@ -16,7 +16,7 @@ use App\Event\TimesheetRestartPostEvent;
 /**
  * @covers \App\Event\TimesheetRestartPostEvent
  */
-class TimesheetRestartPostEventTest extends AbstractTimesheetEventTest
+class TimesheetRestartPostEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

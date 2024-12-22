@@ -15,7 +15,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class FavoriteControllerTest extends ControllerBaseTest
+class FavoriteControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -35,7 +35,7 @@ class FavoriteControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/favorite/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);

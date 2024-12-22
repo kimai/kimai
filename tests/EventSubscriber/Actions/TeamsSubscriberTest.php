@@ -14,7 +14,7 @@ use App\EventSubscriber\Actions\TeamsSubscriber;
 /**
  * @covers \App\EventSubscriber\Actions\TeamsSubscriber
  */
-class TeamsSubscriberTest extends AbstractActionsSubscriberTest
+class TeamsSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

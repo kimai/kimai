@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * @covers \App\Voter\UserVoter
  */
-class UserVoterTest extends AbstractVoterTest
+class UserVoterTest extends AbstractVoterTestCase
 {
     /**
      * @dataProvider getTestData
@@ -28,16 +28,16 @@ class UserVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $user0 = $this->getUser(0, null);
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = self::getUser(0, null);
+        $user1 = self::getUser(1, User::ROLE_USER);
+        $user2 = self::getUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getUser(3, User::ROLE_ADMIN);
+        $user4 = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $result = VoterInterface::ACCESS_GRANTED;
         foreach ([$user1, $user2, $user3] as $user) {
@@ -103,7 +103,7 @@ class UserVoterTest extends AbstractVoterTest
         $this->testVote($user, $subject, 'password', $result);
     }
 
-    public function getTestDataForAuthType()
+    public static function getTestDataForAuthType()
     {
         return [
           [User::AUTH_LDAP, VoterInterface::ACCESS_DENIED],
@@ -120,7 +120,7 @@ class UserVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
-        $this->assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
-        $this->assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
     }
 }

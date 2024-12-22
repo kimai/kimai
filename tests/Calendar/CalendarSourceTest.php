@@ -25,17 +25,17 @@ class CalendarSourceTest extends TestCase
         $sut->addOption('hello', false);
         $sut->addOption('world', 123);
 
-        $this->assertEquals(CalendarSourceType::JSON, $sut->getType());
-        $this->assertEquals('json', $sut->getTypeName());
-        $this->assertEquals('0815', $sut->getId());
-        $this->assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
-        $this->assertEquals('#fffccc', $sut->getColor());
-        $this->assertEquals(['foo' => 'bar', 'hello' => false, 'world' => 123], $sut->getOptions());
+        self::assertEquals(CalendarSourceType::JSON, $sut->getType());
+        self::assertEquals('json', $sut->getTypeName());
+        self::assertEquals('0815', $sut->getId());
+        self::assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
+        self::assertEquals('#fffccc', $sut->getColor());
+        self::assertEquals(['foo' => 'bar', 'hello' => false, 'world' => 123], $sut->getOptions());
 
         $sut = new CalendarSource(CalendarSourceType::TIMESHEET, '0815', 'askdjfhlaksjdhflaksjhdflkjasdlkfjh', null);
 
-        $this->assertEquals('0815', $sut->getId());
-        $this->assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
-        $this->assertNull($sut->getColor());
+        self::assertEquals('0815', $sut->getId());
+        self::assertEquals('askdjfhlaksjdhflaksjhdflkjasdlkfjh', $sut->getUri());
+        self::assertNull($sut->getColor());
     }
 }

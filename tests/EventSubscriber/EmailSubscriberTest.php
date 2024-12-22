@@ -25,9 +25,9 @@ class EmailSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = EmailSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(EmailEvent::class, $events);
+        self::assertArrayHasKey(EmailEvent::class, $events);
         $methodName = $events[EmailEvent::class][0];
-        $this->assertTrue(method_exists(EmailSubscriber::class, $methodName));
+        self::assertTrue(method_exists(EmailSubscriber::class, $methodName));
     }
 
     public function testSendIsTriggered(): void

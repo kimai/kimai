@@ -16,7 +16,7 @@ use App\Entity\CustomerComment;
  * @covers \App\Entity\CustomerComment
  * @covers \App\Entity\CommentTableTypeTrait
  */
-class CustomerCommentTest extends AbstractCommentEntityTest
+class CustomerCommentTest extends AbstractCommentEntityTestCase
 {
     protected function getEntity(): CustomerComment
     {

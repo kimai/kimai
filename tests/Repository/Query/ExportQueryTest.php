@@ -38,21 +38,21 @@ class ExportQueryTest extends TimesheetQueryTest
 
     public function assertMarkAsExported(ExportQuery $sut): void
     {
-        $this->assertFalse($sut->isMarkAsExported());
+        self::assertFalse($sut->isMarkAsExported());
 
         $sut->setMarkAsExported(true);
-        $this->assertTrue($sut->isMarkAsExported());
+        self::assertTrue($sut->isMarkAsExported());
     }
 
     public function assertRenderer(ExportQuery $sut): void
     {
-        $this->assertNull($sut->getRenderer());
+        self::assertNull($sut->getRenderer());
 
         $exportTypes = ['html', 'csv', 'pdf', 'xlsx', 'ods'];
 
         foreach ($exportTypes as $type) {
             $sut->setRenderer($type);
-            $this->assertEquals($type, $sut->getRenderer());
+            self::assertEquals($type, $sut->getRenderer());
         }
     }
 }

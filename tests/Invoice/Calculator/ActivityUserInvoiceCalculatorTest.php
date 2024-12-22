@@ -27,7 +27,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
+class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -155,28 +155,28 @@ class ActivityUserInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('activity_user', $sut->getId());
-        $this->assertEquals(3100.09, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2605.12, $sut->getSubtotal());
-        $this->assertEquals(7000, $sut->getTimeWorked());
+        self::assertEquals('activity_user', $sut->getId());
+        self::assertEquals(3100.09, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2605.12, $sut->getSubtotal());
+        self::assertEquals(7000, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(6, $entries);
-        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-18', $entries[1]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-18', $entries[2]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[4]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals($date->format('Y-m-d'), $entries[5]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-18', $entries[1]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-18', $entries[2]->getBegin()?->format('Y-m-d'));
+        self::assertEquals($date->format('Y-m-d'), $entries[3]->getBegin()?->format('Y-m-d'));
+        self::assertEquals($date->format('Y-m-d'), $entries[4]->getBegin()?->format('Y-m-d'));
+        self::assertEquals($date->format('Y-m-d'), $entries[5]->getBegin()?->format('Y-m-d'));
 
-        $this->assertEquals(404.38, $entries[5]->getRate());
-        $this->assertEquals(2032.74, $entries[1]->getRate());
-        $this->assertEquals(84.0, $entries[2]->getRate());
-        $this->assertEquals(84.0, $entries[0]->getRate());
-        $this->assertEquals(0, $entries[4]->getRate());
-        $this->assertEquals(0, $entries[3]->getRate());
+        self::assertEquals(404.38, $entries[5]->getRate());
+        self::assertEquals(2032.74, $entries[1]->getRate());
+        self::assertEquals(84.0, $entries[2]->getRate());
+        self::assertEquals(84.0, $entries[0]->getRate());
+        self::assertEquals(0, $entries[4]->getRate());
+        self::assertEquals(0, $entries[3]->getRate());
     }
 
     public function testDescriptionByActivity(): void

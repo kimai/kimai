@@ -22,6 +22,6 @@ class TimesheetSubscriberTest extends TestCase
     {
         $sut = new TimesheetSubscriber([]);
         $events = $sut->getSubscribedEvents();
-        $this->assertTrue(\in_array(Events::onFlush, $events));
+        self::assertTrue(\in_array(Events::onFlush, $events));
     }
 }

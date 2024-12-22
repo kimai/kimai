@@ -10,7 +10,7 @@
 namespace App\Tests\Controller\Reporting;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
@@ -19,7 +19,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 /**
  * @group integration
  */
-class ProjectInactiveControllerTest extends ControllerBaseTest
+class ProjectInactiveControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {

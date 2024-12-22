@@ -46,7 +46,7 @@ class NumberGeneratorTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getTestData(): array
+    public static function getTestData(): array
     {
         return [
             ['DEMO-{XXX}-{known,5}', ['known' => 123], 'DEMO-{XXX}-00124', 0],

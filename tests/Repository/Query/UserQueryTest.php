@@ -28,19 +28,19 @@ class UserQueryTest extends BaseQueryTest
 
     protected function assertRole(UserQuery $sut): void
     {
-        $this->assertNull($sut->getRole());
+        self::assertNull($sut->getRole());
         $sut->setRole('ROLE_USER');
-        $this->assertEquals('ROLE_USER', $sut->getRole());
+        self::assertEquals('ROLE_USER', $sut->getRole());
     }
 
     protected function assertSearchTeam(UserQuery $sut): void
     {
         $team = new Team('foo');
-        $this->assertIsArray($sut->getSearchTeams());
-        $this->assertEmpty($sut->getSearchTeams());
+        self::assertIsArray($sut->getSearchTeams());
+        self::assertEmpty($sut->getSearchTeams());
         $sut->setSearchTeams([$team, new Team('foo')]);
-        $this->assertCount(2, $sut->getSearchTeams());
-        $this->assertSame($team, $sut->getSearchTeams()[0]);
+        self::assertCount(2, $sut->getSearchTeams());
+        self::assertSame($team, $sut->getSearchTeams()[0]);
     }
 
     public function testSystemAccount(): void

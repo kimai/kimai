@@ -17,7 +17,7 @@ use App\Event\ProjectUpdatePostEvent;
  * @covers \App\Event\AbstractProjectEvent
  * @covers \App\Event\ProjectUpdatePostEvent
  */
-class ProjectUpdatePostEventTest extends AbstractProjectEventTest
+class ProjectUpdatePostEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent
     {

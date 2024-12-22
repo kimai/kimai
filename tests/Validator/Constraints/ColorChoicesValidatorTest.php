@@ -27,7 +27,7 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         return new ColorChoicesValidator();
     }
 
-    public function getValidColors()
+    public static function getValidColors()
     {
         yield ['#000000'];
         yield ['#fff000'];
@@ -49,16 +49,15 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getValidColors
-     * @param string $color
      */
-    public function testConstraintWithValidColor($color): void
+    public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new ColorChoices();
         $this->validator->validate($color, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidColors()
+    public static function getInvalidColors()
     {
         yield ['sdf_sdf|#000000', null, 'sdf_sdf', '#000000'];
         yield ['sdfghjklöß.|#aaabbb', null, 'sdfghjklöß.', '#aaabbb'];

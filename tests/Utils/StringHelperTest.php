@@ -29,7 +29,7 @@ class StringHelperTest extends TestCase
         self::assertEquals(10, mb_strlen(StringHelper::ensureMaxLength('까깨꺄꺠꺼께껴꼐꼬꽈꼬꽈', 10)));
     }
 
-    public function getDdeAttackStrings()
+    public static function getDdeAttackStrings()
     {
         yield ['DDE ("cmd";"/C calc";"!A0")A0'];
         yield [' DDE ("cmd";"/C calc";"!A0")A0'];
@@ -56,7 +56,7 @@ class StringHelperTest extends TestCase
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
     }
 
-    public function getNonDdeAttackStrings()
+    public static function getNonDdeAttackStrings()
     {
         yield [''];
         yield [' '];

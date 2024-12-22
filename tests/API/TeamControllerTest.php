@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class TeamControllerTest extends APIControllerBaseTest
+class TeamControllerTest extends APIControllerBaseTestCase
 {
     /**
      * @return Team[]
@@ -39,7 +39,7 @@ class TeamControllerTest extends APIControllerBaseTest
     /**
      * @return array<int, array<int, string>>
      */
-    public function getRoleTestData(): array
+    public static function getRoleTestData(): array
     {
         return [
             [User::ROLE_USER],
@@ -62,8 +62,8 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/teams');
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
         self::assertEquals(2, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('TeamCollection', $result[0]);
@@ -78,7 +78,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/teams/' . $id);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
     }
 
@@ -103,12 +103,12 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -135,7 +135,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
@@ -151,11 +151,11 @@ class TeamControllerTest extends APIControllerBaseTest
             ]
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         $updateId = $result['id'];
-        $this->assertIsNumeric($updateId);
+        self::assertIsNumeric($updateId);
 
         $data = [
             'name' => 'foo',
@@ -167,24 +167,24 @@ class TeamControllerTest extends APIControllerBaseTest
         ];
 
         $this->request($client, '/api/teams/' . $updateId, 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertCount(3, $result['members']);
-        $this->assertIsNumeric($updateId);
+        self::assertIsNumeric($updateId);
 
         $this->request($client, '/api/teams/' . $updateId);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['members']);
+        self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
 
-        $this->assertIsArray($result['members'][1]);
+        self::assertIsArray($result['members'][1]);
         self::assertFalse($result['members'][1]['teamlead']);
         self::assertEquals(1, $result['members'][1]['user']['id']);
         self::assertEquals('clara_customer', $result['members'][1]['user']['username']);
@@ -208,10 +208,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         $data = [
             'name' => '1',
@@ -222,7 +222,7 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/teams/' . $result['id'], 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
@@ -234,16 +234,16 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/teams/' . $id);
         $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         $id = $result['id'];
-        $this->assertIsNumeric($id);
+        self::assertIsNumeric($id);
 
         $this->request($client, '/api/teams/' . $id, 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
-        $this->assertEmpty($client->getResponse()->getContent());
+        self::assertEmpty($client->getResponse()->getContent());
     }
 
     public function testPostMemberAction(): void
@@ -256,20 +256,20 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsArray($result['members']);
+        self::assertIsArray($result);
+        self::assertIsArray($result['members']);
         self::assertCount(1, $result['members']);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsNumeric($result['id']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['members']);
+        self::assertIsArray($result['members']);
         self::assertCount(2, $result['members']);
     }
 
@@ -284,10 +284,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertEntityNotFoundForPost($client, '/api/teams/999/members/999');
@@ -297,7 +297,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         // add user
         $this->request($client, '/api/teams/' . $result['id'] . '/members/5', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // cannot add existing member
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/members/5', 'POST');
@@ -316,20 +316,20 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
-        $this->assertIsArray($result['members']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['members']);
         self::assertCount(4, $result['members']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['members']);
+        self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
     }
 
@@ -346,10 +346,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertNotFoundForDelete($client, '/api/teams/999/members/999');
@@ -359,7 +359,7 @@ class TeamControllerTest extends APIControllerBaseTest
 
         // remove user
         $this->request($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // cannot remove non-member
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/members/2', 'DELETE');
@@ -378,21 +378,21 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(0, $result['customers']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['customers']);
+        self::assertIsArray($result['customers']);
         self::assertCount(1, $result['customers']);
-        $this->assertIsArray($result['customers'][0]);
+        self::assertIsArray($result['customers'][0]);
         self::assertEquals(1, $result['customers'][0]['id']);
     }
 
@@ -407,10 +407,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertEntityNotFoundForPost($client, '/api/teams/999/customers/999');
@@ -420,10 +420,10 @@ class TeamControllerTest extends APIControllerBaseTest
 
         // add customer
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(1, $result['customers']);
 
         // cannot add existing customer
@@ -443,29 +443,29 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(0, $result['customers']);
 
         // add customer
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(1, $result['customers']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['customers']);
+        self::assertIsArray($result['customers']);
         self::assertCount(0, $result['customers']);
 
         /** @var EntityManager $em */
@@ -488,10 +488,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertNotFoundForDelete($client, '/api/teams/999/customers/999');
@@ -513,20 +513,20 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(0, $result['projects']);
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['projects']);
+        self::assertIsArray($result['projects']);
         self::assertCount(1, $result['projects']);
-        $this->assertIsArray($result['projects'][0]);
+        self::assertIsArray($result['projects'][0]);
         self::assertEquals(1, $result['projects'][0]['id']);
     }
 
@@ -541,10 +541,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertEntityNotFoundForPost($client, '/api/teams/999/projects/999');
@@ -556,10 +556,10 @@ class TeamControllerTest extends APIControllerBaseTest
 
         // add project
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(1, $result['projects']);
 
         // cannot add existing project
@@ -579,27 +579,27 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(0, $result['projects']);
 
         // add project
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsArray($result['projects']);
+        self::assertIsArray($result);
+        self::assertIsArray($result['projects']);
         self::assertCount(1, $result['projects']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['projects']);
+        self::assertIsArray($result['projects']);
         self::assertCount(0, $result['projects']);
 
         /** @var EntityManager $em */
@@ -622,10 +622,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertNotFoundForDelete($client, '/api/teams/999/projects/999');
@@ -647,20 +647,20 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(0, $result['activities']);
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['activities']);
+        self::assertIsArray($result['activities']);
         self::assertCount(1, $result['activities']);
-        $this->assertIsArray($result['activities'][0]);
+        self::assertIsArray($result['activities'][0]);
         self::assertEquals(1, $result['activities'][0]['id']);
     }
 
@@ -675,10 +675,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertEntityNotFoundForPost($client, '/api/teams/999/activities/999');
@@ -688,10 +688,10 @@ class TeamControllerTest extends APIControllerBaseTest
 
         // add activity
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(1, $result['activities']);
 
         // cannot add existing activity
@@ -711,27 +711,27 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsArray($result['activities']);
+        self::assertIsArray($result);
+        self::assertIsArray($result['activities']);
         self::assertCount(0, $result['activities']);
 
         // add activity
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
         self::assertCount(1, $result['activities']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
-        $this->assertIsArray($result['activities']);
+        self::assertIsArray($result['activities']);
         self::assertCount(0, $result['activities']);
     }
 
@@ -748,10 +748,10 @@ class TeamControllerTest extends APIControllerBaseTest
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertIsNumeric($result['id']);
+        self::assertIsArray($result);
+        self::assertIsNumeric($result['id']);
 
         //  team not found
         $this->assertNotFoundForDelete($client, '/api/teams/999/activities/9999');

@@ -27,10 +27,10 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeImmutableType::class);
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
-        $this->assertInstanceOf(UTCDateTimeImmutableType::class, $type);
+        self::assertInstanceOf(UTCDateTimeImmutableType::class, $type);
         $utc = $type::getUtc();
-        $this->assertSame($utc, $type::getUtc());
-        $this->assertEquals('UTC', $type::getUtc()->getName());
+        self::assertSame($utc, $type::getUtc());
+        self::assertEquals('UTC', $type::getUtc()->getName());
     }
 
     /**
@@ -43,13 +43,13 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToDatabaseValue(null, $platform);
-        $this->assertNull($result);
+        self::assertNull($result);
 
         $berlinTz = new \DateTimeZone('Europe/Berlin');
         $date = new \DateTimeImmutable('2019-01-17 13:30:00');
         $date = $date->setTimezone($berlinTz);
 
-        $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+        self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
 
         $expected = clone $date;
         $expected = $expected->setTimezone($type::getUtc());
@@ -58,7 +58,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         /** @var \DateTime $result */
         $result = $type->convertToDatabaseValue($date, $platform);
 
-        $this->assertEquals($bla, $result);
+        self::assertEquals($bla, $result);
     }
 
     /**
@@ -71,14 +71,14 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToPHPValue(null, $platform);
-        $this->assertNull($result);
+        self::assertNull($result);
 
         $result = $type->convertToPHPValue('2019-01-17 13:30:00', $platform);
-        $this->assertInstanceOf(\DateTimeImmutable::class, $result);
-        $this->assertEquals('UTC', $result->getTimezone()->getName());
+        self::assertInstanceOf(\DateTimeImmutable::class, $result);
+        self::assertEquals('UTC', $result->getTimezone()->getName());
 
         $result = $result->format($platform->getDateTimeFormatString());
-        $this->assertEquals('2019-01-17 13:30:00', $result);
+        self::assertEquals('2019-01-17 13:30:00', $result);
     }
 
     /**
@@ -98,7 +98,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
     /**
      * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
      */
-    public function getPlatforms(): array
+    public static function getPlatforms(): array
     {
         return [
             [new MySQLPlatform()],

@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class ProjectControllerTest extends APIControllerBaseTest
+class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
@@ -101,12 +101,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
     }
@@ -224,18 +224,18 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
+        self::assertIsArray($result);
+        self::assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             self::assertIsArray($project);
             self::assertApiResponseTypeStructure('ProjectCollection', $project);
             if ($customerId !== null) {
-                $this->assertEquals($customerId, $project['customer']);
+                self::assertEquals($customerId, $project['customer']);
             }
         }
     }
@@ -243,7 +243,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getCollectionTestData(): iterable
+    public static function getCollectionTestData(): iterable
     {
         // if you wonder why: case-sensitive ordering feels strange ... "Title" > "fifth”
         yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];
@@ -273,10 +273,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
     }
 
@@ -308,10 +308,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects/' . $project->getId());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
 
         $expected = [
@@ -357,15 +357,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'orderNumber' => '1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('2018-04-17', $result['orderDate']);
         self::assertEquals('2019-02-01', $result['start']);
         self::assertEquals('2020-02-08', $result['end']);
@@ -386,15 +386,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => '',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
@@ -412,15 +412,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => false,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertFalse($result['globalActivities']);
         self::assertFalse($result['billable']);
@@ -438,15 +438,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
@@ -461,15 +461,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'customer' => 1
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertFalse($result['globalActivities']);
         self::assertFalse($result['billable']);
@@ -515,15 +515,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -557,7 +557,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['customer']);
     }
 
@@ -603,12 +603,12 @@ class ProjectControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/projects/1/meta', 'PATCH', [], json_encode($data));
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $em = $this->getEntityManager();
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
-        $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+        self::assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------
@@ -658,9 +658,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $id = $result['id'];
 
         $this->request($client, '/api/projects/' . $id, Request::METHOD_DELETE);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
-        $this->assertEmpty($client->getResponse()->getContent());
+        self::assertEmpty($client->getResponse()->getContent());
 
         $this->request($client, $getUrl);
         $this->assertApiException($client->getResponse(), [

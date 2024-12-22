@@ -47,7 +47,7 @@ class BillableCalculatorTest extends TestCase
         self::assertEquals($expected, $timesheet->isBillable());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $customerYes = new Customer('foo');
         $customerYes->setBillable(true);

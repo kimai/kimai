@@ -1,73 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="tests/bootstrap.php">
-    <php>
-        <ini name="error_reporting" value="-1"/>
-        <ini name="max_execution_time" value="-1"/>
-        <ini name="date.timezone" value="UTC"/>
-        <ini name="intl.default_locale" value="en_US"/>
-        <ini name="date.timezone" value="Europe/Vienna"/>
-        <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-        <env name="APP_ENV" value="test" force="true"/>
-        <env name="APP_DEBUG" value="0" force="true"/>
-        <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=10.5.8-MariaDB"/>
-        <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
-        <env name="MAILER_URL" value="null://null"/>
-        <env name="MAILER_FROM" value="kimai@example.com"/>
-        <!--
-            REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
-
-            - change to "true"
-            - composer tests
-            - change back to "false"
-
-            CREATE DATABASE IF NOT EXISTS `kimai2_test`;
-            CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
-            ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
-            GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
-        -->
-        <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
-    </php>
-
-    <testsuites>
-        <testsuite name="Kimai">
-            <directory>tests/</directory>
-        </testsuite>
-    </testsuites>
-
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src/</directory>
-            <directory suffix=".php">templates/</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">migrations/</directory>
-            <directory suffix=".php">assets/</directory>
-            <directory suffix=".php">bin/</directory>
-            <directory suffix=".php">config/</directory>
-            <directory suffix=".php">node_modules/</directory>
-            <directory suffix=".php">public/</directory>
-            <directory suffix=".php">tests/</directory>
-            <directory suffix=".php">translations/</directory>
-            <directory suffix=".php">var/</directory>
-            <directory suffix=".php">vendor/</directory>
-        </exclude>
-    </coverage>
-
+         bootstrap="tests/bootstrap.php"
+         cacheDirectory="var/cache/phpunit/">
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="max_execution_time" value="-1"/>
+    <ini name="date.timezone" value="UTC"/>
+    <ini name="intl.default_locale" value="en_US"/>
+    <ini name="date.timezone" value="Europe/Vienna"/>
+    <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+    <env name="APP_ENV" value="test" force="true"/>
+    <env name="APP_DEBUG" value="0" force="true"/>
+    <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
+    <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=10.5.8-MariaDB"/>
+    <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
+    <env name="MAILER_URL" value="null://null"/>
+    <env name="MAILER_FROM" value="kimai@example.com"/>
     <!--
-        wrap tests inside database transactions, so tests can safely manipulate contents without
-        affecting other tests. @see https://github.com/dmaicher/doctrine-test-bundle
-    -->
-    <extensions>
-        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
-    </extensions>
+        REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
-    <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
-    </listeners>
+        - change to "true"
+        - composer tests
+        - change back to "false"
+
+        CREATE DATABASE IF NOT EXISTS `kimai2_test`;
+        CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
+        ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
+        GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
+    -->
+    <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
+  </php>
+
+  <testsuites>
+    <testsuite name="Kimai">
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
+
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+      <directory suffix=".php">templates/</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">migrations/</directory>
+      <directory suffix=".php">assets/</directory>
+      <directory suffix=".php">bin/</directory>
+      <directory suffix=".php">config/</directory>
+      <directory suffix=".php">node_modules/</directory>
+      <directory suffix=".php">public/</directory>
+      <directory suffix=".php">tests/</directory>
+      <directory suffix=".php">translations/</directory>
+      <directory suffix=".php">var/</directory>
+      <directory suffix=".php">vendor/</directory>
+    </exclude>
+  </coverage>
+
+  <extensions>
+    <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+  </extensions>
+
 </phpunit>

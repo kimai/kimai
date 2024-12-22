@@ -26,6 +26,6 @@ class UserCreatePreEventTest extends TestCase
 
         $sut = new UserCreatePreEvent($user);
 
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
     }
 }

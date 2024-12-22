@@ -17,7 +17,7 @@ use App\Event\ActivityCreateEvent;
  * @covers \App\Event\AbstractActivityEvent
  * @covers \App\Event\ActivityCreateEvent
  */
-class ActivityCreateEventTest extends AbstractActivityEventTest
+class ActivityCreateEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent
     {

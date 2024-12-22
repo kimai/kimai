@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group integration
  */
-class CustomerControllerTest extends APIControllerBaseTest
+class CustomerControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
@@ -140,12 +140,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
@@ -157,12 +157,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
@@ -178,10 +178,10 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
@@ -225,10 +225,10 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
@@ -250,15 +250,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithLeastFields(): void
@@ -271,15 +271,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -327,15 +327,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -373,7 +373,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
     }
 
@@ -426,12 +426,12 @@ class CustomerControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode($data));
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $em = $this->getEntityManager();
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
-        $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+        self::assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------
@@ -481,9 +481,9 @@ class CustomerControllerTest extends APIControllerBaseTest
         $id = $result['id'];
 
         $this->request($client, '/api/customers/' . $id, Request::METHOD_DELETE);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
-        $this->assertEmpty($client->getResponse()->getContent());
+        self::assertEmpty($client->getResponse()->getContent());
 
         $this->request($client, $getUrl);
         $this->assertApiException($client->getResponse(), [

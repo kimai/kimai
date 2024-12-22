@@ -160,17 +160,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      *
      * @param array<string, string> $parameter
      */
-    private function addFlashTranslated(string $type, string $message, array $parameter = []): void
+    private function addFlashTranslated(string $type, string $message, array $parameter = [], string $domain = 'flashmessages'): void
     {
         if (!empty($parameter)) {
             foreach ($parameter as $key => $value) {
-                $parameter[$key] = $this->getTranslator()->trans($value, [], 'flashmessages');
+                $parameter[$key] = $this->getTranslator()->trans($value, [], $domain);
             }
-            $message = $this->getTranslator()->trans(
-                $message,
-                $parameter,
-                'flashmessages'
-            );
+            $message = $this->getTranslator()->trans($message, $parameter, $domain);
         }
 
         $this->addFlash($type, $message);

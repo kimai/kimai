@@ -84,11 +84,11 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigFilters = $sut->getFilters();
-        //$this->assertCount(\count($filters), $twigFilters);
+        //self::assertCount(\count($filters), $twigFilters);
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($filters[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($filters[$i++], $filter->getName());
         }
     }
 
@@ -99,12 +99,12 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
 
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($functions[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($functions[$i++], $filter->getName());
         }
     }
 
@@ -115,12 +115,12 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $sut = $this->getSut('de', []);
         $twigTests = $sut->getTests();
-        $this->assertCount(\count($tests), $twigTests);
+        self::assertCount(\count($tests), $twigTests);
 
         /** @var TwigTest $test */
         foreach ($twigTests as $test) {
-            $this->assertInstanceOf(TwigTest::class, $test);
-            $this->assertEquals($tests[$i++], $test->getName());
+            self::assertInstanceOf(TwigTest::class, $test);
+            self::assertEquals($tests[$i++], $test->getName());
         }
     }
 
@@ -134,13 +134,13 @@ class LocaleFormatExtensionsTest extends TestCase
             'en' => array_merge(LocaleService::DEFAULT_SETTINGS, ['date' => 'Y-MM-dd']),
             'ru' => array_merge(LocaleService::DEFAULT_SETTINGS, ['date' => 'dd.MM.Y']),
         ]);
-        $this->assertEquals($expected, $sut->dateShort($date));
+        self::assertEquals($expected, $sut->dateShort($date));
     }
 
     /**
      * @return array<int, array<int, \DateTime|string|null>>
      */
-    public function getDateShortData(): array
+    public static function getDateShortData(): array
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
 
@@ -164,14 +164,14 @@ class LocaleFormatExtensionsTest extends TestCase
             'de' => array_merge(LocaleService::DEFAULT_SETTINGS, ['date' => 'dd.MM.Y', 'time' => 'HH:mm:s']),
             'en' => array_merge(LocaleService::DEFAULT_SETTINGS, ['date' => 'Y-MM-dd', 'time' => 'h:mm a']),
         ]);
-        $this->assertEquals($expected, $sut->dateTime($date));
+        self::assertEquals($expected, $sut->dateTime($date));
     }
 
     /**
      * @return array<int, array<int, \DateTime|string|null>>
      * @throws \Exception
      */
-    public function getDateTimeData(): array
+    public static function getDateTimeData(): array
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
 
@@ -196,7 +196,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|bool>>
      */
-    public function getDayNameTestData(): array
+    public static function getDayNameTestData(): array
     {
         return [
             ['de', '2020-07-09 12:00:00', 'Donnerstag', false],
@@ -218,7 +218,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @return array<int, array<int, string|bool>>
      */
-    public function getMonthNameTestData(): array
+    public static function getMonthNameTestData(): array
     {
         return [
             ['de', '2020-07-09 23:59:59', 'Juli', false],
@@ -240,8 +240,8 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $date = new \DateTime('7 January 2010 17:43:21', new \DateTimeZone('Europe/Berlin'));
         $sut = $this->getSut('en', []);
-        $this->assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
-        $this->assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
+        self::assertEquals('2010-01-07T17:43:21+01:00', $sut->dateFormat($date, 'c'));
+        self::assertStringStartsWith('2010-01-07T17:43:21', $sut->dateFormat('7 January 2010 17:43:21', 'c'));
     }
 
     public function testTime(): void
@@ -250,8 +250,8 @@ class LocaleFormatExtensionsTest extends TestCase
         $time->setTime(17, 53, 23);
 
         $sut = $this->getSut('en', ['en' => array_merge(LocaleService::DEFAULT_SETTINGS, ['time' => 'HH:mm'])]);
-        $this->assertEquals('17:53', $sut->time($time));
-        $this->assertEquals('17:53', $sut->time('2016-06-23 17:53'));
+        self::assertEquals('17:53', $sut->time($time));
+        self::assertEquals('17:53', $sut->time('2016-06-23 17:53'));
     }
 
     public function testCreateDate(): void
@@ -260,26 +260,26 @@ class LocaleFormatExtensionsTest extends TestCase
         $user->setTimezone('Europe/Berlin');
         $sut = $this->getSut('en', []);
         $date = $sut->createDate('now', $user);
-        $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+        self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
 
         $user->setTimezone('Asia/Dubai');
         $date = $sut->createDate('2019-08-27 16:30:45', $user);
-        $this->assertEquals('2019-08-27T16:30:45+04:00', $date->format(DATE_ATOM));
-        $this->assertEquals('Asia/Dubai', $date->getTimezone()->getName());
+        self::assertEquals('2019-08-27T16:30:45+04:00', $date->format(DATE_ATOM));
+        self::assertEquals('Asia/Dubai', $date->getTimezone()->getName());
 
         $date = $sut->createDate('2019-08-27 16:30:45', null);
-        $this->assertEquals(date_default_timezone_get(), $date->getTimezone()->getName());
+        self::assertEquals(date_default_timezone_get(), $date->getTimezone()->getName());
     }
 
     public function testMoneyWithoutCurrency(): void
     {
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('123.75', $sut->money(123.75));
+        self::assertEquals('123.75', $sut->money(123.75));
 
         $sut = $this->getSut('de', $this->localeEn);
-        $this->assertEquals('123.234,76', $sut->money(123234.7554, null, true));
-        $this->assertEquals('123.234,76', $sut->money(123234.7554, null, false));
-        $this->assertEquals('123.234,76', $sut->money(123234.7554, 'EUR', false));
+        self::assertEquals('123.234,76', $sut->money(123234.7554, null, true));
+        self::assertEquals('123.234,76', $sut->money(123234.7554, null, false));
+        self::assertEquals('123.234,76', $sut->money(123234.7554, 'EUR', false));
     }
 
     /**
@@ -288,13 +288,13 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testMoneyNoCurrency($result, $amount, $currency, $locale): void
     {
         $sut = $this->getSut($locale, $this->localeEn);
-        $this->assertEquals($result, $sut->money($amount, $currency, false));
+        self::assertEquals($result, $sut->money($amount, $currency, false));
     }
 
     /**
      * @return array<int, array<int, string|null|int|float>>
      */
-    public function getMoneyNoCurrencyData(): array
+    public static function getMoneyNoCurrencyData(): array
     {
         return [
             ['0,00', null, 'EUR', 'de'],
@@ -322,13 +322,13 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testMoney(string $result, float|int|null $amount, string $currency, string $locale): void
     {
         $sut = $this->getSut($locale, $this->localeEn);
-        $this->assertEquals($result, $sut->money($amount, $currency));
+        self::assertEquals($result, $sut->money($amount, $currency));
     }
 
     /**
      * @return array<int, array<int, null|string|float|int>>
      */
-    public function getMoneyData(): array
+    public static function getMoneyData(): array
     {
         return [
             ["0,00\u{a0}€", null, 'EUR', 'de'],
@@ -355,13 +355,13 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testAmount(string $result, null|int|float|string $amount, string $locale): void
     {
         $sut = $this->getSut($locale, $this->localeEn);
-        $this->assertEquals($result, $sut->amount($amount));
+        self::assertEquals($result, $sut->amount($amount));
     }
 
     /**
      * @return array<int, array<int, null|int|string|float>>
      */
-    public function getAmountData(): array
+    public static function getAmountData(): array
     {
         return [
             ['0', null, 'de'],
@@ -386,13 +386,13 @@ class LocaleFormatExtensionsTest extends TestCase
         IntlTestHelper::requireFullIntl($this, '62.1');
 
         $sut = $this->getSut($locale, $this->localeEn);
-        $this->assertEquals($result, $sut->money($amount, $currency));
+        self::assertEquals($result, $sut->money($amount, $currency));
     }
 
     /**
      * @return array<int, array<int, string|float>>
      */
-    public function getMoneyData62_1(): array
+    public static function getMoneyData62_1(): array
     {
         return [
             ["RUB\u{a0}13.50", 13.50, 'RUB', 'en'],
@@ -405,33 +405,33 @@ class LocaleFormatExtensionsTest extends TestCase
         $record = $this->getTimesheet(9437);
 
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('2:37', $sut->duration($record->getDuration()));
-        $this->assertEquals('2.62', $sut->duration($record->getDuration(), true));
+        self::assertEquals('2:37', $sut->duration($record->getDuration()));
+        self::assertEquals('2.62', $sut->duration($record->getDuration(), true));
 
         // test Timesheet object
-        $this->assertEquals('2:37', $sut->duration($record));
-        $this->assertEquals('2.62', $sut->duration($record, true));
+        self::assertEquals('2:37', $sut->duration($record));
+        self::assertEquals('2.62', $sut->duration($record, true));
 
         // test extended format
         $sut = $this->getSut('XX', $this->localeFake);
-        $this->assertEquals('2:37', $sut->duration($record->getDuration()));
+        self::assertEquals('2:37', $sut->duration($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('0:00', $sut->duration(0));
-        $this->assertEquals('0:00', $sut->duration(-1));
-        $this->assertEquals('0:00', $sut->duration(-59));
-        $this->assertEquals('-0:01', $sut->duration(-60));
-        $this->assertEquals('-1:36', $sut->duration(-5786));
+        self::assertEquals('0:00', $sut->duration(0));
+        self::assertEquals('0:00', $sut->duration(-1));
+        self::assertEquals('0:00', $sut->duration(-59));
+        self::assertEquals('-0:01', $sut->duration(-60));
+        self::assertEquals('-1:36', $sut->duration(-5786));
 
         // test zero duration
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('0:00', $sut->duration(0));
+        self::assertEquals('0:00', $sut->duration(0));
 
         $sut = $this->getSut('en', $this->localeEn);
 
-        $this->assertEquals('0:00', $sut->duration(null));
-        $this->assertEquals('0.00', $sut->duration(null, true));
+        self::assertEquals('0:00', $sut->duration(null));
+        self::assertEquals('0.00', $sut->duration(null, true));
     }
 
     public function testDurationChart(): void
@@ -502,39 +502,39 @@ class LocaleFormatExtensionsTest extends TestCase
         $record = $this->getTimesheet(9437);
 
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('2.62', $sut->durationDecimal($record->getDuration()));
+        self::assertEquals('2.62', $sut->durationDecimal($record->getDuration()));
 
         // test Timesheet object
-        $this->assertEquals('2.62', $sut->durationDecimal($record));
+        self::assertEquals('2.62', $sut->durationDecimal($record));
 
         // test extended format
         $sut = $this->getSut('de', $this->localeDe);
-        $this->assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
+        self::assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('-0.00', $sut->durationDecimal(-1));
+        self::assertEquals('-0.00', $sut->durationDecimal(-1));
 
         // test negative duration
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('-0.01', $sut->durationDecimal(-40));
-        $this->assertEquals('-0.01', $sut->durationDecimal(-50));
+        self::assertEquals('-0.01', $sut->durationDecimal(-40));
+        self::assertEquals('-0.01', $sut->durationDecimal(-50));
 
         // test negative duration - with rounding issue
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('-0.02', $sut->durationDecimal(-60));
+        self::assertEquals('-0.02', $sut->durationDecimal(-60));
 
         // test zero duration
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('0.00', $sut->durationDecimal(-0));
-        $this->assertEquals('0.00', $sut->durationDecimal(0));
+        self::assertEquals('0.00', $sut->durationDecimal(-0));
+        self::assertEquals('0.00', $sut->durationDecimal(0));
 
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('0.00', $sut->durationDecimal(-0));
+        self::assertEquals('0.00', $sut->durationDecimal(-0));
 
         $sut = $this->getSut('en', $this->localeEn);
 
-        $this->assertEquals('0.00', $sut->durationDecimal(null));
+        self::assertEquals('0.00', $sut->durationDecimal(null));
     }
 
     private function getTest(LocaleFormatExtensions $sut, string $name): TwigTest
@@ -591,16 +591,16 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testChartMoney(): void
     {
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('-123456.78', $sut->moneyChart(-123456.78));
-        $this->assertEquals('123456.78', $sut->moneyChart(123456.78));
-        $this->assertEquals('123456.00', $sut->moneyChart(123456));
-        $this->assertEquals('456.00', $sut->moneyChart(456));
+        self::assertEquals('-123456.78', $sut->moneyChart(-123456.78));
+        self::assertEquals('123456.78', $sut->moneyChart(123456.78));
+        self::assertEquals('123456.00', $sut->moneyChart(123456));
+        self::assertEquals('456.00', $sut->moneyChart(456));
     }
 
     public function testChartDuration(): void
     {
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('34.29', $sut->durationChart(123456));
-        $this->assertEquals('-34.29', $sut->durationChart(-123456));
+        self::assertEquals('34.29', $sut->durationChart(123456));
+        self::assertEquals('-34.29', $sut->durationChart(-123456));
     }
 }

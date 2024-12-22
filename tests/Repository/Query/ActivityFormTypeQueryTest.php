@@ -16,7 +16,7 @@ use App\Repository\Query\ActivityFormTypeQuery;
  * @covers \App\Repository\Query\ActivityFormTypeQuery
  * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class ActivityFormTypeQueryTest extends BaseFormTypeQueryTest
+class ActivityFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void
     {

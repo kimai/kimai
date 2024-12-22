@@ -14,7 +14,7 @@ use App\Entity\User;
 /**
  * @group integration
  */
-class DoctorControllerTest extends ControllerBaseTest
+class DoctorControllerTest extends AbstractControllerBaseTestCase
 {
     public function testDoctorIsSecure(): void
     {

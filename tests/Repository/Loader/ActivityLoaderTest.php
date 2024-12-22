@@ -16,7 +16,7 @@ use App\Repository\Loader\ActivityLoader;
 /**
  * @covers \App\Repository\Loader\ActivityLoader
  */
-class ActivityLoaderTest extends AbstractLoaderTest
+class ActivityLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void
     {

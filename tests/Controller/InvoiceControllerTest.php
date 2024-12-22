@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 /**
  * @group integration
  */
-class InvoiceControllerTest extends ControllerBaseTest
+class InvoiceControllerTest extends AbstractControllerBaseTestCase
 {
     protected function setUp(): void
     {
@@ -76,7 +76,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $id = $templates[0]->getId();
 
         $this->request($client, '/invoice/?customers[]=1&template=' . $id);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
     }
@@ -90,7 +90,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->request($client, '/invoice/template');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
     }
 
@@ -98,7 +98,7 @@ class InvoiceControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/invoice/template/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $client->submit($form, [
@@ -114,7 +114,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
         $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->findAll()[0];
@@ -136,19 +136,19 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $templates[0];
 
         $this->request($client, '/invoice/template/create/' . $template->getId());
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $values = $form->getPhpValues()['invoice_template_form'];
-        $this->assertEquals($template->getName() . ' (1)', $values['name']);
-        $this->assertEquals($template->getTitle(), $values['title']);
-        $this->assertEquals($template->getDueDays(), $values['dueDays']);
-        $this->assertEquals($template->getCalculator(), $values['calculator']);
-        $this->assertEquals($template->getVat(), $values['vat']);
-        $this->assertEquals($template->getRenderer(), $values['renderer']);
-        $this->assertEquals($template->getCompany(), $values['company']);
-        $this->assertEquals($template->getAddress(), $values['address']);
-        $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
+        self::assertEquals($template->getName() . ' (1)', $values['name']);
+        self::assertEquals($template->getTitle(), $values['title']);
+        self::assertEquals($template->getDueDays(), $values['dueDays']);
+        self::assertEquals($template->getCalculator(), $values['calculator']);
+        self::assertEquals($template->getVat(), $values['vat']);
+        self::assertEquals($template->getRenderer(), $values['renderer']);
+        self::assertEquals($template->getCompany(), $values['company']);
+        self::assertEquals($template->getAddress(), $values['address']);
+        self::assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
     }
 
     public function testCreateAction(): void
@@ -170,11 +170,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         ;
         $timesheets = $this->importFixture($fixture);
         foreach ($timesheets as $timesheet) {
-            $this->assertFalse($timesheet->isExported());
+            self::assertFalse($timesheet->isExported());
         }
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -188,11 +188,11 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
+        self::assertEquals(0, $node->count());
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
@@ -208,16 +208,16 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, $action);
         $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertCount(20, $timesheets);
+        self::assertCount(20, $timesheets);
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
-            $this->assertTrue($timesheet->isExported());
+            self::assertTrue($timesheet->isExported());
         }
     }
 
@@ -240,7 +240,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -254,7 +254,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $params = [
             'daterange' => $dateRange,
@@ -267,13 +267,13 @@ class InvoiceControllerTest extends ControllerBaseTest
         $action = '/invoice/preview/1/' . $token . '?' . http_build_query($params);
 
         $this->request($client, $action);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
+        self::assertEquals(1, $node->count());
 
         /** @var \DOMElement $element */
         $element = $node->getIterator()[0];
-        $this->assertEquals('invoice_print', $element->getAttribute('class'));
+        self::assertEquals('invoice_print', $element->getAttribute('class'));
     }
 
     public function testCreateActionAsAdminWithDownloadAndStatusChange(): void
@@ -295,7 +295,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($begin, $end);
 
@@ -309,11 +309,11 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers' => [1],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
+        self::assertEquals(0, $node->count());
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
@@ -331,7 +331,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
         self::assertCount(1, $invoices);
@@ -345,23 +345,23 @@ class InvoiceControllerTest extends ControllerBaseTest
         // make sure the invoice is saved
         $this->request($client, '/invoice/download/' . $id);
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
         $this->request($client, '/invoice/show');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $link = $client->getCrawler()->selectLink('Waiting for payment');
 
         $this->request($client, $link->attr('href'));
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $link = $client->getCrawler()->selectLink('Invoice paid');
         $url = $link->attr('href');
         $this->request($client, $url);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasValidationError(
             $client,
@@ -375,7 +375,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             ['#invoice_edit_form_paymentDate']
         );
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
         $client->submit($form, [
@@ -386,13 +386,13 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $token = $this->getCsrfToken($client, 'invoice.status');
         $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testEditTemplateAction(): void
@@ -417,7 +417,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/invoice/template'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
     }
@@ -438,10 +438,10 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
-        $this->assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
+        self::assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
     public function testUploadDocumentAction(): void
@@ -452,7 +452,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/invoice/document_upload');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('form[name=invoice_document_upload_form]');
         self::assertEquals(1, $node->count(), 'Could not find upload form');

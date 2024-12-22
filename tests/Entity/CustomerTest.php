@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @covers \App\Entity\Customer
  */
-class CustomerTest extends AbstractEntityTest
+class CustomerTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {

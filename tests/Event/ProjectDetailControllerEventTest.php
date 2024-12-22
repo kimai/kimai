@@ -17,7 +17,7 @@ use App\Event\ProjectDetailControllerEvent;
  * @covers \App\Event\AbstractProjectEvent
  * @covers \App\Event\ProjectDetailControllerEvent
  */
-class ProjectDetailControllerEventTest extends AbstractProjectEventTest
+class ProjectDetailControllerEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent
     {
@@ -29,6 +29,6 @@ class ProjectDetailControllerEventTest extends AbstractProjectEventTest
         /** @var ProjectDetailControllerEvent $event */
         $event = $this->createProjectEvent(new Project());
         $event->addController('Foo\\Bar::helloWorld');
-        $this->assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
+        self::assertEquals(['Foo\\Bar::helloWorld'], $event->getController());
     }
 }

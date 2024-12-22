@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * @group integration
  */
-class ExportControllerTest extends ControllerBaseTest
+class ExportControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -35,7 +35,7 @@ class ExportControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
     }
@@ -83,7 +83,7 @@ class ExportControllerTest extends ControllerBaseTest
         $em->flush();
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
@@ -106,7 +106,7 @@ class ExportControllerTest extends ControllerBaseTest
             $type = $button->getAttribute('data-type');
             unset($expected[$type]);
         }
-        $this->assertEmpty($expected);
+        self::assertEmpty($expected);
     }
 
     public function testIndexActionWithEntriesForTeamleadDoesNotShowUserWithoutTeam(): void
@@ -126,7 +126,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure existing records are not displayed
         $this->assertHasNoEntriesWithFilter($client);
@@ -142,7 +142,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/?performSearch=performSearch');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // make sure all existing records are displayed
         $this->assertHasDataTable($client);
@@ -165,16 +165,14 @@ class ExportControllerTest extends ControllerBaseTest
             $type = $button->getAttribute('data-type');
             unset($expected[$type]);
         }
-        $this->assertEmpty($expected);
+        self::assertEmpty($expected);
     }
 
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/export/data', 'POST');
-
-        $response = $client->getResponse();
-        $this->assert404($response, 'Missing export renderer');
+        $this->assertRouteNotFound($client);
     }
 
     public function testExportActionWithInvalidRenderer(): void
@@ -182,7 +180,7 @@ class ExportControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $this->request($client, '/export/', 'GET');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('#export-form')->form();
         $node = $form->getFormNode();
@@ -193,8 +191,7 @@ class ExportControllerTest extends ControllerBaseTest
             'renderer' => 'default'
         ]);
 
-        $response = $client->getResponse();
-        $this->assert404($response, 'Unknown export renderer');
+        $this->assertRouteNotFound($client);
     }
 
     public function testExportAction(): void
@@ -213,7 +210,7 @@ class ExportControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/export/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('#export-form')->form();
         $node = $form->getFormNode();
@@ -227,26 +224,26 @@ class ExportControllerTest extends ControllerBaseTest
         ]);
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         $content = $response->getContent();
         $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
+        self::assertEquals(1, $node->count());
 
         // poor mans assertions ;-)
         /** @var \DOMElement $element */
         $element = $node->getIterator()[0];
-        $this->assertStringContainsString('export_print', $element->getAttribute('class'));
-        $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
-        $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
+        self::assertStringContainsString('export_print', $element->getAttribute('class'));
+        self::assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
+        self::assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer
-        $this->assertEquals(21, $node->count());
+        self::assertEquals(21, $node->count());
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
         /** @var Timesheet $timesheet */
         foreach ($timesheets as $timesheet) {
-            $this->assertTrue($timesheet->isExported());
+            self::assertTrue($timesheet->isExported());
         }
     }
 }

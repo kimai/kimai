@@ -10,12 +10,12 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 
 /**
  * @group integration
  */
-class ApiDocControllerTest extends ControllerBaseTest
+class ApiDocControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -26,7 +26,7 @@ class ApiDocControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
-        $this->assertStringContainsString('<title>Kimai', $client->getResponse()->getContent());
+        self::assertStringContainsString('<title>Kimai', $client->getResponse()->getContent());
         $result = $client->getCrawler()->filter('script#swagger-data');
         $swaggerJson = json_decode($result->text(), true);
         $tags = [];
@@ -104,25 +104,25 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/users/api-token/{id}',
         ];
 
-        $this->assertArrayHasKey('openapi', $json);
-        $this->assertEquals('3.0.0', $json['openapi']);
-        $this->assertArrayHasKey('info', $json);
-        $this->assertStringStartsWith('Kimai', $json['info']['title']);
-        $this->assertEquals('1.0', $json['info']['version']);
+        self::assertArrayHasKey('openapi', $json);
+        self::assertEquals('3.0.0', $json['openapi']);
+        self::assertArrayHasKey('info', $json);
+        self::assertStringStartsWith('Kimai', $json['info']['title']);
+        self::assertEquals('1.0', $json['info']['version']);
 
-        $this->assertArrayHasKey('paths', $json);
-        $this->assertEquals($paths, array_keys($json['paths']));
+        self::assertArrayHasKey('paths', $json);
+        self::assertEquals($paths, array_keys($json['paths']));
 
-        $this->assertArrayHasKey('security', $json);
-        $this->assertEquals(['bearer' => []], $json['security'][0]);
+        self::assertArrayHasKey('security', $json);
+        self::assertEquals(['bearer' => []], $json['security'][0]);
 
-        $this->assertArrayHasKey('components', $json);
-        $this->assertArrayHasKey('schemas', $json['components']);
-        $this->assertArrayHasKey('securitySchemes', $json['components']);
+        self::assertArrayHasKey('components', $json);
+        self::assertArrayHasKey('schemas', $json['components']);
+        self::assertArrayHasKey('securitySchemes', $json['components']);
 
         $result = json_decode($client->getResponse()->getContent(), true);
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
     }
 
     protected function createUrl(string $url): string
