@@ -74,7 +74,7 @@ final class SpreadsheetRenderer
     /**
      * @param ExportableItem[] $exportItems
      */
-    public function writeSpreadsheet(SpreadsheetPackage $spreadsheetPackage, array $exportItems, TimesheetQuery $query): string
+    public function writeSpreadsheet(SpreadsheetPackage $spreadsheetPackage, array $exportItems, TimesheetQuery $query): void
     {
         $columns = $this->getColumns($query);
 
@@ -112,7 +112,7 @@ final class SpreadsheetRenderer
             $spreadsheetPackage->addRow($totalRow, ['totals' => true]);
         }
 
-        return $spreadsheetPackage->save();
+        $spreadsheetPackage->save();
     }
 
     /**

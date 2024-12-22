@@ -47,6 +47,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         $security = $this->createMock(Security::class);
         $spreadsheetPackage = $this->createMock(SpreadsheetPackage::class);
         $spreadsheetPackage->expects(self::exactly(2))->method('addRow');
+        $spreadsheetPackage->expects(self::once())->method('save');
 
         $exportItem = $this->createMock(ExportableItem::class);
         $exportItem->method('getBegin')->willReturn(new \DateTime());
@@ -97,20 +98,5 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
 
         $renderer = new SpreadsheetRenderer($translator, $dispatcher, $security);
         $renderer->writeSpreadsheet($spreadsheetPackage, [$exportItem, $exportItem], new TimesheetQuery());
-    }
-
-    public function testWriteSpreadsheetReturnsSavedFilePath(): void
-    {
-        $translator = $this->createMock(TranslatorInterface::class);
-        $translator->method('trans')->willReturnArgument(0);
-        $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $security = $this->createMock(Security::class);
-        $spreadsheetPackage = $this->createMock(SpreadsheetPackage::class);
-        $spreadsheetPackage->method('save')->willReturn('/path/to/spreadsheet.xlsx');
-
-        $renderer = new SpreadsheetRenderer($translator, $dispatcher, $security);
-        $result = $renderer->writeSpreadsheet($spreadsheetPackage, [], new TimesheetQuery());
-
-        self::assertEquals('/path/to/spreadsheet.xlsx', $result);
     }
 }

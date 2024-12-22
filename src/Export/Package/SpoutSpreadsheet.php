@@ -23,18 +23,9 @@ use OpenSpout\Writer\XLSX\Entity\SheetView;
 
 class SpoutSpreadsheet implements SpreadsheetPackage
 {
-    private string $filename;
-
     public function __construct(private readonly WriterInterface $writer)
     {
         $this->writer->setCreator(Constants::SOFTWARE);
-
-        $this->filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
-        if (false === $this->filename) {
-            throw new \Exception('Could not open temporary file');
-        }
-
-        $this->writer->openToFile($this->filename);
 
         if ($this->writer instanceof AbstractWriterMultiSheets) {
             $sheetView = new SheetView();
@@ -91,10 +82,13 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $this->writer->addRow(new Row($tmp, $style));
     }
 
-    public function save(): string
+    public function open(string $filename): void
+    {
+        $this->writer->openToFile($filename);
+    }
+
+    public function save(): void
     {
         $this->writer->close();
-
-        return $this->filename;
     }
 }

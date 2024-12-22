@@ -21,6 +21,7 @@ final class PhpOfficeSpreadsheet implements SpreadsheetPackage
     private ?Spreadsheet $spreadsheet;
     private ?Worksheet $worksheet;
     private int $currentRow = 1;
+    private ?string $filename = null;
 
     public function __construct()
     {
@@ -28,15 +29,19 @@ final class PhpOfficeSpreadsheet implements SpreadsheetPackage
         $this->worksheet = $this->spreadsheet->getActiveSheet();
     }
 
-    public function save(): string
+    public function open(string $filename): void
     {
-        if ($this->spreadsheet === null || $this->worksheet === null) {
-            throw new \Exception('Cannot re-use spreadsheet after calling save()');
+        $this->filename = $filename;
+    }
+
+    public function save(): void
+    {
+        if ($this->filename === null) {
+            throw new \Exception('Need to call open() first before save()');
         }
 
-        $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
-        if ($filename === false) {
-            throw new \Exception('Could not open temporary file');
+        if ($this->spreadsheet === null || $this->worksheet === null) {
+            throw new \Exception('Cannot re-use spreadsheet after calling save()');
         }
 
         $sheet = $this->worksheet;
@@ -70,12 +75,10 @@ final class PhpOfficeSpreadsheet implements SpreadsheetPackage
             ->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
         $writer = IOFactory::createWriter($this->spreadsheet, 'Xlsx');
-        $writer->save($filename);
+        $writer->save($this->filename);
 
         $this->spreadsheet = null;
         $this->worksheet = null;
-
-        return $filename;
     }
 
     /**

@@ -12,9 +12,11 @@ namespace App\Export\Package;
 interface SpreadsheetPackage
 {
     /**
-     * Returns the temporary filename.
+     * Pass the temporary filename where data will be written to.
      */
-    public function save(): string;
+    public function open(string $filename): void;
+
+    public function save(): void;
 
     /**
      * @param array<string> $columns

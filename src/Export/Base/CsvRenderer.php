@@ -53,8 +53,16 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
      */
     public function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
-        $file = $this->spreadsheetRenderer->writeSpreadsheet(new SpoutSpreadsheet(new Writer()), $exportItems, $query);
+        $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-csv');
+        if (false === $filename) {
+            throw new \Exception('Could not open temporary file');
+        }
 
-        return new \SplFileInfo($file);
+        $spreadsheet = new SpoutSpreadsheet(new Writer());
+        $spreadsheet->open($filename);
+
+        $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
+
+        return new \SplFileInfo($filename);
     }
 }
