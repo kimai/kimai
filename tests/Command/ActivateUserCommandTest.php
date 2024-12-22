@@ -70,7 +70,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('chris_user');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
+        self::assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
 
         $container = self::$kernel->getContainer();
         /** @var Registry $doctrine */
@@ -87,7 +87,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('susan_super');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "susan_super" is already active.', $output);
+        self::assertStringContainsString('[WARNING] User "susan_super" is already active.', $output);
     }
 
     public function testWithMissingUsername(): void

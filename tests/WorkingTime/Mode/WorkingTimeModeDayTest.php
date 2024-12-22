@@ -24,11 +24,11 @@ class WorkingTimeModeDayTest extends TestCase
         $user = new User();
         $user->setWorkContractMode('day');
         $sut = new WorkingTimeModeDay();
-        $this->assertEquals('day', $sut->getId());
-        $this->assertEquals(10, $sut->getOrder());
-        $this->assertEquals('hours_per_day', $sut->getName());
-        $this->assertInstanceOf(WorkingTimeCalculatorDay::class, $sut->getCalculator($user));
+        self::assertEquals('day', $sut->getId());
+        self::assertEquals(10, $sut->getOrder());
+        self::assertEquals('hours_per_day', $sut->getName());
+        self::assertInstanceOf(WorkingTimeCalculatorDay::class, $sut->getCalculator($user));
         $fields = $sut->getFormFields();
-        $this->assertCount(7, $fields);
+        self::assertCount(7, $fields);
     }
 }

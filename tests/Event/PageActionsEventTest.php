@@ -24,66 +24,66 @@ class PageActionsEventTest extends TestCase
         $user->setAlias('foo');
 
         $sut = new PageActionsEvent($user, [], 'foo', 'bar');
-        $this->assertEquals('bar', $sut->getView());
-        $this->assertEquals('foo', $sut->getActionName());
-        $this->assertEquals('actions.foo', $sut->getEventName());
-        $this->assertTrue($sut->isView('bar'));
-        $this->assertFalse($sut->isView('foo'));
-        $this->assertFalse($sut->isIndexView());
-        $this->assertSame($user, $sut->getUser());
-        $this->assertEquals([], $sut->getActions());
-        $this->assertEquals(['actions' => [], 'view' => 'bar'], $sut->getPayload());
-        $this->assertNull($sut->getLocale());
+        self::assertEquals('bar', $sut->getView());
+        self::assertEquals('foo', $sut->getActionName());
+        self::assertEquals('actions.foo', $sut->getEventName());
+        self::assertTrue($sut->isView('bar'));
+        self::assertFalse($sut->isView('foo'));
+        self::assertFalse($sut->isIndexView());
+        self::assertSame($user, $sut->getUser());
+        self::assertEquals([], $sut->getActions());
+        self::assertEquals(['actions' => [], 'view' => 'bar'], $sut->getPayload());
+        self::assertNull($sut->getLocale());
 
         $sut = new PageActionsEvent($user, ['hello' => 'world'], 'foo', 'bar');
-        $this->assertSame($user, $sut->getUser());
-        $this->assertEquals([], $sut->getActions());
-        $this->assertEquals(['hello' => 'world', 'actions' => [], 'view' => 'bar'], $sut->getPayload());
+        self::assertSame($user, $sut->getUser());
+        self::assertEquals([], $sut->getActions());
+        self::assertEquals(['hello' => 'world', 'actions' => [], 'view' => 'bar'], $sut->getPayload());
     }
 
     public function testSetActions(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
         $sut->addAction('foo', ['url' => 'bar']);
-        $this->assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
-        $this->assertEquals(['hello' => 'world', 'actions' => ['foo' => ['url' => 'bar']], 'view' => 'xxx'], $sut->getPayload());
+        self::assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
+        self::assertEquals(['hello' => 'world', 'actions' => ['foo' => ['url' => 'bar']], 'view' => 'xxx'], $sut->getPayload());
 
-        $this->assertEquals(1, $sut->countActions());
+        self::assertEquals(1, $sut->countActions());
 
         // make sure an action with tzhe same name cannot be added
         $sut->addAction('foo', ['url' => 'bar']);
-        $this->assertEquals(1, $sut->countActions());
+        self::assertEquals(1, $sut->countActions());
 
-        $this->assertEquals(0, $sut->countActions('foo'));
-        $this->assertTrue($sut->hasAction('foo'));
-        $this->assertFalse($sut->hasAction('sdsd'));
+        self::assertEquals(0, $sut->countActions('foo'));
+        self::assertTrue($sut->hasAction('foo'));
+        self::assertFalse($sut->hasAction('sdsd'));
 
         $sut->removeAction('xxx');
-        $this->assertEquals(1, $sut->countActions());
+        self::assertEquals(1, $sut->countActions());
         $sut->removeAction('foo');
-        $this->assertEquals(0, $sut->countActions());
+        self::assertEquals(0, $sut->countActions());
 
         $sut->addAction('foo', ['url' => 'bar']);
-        $this->assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
+        self::assertEquals(['foo' => ['url' => 'bar']], $sut->getActions());
         $sut->replaceAction('foo', ['url' => 'xyz']);
-        $this->assertEquals(['foo' => ['url' => 'xyz']], $sut->getActions());
+        self::assertEquals(['foo' => ['url' => 'xyz']], $sut->getActions());
 
         $sut->setLocale('de');
-        $this->assertEquals('de', $sut->getLocale());
+        self::assertEquals('de', $sut->getLocale());
 
         $sut->setLocale(null);
-        $this->assertNull($sut->getLocale());
+        self::assertNull($sut->getLocale());
     }
 
     public function testSubmenu(): void
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
-        $this->assertFalse($sut->hasSubmenu('test'));
+        self::assertFalse($sut->hasSubmenu('test'));
         $sut->addActionToSubmenu('test', 'blub', ['url' => 'hello-world']);
-        $this->assertTrue($sut->hasSubmenu('test'));
-        $this->assertEquals(['test' => ['children' => ['blub' => ['url' => 'hello-world']]]], $sut->getActions());
+        self::assertTrue($sut->hasSubmenu('test'));
+        self::assertEquals(['test' => ['children' => ['blub' => ['url' => 'hello-world']]]], $sut->getActions());
         $sut->addActionToSubmenu('test', 'blub1', ['url' => 'hello-world']);
-        $this->assertEquals(2, $sut->countActions('test'));
+        self::assertEquals(2, $sut->countActions('test'));
     }
 
     public function testAddHelper(): void
@@ -106,9 +106,9 @@ class PageActionsEventTest extends TestCase
             'edit' => ['url' => 'trölölö', 'class' => 'modal-ajax-form', 'title' => 'edit'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red', 'title' => 'trash'],
         ];
-        $this->assertEquals(\count($expected), $sut->countActions());
+        self::assertEquals(\count($expected), $sut->countActions());
 
-        $this->assertEquals($expected, $sut->getActions());
+        self::assertEquals($expected, $sut->getActions());
     }
 
     public function testAddOthers(): void
@@ -117,13 +117,13 @@ class PageActionsEventTest extends TestCase
 
         // make sure that modal always start with #, no matter what was given
         $sut->addColumnToggle('#fooX');
-        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
+        self::assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
         // make sure that a second toggle cannot be added
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
+        self::assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
 
         $sut->removeAction('columns');
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['columns' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
+        self::assertEquals(['columns' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
     }
 }

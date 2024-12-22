@@ -15,7 +15,7 @@ use App\EventSubscriber\Actions\TimesheetsTeamSubscriber;
  * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
  * @covers \App\EventSubscriber\Actions\TimesheetsTeamSubscriber
  */
-class TimesheetsTeamSubscriberTest extends AbstractActionsSubscriberTest
+class TimesheetsTeamSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

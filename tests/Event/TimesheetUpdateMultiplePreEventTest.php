@@ -16,7 +16,7 @@ use App\Event\TimesheetUpdateMultiplePreEvent;
  * @covers \App\Event\AbstractTimesheetMultipleEvent
  * @covers \App\Event\TimesheetUpdateMultiplePreEvent
  */
-class TimesheetUpdateMultiplePreEventTest extends AbstractTimesheetMultipleEventTest
+class TimesheetUpdateMultiplePreEventTest extends AbstractTimesheetMultipleEventTestCase
 {
     protected function createTimesheetMultipleEvent(array $timesheets): AbstractTimesheetMultipleEvent
     {

@@ -16,7 +16,7 @@ use App\Entity\ProjectComment;
  * @covers \App\Entity\ProjectComment
  * @covers \App\Entity\CommentTableTypeTrait
  */
-class ProjectCommentTest extends AbstractCommentEntityTest
+class ProjectCommentTest extends AbstractCommentEntityTestCase
 {
     protected function getEntity(): ProjectComment
     {

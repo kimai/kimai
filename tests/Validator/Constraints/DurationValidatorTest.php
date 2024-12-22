@@ -31,7 +31,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<string|int|null>>
      */
-    public function getValidData(): array
+    public static function getValidData(): array
     {
         return [
             ['2h'],
@@ -81,7 +81,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array<array<string>>
      */
-    public function getInvalidData(): array
+    public static function getInvalidData(): array
     {
         return [
             ['13-13'],

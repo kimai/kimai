@@ -15,7 +15,7 @@ use App\Repository\Query\UserFormTypeQuery;
  * @covers \App\Repository\Query\UserFormTypeQuery
  * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class UserFormTypeQueryTest extends BaseFormTypeQueryTest
+class UserFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void
     {

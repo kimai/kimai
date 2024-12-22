@@ -21,25 +21,25 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @covers \App\Entity\Activity
  */
-class ActivityTest extends AbstractEntityTest
+class ActivityTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
         $sut = new Activity();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getProject());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getComment());
-        $this->assertNull($sut->getInvoiceText());
-        $this->assertTrue($sut->isVisible());
-        $this->assertTrue($sut->isBillable());
-        $this->assertTrue($sut->isGlobal());
-        $this->assertNull($sut->getColor());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getProject());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getComment());
+        self::assertNull($sut->getInvoiceText());
+        self::assertTrue($sut->isVisible());
+        self::assertTrue($sut->isBillable());
+        self::assertTrue($sut->isGlobal());
+        self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
-        $this->assertEquals(0, $sut->getMetaFields()->count());
-        $this->assertNull($sut->getMetaField('foo'));
-        $this->assertInstanceOf(Collection::class, $sut->getTeams());
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEquals(0, $sut->getMetaFields()->count());
+        self::assertNull($sut->getMetaField('foo'));
+        self::assertInstanceOf(Collection::class, $sut->getTeams());
     }
 
     public function testBudgets(): void
@@ -50,36 +50,36 @@ class ActivityTest extends AbstractEntityTest
     public function testSetterAndGetter(): void
     {
         $sut = new Activity();
-        $this->assertInstanceOf(Activity::class, $sut->setName('foo-bar'));
-        $this->assertEquals('foo-bar', $sut->getName());
-        $this->assertEquals('foo-bar', (string) $sut);
+        self::assertInstanceOf(Activity::class, $sut->setName('foo-bar'));
+        self::assertEquals('foo-bar', $sut->getName());
+        self::assertEquals('foo-bar', (string) $sut);
 
-        $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
-        $this->assertFalse($sut->isVisible());
+        self::assertInstanceOf(Activity::class, $sut->setVisible(false));
+        self::assertFalse($sut->isVisible());
 
         $sut->setVisible(false);
         self::assertFalse($sut->isVisible());
         $sut->setVisible(true);
         self::assertTrue($sut->isVisible());
 
-        $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
-        $this->assertEquals('hello world', $sut->getComment());
+        self::assertInstanceOf(Activity::class, $sut->setComment('hello world'));
+        self::assertEquals('hello world', $sut->getComment());
 
         $sut->setInvoiceText('very long invoice text comment 12324');
         self::assertEquals('very long invoice text comment 12324', $sut->getInvoiceText());
 
         self::assertFalse($sut->hasColor());
         $sut->setColor('#fffccc');
-        $this->assertEquals('#fffccc', $sut->getColor());
+        self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
         $sut->setColor(Constants::DEFAULT_COLOR);
-        $this->assertNull($sut->getColor());
+        self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
-        $this->assertTrue($sut->isGlobal());
-        $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));
-        $this->assertFalse($sut->isGlobal());
+        self::assertTrue($sut->isGlobal());
+        self::assertInstanceOf(Activity::class, $sut->setProject(new Project()));
+        self::assertFalse($sut->isGlobal());
     }
 
     public function testMetaFields(): void
@@ -87,7 +87,7 @@ class ActivityTest extends AbstractEntityTest
         $sut = new Activity();
         $meta = new ActivityMeta();
         $meta->setName('foo')->setValue('bar2')->setType('test');
-        $this->assertInstanceOf(Activity::class, $sut->setMetaField($meta));
+        self::assertInstanceOf(Activity::class, $sut->setMetaField($meta));
         self::assertEquals(1, $sut->getMetaFields()->count());
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
@@ -96,7 +96,7 @@ class ActivityTest extends AbstractEntityTest
 
         $meta2 = new ActivityMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
-        $this->assertInstanceOf(Activity::class, $sut->setMetaField($meta2));
+        self::assertInstanceOf(Activity::class, $sut->setMetaField($meta2));
         self::assertEquals(1, $sut->getMetaFields()->count());
         self::assertCount(0, $sut->getVisibleMetaFields());
 

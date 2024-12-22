@@ -26,7 +26,7 @@ class ClosestRoundingTest extends TestCase
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
@@ -37,12 +37,12 @@ class ClosestRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
         $sut->roundDuration($record, $roundDuration);
 
-        $this->assertEquals($expectedStart->getTimestamp(), $record->getBegin()->getTimestamp());
-        $this->assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
-        $this->assertEquals($expectedDuration, $record->getDuration());
+        self::assertEquals($expectedStart->getTimestamp(), $record->getBegin()->getTimestamp());
+        self::assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
+        self::assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

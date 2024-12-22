@@ -11,7 +11,7 @@ namespace App\Tests\Controller\Reporting;
 
 use App\Entity\Project;
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
@@ -21,7 +21,7 @@ use App\Timesheet\DateTimeFactory;
 /**
  * @group integration
  */
-class ProjectDateRangeControllerTest extends ControllerBaseTest
+class ProjectDateRangeControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {

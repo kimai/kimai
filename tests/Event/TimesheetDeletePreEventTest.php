@@ -17,7 +17,7 @@ use App\Event\TimesheetDeletePreEvent;
  * @covers \App\Event\AbstractTimesheetEvent
  * @covers \App\Event\TimesheetDeletePreEvent
  */
-class TimesheetDeletePreEventTest extends AbstractTimesheetEventTest
+class TimesheetDeletePreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent
     {

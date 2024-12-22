@@ -14,7 +14,7 @@ use App\Event\AbstractActivityEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\Event;
 
-abstract class AbstractActivityEventTest extends TestCase
+abstract class AbstractActivityEventTestCase extends TestCase
 {
     abstract protected function createActivityEvent(Activity $activity): AbstractActivityEvent;
 

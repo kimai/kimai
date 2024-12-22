@@ -21,8 +21,8 @@ class MenuSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = MenuSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
+        self::assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
         $methodName = $events[ConfigureMainMenuEvent::class][0];
-        $this->assertTrue(method_exists(MenuSubscriber::class, $methodName));
+        self::assertTrue(method_exists(MenuSubscriber::class, $methodName));
     }
 }

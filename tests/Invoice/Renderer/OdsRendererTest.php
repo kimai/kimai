@@ -28,25 +28,28 @@ class OdsRendererTest extends TestCase
     {
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
 
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('company.docx', true)));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('company.docx', true)));
+        self::assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
+        self::assertTrue($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
 
-    public function getTestModel()
+    public static function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModel(), '1,947.99', 6, 5, 1, 2, 2];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
+    public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
+        /** @var InvoiceModel $model */
+        $model = $invoiceModel($this); // FIXME
+
         /** @var OdsRenderer $sut */
         $sut = $this->getAbstractRenderer(OdsRenderer::class);
         $model = $this->getInvoiceModel();
@@ -56,28 +59,28 @@ class OdsRendererTest extends TestCase
 
         $filename = $model->getInvoiceNumber() . '-customer_with_special_name.ods';
         $file = $response->getFile();
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $filename, $response->headers->get('Content-Disposition'));
 
-        $this->assertTrue(file_exists($file->getRealPath()));
+        self::assertTrue(file_exists($file->getRealPath()));
 
         // TODO test spreadsheet content?
         /*
         $content = file_get_contents($file->getRealPath());
-        $this->assertNotContains('${', $content);
-        $this->assertStringContainsString(',"1,947.99" ', $content);
-        $this->assertEquals(6, substr_count($content, PHP_EOL));
-        $this->assertEquals(5, substr_count($content, 'activity description'));
-        $this->assertEquals(1, substr_count($content, ',"kevin",'));
-        $this->assertEquals(2, substr_count($content, ',"hello-world",'));
-        $this->assertEquals(2, substr_count($content, ',"foo-bar",'));
+        self::assertNotContains('${', $content);
+        self::assertStringContainsString(',"1,947.99" ', $content);
+        self::assertEquals(6, substr_count($content, PHP_EOL));
+        self::assertEquals(5, substr_count($content, 'activity description'));
+        self::assertEquals(1, substr_count($content, ',"kevin",'));
+        self::assertEquals(2, substr_count($content, ',"hello-world",'));
+        self::assertEquals(2, substr_count($content, ',"foo-bar",'));
         */
 
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
-        $this->assertNotEmpty($content2);
+        self::assertNotEmpty($content2);
 
-        $this->assertFalse(file_exists($file->getRealPath()));
+        self::assertFalse(file_exists($file->getRealPath()));
     }
 }

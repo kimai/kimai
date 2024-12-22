@@ -15,7 +15,7 @@ use App\Repository\Query\TagFormTypeQuery;
  * @covers \App\Repository\Query\TagFormTypeQuery
  * @covers \App\Repository\Query\BaseFormTypeQuery
  */
-class TagFormTypeQueryTest extends BaseFormTypeQueryTest
+class TagFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void
     {

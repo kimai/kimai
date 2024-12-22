@@ -41,12 +41,12 @@ class TimesheetEntryTest extends TestCase
 
         $sut = new TimesheetEntry($timesheet, '#cccccc');
 
-        $this->assertEquals('a wonderful activity!!', $sut->getTitle());
-        $this->assertEquals('#cccccc', $sut->getColor());
-        $this->assertSame($project, $sut->getProject());
-        $this->assertSame($activity, $sut->getActivity());
-        $this->assertEquals('dd_timesheet', $sut->getBlockName());
-        $this->assertEquals($expectedData, $sut->getData());
+        self::assertEquals('a wonderful activity!!', $sut->getTitle());
+        self::assertEquals('#cccccc', $sut->getColor());
+        self::assertSame($project, $sut->getProject());
+        self::assertSame($activity, $sut->getActivity());
+        self::assertEquals('dd_timesheet', $sut->getBlockName());
+        self::assertEquals($expectedData, $sut->getData());
 
         $expectedData = [
             'activity' => null,
@@ -57,7 +57,7 @@ class TimesheetEntryTest extends TestCase
 
         $sut = new TimesheetEntry($timesheet, '#cccccc', true);
 
-        $this->assertEquals($expectedData, $sut->getData());
+        self::assertEquals($expectedData, $sut->getData());
     }
 
     public function testEmpty(): void
@@ -71,11 +71,11 @@ class TimesheetEntryTest extends TestCase
 
         $sut = new TimesheetEntry($timesheet, '#ddd');
 
-        $this->assertEquals('', $sut->getTitle());
-        $this->assertEquals('#ddd', $sut->getColor());
-        $this->assertNull($sut->getProject());
-        $this->assertNull($sut->getActivity());
-        $this->assertEquals($expectedData, $sut->getData());
+        self::assertEquals('', $sut->getTitle());
+        self::assertEquals('#ddd', $sut->getColor());
+        self::assertNull($sut->getProject());
+        self::assertNull($sut->getActivity());
+        self::assertEquals($expectedData, $sut->getData());
     }
 
     public function testGetTitle(): void

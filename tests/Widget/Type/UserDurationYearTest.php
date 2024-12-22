@@ -21,7 +21,7 @@ use App\Widget\Type\UserDurationYear;
  * @covers \App\Widget\Type\UserDurationYear
  * @covers \App\Widget\Type\AbstractCounterYear
  */
-class UserDurationYearTest extends AbstractWidgetTypeTest
+class UserDurationYearTest extends AbstractWidgetTypeTestCase
 {
     /**
      * @return AbstractCounterYear

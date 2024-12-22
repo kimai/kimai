@@ -24,7 +24,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
  * @covers \App\Invoice\Calculator\DefaultCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class DefaultCalculatorTest extends AbstractCalculatorTest
+class DefaultCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -70,11 +70,11 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('default', $sut->getId());
-        $this->assertEquals(581.17, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals('default', $sut->getId());
+        self::assertEquals(581.17, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(488.38, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
     }
 }

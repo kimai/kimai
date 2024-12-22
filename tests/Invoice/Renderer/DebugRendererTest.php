@@ -21,17 +21,20 @@ class DebugRendererTest extends TestCase
 {
     use RendererTestTrait;
 
-    public function getTestModel()
+    public static function getTestModel()
     {
-        yield [$this->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true, [['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], ['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet3']]];
-        yield [$this->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModel(), '1,947.99', 5, 5, 1, 2, 2, true, [['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet', 'entry.meta.foo-timesheet2'], ['entry.meta.foo-timesheet'], ['entry.meta.foo-timesheet3']]];
+        yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(InvoiceModel $model, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
+    public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
     {
+        /** @var InvoiceModel $model */
+        $model = $invoiceModel($this);
+
         $itemHydrator = new class() implements InvoiceItemHydrator {
             public function setInvoiceModel(InvoiceModel $model): void
             {
@@ -58,12 +61,12 @@ class DebugRendererTest extends TestCase
         $response = $sut->render($document, $model);
         $data = json_decode($response->getContent(), true);
 
-        $this->assertIsArray($data);
-        $this->assertIsArray($data['model']);
+        self::assertIsArray($data);
+        self::assertIsArray($data['model']);
 
         $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
-        $this->assertEquals($expectedRows, \count($rows));
+        self::assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
@@ -257,7 +260,7 @@ class DebugRendererTest extends TestCase
         sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals($keys, $givenKeys);
+        self::assertEquals($keys, $givenKeys);
     }
 
     protected function assertEntryStructure(array $model, array $metaFields): void
@@ -316,7 +319,7 @@ class DebugRendererTest extends TestCase
         $keys = array_merge($keys, $metaFields);
 
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $model);
+            self::assertArrayHasKey($key, $model);
         }
 
         $expectedKeys = array_merge([], $keys);
@@ -324,7 +327,7 @@ class DebugRendererTest extends TestCase
         $givenKeys = array_keys($model);
         sort($givenKeys);
 
-        $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(\count($keys), \count($givenKeys));
+        self::assertEquals($expectedKeys, $givenKeys);
+        self::assertEquals(\count($keys), \count($givenKeys));
     }
 }

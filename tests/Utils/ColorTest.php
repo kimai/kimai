@@ -92,26 +92,26 @@ class ColorTest extends TestCase
     public function testGetFontContrastColor(): void
     {
         $sut = new Color();
-        $this->assertEquals('#ffffff', $sut->getFontContrastColor('#666'));
-        $this->assertEquals('#ffffff', $sut->getFontContrastColor('#666666'));
-        $this->assertEquals('#ffffff', $sut->getFontContrastColor('#000000'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#ccc'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#cccccc'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#ffffff'));
+        self::assertEquals('#ffffff', $sut->getFontContrastColor('#666'));
+        self::assertEquals('#ffffff', $sut->getFontContrastColor('#666666'));
+        self::assertEquals('#ffffff', $sut->getFontContrastColor('#000000'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#ccc'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#cccccc'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#ffffff'));
     }
 
     public function testGetFontContrastColorReturnsContrastForDefaultColorOnInvalidColor(): void
     {
         $sut = new Color();
-        $this->assertEquals('#000000', $sut->getFontContrastColor(''));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('000000'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor(Constants::DEFAULT_COLOR));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#6'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#66'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#6666'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#cccc'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccc'));
-        $this->assertEquals('#000000', $sut->getFontContrastColor('#ccccccc'));
+        self::assertEquals('#000000', $sut->getFontContrastColor(''));
+        self::assertEquals('#000000', $sut->getFontContrastColor('000000'));
+        self::assertEquals('#000000', $sut->getFontContrastColor(Constants::DEFAULT_COLOR));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#6'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#66'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#6666'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#cccc'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#ccccc'));
+        self::assertEquals('#000000', $sut->getFontContrastColor('#ccccccc'));
     }
 
     public function testGetRandomColor(): void

@@ -18,7 +18,7 @@ use App\Model\CustomerStatistic;
  * @covers \App\Event\AbstractCustomerEvent
  * @covers \App\Event\CustomerStatisticEvent
  */
-class CustomerStatisticEventTest extends AbstractCustomerEventTest
+class CustomerStatisticEventTest extends AbstractCustomerEventTestCase
 {
     protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent
     {

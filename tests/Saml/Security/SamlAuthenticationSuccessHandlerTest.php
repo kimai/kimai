@@ -27,8 +27,8 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
     {
         $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
         $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', 'http://localhost/relayed'), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue($response->isRedirect('http://localhost/relayed'));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue($response->isRedirect('http://localhost/relayed'));
     }
 
     public function testWithoutRelayState(): void
@@ -37,8 +37,8 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $handler = new SamlAuthenticationSuccessHandler($httpUtils);
         $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/');
         $response = $handler->onAuthenticationSuccess($this->getRequest(), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue($response->isRedirect($defaultTargetPath));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue($response->isRedirect($defaultTargetPath));
     }
 
     public function testRelayStateLoop(): void
@@ -47,8 +47,8 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $handler = new SamlAuthenticationSuccessHandler($httpUtils);
         $loginPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/login');
         $response = $handler->onAuthenticationSuccess($this->getRequest($loginPath), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue(!$response->isRedirect($loginPath));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue(!$response->isRedirect($loginPath));
     }
 
     private function getUrlGenerator(): UrlGeneratorInterface
@@ -57,9 +57,9 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->will($this->returnCallback(function ($name) {
+            ->willReturnCallback(function ($name) {
                 return (string) $name;
-            }))
+            })
         ;
 
         return $urlGenerator;

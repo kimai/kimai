@@ -34,7 +34,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         ];
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];
@@ -55,9 +55,9 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expectedDuration, $model->getDuration());
-        $this->assertEquals($expectedDuration, $model->getDuration(true));
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expectedDuration, $model->getDuration());
+        self::assertEquals($expectedDuration, $model->getDuration(true));
     }
 
     private function createDefaultModel(): Timesheet

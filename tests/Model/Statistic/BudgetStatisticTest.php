@@ -10,12 +10,12 @@
 namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\BudgetStatistic;
-use App\Tests\Model\AbstractTimesheetCountedStatisticTest;
+use App\Tests\Model\AbstractTimesheetCountedStatisticTestCase;
 
 /**
  * @covers \App\Model\Statistic\BudgetStatistic
  */
-class BudgetStatisticTest extends AbstractTimesheetCountedStatisticTest
+class BudgetStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void
     {

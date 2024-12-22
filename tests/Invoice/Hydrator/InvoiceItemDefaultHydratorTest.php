@@ -41,10 +41,10 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             $exp = $expected[$i++];
             $this->assertEntryStructure($result, $exp['meta_fields']);
             if (\array_key_exists('description', $exp)) {
-                $this->assertEquals($exp['description'], $result['entry.description']);
+                self::assertEquals($exp['description'], $result['entry.description']);
             }
             if (\array_key_exists('description_safe', $exp)) {
-                $this->assertEquals($exp['description_safe'], $result['entry.description_safe']);
+                self::assertEquals($exp['description_safe'], $result['entry.description_safe']);
             }
         }
     }
@@ -106,7 +106,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         }
 
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $model);
+            self::assertArrayHasKey($key, $model);
         }
 
         $expectedKeys = array_merge([], $keys);
@@ -114,7 +114,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         $givenKeys = array_keys($model);
         sort($givenKeys);
 
-        $this->assertEquals($expectedKeys, $givenKeys);
-        $this->assertEquals(\count($keys), \count($givenKeys));
+        self::assertEquals($expectedKeys, $givenKeys);
+        self::assertEquals(\count($keys), \count($givenKeys));
     }
 }

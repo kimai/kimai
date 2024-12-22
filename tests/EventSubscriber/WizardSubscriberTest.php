@@ -21,8 +21,8 @@ class WizardSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = WizardSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(KernelEvents::REQUEST, $events);
+        self::assertArrayHasKey(KernelEvents::REQUEST, $events);
         $methodName = $events[KernelEvents::REQUEST][0];
-        $this->assertTrue(method_exists(WizardSubscriber::class, $methodName));
+        self::assertTrue(method_exists(WizardSubscriber::class, $methodName));
     }
 }

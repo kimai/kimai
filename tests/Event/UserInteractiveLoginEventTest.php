@@ -26,6 +26,6 @@ class UserInteractiveLoginEventTest extends TestCase
 
         $sut = new UserInteractiveLoginEvent($user);
 
-        $this->assertEquals($user, $sut->getUser());
+        self::assertEquals($user, $sut->getUser());
     }
 }

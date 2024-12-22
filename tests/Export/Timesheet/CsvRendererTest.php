@@ -19,17 +19,17 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * @covers \App\Export\Timesheet\CsvRenderer
  * @group integration
  */
-class CsvRendererTest extends AbstractRendererTest
+class CsvRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer(CsvRenderer::class);
 
-        $this->assertEquals('csv', $sut->getId());
-        $this->assertEquals('csv', $sut->getTitle());
+        self::assertEquals('csv', $sut->getId());
+        self::assertEquals('csv', $sut->getTitle());
     }
 
-    public function getTestModel()
+    public static function getTestModel()
     {
         return [
             ['400', '2437.12', ' EUR 1,947.99 ', 6, 5, 1, 2, 2]
@@ -48,25 +48,25 @@ class CsvRendererTest extends AbstractRendererTest
 
         $file = $response->getFile();
         $prefix = date('Ymd');
-        $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.csv', $response->headers->get('Content-Disposition'));
+        self::assertEquals('text/csv', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.csv', $response->headers->get('Content-Disposition'));
 
-        $this->assertTrue(file_exists($file->getRealPath()));
+        self::assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());
 
-        $this->assertStringContainsString('"' . $expectedRate . '"', $content);
-        $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
-        $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
-        $this->assertEquals($expectedUser1, substr_count($content, ',"kevin",'));
-        $this->assertEquals($expectedUser3, substr_count($content, ',"hello-world",'));
-        $this->assertEquals($expectedUser2, substr_count($content, ',"foo-bar",'));
+        self::assertStringContainsString('"' . $expectedRate . '"', $content);
+        self::assertEquals($expectedRows, substr_count($content, PHP_EOL));
+        self::assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
+        self::assertEquals($expectedUser1, substr_count($content, ',"kevin",'));
+        self::assertEquals($expectedUser3, substr_count($content, ',"hello-world",'));
+        self::assertEquals($expectedUser2, substr_count($content, ',"foo-bar",'));
 
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
 
-        $this->assertEquals($content, $content2);
-        $this->assertFalse(file_exists($file->getRealPath()));
+        self::assertEquals($content, $content2);
+        self::assertFalse(file_exists($file->getRealPath()));
 
         $all = [];
         $rows = str_getcsv($content2, PHP_EOL);

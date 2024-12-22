@@ -39,10 +39,10 @@ class VersionCommandTest extends KernelTestCase
     {
         $commandTester = $this->getCommandTester($options);
         $output = $commandTester->getDisplay();
-        $this->assertEquals($result . PHP_EOL, $output);
+        self::assertEquals($result . PHP_EOL, $output);
     }
 
-    public function getTestData(): array // @phpstan-ignore missingType.iterableValue
+    public static function getTestData(): array // @phpstan-ignore missingType.iterableValue
     {
         return [
             [[], 'Kimai ' . Constants::VERSION . ' by Kevin Papst.'],

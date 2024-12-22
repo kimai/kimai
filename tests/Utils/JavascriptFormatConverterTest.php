@@ -20,12 +20,12 @@ class JavascriptFormatConverterTest extends TestCase
     public function test()
     {
         $sut = new JavascriptFormatConverter();
-        $this->assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.y HH:mm'));
-        $this->assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.yy HH:mm'));
-        $this->assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.yyyy HH:mm'));
-        $this->assertEquals('DD-MM-YYYY HH:mm', $sut->convert('dd-MM-yyyy HH:mm'));
-        $this->assertEquals('D/MM/YYYY HH:mm', $sut->convert('d/MM/yyyy HH:mm'));
-        $this->assertEquals('YYYY-MM-DD HH:mm', $sut->convert('yyyy-MM-dd HH:mm'));
-        $this->assertEquals('YYYY.MM.DD. HH:mm A', $sut->convert('yyyy.MM.dd. HH:mm a'));
+        self::assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.y HH:mm'));
+        self::assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.yy HH:mm'));
+        self::assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.yyyy HH:mm'));
+        self::assertEquals('DD-MM-YYYY HH:mm', $sut->convert('dd-MM-yyyy HH:mm'));
+        self::assertEquals('D/MM/YYYY HH:mm', $sut->convert('d/MM/yyyy HH:mm'));
+        self::assertEquals('YYYY-MM-DD HH:mm', $sut->convert('yyyy-MM-dd HH:mm'));
+        self::assertEquals('YYYY.MM.DD. HH:mm A', $sut->convert('yyyy.MM.dd. HH:mm a'));
     }
 }

@@ -16,7 +16,7 @@ use App\Tests\DataFixtures\InvoiceFixtures;
 /**
  * @group integration
  */
-class InvoiceControllerTest extends APIControllerBaseTest
+class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**
      * @return Invoice[]
@@ -45,12 +45,12 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/invoices');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(10, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
@@ -67,12 +67,12 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/invoices', 'GET', $query);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(7, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(7, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
     }
@@ -86,12 +86,12 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/invoices', 'GET', $query);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(4, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(4, \count($result));
         $this->assertPagination($client->getResponse(), 2, 4, 5, 20);
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('InvoiceCollection', $result[0]);
@@ -113,10 +113,10 @@ class InvoiceControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/invoices/' . $invoices[0]->getId());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('Invoice', $result);
     }
 

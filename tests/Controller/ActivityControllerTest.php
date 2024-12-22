@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 /**
  * @group integration
  */
-class ActivityControllerTest extends ControllerBaseTest
+class ActivityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -88,7 +88,7 @@ class ActivityControllerTest extends ControllerBaseTest
             'page' => 1,
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_activity_admin', 5);
     }
@@ -215,7 +215,7 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->request($client, '/admin/activity/' . $id . '/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
+        self::assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
     }
 
     public function testCreateActionShowsMetaFields(): void
@@ -225,12 +225,12 @@ class ActivityControllerTest extends ControllerBaseTest
         static::assertInstanceOf(EventDispatcher::class, $eventDispatcher);
         $eventDispatcher->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/activity/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertTrue($form->has('activity_edit_form[metaFields][metatestmock][value]'));
-        $this->assertTrue($form->has('activity_edit_form[metaFields][foobar][value]'));
-        $this->assertFalse($form->has('activity_edit_form[metaFields][0][value]'));
+        self::assertTrue($form->has('activity_edit_form[metaFields][metatestmock][value]'));
+        self::assertTrue($form->has('activity_edit_form[metaFields][foobar][value]'));
+        self::assertFalse($form->has('activity_edit_form[metaFields][0][value]'));
     }
 
     public function testEditAction(): void
@@ -238,7 +238,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
+        self::assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2']
         ]);
@@ -246,7 +246,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+        self::assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
     }
 
     public function testEditActionForGlobalActivity(): void
@@ -254,7 +254,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
+        self::assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
         $client->submit($form, [
             'activity_edit_form' => ['name' => 'Test 2']
         ]);
@@ -262,7 +262,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->request($client, '/admin/activity/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
+        self::assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
     }
 
     public function testTeamPermissionAction(): void
@@ -317,13 +317,13 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/admin/activity/1/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/admin/activity/1/delete');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
@@ -331,7 +331,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->request($client, '/admin/activity/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntries(): void
@@ -347,18 +347,18 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getActivity()->getId());
+            self::assertEquals(1, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/activity/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
         $client->submit($form);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
@@ -368,10 +368,10 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(0, \count($timesheets));
+        self::assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/activity/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntriesAndReplacement(): void
@@ -392,18 +392,18 @@ class ActivityControllerTest extends ControllerBaseTest
         $id = $activity->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getActivity()->getId());
+            self::assertEquals(1, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/activity/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/activity/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
                 'activity' => $id
@@ -416,15 +416,15 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals($id, $entry->getActivity()->getId());
+            self::assertEquals($id, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/activity/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     /**
@@ -441,7 +441,7 @@ class ActivityControllerTest extends ControllerBaseTest
         );
     }
 
-    public function getValidationTestData()
+    public static function getValidationTestData()
     {
         return [
             [

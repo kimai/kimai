@@ -242,6 +242,6 @@ final class WorkingTimeService
             $durations[$row['day']] = (int) $row['duration'];
         }
 
-        return $durations; // @phpstan-ignore-line
+        return $durations;
     }
 }

@@ -22,7 +22,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 /**
  * @group integration
  */
-class ProfileControllerTest extends ControllerBaseTest
+class ProfileControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -40,16 +40,16 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
 
         $content = $client->getResponse()->getContent();
         $year = (new \DateTime())->format('Y');
-        $this->assertStringContainsString('<h3 class="card-title">' . $year, $content);
-        $this->assertStringContainsString('new Chart(', $content);
-        $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
+        self::assertStringContainsString('<h3 class="card-title">' . $year, $content);
+        self::assertStringContainsString('new Chart(', $content);
+        self::assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
     }
 
     public function testIndexAction(): void
@@ -70,13 +70,13 @@ class ProfileControllerTest extends ControllerBaseTest
         }
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
 
         foreach ($dates as $start) {
             $year = $start->format('Y');
-            $this->assertStringContainsString('<h3 class="card-title">' . $year, $content);
-            $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
+            self::assertStringContainsString('<h3 class="card-title">' . $year, $content);
+            self::assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');
@@ -86,19 +86,19 @@ class ProfileControllerTest extends ControllerBaseTest
     protected function assertHasProfileBox(HttpKernelBrowser $client, string $username): void
     {
         $profileBox = $client->getCrawler()->filter('div.box-user-profile');
-        $this->assertEquals(1, $profileBox->count());
+        self::assertEquals(1, $profileBox->count());
         $profileAvatar = $profileBox->filter('span.avatar');
-        $this->assertEquals(1, $profileAvatar->count());
+        self::assertEquals(1, $profileAvatar->count());
     }
 
     protected function assertHasAboutMeBox(HttpKernelBrowser $client, string $username): void
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<div class="datagrid-content">' . $username . '</div>', $content);
+        self::assertStringContainsString('<div class="datagrid-content">' . $username . '</div>', $content);
     }
 
-    public function getTabTestData(): array
+    public static function getTabTestData(): array
     {
         return [
             [User::ROLE_USER, UserFixtures::USERNAME_USER],
@@ -113,14 +113,14 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testIndexActionWithDifferentUsername(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/profile/' . UserFixtures::USERNAME_TEAMLEAD);
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testEditAction(): void
@@ -131,11 +131,11 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-        $this->assertEquals('John Doe', $user->getAlias());
-        $this->assertEquals('Developer', $user->getTitle());
-        $this->assertEquals('john_user@example.com', $user->getEmail());
-        $this->assertTrue($user->isEnabled());
+        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
+        self::assertEquals('John Doe', $user->getAlias());
+        self::assertEquals('Developer', $user->getTitle());
+        self::assertEquals('john_user@example.com', $user->getEmail());
+        self::assertTrue($user->isEnabled());
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $client->submit($form, [
@@ -148,17 +148,17 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-        $this->assertEquals('Johnny', $user->getAlias());
-        $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('updated@example.com', $user->getEmail());
-        $this->assertTrue($user->isEnabled());
+        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
+        self::assertEquals('Johnny', $user->getAlias());
+        self::assertEquals('Code Monkey', $user->getTitle());
+        self::assertEquals('updated@example.com', $user->getEmail());
+        self::assertTrue($user->isEnabled());
     }
 
     public function testEditActionWithActiveFlag(): void
@@ -178,17 +178,17 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-        $this->assertEquals('Johnny', $user->getAlias());
-        $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('updated@example.com', $user->getEmail());
-        $this->assertFalse($user->isEnabled());
+        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
+        self::assertEquals('Johnny', $user->getAlias());
+        self::assertEquals('Code Monkey', $user->getTitle());
+        self::assertEquals('updated@example.com', $user->getEmail());
+        self::assertFalse($user->isEnabled());
     }
 
     public function testPasswordAction(): void
@@ -202,9 +202,9 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var PasswordHasherFactoryInterface $passwordEncoder */
         $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
 
-        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
-        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test123'));
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
+        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test123'));
+        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
         $form = $client->getCrawler()->filter('form[name=user_password]')->form();
         $client->submit($form, [
@@ -221,8 +221,8 @@ class ProfileControllerTest extends ControllerBaseTest
         // are the old ones, so following the redirect would fail with "Unauthorized".
 
         $user = $this->getUserByRole(User::ROLE_USER);
-        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
-        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test1234'));
+        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test1234'));
     }
 
     public function testPasswordActionFailsIfPasswordLengthToShort(): void
@@ -256,9 +256,9 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var PasswordHasherFactoryInterface $passwordEncoder */
         $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
 
-        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
+        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
+        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
         $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
         $client->submit($form, [
@@ -272,14 +272,14 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
+        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
     }
 
     public function testApiTokenActionFailsIfPasswordLengthToShort(): void
@@ -304,7 +304,7 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testRolesAction(): void
@@ -315,7 +315,7 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(['ROLE_USER'], $user->getRoles());
+        self::assertEquals(['ROLE_USER'], $user->getRoles());
 
         $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
         $client->submit($form, [
@@ -327,13 +327,13 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/roles'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
+        self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
     public function testTeamsActionIsSecured(): void
@@ -364,7 +364,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
-        $this->assertEquals([], $user->getTeams());
+        self::assertEquals([], $user->getTeams());
 
         $form = $client->getCrawler()->filter('form[name=user_teams]')->form();
         /** @var ChoiceFormField $team */
@@ -375,16 +375,16 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/teams'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertCount(1, $user->getTeams());
+        self::assertCount(1, $user->getTeams());
     }
 
-    public function getPreferencesTestData(): array
+    public static function getPreferencesTestData(): array
     {
         return [
             // assert that the user doesn't have the "hourly-rate_own_profile" permission
@@ -411,9 +411,9 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByName($username);
 
-        $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
-        $this->assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
-        $this->assertEquals('default', $user->getPreferenceValue(UserPreference::SKIN));
+        self::assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        self::assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
+        self::assertEquals('default', $user->getPreferenceValue(UserPreference::SKIN));
 
         $data = [
             UserPreference::TIMEZONE => ['value' => 'America/Creston'],
@@ -439,23 +439,23 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $targetUrl);
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByName($username);
 
-        $this->assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
-        $this->assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
-        $this->assertEquals('America/Creston', $user->getPreferenceValue(UserPreference::TIMEZONE));
-        $this->assertEquals('America/Creston', $user->getTimezone());
-        $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LANGUAGE));
-        $this->assertEquals('ru', $user->getPreferenceValue(UserPreference::LOCALE));
-        $this->assertEquals('ru', $user->getLocale());
-        $this->assertEquals('ar', $user->getLanguage());
-        $this->assertEquals('dark', $user->getPreferenceValue(UserPreference::SKIN));
-        $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
-        $this->assertEquals('sunday', $user->getFirstDayOfWeek());
+        self::assertEquals($hourlyRate, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
+        self::assertEquals($expectedInternalRate, $user->getPreferenceValue(UserPreference::INTERNAL_RATE));
+        self::assertEquals('America/Creston', $user->getPreferenceValue(UserPreference::TIMEZONE));
+        self::assertEquals('America/Creston', $user->getTimezone());
+        self::assertEquals('ar', $user->getPreferenceValue(UserPreference::LANGUAGE));
+        self::assertEquals('ru', $user->getPreferenceValue(UserPreference::LOCALE));
+        self::assertEquals('ru', $user->getLocale());
+        self::assertEquals('ar', $user->getLanguage());
+        self::assertEquals('dark', $user->getPreferenceValue(UserPreference::SKIN));
+        self::assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
+        self::assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 
     public function testIsTwoFactorSecure(): void
@@ -471,17 +471,17 @@ class ProfileControllerTest extends ControllerBaseTest
         self::assertFalse($user->hasTotpSecret());
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
         self::assertTrue($user->hasTotpSecret());
 
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         $content = $client->getResponse()->getContent();
-        $this->assertNotFalse($content);
+        self::assertNotFalse($content);
 
-        $this->assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
-        $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+        self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
+        self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
     }
 
     public function testTwoFactorAsAdmin(): void
@@ -494,14 +494,14 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertNotFalse($content);
+        self::assertNotFalse($content);
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
 
-        $this->assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
-        $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+        self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
+        self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
     }
 
     public function testActivateTwoFactorWithEmptyToken(): void
@@ -543,25 +543,25 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testContractAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByRole(User::ROLE_USER);
         $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
-        $this->assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        self::assertEquals(0, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
 
         $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
 
@@ -577,19 +577,19 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/contract'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasFlashSuccess($client);
 
         $user = $this->getUserByRole(User::ROLE_USER);
         $calculator = (new WorkingTimeModeDay())->getCalculator($user);
 
-        $this->assertEquals(3600, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
-        $this->assertEquals(7200, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
-        $this->assertEquals(10800, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
-        $this->assertEquals(16200, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
-        $this->assertEquals(18720, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
-        $this->assertEquals(25140, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
-        $this->assertEquals(60, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
+        self::assertEquals(3600, $calculator->getWorkHoursForDay(new \DateTime('monday this week')));
+        self::assertEquals(7200, $calculator->getWorkHoursForDay(new \DateTime('tuesday this week')));
+        self::assertEquals(10800, $calculator->getWorkHoursForDay(new \DateTime('wednesday this week')));
+        self::assertEquals(16200, $calculator->getWorkHoursForDay(new \DateTime('thursday this week')));
+        self::assertEquals(18720, $calculator->getWorkHoursForDay(new \DateTime('friday this week')));
+        self::assertEquals(25140, $calculator->getWorkHoursForDay(new \DateTime('saturday this week')));
+        self::assertEquals(60, $calculator->getWorkHoursForDay(new \DateTime('sunday this week')));
     }
 }

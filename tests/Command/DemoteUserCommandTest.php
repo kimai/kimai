@@ -79,7 +79,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_TEAMLEAD');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been removed from user "tony_teamlead".', $output);
+        self::assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been removed from user "tony_teamlead".', $output);
 
         $container = self::$kernel->getContainer();
         /** @var Registry $doctrine */
@@ -96,7 +96,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('susan_super', null, true);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Super administrator role has been removed from the user "susan_super".', $output);
+        self::assertStringContainsString('[OK] Super administrator role has been removed from the user "susan_super".', $output);
 
         $container = self::$kernel->getContainer();
         /** @var Registry $doctrine */
@@ -113,7 +113,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', null, true);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "tony_teamlead" doesn\'t have the super administrator role.', $output);
+        self::assertStringContainsString('[WARNING] User "tony_teamlead" doesn\'t have the super administrator role.', $output);
     }
 
     public function testDemoteAdminFailsOnTeamlead(): void
@@ -121,7 +121,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_ADMIN', false);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "tony_teamlead" didn\'t have "ROLE_ADMIN" role.', $output);
+        self::assertStringContainsString('[WARNING] User "tony_teamlead" didn\'t have "ROLE_ADMIN" role.', $output);
     }
 
     public function testDemoteRoleAndSuperFails(): void

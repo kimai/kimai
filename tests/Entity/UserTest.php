@@ -33,7 +33,7 @@ class UserTest extends TestCase
         $user = new User();
         self::assertInstanceOf(EquatableInterface::class, $user);
         self::assertInstanceOf(UserInterface::class, $user);
-        $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
+        self::assertInstanceOf(ArrayCollection::class, $user->getPreferences());
         self::assertNull($user->getTitle());
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());

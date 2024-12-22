@@ -17,7 +17,7 @@ use App\Model\InvoiceDocument;
 /**
  * @covers \App\EventSubscriber\Actions\InvoiceDocumentSubscriber
  */
-class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTest
+class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

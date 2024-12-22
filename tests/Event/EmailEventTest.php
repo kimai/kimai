@@ -25,6 +25,6 @@ class EmailEventTest extends TestCase
 
         $sut = new EmailEvent($email);
 
-        $this->assertEquals($email, $sut->getEmail());
+        self::assertEquals($email, $sut->getEmail());
     }
 }

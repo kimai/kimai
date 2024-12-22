@@ -20,7 +20,7 @@ class UserValidationTest extends KernelTestCase
 {
     use EntityValidationTestTrait;
 
-    public function getInvalidTestData()
+    public static function getInvalidTestData()
     {
         return [
             ['', ''],
@@ -69,7 +69,7 @@ class UserValidationTest extends KernelTestCase
         $this->assertHasNoViolations($user, ['RolesUpdate']);
     }
 
-    public function getValidTestData()
+    public static function getValidTestData()
     {
         return [
             [str_pad('#', 8, '-'), 'test@x.x'], // shortest possible username

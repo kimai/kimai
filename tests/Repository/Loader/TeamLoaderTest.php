@@ -15,7 +15,7 @@ use App\Repository\Loader\TeamLoader;
 /**
  * @covers \App\Repository\Loader\TeamLoader
  */
-class TeamLoaderTest extends AbstractLoaderTest
+class TeamLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void
     {

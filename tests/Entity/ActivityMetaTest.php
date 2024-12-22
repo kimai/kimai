@@ -18,7 +18,7 @@ use App\Entity\Timesheet;
 /**
  * @covers \App\Entity\ActivityMeta
  */
-class ActivityMetaTest extends AbstractMetaEntityTest
+class ActivityMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

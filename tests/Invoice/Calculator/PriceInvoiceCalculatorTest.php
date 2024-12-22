@@ -28,7 +28,7 @@ use DateTime;
  * @covers \App\Invoice\Calculator\AbstractMergedCalculator
  * @covers \App\Invoice\Calculator\AbstractCalculator
  */
-class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
+class PriceInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -118,25 +118,25 @@ class PriceInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('price', $sut->getId());
-        $this->assertEquals(3000.13, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2521.12, $sut->getSubtotal());
-        $this->assertEquals(6600, $sut->getTimeWorked());
+        self::assertEquals('price', $sut->getId());
+        self::assertEquals(3000.13, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2521.12, $sut->getSubtotal());
+        self::assertEquals(6600, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(4, $entries);
 
-        $this->assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[2]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[3]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[0]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[2]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-29', $entries[3]->getBegin()?->format('Y-m-d'));
 
-        $this->assertEquals(378.02, $entries[3]->getRate());
-        $this->assertEquals(111.11, $entries[0]->getRate());
-        $this->assertEquals(1947.99, $entries[1]->getRate());
-        $this->assertEquals(84, $entries[2]->getRate());
+        self::assertEquals(378.02, $entries[3]->getRate());
+        self::assertEquals(111.11, $entries[0]->getRate());
+        self::assertEquals(1947.99, $entries[1]->getRate());
+        self::assertEquals(84, $entries[2]->getRate());
     }
 
     public function testDescriptionByTimesheet(): void

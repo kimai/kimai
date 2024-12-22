@@ -25,7 +25,7 @@ class ReportingServiceTest extends TestCase
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly($isGranted ? 1 : 0))->method('dispatch')->willReturnCallback(function ($event) {
-            $this->assertInstanceOf(ReportingEvent::class, $event);
+            self::assertInstanceOf(ReportingEvent::class, $event);
 
             return $event;
         });

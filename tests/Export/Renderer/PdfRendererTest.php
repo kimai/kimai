@@ -24,7 +24,7 @@ use Twig\Environment;
  * @covers \App\Export\Renderer\PDFRenderer
  * @group integration
  */
-class PdfRendererTest extends AbstractRendererTest
+class PdfRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {
@@ -34,13 +34,13 @@ class PdfRendererTest extends AbstractRendererTest
             $this->createMock(ProjectStatisticService::class)
         );
 
-        $this->assertEquals('pdf', $sut->getId());
-        $this->assertEquals('pdf', $sut->getTitle());
-        $this->assertEquals([], $sut->getPdfOptions());
+        self::assertEquals('pdf', $sut->getId());
+        self::assertEquals('pdf', $sut->getTitle());
+        self::assertEquals([], $sut->getPdfOptions());
 
         $sut->setPdfOption('foo', 'bar');
         $sut->setPdfOption('bar1', 'foo1');
-        $this->assertEquals(['foo' => 'bar', 'bar1' => 'foo1'], $sut->getPdfOptions());
+        self::assertEquals(['foo' => 'bar', 'bar1' => 'foo1'], $sut->getPdfOptions());
     }
 
     public function testRenderAttachment(): void
@@ -62,9 +62,9 @@ class PdfRendererTest extends AbstractRendererTest
         $prefix = date('Ymd');
 
         $response = $this->render($sut);
-        $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
-        $this->assertNotEmpty($response->getContent());
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
+        self::assertNotEmpty($response->getContent());
     }
 
     public function testRenderInline(): void
@@ -87,8 +87,8 @@ class PdfRendererTest extends AbstractRendererTest
 
         $sut->setDispositionInline(true);
         $response = $this->render($sut);
-        $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('inline; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
-        $this->assertNotEmpty($response->getContent());
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        self::assertEquals('inline; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
+        self::assertNotEmpty($response->getContent());
     }
 }

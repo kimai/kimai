@@ -3658,11 +3658,6 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$year of method App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsModel\\:\\:addYearActivity\\(\\) expects string, int\\|string given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ProjectStatisticEvent constructor expects App\\\\Model\\\\ProjectStatistic, App\\\\Model\\\\ProjectStatistic\\|null given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
