@@ -1266,9 +1266,9 @@
         <source>request</source>
         <target>Request</target>
       </trans-unit>
-      <trans-unit id="YzOSTim" resname="status.rejected">
-        <source>status.rejected</source>
-        <target>Rejcted</target>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="yes">
+        <source>Rejected</source>
+        <target state="final">Rejected</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject">
         <source>reject</source>

@@ -28,15 +28,15 @@
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Vous avez oublié votre mot de passe ?</target>
+        <target state="translated">Connectez-vous à votre compte</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Réinitialiser le mot de passe</target>
+        <target state="translated">Connectez-vous</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">Ne vous inquiétez pas, Kimai vous aidera à en créer un nouveau !</target>
+        <target state="translated">Ce lien ne sera valide que pendant les 15 prochaines minutes.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
@@ -53,6 +53,42 @@ Please review them at: %url%</source>
 %list%
 
 Veuillez les examiner à l'adresse suivante : %url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Votre demande d'autorisation a été refusée par %created_by%.
+
+%list%
+
+Veuillez consulter vos demandes à l'url suivante : %url%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Votre demande a été approuvée par %created_by%.
+
+%list%
+
+Vous pouvez retrouver toutes vos demandes via l'url suivante : %url%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Une approbation pour %user% a été demandée.
+
+%list%
+
+Veuillez les consulter à : %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Votre demande a été refusée</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Approbation demandée : %user%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Votre demande a été approuvée</target>
       </trans-unit>
     </body>
   </file>
