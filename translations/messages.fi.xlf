@@ -1919,8 +1919,8 @@
         <target state="translated">Kulut</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
-        <target state="translated">Hylätty</target>
+        <source>Rejected</source>
+        <target state="needs-translation">Hylätty</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>

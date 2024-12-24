@@ -1915,8 +1915,8 @@
         <target state="translated">Sesije</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
-        <target state="translated">Odbijeno</target>
+        <source>Rejected</source>
+        <target state="needs-translation">Odbijeno</target>
       </trans-unit>
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
         <source>Log out of all devices</source>

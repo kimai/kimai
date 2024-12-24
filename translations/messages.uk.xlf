@@ -1919,7 +1919,7 @@
         <target state="translated">Імпорт</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
+        <source>Rejected</source>
         <target state="translated">Відхилено</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
@@ -1933,6 +1933,14 @@
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve" approved="no">
         <source>Log out of all devices</source>
         <target state="translated">Вийти з усіх пристроїв</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve" approved="no">
+        <source>training</source>
+        <target state="translated">Навчання</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve" approved="no">
+        <source>result</source>
+        <target state="translated">Результат</target>
       </trans-unit>
     </body>
   </file>
