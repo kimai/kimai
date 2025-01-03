@@ -12,7 +12,7 @@ namespace App;
 /**
  * Some "very" global constants for Kimai.
  */
-class Constants
+final class Constants
 {
     /**
      * The current release version
