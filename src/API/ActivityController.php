@@ -83,7 +83,8 @@ final class ActivityController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== $paramFetcher->get('globals')) {
+        $globals = $paramFetcher->get('globals');
+        if (\is_string($globals) && $globals == 'true') {
             $query->setGlobalsOnly(true);
         }
 
