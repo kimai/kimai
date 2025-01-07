@@ -84,7 +84,7 @@ final class ActivityController extends BaseApiController
         }
 
         $globals = $paramFetcher->get('globals');
-        if (\is_string($globals) && $globals == 'true') {
+        if (\is_string($globals) && $globals === 'true') {
             $query->setGlobalsOnly(true);
         }
 
