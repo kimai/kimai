@@ -1266,9 +1266,9 @@
         <source>request</source>
         <target>Beantragen</target>
       </trans-unit>
-      <trans-unit id="YzOSTim" resname="status.rejected">
-        <source>status.rejected</source>
-        <target>Abgelehnt</target>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="yes">
+        <source>Rejected</source>
+        <target state="final">Abgelehnt</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject">
         <source>reject</source>
@@ -1606,9 +1606,9 @@
         <source>time_off</source>
         <target>Freizeitausgleich</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>default</source>
-        <target>Standard</target>
+        <target state="final">Standard</target>
       </trans-unit>
       <trans-unit id="_WlU8Fp" resname="sickness">
         <source>sickness</source>
@@ -1630,9 +1630,9 @@
         <source>sickness.intro</source>
         <target>Krankheit, Arztbesuch, Pflege naher Angehöriger etc.</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Sie haben bisher %used% von Ihren verfügbaren %days% Urlaubstagen eingereicht.</target>
+        <target state="final">Sie haben bisher %used% von Ihren verfügbaren %days% Urlaubstagen eingereicht.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>

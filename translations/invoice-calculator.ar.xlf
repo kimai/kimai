@@ -50,6 +50,10 @@
         <source>date_user</source>
         <target state="translated">التاريخ والمستخدِم</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">حدد الحقول التي يجب تجميع عناصر الفاتورة بناءً عليها</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
