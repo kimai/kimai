@@ -694,9 +694,9 @@
         <source>export.period</source>
         <target>Período</target>
       </trans-unit>
-      <trans-unit id="3CQ7A2m" resname="export.document_title">
+      <trans-unit id="3CQ7A2m" resname="export.document_title" xml:space="preserve">
         <source>export.document_title</source>
-        <target>Exportación de partes de horas</target>
+        <target state="translated">Exportación de hojas de horas</target>
       </trans-unit>
       <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
@@ -738,9 +738,9 @@
         <source>exported</source>
         <target>Exportado</target>
       </trans-unit>
-      <trans-unit id="_DDecAV" resname="entryState.exported">
+      <trans-unit id="_DDecAV" resname="entryState.exported" xml:space="preserve">
         <source>entryState.exported</source>
-        <target>Tratado</target>
+        <target state="translated">Despejado</target>
       </trans-unit>
       <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
@@ -1342,9 +1342,9 @@
         <source>skin.dark</source>
         <target state="translated">Oscuro</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
         <source>api_password.missing_title</source>
-        <target state="translated">No se puede usar la aplicación</target>
+        <target state="translated">No se puede usar la API de la aplicación</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1923,8 +1923,8 @@
         <target state="translated">Rechazar</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
-        <target state="translated">Rechazado</target>
+        <source>Rejected</source>
+        <target state="needs-translation">Rechazado</target>
       </trans-unit>
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
         <source>Log out of all devices</source>
@@ -1933,6 +1933,10 @@
       <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
         <source>Sessions</source>
         <target state="translated">Sesiones</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">Capacitación</target>
       </trans-unit>
     </body>
   </file>

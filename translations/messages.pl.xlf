@@ -1899,8 +1899,8 @@
         <target state="translated">Zezwalaj na wpisy czasu tylko dla dni, dla których przewidywane godziny pracy są określone w umowie o pracę</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
-        <target state="translated">Odrzucone</target>
+        <source>Rejected</source>
+        <target state="needs-translation">Odrzucone</target>
       </trans-unit>
       <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
         <source>profit</source>
