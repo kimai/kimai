@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="teams.en.xlf">
+    <body>
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve">
+        <source>teams.project_access</source>
+        <target state="translated">திட்டங்களுக்கான அணுகலை வழங்கவும்</target>
+      </trans-unit>
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
+        <source>teams.customer_access</source>
+        <target state="translated">வாடிக்கையாளர்களுக்கு அணுகலை வழங்கவும்</target>
+      </trans-unit>
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
+        <source>team.visibility_global</source>
+        <target state="translated">அனைவருக்கும் தெரியும், ஏனெனில் இதுவரை எந்த அணியும் ஒதுக்கப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
+        <source>team.visibility_restricted</source>
+        <target state="translated">பின்வரும் அணிகள் மற்றும் அனைத்து நிர்வாகிகளுக்கும் மட்டுமே தெரியும்.</target>
+      </trans-unit>
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
+        <source>team.project_visibility_inherited</source>
+        <target state="translated">திட்டத்திற்கு மட்டுப்படுத்தப்பட்ட அணுகல் உள்ளது, ஏனெனில் வாடிக்கையாளருக்கு குழு அனுமதிகள் அமைக்கப்படுகின்றன.</target>
+      </trans-unit>
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
+        <source>team.activity_visibility_inherited</source>
+        <target state="translated">செயல்பாடு வரையறுக்கப்பட்ட அணுகலைக் கொண்டுள்ளது, ஏனெனில் திட்டம் மற்றும்/அல்லது வாடிக்கையாளருக்கு குழு அனுமதிகள் அமைக்கப்படுகின்றன.</target>
+      </trans-unit>
+      <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
+        <source>team.create_default</source>
+        <target state="translated">அணுகலைக் கட்டுப்படுத்த புதிய குழுவை உருவாக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">உறுப்பினர்</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

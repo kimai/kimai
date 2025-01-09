@@ -1915,7 +1915,7 @@
         <target state="translated">Sesije</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
+        <source>Rejected</source>
         <target state="translated">Odbijeno</target>
       </trans-unit>
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
@@ -1933,6 +1933,14 @@
       <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
         <source>costs</source>
         <target state="translated">Troškovi</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Rezultat</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">Vježbanje</target>
       </trans-unit>
     </body>
   </file>

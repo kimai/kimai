@@ -1919,7 +1919,7 @@
         <target state="final">Biglietto da visita</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="yes">
-        <source>status.rejected</source>
+        <source>Rejected</source>
         <target state="final">Rifiutato</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="yes">
@@ -1933,6 +1933,14 @@
       <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve" approved="yes">
         <source>Sessions</source>
         <target state="final">Sessioni</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve" approved="yes">
+        <source>result</source>
+        <target state="final">Risultato</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve" approved="yes">
+        <source>training</source>
+        <target state="final">Formazione</target>
       </trans-unit>
     </body>
   </file>

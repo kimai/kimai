@@ -94,9 +94,9 @@
         <source>error.no_entries_found</source>
         <target>لم يتم العثور على إدخالات على أساس عوامل التصفية المحددة الخاصة بك.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>التاريخ</target>
+        <target state="translated">تاريخ</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -110,9 +110,9 @@
         <source>duration</source>
         <target>المدة الزمنية</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>المستخدم</target>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
+        <target state="translated">مستخدم</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -142,13 +142,13 @@
         <source>budget</source>
         <target>الميزانية</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>النشاط</target>
+        <target state="translated">نشاط</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
-        <target>المشروع</target>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
+        <target state="translated">مشروع</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
@@ -236,7 +236,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">العمل منذ</target>
+        <target state="translated">أول يوم عمل</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -596,7 +596,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">الميزانية الزمنية</target>
+        <target state="translated">الحصة بالساعة</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -742,9 +742,9 @@
         <source>export.mark_all</source>
         <target>وضع علامة على جميع السجلات المعروضة كمسح؟</target>
       </trans-unit>
-      <trans-unit id="CiA4s9E" resname="set_as_default">
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
         <source>set_as_default</source>
-        <target>حفظ الإعداد ات كمفضلة البحث</target>
+        <target state="translated">حفظ الإعدادات كمفضلة البحث</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
@@ -976,7 +976,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="needs-translation">%action% %count% إدخالات؟</target>
+        <target state="translated">%action% %count% إدخالات</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
@@ -1080,7 +1080,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
+        <target state="translated">تم إرسال بريد إلكتروني يحتوي على رابط لإعادة تعيين كلمة المرور الخاصة بك. ملاحظة: يمكنك طلب كلمة مرور جديدة مرة واحدة فقط كل %tokenLifetime% ساعة. إذا لم تستلم البريد الإلكتروني، يرجى التحقق من مجلد الرسائل غير المرغوب فيها أو المحاولة مرة أخرى.</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -1252,7 +1252,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="needs-translation">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك</target>
+        <target state="translated">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1368,7 +1368,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">الإفتراضي</target>
+        <target state="translated">إفتراضي</target>
       </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
@@ -1412,7 +1412,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">الساعات المستهدَفة</target>
+        <target state="translated">الساعات المتوقّعة</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -1432,7 +1432,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">لقد أخذت %used% من %days% أيام العطلة المتاحة لديك حتى الآن.</target>
+        <target state="translated">لقد اسنفذت %used% من %days% أيام العطلة المتاحة لديك حتى الآن.</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1528,7 +1528,7 @@
       </trans-unit>
       <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
         <source>Importer</source>
-        <target state="translated">استيراد</target>
+        <target state="translated">مستورِد</target>
       </trans-unit>
       <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
         <source>unpaid_vacation</source>
@@ -1548,7 +1548,7 @@
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>
-        <target state="needs-translation">مرض الطفل</target>
+        <target state="translated">مرض أحد الأقارب</target>
       </trans-unit>
       <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
         <source>Translations</source>
@@ -1564,7 +1564,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">بعد اكتمال الشهر، لن يتمكن المستخدم بعد ذلك من إنشاء أو تعديل الأوقات لتلك الفترة.</target>
+        <target state="translated">سيؤدي هذا إلى قفل جميع أيام السنة قبل التاريخ المحدد. لن يتمكن المستخدم بعد الآن من إنشاء أو تعديل الأوقات للفترة المقفلة.</target>
       </trans-unit>
       <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
         <source>invoice_date.help</source>
@@ -1572,7 +1572,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">الساعات الحقيقية</target>
+        <target state="translated">عدد ساعات العمل</target>
       </trans-unit>
       <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
         <source>status.requested</source>
@@ -1753,6 +1753,194 @@
       <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
         <source>reload</source>
         <target state="translated">إعادة تحميل</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">عدد الساعات في اليوم</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">حساب مدة العمل</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">أيام العمل</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">فَعِّل</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">يمكنك إعادة ترتيب أدواتك باستخدام السحب والإفلات. إضافة الأدوات الذكية يحفظ التغييرات المعلقة.</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve">
+        <source>help.globalActivities</source>
+        <target state="translated">إذا كان الإعداد متوقفًا، يمكن تسجيل الأوقات فقط باستخدام الأنشطة الخاصة بالمشروع.</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">السماح بإدخال الوقت فقط للأيام التي حُددت لها ساعات العمل المطلوبة في عقد العمل</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">تحديد جميع الإدخالات لقائمة التحديث الجماعي</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">تنسيق الوقت والتاريخ والعُملة</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">لدى حساب وقت العمل الخاص بك رصيد قدره %hours% ساعة.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
+        <source>absence_other.intro</source>
+        <target state="translated">المناسبات العائلية، والانتقال إلى منزل جديد، وفوضى الطقس وما إلى ذلك.</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">لا يمكن تغيير الحجوزات اليدوية أو حذفها لاحقًا!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">يمكن أن تكون المدة إيجابية (زيادة في الوقت الحالي) أو سلبية (تقليل في الوقت الحالي).</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">عدد الساعات في الأسبوع</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">عدد الساعات في الشهر</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">آخر يوم عمل</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve">
+        <source>Remove widget</source>
+        <target state="translated">إزالة أداة (Widget)</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">ربح</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">التكلفة</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve">
+        <source>Add widget</source>
+        <target state="translated">إضافة أداة (Widget)</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">المزامنة</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">الجلسات</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">تسجيل الخروج من جميع الأجهزة</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">النتيجة</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">التدريب</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
+        <source>receive_from</source>
+        <target state="translated">استلام من %name%</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">سجلات مراجعة الحسابات</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">يتم استخدام معرّف المستخدم الفريد للمصادقة وفي عمليات التصدير</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">الموافقة</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">طلب</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">مرفوض</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">رفض</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">إضافة إدخال إلى قائمة التحديث الجماعي</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">مُحدَّث</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">معرّف المستخدم</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">هذه هي المرة الوحيدة التي سيتم فيها عرض هذا المفتاح! لذا حافظ عليه وتأكد من نسخه قبل إغلاق هذه النافذة.</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve">
+        <source>vcard</source>
+        <target state="translated">بطاقة عمل</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">تاريخ انتهاء الصلاحية</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">كلمات مرور واجهة برمجة التطبيقات (API) قديمة: يُرجى استخدام رموز واجهة برمجة التطبيقات (API) بدلاً من ذلك.</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+        <source>completed_month_pdf</source>
+        <target state="translated">ملف PDF الشهر المنتهي</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">لم يتم تهيئة أي ساعات مستهدفة لهذا المستخدم في إعدادات عقد العمل.</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">قفل الشهر</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">آخر استخدام</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">مولد</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">أوقات عمل الحساب</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">استراحة</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">استيراد</target>
       </trans-unit>
     </body>
   </file>

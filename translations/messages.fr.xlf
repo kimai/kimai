@@ -1907,8 +1907,8 @@
         <target state="translated">Mis à jour</target>
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
-        <source>status.rejected</source>
-        <target state="translated">Refusé</target>
+        <source>Rejected</source>
+        <target state="needs-translation">Refusé</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
