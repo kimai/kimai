@@ -15,6 +15,7 @@ use App\Export\Package\SpoutSpreadsheet;
 use App\Export\RendererInterface;
 use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
+use OpenSpout\Writer\CSV\Options;
 use OpenSpout\Writer\CSV\Writer;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,7 +59,10 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer());
+        $options = new Options();
+        $options->SHOULD_ADD_BOM = false;
+
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options));
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
