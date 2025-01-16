@@ -75,9 +75,29 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
     toggleAll(checked)
     {
         for (const element of document.querySelectorAll('.multi_update_all')) {
-            element.checked = checked;
-            this.toggle(checked, element.closest('table'));
+            this._toggleAll(checked, element);
         }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {string} name
+     */
+    toggleByName(checked, name)
+    {
+        for (const element of document.querySelectorAll('#multi_update_all_' + name)) {
+            this._toggleAll(checked, element);
+        }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {Element} name
+     */
+    _toggleAll(checked, element)
+    {
+        element.checked = checked;
+        this.toggle(checked, element.closest('table'));
     }
 
     /**

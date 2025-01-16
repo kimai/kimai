@@ -1,7 +1,7 @@
 {
-  "name": "kimai2",
+  "name": "kimai",
   "homepage": "https://github.com/kimai/kimai",
-  "license": "MIT",
+  "license": "AGPL",
   "maintainers": [
     {
       "name": "Kevin Papst",

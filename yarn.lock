@@ -4217,9 +4217,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kimai2@workspace:.":
+"kimai@workspace:.":
   version: 0.0.0-use.local
-  resolution: "kimai2@workspace:."
+  resolution: "kimai@workspace:."
   dependencies:
     "@babel/core": "npm:^7"
     "@babel/eslint-parser": "npm:^7"
