@@ -58,21 +58,21 @@
         <source>my.profile</source>
         <target>הפרופיל שלי</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
-        <target>%action% %count% רשומות</target>
+        <target state="final">%count% רשומות %action%</target>
       </trans-unit>
-      <trans-unit id="OTDmccn" resname="attachments">
+      <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
         <source>attachments</source>
-        <target>קבצים</target>
+        <target state="final">קבצים</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve" approved="yes">
         <source>rates.empty</source>
-        <target>לא הוגדרו עדיין עמלות שעתיות.</target>
+        <target state="final">לא הוגדרו עדיין עמלות שעתיות.</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve" approved="yes">
         <source>rates.title</source>
-        <target>עמלות</target>
+        <target state="final">מחירים</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password" xml:space="preserve" approved="yes">
         <source>Password</source>
@@ -910,13 +910,13 @@
         <source>update_browser_title</source>
         <target>עדכון כותרת דפדפן</target>
       </trans-unit>
-      <trans-unit id="XP5zkiN" resname="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve" approved="yes">
         <source>modal.dirty</source>
-        <target>הטופס השתנה. נא ללחוץ על „שמירה” כדי לשמור את השינויים או על „סגירה” כדי לבטל.</target>
+        <target state="final">הטופס השתנה. נא ללחוץ על „שמירה” כדי לשמור את השינויים או על „סגירה” כדי לבטל.</target>
       </trans-unit>
-      <trans-unit id="zFfl7jw" resname="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve" approved="yes">
         <source>sum.total</source>
-        <target>סך הכול</target>
+        <target state="final">סך הכול</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
@@ -950,9 +950,9 @@
         <source>tax_rate</source>
         <target>גובה המס</target>
       </trans-unit>
-      <trans-unit id="O5w1jzb" resname="file">
+      <trans-unit id="O5w1jzb" resname="file" xml:space="preserve" approved="yes">
         <source>file</source>
-        <target>קובץ</target>
+        <target state="final">קובץ</target>
       </trans-unit>
       <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>
@@ -1925,6 +1925,22 @@
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="yes">
         <source>reject</source>
         <target state="final">דחייה</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">תוצאה</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve" approved="yes">
+        <source>training</source>
+        <target state="final">הכשרה</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">הפעלות</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">הוצאת כל המכשירים</target>
       </trans-unit>
     </body>
   </file>
