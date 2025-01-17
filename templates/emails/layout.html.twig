@@ -10,6 +10,6 @@
 
     <spacer size="32"></spacer>
 
-    <p><small>{{ 'automated_email_dont_answer'|trans({}, 'email') }}</small></p>
+    {% block no_answer %}<p><small>{{ 'automated_email_dont_answer'|trans({}, 'email') }}</small></p>{% endblock %}
 
 {% endapply %}
