@@ -60,7 +60,7 @@
             <div class="col-sm-3 col-xs-6 mt-1 mb-2 mb-md-0">
                 <div class="text-center">
                     <h5 class="mb-1">{{ data.year|duration }}</h5>
-                    <span>{{ 'stats.workingTimeYear'|trans({'%year%': data.thisMonth|date_format('Y')}) }}</span>
+                    <span>{{ 'stats.workingTimeYear'|trans({'%year%': data.dateYear}) }}</span>
                 </div>
             </div>
             {% endif %}
