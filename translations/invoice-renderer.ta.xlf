@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ta" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve" approved="yes">
         <source>invoice_renderer</source>
-        <target state="translated">விலைப்பட்டியல் வார்ப்புரு</target>
+        <target state="final">விலைப்பட்டியல் வார்ப்புரு</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve" approved="yes">
         <source>help.upload</source>
-        <target state="translated">கவனம்: இருக்கும் கோப்புகள் மேலெழுதப்படும். அனுமதிக்கப்பட்ட கோப்பு வகைகள்: %extensions%.</target>
+        <target state="final">கவனம்: இருக்கும் கோப்புகள் மேலெழுதப்படும். அனுமதிக்கப்பட்ட கோப்பு வகைகள்: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve" approved="yes">
         <source>download_invoice_renderer</source>
-        <target state="translated">மேலும் வார்ப்புருக்களை இங்கே பதிவிறக்கம் செய்யலாம்</target>
+        <target state="final">மேலும் வார்ப்புருக்களை இங்கே பதிவிறக்கம் செய்யலாம்</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve" approved="yes">
         <source>programmatic</source>
-        <target state="translated">மேலும் செயலாக்கத்திற்கு</target>
+        <target state="final">மேலும் செயலாக்கத்திற்கு</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve" approved="yes">
         <source>invoice</source>
-        <target state="translated">விலைப்பட்டியல்</target>
+        <target state="final">விலைப்பட்டியல்</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>Invoice</source>
-        <target state="translated">விலைப்பட்டியல்</target>
+        <target state="final">விலைப்பட்டியல்</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve">
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve" approved="yes">
         <source>text</source>
-        <target state="translated">உரை</target>
+        <target state="final">உரை</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>timesheet</source>
-        <target state="translated">டைம்சீட்</target>
+        <target state="final">நேரத்தாள்</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date" approved="no" xml:space="preserve">
+      <trans-unit id="m1UyfD9" resname="service-date" approved="yes" xml:space="preserve">
         <source>Single service date</source>
-        <target state="translated">பணி தேதி</target>
+        <target state="final">பணி தேதி</target>
       </trans-unit>
     </body>
   </file>

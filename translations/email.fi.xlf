@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… eli unohdit salasanasi? Ei hätää: Kimai auttaa sinua tekemään uuden:</target>
+        <target state="translated">Tämä linkki on voimassa ainoastaan seuraavat 15 minuuttia.</target>
       </trans-unit>
     </body>
   </file>
