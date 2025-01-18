@@ -453,11 +453,6 @@ parameters:
             path: src/Command/ResetDevelopmentCommand.php
 
         -
-            message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
             message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php

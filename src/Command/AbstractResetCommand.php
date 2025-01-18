@@ -108,7 +108,7 @@ abstract class AbstractResetCommand extends Command
     {
         try {
             $command = $this->getApplication()->find('doctrine:schema:drop');
-            $command->run(new ArrayInput(['--force' => true]), $output);
+            $command->run(new ArrayInput(['--force' => true, '--full-database' => true]), $output);
         } catch (Exception $ex) {
             $io->error('Failed to drop database schema: ' . $ex->getMessage());
 

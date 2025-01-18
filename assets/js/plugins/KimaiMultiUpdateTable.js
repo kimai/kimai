@@ -13,6 +13,11 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
+    getId()
+    {
+        return 'datatable-batch-action';
+    }
+
     init()
     {
         if (document.getElementsByClassName('multi_update_all').length === 0) {
@@ -24,17 +29,11 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         const element = document.querySelector('div.page-body');
         element.addEventListener('change', (event) => {
             if (event.target.matches('.multi_update_all')) {
-                // the "check all" checkbox in the upper start corner of the table
-                const checked = event.target.checked;
-                const table = event.target.closest('table');
-                for (const element of table.querySelectorAll('.multi_update_single')) {
-                    element.checked = checked;
-                }
-                this._toggleForm(table);
+                this.toggle(event.target.checked, event.target.closest('table'));
                 event.stopPropagation();
             } else if (event.target.matches('.multi_update_single')) {
                 // single checkboxes in front of each row
-                this._toggleForm(event.target.closest('table'));
+                this._toggleDatatable(event.target.closest('table'));
                 event.stopPropagation();
             }
         });
@@ -59,10 +58,53 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
     }
 
     /**
+     * @param {boolean} checked
+     * @param {HTMLTableElement} table
+     */
+    toggle(checked, table)
+    {
+        for (const element of table.querySelectorAll('.multi_update_single')) {
+            element.checked = checked;
+        }
+        this._toggleDatatable(table);
+    }
+
+    /**
+     * @param {boolean} checked
+     */
+    toggleAll(checked)
+    {
+        for (const element of document.querySelectorAll('.multi_update_all')) {
+            this._toggleAll(checked, element);
+        }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {string} name
+     */
+    toggleByName(checked, name)
+    {
+        for (const element of document.querySelectorAll('#multi_update_all_' + name)) {
+            this._toggleAll(checked, element);
+        }
+    }
+
+    /**
+     * @param {boolean} checked
+     * @param {Element} name
+     */
+    _toggleAll(checked, element)
+    {
+        element.checked = checked;
+        this.toggle(checked, element.closest('table'));
+    }
+
+    /**
      * @param {HTMLTableElement} table
      * @private
      */
-    _toggleForm(table)
+    _toggleDatatable(table)
     {
         const card = table.closest('div.card.data_table');
 
