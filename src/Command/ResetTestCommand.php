@@ -213,18 +213,4 @@ final class ResetTestCommand extends AbstractResetCommand
 
         $this->entityManager->flush();
     }
-
-    protected function dropSchema(SymfonyStyle $io, OutputInterface $output): int
-    {
-        try {
-            $command = $this->getApplication()->find('doctrine:schema:drop');
-            $command->run(new ArrayInput(['--force' => true, '--full-database' => true]), $output);
-        } catch (Exception $ex) {
-            $io->error('Failed to drop database schema: ' . $ex->getMessage());
-
-            return Command::FAILURE;
-        }
-
-        return Command::SUCCESS;
-    }
 }
