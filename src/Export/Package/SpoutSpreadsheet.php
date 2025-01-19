@@ -71,7 +71,7 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $tmp = [];
         foreach ($columns as $column) {
             if ($column instanceof \DateTimeInterface) {
-                $tmp[] = Cell::fromValue($column, $dateStyle); // @phpstan-ignore argument.type
+                $tmp[] = Cell::fromValue($column, $dateStyle);
             } else {
                 $tmp[] = Cell::fromValue($column); // @phpstan-ignore argument.type
             }
