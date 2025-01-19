@@ -13,7 +13,7 @@ use App\Export\Package\CellFormatter\DateStringFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Export\Package\CellFormatter\DateFormatter
+ * @covers \App\Export\Package\CellFormatter\DateStringFormatter
  */
 class DateStringFormatterTest extends TestCase
 {
