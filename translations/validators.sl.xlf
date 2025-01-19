@@ -87,8 +87,8 @@
         <target state="translated">Prazno trajanje ni dovoljeno.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
-        <source>End date must not be earlier then start date.</source>
-        <target state="translated">Končni datum ne sme biti pred začetnim.</target>
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Končni datum ne sme biti pred začetnim.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>

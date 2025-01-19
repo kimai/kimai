@@ -30,9 +30,9 @@
         <source>This value is not a valid role.</source>
         <target state="final">இந்த மதிப்பு சரியான பாத்திரம் அல்ல.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
-        <source>End date must not be earlier then start date.</source>
-        <target state="final">இறுதி தேதி தொடக்க தேதியைவிட முந்தையதாக இருக்கக் கூடாது.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="no">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">இறுதி தேதி தொடக்க தேதியைவிட முந்தையதாக இருக்கக் கூடாது.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve" approved="yes">
         <source>The begin date cannot be in the future.</source>
@@ -62,9 +62,9 @@
         <source>The given value is not a valid time.</source>
         <target state="final">கொடுக்கப்பட்ட மதிப்பு சரியான நேரம் அல்ல.</target>
       </trans-unit>
-      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve">
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve" approved="yes">
         <source>The budget is completely used.</source>
-        <target state="translated">பட்செட் பயன்படுத்தப்படுகிறது. கிடைக்கக்கூடிய %budget%, %used% இதுவரை முன்பதிவு செய்யப்பட்டுள்ளது, %free%இன்னும் பயன்படுத்தப்படலாம்.</target>
+        <target state="final">நிதித்திட்டம் பயன்படுத்தப்பட்டது. கிடைக்கக்கூடிய %budget%, %used% இதுவரை முன்பதிவு செய்யப்பட்டுள்ளது, %free%இன்னும் பயன்படுத்தப்படலாம்.</target>
       </trans-unit>
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve" approved="yes">
         <source>Sorry, the budget is used up.</source>
@@ -94,9 +94,9 @@
         <source>Cannot stop running timesheet</source>
         <target state="final">உங்களிடம் செயலில் நேர பதிவு உள்ளது, இது தானாக நிறுத்த முடியாது.</target>
       </trans-unit>
-      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve" approved="yes">
         <source>The given code is not the correct TOTP token.</source>
-        <target state="translated">கொடுக்கப்பட்ட குறியீடு சரியான TOTP கிள்ளாக்கு அல்ல.</target>
+        <target state="final">கொடுக்கப்பட்ட குறியீடு சரியான இஒமுக கிள்ளாக்கு அல்ல.</target>
       </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve" approved="yes">
         <source>This value is not a valid role name.</source>
