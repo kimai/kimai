@@ -14,7 +14,7 @@ final class DateFormatter implements CellFormatterInterface
     public function formatValue(mixed $value): mixed
     {
         if ($value instanceof \DateTimeInterface) {
-            return $value->format('Y-m-d');
+            return $value;
         }
 
         if ($value === null) {

@@ -22,7 +22,7 @@ class DateFormatterTest extends TestCase
         $formatter = new DateFormatter();
         $date = new \DateTime('2023-10-01');
         $result = $formatter->formatValue($date);
-        self::assertEquals('2023-10-01', $result);
+        $this->assertInstanceOf(\DateTimeInterface::class, $result);
     }
 
     public function testFormatValueReturnsNullForNullValue(): void
