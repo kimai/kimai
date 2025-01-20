@@ -9,12 +9,12 @@
 
 namespace App\Export\Package\CellFormatter;
 
-final class DateFormatter implements CellFormatterInterface
+final class DateStringFormatter implements CellFormatterInterface
 {
     public function formatValue(mixed $value): mixed
     {
         if ($value instanceof \DateTimeInterface) {
-            return $value;
+            return $value->format('Y-m-d');
         }
 
         if ($value === null) {

@@ -9,25 +9,26 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
-use App\Export\Package\CellFormatter\DateFormatter;
+use App\Export\Package\CellFormatter\DateStringFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Export\Package\CellFormatter\DateFormatter
+ * @covers \App\Export\Package\CellFormatter\DateStringFormatter
  */
-class DateFormatterTest extends TestCase
+class DateStringFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedDateForDateTime(): void
     {
-        $formatter = new DateFormatter();
-        $date = new \DateTime('2023-10-01');
+        $formatter = new DateStringFormatter();
+        $date = new \DateTime('2023-10-01 12:37');
         $result = $formatter->formatValue($date);
-        $this->assertInstanceOf(\DateTimeInterface::class, $result);
+        $this->assertIsString($result);
+        $this->assertEquals('2023-10-01', $result);
     }
 
     public function testFormatValueReturnsNullForNullValue(): void
     {
-        $formatter = new DateFormatter();
+        $formatter = new DateStringFormatter();
         $result = $formatter->formatValue(null);
         self::assertNull($result);
     }
@@ -37,7 +38,7 @@ class DateFormatterTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Only DateTimeInterface can be formatted');
 
-        $formatter = new DateFormatter();
+        $formatter = new DateStringFormatter();
         $formatter->formatValue('not a date');
     }
 }
