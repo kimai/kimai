@@ -11,6 +11,7 @@ namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
+use App\Export\Package\CellFormatter\DateStringFormatter;
 use App\Export\Package\SpoutSpreadsheet;
 use App\Export\RendererInterface;
 use App\Export\TimesheetExportInterface;
@@ -65,6 +66,7 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         $spreadsheet = new SpoutSpreadsheet(new Writer($options));
         $spreadsheet->open($filename);
 
+        $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
 
         return new \SplFileInfo($filename);

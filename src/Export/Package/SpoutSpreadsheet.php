@@ -23,9 +23,12 @@ use OpenSpout\Writer\XLSX\Entity\SheetView;
 
 class SpoutSpreadsheet implements SpreadsheetPackage
 {
+    private Style $dateStyle;
+
     public function __construct(private readonly WriterInterface $writer)
     {
         $this->writer->setCreator(Constants::SOFTWARE);
+        $this->dateStyle = (new Style())->setFormat('yyyy-mm-dd');
     }
 
     /**
@@ -68,7 +71,11 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
         $tmp = [];
         foreach ($columns as $column) {
-            $tmp[] = Cell::fromValue($column); // @phpstan-ignore argument.type
+            if ($column instanceof \DateTimeInterface) {
+                $tmp[] = Cell::fromValue($column, $this->dateStyle);
+            } else {
+                $tmp[] = Cell::fromValue($column); // @phpstan-ignore argument.type
+            }
         }
 
         $this->writer->addRow(new Row($tmp, $style));
