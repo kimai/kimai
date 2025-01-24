@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
+        <source>automated_email_dont_answer</source>
+        <target state="needs-translation">This is an auto generated e-mail. Please do not reply, the address will not be read.</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
+        <source>registration.title</source>
+        <target state="translated">Welcome %username%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

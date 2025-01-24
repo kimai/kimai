@@ -34,9 +34,9 @@
         <source>The begin date cannot be in the future.</source>
         <target>Datum početka ne može biti u budućnosti.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Datum kraja ne smije biti prije datuma početka.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Datum kraja ne smije biti prije datuma početka.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
