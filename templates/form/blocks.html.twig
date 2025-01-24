@@ -180,7 +180,11 @@
         <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
-                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
+                {% if range|length == 0 %}
+                    <hr class="dropdown-divider">
+                {% else %}
+                    <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
+                {% endif %}
             {% endfor %}
         </div>
         {% endif %}

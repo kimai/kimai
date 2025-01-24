@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target state="final">Questa settimana</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" approved="yes">
-        <source>daterangepicker.lastMonth</source>
-        <target state="final">Mese scorso</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" approved="yes">
-        <source>daterangepicker.thisMonth</source>
-        <target state="final">Questo mese</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" approved="yes">
         <source>daterangepicker.lastYear</source>
         <target state="final">Anno scorso</target>
