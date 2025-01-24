@@ -881,7 +881,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'activity' => 10,
             'project' => 1,
             'begin' => (new \DateTime())->format('Y-m-d H:m'),
-            'end' => (new \DateTime('- 1 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime('-1 day'))->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
@@ -890,7 +890,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['activity'], false, ['End date must not be earlier then start date.']);
+        $this->assertApiCallValidationError($response, ['activity'], false, ['The end date must not be earlier than the start date.']);
     }
 
     // TODO: TEST PATCH FOR EXPORTED TIMESHEET FOR USER WITHOUT PERMISSION IS REJECTED

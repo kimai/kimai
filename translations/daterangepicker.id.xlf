@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target state="translated">Minggu ini</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
-        <source>daterangepicker.lastMonth</source>
-        <target state="translated">Bulan lalu</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
-        <source>daterangepicker.thisMonth</source>
-        <target state="translated">Bulan Ini</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve">
         <source>daterangepicker.lastYear</source>
         <target state="translated">Tahun lalu</target>

@@ -308,6 +308,11 @@ final class LocaleFormatter
         return $this->formatIntl($dateTime, ($withYear ? 'LLLL yyyy' : 'LLLL'));
     }
 
+    public function quarterName(\DateTimeInterface $dateTime, bool $withYear = false): string
+    {
+        return $this->formatIntl($dateTime, ($withYear ? 'QQQ yyyy' : 'QQQ'));
+    }
+
     public function dayName(\DateTimeInterface $dateTime, bool $short = false): string
     {
         return $this->formatIntl($dateTime, ($short ? 'EE' : 'EEEE'));

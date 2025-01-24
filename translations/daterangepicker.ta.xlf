@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target state="final">இந்த வாரம்</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
-        <source>daterangepicker.lastMonth</source>
-        <target state="final">கடந்த திங்கள்</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
-        <source>daterangepicker.thisMonth</source>
-        <target state="final">இந்தத் திங்கள்</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve" approved="yes">
         <source>daterangepicker.lastYear</source>
         <target state="final">கடந்த ஆண்டு</target>
