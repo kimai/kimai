@@ -50,6 +50,7 @@ final class DateRangeType extends AbstractType
             'max_day' => null,
             'locale' => \Locale::getDefault(),
         ]);
+        $resolver->setAllowedTypes('locale', 'string');
         $resolver->setAllowedTypes('separator', 'string');
         $resolver->addAllowedTypes('timezone', 'string');
         $resolver->addAllowedTypes('min_day', ['null', 'string', \DateTimeInterface::class]);
@@ -75,6 +76,10 @@ final class DateRangeType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
+        if (!\is_string($options['locale'])) {
+            throw new \InvalidArgumentException('Locale needs to be a string');
+        }
+
         /** @var User $user */
         $user = $options['user'];
         $factory = DateTimeFactory::createByUser($user);
@@ -104,7 +109,7 @@ final class DateRangeType extends AbstractType
             // last quarters
             $month = clone $thisMonth;
             $quarterStartMonth = (int) (floor(($month->format('n') - 1) / 3) * 3) + 1;
-            $month = \DateTimeImmutable::createFromInterface($factory->getStartOfMonth($month->setDate($month->format('Y'), $quarterStartMonth, 1)));
+            $month = \DateTimeImmutable::createFromInterface($factory->getStartOfMonth($month->setDate((int) $month->format('Y'), $quarterStartMonth, 1)));
 
             for ($i = 0; $i < 4; $i++) {
                 $end = $factory->getEndOfMonth($month->add(new \DateInterval('P2M')));
