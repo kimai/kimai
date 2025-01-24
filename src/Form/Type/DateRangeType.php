@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Form\Model\DateRange;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\FormFormatConverter;
+use App\Utils\LocaleFormatter;
 use IntlDateFormatter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -77,6 +78,8 @@ final class DateRangeType extends AbstractType
         /** @var User $user */
         $user = $options['user'];
         $factory = DateTimeFactory::createByUser($user);
+        $formatter = new LocaleFormatter($this->localeService, $options['locale']);
+        $thisMonth = \DateTimeImmutable::createFromInterface($factory->getStartOfMonth());
 
         if ($options['with_presets']) {
             $ranges = [
@@ -88,8 +91,31 @@ final class DateRangeType extends AbstractType
                 'daterangepicker.thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
                 'daterangepicker.lastMonth' => [$factory->getStartOfLastMonth(), $factory->getEndOfLastMonth()],
                 'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
+                'divider1' => [],
             ];
 
+            // last months
+            $month = clone $thisMonth;
+            for ($i = 0; $i < 4; $i++) {
+                $end = $factory->getEndOfMonth($month);
+                $ranges[$formatter->monthName($month, true)] = [$month, $end];
+                $month = $month->sub(new \DateInterval('P1M'));
+            }
+            $ranges['divider2'] = [];
+
+            // last quarters
+            $month = clone $thisMonth;
+            $quarterStartMonth = (int) (floor(($month->format('n') - 1) / 3) * 3) + 1;
+            $month = \DateTimeImmutable::createFromInterface($factory->getStartOfMonth($month->setDate($month->format('Y'), $quarterStartMonth, 1)));
+
+            for ($i = 0; $i < 4; $i++) {
+                $end = $factory->getEndOfMonth($month->add(new \DateInterval('P2M')));
+                $ranges[$formatter->quarterName($month, true)] = [$month, $end];
+                $month = $month->sub(new \DateInterval('P3M'));
+            }
+            $ranges['divider3'] = [];
+
+            // last years
             $thisYear = (int) $factory->createStartOfYear()->format('Y');
             for ($i = 0; $i < 3; $i++) {
                 $year = $thisYear - $i;
