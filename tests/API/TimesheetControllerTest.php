@@ -881,7 +881,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'activity' => 10,
             'project' => 1,
             'begin' => (new \DateTime())->format('Y-m-d H:m'),
-            'end' => (new \DateTime('- 1 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime('-1 day'))->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
