@@ -88,8 +88,6 @@ final class DateRangeType extends AbstractType
                 'daterangepicker.yesterday' => [$factory->createDateTime('-1 day 00:00:00'), $factory->createDateTime('-1 day 23:59:59')],
                 'daterangepicker.thisWeek' => [$factory->getStartOfWeek(), $factory->getEndOfWeek()],
                 'daterangepicker.lastWeek' => [$factory->getStartOfWeek('-1 week'), $factory->getEndOfWeek('-1 week')],
-                'daterangepicker.thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
-                'daterangepicker.lastMonth' => [$factory->getStartOfLastMonth(), $factory->getEndOfLastMonth()],
                 'daterangepicker.thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
                 'divider1' => [],
             ];
