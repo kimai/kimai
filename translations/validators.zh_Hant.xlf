@@ -110,9 +110,9 @@
         <source>This e-mail address is already in use.</source>
         <target state="final">此電子郵件地址已被使用。</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
-        <source>End date must not be earlier then start date.</source>
-        <target state="final">結束日期不能早於開始日期。</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="no">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">結束日期不能早於開始日期。</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve" approved="yes">
         <source>Duration cannot be zero.</source>

@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>Această valoare nu este un rol valid.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Data de încheiere nu trebuie să fie anterioară datei de început.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Data de încheiere nu trebuie să fie anterioară datei de început.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
