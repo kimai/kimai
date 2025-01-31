@@ -47,6 +47,7 @@ final class YearPickerType extends AbstractType
 
         $range = [];
         $start = new \DateTimeImmutable();
+        $start = $start->setDate((int) $start->format('Y'), (int) $date->format('m'), (int) $date->format('d'));
         for ($i = 0; $i < 6; $i++) {
             $range[] = $start->modify('-' . $i . ' year');
         }
