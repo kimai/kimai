@@ -291,7 +291,7 @@
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        {% if show_range %}
+        {% if range is not defined or range is not iterable or range is empty %}
             <a class="btn" href="#" onclick="return false;">
                 <span id="{{ form.vars.id }}_month_name">{{ year|date_short }} &ndash; {{ nextYear|date_short }}</span>
             </a>
@@ -300,9 +300,8 @@
                 {{ yearInt }}
             </button>
             <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
-                {% for i in (yearInt - 5)..(yearInt + 5) %}
-                    {% set tmpYear = report_date(i) %}
-                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event="change" class="dropdown-item">{{ tmpYear|date_format('Y') }}</a></li>
+                {% for tmpYear in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event="change" class="dropdown-item {% if tmpYear|date_format('Y') == yearInt %}active{% endif %}">{{ tmpYear|date_format('Y') }}</a></li>
                 {% endfor %}
             </ul>
         {% endif %}
