@@ -42,11 +42,17 @@ final class WeekPickerType extends AbstractType
             $date = $options['start_date'];
         }
 
-        $date = \DateTime::createFromInterface($date);
+        $date = \DateTimeImmutable::createFromInterface($date);
 
-        $view->vars['week'] = $date;
-        $view->vars['previousWeek'] = (clone $date)->modify('-1 week');
-        $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
+        $week = $date;
+        if ($date->format('N') === '7') {
+            $week = $date->modify('+1 day');
+        }
+
+        $view->vars['weekNumber'] = $week->format('W');
+        $view->vars['week'] = $week;
+        $view->vars['previousWeek'] = $week->modify('-1 week');
+        $view->vars['nextWeek'] = $week->modify('+1 week');
     }
 
     public function getParent(): string
