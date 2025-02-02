@@ -320,9 +320,20 @@
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        <a class="btn" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
-        </a>
+        {% if range is not defined or range is not iterable or range is empty %}
+            <a class="btn" href="#" onclick="return false;">
+                <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ month|month_name(true) }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m') == month|date_format('Y-m') %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|month_name(true) }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event="change">
             {{ icon('right') }}

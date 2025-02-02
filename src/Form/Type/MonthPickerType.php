@@ -41,7 +41,18 @@ final class MonthPickerType extends AbstractType
             $date = $options['start_date'];
         }
 
+        $range = [];
+        $start = new \DateTimeImmutable();
+        $end = $start->modify('-2 year');
+        $end = $end->setDate((int) $end->format('Y'), 1, 1);
+        $i = 1;
+        while ($i++ < 36 && $end <= $start) {
+            $range[] = $start;
+            $start = $start->modify('- 1 month');
+        }
+
         $view->vars['month'] = $date;
+        $view->vars['range'] = $range;
         $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
         $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
     }
