@@ -29,7 +29,6 @@ final class YearPickerType extends AbstractType
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
             'start_date' => new \DateTimeImmutable(),
-            'show_range' => false,
         ]);
     }
 

@@ -300,8 +300,8 @@
                 {{ yearInt }}
             </button>
             <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
-                {% for tmpYear in range %}
-                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event="change" class="dropdown-item {% if tmpYear|date_format('Y') == yearInt %}active{% endif %}" title="{{ tmpYear|date_short }}">{{ tmpYear|date_format('Y') }}</a></li>
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y') == yearInt %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|date_format('Y') }}</a></li>
                 {% endfor %}
             </ul>
         {% endif %}
