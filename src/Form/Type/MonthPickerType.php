@@ -43,6 +43,7 @@ final class MonthPickerType extends AbstractType
 
         $range = [];
         $start = new \DateTimeImmutable();
+        $start = $start->setDate((int) $start->format('Y'), 1, 1);
         $end = $start->modify('-2 year');
         $end = $end->setDate((int) $end->format('Y'), 1, 1);
         $i = 1;
