@@ -2893,16 +2893,6 @@ parameters:
             path: src/Form/Type/MetaFieldsCollectionType.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on mixed\\.$#"
-            count: 2
-            path: src/Form/Type/MonthPickerType.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$date of type mixed\\.$#"
-            count: 2
-            path: src/Form/Type/MonthPickerType.php
-
-        -
             message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Form/Type/QuickEntryTimesheetType.php

@@ -28,22 +28,29 @@ final class MonthPickerType extends AbstractType
             'widget' => 'single_text',
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
-            'start_date' => new \DateTime(),
+            'start_date' => new \DateTimeImmutable(),
         ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        /** @var \DateTime|null $date */
+        if (!$options['start_date'] instanceof \DateTimeInterface) {
+            throw new \InvalidArgumentException('Start date needs to be a DateTime object');
+        }
+
+        /** @var \DateTimeInterface|null $date */
         $date = $form->getData();
 
         if (null === $date) {
+            /** @var \DateTimeImmutable $date */
             $date = $options['start_date'];
         }
 
+        $date = \DateTimeImmutable::createFromInterface($date);
+        $start = \DateTimeImmutable::createFromInterface($options['start_date']);
+        $start = $start->setDate((int) $start->format('Y'), (int) $start->format('m'), 1);
+
         $range = [];
-        $start = new \DateTimeImmutable();
-        $start = $start->setDate((int) $start->format('Y'), 1, 1);
         $end = $start->modify('-2 year');
         $end = $end->setDate((int) $end->format('Y'), 1, 1);
         $i = 1;
@@ -54,8 +61,8 @@ final class MonthPickerType extends AbstractType
 
         $view->vars['month'] = $date;
         $view->vars['range'] = $range;
-        $view->vars['previousMonth'] = (clone $date)->modify('-1 month');
-        $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
+        $view->vars['previousMonth'] = $date->modify('-1 month');
+        $view->vars['nextMonth'] = $date->modify('+1 month');
     }
 
     public function getParent(): string
