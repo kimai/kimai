@@ -299,7 +299,7 @@
             <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ yearInt }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
                 {% for rangeDate in range %}
                     <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y') == yearInt %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|date_format('Y') }}</a></li>
                 {% endfor %}
@@ -328,7 +328,7 @@
             <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ month|month_name(true) }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
                 {% for rangeDate in range %}
                     <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m') == month|date_format('Y-m') %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|month_name(true) }}</a></li>
                 {% endfor %}
@@ -363,7 +363,7 @@
                 &ndash;
                 {{ 'stats.workingTimeWeekShort'|trans({'%week%': weekNumber}) }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
                 {% for rangeDate in range %}
                     <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m-W') == week|date_format('Y-m-W') %}active{% endif %}">
                         {{ rangeDate|month_name(true) }}
