@@ -1778,10 +1778,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Tidrapport</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Filtrera kunder</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target state="translated">Filtrera aktiviter</target>

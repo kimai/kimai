@@ -1270,10 +1270,6 @@
         <source>create-project</source>
         <target state="translated">Projekt erstellen</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Kunden filtern</target>
-      </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target state="translated">Rechnung bezahlt</target>

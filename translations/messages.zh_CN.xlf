@@ -1794,10 +1794,6 @@
         <source>Filter timesheets</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target>筛选用户</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>筛选活动</target>

@@ -1422,10 +1422,6 @@
         <source>Filter timesheets</source>
         <target>Timeseddel</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target>Filtrer kunder</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>Filtrer aktiviteter</target>

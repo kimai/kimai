@@ -1802,10 +1802,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Työajanseuranta</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Suodata asiakkaita</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target state="translated">Suodata työtehtäviä</target>

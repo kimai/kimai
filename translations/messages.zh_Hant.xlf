@@ -1830,10 +1830,6 @@
         <source>invoice.paid</source>
         <target state="final">收支單已付款</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter" xml:space="preserve" approved="yes">
-        <source>Filter customers</source>
-        <target state="final">篩選客戶</target>
-      </trans-unit>
       <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve" approved="yes">
         <source>invoice.cancel</source>
         <target state="final">取消收支單</target>

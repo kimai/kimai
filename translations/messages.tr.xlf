@@ -1826,10 +1826,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Çizelgeler</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Müşterileri filtrele</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target state="translated">Etkinlikleri filtrele</target>
