@@ -1258,10 +1258,6 @@
         <source>Filter timesheets</source>
         <target state="translated">타임시트 필터링</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">활동 필터링</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">사본 만들기</target>

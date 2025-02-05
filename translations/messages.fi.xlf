@@ -1802,10 +1802,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Työajanseuranta</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">Suodata työtehtäviä</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">Luo kopio</target>

@@ -65,7 +65,7 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activities', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {

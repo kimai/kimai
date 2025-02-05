@@ -1010,10 +1010,6 @@
         <source>Filter timesheets</source>
         <target>Ordu taula</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Jarduerak aukeratu</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Kopiatu</target>

@@ -1586,10 +1586,6 @@
         <source>Filter timesheets</source>
         <target>Pracovné výkazy</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Činnosť</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Kópia</target>

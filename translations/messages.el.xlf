@@ -1198,10 +1198,6 @@
         <source>Filter timesheets</source>
         <target>Φιλτράρισμα χρονοδιαγραμμάτων</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Φίλτρο δραστηριοτήτων</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Δημιουργία αντίγραφου</target>

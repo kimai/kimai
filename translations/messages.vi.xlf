@@ -1766,10 +1766,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Lọc bảng chấm công</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Lọc hoạt động</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Tạo bản sao</target>

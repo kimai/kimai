@@ -1842,10 +1842,6 @@
         <source>Filter timesheets</source>
         <target>Stundenzettel</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Tätigkeiten filtern</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Kopie erstellen</target>

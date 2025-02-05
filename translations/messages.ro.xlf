@@ -1774,10 +1774,6 @@
         <source>Filter timesheets</source>
         <target>Fișe de pontaj</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Filtrează activitățile</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Copiază</target>

@@ -1830,10 +1830,6 @@
         <source>Filter timesheets</source>
         <target>Partes de horas</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Filtrar actividades</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Copiar</target>

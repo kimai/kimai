@@ -1794,10 +1794,6 @@
         <source>Filter timesheets</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>筛选活动</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>创建复制</target>

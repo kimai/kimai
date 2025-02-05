@@ -1842,10 +1842,6 @@
         <source>Filter timesheets</source>
         <target>Timesheets</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Filter activities</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Create copy</target>

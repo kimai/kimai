@@ -1218,10 +1218,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Arbeitszeittabellen filtern</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">Tätigkeiten filtern</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">Kopie erstellen</target>

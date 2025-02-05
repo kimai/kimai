@@ -1782,10 +1782,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Filtruj ewidencję pomiarów</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">Filtruj aktywności</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Utwórz kopię</target>

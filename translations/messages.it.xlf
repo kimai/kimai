@@ -1830,10 +1830,6 @@
         <source>Filter timesheets</source>
         <target state="final">Filtra fogli di presenza</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" approved="yes">
-        <source>Filter activities</source>
-        <target state="final">Filtra attività</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" approved="yes">
         <source>copy</source>
         <target state="final">Crea copia</target>

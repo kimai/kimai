@@ -1686,10 +1686,6 @@
         <source>Filter timesheets</source>
         <target>الجداول الزمنية</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>فلتر الأنشطة</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>إنشاء نسخة</target>

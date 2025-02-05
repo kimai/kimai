@@ -1826,10 +1826,6 @@
         <source>Filter timesheets</source>
         <target>גיליונות שעות</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve">
-        <source>Filter activities</source>
-        <target state="translated">סינון פעילויות</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve">
         <source>copy</source>
         <target state="translated">יצירת עותק</target>

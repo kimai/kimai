@@ -1814,10 +1814,6 @@
         <source>profile-stats</source>
         <target state="final">資料</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve" approved="yes">
-        <source>Filter activities</source>
-        <target state="final">篩選活動</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve" approved="yes">
         <source>copy</source>
         <target state="final">建立複本</target>

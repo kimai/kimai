@@ -1218,10 +1218,6 @@
         <source>Filter timesheets</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Tevékenységek szűrése</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Másolat készítése</target>
