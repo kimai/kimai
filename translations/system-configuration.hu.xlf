@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target>Rögzített órák</target>
-      </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
         <target>Jövőbeli rögzítések engedélyezése</target>
