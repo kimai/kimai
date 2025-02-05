@@ -1770,10 +1770,6 @@
         <source>Filter customers</source>
         <target>Lọc khách hàng</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>Lọc dự án</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>Lọc hoạt động</target>

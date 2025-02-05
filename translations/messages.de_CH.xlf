@@ -1218,10 +1218,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Arbeitszeittabellen filtern</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="translated">Projekte filtern</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target state="translated">Tätigkeiten filtern</target>

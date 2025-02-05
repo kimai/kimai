@@ -1798,10 +1798,6 @@
         <source>Filter customers</source>
         <target>筛选用户</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>筛选项目</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>筛选活动</target>

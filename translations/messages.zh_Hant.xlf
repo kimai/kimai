@@ -1870,10 +1870,6 @@
         <source>download</source>
         <target state="final">下載</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">篩選專案</target>
-      </trans-unit>
       <trans-unit id="hF6RgxM" resname="report" xml:space="preserve" approved="yes">
         <source>report</source>
         <target state="final">報表</target>

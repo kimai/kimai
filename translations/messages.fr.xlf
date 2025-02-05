@@ -1774,10 +1774,6 @@
         <source>Filter customers</source>
         <target>Filtrer les clients</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>Filtrer les projets</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>Filtrer les activités</target>

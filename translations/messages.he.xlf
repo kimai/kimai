@@ -1830,10 +1830,6 @@
         <source>Filter customers</source>
         <target state="final">סינון לקוחות</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">סינון מיזמים</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve">
         <source>Filter activities</source>
         <target state="translated">סינון פעילויות</target>

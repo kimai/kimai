@@ -61,7 +61,7 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_project') || $this->isGranted('view_teamlead_project') || $this->isGranted('view_team_project')) {
-            $event->addActionToSubmenu('filter', 'project', ['title' => 'project.filter', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'project', ['title' => 'projects', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_activity')) {

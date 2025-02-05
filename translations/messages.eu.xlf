@@ -1014,10 +1014,6 @@
         <source>Filter customers</source>
         <target>Bezeroak aukeratu</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>Proiektuak aukeratu</target>
-      </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target>Jarduerak aukeratu</target>
