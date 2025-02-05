@@ -293,7 +293,8 @@ final class SystemConfigurationController extends AbstractController
         }
 
         return [
-            (new SystemConfigurationModel('time_tracking'))
+            (new SystemConfigurationModel('timesheet'))
+                ->setTranslation('time_tracking')
                 ->setTranslationDomain('messages')
                 ->setConfiguration([
                     (new Configuration('timesheet.mode'))
