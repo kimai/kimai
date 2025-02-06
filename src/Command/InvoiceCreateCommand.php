@@ -279,11 +279,18 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForCustomer($input, $customer);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer);
+
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
-                continue;
+                $tpl = $customer->getInvoiceTemplate();
+                if (null === $tpl) {
+                    $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
+                    continue;
+                }
+            } else {
+                $query->setAllowTemplateOverwrite(true);
             }
+            
             $query->setTemplate($tpl);
 
             try {
@@ -431,12 +438,12 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate
     {
         $template = $input->getOption('template');
 
         if (null === $template) {
-            return $customer->getInvoiceTemplate();
+            return null;
         }
 
         $tpl = $this->invoiceTemplateRepository->find($template);
