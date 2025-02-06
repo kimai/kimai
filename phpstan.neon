@@ -404,7 +404,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$timezone of class DateTimeZone constructor expects string, mixed given\\.$#"
-            count: 2
+            count: 1
             path: src/Command/InvoiceCreateCommand.php
 
         -
@@ -424,7 +424,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 1
+            count: 2
             path: src/Command/InvoiceCreateCommand.php
 
         -
