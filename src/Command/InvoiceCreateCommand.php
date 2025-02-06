@@ -290,7 +290,7 @@ final class InvoiceCreateCommand extends Command
             } else {
                 $query->setAllowTemplateOverwrite(true);
             }
-            
+
             $query->setTemplate($tpl);
 
             try {
@@ -357,11 +357,18 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForCustomer($input, $customer);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer);
+
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
-                continue;
+                $tpl = $customer->getInvoiceTemplate();
+                if (null === $tpl) {
+                    $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
+                    continue;
+                }
+            } else {
+                $query->setAllowTemplateOverwrite(true);
             }
+
             $query->setTemplate($tpl);
 
             try {
