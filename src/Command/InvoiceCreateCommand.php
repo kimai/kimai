@@ -465,7 +465,7 @@ final class InvoiceCreateCommand extends Command
 
         if (null === $tpl) {
             $io->warning(
-                \sprintf('Couldn''t find any template for template parameter: %s . Customer''s default template is used if defined.', $template);
+                \sprintf('Couldn\'t find any template for template parameter: %s . Customer\'s default template is used if defined.', $template)
             );
         }
 
