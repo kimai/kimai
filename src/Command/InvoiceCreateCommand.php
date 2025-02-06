@@ -279,7 +279,7 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer, $output);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -357,7 +357,7 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer, $output);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -445,8 +445,10 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, Customer $customer, OutputInterface $output): ?InvoiceTemplate
     {
+        $io = new SymfonyStyle($input, $output);
+
         $template = $input->getOption('template');
 
         if (null === $template) {
@@ -459,7 +461,15 @@ final class InvoiceCreateCommand extends Command
             return $tpl;
         }
 
-        return $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
+        $tpl = $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
+
+        if (null === $tpl) {
+            $io->warning(
+                \sprintf('Couldn''t find any template for template parameter: %s . Customer''s default template is used if defined.', $template);
+            );
+        }
+
+        return 
     }
 
     /**
