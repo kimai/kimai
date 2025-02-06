@@ -29,7 +29,6 @@ final class YearPickerType extends AbstractType
             'html5' => false,
             'format' => DateType::HTML5_FORMAT,
             'start_date' => new \DateTimeImmutable(),
-            'show_range' => false,
         ]);
     }
 
@@ -43,12 +42,19 @@ final class YearPickerType extends AbstractType
             $date = $options['start_date'];
         }
 
-        $date = \DateTime::createFromInterface($date);
+        $date = \DateTimeImmutable::createFromInterface($date);
+
+        $range = [];
+        $start = new \DateTimeImmutable();
+        $start = $start->setDate((int) $start->format('Y'), (int) $date->format('m'), (int) $date->format('d'));
+        for ($i = 0; $i < 6; $i++) {
+            $range[] = $start->modify('-' . $i . ' year');
+        }
 
         $view->vars['year'] = $date;
-        $view->vars['show_range'] = $options['show_range'];
-        $view->vars['previousYear'] = (clone $date)->modify('-1 year');
-        $view->vars['nextYear'] = (clone $date)->modify('+1 year');
+        $view->vars['range'] = $range;
+        $view->vars['previousYear'] = $date->modify('-1 year');
+        $view->vars['nextYear'] = $date->modify('+1 year');
     }
 
     public function getParent(): string
