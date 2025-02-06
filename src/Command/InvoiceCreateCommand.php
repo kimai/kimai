@@ -469,7 +469,7 @@ final class InvoiceCreateCommand extends Command
             );
         }
 
-        return 
+        return $tpl;
     }
 
     /**
