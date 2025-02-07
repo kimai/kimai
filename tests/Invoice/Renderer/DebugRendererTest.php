@@ -271,6 +271,7 @@ class DebugRendererTest extends TestCase
             'entry.description_safe',
             'entry.amount',
             'entry.rate',
+            'entry.rate_fixed',
             'entry.rate_nc',
             'entry.rate_plain',
             'entry.rate_internal',
