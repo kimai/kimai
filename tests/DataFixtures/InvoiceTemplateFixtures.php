@@ -53,6 +53,15 @@ class InvoiceTemplateFixtures implements TestFixture
 
         $created[] = $template;
 
+        $template2 = new InvoiceTemplate();
+        $template2 = $template;
+        $template->setRenderer('default');
+
+        $manager->persist($template2);
+        $manager->flush();
+        
+        $created[] = $template2;
+
         return $created;
     }
 }

@@ -279,4 +279,19 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('Created 1 invoice(s) ', $output);
     }
+
+    public function testCreateInvoiceWithTemplateOverwrite(): void
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $customer = $this->prepareFixtures($start)[0];
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer->getId(), '--template' => 1, '--exported' => 'all', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        print($output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.pdf |', $output);
+    }
 }
