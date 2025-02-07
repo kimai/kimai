@@ -287,10 +287,10 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $customer = $this->prepareFixtures($start)[0];
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer->getId(), '--template' => 1, '--exported' => 'all', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'MyInvoice', '--exported' => 'all', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        print($output);
+
         self::assertStringContainsString('Created 1 invoice(s) ', $output);
         self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.pdf |', $output);
     }
