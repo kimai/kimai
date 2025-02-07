@@ -279,7 +279,7 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer, $output);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $output);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -357,7 +357,7 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $customer, $output);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $output);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -445,7 +445,7 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, Customer $customer, OutputInterface $output): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, OutputInterface $output): ?InvoiceTemplate
     {
         $io = new SymfonyStyle($input, $output);
 
