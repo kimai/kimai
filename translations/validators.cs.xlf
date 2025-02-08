@@ -154,6 +154,10 @@
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Zkuste formulář odeslat znovu. Pokud problém přetrvává, obnovte stránku v prohlížeči.</target>
       </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Absenci nelze rezervovat po posledním pracovním dni.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

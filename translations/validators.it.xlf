@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target state="final">Questo valore non è un ruolo valido.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="no" xml:space="preserve">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes" xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">La data di fine non deve essere precedente alla data di inizio.</target>
+        <target state="final">La data di fine non deve essere anteriore alla data di inizio.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team." approved="yes">
         <source>You must select at least one user or team.</source>
