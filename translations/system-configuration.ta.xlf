@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ta" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
-        <source>Time tracking</source>
-        <target state="final">நேர கண்காணிப்பு</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme" xml:space="preserve" approved="yes">
         <source>theme</source>
         <target state="final">கருப்பொருள்</target>

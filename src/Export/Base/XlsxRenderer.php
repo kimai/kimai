@@ -17,12 +17,16 @@ use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
 use OpenSpout\Writer\XLSX\Writer;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
 {
     use ExportTrait;
 
-    public function __construct(private readonly SpreadsheetRenderer $spreadsheetRenderer)
+    public function __construct(
+        private readonly SpreadsheetRenderer $spreadsheetRenderer,
+        private readonly TranslatorInterface $translator,
+    )
     {
     }
 
@@ -58,7 +62,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer());
+        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator);
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);

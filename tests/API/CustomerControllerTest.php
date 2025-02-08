@@ -32,13 +32,12 @@ class CustomerControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
-    /**
-     * @param CustomerRate $rate
-     * @param bool $isCollection
-     * @return string
-     */
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
     {
+        self::assertInstanceOf(CustomerRate::class, $rate);
+        self::assertNotNull($rate->getCustomer());
+        self::assertNotNull($rate->getCustomer()->getId());
+
         if ($isCollection) {
             return $this->getRateUrl($rate->getCustomer()->getId());
         }
@@ -46,7 +45,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         return $this->getRateUrl($rate->getCustomer()->getId(), $rate->getId());
     }
 
-    protected function getRateUrl($id = '1', $rateId = null): string
+    protected function getRateUrl(?int $id = 1, ?int $rateId = null): string
     {
         if (null !== $rateId) {
             return \sprintf('/api/customers/%s/rates/%s', $id, $rateId);

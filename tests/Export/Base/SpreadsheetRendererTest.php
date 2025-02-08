@@ -26,23 +26,17 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
 {
     public function testWriteSpreadsheetCreatesSpreadsheetWithCorrectHeaders(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-        $translator->method('trans')->willReturnArgument(0);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $security = $this->createMock(Security::class);
         $spreadsheetPackage = $this->createMock(SpreadsheetPackage::class);
-        $spreadsheetPackage->expects(self::once())->method('setHeader')->with([
-            'date', 'begin', 'end', 'duration', 'currency', 'rate', 'internalRate', 'hourlyRate', 'fixedRate', 'username', 'account_number', 'customer', 'project', 'activity', 'description', 'billable', 'tags', 'type', 'category', 'number', 'project_number', 'vat_id', 'orderNumber'
-        ]);
+        $spreadsheetPackage->expects(self::once())->method('setColumns');
 
-        $renderer = new SpreadsheetRenderer($translator, $dispatcher, $security);
+        $renderer = new SpreadsheetRenderer($dispatcher, $security);
         $renderer->writeSpreadsheet($spreadsheetPackage, [], new TimesheetQuery());
     }
 
     public function testWriteSpreadsheetAddsRowsForExportItems(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-        $translator->method('trans')->willReturnArgument(0);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $security = $this->createMock(Security::class);
         $spreadsheetPackage = $this->createMock(SpreadsheetPackage::class);
@@ -66,7 +60,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         $exportItem->method('getType')->willReturn('type');
         $exportItem->method('getCategory')->willReturn('category');
 
-        $renderer = new SpreadsheetRenderer($translator, $dispatcher, $security);
+        $renderer = new SpreadsheetRenderer($dispatcher, $security);
         $renderer->writeSpreadsheet($spreadsheetPackage, [$exportItem], new TimesheetQuery());
     }
 
@@ -96,7 +90,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         $exportItem->method('getType')->willReturn('type');
         $exportItem->method('getCategory')->willReturn('category');
 
-        $renderer = new SpreadsheetRenderer($translator, $dispatcher, $security);
+        $renderer = new SpreadsheetRenderer($dispatcher, $security);
         $renderer->writeSpreadsheet($spreadsheetPackage, [$exportItem, $exportItem], new TimesheetQuery());
     }
 }

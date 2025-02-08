@@ -19,9 +19,9 @@ interface SpreadsheetPackage
     public function save(): void;
 
     /**
-     * @param array<string> $columns
+     * @param array<Column> $columns
      */
-    public function setHeader(array $columns): void;
+    public function setColumns(array $columns): void;
 
     /**
      * @param array<int, mixed> $columns

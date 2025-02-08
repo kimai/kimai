@@ -32,13 +32,12 @@ class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
-    /**
-     * @param ProjectRate $rate
-     * @param bool $isCollection
-     * @return string
-     */
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
     {
+        self::assertInstanceOf(ProjectRate::class, $rate);
+        self::assertNotNull($rate->getProject());
+        self::assertNotNull($rate->getProject()->getId());
+
         if ($isCollection) {
             return $this->getRateUrl($rate->getProject()->getId());
         }
@@ -46,7 +45,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         return $this->getRateUrl($rate->getProject()->getId(), $rate->getId());
     }
 
-    protected function getRateUrl($id = '1', $rateId = null): string
+    protected function getRateUrl(?int $id = 1, ?int $rateId = null): string
     {
         if (null !== $rateId) {
             return \sprintf('/api/projects/%s/rates/%s', $id, $rateId);

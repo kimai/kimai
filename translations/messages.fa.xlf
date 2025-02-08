@@ -1442,18 +1442,6 @@
         <source>Filter timesheets</source>
         <target state="translated">فیلتر تایم شیت ها</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">فیلتر مشتریان</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="translated">فیلتر پروژه ها</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">فیلتر فعالیت ها</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">ایجاد کپی</target>

@@ -1814,10 +1814,6 @@
         <source>profile-stats</source>
         <target state="final">資料</target>
       </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve" approved="yes">
-        <source>Filter activities</source>
-        <target state="final">篩選活動</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve" approved="yes">
         <source>copy</source>
         <target state="final">建立複本</target>
@@ -1829,10 +1825,6 @@
       <trans-unit id="9M4b2ZN" resname="invoice.paid" xml:space="preserve" approved="yes">
         <source>invoice.paid</source>
         <target state="final">收支單已付款</target>
-      </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter" xml:space="preserve" approved="yes">
-        <source>Filter customers</source>
-        <target state="final">篩選客戶</target>
       </trans-unit>
       <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve" approved="yes">
         <source>invoice.cancel</source>
@@ -1869,10 +1861,6 @@
       <trans-unit id="aP9j_4L" resname="download" xml:space="preserve" approved="yes">
         <source>download</source>
         <target state="final">下載</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">篩選專案</target>
       </trans-unit>
       <trans-unit id="hF6RgxM" resname="report" xml:space="preserve" approved="yes">
         <source>report</source>
