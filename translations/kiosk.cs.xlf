@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="kiosk.en.xlf">
     <body>
-      </body>
+      <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
+        <source>kiosk.login</source>
+        <target state="translated">Přihlašovací obrazovka</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
