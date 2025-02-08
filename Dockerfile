@@ -24,6 +24,8 @@
 
 # Source base, one of: fpm, apache
 ARG BASE="fpm"
+# Kimai repository to run
+ARG REPOSITORY="https://github.com/kimai/kimai"
 # Kimai branch/tag to run
 ARG KIMAI="main"
 # Timezone for images
@@ -222,12 +224,13 @@ COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 ###########################
 
 FROM alpine:latest AS git-prod
+ARG REPOSITORY
 ARG KIMAI
 ARG TIMEZONE
 # the convention in the Kimai repository is: tags are always version numbers, branch names always start with a letter
 # if the KIMAI variable starts with a number (e.g. 2.24.0) we assume its a tag, otherwise its a branch
 RUN [[ $KIMAI =~ ^[0-9] ]] && export REF='tags' || export REF='heads' && \
-    wget -O "/opt/kimai.tar.gz" "https://github.com/kimai/kimai/archive/refs/${REF}/${KIMAI}.tar.gz" && \
+    wget -O "/opt/kimai.tar.gz" "${REPOSITORY}/archive/refs/${REF}/${KIMAI}.tar.gz" && \
     tar -xpzf /opt/kimai.tar.gz -C /opt/ && \
     mv /opt/kimai-${KIMAI} /opt/kimai
 
@@ -236,6 +239,7 @@ RUN [[ $KIMAI =~ ^[0-9] ]] && export REF='tags' || export REF='heads' && \
 ###########################
 
 FROM php-base AS base
+ARG REPOSITORY
 ARG KIMAI
 ARG TIMEZONE
 
@@ -244,7 +248,7 @@ LABEL org.opencontainers.image.title="Kimai" \
       org.opencontainers.image.authors="Kimai Community" \
       org.opencontainers.image.url="https://www.kimai.org/" \
       org.opencontainers.image.documentation="https://www.kimai.org/documentation/" \
-      org.opencontainers.image.source="https://github.com/kimai/kimai" \
+      org.opencontainers.image.source="${REPOSITORY}" \
       org.opencontainers.image.version="${KIMAI}" \
       org.opencontainers.image.vendor="Kevin Papst" \
       org.opencontainers.image.licenses="AGPL-3.0"
