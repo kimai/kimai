@@ -1458,16 +1458,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.20.1",
+            "version": "2.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "e3cabade99ebccc6ba078884c1c5f250866a494e"
+                "reference": "19912de9270fa6abb3d25a1a37784af6b818d534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/e3cabade99ebccc6ba078884c1c5f250866a494e",
-                "reference": "e3cabade99ebccc6ba078884c1c5f250866a494e",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/19912de9270fa6abb3d25a1a37784af6b818d534",
+                "reference": "19912de9270fa6abb3d25a1a37784af6b818d534",
                 "shasum": ""
             },
             "require": {
@@ -1554,9 +1554,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.20.1"
+                "source": "https://github.com/doctrine/orm/tree/2.20.2"
             },
-            "time": "2024-12-19T06:48:36+00:00"
+            "time": "2025-02-04T19:17:01+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2009,25 +2009,24 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v3.17.1",
+            "version": "v3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine-extensions/DoctrineExtensions.git",
-                "reference": "eabb45018c5a4362b46c5beae3881261da89f900"
+                "reference": "964db6c4fb5b0fc8aa25cc31b17471b4963460c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/eabb45018c5a4362b46c5beae3881261da89f900",
-                "reference": "eabb45018c5a4362b46c5beae3881261da89f900",
+                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/964db6c4fb5b0fc8aa25cc31b17471b4963460c6",
+                "reference": "964db6c4fb5b0fc8aa25cc31b17471b4963460c6",
                 "shasum": ""
             },
             "require": {
                 "behat/transliterator": "^1.2",
                 "doctrine/collections": "^1.2 || ^2.0",
-                "doctrine/common": "^2.13 || ^3.0",
                 "doctrine/deprecations": "^1.0",
                 "doctrine/event-manager": "^1.2 || ^2.0",
-                "doctrine/persistence": "^2.2 || ^3.0",
+                "doctrine/persistence": "^2.2 || ^3.0 || ^4.0",
                 "php": "^7.4 || ^8.0",
                 "psr/cache": "^1 || ^2 || ^3",
                 "psr/clock": "^1",
@@ -2035,6 +2034,7 @@
             },
             "conflict": {
                 "doctrine/annotations": "<1.13 || >=3.0",
+                "doctrine/common": "<2.13 || >=4.0",
                 "doctrine/dbal": "<3.7 || >=5.0",
                 "doctrine/mongodb-odm": "<2.3 || >=3.0",
                 "doctrine/orm": "<2.14.0 || 2.16.0 || 2.16.1 || >=4.0"
@@ -2042,17 +2042,18 @@
             "require-dev": {
                 "doctrine/annotations": "^1.13 || ^2.0",
                 "doctrine/cache": "^1.11 || ^2.0",
+                "doctrine/common": "^2.13 || ^3.0",
                 "doctrine/dbal": "^3.7 || ^4.0",
                 "doctrine/doctrine-bundle": "^2.3",
                 "doctrine/mongodb-odm": "^2.3",
                 "doctrine/orm": "^2.14.0 || ^3.0",
                 "friendsofphp/php-cs-fixer": "^3.14.0",
                 "nesbot/carbon": "^2.71 || ^3.0",
-                "phpstan/phpstan": "^1.11",
-                "phpstan/phpstan-doctrine": "^1.4",
-                "phpstan/phpstan-phpunit": "^1.4",
+                "phpstan/phpstan": "^2.1.1",
+                "phpstan/phpstan-doctrine": "^2.0.1",
+                "phpstan/phpstan-phpunit": "^2.0.3",
                 "phpunit/phpunit": "^9.6",
-                "rector/rector": "^1.1",
+                "rector/rector": "^2.0.6",
                 "symfony/console": "^5.4 || ^6.0 || ^7.0",
                 "symfony/doctrine-bridge": "^5.4 || ^6.0 || ^7.0",
                 "symfony/phpunit-bridge": "^6.0 || ^7.0",
@@ -2114,7 +2115,7 @@
             "support": {
                 "email": "gediminas.morkevicius@gmail.com",
                 "issues": "https://github.com/doctrine-extensions/DoctrineExtensions/issues",
-                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.17.1",
+                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.18.0",
                 "wiki": "https://github.com/Atlantic18/DoctrineExtensions/tree/main/doc"
             },
             "funding": [
@@ -2135,7 +2136,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-07T22:30:27+00:00"
+            "time": "2025-02-01T22:28:13+00:00"
         },
         {
             "name": "jms/metadata",
@@ -3971,20 +3972,20 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "2.3.7",
+            "version": "2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "cf357183b1d17a3862e8e4b9b056a556654dcae6"
+                "reference": "7a700683743bf1c4a21837c84b266916f1aa7d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/cf357183b1d17a3862e8e4b9b056a556654dcae6",
-                "reference": "cf357183b1d17a3862e8e4b9b056a556654dcae6",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/7a700683743bf1c4a21837c84b266916f1aa7d25",
+                "reference": "7a700683743bf1c4a21837c84b266916f1aa7d25",
                 "shasum": ""
             },
             "require": {
-                "composer/pcre": "^3.2",
+                "composer/pcre": "^1 || ^2 || ^3",
                 "ext-ctype": "*",
                 "ext-dom": "*",
                 "ext-fileinfo": "*",
@@ -4070,9 +4071,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.3.7"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/2.3.8"
             },
-            "time": "2025-01-26T04:53:06+00:00"
+            "time": "2025-02-08T03:01:45+00:00"
         },
         {
             "name": "phpoffice/phpword",
@@ -4903,31 +4904,31 @@
         },
         {
             "name": "setasign/fpdi",
-            "version": "v2.6.2",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDI.git",
-                "reference": "9e013b376939c0d4029f54150d2a16f3c67a5797"
+                "reference": "67c31f5e50c93c20579ca9e23035d8c540b51941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/9e013b376939c0d4029f54150d2a16f3c67a5797",
-                "reference": "9e013b376939c0d4029f54150d2a16f3c67a5797",
+                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/67c31f5e50c93c20579ca9e23035d8c540b51941",
+                "reference": "67c31f5e50c93c20579ca9e23035d8c540b51941",
                 "shasum": ""
             },
             "require": {
                 "ext-zlib": "*",
-                "php": "^5.6 || ^7.0 || ^8.0"
+                "php": "^7.1 || ^8.0"
             },
             "conflict": {
                 "setasign/tfpdf": "<1.31"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7",
+                "phpunit/phpunit": "^7",
                 "setasign/fpdf": "~1.8.6",
                 "setasign/tfpdf": "~1.33",
                 "squizlabs/php_codesniffer": "^3.5",
-                "tecnickcom/tcpdf": "~6.2"
+                "tecnickcom/tcpdf": "^6.2"
             },
             "suggest": {
                 "setasign/fpdf": "FPDI will extend this class but as it is also possible to use TCPDF or tFPDF as an alternative. There's no fixed dependency configured."
@@ -4963,7 +4964,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Setasign/FPDI/issues",
-                "source": "https://github.com/Setasign/FPDI/tree/v2.6.2"
+                "source": "https://github.com/Setasign/FPDI/tree/v2.6.3"
             },
             "funding": [
                 {
@@ -4971,7 +4972,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-10T13:12:19+00:00"
+            "time": "2025-02-05T13:22:35+00:00"
         },
         {
             "name": "spomky-labs/otphp",
@@ -10423,16 +10424,16 @@
         },
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v8.2.0",
+            "version": "v8.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "1f81a280ea63f049d24e9c8ce00e557b18e0ff2f"
+                "reference": "eefe54fdf00d910f808efea9cfce9cc261064a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/1f81a280ea63f049d24e9c8ce00e557b18e0ff2f",
-                "reference": "1f81a280ea63f049d24e9c8ce00e557b18e0ff2f",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/eefe54fdf00d910f808efea9cfce9cc261064a0a",
+                "reference": "eefe54fdf00d910f808efea9cfce9cc261064a0a",
                 "shasum": ""
             },
             "require": {
@@ -10446,9 +10447,9 @@
             "require-dev": {
                 "behat/behat": "^3.0",
                 "friendsofphp/php-cs-fixer": "^3.27",
-                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^8.0 || ^9.0 || ^10.0 || ^11.0",
-                "symfony/phpunit-bridge": "^6.3",
+                "symfony/phpunit-bridge": "^7.2",
                 "symfony/process": "^5.4 || ^6.3 || ^7.0",
                 "symfony/yaml": "^5.4 || ^6.3 || ^7.0"
             },
@@ -10484,9 +10485,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.2.0"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.2.2"
             },
-            "time": "2024-05-28T15:41:06+00:00"
+            "time": "2025-02-04T14:37:36+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -11119,16 +11120,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.2",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a"
+                "reference": "64ae44e48214f3deebdaeebf2694297a10a2bea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7d08f569e582ade182a375c366cbd896eccadd3a",
-                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/64ae44e48214f3deebdaeebf2694297a10a2bea9",
+                "reference": "64ae44e48214f3deebdaeebf2694297a10a2bea9",
                 "shasum": ""
             },
             "require": {
@@ -11173,7 +11174,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-21T14:54:06+00:00"
+            "time": "2025-02-07T15:05:24+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -11786,16 +11787,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.44",
+            "version": "10.5.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1381c62769be4bb88fa4c5aec1366c7c66ca4f36"
+                "reference": "bd68a781d8e30348bc297449f5234b3458267ae8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1381c62769be4bb88fa4c5aec1366c7c66ca4f36",
-                "reference": "1381c62769be4bb88fa4c5aec1366c7c66ca4f36",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bd68a781d8e30348bc297449f5234b3458267ae8",
+                "reference": "bd68a781d8e30348bc297449f5234b3458267ae8",
                 "shasum": ""
             },
             "require": {
@@ -11867,7 +11868,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.44"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.45"
             },
             "funding": [
                 {
@@ -11883,7 +11884,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-31T07:00:38+00:00"
+            "time": "2025-02-06T16:08:12+00:00"
         },
         {
             "name": "react/cache",

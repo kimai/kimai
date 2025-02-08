@@ -143,11 +143,6 @@ parameters:
             path: API/ActionsControllerTest.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 2
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
             count: 1
             path: API/ActivityControllerTest.php
@@ -163,22 +158,7 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: API/ActivityControllerTest.php
 
@@ -243,11 +223,6 @@ parameters:
             path: API/ApiDocControllerTest.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 2
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
             count: 1
             path: API/CustomerControllerTest.php
@@ -263,22 +238,7 @@ parameters:
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\CustomerControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: API/CustomerControllerTest.php
 
@@ -286,11 +246,6 @@ parameters:
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: API/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
@@ -308,22 +263,7 @@ parameters:
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$rateId with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:importTestRates\\(\\) has parameter \\$id with no type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:importTestRates\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: API/ProjectControllerTest.php
 
