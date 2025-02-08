@@ -6,17 +6,17 @@
         <source>timesheet.stop.success</source>
         <target>Nahrávanie času zastavené</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target>Nahrávanie času nebolo možné zastaviť: %reason%</target>
+        <target state="needs-translation">Nahrávanie času nebolo možné zastaviť: %reason%</target>
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
         <target>Začalo sa nahrávanie času</target>
       </trans-unit>
-      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
         <source>timesheet.start.error</source>
-        <target>Nahrávanie času nebolo možné spustiť: %reason%</target>
+        <target state="needs-translation">Nahrávanie času nebolo možné spustiť: %reason%</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
