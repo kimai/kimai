@@ -750,13 +750,13 @@
         <source>export.date_copyright</source>
         <target>Vytvorené %date% - %kimai%</target>
       </trans-unit>
-      <trans-unit id="OxdYMR3" resname="active.entries">
+      <trans-unit id="OxdYMR3" resname="active.entries" xml:space="preserve">
         <source>active.entries</source>
-        <target>Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
+        <target state="needs-translation">Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
       </trans-unit>
-      <trans-unit id="WVU_S.A" resname="recent.activities">
+      <trans-unit id="WVU_S.A" resname="recent.activities" xml:space="preserve">
         <source>recent.activities</source>
-        <target>Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
+        <target state="needs-translation">Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
