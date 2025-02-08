@@ -35,11 +35,12 @@ class XlsxRendererTest extends AbstractRendererTestCase
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
         $translator = $this->createMock(TranslatorInterface::class);
+        $translator->method('trans')->willReturnArgument(0);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new XlsxRenderer(new SpreadsheetRenderer($translator, $dispatcher, $security));
+        return new XlsxRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
     }
 
     public function testConfiguration(): void
