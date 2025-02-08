@@ -10,17 +10,17 @@
         <source>timesheet.stop.success</source>
         <target>De teller is gestopt</target>
       </trans-unit>
-      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target>De teller kon niet worden gestopt: %reason%</target>
+        <target state="needs-translation">De teller kon niet worden gestopt: %reason%</target>
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
         <target>De teller is gestart</target>
       </trans-unit>
-      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
         <source>timesheet.start.error</source>
-        <target>De teller kon niet worden gestart: %reason%</target>
+        <target state="needs-translation">De teller kon niet worden gestart: %reason%</target>
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>

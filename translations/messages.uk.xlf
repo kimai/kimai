@@ -122,9 +122,9 @@
         <source>registration.check_email</source>
         <target state="translated">На адресу %email% надісланий лист. У ньому міститься посилання для активації, за яким потрібно перейти для активації Вашого облікового запису.</target>
       </trans-unit>
-      <trans-unit id="UoOv6mx" resname="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
-        <target state="translated">Інформпанель</target>
+        <target state="translated">Табло</target>
       </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
@@ -178,13 +178,13 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Надісланий е-лист з посиланням для зміни пароля. Примітка: Ви можете запитати новий пароль протягом %tokenLifetime% годин лише один раз. Якщо Ви не отримали листа, перевірте "Спам" або спробуйте ще раз.</target>
       </trans-unit>
-      <trans-unit id="JXfA9Ve" resname="projects">
+      <trans-unit id="JXfA9Ve" resname="projects" xml:space="preserve">
         <source>projects</source>
-        <target state="translated">Проекти</target>
+        <target state="translated">Проєкти</target>
       </trans-unit>
-      <trans-unit id="YkyVVAY" resname="activities">
+      <trans-unit id="YkyVVAY" resname="activities" xml:space="preserve">
         <source>activities</source>
-        <target state="translated">Діяльності</target>
+        <target state="translated">Види діяльності</target>
       </trans-unit>
       <trans-unit id="fftM9nd" resname="users">
         <source>users</source>
@@ -330,9 +330,9 @@
         <source>action.close</source>
         <target state="translated">Закрити</target>
       </trans-unit>
-      <trans-unit id="3bqLM8Q" resname="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title" xml:space="preserve">
         <source>dashboard.title</source>
-        <target state="translated">Інформпанель</target>
+        <target state="translated">Табло</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
@@ -446,25 +446,25 @@
         <source>revenue</source>
         <target state="translated">Доходи</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">Робочі години сьогодні</target>
+        <target state="translated">Робочий час сьогодні</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="translated">Робочі години цього тижня</target>
+        <target state="translated">Робочий час за поточний тиждень</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="translated">Робочі години цього місяця</target>
+        <target state="translated">Робочий час за поточний місяць</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="translated">Робочі години в цьому році</target>
+        <target state="translated">Робочий час за поточний рік</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">Робочі години в цьому фінансовому році</target>
+        <target state="translated">Робочий час за поточний фінансовий рік</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -530,9 +530,9 @@
         <source>stats.userTotal</source>
         <target state="translated">Користувачі</target>
       </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
+      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve">
         <source>stats.activityTotal</source>
-        <target state="translated">Діяльності</target>
+        <target state="translated">Види діяльності</target>
       </trans-unit>
       <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
@@ -754,9 +754,9 @@
         <source>default_value_new</source>
         <target state="translated">Типові значення для нових записів</target>
       </trans-unit>
-      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+      <trans-unit id="f8oNzSP" resname="quick_entry.title" xml:space="preserve">
         <source>quick_entry.title</source>
-        <target state="translated">Тижневий час</target>
+        <target state="translated">Робочий тиждень</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
@@ -1158,9 +1158,9 @@
         <source>help.teams</source>
         <target state="translated">Обмежує видимість до вибраних команд.</target>
       </trans-unit>
-      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
         <source>dashboard.edit_mode</source>
-        <target state="translated">Ви можете впорядковувати віджети перетягуванням. Додавання віджетів зберігає відкладені зміни.</target>
+        <target state="translated">Ви можете розміщати віджети перетягуванням. Додавання віджетів зберігає відкладені зміни.</target>
       </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
@@ -1418,9 +1418,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">Завершений місяць у PDF</target>
       </trans-unit>
-      <trans-unit id="mS4SSmt" resname="work_times">
-        <source>work_times</source>
-        <target state="translated">Робочі години</target>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
+        <source>Working times</source>
+        <target state="translated">Робочий час</target>
       </trans-unit>
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
@@ -1458,9 +1458,9 @@
         <source>completed_month_pdf_note</source>
         <target state="translated">Цей документ є підтвердженням відпрацьованих годин.</target>
       </trans-unit>
-      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
-        <target state="translated">В налаштуваннях трудового договору цього користувача не налаштовані цільові години.</target>
+        <target state="translated">У налаштуваннях трудового договору цього користувача не налаштовані цільові години.</target>
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>

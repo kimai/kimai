@@ -14,13 +14,13 @@
         <source>no</source>
         <target>Ne</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both">
-        <source>both</source>
-        <target>Oba</target>
+      <trans-unit id=".3dyBTq" resname="both" xml:space="preserve">
+        <source>Both</source>
+        <target state="needs-translation">Obojí</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
         <source>This is a mandatory field</source>
-        <target>Toto pole je povinné</target>
+        <target state="needs-translation">Povinné</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
@@ -1548,7 +1548,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Doposud jste využili %used% z dostupných %days% dnů dovolené.</target>
+        <target state="needs-translation">Doposud jste využili %used% z dostupných %days% dní dovolené.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1913,6 +1913,34 @@
       <trans-unit id="2UL2SIZ" resname="import">
         <source>import</source>
         <target state="translated">Import</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">Zamítnuto</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Zamítnout</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Relace</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Odhlásit všechna zařízení</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Pozastavit</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Výsledek</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="needs-translation">Trénink</target>
       </trans-unit>
     </body>
   </file>
