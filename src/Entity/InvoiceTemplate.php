@@ -30,9 +30,11 @@ class InvoiceTemplate
     #[Assert\Length(min: 1, max: 60)]
     private ?string $name = null;
     #[ORM\Column(name: 'title', type: 'string', length: 255, nullable: false)]
+    #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
     private ?string $title = null;
     #[ORM\Column(name: 'company', type: 'string', length: 255, nullable: false)]
+    #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
     private ?string $company = null;
     #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
