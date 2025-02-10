@@ -39,7 +39,7 @@ class CsvRendererTest extends AbstractRendererTestCase
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new CsvRenderer(new SpreadsheetRenderer($translator, $dispatcher, $security));
+        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
     }
 
     public function testConfiguration(): void

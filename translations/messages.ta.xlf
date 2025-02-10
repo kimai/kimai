@@ -1878,18 +1878,6 @@
         <source>Filter timesheets</source>
         <target state="final">நேர அட்டவணைகளை வடிகட்டவும்</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter" xml:space="preserve" approved="yes">
-        <source>Filter customers</source>
-        <target state="final">வாடிக்கையாளர்களை வடிகட்டவும்</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">வடிகட்டித் திட்டங்கள்</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve" approved="yes">
-        <source>Filter activities</source>
-        <target state="final">வடிகட்டி நடவடிக்கைகள்</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve" approved="yes">
         <source>copy</source>
         <target state="final">நகலை உருவாக்கவும்</target>

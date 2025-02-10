@@ -36,5 +36,6 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             </form>
             {% endif %}
+            <a class="btn w-100 mt-2" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
         {% endblock %}
 {% endblock %}

@@ -1218,14 +1218,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Arbeitszeittabellen filtern</target>
       </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="translated">Projekte filtern</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">Tätigkeiten filtern</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">Kopie erstellen</target>
@@ -1273,10 +1265,6 @@
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
         <target state="translated">Projekt erstellen</target>
-      </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Kunden filtern</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>

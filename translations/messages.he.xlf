@@ -1826,18 +1826,6 @@
         <source>Filter timesheets</source>
         <target>גיליונות שעות</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter" xml:space="preserve" approved="yes">
-        <source>Filter customers</source>
-        <target state="final">סינון לקוחות</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" xml:space="preserve" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">סינון מיזמים</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" xml:space="preserve">
-        <source>Filter activities</source>
-        <target state="translated">סינון פעילויות</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve">
         <source>copy</source>
         <target state="translated">יצירת עותק</target>

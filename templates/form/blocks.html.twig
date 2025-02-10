@@ -291,7 +291,7 @@
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        {% if show_range %}
+        {% if range is not defined or range is not iterable or range is empty %}
             <a class="btn" href="#" onclick="return false;">
                 <span id="{{ form.vars.id }}_month_name">{{ year|date_short }} &ndash; {{ nextYear|date_short }}</span>
             </a>
@@ -299,10 +299,9 @@
             <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ yearInt }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
-                {% for i in (yearInt - 5)..(yearInt + 5) %}
-                    {% set tmpYear = report_date(i) %}
-                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event="change" class="dropdown-item">{{ tmpYear|date_format('Y') }}</a></li>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y') == yearInt %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|date_format('Y') }}</a></li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -321,9 +320,20 @@
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        <a class="btn" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
-        </a>
+        {% if range is not defined or range is not iterable or range is empty %}
+            <a class="btn" href="#" onclick="return false;">
+                <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ month|month_name(true) }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m') == month|date_format('Y-m') %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|month_name(true) }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event="change">
             {{ icon('right') }}
@@ -339,13 +349,30 @@
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        <a class="btn btn-default" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}">
+        {% if range is not defined or range is not iterable or range is empty %}
+            <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': weekNumber}) }}">
                 {{ week|month_name(true) }}
                 &ndash;
-                {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': weekNumber}) }}
             </span>
-        </a>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ week|month_name(true) }}
+                &ndash;
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': weekNumber}) }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m-W') == week|date_format('Y-m-W') %}active{% endif %}">
+                        {{ rangeDate|month_name(true) }}
+                        &ndash;
+                        {{ 'stats.workingTimeWeekShort'|trans({'%week%': rangeDate|date_format('W')}) }}
+                    </a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}"
            data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextWeek|report_date }}" data-event="change">
             {{ icon('right') }}

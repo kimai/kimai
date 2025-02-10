@@ -1830,18 +1830,6 @@
         <source>Filter timesheets</source>
         <target state="final">Filtra fogli di presenza</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter" approved="yes">
-        <source>Filter customers</source>
-        <target state="final">Filtra clienti</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter" approved="yes">
-        <source>Filter projects</source>
-        <target state="final">Filtra progetti</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter" approved="yes">
-        <source>Filter activities</source>
-        <target state="final">Filtra attività</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" approved="yes">
         <source>copy</source>
         <target state="final">Crea copia</target>
