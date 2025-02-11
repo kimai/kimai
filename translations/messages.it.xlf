@@ -1826,9 +1826,9 @@
         <source>settings</source>
         <target state="final">Preferenze</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter" approved="yes">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" approved="yes" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="final">Filtra fogli di presenza</target>
+        <target state="final">Fogli di presenza</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy" approved="yes">
         <source>copy</source>

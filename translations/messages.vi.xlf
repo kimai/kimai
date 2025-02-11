@@ -1762,9 +1762,9 @@
         <source>settings</source>
         <target state="translated">Tùy chỉnh</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Lọc bảng chấm công</target>
+        <target state="needs-translation">Lọc bảng chấm công</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

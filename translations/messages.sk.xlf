@@ -1582,9 +1582,9 @@
         <source>settings</source>
         <target state="translated">Nastavenia</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Pracovné výkazy</target>
+        <target state="needs-translation">Pracovné výkazy</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

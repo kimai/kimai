@@ -1826,9 +1826,9 @@
         <source>settings</source>
         <target>Preferencias</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Partes de horas</target>
+        <target state="needs-translation">Partes de horas</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

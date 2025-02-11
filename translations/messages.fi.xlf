@@ -1798,9 +1798,9 @@
         <source>settings</source>
         <target state="translated">Asetukset</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Työajanseuranta</target>
+        <target state="needs-translation">Työajanseuranta</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

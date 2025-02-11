@@ -146,9 +146,9 @@
         <source>user</source>
         <target>Usuário</target>
       </trans-unit>
-      <trans-unit id="FveKfWM" resname="username">
+      <trans-unit id="FveKfWM" resname="username" xml:space="preserve">
         <source>username</source>
-        <target>Nome de usuário</target>
+        <target state="translated">Nome do usuário</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
@@ -1826,9 +1826,9 @@
         <source>settings</source>
         <target>Preferências</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Horários</target>
+        <target state="translated">Quadro de horários</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

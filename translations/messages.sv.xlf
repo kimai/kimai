@@ -1774,9 +1774,9 @@
         <source>settings</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Tidrapport</target>
+        <target state="needs-translation">Tidrapport</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
