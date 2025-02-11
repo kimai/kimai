@@ -28,7 +28,7 @@ final class Configuration
      */
     private array $constraints = [];
 
-    public function __construct(private string $name)
+    public function __construct(private readonly string $name)
     {
     }
 

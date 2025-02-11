@@ -1258,18 +1258,6 @@
         <source>Filter timesheets</source>
         <target state="translated">타임시트 필터링</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">고객 필터링</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="translated">프로젝트 필터링</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">활동 필터링</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">사본 만들기</target>

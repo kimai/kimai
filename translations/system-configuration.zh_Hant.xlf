@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
-        <source>Time tracking</source>
-        <target state="final">工時追蹤</target>
-      </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period" xml:space="preserve" approved="yes">
         <source>lockdown_period</source>
         <target state="final">鎖定期間</target>

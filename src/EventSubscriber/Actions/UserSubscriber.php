@@ -35,7 +35,13 @@ final class UserSubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
-        if (($user = $payload['user']) === null || !$user instanceof User || $user->getId() === null) {
+        if (!\array_key_exists('user', $payload)) {
+            return;
+        }
+
+        $user = $payload['user'];
+
+        if (!$user instanceof User || $user->getId() === null) {
             return;
         }
 

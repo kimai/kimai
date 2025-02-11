@@ -750,13 +750,13 @@
         <source>export.date_copyright</source>
         <target>Vytvorené %date% - %kimai%</target>
       </trans-unit>
-      <trans-unit id="OxdYMR3" resname="active.entries">
+      <trans-unit id="OxdYMR3" resname="active.entries" xml:space="preserve">
         <source>active.entries</source>
-        <target>Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
+        <target state="needs-translation">Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
       </trans-unit>
-      <trans-unit id="WVU_S.A" resname="recent.activities">
+      <trans-unit id="WVU_S.A" resname="recent.activities" xml:space="preserve">
         <source>recent.activities</source>
-        <target>Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
+        <target state="needs-translation">Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
@@ -1585,18 +1585,6 @@
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
         <target>Pracovné výkazy</target>
-      </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target>Zákazník</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>Projekt</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Činnosť</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

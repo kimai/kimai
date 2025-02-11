@@ -1826,18 +1826,6 @@
         <source>Filter timesheets</source>
         <target state="translated">Çizelgeler</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target state="translated">Müşterileri filtrele</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target state="translated">Projeleri filtrele</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target state="translated">Etkinlikleri filtrele</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target state="translated">Kopya oluştur</target>
@@ -1917,6 +1905,26 @@
       <trans-unit id="FOvlalA" resname="break" xml:space="preserve" approved="no">
         <source>break</source>
         <target state="translated">Ara ver</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Sonuç</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">Reddedildi</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Bütün cihazların oturumundan çık</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Reddet</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Oturumlar</target>
       </trans-unit>
     </body>
   </file>

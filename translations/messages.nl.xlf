@@ -1830,18 +1830,6 @@
         <source>Filter timesheets</source>
         <target>Tijden</target>
       </trans-unit>
-      <trans-unit id="xY9_cU2" resname="customer.filter">
-        <source>Filter customers</source>
-        <target>Filter op klant</target>
-      </trans-unit>
-      <trans-unit id="UFgOnc6" resname="project.filter">
-        <source>Filter projects</source>
-        <target>Filter op project</target>
-      </trans-unit>
-      <trans-unit id="5G3QNHA" resname="activity.filter">
-        <source>Filter activities</source>
-        <target>Filter op activiteiten</target>
-      </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Maak een kopie</target>

@@ -16,6 +16,7 @@ class Column
 {
     private ?string $header = null;
     private \Closure|null $extractor = null;
+    private ColumnWidth $columnWidth = ColumnWidth::DEFAULT;
 
     public function __construct(private readonly string $name, private readonly CellFormatterInterface $formatter)
     {
@@ -31,6 +32,18 @@ class Column
         $this->header = $header;
 
         return $this;
+    }
+
+    public function withColumnWidth(ColumnWidth $columnWidth): Column
+    {
+        $this->columnWidth = $columnWidth;
+
+        return $this;
+    }
+
+    public function getColumnWidth(): ColumnWidth
+    {
+        return $this->columnWidth;
     }
 
     public function withExtractor(\Closure $extractor): Column

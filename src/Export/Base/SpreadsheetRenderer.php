@@ -27,6 +27,7 @@ use App\Export\Package\CellFormatter\RateFormatter;
 use App\Export\Package\CellFormatter\TextFormatter;
 use App\Export\Package\CellFormatter\TimeFormatter;
 use App\Export\Package\Column;
+use App\Export\Package\ColumnWidth;
 use App\Export\Package\SpreadsheetPackage;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
@@ -34,7 +35,6 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @internal means no BC promise whatsoever!
@@ -47,7 +47,6 @@ final class SpreadsheetRenderer
     private array $formatter = [];
 
     public function __construct(
-        protected TranslatorInterface $translator,
         protected EventDispatcherInterface $dispatcher,
         protected Security $voter
     ) {
@@ -83,12 +82,7 @@ final class SpreadsheetRenderer
     public function writeSpreadsheet(SpreadsheetPackage $spreadsheetPackage, array $exportItems, TimesheetQuery $query): void
     {
         $columns = $this->getColumns($query);
-
-        $headerRow = [];
-        foreach ($columns as $column) {
-            $headerRow[] = $this->translator->trans($column->getHeader());
-        }
-        $spreadsheetPackage->setHeader($headerRow);
+        $spreadsheetPackage->setColumns($columns);
 
         $currentRow = 1;
         foreach ($exportItems as $exportItem) {
@@ -150,26 +144,26 @@ final class SpreadsheetRenderer
         $columns = [];
 
         $columns[] = (new Column('date', $this->getFormatter('date')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
-        $columns[] = (new Column('begin', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
-        $columns[] = (new Column('end', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getEnd());
-        $columns[] = (new Column('duration', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration());
+        $columns[] = (new Column('begin', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin())->withColumnWidth(ColumnWidth::SMALL);
+        $columns[] = (new Column('end', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getEnd())->withColumnWidth(ColumnWidth::SMALL);
+        $columns[] = (new Column('duration', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration())->withColumnWidth(ColumnWidth::SMALL);
 
         if ($showRates) {
-            $columns[] = (new Column('currency', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getCurrency());
+            $columns[] = (new Column('currency', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getCurrency())->withColumnWidth(ColumnWidth::SMALL);
             $columns[] = (new Column('rate', new RateFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getRate());
             $columns[] = (new Column('internalRate', new RateFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getInternalRate());
             $columns[] = (new Column('hourlyRate', new RateFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getHourlyRate());
             $columns[] = (new Column('fixedRate', new RateFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getFixedRate());
         }
 
-        $columns[] = (new Column('username', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getDisplayName());
+        $columns[] = (new Column('username', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getDisplayName())->withColumnWidth(ColumnWidth::MEDIUM);
         $columns[] = (new Column('account_number', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getAccountNumber());
-        $columns[] = (new Column('customer', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getName());
-        $columns[] = (new Column('project', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getName());
-        $columns[] = (new Column('activity', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getActivity()?->getName());
-        $columns[] = (new Column('description', new TextFormatter(true)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDescription());
+        $columns[] = (new Column('customer', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getName())->withColumnWidth(ColumnWidth::MEDIUM);
+        $columns[] = (new Column('project', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getName())->withColumnWidth(ColumnWidth::MEDIUM);
+        $columns[] = (new Column('activity', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getActivity()?->getName())->withColumnWidth(ColumnWidth::MEDIUM);
+        $columns[] = (new Column('description', new TextFormatter(true)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDescription())->withColumnWidth(ColumnWidth::LARGE);
         //$columns[] = (new Column('exported', new BooleanFormatter()))->withExtractor(fn(ExportableItem $exportableItem) => $exportableItem->isExported());
-        $columns[] = (new Column('billable', new BooleanFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->isBillable());
+        $columns[] = (new Column('billable', new BooleanFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->isBillable())->withColumnWidth(ColumnWidth::SMALL);
         $columns[] = (new Column('tags', new ArrayFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getTagsAsArray());
         $columns[] = (new Column('type', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getType());
         $columns[] = (new Column('category', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getCategory());

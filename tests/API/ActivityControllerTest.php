@@ -32,13 +32,12 @@ class ActivityControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
-    /**
-     * @param ActivityRate $rate
-     * @param bool $isCollection
-     * @return string
-     */
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
     {
+        self::assertInstanceOf(ActivityRate::class, $rate);
+        self::assertNotNull($rate->getActivity());
+        self::assertNotNull($rate->getActivity()->getId());
+
         if ($isCollection) {
             return $this->getRateUrl($rate->getActivity()->getId());
         }
@@ -46,7 +45,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         return $this->getRateUrl($rate->getActivity()->getId(), $rate->getId());
     }
 
-    protected function getRateUrl($id = '1', $rateId = null): string
+    protected function getRateUrl(?int $id = 1, ?int $rateId = null): string
     {
         if (null !== $rateId) {
             return \sprintf('/api/activities/%s/rates/%s', $id, $rateId);

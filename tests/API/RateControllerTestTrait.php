@@ -20,7 +20,7 @@ use App\Entity\User;
  */
 trait RateControllerTestTrait
 {
-    abstract protected function getRateUrl(string|int $id = '1', string|int|null $rateId = null): string;
+    abstract protected function getRateUrl(?int $id = 1, ?int $rateId = null): string;
 
     abstract protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string;
 
