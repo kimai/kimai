@@ -284,8 +284,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
-
-        $customer = $this->prepareFixtures($start)[0];
+        $this->prepareFixtures($start)[0];
 
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'MyInvoice', '--exported' => 'all', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
@@ -293,5 +292,20 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Created 1 invoice(s) ', $output);
         self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.pdf |', $output);
+    }
+
+    public function testCreateInvoiceWithTemplateOverwriteProjectIdMissingTemplate(): void
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $customer = $this->prepareFixtures($start)[0];
+        $customer->SetInvoiceTemplate(null);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => '1', '--template' => 'NoInvoiceTemplate', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $output = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Default template of customer is used if defined. ', $output);
+        self::assertStringContainsString('Could not find invoice template for project ', $output);
     }
 }
