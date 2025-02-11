@@ -1790,9 +1790,9 @@
         <source>settings</source>
         <target>Postavke</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Filtriraj vremenske tablice</target>
+        <target state="needs-translation">Filtriraj vremenske tablice</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

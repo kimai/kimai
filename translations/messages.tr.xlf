@@ -1822,9 +1822,9 @@
         <source>settings</source>
         <target state="translated">Ayarlar</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Çizelgeler</target>
+        <target state="needs-translation">Çizelgeler</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

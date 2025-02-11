@@ -1778,9 +1778,9 @@
         <source>settings</source>
         <target>Ustawienia</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Filtruj ewidencję pomiarów</target>
+        <target state="needs-translation">Filtruj ewidencję pomiarów</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1921,6 +1921,14 @@
       <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
         <source>costs</source>
         <target state="translated">Koszt</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Wynik</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">Trenowanie</target>
       </trans-unit>
     </body>
   </file>

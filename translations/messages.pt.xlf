@@ -1826,9 +1826,9 @@
         <source>settings</source>
         <target>Preferências</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Quadro de horários</target>
+        <target state="needs-translation">Quadro de horários</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

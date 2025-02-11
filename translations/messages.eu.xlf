@@ -1006,9 +1006,9 @@
         <source>settings</source>
         <target>Dohiketak</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Ordu taula</target>
+        <target state="needs-translation">Ordu taula</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

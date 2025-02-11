@@ -1186,9 +1186,9 @@
         <source>settings</source>
         <target>Agordoj</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Temposlipoj</target>
+        <target state="needs-translation">Temposlipoj</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
