@@ -305,7 +305,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => '1', '--template' => 'NoInvoice', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
         $output = $commandTester->getDisplay();
 
-        self::assertStringContainsString('template of customer is used if defined.', $output);
+        self::assertStringContainsString('No template for template parameter NoInvoice found', $output);
         self::assertStringContainsString('Could not find invoice template for project ', $output);
         self::assertStringContainsString('No invoice was generated', $output);
     }
