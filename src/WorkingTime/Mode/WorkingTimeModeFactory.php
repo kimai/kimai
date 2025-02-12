@@ -48,7 +48,7 @@ final class WorkingTimeModeFactory
                 \sprintf('Unknown mode "%s" requested for user %s', $user->getWorkContractMode(), $user->getId())
             );
 
-            return new WorkingTimeModeNone();
+            return new WorkingTimeModeNone(); // @CloudRequired
         }
     }
 
