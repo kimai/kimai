@@ -424,7 +424,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 1
+            count: 2
             path: src/Command/InvoiceCreateCommand.php
 
         -
