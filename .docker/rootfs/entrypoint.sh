@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 KIMAI=$(cat /opt/kimai/version.txt)
 echo $KIMAI

@@ -1,8 +1,8 @@
 volumes:
-    db:
+    db-dev:
 
 services:
-    app:
+    kimai-dev:
         image: kimai
         build:
             dockerfile: Dockerfile
@@ -12,14 +12,14 @@ services:
         environment:
             USER_ID: ${UID:-1000}
             GROUP_ID: ${GID:-1000}
-            DATABASE_URL: mysql://kimai:kimai@db:3306/kimai?charset=utf8&serverVersion=5.7
+            APP_ENV: dev
+            DATABASE_URL: mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
         volumes:
             - ./:/opt/kimai/
-            - ./var:/opt/kimai/var
         depends_on:
-            db:
+            db-dev:
                 condition: service_healthy
-    db:
+    db-dev:
         image: mysql:5.7
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: yes
@@ -27,7 +27,7 @@ services:
             MYSQL_USER: kimai
             MYSQL_PASSWORD: kimai
         volumes:
-            - db:/var/lib/mysql
+            - db-dev:/var/lib/mysql
         healthcheck:
             test: mysqladmin status
             interval: 20s
