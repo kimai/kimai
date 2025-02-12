@@ -9,6 +9,7 @@
 
 namespace App\Command;
 
+use App\Constants;
 use App\Event\EmailEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -19,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Mime\Email;
 
-#[AsCommand(name: 'kimai:mail:test', description: 'Send a test email')]
+#[AsCommand(name: 'kimai:mail:test', description: 'Send a test email using MAILER_URL and MAILER_FROM')]
 final class MailTestCommand extends Command
 {
     public function __construct(private readonly EventDispatcherInterface $dispatcher)
@@ -30,16 +31,24 @@ final class MailTestCommand extends Command
     protected function configure(): void
     {
         $this->addArgument('to', InputArgument::REQUIRED, 'The email address to send the email to');
-        $this->addOption('from', null, InputOption::VALUE_OPTIONAL, 'The sender of the message', 'kimai@example.org');
+        $this->addOption('from', null, InputOption::VALUE_OPTIONAL, 'Deprecated: uses the MAILER_FROM env variable.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $to = $input->getArgument('to');
+        if (!\is_string($to) || $to === '') {
+            throw new \InvalidArgumentException('Need a non-empty "to" address');
+        }
+
+        if ($input->getOption('from') !== null) {
+            throw new \InvalidArgumentException('The "from" option is deprecated and will be ignored');
+        }
+
         $message = new Email();
-        $message->to((string) $input->getArgument('to')); // @phpstan-ignore-line
-        $message->from((string) $input->getOption('from')); // @phpstan-ignore-line
-        $message->subject('Kimai test email');
-        $message->text('This is an email for testing the text body.');
+        $message->to($to);
+        $message->subject('Test email - ' . Constants::SOFTWARE);
+        $message->text('This is a test email from your time-tracker');
 
         $this->dispatcher->dispatch(new EmailEvent($message));
 

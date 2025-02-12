@@ -14,6 +14,8 @@ use App\WorkingTime\Mode\WorkingTimeModeDay;
 use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * @covers \App\WorkingTime\Mode\WorkingTimeModeFactory
@@ -25,7 +27,7 @@ class WorkingTimeModeFactoryTest extends TestCase
         $none = new WorkingTimeModeNone();
         $day = new WorkingTimeModeDay();
         $modes = [$none, $day];
-        $sut = new WorkingTimeModeFactory($modes);
+        $sut = new WorkingTimeModeFactory($modes, new NullLogger());
         self::assertEquals($modes, $sut->getAll());
         self::assertSame($none, $sut->getMode('none'));
         self::assertSame($day, $sut->getMode('day'));
@@ -35,12 +37,24 @@ class WorkingTimeModeFactoryTest extends TestCase
         self::assertSame($day, $sut->getModeForUser($user));
     }
 
+    public function testFallbackMode(): void
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+        $modes = [new WorkingTimeModeNone(), new WorkingTimeModeDay()];
+        $sut = new WorkingTimeModeFactory($modes, $logger);
+
+        $user = new User();
+        $user->setWorkContractMode('foo');
+        self::assertInstanceOf(WorkingTimeModeNone::class, $sut->getModeForUser($user));
+    }
+
     public function testException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown working contract mode: foo');
 
-        $sut = new WorkingTimeModeFactory([]);
+        $sut = new WorkingTimeModeFactory([], new NullLogger());
         $sut->getMode('foo');
     }
 }
