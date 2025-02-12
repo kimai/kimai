@@ -2,6 +2,22 @@ volumes:
     db-dev:
 
 services:
+    db-dev:
+        image: mariadb:lts
+        environment:
+            - MARIADB_DATABASE=kimai
+            - MARIADB_USER=kimai
+            - MARIADB_PASSWORD=kimai
+            - MARIADB_RANDOM_ROOT_PASSWORD=1
+        volumes:
+            - db-dev:/var/lib/mysql
+        healthcheck:
+            test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
     kimai-dev:
         image: kimai
         build:
@@ -10,27 +26,12 @@ services:
             target: dev
         pull_policy: build
         environment:
-            USER_ID: ${UID:-1000}
-            GROUP_ID: ${GID:-1000}
-            APP_ENV: dev
-            DATABASE_URL: mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
+            - USER_ID=${UID:-1000}
+            - GROUP_ID=${GID:-1000}
+            - APP_ENV=dev
+            - DATABASE_URL=mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
         volumes:
             - ./:/opt/kimai/
         depends_on:
             db-dev:
                 condition: service_healthy
-    db-dev:
-        image: mysql:5.7
-        environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: yes
-            MYSQL_DATABASE: kimai
-            MYSQL_USER: kimai
-            MYSQL_PASSWORD: kimai
-        volumes:
-            - db-dev:/var/lib/mysql
-        healthcheck:
-            test: mysqladmin status
-            interval: 20s
-            start_period: 10s
-            timeout: 10s
-            retries: 3
