@@ -1214,9 +1214,9 @@
         <source>Remove widget</source>
         <target state="translated">Widget entfernen</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Arbeitszeittabellen filtern</target>
+        <target state="needs-translation">Arbeitszeittabellen filtern</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

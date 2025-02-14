@@ -38,6 +38,22 @@
         <source>price</source>
         <target state="final">விலை</target>
       </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+        <source>date</source>
+        <target state="translated">திகதி</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>user</source>
+        <target state="translated">பயனர்</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+        <source>activity</source>
+        <target state="translated">செய்கைப்பாடு</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>project</source>
+        <target state="translated">திட்டம்</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

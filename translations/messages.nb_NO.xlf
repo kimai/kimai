@@ -1462,9 +1462,9 @@
         <source>settings</source>
         <target>Innstillinger</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Filtrer timesedler</target>
+        <target state="needs-translation">Filtrer timesedler</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

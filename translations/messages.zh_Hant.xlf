@@ -1898,9 +1898,9 @@
         <source>settings</source>
         <target state="final">偏好設定</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="yes">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
-        <target state="final">篩選工時單</target>
+        <target state="needs-translation">篩選工時單</target>
       </trans-unit>
     </body>
   </file>

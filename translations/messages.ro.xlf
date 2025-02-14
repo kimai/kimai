@@ -1770,9 +1770,9 @@
         <source>settings</source>
         <target>Preferințe</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Fișe de pontaj</target>
+        <target state="needs-translation">Fișe de pontaj</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

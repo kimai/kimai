@@ -332,7 +332,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">自什么时候开始工作</target>
+        <target state="translated">开始工作时间</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -1464,7 +1464,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">是-小时</target>
+        <target state="translated">工作时长</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1540,7 +1540,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">到目前为止，您已使用了 %used% 的可用假期，其中有 %days% 个。</target>
+        <target state="translated">到目前为止，您已使用了可用假期 %days%天中的 %used% 天。</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1790,9 +1790,9 @@
         <source>settings</source>
         <target>参数选择</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>时间表</target>
+        <target state="needs-translation">时间表</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1869,6 +1869,62 @@
       <trans-unit id="5vJvarK" resname="syncronisation">
         <source>syncronisation</source>
         <target state="translated">同步</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">工作时间计算</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">最后工作日</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">利润</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">休息</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">结果</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">培训</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">成本</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">会话</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">从所有设备退出</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">拒绝</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">小时/天</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">小时/月</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">小时/周</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">工作天数</target>
       </trans-unit>
     </body>
   </file>
