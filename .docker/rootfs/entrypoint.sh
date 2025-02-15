@@ -30,15 +30,15 @@ function waitForDB() {
 
 function handleStartup {
   # set mem limits and copy in custom logger config
-  if [ -z "$memory_limit" ]; then
+  if [[ -z "$memory_limit" ]]; then
     memory_limit=512M
   fi
   sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /etc/php"${PHP_VERSION}"/php.ini
 
-  if [ -z "$USER_ID" ]; then
+  if [[ -z "$USER_ID" ]]; then
     USER_ID=$(id -u www-data)
   fi
-  if [ -z "$GROUP_ID" ]; then
+  if [[ -z "$GROUP_ID" ]]; then
     GROUP_ID=$(id -g www-data)
   fi
 

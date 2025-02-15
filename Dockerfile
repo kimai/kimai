@@ -9,7 +9,6 @@
 # Kimai images for:
 # - plain PHP FPM   (kimai/kimai2:fpm)
 # - Apache with PHP (kimai/kimai2:apache)
-# - Development     (kimai/kimai2:dev)
 # ---------------------------------------------------------------------
 # For local testing by maintainer:
 #
@@ -32,7 +31,6 @@ FROM alpine:3.20 AS base
 
 ARG PHP_VERSION
 ARG KIMAI
-ARG TIMEZONE
 
 LABEL org.opencontainers.image.title="Kimai" \
       org.opencontainers.image.description="Kimai is a time-tracking application." \
@@ -46,7 +44,8 @@ LABEL org.opencontainers.image.title="Kimai" \
 
 WORKDIR /opt/kimai
 
-RUN apk --no-cache --update add \
+RUN --mount=type=cache,target=/var/cache/apk \
+    apk --update add \
     bash \
     curl \
     shadow-conv \
@@ -95,7 +94,8 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 FROM base AS dev
 ARG PHP_VERSION
 
-RUN apk --no-cache --update add \
+RUN --mount=type=cache,target=/var/cache/apk \
+    apk --update add \
     apache2 \
     php${PHP_VERSION}-apache2
 
@@ -118,7 +118,7 @@ ARG PHP_VERSION
 
 COPY --exclude=./.docker  . .
 
-RUN \
+RUN --mount=type=cache,target=/tmp/cache \
     composer install  --no-dev --optimize-autoloader && \
     composer require --update-no-dev  laminas/laminas-ldap
 
@@ -140,7 +140,8 @@ RUN \
 FROM prod AS apache
 ARG PHP_VERSION
 
-RUN apk --no-cache --update add \
+RUN --mount=type=cache,target=/var/cache/apk \
+    apk --update add \
     apache2 \
     php${PHP_VERSION}-apache2
 
@@ -162,7 +163,8 @@ CMD ["httpd", "-DFOREGROUND"]
 FROM prod AS fpm
 ARG PHP_VERSION
 
-RUN apk add \
+RUN --mount=type=cache,target=/var/cache/apk \
+    apk --update add \
     fcgi \
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-cgi && \
