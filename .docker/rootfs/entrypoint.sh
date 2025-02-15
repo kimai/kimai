@@ -28,7 +28,7 @@ function waitForDB() {
   echo "Connection established"
 }
 
-function handleStartup() {
+function handleStartup {
   # set mem limits and copy in custom logger config
   if [ -z "$memory_limit" ]; then
     memory_limit=512M
@@ -58,10 +58,16 @@ function handleStartup() {
     pwconv
   fi
 
-  export APACHE_RUN_USER=$(id -nu "$USER_ID")
-  # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
-  export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
+  if [[ "$1" = "httpd" ]]; then
+    export APACHE_RUN_USER=$(id -nu "$USER_ID")
+    # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
+    export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
+  fi
 
+  if [[ "$1" = "php-fpm" ]]; then
+      sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
+      sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
+    fi
 }
 
 function prepareKimai() {
@@ -77,7 +83,7 @@ function prepareKimai() {
 }
 
 waitForDB
-handleStartup
+handleStartup "$1"
 prepareKimai
 
 echo ""
