@@ -65,9 +65,9 @@ function handleStartup {
   fi
 
   if [[ "$1" = "php-fpm" ]]; then
-      sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
-      sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    fi
+    sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
+    sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
+  fi
 }
 
 function prepareKimai() {

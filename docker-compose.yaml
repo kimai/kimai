@@ -19,19 +19,19 @@ services:
             retries: 3
 
     kimai-dev:
-        image: kimai
-        build:
-            dockerfile: Dockerfile
-            context: .
-            target: dev
-        pull_policy: build
+        image: thecodingmachine/php:8.2-v4-apache
         environment:
-            - USER_ID=${UID:-1000}
-            - GROUP_ID=${GID:-1000}
+            - PHP_EXTENSIONS=xdebug gd intl
+            - PHP_INI_MEMORY_LIMIT:=1g
+            - APACHE_DOCUMENT_ROOT=public/
+            - STARTUP_COMMAND_1=composer install
+
             - APP_ENV=dev
             - DATABASE_URL=mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
         volumes:
-            - ./:/opt/kimai/
+            - ./:/var/www/html
         depends_on:
             db-dev:
                 condition: service_healthy
+        expose:
+            - 80
