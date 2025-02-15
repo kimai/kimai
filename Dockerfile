@@ -72,7 +72,8 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-session \
     php${PHP_VERSION}-ctype
 
-ENV APP_ENV=prod \
+ENV KIMAI=${KIMAI} \
+    APP_ENV=prod \
     APP_SECRET=change_this_to_something_unique \
     # The default container name for nginx is nginx \
     TRUSTED_PROXIES=nginx,localhost,127.0.0.1 \
@@ -81,15 +82,12 @@ ENV APP_ENV=prod \
     MAILER_URL=null://localhost \
     ADMINPASS="" \
     ADMINMAIL="" \
-    memory_limit=512M \
-    COMPOSER_MEMORY_LIMIT=-1 \
-    PHP_VERSION=${PHP_VERSION}
+    PHP_MEMORY_LIMIT=512M \
+    COMPOSER_MEMORY_LIMIT=-1
 
-COPY .docker/rootfs /
-
-VOLUME [ "/opt/kimai/var" ]
-
-ENTRYPOINT [ "/entrypoint.sh" ]
+RUN \
+    sed -i "s|memory_limit = 128M|memory_limit = \${PHP_MEMORY_LIMIT}|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|128M|-1|g" /etc/php${PHP_VERSION}/php.ini > /opt/kimai/php-cli.ini
 
 FROM base AS dev
 ARG PHP_VERSION
@@ -100,8 +98,10 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-apache2
 
 RUN \
-    sed -i "s/#LoadModule rewrite_module/LoadModule rewrite_module/g" /etc/apache2/httpd.conf && \
-    sed -i "s/#ServerName www.example.com:80/ServerName localhost/g" /etc/apache2/httpd.conf && \
+    sed -i "s|ErrorLog logs/error.log|ErrorLog /dev/stderr|g" /etc/apache2/httpd.conf && \
+    sed -i "s|CustomLog logs/access.log|CustomLog /dev/stdout|g" /etc/apache2/httpd.conf && \
+    sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf && \
+    sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf && \
     echo "Listen 8001" >> /etc/apache2/httpd.conf
 
 COPY .docker/000-default.conf /etc/apache2/conf.d/000-default.conf
@@ -116,26 +116,26 @@ CMD ["httpd", "-DFOREGROUND"]
 FROM base AS prod
 ARG PHP_VERSION
 
-COPY --exclude=./.docker  . .
+COPY --exclude=./.docker . .
 
 RUN --mount=type=cache,target=/tmp/cache \
     composer install  --no-dev --optimize-autoloader && \
     composer require --update-no-dev  laminas/laminas-ldap
 
 RUN \
-    mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
-    sed "s/128M/-1/g" /etc/php${PHP_VERSION}/php.ini > /opt/kimai/php-cli.ini \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    sed -i "s|expose_php = On|expose_php = Off|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|;opcache.enable=1|opcache.enable=1|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|;opcache.memory_consumption=128|opcache.memory_consumption=256|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=24|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=100000|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|opcache.validate_timestamps=1|opcache.validate_timestamps=0|g" /etc/php${PHP_VERSION}/php.ini && \
+    sed -i "s|session.gc_maxlifetime = 1440|session.gc_maxlifetime = 604800|g" /etc/php${PHP_VERSION}/php.ini
 
-RUN \
-    sed -i "s/expose_php = On/expose_php = Off/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/;opcache.enable=1/opcache.enable=1/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/;opcache.memory_consumption=128/opcache.memory_consumption=256/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=24/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=100000/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/opcache.validate_timestamps=1/opcache.validate_timestamps=0/g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 604800/g" /etc/php${PHP_VERSION}/php.ini
+COPY .docker/rootfs /
 
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+VOLUME [ "/opt/kimai/var" ]
 
 FROM prod AS apache
 ARG PHP_VERSION
@@ -146,8 +146,10 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-apache2
 
 RUN \
-    sed -i "s/#LoadModule rewrite_module/LoadModule rewrite_module/g" /etc/apache2/httpd.conf && \
-    sed -i "s/#ServerName www.example.com:80/ServerName localhost/g" /etc/apache2/httpd.conf && \
+    sed -i "s|ErrorLog logs/error.log|ErrorLog /dev/stderr|g" /etc/apache2/httpd.conf && \
+    sed -i "s|CustomLog logs/access.log|CustomLog /dev/stdout|g" /etc/apache2/httpd.conf && \
+    sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf && \
+    sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf && \
     echo "Listen 8001" >> /etc/apache2/httpd.conf
 
 COPY .docker/000-default.conf /etc/apache2/conf.d/000-default.conf
@@ -171,8 +173,12 @@ RUN --mount=type=cache,target=/var/cache/apk \
     ln -s /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm
 
 RUN \
-    sed -i "s/;ping.path/ping.path/g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
-    sed -i "s/;access.suppress_path\[\] = \/ping/access.suppress_path\[\] = \/ping/g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf
+    sed -i "s|;ping.path|ping.path|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
+    sed -i "s|;access.suppress_path\[\] = /ping|access.suppress_path\[\] = /ping|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf
+
+RUN --mount=type=cache,target=/tmp/cache \
+    composer install  --no-dev --optimize-autoloader && \
+    composer require --update-no-dev  laminas/laminas-ldap
 
 EXPOSE 9000
 

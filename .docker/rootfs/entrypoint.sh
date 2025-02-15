@@ -1,11 +1,9 @@
 #!/bin/bash
 
 set -o errexit
-set -o nounset
+#set -o nounset
 set -o pipefail
-
-KIMAI=$(cat /opt/kimai/version.txt)
-echo $KIMAI
+#set -o xtrace # Uncomment this line for debugging purposes
 
 function waitForDB() {
   # Parse sql connection data
@@ -28,48 +26,6 @@ function waitForDB() {
   echo "Connection established"
 }
 
-function handleStartup {
-  # set mem limits and copy in custom logger config
-  if [[ -z "$memory_limit" ]]; then
-    memory_limit=512M
-  fi
-  sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /etc/php"${PHP_VERSION}"/php.ini
-
-  if [[ -z "$USER_ID" ]]; then
-    USER_ID=$(id -u www-data)
-  fi
-  if [[ -z "$GROUP_ID" ]]; then
-    GROUP_ID=$(id -g www-data)
-  fi
-
-  # if group doesn't exist
-  if grep -w "$GROUP_ID" /etc/group &>/dev/null; then
-    echo Group already exists
-  else
-    echo www-kimai:x:"$GROUP_ID": >> /etc/group
-    grpconv
-  fi
-
-  # if user doesn't exist
-  if id "$USER_ID" &>/dev/null; then
-    echo User already exists
-  else
-    echo www-kimai:x:"$USER_ID":"$GROUP_ID":www-kimai:/var/www:/usr/sbin/nologin >> /etc/passwd
-    pwconv
-  fi
-
-  if [[ "$1" = "httpd" ]]; then
-    export APACHE_RUN_USER=$(id -nu "$USER_ID")
-    # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
-    export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
-  fi
-
-  if [[ "$1" = "php-fpm" ]]; then
-    sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
-  fi
-}
-
 function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
   /opt/kimai/bin/console -n kimai:install
@@ -79,12 +35,12 @@ function prepareKimai() {
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
   /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
-  chown -R $USER_ID:$GROUP_ID /opt/kimai/var
 }
 
-waitForDB
-handleStartup "$1"
-prepareKimai
+if [[ "$1" = "httpd" || "$1" = "php-fpm" ]]; then
+  waitForDB
+  prepareKimai
+fi
 
 echo ""
 exec "$@"

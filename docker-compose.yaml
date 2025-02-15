@@ -25,9 +25,8 @@ services:
             context: .
             target: dev
         pull_policy: build
+        user: ${UID:-1000}:${GID:-1000}
         environment:
-            - USER_ID=${UID:-1000}
-            - GROUP_ID=${GID:-1000}
             - APP_ENV=dev
             - DATABASE_URL=mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
         volumes:
