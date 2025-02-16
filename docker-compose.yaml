@@ -20,6 +20,7 @@ services:
 
     kimai-dev:
         image: kimai
+        working_dir: /opt/kimai/
         build:
             dockerfile: Dockerfile
             context: .

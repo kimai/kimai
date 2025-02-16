@@ -70,7 +70,7 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-session \
     php${PHP_VERSION}-ctype
 
-RUN addgroup -S docker && adduser -S docker -G docker
+RUN addgroup -S docker && adduser -S docker -G docker --uid 1000
 
 ENV KIMAI=${KIMAI} \
     APP_ENV=prod \
@@ -92,8 +92,6 @@ COPY .docker/rootfs/entrypoint.sh .docker/rootfs/dbtest.php /
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-VOLUME [ "/opt/kimai/var" ]
-
 FROM base AS dev
 ARG PHP_VERSION
 
@@ -103,10 +101,13 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-apache2
 
 RUN \
+    sed -i "s|User apache|User docker|g" /etc/apache2/httpd.conf && \
+    sed -i "s|Group apache|Group docker|g" /etc/apache2/httpd.conf && \
     sed -i "s|ErrorLog logs/error.log|ErrorLog /proc/self/fd/2|g" /etc/apache2/httpd.conf && \
     sed -i "s|CustomLog logs/access.log|CustomLog /proc/self/fd/1|g" /etc/apache2/httpd.conf && \
     sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf && \
     sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf && \
+    sed -i "s|PidFile \"/run/apache2/httpd.pid\"|PidFile \"/tmp/httpd.pid\"|g" /etc/apache2/conf.d/mpm.conf && \
     echo "Listen 8001" >> /etc/apache2/httpd.conf
 
 COPY .docker/000-default.conf /etc/apache2/conf.d/000-default.conf
@@ -147,6 +148,8 @@ USER root
 
 RUN \
     sed -i "s|128M|-1|g" /etc/php${PHP_VERSION}/php.ini > /opt/kimai/php-cli.ini
+
+VOLUME [ "/opt/kimai/var" ]
 
 FROM prod AS apache
 ARG PHP_VERSION
