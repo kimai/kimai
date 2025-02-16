@@ -3300,8 +3300,3 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserDurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserDurationYearTest.php
-
-        -   
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1 
-            path: Command/InvoiceCreateCommandTest.php

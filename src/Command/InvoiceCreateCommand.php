@@ -38,6 +38,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class InvoiceCreateCommand extends Command
 {
     private ?string $previewDirectory = null;
+    private ?string $overwriteTemplate = null;
     private bool $previewUniqueFile = false;
 
     public function __construct(
@@ -279,7 +280,7 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $output);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $io);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -357,7 +358,7 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $output);
+            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $io);
 
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
@@ -445,10 +446,8 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, OutputInterface $output): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, SymfonyStyle $io): ?InvoiceTemplate
     {
-        $io = new SymfonyStyle($input, $output);
-
         $template = $input->getOption('template');
 
         if (null === $template) {

@@ -299,7 +299,8 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
         $customer = $this->prepareFixtures($start)[0];
-        $template = $customer->GetInvoiceTemplate();
+        $template = $customer->getInvoiceTemplate();
+        self::assertNotNull($template);
         $templateId = $template->getId();
         $customer->SetInvoiceTemplate(null);
 
