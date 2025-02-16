@@ -42,8 +42,6 @@ LABEL org.opencontainers.image.title="Kimai" \
       org.opencontainers.image.vendor="Kevin Papst" \
       org.opencontainers.image.licenses="AGPL-3.0"
 
-WORKDIR /opt/kimai
-
 RUN --mount=type=cache,target=/var/cache/apk \
     apk --update add \
     bash \
@@ -72,6 +70,8 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-session \
     php${PHP_VERSION}-ctype
 
+RUN addgroup -S docker && adduser -S docker -G docker
+
 ENV KIMAI=${KIMAI} \
     APP_ENV=prod \
     APP_SECRET=change_this_to_something_unique \
@@ -86,8 +86,13 @@ ENV KIMAI=${KIMAI} \
     COMPOSER_MEMORY_LIMIT=-1
 
 RUN \
-    sed -i "s|memory_limit = 128M|memory_limit = \${PHP_MEMORY_LIMIT}|g" /etc/php${PHP_VERSION}/php.ini && \
-    sed -i "s|128M|-1|g" /etc/php${PHP_VERSION}/php.ini > /opt/kimai/php-cli.ini
+    sed -i "s|memory_limit = 128M|memory_limit = \${PHP_MEMORY_LIMIT}|g" /etc/php${PHP_VERSION}/php.ini
+
+COPY .docker/rootfs/entrypoint.sh .docker/rootfs/dbtest.php /
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+VOLUME [ "/opt/kimai/var" ]
 
 FROM base AS dev
 ARG PHP_VERSION
@@ -98,13 +103,15 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-apache2
 
 RUN \
-    sed -i "s|ErrorLog logs/error.log|ErrorLog /dev/stderr|g" /etc/apache2/httpd.conf && \
-    sed -i "s|CustomLog logs/access.log|CustomLog /dev/stdout|g" /etc/apache2/httpd.conf && \
+    sed -i "s|ErrorLog logs/error.log|ErrorLog /proc/self/fd/2|g" /etc/apache2/httpd.conf && \
+    sed -i "s|CustomLog logs/access.log|CustomLog /proc/self/fd/1|g" /etc/apache2/httpd.conf && \
     sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf && \
     sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf && \
     echo "Listen 8001" >> /etc/apache2/httpd.conf
 
 COPY .docker/000-default.conf /etc/apache2/conf.d/000-default.conf
+
+WORKDIR /opt/kimai
 
 EXPOSE 8001
 
@@ -116,12 +123,6 @@ CMD ["httpd", "-DFOREGROUND"]
 FROM base AS prod
 ARG PHP_VERSION
 
-COPY --exclude=./.docker . .
-
-RUN --mount=type=cache,target=/tmp/cache \
-    composer install  --no-dev --optimize-autoloader && \
-    composer require --update-no-dev  laminas/laminas-ldap
-
 RUN \
     sed -i "s|expose_php = On|expose_php = Off|g" /etc/php${PHP_VERSION}/php.ini && \
     sed -i "s|;opcache.enable=1|opcache.enable=1|g" /etc/php${PHP_VERSION}/php.ini && \
@@ -131,11 +132,21 @@ RUN \
     sed -i "s|opcache.validate_timestamps=1|opcache.validate_timestamps=0|g" /etc/php${PHP_VERSION}/php.ini && \
     sed -i "s|session.gc_maxlifetime = 1440|session.gc_maxlifetime = 604800|g" /etc/php${PHP_VERSION}/php.ini
 
-COPY .docker/rootfs /
+USER docker
+WORKDIR /opt/kimai
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+COPY --exclude=./.docker --chown=docker:docker . .
+COPY --chown=docker:docker .docker/monolog.yaml ./config/package/
 
-VOLUME [ "/opt/kimai/var" ]
+RUN --mount=type=cache,target=/tmp/cache \
+    COMPOSER_CACHE_DIR=/tmp/cache \
+    composer install  --no-dev --optimize-autoloader && \
+    composer require --update-no-dev  laminas/laminas-ldap
+
+USER root
+
+RUN \
+    sed -i "s|128M|-1|g" /etc/php${PHP_VERSION}/php.ini > /opt/kimai/php-cli.ini
 
 FROM prod AS apache
 ARG PHP_VERSION
@@ -146,13 +157,18 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-apache2
 
 RUN \
-    sed -i "s|ErrorLog logs/error.log|ErrorLog /dev/stderr|g" /etc/apache2/httpd.conf && \
-    sed -i "s|CustomLog logs/access.log|CustomLog /dev/stdout|g" /etc/apache2/httpd.conf && \
+    sed -i "s|User apache|User docker|g" /etc/apache2/httpd.conf && \
+    sed -i "s|Group apache|Group docker|g" /etc/apache2/httpd.conf && \
+    sed -i "s|ErrorLog logs/error.log|ErrorLog /proc/self/fd/2|g" /etc/apache2/httpd.conf && \
+    sed -i "s|CustomLog logs/access.log|CustomLog /proc/self/fd/1|g" /etc/apache2/httpd.conf && \
     sed -i "s|#LoadModule rewrite_module|LoadModule rewrite_module|g" /etc/apache2/httpd.conf && \
     sed -i "s|#ServerName www.example.com:80|ServerName localhost|g" /etc/apache2/httpd.conf && \
+    sed -i "s|PidFile \"/run/apache2/httpd.pid\"|PidFile \"/tmp/httpd.pid\"|g" /etc/apache2/conf.d/mpm.conf && \
     echo "Listen 8001" >> /etc/apache2/httpd.conf
 
 COPY .docker/000-default.conf /etc/apache2/conf.d/000-default.conf
+
+USER docker
 
 EXPOSE 8001
 
@@ -173,12 +189,11 @@ RUN --mount=type=cache,target=/var/cache/apk \
     ln -s /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm
 
 RUN \
+    sed -i "s|;error_log = log/php83/error.log|error_log = /proc/self/fd/2|g" /etc/php${PHP_VERSION}/php-fpm.conf && \
     sed -i "s|;ping.path|ping.path|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
     sed -i "s|;access.suppress_path\[\] = /ping|access.suppress_path\[\] = /ping|g" /etc/php${PHP_VERSION}/php-fpm.d/www.conf
 
-RUN --mount=type=cache,target=/tmp/cache \
-    composer install  --no-dev --optimize-autoloader && \
-    composer require --update-no-dev  laminas/laminas-ldap
+USER docker
 
 EXPOSE 9000
 
