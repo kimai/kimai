@@ -381,7 +381,7 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @dataProvider getMoneyData62_1
      */
-    public function testMoney62_1(string $result, null|int|float $amount, string $currency, string $locale): void
+    public function testMoney621(string $result, null|int|float $amount, string $currency, string $locale): void
     {
         IntlTestHelper::requireFullIntl($this, '62.1');
 

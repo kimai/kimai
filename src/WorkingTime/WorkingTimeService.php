@@ -12,6 +12,7 @@ namespace App\WorkingTime;
 use App\Entity\User;
 use App\Entity\WorkingTime;
 use App\Event\WorkingTimeApproveMonthEvent;
+use App\Event\WorkingTimeQueryStatsEvent;
 use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
@@ -234,6 +235,9 @@ final class WorkingTimeService
             ->setParameter('user', $user->getId())
             ->addGroupBy('day')
         ;
+
+        $event = new WorkingTimeQueryStatsEvent($qb, $user, $begin, $end);
+        $this->eventDispatcher->dispatch($event);
 
         $results = $qb->getQuery()->getResult();
 

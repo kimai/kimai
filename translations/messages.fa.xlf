@@ -1438,9 +1438,9 @@
         <source>settings</source>
         <target state="translated">ترجیحات</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">فیلتر تایم شیت ها</target>
+        <target state="needs-translation">فیلتر تایم شیت ها</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

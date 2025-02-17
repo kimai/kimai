@@ -1254,9 +1254,9 @@
         <source>settings</source>
         <target state="translated">기본 설정</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">타임시트 필터링</target>
+        <target state="needs-translation">타임시트 필터링</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>

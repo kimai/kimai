@@ -1750,6 +1750,10 @@
         <source>booking_allow_only_work_days</source>
         <target>Allow time entries only for days for which expected hours are defined in the employment contract</target>
       </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project">
+        <source>attendance_only_project</source>
+        <target>Only count entries of the selected project as working time</target>
+      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires">
         <source>Expiry date</source>
         <target>Expiry date</target>

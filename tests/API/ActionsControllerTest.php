@@ -25,7 +25,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
         $this->assertUrlIsSecured('/api/actions/timesheet/1/index/en');
     }
 
-    public function test_getTimesheetActions(): void
+    public function testGetTimesheetActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -73,7 +73,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
         }
     }
 
-    public function test_getActivityActions(): void
+    public function testGetActivityActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -125,7 +125,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
         }
     }
 
-    public function test_getProjectActions(): void
+    public function testGetProjectActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -176,7 +176,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
         }
     }
 
-    public function test_getCustomerActions(): void
+    public function testGetCustomerActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
