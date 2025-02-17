@@ -1826,9 +1826,9 @@
         <source>settings</source>
         <target>Preferencias</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target>Partes de horas</target>
+        <target state="translated">Partes de horas</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1912,7 +1912,7 @@
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
         <source>Rejected</source>
-        <target state="needs-translation">Rechazado</target>
+        <target state="translated">Rechazado</target>
       </trans-unit>
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
         <source>Log out of all devices</source>
@@ -1925,6 +1925,10 @@
       <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
         <source>training</source>
         <target state="translated">Capacitación</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Resultado</target>
       </trans-unit>
     </body>
   </file>

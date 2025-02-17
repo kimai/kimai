@@ -1750,9 +1750,9 @@
         <source>settings</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="translated">Фильтр табелей</target>
+        <target state="needs-translation">Фильтр табелей</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
