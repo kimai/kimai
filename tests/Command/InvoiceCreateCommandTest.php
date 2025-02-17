@@ -158,12 +158,12 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     public function testCreateWithInvalidCustomer(): void
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3], 'Unknown customer ID: 3');
     }
 
     public function testCreateWithInvalidProject(): void
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => 3, '--template' => 'x'], 'Unknown project ID: 3');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => 3], 'Unknown project ID: 3');
     }
 
     public function testCreateInvoice(): void
@@ -209,6 +209,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $fixture->setAmount(20);
         $fixture->setStartDate($start);
         $fixture->setProjects($projects);
+        $fixture->setHourlyRate(true);
         $this->importFixture($fixture);
 
         return [$customer];
@@ -323,8 +324,19 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => '1', '--template' => 'NoInvoice', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
         $output = $commandTester->getDisplay();
 
-        self::assertStringContainsString('No template for template parameter NoInvoice found', $output);
-        self::assertStringContainsString('Could not find invoice template for project ', $output);
-        self::assertStringContainsString('No invoice was generated', $output);
+        self::assertStringContainsString('Invalid invoice template name or id given', $output);
+    }
+
+    public function testCreateInvoiceByProjectIdSearchTerm(): void
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => '1', '--template' => 'Invoice', '--search' => 'wxjehrchskejrht', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $output = $commandTester->getDisplay();
+
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 }

@@ -424,8 +424,13 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 2
+            count: 1
             path: src/Command/InvoiceCreateCommand.php
+
+        -
+            message: "#^Parameter \\#1 \\$template of method App\\\\Command\\\\InvoiceCreateCommand\\:\\:getCommandLineArgumentTemplateForCustomer\\(\\) expects string, mixed given\\.$#"
+            path: src/Command/InvoiceCreateCommand.php
+            count: 1
 
         -
             message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"

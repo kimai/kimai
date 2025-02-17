@@ -38,7 +38,6 @@ use Symfony\Component\HttpFoundation\Response;
 final class InvoiceCreateCommand extends Command
 {
     private ?string $previewDirectory = null;
-    private ?string $overwriteTemplate = null;
     private bool $previewUniqueFile = false;
 
     public function __construct(
@@ -186,7 +185,7 @@ final class InvoiceCreateCommand extends Command
             $searchTerm = new SearchTerm($input->getOption('search'));
         }
 
-        if ($input->getOption('preview') !== null) {
+        if (null !== $input->getOption('preview')) {
             $this->previewUniqueFile = (bool) $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
@@ -198,6 +197,16 @@ final class InvoiceCreateCommand extends Command
             @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
+        $overwriteTemplate = null;
+        if (null !== $input->getOption('template')) {
+            $overwriteTemplate = $this->getCommandLineArgumentTemplateForCustomer($input->getOption('template'));
+            if (null === $overwriteTemplate){
+                $io->error('Invalid invoice template name or id given');
+
+                return Command::FAILURE;
+            }
+        }
+
         // =============== VALIDATION END ===============
 
         $defaultQuery = new InvoiceQuery();
@@ -206,6 +215,10 @@ final class InvoiceCreateCommand extends Command
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
         $defaultQuery->setExported($exportedFilter);
+        if (null !== $overwriteTemplate){
+            $defaultQuery->setTemplate($overwriteTemplate);
+            $defaultQuery->setAllowTemplateOverwrite(true);
+        }
 
         /** @var Invoice[] $invoices */
         $invoices = [];
@@ -280,19 +293,15 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $io);
-
+            $tpl = $query->getTemplate();
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
                 if (null === $tpl) {
                     $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                     continue;
                 }
-            } else {
-                $query->setAllowTemplateOverwrite(true);
+                $query->setTemplate($tpl);
             }
-
-            $query->setTemplate($tpl);
 
             try {
                 if (null !== $this->previewDirectory) {
@@ -358,19 +367,15 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getCommandLineArgumentTemplateForCustomer($input, $io);
-
+            $tpl = $query->getTemplate();
             if (null === $tpl) {
                 $tpl = $customer->getInvoiceTemplate();
                 if (null === $tpl) {
                     $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
                     continue;
                 }
-            } else {
-                $query->setAllowTemplateOverwrite(true);
+                $query->setTemplate($tpl);
             }
-
-            $query->setTemplate($tpl);
 
             try {
                 if (null !== $this->previewDirectory) {
@@ -446,29 +451,15 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getCommandLineArgumentTemplateForCustomer(InputInterface $input, SymfonyStyle $io): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(string $template): ?InvoiceTemplate
     {
-        $template = $input->getOption('template');
-
-        if (null === $template) {
-            return null;
-        }
-
         $tpl = $this->invoiceTemplateRepository->find($template);
 
         if (null !== $tpl) {
             return $tpl;
         }
 
-        $tpl = $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
-
-        if (null === $tpl) {
-            $io->warning(
-                \sprintf('No template for template parameter %s found. Default template of customer is used if defined.', $template)
-            );
-        }
-
-        return $tpl;
+        return $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
     }
 
     /**
