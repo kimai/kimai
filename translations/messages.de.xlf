@@ -1750,6 +1750,10 @@
         <source>booking_allow_only_work_days</source>
         <target>Erlaube Zeiteinträge nur an Tagen, für die im Arbeitsvertrag Sollstunden hinterlegt sind</target>
       </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project">
+        <source>attendance_only_project</source>
+        <target>Nur Einträge des ausgewählten Projekts als Arbeitszeit zählen</target>
+      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires">
         <source>Expiry date</source>
         <target>Ablaufdatum</target>
