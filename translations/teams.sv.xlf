@@ -12,23 +12,23 @@
       </trans-unit>
       <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
         <source>team.visibility_global</source>
-        <target state="translated">Synlig för alla, eftersom inge grupp är tilldelad.</target>
+        <target state="translated">Synlig för alla, eftersom att inga grupper är tilldelade ännu.</target>
       </trans-unit>
       <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
         <source>team.visibility_restricted</source>
-        <target state="translated">Endast synlig för följande grupper (samt alla administratörer).</target>
+        <target state="translated">Endast synlig för följande grupper och alla administratörer.</target>
       </trans-unit>
       <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
         <source>team.project_visibility_inherited</source>
-        <target state="translated">Projektet har begränsad tillgång, eftersom gruppbehörigheter är inställda för kunden.</target>
+        <target state="translated">Projektet har begränsad åtkomst eftersom att grupp-behörigheter är inställda för kunden.</target>
       </trans-unit>
       <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
         <source>team.create_default</source>
-        <target state="translated">Skapa en ny grupp för att begränsa tillgång</target>
+        <target state="translated">Skapa en ny grupp för att begränsa åtkomst</target>
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
         <source>team.activity_visibility_inherited</source>
-        <target state="translated">Detta projekt har begränsad åtkomst eftersom gruppbehörigheter är satta för projektet och/eller kunden.</target>
+        <target state="translated">Aktiviteten har begränsad åtkomst eftersom att grupp-behörigheter är satta för projektet och/eller kunden.</target>
       </trans-unit>
       <trans-unit id="6g81kYY" approved="no" resname="team.member">
         <source>team.member</source>

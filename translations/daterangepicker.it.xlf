@@ -34,6 +34,18 @@
         <source>This year — until today</source>
         <target state="final">Quest'anno - fino ad oggi</target>
       </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisMonth</source>
+        <target state="final">Questo mese</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastMonth</source>
+        <target state="final">Il mese scorso</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="final">Questo anno finanziario</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

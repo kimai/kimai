@@ -1930,6 +1930,10 @@
         <source>training</source>
         <target state="final">Formazione</target>
       </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
+        <source>attendance_only_project</source>
+        <target state="final">Contare solo le voci del progetto selezionato come tempo di lavoro</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
