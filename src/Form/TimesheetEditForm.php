@@ -311,10 +311,7 @@ class TimesheetEditForm extends AbstractType
         $builder->add('duration', DurationType::class, $durationOptions);
 
         if ($this->systemConfiguration->isBreakTimeEnabled()) {
-            $builder->add('break', DurationType::class, array_merge(
-                $durationOptions,
-                ['label' => 'break', 'preset_hours' => []]
-            ));
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false]);
         }
 
         $builder->addEventListener(
