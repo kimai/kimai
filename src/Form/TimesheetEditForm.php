@@ -310,14 +310,26 @@ class TimesheetEditForm extends AbstractType
 
         $builder->add('duration', DurationType::class, $durationOptions);
 
+        if ($this->systemConfiguration->isBreakTimeEnabled()) {
+            $builder->add('break', DurationType::class, array_merge(
+                $durationOptions,
+                ['label' => 'break', 'preset_hours' => []]
+            ));
+        }
+
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                /** @var Timesheet|null $timesheet */
-                $timesheet = $event->getData();
-                if (null === $timesheet || $timesheet->isRunning()) {
-                    $event->getForm()->get('duration')->setData(null);
-                }
+                /* @var Timesheet|null $timesheet */
+                // TODO why was the next code added?
+                //$timesheet = $event->getData();
+                //if (null === $timesheet || $timesheet->isRunning()) {
+                //    $event->getForm()->get('duration')->setData(null);
+                //}
+
+                // having a value inside here causes issues with calculators that change the duration (e.g. break times)
+                // so the duration field needs always be set to null
+                //$event->getForm()->get('duration')->setData(null);
             }
         );
 
@@ -338,7 +350,7 @@ class TimesheetEditForm extends AbstractType
 
                 $duration = $timesheet->getDuration() ?? 0;
 
-                // only apply the duration, if the end is not yet set
+                // only apply the duration, if the end is not yet set.
                 // without that check, the end would be overwritten and the real end time would be lost
                 if (($forceApply && $duration > 0) || ($duration > 0 && $timesheet->isRunning())) {
                     $end = clone $timesheet->getBegin();
