@@ -320,16 +320,11 @@ class TimesheetEditForm extends AbstractType
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                /* @var Timesheet|null $timesheet */
-                // TODO why was the next code added?
-                //$timesheet = $event->getData();
-                //if (null === $timesheet || $timesheet->isRunning()) {
-                //    $event->getForm()->get('duration')->setData(null);
-                //}
-
-                // having a value inside here causes issues with calculators that change the duration (e.g. break times)
-                // so the duration field needs always be set to null
-                //$event->getForm()->get('duration')->setData(null);
+                /** @var Timesheet|null $timesheet */
+                $timesheet = $event->getData();
+                if (null === $timesheet || $timesheet->isRunning()) {
+                    $event->getForm()->get('duration')->setData(null);
+                }
             }
         );
 
