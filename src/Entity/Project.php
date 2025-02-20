@@ -87,7 +87,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Project_Entity'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getOrderDate')]
-    #[Exporter\Expose(label: 'orderDate', type: 'datetime')]
     private ?\DateTime $orderDate = null;
     /**
      * Project start date (times before this date cannot be recorded)
@@ -99,7 +98,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getStart')]
-    #[Exporter\Expose(label: 'project_start', type: 'datetime')]
     private ?\DateTime $start = null;
     /**
      * Project end time (times after this date cannot be recorded)
@@ -111,7 +109,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getEnd')]
-    #[Exporter\Expose(label: 'project_end', type: 'datetime')]
     private ?\DateTime $end = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: true)]
     private ?string $timezone = null;
@@ -291,6 +288,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         $this->localized = true;
     }
 
+    #[Exporter\Expose(name: 'orderDate', label: 'orderDate', type: 'date')]
     public function getOrderDate(): ?\DateTime
     {
         $this->localizeDates();
@@ -309,6 +307,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this;
     }
 
+    #[Exporter\Expose(name: 'start', label: 'project_start', type: 'date')]
     public function getStart(): ?\DateTime
     {
         $this->localizeDates();
@@ -327,6 +326,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this;
     }
 
+    #[Exporter\Expose(name: 'end', label: 'project_end', type: 'date')]
     public function getEnd(): ?\DateTime
     {
         $this->localizeDates();
