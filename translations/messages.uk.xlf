@@ -1930,6 +1930,10 @@
         <source>result</source>
         <target state="translated">Результат</target>
       </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Зараховувати як робочий час лише записи вибраного проекту</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
