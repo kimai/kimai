@@ -218,10 +218,6 @@
         <source>file</source>
         <target state="translated">Berkas</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">Profil saya</target>
-      </trans-unit>
       <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
         <source>api_token</source>
         <target state="translated">Kata sandi API</target>

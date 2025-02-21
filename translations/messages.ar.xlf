@@ -642,10 +642,6 @@
         <source>attachments</source>
         <target>ملفات</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">ملفي التعريفي</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>بحث</target>

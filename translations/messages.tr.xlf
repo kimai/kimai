@@ -50,10 +50,6 @@
         <source>search</source>
         <target state="translated">Ara</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">Profilim</target>
-      </trans-unit>
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Parola</target>

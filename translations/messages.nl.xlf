@@ -50,10 +50,6 @@
         <source>search</source>
         <target>Zoeken</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Mijn profiel</target>
-      </trans-unit>
       <trans-unit id="XohImNo" resname="password">
         <source>Password</source>
         <target state="translated">Wachtwoord</target>

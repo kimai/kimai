@@ -554,10 +554,6 @@
         <source>orderBy</source>
         <target state="translated">இதால் அடுக்கு</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile" xml:space="preserve" approved="no">
-        <source>my.profile</source>
-        <target state="translated">தன் விவரக்குறிப்பு</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="no">
         <source>update_multiple</source>
         <target state="translated">%action%%count% உள்ளீடுகள்</target>

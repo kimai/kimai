@@ -162,10 +162,6 @@
         <source>remove_default</source>
         <target state="translated">Видалити обране в пошуку</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">Мій профіль</target>
-      </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
         <target state="translated">Розцінки ще не додано.</target>

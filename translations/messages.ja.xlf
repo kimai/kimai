@@ -710,10 +710,6 @@
         <source>orderBy</source>
         <target state="translated">並べ替え</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">プロフィール</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
         <target state="translated">%count%個のエントリーを%action%しますか</target>

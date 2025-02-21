@@ -54,10 +54,6 @@
         <source>search</source>
         <target state="final">Cerca</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile" approved="yes">
-        <source>my.profile</source>
-        <target state="final">Il mio profilo</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" approved="yes">
         <source>update_multiple</source>
         <target state="final">%action% %count% voci</target>
