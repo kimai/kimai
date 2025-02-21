@@ -238,9 +238,9 @@
         <source>tag</source>
         <target state="translated">Tunnisteet</target>
       </trans-unit>
-      <trans-unit id="E_bHhGR" resname="hourlyRate">
+      <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve">
         <source>hourlyRate</source>
-        <target state="translated">Tunti hinta</target>
+        <target state="translated">Tuntihinta</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
@@ -254,9 +254,9 @@
         <source>rate</source>
         <target state="translated">Hinta</target>
       </trans-unit>
-      <trans-unit id="djL6LMC" resname="help.rate">
+      <trans-unit id="djL6LMC" resname="help.rate" xml:space="preserve">
         <source>help.rate</source>
-        <target state="translated">Muutettava tunti hinta</target>
+        <target state="translated">Veloitettava tuntihinta</target>
       </trans-unit>
       <trans-unit id="5ofAsOs" resname="internalRate">
         <source>internalRate</source>
@@ -366,9 +366,9 @@
         <source>modal.columns.title</source>
         <target state="translated">Muuta sarakkeen näkyvyyttä</target>
       </trans-unit>
-      <trans-unit id="_0tuMNE" resname="fixedRate">
+      <trans-unit id="_0tuMNE" resname="fixedRate" xml:space="preserve">
         <source>fixedRate</source>
-        <target state="translated">Kiinteä korko</target>
+        <target state="translated">Kiinteä hinta</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>

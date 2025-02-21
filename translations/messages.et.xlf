@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
         <source>Display of entries in selection lists</source>
-        <target state="translated">Kirjete  kuvamine valikloendites</target>
+        <target state="translated">Kirjete kuvamine valikloendites</target>
       </trans-unit>
       <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve">
         <source>password_repeat</source>
