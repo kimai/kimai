@@ -42,7 +42,7 @@ class MultiUpdateTableDTOTest extends TestCase
         self::assertEquals(
             [
                 '' => '',
-                'action.edit' => 'foo',
+                'edit' => 'foo',
                 'delete' => 'bar',
                 'test' => 'hello/world'
             ],

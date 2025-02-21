@@ -12,7 +12,7 @@
         {% set warningMsg %}
             {{ 'work_times_should.none_configured'|trans }}
             {% if is_granted('contract', user) %}
-                <a href="{{ path('user_profile_contract', {'username': user.getUserIdentifier()}) }}" class="alert-link">{{ 'action.edit'|trans }}</a>
+                <a href="{{ path('user_profile_contract', {'username': user.getUserIdentifier()}) }}" class="alert-link">{{ 'edit'|trans }}</a>
             {% endif %}
         {% endset %}
         {% from '@theme/components/alert.html.twig' import alert %}

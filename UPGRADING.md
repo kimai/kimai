@@ -1,4 +1,4 @@
-# Upgrading Kimai - Version2.x
+# Upgrading Kimai - Version 2.x
 
 _Make sure to create a backup before you start!_ 
 

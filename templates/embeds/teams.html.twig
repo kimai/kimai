@@ -14,7 +14,7 @@
             {{ widgets.card_tool_button('create', {'title': 'team.create_default', 'translation_domain': 'teams', 'url': route_create}) }}
         {% endif %}
         {% if route_edit is not null %}
-            {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': route_edit}) }}
+            {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': route_edit}) }}
         {% endif %}
     {% endblock %}
     {% block box_attributes %}id="team_listing_box"{% endblock %}
