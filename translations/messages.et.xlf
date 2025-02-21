@@ -114,10 +114,6 @@
         <source>desc</source>
         <target state="translated">Kahanev</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile" xml:space="preserve">
-        <source>my.profile</source>
-        <target state="translated">Minu profiil</target>
-      </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve">
         <source>attachments</source>
         <target state="translated">Fail</target>

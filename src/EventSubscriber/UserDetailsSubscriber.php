@@ -43,7 +43,7 @@ class UserDetailsSubscriber implements EventSubscriberInterface
         $event->setUser($user);
 
         if ($this->auth->isGranted('view', $user)) {
-            $event->addLink(new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUserIdentifier()]));
+            $event->addLink(new MenuItemModel('user_profile', 'user_profile', 'user_profile', ['username' => $user->getUserIdentifier()]));
         }
         if ($this->auth->isGranted('edit', $user)) {
             $event->addLink(new MenuItemModel('user_profile_edit', 'edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()]));

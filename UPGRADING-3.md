@@ -14,4 +14,5 @@ Perform EACH version specific task between your version and the new one, otherwi
 ### Developer
 
 Removed translations:
-- `action.edit`, use `edit` instead
+- `action.edit`: use `edit` instead
+- `my.profile`: use `user_profile` instead

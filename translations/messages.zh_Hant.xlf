@@ -82,10 +82,6 @@
         <source>orderBy</source>
         <target state="final">排序依據</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile" xml:space="preserve" approved="yes">
-        <source>my.profile</source>
-        <target state="final">我的帳號</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
         <target state="final">是否要%action% %count% 條項目</target>
