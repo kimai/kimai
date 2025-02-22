@@ -904,27 +904,27 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
-        <target>Arbeitszeit heute</target>
+        <target>Heute</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
-        <target>Arbeitszeit diese Woche</target>
+        <target>Diese Woche</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
-        <target>Arbeitszeit diesen Monat</target>
+        <target>Diesen Monat</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
-        <target>Arbeitszeit dieses Jahr</target>
+        <target>Dieses Jahr</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
-        <target>Arbeitszeit dieses Geschäftsjahr</target>
+        <target>Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
-        <target>Arbeitszeit gesamt</target>
+        <target>Gesamt</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>
