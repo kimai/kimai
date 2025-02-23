@@ -171,24 +171,33 @@ final class DateTimeFactory
             return $defaultDate;
         }
 
-        $financialYear = $this->createDateTime($financialYear);
-        $financialYear = $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
-        $financialYear = $financialYear->setTime(0, 0, 0);
+        $year = $this->createDateTime($financialYear);
+        $year = $year->setDate((int) $defaultDate->format('Y'), (int) $year->format('m'), (int) $year->format('d'));
+        $year = $year->setTime(0, 0, 0);
 
         $today = $this->createDateTime('00:00:00');
 
-        if ($financialYear > $today) {
-            $financialYear = $financialYear->modify('-1 year');
+        if ($year > $today) {
+            $year = $year->modify('-1 year');
         }
 
-        return $financialYear;
+        return $year;
+    }
+
+    public function createStartOfPreviousFinancialYear(?string $financialYear = null): DateTimeInterface
+    {
+        return $this->createStartOfFinancialYear($financialYear)->modify('-2 years');
     }
 
     public function createEndOfFinancialYear(DateTimeInterface $financialYear): DateTimeInterface
     {
         $yearEnd = DateTime::createFromInterface($financialYear);
-        $yearEnd = $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
 
-        return $yearEnd;
+        return $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
+    }
+
+    public function createEndOfPreviousFinancialYear(DateTimeInterface $financialYear): DateTimeInterface
+    {
+        return $this->createEndOfFinancialYear($financialYear);
     }
 }

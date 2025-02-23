@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class ActiveUsersToday extends AbstractActiveUsers
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
@@ -36,7 +36,7 @@ final class ActiveUsersToday extends AbstractActiveUsers
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): int
     {
         try {
             return $this->repository->countActiveUsers($this->createTodayStartDate(), $this->createTodayEndDate(), null);

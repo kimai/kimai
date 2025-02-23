@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class DurationToday extends AbstractCounterDuration
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 

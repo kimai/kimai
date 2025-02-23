@@ -19,8 +19,11 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class AmountYear extends AbstractCounterYear
 {
-    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        SystemConfiguration $systemConfiguration,
+        private readonly EventDispatcherInterface $dispatcher
+    ) {
         parent::__construct($systemConfiguration);
     }
 
@@ -38,8 +41,9 @@ final class AmountYear extends AbstractCounterYear
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, float>
      */
-    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array
     {
         try {
             /** @var array<Revenue> $data */
