@@ -428,11 +428,6 @@ parameters:
             path: src/Command/InvoiceCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$template of method App\\\\Command\\\\InvoiceCreateCommand\\:\\:getCommandLineArgumentTemplateForCustomer\\(\\) expects string, mixed given\\.$#"
-            path: src/Command/InvoiceCreateCommand.php
-            count: 1
-
-        -
             message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: src/Command/PromoteUserCommand.php

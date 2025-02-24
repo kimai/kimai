@@ -198,10 +198,17 @@ final class InvoiceCreateCommand extends Command
         }
 
         $overwriteTemplate = null;
-        if (null !== ($tplOption = $input->getOption('template')) && is_string($tplOption)) {
-            $overwriteTemplate = $this->getCommandLineArgumentTemplateForCustomer($tplOption);
-            if (null === $overwriteTemplate){
-                $io->error('Invalid invoice template name or id given');
+        if (null !== ($tplOption = $input->getOption('template'))) {
+            if (\is_string($tplOption) || \is_int($tplOption)){
+                $tplOption = \strval($tplOption);
+                $overwriteTemplate = $this->getCommandLineArgumentTemplateForCustomer($tplOption);
+                if (null === $overwriteTemplate){
+                    $io->error('Invalid invoice template name or id given');
+
+                    return Command::FAILURE;
+                }
+            } else {
+                $io->error('Option --template must be string or int');
 
                 return Command::FAILURE;
             }
