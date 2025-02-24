@@ -43,7 +43,7 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
     public static function getTestData(): array
     {
         return [
-            ['duration', 'Working hours total'],
+            ['duration', 'Total'],
             ['rate', 'Total revenue'],
             ['internalRate', 'Internal price'],
         ];
