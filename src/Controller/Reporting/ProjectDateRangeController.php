@@ -59,11 +59,12 @@ final class ProjectDateRangeController extends AbstractController
             $byCustomer[$customer->getId()]['projects'][] = $entry;
         }
 
-        return $this->render('reporting/project_daterange.html.twig', [
+        return $this->render('reporting/project/daterange.html.twig', [
             'report_title' => 'report_project_daterange',
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'queryEnd' => $dateRange->getEnd(),
+            'queryBegin' => $begin,
+            'queryEnd' => $end,
         ]);
     }
 }
