@@ -1926,6 +1926,10 @@
         <source>training</source>
         <target state="translated">Treinamento</target>
       </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Contar apenas as entradas do projeto selecionado como tempo trabalhado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
