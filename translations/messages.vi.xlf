@@ -54,10 +54,6 @@
         <source>search</source>
         <target>Tìm kiếm</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Thông tin của tôi</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% giá trị</target>

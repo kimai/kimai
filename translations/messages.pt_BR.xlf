@@ -702,10 +702,6 @@
         <source>attachments</source>
         <target>Arquivos</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Meu perfil</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Procurar</target>

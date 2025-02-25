@@ -714,10 +714,6 @@
         <source>attachments</source>
         <target>Fájlok</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Profilom</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Keresés</target>

@@ -710,10 +710,6 @@
         <source>attachments</source>
         <target>Файлы</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Мой профиль</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Поиск</target>

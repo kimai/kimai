@@ -162,10 +162,6 @@
         <source>remove_default</source>
         <target state="translated">Видалити обране в пошуку</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">Мій профіль</target>
-      </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
         <target state="translated">Розцінки ще не додано.</target>
@@ -1929,6 +1925,10 @@
       <trans-unit id="9qIU96X" resname="result" xml:space="preserve" approved="no">
         <source>result</source>
         <target state="translated">Результат</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Зараховувати як робочий час лише записи вибраного проекту</target>
       </trans-unit>
     </body>
   </file>

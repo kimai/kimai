@@ -346,10 +346,6 @@
         <source>entryState.not_exported</source>
         <target>Opið</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Mín vangi</target>
-      </trans-unit>
       <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>
         <target>Raðfest eftir</target>

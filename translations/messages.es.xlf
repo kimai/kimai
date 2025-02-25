@@ -50,10 +50,6 @@
         <source>search</source>
         <target>Buscar</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Mi perfil</target>
-      </trans-unit>
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Contraseña</target>

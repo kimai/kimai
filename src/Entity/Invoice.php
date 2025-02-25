@@ -80,7 +80,6 @@ class Invoice implements EntityWithMetaFields
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    #[Exporter\Expose(label: 'date', type: 'datetime')]
     private ?\DateTime $createdAt = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     private ?string $timezone = null;
@@ -176,6 +175,7 @@ class Invoice implements EntityWithMetaFields
         return $this->total;
     }
 
+    #[Exporter\Expose(name: 'createdAt', label: 'date', type: 'datetime')]
     public function getCreatedAt(): ?\DateTime
     {
         if (!$this->localized) {

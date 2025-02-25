@@ -802,10 +802,6 @@
         <source>update_multiple</source>
         <target>%action% %count% entrées</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>Mon profil</target>
-      </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Rechercher</target>

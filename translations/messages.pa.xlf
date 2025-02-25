@@ -162,10 +162,6 @@
         <source>file</source>
         <target state="translated">ਫਾਈਲ</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target state="translated">ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ</target>
-      </trans-unit>
       <trans-unit id="xEuy.VF" resname="comment">
         <source>comment</source>
         <target state="translated">ਟਿੱਪਣੀ</target>

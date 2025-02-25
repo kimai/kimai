@@ -18,7 +18,7 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_activity_edit', {'id': activity.id})}) }}
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': path('admin_activity_edit', {'id': activity.id})}) }}
             {% endif %}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}

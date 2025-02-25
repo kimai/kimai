@@ -54,10 +54,6 @@
         <source>search</source>
         <target>جستجو</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile">
-        <source>my.profile</source>
-        <target>پروفایل من</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
         <target state="needs-translation">%action% %count% ورودی ها؟</target>
