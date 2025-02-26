@@ -21,4 +21,4 @@ Removed translations:
 - `stats.userAmountMonth`: use `` instead
 - `stats.userAmountYear`: use `` instead
 - `stats.userAmountTotal`: use `` instead
-  
+- `update_multiple`
