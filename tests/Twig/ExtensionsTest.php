@@ -64,7 +64,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFunctions(): void
     {
-        $functions = ['report_date', 'class_name', 'iso_day_by_name', 'random_color'];
+        $functions = ['date_range', 'report_date', 'class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         self::assertCount(\count($functions), $twigFunctions);
@@ -219,6 +219,25 @@ sdfsdf' . PHP_EOL . "\n" .
         $sut = $this->getSut();
 
         self::assertEquals($expected, $sut->replaceNewline($input, $replacer));
+    }
+
+    public function testReportDate(): void
+    {
+        $sut = $this->getSut();
+
+        $begin = new \DateTimeImmutable('2025-02-01 17:13:45');
+        $end = new \DateTimeImmutable('2025-02-25 06:10:00');
+
+        self::assertEquals('2025-02-01 - 2025-02-25', $sut->buildDateRange($begin, $end));
+    }
+
+    public function testFormatReportDate(): void
+    {
+        $sut = $this->getSut();
+
+        $date = new \DateTimeImmutable('2024-07-23 17:13:45');
+
+        self::assertEquals('2024-07-23', $sut->formatReportDate($date));
     }
 
     public function testGetRandomColor(): void

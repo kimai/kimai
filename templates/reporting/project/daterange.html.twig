@@ -99,7 +99,7 @@
                                     {{ progress.progressbar_budget(entry, currency) }}
                                 {% endif %}
                             {% elseif name == 'actions' %}
-                                {{ projectActions.project(project, 'custom') }}
+                                {{ projectActions.project(project, 'custom', true, {'daterange': date_range(queryBegin, queryEnd)}) }}
                             {% endif %}
                             </td>
                         {% endfor %}

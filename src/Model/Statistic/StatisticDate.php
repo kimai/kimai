@@ -14,6 +14,7 @@ final class StatisticDate extends Timesheet
     private \DateTimeInterface $date;
     private int $billableDuration = 0;
     private float $billableRate = 0.00;
+    private int $amount = 0;
 
     public function __construct(\DateTimeInterface $date)
     {
@@ -43,5 +44,15 @@ final class StatisticDate extends Timesheet
     public function setBillableRate(float $billableRate): void
     {
         $this->billableRate = $billableRate;
+    }
+
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): void
+    {
+        $this->amount = $amount;
     }
 }

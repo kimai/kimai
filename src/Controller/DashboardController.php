@@ -38,7 +38,11 @@ final class DashboardController extends AbstractController
      */
     private ?array $widgets = null;
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private WidgetService $service, private BookmarkRepository $repository)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly WidgetService $service,
+        private readonly BookmarkRepository $repository
+    )
     {
     }
 
