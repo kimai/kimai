@@ -76,7 +76,7 @@ final class DateTimeFactory
         }
 
         if (\is_string($date)) {
-            return $this->createDate($date);
+            return $this->create($date);
         }
 
         return \DateTimeImmutable::createFromInterface($date);
