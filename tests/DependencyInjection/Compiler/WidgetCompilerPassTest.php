@@ -10,8 +10,8 @@
 namespace App\Tests\DependencyInjection\Compiler;
 
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
-use App\Widget\Type\ActiveTimesheets;
-use App\Widget\Type\ActiveUsersMonth;
+use App\Widget\Type\ActiveUsers;
+use App\Widget\Type\Duration;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ class WidgetCompilerPassTest extends TestCase
         $definition = new Definition(WidgetService::class);
         $container->setDefinition(WidgetService::class, $definition);
 
-        $widgets = [ActiveTimesheets::class, ActiveUsersMonth::class];
+        $widgets = [Duration::class, ActiveUsers::class];
         foreach ($widgets as $widget) {
             $container->register($widget)->addTag(WidgetInterface::class);
         }

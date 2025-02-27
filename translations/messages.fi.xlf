@@ -606,65 +606,13 @@
         <source>stats.yourWorkingHours</source>
         <target state="translated">Omat työajat</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target state="translated">Tulot tänään</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target state="translated">Tulot tällä viikolla</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target state="translated">Tulot tässä kuussa</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target state="translated">Tulot tänä vuonna</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target state="translated">Tulot yhteensä</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target state="translated">Aktiivisia käyttäjiä tänään</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">Aktiivisa käyttäjiä tällä viikolla</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">Aktiivisia käyttäjiä tässä kuussa</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">Aktiivisia käyttäjiä tänä vuonna</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">Aktiivisia käyttäjiä yhteensä</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target state="translated">Aktiivisia merkintöjä</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target state="translated">Käyttäjiä</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target state="translated">Työtehtäviä</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target state="translated">Projekteja</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target state="translated">Asiakkaita</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -962,10 +910,6 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% käytetty tässä kuussa</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktiivisia käyttäjiä tällä tilikaudella</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Tulo tällä tilikaudella</target>
@@ -1226,10 +1170,6 @@
         <source>sickness.intro</source>
         <target state="translated">Sairaus, lääkärikäynti, läheisen sairaus tms.</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">Työtuntini tänään</target>
-      </trans-unit>
       <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
         <source>Complete month</source>
         <target state="translated">Lukitse kuukausi</target>
@@ -1306,10 +1246,6 @@
         <source>plugin.installed</source>
         <target state="translated">Asennetut lisäosat</target>
       </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">Työtuntini tässä kuussa</target>
-      </trans-unit>
       <trans-unit id="2SmKENG" resname="other">
         <source>other</source>
         <target state="translated">Muu</target>
@@ -1325,10 +1261,6 @@
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
         <target state="translated">Perhetapahtumat, muutto, sääolosuhteet tms.</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">Työtuntini tällä viikolla</target>
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract">
         <source>work_contract</source>
@@ -1406,10 +1338,6 @@
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
         <target state="needs-translation">Olet käyttänyt %used% vapaata saatavilla olevista %days% päivästä.</target>
       </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">Työtuntini tänä vuonna</target>
-      </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
         <target state="translated">Piilotettu</target>
@@ -1461,10 +1389,6 @@
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
         <target state="translated">Vahvistetun kuukauden PDF</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">Työtuntini yhteensä</target>
       </trans-unit>
       <trans-unit id="M2B0gF." resname="time">
         <source>time</source>

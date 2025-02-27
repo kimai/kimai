@@ -3197,11 +3197,6 @@ parameters:
             path: Widget/Type/AbstractWidgetTypeTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\ActiveUsersYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Widget/Type/ActiveUsersYearTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\AmountMonthTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/AmountMonthTest.php

@@ -598,22 +598,6 @@
         <source>stats.yourWorkingHours</source>
         <target state="final">我的工時</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday" xml:space="preserve" approved="yes">
-        <source>stats.amountToday</source>
-        <target state="final">本日營收</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek" xml:space="preserve" approved="yes">
-        <source>stats.amountWeek</source>
-        <target state="final">本週營收</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth" xml:space="preserve" approved="yes">
-        <source>stats.amountMonth</source>
-        <target state="final">本月營收</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve" approved="yes">
-        <source>stats.amountYear</source>
-        <target state="final">本年度營收</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve" approved="yes">
         <source>stats.amountFinancialYear</source>
         <target state="final">本會計年度營收</target>
@@ -621,42 +605,6 @@
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve" approved="yes">
         <source>stats.amountTotal</source>
         <target state="final">總營收</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersWeek</source>
-        <target state="final">本週活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersMonth</source>
-        <target state="final">本月活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersYear</source>
-        <target state="final">本年度活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="final">本會計年度活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersToday</source>
-        <target state="final">本日活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal" xml:space="preserve" approved="yes">
-        <source>stats.userTotal</source>
-        <target state="final">使用者數</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve" approved="yes">
-        <source>stats.activityTotal</source>
-        <target state="final">活動數</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal" xml:space="preserve" approved="yes">
-        <source>stats.projectTotal</source>
-        <target state="final">專案數</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal" xml:space="preserve" approved="yes">
-        <source>stats.customerTotal</source>
-        <target state="final">客戶數</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed" xml:space="preserve" approved="yes">
         <source>stats.percentUsed</source>
@@ -926,10 +874,6 @@
         <source>sickness.intro</source>
         <target state="final">生病、看病、照顧近親、等。</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="yes">
-        <source>stats.userDurationToday</source>
-        <target state="final">我的本日工時</target>
-      </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user" xml:space="preserve" approved="yes">
         <source>invoice.signature_user</source>
         <target state="final">確認：日期 / 顧問姓名 / 簽名</target>
@@ -1146,10 +1090,6 @@
         <source>stats.percentUsedLeft_month</source>
         <target state="final">%percent%% 已使用（本月 %left% 仍可用）</target>
       </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve" approved="yes">
-        <source>stats.userDurationMonth</source>
-        <target state="final">我的本月工時</target>
-      </trans-unit>
       <trans-unit id="EohvnQA" resname="number" xml:space="preserve" approved="yes">
         <source>number</source>
         <target state="final">帳戶</target>
@@ -1218,10 +1158,6 @@
         <source>absence_other.intro</source>
         <target state="final">家庭活動、搬家、天氣惡劣、等。</target>
       </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="yes">
-        <source>stats.userDurationWeek</source>
-        <target state="final">我的本週工時</target>
-      </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all" xml:space="preserve" approved="yes">
         <source>export.clear_all</source>
         <target state="final">是否要將所有紀錄標示為未處理？</target>
@@ -1281,10 +1217,6 @@
       <trans-unit id="d5wyWRD" resname="export.full_list" xml:space="preserve" approved="yes">
         <source>export.full_list</source>
         <target state="final">完整清單</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersTotal</source>
-        <target state="final">所有曾活躍的使用者</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve" approved="yes">
         <source>help.globalActivities</source>
@@ -1430,10 +1362,6 @@
         <source>security.unlock.intro</source>
         <target state="final">請輸入您的密碼以正常存取</target>
       </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve" approved="yes">
-        <source>stats.userDurationYear</source>
-        <target state="final">我的本年度工時</target>
-      </trans-unit>
       <trans-unit id="t1r372x" resname="invisible" xml:space="preserve" approved="yes">
         <source>invisible</source>
         <target state="final">不可見</target>
@@ -1573,10 +1501,6 @@
       <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve" approved="yes">
         <source>stats.userAmountYear</source>
         <target state="final">我的本年度營收</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve" approved="yes">
-        <source>stats.userDurationTotal</source>
-        <target state="final">我的總工時</target>
       </trans-unit>
       <trans-unit id="qtjPKUT" resname="export.mark_all" xml:space="preserve" approved="yes">
         <source>export.mark_all</source>

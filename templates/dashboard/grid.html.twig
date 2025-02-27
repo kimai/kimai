@@ -29,19 +29,10 @@
 
         <div class="grid-stack" id="dashboard-grid-container" style="visibility: hidden">
             {% for widget in widgets %}
-                {% set gridWidth = widget.width %}
-                {% set gridHeight = widget.height %}
+                {% set gridWidth = 2 %}
+                {% set gridHeight = 3 %}
                 {% set widgetWidth = gridWidth * 100 %}
-                {% set widgetHeight = (gridHeight * 72) %}
-                {% if gridHeight == 1 %}
-                    {% set widgetHeight = widgetHeight - 67 %}
-                {% elseif gridHeight == 3 %}
-                    {% set widgetHeight = widgetHeight %}
-                {% elseif gridHeight == 5 %}
-                    {% set widgetHeight = widgetHeight - 10 %}
-                {% elseif gridHeight == 7 %}
-                    {% set widgetHeight = widgetHeight - 10 %}
-                {% endif %}
+                {% set widgetHeight = 33 %}
                 <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ gridWidth }}" gs-min-w="{{ gridWidth }}" gs-h="{{ gridHeight }}" gs-id="{{ widget.id }}" id="{{ widget.id }}">
                     <div class="grid-stack-item-content">
                         <div class="card">

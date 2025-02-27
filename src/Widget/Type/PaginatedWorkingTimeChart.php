@@ -13,23 +13,15 @@ use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
-use App\Widget\WidgetInterface;
 use DateTime;
 
 final class PaginatedWorkingTimeChart extends AbstractWidget
 {
-    public function __construct(private TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
-    }
-
-    public function getWidth(): int
-    {
-        return WidgetInterface::WIDTH_FULL;
-    }
-
-    public function getHeight(): int
-    {
-        return WidgetInterface::HEIGHT_MAXIMUM;
     }
 
     public function getPermissions(): array

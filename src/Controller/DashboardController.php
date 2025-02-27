@@ -91,29 +91,8 @@ final class DashboardController extends AbstractController
 
         // default widgets
         $dashboard = [
+            // FIXME
             'PaginatedWorkingTimeChart',
-            //'UserAmountToday',
-            //'UserAmountWeek',
-            //'UserAmountMonth',
-            //'UserAmountYear',
-            //'UserTeams',
-            //'UserTeamProjects',
-            'DurationToday',
-            'DurationWeek',
-            'DurationMonth',
-            'DurationYear',
-            //'ActiveUsersToday',
-            //'ActiveUsersWeek',
-            //'ActiveUsersMonth',
-            //'ActiveUsersYear',
-            //'AmountToday',
-            //'AmountWeek',
-            //'AmountMonth',
-            //'AmountYear',
-            //'TotalsUser',
-            //'TotalsCustomer',
-            //'TotalsProject',
-            //'TotalsActivity',
         ];
 
         foreach ($dashboard as $widgetName) {

@@ -12,26 +12,23 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
-use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
-use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\UserDurationYear;
+use App\Widget\Type\Duration;
 
 /**
- * @covers \App\Widget\Type\UserDurationYear
- * @covers \App\Widget\Type\AbstractCounterYear
+ * @covers \App\Widget\Type\Duration
  */
-class UserDurationYearTest extends AbstractWidgetTypeTestCase
+class DurationTest extends AbstractWidgetTestCase
 {
     /**
-     * @return AbstractCounterYear
+     * @return Duration
      */
-    public function createSut(): AbstractWidgetType
+    public function createSut(): AbstractWidget
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new UserDurationYear($repository, $configuration);
+        $sut = new Duration($repository, $configuration);
         $sut->setUser(new User());
 
         return $sut;
@@ -44,17 +41,14 @@ class UserDurationYearTest extends AbstractWidgetTypeTestCase
 
     public function getDefaultOptions(): array
     {
-        return [
-            'icon' => 'duration',
-            'color' => 'yellow',
-        ];
+        return [];
     }
 
     public function testSettings(): void
     {
         $sut = $this->createSut();
 
-        self::assertEquals('widget/widget-counter-duration.html.twig', $sut->getTemplateName());
-        self::assertEquals('userDurationYear', $sut->getId());
+        self::assertEquals('widget/widget-duration.html.twig', $sut->getTemplateName());
+        self::assertEquals('Duration', $sut->getId());
     }
 }

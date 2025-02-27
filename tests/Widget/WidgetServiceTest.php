@@ -9,7 +9,8 @@
 
 namespace App\Tests\Widget;
 
-use App\Tests\Widget\Type\More;
+use App\Repository\TimesheetRepository;
+use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
 
@@ -26,12 +27,11 @@ class WidgetServiceTest extends TestCase
 
     public function testHasAndGetWidget(): void
     {
-        $widget = new More();
-        $widget->setId('sdfsdf');
+        $widget = new DailyWorkingTimeChart($this->createMock(TimesheetRepository::class));
 
         $sut = new WidgetService();
         $sut->registerWidget($widget);
-        self::assertTrue($sut->hasWidget('sdfsdf'));
-        self::assertSame($widget, $sut->getWidget('sdfsdf'));
+        self::assertTrue($sut->hasWidget('DailyWorkingTimeChart'));
+        self::assertSame($widget, $sut->getWidget('DailyWorkingTimeChart'));
     }
 }

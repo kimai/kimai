@@ -25,9 +25,9 @@
         {{ widgets.nothing_found() }}
     {% else %}
         <div class="row row-deck row-cards">
+        {% set width = (widgets|length == 1) ? 12 : 6 %}
         {% for widget in widgets %}
-            {% set columnSize = widget.width %}
-            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}" id="{{ widget.id }}">
+            <div class="col-md-{{ width }} col-sm-12 widget" id="{{ widget.id }}">
                 {{ render_widget(widget) }}
             </div>
         {% endfor %}

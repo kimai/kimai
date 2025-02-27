@@ -139,6 +139,20 @@ final class DateTimeFactory
         return new \DateTimeImmutable($datetime, $this->getTimezone());
     }
 
+    public function createStartOfDay(DateTimeInterface|string|null $date = null): DateTime
+    {
+        $date = $this->getDate($date);
+
+        return $date->modify('00:00:00');
+    }
+
+    public function createEndOfDay(DateTimeInterface|string|null $date = null): DateTime
+    {
+        $date = $this->getDate($date);
+
+        return $date->modify('23:59:59');
+    }
+
     /**
      * @param string $format
      * @param null|string $datetime

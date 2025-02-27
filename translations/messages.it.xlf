@@ -606,65 +606,13 @@
         <source>stats.yourWorkingHours</source>
         <target state="final">Le mie ore lavorative</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday" approved="yes">
-        <source>stats.amountToday</source>
-        <target state="final">Entrate oggi</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek" approved="yes">
-        <source>stats.amountWeek</source>
-        <target state="final">Entrate questa settimana</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth" approved="yes">
-        <source>stats.amountMonth</source>
-        <target state="final">Entrate questo mese</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear" approved="yes">
-        <source>stats.amountYear</source>
-        <target state="final">Entrate quest'anno</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" approved="yes">
         <source>stats.amountTotal</source>
         <target state="final">Entrate totali</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday" approved="yes">
-        <source>stats.activeUsersToday</source>
-        <target state="final">Utenti attivi oggi</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" approved="yes">
-        <source>stats.activeUsersWeek</source>
-        <target state="final">Utenti attivi questa settimana</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" approved="yes">
-        <source>stats.activeUsersMonth</source>
-        <target state="final">Utenti attivi questo mese</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" approved="yes">
-        <source>stats.activeUsersYear</source>
-        <target state="final">Utenti attivi quest'anno</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" approved="yes">
-        <source>stats.activeUsersTotal</source>
-        <target state="final">Utenti attivi di sempre</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings" approved="yes">
         <source>stats.activeRecordings</source>
         <target state="final">Registrazioni attive</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal" approved="yes">
-        <source>stats.userTotal</source>
-        <target state="final">Utenti</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal" approved="yes">
-        <source>stats.activityTotal</source>
-        <target state="final">Attività</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal" approved="yes">
-        <source>stats.projectTotal</source>
-        <target state="final">Progetti</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal" approved="yes">
-        <source>stats.customerTotal</source>
-        <target state="final">Clienti</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed" approved="yes">
         <source>stats.percentUsed</source>
@@ -990,10 +938,6 @@
         <source>last_record_before</source>
         <target state="final">Nessuna prenotazione di tempo da</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" approved="yes">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="final">Utenti attivi in quest'anno finanziario</target>
-      </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes">
         <source>stats.durationFinancialYear</source>
         <target state="final">Ore lavorative in quest'anno finanziario</target>
@@ -1222,10 +1166,6 @@
         <source>profile.2fa_confirmation</source>
         <target state="final">Conferma il codice, che attiverà l'autenticazione a due fattori per questo account.</target>
       </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" approved="yes">
-        <source>stats.userDurationMonth</source>
-        <target state="final">Le mie ore lavorative questo mese</target>
-      </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label" approved="yes">
         <source>modal.columns.label</source>
         <target state="final">Colonne tabella</target>
@@ -1273,22 +1213,6 @@
       <trans-unit id="On18MKP" resname="plugin.installed" approved="yes">
         <source>plugin.installed</source>
         <target state="final">Plugin installati</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" approved="yes">
-        <source>stats.userDurationToday</source>
-        <target state="final">Le mie ore lavorative oggi</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" approved="yes">
-        <source>stats.userDurationWeek</source>
-        <target state="final">Le mie ore lavorative questa settimana</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear" approved="yes">
-        <source>stats.userDurationYear</source>
-        <target state="final">Le mie ore lavorative quest'anno</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" approved="yes">
-        <source>stats.userDurationTotal</source>
-        <target state="final">Totale delle mie ore lavorative</target>
       </trans-unit>
       <trans-unit id="0ZWvn12" resname="notifications.welcome" approved="yes">
         <source>notifications.welcome</source>

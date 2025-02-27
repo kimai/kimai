@@ -26,14 +26,22 @@ interface WidgetInterface
     public const COLOR_YEAR = 'yellow';
     public const COLOR_TOTAL = 'red';
 
+    /** @deprecated */
     public const WIDTH_FULL = 4;
+    /** @deprecated */
     public const WIDTH_LARGE = 3;
+    /** @deprecated */
     public const WIDTH_HALF = 2;
+    /** @deprecated */
     public const WIDTH_SMALL = 1;
 
+    /** @deprecated */
     public const HEIGHT_MAXIMUM = 6;
+    /** @deprecated */
     public const HEIGHT_LARGE = 5;
+    /** @deprecated */
     public const HEIGHT_MEDIUM = 3;
+    /** @deprecated */
     public const HEIGHT_SMALL = 1;
 
     /**
@@ -50,16 +58,6 @@ interface WidgetInterface
      * Returns the translation domain used by this widget.
      */
     public function getTranslationDomain(): string;
-
-    /**
-     * Returns the height for this widget.
-     */
-    public function getHeight(): int;
-
-    /**
-     * Returns the width for this widget.
-     */
-    public function getWidth(): int;
 
     /**
      * Injects the current user.
@@ -111,16 +109,6 @@ interface WidgetInterface
      * Returns the template, which is used to render the widget.
      */
     public function getTemplateName(): string;
-
-    /**
-     * Whether this widget can be configured with options.
-     */
-    public function hasForm(): bool;
-
-    /**
-     * A form to edit the widget options or null, if it can't be configured.
-     */
-    public function getForm(): ?Form;
 
     /**
      * Whether this is a widget that is supposed to be selectable by the end-user.

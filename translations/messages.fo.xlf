@@ -306,14 +306,6 @@
         <source>invoice.from</source>
         <target>Frá</target>
       </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Kundar</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Brúkarar</target>
-      </trans-unit>
       <trans-unit id="W_TXvSi" resname="button.csv">
         <source>button.csv</source>
         <target>CSV</target>
@@ -550,45 +542,9 @@
         <source>stats.durationToday</source>
         <target>Arbeiðistímar í dag</target>
       </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Virknir brúkarir í alt</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Virknir brúkarir hetta árið</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Virknir brúkarir hendan mánaðin</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Virknir brúkarir hesa vikuna</target>
-      </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Virknir brúkarir í dag</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Samanløgd inntøka</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Inntøka hetta árið</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Inntøka hendan mánaðin</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Inntøka hesa vikuna</target>
-      </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Inntøka í dag</target>
       </trans-unit>
       <trans-unit id="loeWEWU" resname="active">
         <source>active</source>
@@ -626,10 +582,6 @@
         <source>stats.percentUsed</source>
         <target>%percent%% brúkt</target>
       </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Værkætlanir</target>
-      </trans-unit>
       <trans-unit id="vjmoQGo" resname="export.period">
         <source>export.period</source>
         <target>Tíðarskeið</target>
@@ -637,10 +589,6 @@
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
         <target>Einans heiltøk</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Virksemi</target>
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
